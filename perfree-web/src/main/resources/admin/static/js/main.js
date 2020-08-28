@@ -22,6 +22,7 @@ function initMenu() {
         $('.p-menu-item').removeClass('mdui-list-item-active');
         $(this).addClass('mdui-list-item-active');
         $("#iframe").attr("src", $(this).data("url"));
+        $("#p-iframe-title").text($(this).data("text"));
     })
 }
 
