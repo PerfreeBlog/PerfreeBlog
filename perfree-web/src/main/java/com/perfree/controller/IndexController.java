@@ -18,6 +18,10 @@ public class IndexController {
         return "admin/index";
     }
 
+    /**
+     * 前台首页
+     * @return String
+     */
     @RequestMapping("/")
     public String index() {
         return "themes/perfree/index";
