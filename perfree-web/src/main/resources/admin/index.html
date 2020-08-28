@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>空标签界面</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+        <meta name="renderer" content="webkit"/>
+        <meta name="force-rendering" content="webkit"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <link href="/admin/static/lib/mdui/css/mdui.min.css" rel="stylesheet"/>
+        <link href="/admin/static/css/style.css" rel="stylesheet"/>
+    </head>
+    <body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-layout-auto mdui-loaded mdui-drawer-body-left mdui-color-grey-50">
+        <!-- 顶栏start -->
+        <header class="mdui-appbar mdui-appbar-fixed">
+            <div class="mdui-toolbar mdui-color-theme">
+                <a href="javascript:;" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer', swipe: true}"><i class="mdui-icon material-icons">menu</i></a>
+                <span class="mdui-typo-title">Perfree</span>
+                <div class="mdui-toolbar-spacer"></div>
+                <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-list-item-icon mdui-icon material-icons">color_lens</i></a>
+                <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">refresh</i></a>
+                <a href="javascript:;" class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">more_vert</i></a>
+            </div>
+        </header>
+        <!-- 顶栏endt -->
+
+        <!-- 左侧边栏start -->
+        <div class="mc-drawer mdui-drawer mdui-drawer-open mdui-color-white" id="left-drawer">
+            <ul class="mdui-list mdui-list-dense" mdui-collapse="{accordion: true}">
+                <li class="mdui-list-item mdui-ripple mdui-list-item-active">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">equalizer</i>
+                    <div class="mdui-list-item-content">面板</div>
+                </li>
+                <li class="mdui-collapse-item">
+                    <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">import_contacts</i>
+                        <div class="mdui-list-item-content">文章</div>
+                        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                        <li class="mdui-list-item mdui-ripple">列表</li>
+                        <li class="mdui-list-item mdui-ripple">新建</li>
+                    </ul>
+                </li>
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">comment</i>
+                    <div class="mdui-list-item-content">评论</div>
+                </li>
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">layers</i>
+                    <div class="mdui-list-item-content">分类</div>
+                </li>
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">local_offer</i>
+                    <div class="mdui-list-item-content">标签</div>
+                </li>
+                <li class="mdui-collapse-item">
+                    <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">color_lens</i>
+                        <div class="mdui-list-item-content">主题</div>
+                        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                    </div>
+                    <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                        <li class="mdui-list-item mdui-ripple">列表</li>
+                        <li class="mdui-list-item mdui-ripple">新建</li>
+                    </ul>
+                </li>
+                <li class="mdui-list-item mdui-ripple">
+                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">settings</i>
+                    <div class="mdui-list-item-content">设置</div>
+                </li>
+            </ul>
+        </div>
+        <!-- 左侧边栏end -->
+
+        <!-- 内容start -->
+        <div class="p-iframe">
+            <iframe src="/admin/dashboard.html" scrolling="auto" width="100%" height="100%" frameborder="0"></iframe>
+        </div>
+        <!-- 内容ned -->
+
+        <script src="/admin/static/lib/jquery/jquery-3.5.1.min.js"></script>
+        <script src="/admin/static/lib/mdui/js/mdui.min.js"></script>
+        <script src="/admin/static/js/main.js"></script>
+    </body>
+</html>

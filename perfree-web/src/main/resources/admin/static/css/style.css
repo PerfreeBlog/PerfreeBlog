@@ -1,0 +1,28 @@
+.mdui-drawer{
+    z-index: 0;
+}
+.mdui-list-dense{
+    padding: 0;
+}
+
+@media (max-width: 1023px){
+    .mdui-drawer {
+        z-index: 5000;
+    }
+}
+@media (min-width: 600px){
+    .mdui-appbar .mdui-toolbar {
+        height: 50px;
+        line-height: 50px;
+    }
+}
+@media (min-width: 600px){
+    .mdui-appbar-with-toolbar {
+        padding-top: 50px;
+    }
+}
+@media (min-width: 1024px){
+    .mdui-appbar-with-toolbar .mdui-drawer {
+        top: 50px;
+    }
+}

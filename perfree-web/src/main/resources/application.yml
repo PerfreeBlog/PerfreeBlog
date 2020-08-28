@@ -1,0 +1,22 @@
+server:
+  port: 8080
+
+# spring配置
+
+spring:
+  resources:
+    static-locations: [classpath:/,classpath:/themes/]
+  devtools:
+    restart:
+      enabled: true
+  thymeleaf:
+    enabled: true
+    encoding: utf-8
+    prefix: classpath:/
+    cache: false
+    mode: HTML
+    suffix: .html
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
