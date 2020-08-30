@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * 控制首页地址
  */
 @Controller
-public class IndexController {
+public class SystemController {
 
     /**
      * 后台首页
@@ -25,5 +25,14 @@ public class IndexController {
     @RequestMapping("/")
     public String index() {
         return "themes/perfree/index";
+    }
+
+    /**
+     * 登陆页
+     * @return String
+     */
+    @RequestMapping("/login")
+    public String login() {
+        return "public/login";
     }
 }
