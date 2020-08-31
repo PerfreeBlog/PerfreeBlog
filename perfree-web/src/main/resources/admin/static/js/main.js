@@ -23,7 +23,8 @@ function initMenu() {
         $(this).addClass('mdui-list-item-active');
         $("#iframe").attr("src", $(this).data("url"));
         $("#p-iframe-title").text($(this).data("text"));
-    })
+    });
+    $(".p-menu-item")[0].click();
 }
 
 function initEvent() {

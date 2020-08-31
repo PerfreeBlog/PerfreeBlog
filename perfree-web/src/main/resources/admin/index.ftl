@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
     <head>
         <meta charset="UTF-8">
         <title>Perfree</title>
@@ -12,18 +12,17 @@
     </head>
     <body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-layout-auto mdui-loaded mdui-drawer-body-left mdui-color-grey-50">
         <!-- 顶栏start -->
-        <div th:replace="admin/layout/header :: header"></div>
+        <#include "layout/header.ftl">
         <!-- 顶栏end -->
-
         <!-- 左侧边栏start -->
-        <div th:replace="admin/layout/sider :: sider"></div>
+        <#include "layout/sider.ftl">
         <!-- 左侧边栏end -->
 
         <!-- 内容start -->
         <div class="p-container">
             <div class="mdui-shadow-1 p-iframe-title" id="p-iframe-title">面板</div>
             <div class="p-iframe">
-                <iframe id="iframe" src="/admin/dashboard.html" scrolling="0" width="100%" height="100%" frameborder="0"></iframe>
+                <iframe id="iframe" scrolling="0" width="100%" height="100%" frameborder="0"></iframe>
             </div>
         </div>
         <!-- 内容ned -->

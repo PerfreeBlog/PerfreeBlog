@@ -9,13 +9,11 @@ spring:
   devtools:
     restart:
       enabled: true
-  thymeleaf:
-    enabled: true
-    encoding: utf-8
-    prefix: classpath:/
-    cache: false
-    mode: HTML
-    suffix: .html
+  freemarker:
+    template-loader-path: classpath:/
+    charset: UTF-8
+    suffix: .ftl
+    content-type: text/html; charset=utf-8
   servlet:
     multipart:
       max-file-size: 30MB

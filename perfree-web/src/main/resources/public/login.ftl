@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>Perfree</title>
@@ -25,9 +25,6 @@
             </div>
         </form>
 
-        <div class="p-error-tip mdui-text-color-red">
-            123456
-        </div>
         <button class="mdui-btn mdui-btn-raised mdui-color-theme p-login-btn">登录</button>
         <p class="p-login-box-bottom">
             还没有账号? 点击<a class="mdui-text-color-theme p-register-btn">注册</a>

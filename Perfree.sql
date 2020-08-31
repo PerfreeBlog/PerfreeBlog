@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 31/08/2020 16:50:57
+ Date: 31/08/2020 19:09:15
 */
 
 SET NAMES utf8mb4;
@@ -25,10 +25,11 @@ CREATE TABLE `p_menu`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `pid` int(0) NULL DEFAULT NULL COMMENT '父级id',
   `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名',
-  `url` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单链接',
+  `url` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单链接',
   `icon` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单图标',
   `seq` int(0) NULL DEFAULT NULL COMMENT '排序序号',
   `type` int(0) NOT NULL DEFAULT 0 COMMENT '菜单类型0:前台,1:后台',
+  `target` int(0) NULL DEFAULT 0 COMMENT '菜单打开方式:0本页,1:新窗口',
   `status` int(0) NOT NULL DEFAULT 0 COMMENT '菜单状态0:启用,1禁用',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -38,6 +39,15 @@ CREATE TABLE `p_menu`  (
 -- ----------------------------
 -- Records of p_menu
 -- ----------------------------
+INSERT INTO `p_menu` VALUES (1, -1, '面板', '/admin/dashboard', 'equalizer', 1, 1, 0, 0, '2020-08-31 17:15:08', '2020-08-31 17:15:10');
+INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'import_contacts', 2, 1, 0, 0, '2020-08-31 17:15:39', '2020-08-31 17:15:41');
+INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article_list', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
+INSERT INTO `p_menu` VALUES (4, 2, '新建', '/admin/dashboard', NULL, 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
+INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
+INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/dashboard', 'layers', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
+INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/dashboard', 'local_offer', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
+INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'color_lens', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
+INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'settings', 7, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
 
 -- ----------------------------
 -- Table structure for p_role
@@ -72,6 +82,15 @@ CREATE TABLE `p_role_menu`  (
 -- ----------------------------
 -- Records of p_role_menu
 -- ----------------------------
+INSERT INTO `p_role_menu` VALUES (1, 1);
+INSERT INTO `p_role_menu` VALUES (1, 2);
+INSERT INTO `p_role_menu` VALUES (1, 3);
+INSERT INTO `p_role_menu` VALUES (1, 4);
+INSERT INTO `p_role_menu` VALUES (1, 5);
+INSERT INTO `p_role_menu` VALUES (1, 6);
+INSERT INTO `p_role_menu` VALUES (1, 7);
+INSERT INTO `p_role_menu` VALUES (1, 8);
+INSERT INTO `p_role_menu` VALUES (1, 9);
 
 -- ----------------------------
 -- Table structure for p_user

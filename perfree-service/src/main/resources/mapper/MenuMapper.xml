@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.MenuMapper" >
+    <!-- 获取当前账户所拥有的菜单 -->
+    <select id="getParentMenuByUserIdAndType" resultType="com.perfree.model.Menu">
+        SELECT distinct t.* from p_menu t
+        LEFT JOIN p_role_menu t2 on t.id = t2.menuId
+        LEFT JOIN p_user t3 on t3.roleId = t2.roleId
+        where t3.id = #{id} and t.pid = -1 and t.status = 0 and t.type = #{type}
+        order by t.seq asc
+    </select>
+
+    <!-- 获取当前账户所拥有的子菜单 -->
+    <select id="getChildMenuByUserIdAndType" resultType="com.perfree.model.Menu">
+        SELECT distinct t.* from p_menu t
+        LEFT JOIN p_role_menu t2 on t.id = t2.menuId
+        LEFT JOIN p_user t3 on t3.roleId = t2.roleId
+        where t.pid = #{pid} and t.status = 0 and t.type = #{type} and t3.id = #{id}
+        order by t.seq asc
+    </select>
+</mapper>

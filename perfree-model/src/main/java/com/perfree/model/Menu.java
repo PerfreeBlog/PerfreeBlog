@@ -1,6 +1,7 @@
 package com.perfree.model;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * menu table
@@ -16,6 +17,24 @@ public class Menu {
     private Integer status;
     private Date createTime;
     private Date updateTime;
+    private Integer target;
+    private List<Menu> childMenu;
+
+    public List<Menu> getChildMenu() {
+        return childMenu;
+    }
+
+    public void setChildMenu(List<Menu> childMenu) {
+        this.childMenu = childMenu;
+    }
+
+    public Integer getTarget() {
+        return target;
+    }
+
+    public void setTarget(Integer target) {
+        this.target = target;
+    }
 
     public Long getId() {
         return id;

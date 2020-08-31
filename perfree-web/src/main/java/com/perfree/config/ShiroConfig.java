@@ -1,6 +1,5 @@
 package com.perfree.config;
 
-import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
@@ -20,14 +19,6 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    /**
-     * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
-     * @return ShiroDialect
-     */
-    @Bean
-    public ShiroDialect shiroDialect() {
-        return new ShiroDialect();
-    }
 
     /**
      * cookie对象
