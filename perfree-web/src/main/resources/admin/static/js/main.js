@@ -1,3 +1,4 @@
+let heightDiffer = 122;
 iframeAuto();
 initMenu();
 initEvent();
@@ -5,15 +6,16 @@ initEvent();
  * 自适应iframe
  */
 function iframeAuto() {
-    $(window).on('resize', function () {
-        let $content = $('.p-iframe');
-        $content.height($(this).height() - 122);
-        $content.find('p-container').each(function () {
-            $(this).height($content.height());
-        });
-    }).resize();
+    $(window).on('resize', resizeIframe).resize();
 }
 
+function resizeIframe() {
+    let $content = $('.p-iframe');
+    $content.height($(this).height() - heightDiffer);
+    $content.find('p-container').each(function () {
+        $(this).height($content.height());
+    });
+}
 /**
  * 初始化菜单事件
  */
@@ -31,5 +33,12 @@ function initEvent() {
     // 刷新按钮事件
     $("#refresh").on("click", function () {
         document.getElementById('iframe').contentWindow.location.reload(true);
+    });
+
+    // 关闭标题栏
+    $(".hide-title").on('click', function () {
+        $(".p-iframe-title").addClass('hideTitlePanel');
+        heightDiffer = heightDiffer - 55;
+        resizeIframe();
     });
 }

@@ -1,31 +1,49 @@
+// 当前编辑器类型
 let currEditorType = 'markdown';
+// markdown编辑器
 let markdownEditor;
+// 富文本编辑器
 let richTextEditor;
+init();
+/**
+ * 页面初始化
+ */
+function init() {
+    initEditor();
+    initEvent();
+}
 
-initEditor();
-initEvent();
-
-
+/**
+ * 初始化编辑器
+ */
 function initEditor() {
     initMarkdownEditor();
 }
 
+/**
+ * 初始化页面事件
+ */
 function initEvent() {
     $(".editor-switch-btn").on('click', function () {
-        $("#editor").remove();
-        $("#editorBox").append('<div id="editor"></div>');
-        if (currEditorType === 'markdown') {
-            $("#currEditor").text("富文本");
-            $(".editor-switch-btn").text("切换MarkDown编辑器");
-            initWangEditor();
-        } else {
-            $("#currEditor").text("MarkDown");
-            $(".editor-switch-btn").text("切换富文本编辑器");
-            initMarkdownEditor();
-        }
+        pConfirm('提示', '确定要更换编辑器吗?更换后编辑器内容将清空!', null, function () {
+            $("#editor").remove();
+            $("#editorBox").append('<div id="editor"></div>');
+            if (currEditorType === 'markdown') {
+                $("#currEditor").text("富文本");
+                $(".editor-switch-btn").text("切换MarkDown编辑器");
+                initWangEditor();
+            } else {
+                $("#currEditor").text("MarkDown");
+                $(".editor-switch-btn").text("切换富文本编辑器");
+                initMarkdownEditor();
+            }
+        })
     });
 }
 
+/**
+ * 初始化markdown编辑器
+ */
 function initMarkdownEditor() {
     currEditorType = 'markdown';
     markdownEditor = editormd("editor", {
@@ -33,14 +51,11 @@ function initMarkdownEditor() {
         width : "100%",
         height : '600',
         syncScrolling : "single",
-        taskList : true,
         path : "/public/libs/editormd/lib/", //注意2：你的路径
-        saveHTMLToTextarea : true,
-        tocm : true, // Using [TOCM]
+        saveHTMLToTextarea : false,
         tex : true, // 开启科学公式TeX语言支持，默认关闭
         watch : false,
-        flowChart : true, // 开启流程图支持，默认关闭
-        imageUpload : true,
+        imageUpload : false,
         imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
         imageUploadURL : "${proPath }/base/blog/upFile", //注意你后端的上传图片服务地址
         toolbarIcons : function() {
@@ -56,6 +71,9 @@ function initMarkdownEditor() {
     });
 }
 
+/**
+ * 初始化富文本编辑器
+ */
 function initWangEditor() {
     currEditorType = 'richText';
     let E = window.wangEditor;

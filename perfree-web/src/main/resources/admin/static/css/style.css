@@ -4,7 +4,7 @@
 .mdui-list-dense{
     padding: 0;
 }
-.p-iframe-title{
+.p-iframe-title {
     height: 35px;
     background: white;
     line-height: 35px;
@@ -12,6 +12,16 @@
     border-bottom: 1px solid #ddd;
     font-size: 17px;
     font-weight: 700;
+    position: relative;
+    border-left: 1px solid #ddd;
+    transition: all .8s;
+}
+.hide-title{
+    position: absolute;
+    right: 8px;
+    top: 2px;
+    cursor: pointer;
+    font-size: 20px!important;
 }
 .p-iframe{
     padding: 8px;
@@ -41,4 +51,8 @@
     .mdui-appbar-with-toolbar .mdui-drawer {
         top: 50px;
     }
+}
+
+.hideTitlePanel{
+    display: none;
 }

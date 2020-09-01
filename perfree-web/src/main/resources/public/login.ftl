@@ -8,6 +8,7 @@
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <link href="/public/libs/mdui/css/mdui.min.css" rel="stylesheet"/>
+    <link href="/public/libs/dialog/dialog.css" rel="stylesheet"/>
     <link href="/public/css/login.css" rel="stylesheet"/>
 </head>
 <body class="mdui-theme-primary-indigo">
@@ -32,7 +33,8 @@
     </div>
     <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
     <script src="/public/libs/mdui/js/mdui.min.js"></script>
-    <script src="/public/libs/dialog/modal_dialog.js"></script>
+    <script src="/public/js/common.js"></script>
+    <script src="/public/libs/dialog/dialog.js"></script>
     <script src="/public/js/login.js"></script>
 </body>
 </html>

@@ -20,7 +20,10 @@
 
         <!-- 内容start -->
         <div class="p-container">
-            <div class="mdui-shadow-1 p-iframe-title" id="p-iframe-title">面板</div>
+            <div class="p-iframe-title">
+                <span id="p-iframe-title">面板</span>
+                <a class="hide-title" mdui-tooltip="{content: '关闭标题'}"><i class="mdui-icon material-icons">close</i></a>
+            </div>
             <div class="p-iframe">
                 <iframe id="iframe" scrolling="0" width="100%" height="100%" frameborder="0"></iframe>
             </div>
