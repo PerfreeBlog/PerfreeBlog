@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class ArticleController extends BaseController{
 
-    @RequestMapping("/articleList")
+    @RequestMapping("/article")
     public String index() {
         return "admin/article/article_list";
     }
