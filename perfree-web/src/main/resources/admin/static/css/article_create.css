@@ -1,0 +1,72 @@
+.p-container{
+    padding: 10px;
+    height: 100%;
+}
+html{
+    height: calc(100% - 20px);
+}
+body{
+    height: 100%;
+}
+.p-container-left {
+    width: 75%;
+    min-height: 100%;
+    float: left;
+    border-right: 1px solid #ddd;
+    padding-left: 10px;
+    padding-right: 20px;
+}
+.p-container-right {
+    width: calc(25% - 61px);
+    min-height: 100%;
+    float: left;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+.mdui-textfield{
+    padding-top: 0;
+}
+.CodeMirror .cm-spell-error:not(.cm-url):not(.cm-comment):not(.cm-tag):not(.cm-word) {
+    background: white;
+}
+.CodeMirror-selectedtext{
+    background: #d9d9d9!important;
+}
+.w-e-toolbar {
+    background: white!important;
+    height: 40px;
+    line-height: 40px;
+    padding: 0;
+}
+.w-e-toolbar .w-e-menu {
+    padding: 0 10px!important;
+}
+.editor-switch-box{
+    height: 30px;
+    line-height: 30px;
+    text-align: right;
+}
+.editor-switch-box{
+    font-size: 13px;
+    color: #555;
+}
+.editor-switch-btn{
+    cursor: pointer;
+    font-size: 13px;
+    color: #545353;
+    margin-bottom: 3px;
+    margin-top: 5px;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+}
+.editormd-toolbar {
+    display: block!important;
+    position: absolute!important;
+    width: 100% !important;
+    left: 0!important;
+}
+.w-e-toolbar .w-e-menu i {
+    color: rgb(102 102 102)!important;
+}
