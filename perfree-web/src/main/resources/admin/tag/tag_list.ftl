@@ -12,6 +12,24 @@
 </head>
 <body>
     <div class="p-container">
+        <div class="form-panel mdui-row">
+            <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
+                <label class="p-input-label">标签名: </label>
+                <input class="p-input" />
+            </div>
+            <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
+                <label class="p-input-label">标签名: </label>
+                <input class="p-input" />
+            </div>
+            <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
+                <label class="p-input-label">标签名: </label>
+                <input class="p-input" />
+            </div>
+            <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
+                <label class="p-input-label">标签名: </label>
+                <input class="p-input" />
+            </div>
+        </div>
         <div class="mdui-table-fluid mdui-shadow-0">
             <table class="mdui-table mdui-table-selectable">
                 <thead>
@@ -44,7 +62,12 @@
                 </tbody>
             </table>
         </div>
+        <div id="pager-box">
+            123456
+        </div>
     </div>
     <script src="/public/libs/mdui/js/mdui.min.js"></script>
+    <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/public/libs/jquery-tmpl/jquery.tmpl.min.js"></script>
 </body>
 </html>
