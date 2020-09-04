@@ -8,9 +8,11 @@
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <link href="/public/libs/mdui/css/mdui.min.css" rel="stylesheet"/>
+    <link href="/public/libs/dialog/dialog.css" rel="stylesheet"/>
+    <link href="/public/libs/table/table.css" rel="stylesheet"/>
     <link href="/admin/static/css/tag_list.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="mdui-theme-primary-indigo">
     <div class="p-container">
         <div class="form-panel mdui-row">
             <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
@@ -18,17 +20,12 @@
                 <input class="p-input" />
             </div>
             <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
-                <label class="p-input-label">标签名: </label>
+                <label class="p-input-label">创建人: </label>
                 <input class="p-input" />
             </div>
-            <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
-                <label class="p-input-label">标签名: </label>
-                <input class="p-input" />
-            </div>
-            <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
-                <label class="p-input-label">标签名: </label>
-                <input class="p-input" />
-            </div>
+            <button class="mdui-btn mdui-color-theme table-btn">搜索</button>
+            <button class="mdui-btn mdui-color-theme table-btn">新增</button>
+            <button class="mdui-btn mdui-color-theme table-btn">删除</button>
         </div>
         <div class="mdui-table-fluid mdui-shadow-0">
             <table class="mdui-table mdui-table-selectable">
@@ -42,32 +39,43 @@
                         <th class="mdui-table-col-numeric">操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="mdui-table-row-selected">
-                        <td>java</td>
-                        <td>99</td>
-                        <td>Perfree</td>
-                        <td>2020-06-06 06:06:06</td>
-                        <td>2020-06-06 06:06:06</td>
-                        <td><a class="mdui-text-color-pink">删除</a></td>
-                    </tr>
-                    <tr>
-                        <td>java</td>
-                        <td>99</td>
-                        <td>Perfree</td>
-                        <td>2020-06-06 06:06:06</td>
-                        <td>2020-06-06 06:06:06</td>
-                        <td><a class="mdui-text-color-pink-a200">删除</a></td>
-                    </tr>
+                <tbody id="tableBody">
                 </tbody>
             </table>
         </div>
         <div id="pager-box">
-            123456
         </div>
     </div>
+
+    <script type="text/x-jquery-tmpl" id="tableTpl">
+        {{each data}}
+            <tr>
+                <td>java</td>
+                <td>99</td>
+                <td>Perfree</td>
+                <td>2020-06-06 06:06:06</td>
+                <td>2020-06-06 06:06:06</td>
+                <td><a class="mdui-text-color-pink-a200">删除</a></td>
+            </tr>
+        {{/each}}
+    </script>
+
     <script src="/public/libs/mdui/js/mdui.min.js"></script>
     <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/public/js/common.js"></script>
+    <script src="/public/libs/dialog/dialog.js"></script>
     <script src="/public/libs/jquery-tmpl/jquery.tmpl.min.js"></script>
+    <script src="/public/libs/table/table.js"></script>
+    <script>
+        initTable({
+            url: '/admin/tag/list',
+            pageIndex: 1,
+            pageSize: 10,
+            data: {},
+            tableBodyElement: '#tableBody',
+            tableTplL: '#tableTpl',
+            pagerElement: '#pager-box',
+        });
+    </script>
 </body>
 </html>

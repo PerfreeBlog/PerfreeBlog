@@ -8,6 +8,8 @@ import java.util.Map;
  * 分页工具类
  */
 public class Pager<T> implements Serializable {
+    public static final int SUCCESS_CODE = 200;
+    public static final int ERROR_CODE = 500;
     //  页码
     private Integer pageIndex;
     // 每页数据量

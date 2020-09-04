@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.TagMapper" >
+    <!-- 基础列 -->
+    <sql id="BASE_COLUMN">
+        id,
+        name,
+        count,
+        userId,
+        createTime,
+        updateTime
+    </sql>
+    <select id="getReportList" resultType="com.perfree.model.Tag">
+        select <include refid="BASE_COLUMN"/> from p_tag
+    </select>
+</mapper>

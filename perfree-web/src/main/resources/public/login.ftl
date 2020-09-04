@@ -10,6 +10,10 @@
     <link href="/public/libs/mdui/css/mdui.min.css" rel="stylesheet"/>
     <link href="/public/libs/dialog/dialog.css" rel="stylesheet"/>
     <link href="/public/css/login.css" rel="stylesheet"/>
+    <script type="text/javascript">
+        if (window !== top)
+            top.location.href = location.href;
+    </script>
 </head>
 <body class="mdui-theme-primary-indigo">
     <div class="p-login-box mdui-shadow-3">

@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 31/08/2020 19:09:15
+ Date: 04/09/2020 14:05:37
 */
 
 SET NAMES utf8mb4;
@@ -34,18 +34,18 @@ CREATE TABLE `p_menu`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_menu
 -- ----------------------------
 INSERT INTO `p_menu` VALUES (1, -1, '面板', '/admin/dashboard', 'equalizer', 1, 1, 0, 0, '2020-08-31 17:15:08', '2020-08-31 17:15:10');
 INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'import_contacts', 2, 1, 0, 0, '2020-08-31 17:15:39', '2020-08-31 17:15:41');
-INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article_list', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
-INSERT INTO `p_menu` VALUES (4, 2, '新建', '/admin/dashboard', NULL, 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
+INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
+INSERT INTO `p_menu` VALUES (4, 2, '新建', '/admin/articleCreate', '', 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
 INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
 INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/dashboard', 'layers', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
-INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/dashboard', 'local_offer', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
+INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'local_offer', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
 INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'color_lens', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
 INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'settings', 7, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
 
@@ -61,7 +61,7 @@ CREATE TABLE `p_role`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_role
@@ -93,6 +93,26 @@ INSERT INTO `p_role_menu` VALUES (1, 8);
 INSERT INTO `p_role_menu` VALUES (1, 9);
 
 -- ----------------------------
+-- Table structure for p_tag
+-- ----------------------------
+DROP TABLE IF EXISTS `p_tag`;
+CREATE TABLE `p_tag`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标签名',
+  `count` int(0) NOT NULL DEFAULT 0 COMMENT '文章数量',
+  `userId` int(0) NOT NULL COMMENT '添加人',
+  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of p_tag
+-- ----------------------------
+INSERT INTO `p_tag` VALUES (1, '1', 0, 1, '2020-09-04 11:43:48', '2020-09-04 11:43:51');
+INSERT INTO `p_tag` VALUES (2, '2', 0, 2, '2020-09-04 13:59:31', '2020-09-04 13:59:33');
+
+-- ----------------------------
 -- Table structure for p_user
 -- ----------------------------
 DROP TABLE IF EXISTS `p_user`;
@@ -108,7 +128,7 @@ CREATE TABLE `p_user`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_user

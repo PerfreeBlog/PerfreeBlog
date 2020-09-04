@@ -1,11 +1,12 @@
-package com.perfree.controller;
+package com.perfree.controller.admin;
 
+import com.perfree.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/admin")
-public class ArticleController extends BaseController{
+public class ArticleController extends BaseController {
 
     @RequestMapping("/article")
     public String index() {
