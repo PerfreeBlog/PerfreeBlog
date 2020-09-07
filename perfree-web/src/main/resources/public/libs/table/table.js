@@ -6,7 +6,10 @@
  * @param tableTpl tableTpl
  * @param pagerId pagerId
  */
+let pageParam;
 function initTable(param) {
+    pageParam = param;
+    $(param.tableBodyElement).html("<div class='loading-box'><div class='mdui-spinner'></div></div>");
     const data = {pageIndex: param.pageIndex, pageSize: param.pageSize, form: param.data};
     $.ajax({
         url: param.url,
@@ -17,9 +20,11 @@ function initTable(param) {
         data: JSON.stringify(data),
         success: function (result) {
             if (result.code === 200) {
+                $(param.tableBodyElement).html("");
                 $(param.tableTplL).tmpl(result).appendTo(param.tableBodyElement);
                 mdui.updateTables();
                 handlePage(result.total, param.pageIndex, param.pageSize, param.pagerElement);
+                bindEvent();
             } else {
                 pMessage('error', '表格数据加载失败');
             }
@@ -40,7 +45,7 @@ function handlePage(total, pageIndex , pageSize, pagerElement) {
     if(rest > 0 ) {pageTotal++;}
     let pageHtml = '<ul>'
     if (pageTotal > 1 && pageIndex !== 1) {
-        pageHtml += '<li class="pager-btn"><</li>';
+        pageHtml += '<li class="pager-btn p-pager-pre-btn"><</li>';
     } else {
         pageHtml += '<li class="pager-btn pager-disable"><</li>';;
     }
@@ -66,13 +71,33 @@ function handlePage(total, pageIndex , pageSize, pagerElement) {
         if (start === pageIndex) {
             pageHtml += '<li class="pager-btn pager-select">'+start+'</li>';
         } else {
-            pageHtml += '<li class="pager-btn">'+start+'</li>';
+            pageHtml += '<li class="pager-btn p-pager-btn">'+start+'</li>';
         }
     }
     if (pageIndex !== pageTotal) {
-        pageHtml += '<li class="pager-btn">></li>';
+        pageHtml += '<li class="pager-btn p-pager-next-btn">></li>';
     } else {
         pageHtml += '<li class="pager-btn pager-disable">></li>';;
     }
     $(pagerElement).html(pageHtml);
+}
+
+/**
+ * 绑定点击事件
+ */
+function bindEvent() {
+    $(".p-pager-btn").on('click', function () {
+        pageParam.pageIndex = $(this).text();
+        initTable(pageParam);
+    });
+
+    $(".p-pager-next-btn").on('click', function () {
+        pageParam.pageIndex = ++pageParam.pageIndex;
+        initTable(pageParam);
+    });
+
+    $(".p-pager-pre-btn").on('click', function () {
+        pageParam.pageIndex = --pageParam.pageIndex;
+        initTable(pageParam);
+    });
 }

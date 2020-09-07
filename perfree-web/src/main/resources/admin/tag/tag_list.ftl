@@ -17,9 +17,9 @@
         <div class="form-panel mdui-row">
             <div class="input-box mdui-col-xs-12 mdui-col-sm-4 mdui-col-md-3 mdui-col-lg-2">
                 <label class="p-input-label">标签名: </label>
-                <input class="p-input" id="name" value="1"/>
+                <input class="p-input" id="name"/>
             </div>
-            <button class="mdui-btn mdui-color-theme table-btn">搜索</button>
+            <button class="mdui-btn mdui-color-theme table-btn p-search" onclick="initPage()">搜索</button>
             <button class="mdui-btn mdui-color-theme table-btn">新增</button>
             <button class="mdui-btn mdui-color-theme table-btn">删除</button>
         </div>
@@ -50,8 +50,8 @@
                     <td>${name}</td>
                     <td>${count}</td>
                     <td>Perfree</td>
-                    <td>${createTime}</td>
-                    <td>${updateTime}</td>
+                    <td>${common.formatDate(createTime, "yyyy-MM-dd HH:mm:ss")}</td>
+                    <td>${common.formatDate(updateTime, "yyyy-MM-dd HH:mm:ss")}</td>
                     <td><a class="mdui-text-color-pink-a200">删除</a></td>
                 </tr>
             {{/each}}
@@ -65,15 +65,18 @@
     <script src="/public/libs/jquery-tmpl/jquery.tmpl.min.js"></script>
     <script src="/public/libs/table/table.js"></script>
     <script>
-        initTable({
-            url: '/admin/tag/list',
-            pageIndex: 1,
-            pageSize: 10,
-            data: {name: $("#name").val()},
-            tableBodyElement: '#tableBody',
-            tableTplL: '#tableTpl',
-            pagerElement: '#pager-box',
-        });
+        initPage();
+        function initPage () {
+            initTable({
+                url: '/admin/tag/list',
+                pageIndex: 1,
+                pageSize: 10,
+                data: {name: $("#name").val()},
+                tableBodyElement: '#tableBody',
+                tableTplL: '#tableTpl',
+                pagerElement: '#pager-box',
+            });
+        }
     </script>
 </body>
 </html>

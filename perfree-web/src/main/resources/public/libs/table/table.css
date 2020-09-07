@@ -63,3 +63,10 @@
     color: #3f51b5;
     cursor: pointer;
 }
+.loading-box{
+    position: fixed;
+    right: 0;
+    left: 0;
+    text-align: center;
+    margin-top: 20px;
+}
