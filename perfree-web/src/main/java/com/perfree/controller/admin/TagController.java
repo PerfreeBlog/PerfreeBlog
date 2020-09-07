@@ -37,7 +37,7 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag/list")
     @ResponseBody
-    public Pager<Tag> list(Pager<Tag> pager) {
+    public Pager<Tag> list(@RequestBody Pager<Tag> pager) {
         return tagService.list(pager);
     }
 }

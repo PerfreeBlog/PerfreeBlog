@@ -7,16 +7,24 @@
  * @param pagerId pagerId
  */
 function initTable(param) {
-    $.post(param.url, {pageIndex: param.pageIndex, pageSize: param.pageSize, form: param.data}, function(result){
-        if (result.code === 200) {
-            console.log(result)
-            $(param.tableTplL).tmpl(result).appendTo(param.tableBodyElement);
-            mdui.updateTables();
-            handlePage(result.total, param.pageIndex, param.pageSize, param.pagerElement);
-        } else {
-            pMessage('error', '表格数据加载失败');
-        }
-    });
+    const data = {pageIndex: param.pageIndex, pageSize: param.pageSize, form: param.data};
+    $.ajax({
+        url: param.url,
+        dataType: "json",
+        type: "post",
+        contentType: 'application/json',
+        async: false,
+        data: JSON.stringify(data),
+        success: function (result) {
+            if (result.code === 200) {
+                $(param.tableTplL).tmpl(result).appendTo(param.tableBodyElement);
+                mdui.updateTables();
+                handlePage(result.total, param.pageIndex, param.pageSize, param.pagerElement);
+            } else {
+                pMessage('error', '表格数据加载失败');
+            }
+        },
+    })
 }
 
 /**
@@ -26,14 +34,45 @@ function initTable(param) {
  * @param pageSize 每页大小
  * @param pagerElement 分页容器
  */
-function handlePage(total, pageIndex, pageSize, pagerElement) {
-    // let pageTotal = total / pageSize
-    $(pagerElement).html(' <ul>\n' +
-        '                <li class="pager-btn">首页</li>\n' +
-        '                <li class="pager-btn">上一页</li>\n' +
-        '                <li class="pager-btn">1</li>\n' +
-        '                <li class="pager-btn">2</li>\n' +
-        '                <li class="pager-btn">下一页</li>\n' +
-        '                <li class="pager-btn">尾页</li>\n' +
-        '            </ul>');
+function handlePage(total, pageIndex , pageSize, pagerElement) {
+    let pageTotal = parseInt((total / pageSize).toString());
+    const rest = total % pageSize;
+    if(rest > 0 ) {pageTotal++;}
+    let pageHtml = '<ul>'
+    if (pageTotal > 1 && pageIndex !== 1) {
+        pageHtml += '<li class="pager-btn"><</li>';
+    } else {
+        pageHtml += '<li class="pager-btn pager-disable"><</li>';;
+    }
+    let start = 1, end;
+    if (pageIndex > 5) {
+        if ((pageTotal - pageIndex) > 5) {
+            start = pageIndex - 4;
+        } else {
+            const startTemp = pageIndex - (10 -  (pageTotal - pageIndex) - 1);
+            start = startTemp > 0 ? startTemp : 1;
+        }
+    }
+    if (pageTotal > 10 && (pageTotal - pageIndex) > 5) {
+        if (pageIndex >= 5) {
+            end = pageIndex + 5;
+        } else {
+            end = 10;
+        }
+    } else {
+        end = pageTotal;
+    }
+    for (start; start <= end; start++) {
+        if (start === pageIndex) {
+            pageHtml += '<li class="pager-btn pager-select">'+start+'</li>';
+        } else {
+            pageHtml += '<li class="pager-btn">'+start+'</li>';
+        }
+    }
+    if (pageIndex !== pageTotal) {
+        pageHtml += '<li class="pager-btn">></li>';
+    } else {
+        pageHtml += '<li class="pager-btn pager-disable">></li>';;
+    }
+    $(pagerElement).html(pageHtml);
 }

@@ -10,7 +10,12 @@
         createTime,
         updateTime
     </sql>
+    <!-- 标签列表 -->
     <select id="getReportList" resultType="com.perfree.model.Tag">
         select <include refid="BASE_COLUMN"/> from p_tag
+        where 1 = 1
+        <if test="name != null and name != ''">
+            and name like concat('%', #{name,jdbcType=VARCHAR},'%')
+        </if>
     </select>
 </mapper>
