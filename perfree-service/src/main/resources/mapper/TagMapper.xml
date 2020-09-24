@@ -10,9 +10,22 @@
         createTime,
         updateTime
     </sql>
+
+    <resultMap id="LIST_RESULT" type="com.perfree.model.Tag">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="count" column="count"></result>
+        <result property="userId" column="userId"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <association property="user" javaType="com.perfree.model.User">
+            <id property="id" column="userId" />
+            <result property="userName" column="userName"/>
+        </association>
+    </resultMap>
     <!-- 标签列表 -->
-    <select id="getReportList" resultType="com.perfree.model.Tag">
-        select <include refid="BASE_COLUMN"/> from p_tag
+    <select id="getReportList" resultMap="LIST_RESULT">
+        select t.*,t1.userName from p_tag t left join p_user t1 on t.userId = t1.id
         where 1 = 1
         <if test="name != null and name != ''">
             and name like concat('%', #{name,jdbcType=VARCHAR},'%')

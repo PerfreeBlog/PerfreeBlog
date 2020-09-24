@@ -49,7 +49,7 @@
                 <tr>
                     <td>${name}</td>
                     <td>${count}</td>
-                    <td>Perfree</td>
+                    <td>${user.userName}</td>
                     <td>${common.formatDate(createTime, "yyyy-MM-dd HH:mm:ss")}</td>
                     <td>${common.formatDate(updateTime, "yyyy-MM-dd HH:mm:ss")}</td>
                     <td><a class="mdui-text-color-pink-a200">删除</a></td>
