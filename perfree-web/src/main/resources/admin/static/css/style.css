@@ -254,3 +254,6 @@
 .layui-tab-item {
     height: 100%;
 }
+.layui-tab-title li:hover {
+    background: #f3f3f3;
+}
