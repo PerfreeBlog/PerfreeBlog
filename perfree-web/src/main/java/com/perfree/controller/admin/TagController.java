@@ -32,6 +32,15 @@ public class TagController extends BaseController {
     }
 
     /**
+     * 标签管理列表页
+     * @return String
+     */
+    @RequestMapping("/tag/add")
+    public String addPage() {
+        return "/admin/tag/tag_add";
+    }
+
+    /**
      * 标签管理列表数据
      * @return String
      */

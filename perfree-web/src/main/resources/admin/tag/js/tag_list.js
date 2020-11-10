@@ -18,15 +18,14 @@ function initPage() {
     // 添加
     $("#addBtn").click(function () {
         layer.open({
+            title: "添加标签",
             type: 2,
-            shade: false,
-            area: '500px',
-            maxmin: true,
-            content: 'http://www.baidu.com',
-            zIndex: layer.zIndex, //重点1
-            success: function(layero){
-                layer.setTop(layero); //重点2
-            }
+            offset: '20%',
+            area:  ['400px', '140px'],
+            shadeClose: true,
+            anim: 1,
+            move: false,
+            content: '/admin/tag/add'
         });
     });
 }

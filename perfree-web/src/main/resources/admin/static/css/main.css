@@ -27,3 +27,14 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-track-piece {
     background: #e8e8e8;
 }
+.layui-layer-shade{
+    opacity: 0.1!important;
+}
+.p-add-panel{
+    padding: 10px;
+}
+.add-btn-box{
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
