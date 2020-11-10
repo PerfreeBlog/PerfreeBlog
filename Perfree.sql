@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 04/09/2020 14:05:37
+ Date: 10/11/2020 17:47:17
 */
 
 SET NAMES utf8mb4;
@@ -39,15 +39,15 @@ CREATE TABLE `p_menu`  (
 -- ----------------------------
 -- Records of p_menu
 -- ----------------------------
-INSERT INTO `p_menu` VALUES (1, -1, '面板', '/admin/dashboard', 'equalizer', 1, 1, 0, 0, '2020-08-31 17:15:08', '2020-08-31 17:15:10');
-INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'import_contacts', 2, 1, 0, 0, '2020-08-31 17:15:39', '2020-08-31 17:15:41');
+INSERT INTO `p_menu` VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, 0, '2020-08-31 17:15:08', '2020-08-31 17:15:10');
+INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'fa-book', 2, 1, 0, 0, '2020-08-31 17:15:39', '2020-08-31 17:15:41');
 INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
 INSERT INTO `p_menu` VALUES (4, 2, '新建', '/admin/articleCreate', '', 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
-INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
-INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/dashboard', 'layers', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
-INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'local_offer', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
-INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'color_lens', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
-INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'settings', 7, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
+INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'fa-comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
+INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/dashboard', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
+INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
+INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
+INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 7, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
 
 -- ----------------------------
 -- Table structure for p_role
@@ -104,13 +104,13 @@ CREATE TABLE `p_tag`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_tag
 -- ----------------------------
 INSERT INTO `p_tag` VALUES (1, '1', 0, 1, '2020-09-04 11:43:48', '2020-09-04 11:43:51');
-INSERT INTO `p_tag` VALUES (2, '2', 0, 2, '2020-09-04 13:59:31', '2020-09-04 13:59:33');
+INSERT INTO `p_tag` VALUES (2, '2', 0, 1, '2020-09-04 13:59:31', '2020-09-04 13:59:33');
 
 -- ----------------------------
 -- Table structure for p_user
