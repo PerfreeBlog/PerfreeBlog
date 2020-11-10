@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="layui-inline">
-                        <button id="queryBtn" class="layui-btn" type="button">
+                        <button id="addBtn" class="layui-btn" type="button">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                             添加
                         </button>
@@ -41,7 +41,7 @@
                     <div class="layui-inline">
                         <button id="queryBtn" class="layui-btn" type="button">
                             <i class="fa fa-trash" aria-hidden="true"></i>
-                            删除
+                            批量删除
                         </button>
                     </div>
                 </div>

@@ -10,9 +10,15 @@ initPage();
 function initPage() {
     queryTable();
 
+    // 查询
     $("#queryBtn").click(function () {
         queryTable();
-    })
+    });
+
+    // 添加
+    $("#addBtn").click(function () {
+        alert(1);
+    });
 }
 
 
