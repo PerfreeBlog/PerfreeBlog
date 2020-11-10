@@ -22,9 +22,16 @@
 
             <!-- 内容start -->
             <div class="layui-body">
-                <!-- 内容主体区域 -->
-                <div class="f-iframe-box">
-                    <iframe src="/admin/dashboard" frameborder="0" scrolling="no" id="iframe" onload="setIframeHeight(this)" width="100%"></iframe>
+                <div class="layui-tab" lay-allowClose="true" lay-filter="tabNav">
+                    <ul class="layui-tab-title content-tab-title">
+                        <li class="layui-this" lay-id="0"><i class='fa fa-home' style='font-size: 16px;'></i></li>
+                    </ul>
+                    <div class="layui-tab-content f-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <!-- 内容主体区域 -->
+                            <iframe src="/admin/dashboard" scrolling='auto' width='100%' height='100%' frameborder='0' allowfullscreen='true' webkitallowfullscreen='true' mozallowfullscreen='true' class='f-ifram'></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- 内容ned -->

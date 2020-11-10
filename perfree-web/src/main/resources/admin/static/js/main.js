@@ -7,6 +7,7 @@ $(function(){
     });
     initEvent();
     initTheme();
+    setIframeHeight();
 });
 
 /**
@@ -19,10 +20,6 @@ let index = null;
 // 是否全屏
 let isFull = false;
 function initEvent() {
-    // iframe自适应
-    window.onload = function () {
-        setIframeHeight(document.getElementById('iframe'));
-    }
 
     // 开关侧边栏事件
     $(".f-switch-side-btn").click(function() {
@@ -33,15 +30,14 @@ function initEvent() {
     $(".f-nav-item,.f-child-side").click(function(){
         if ($(this).find(".layui-nav-child").length > 0 && !isOpen) {
             switchSide();
-        } else {
-            if ($(this).children("a").attr("url") === undefined) {return;}
-            $("#iframe").attr("src", $(this).children("a").attr("url"));
         }
     });
 
     // 刷新iframe
     $(".f-refresh-btn").click(function(){
-        $('#iframe').attr('src', $('#iframe').attr('src'));
+        const iframe = $('.f-tab-content>.layui-show>iframe');
+        $(iframe).attr('src', $(iframe).attr('src'));
+        setIframeHeight();
     });
 
     /**
@@ -186,15 +182,15 @@ function exitScreen(){
 
 /**
  * 设置iframe高度
- * @param {iframeID} iframe
  */
-function setIframeHeight(iframe) {
-    if (iframe) {
-        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-        if (iframeWin.document.body) {
-            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
-        }
-    }
+function setIframeHeight() {
+    $(window).on('resize', function () {
+        let $content = $('.f-tab-content');
+        $content.height($(this).height() - 91);
+        $content.find('.f-iframe').each(function () {
+            $(this).height($content.height()-3);
+        });
+    }).resize();
 }
 
 /**
@@ -220,4 +216,40 @@ function changeTheme(e){
     $(".f-header").css("background", headerBg);
     $(".f-nav .layui-nav-item a").css("color", headerColor);
     $(".f-nav .layui-nav-item .layui-nav-child a").css("color", "#000000");
+}
+
+/**
+ * 打开tab
+ * @param {图标} icon
+ * @param {菜单名} menuName
+ * @param {链接} url
+ * @param {tabid} tabId
+ */
+function openTab(icon,menuName,url,tabId) {
+    var element = layui.element;
+    var eachcount=0;
+    var flag= false;
+    $(".content-tab-title").find('li').each(function() {
+        eachcount++;
+        var layId = $(this).attr("lay-id");
+        if(tabId == layId){
+            flag = true;
+        }
+        if(eachcount >= $(".content-tab-title").find('li').length){
+            if(flag){
+                element.tabChange('tabNav', tabId);
+                return;
+            }else{
+                //添加tab
+                element.tabAdd('tabNav', {
+                    title: "<i class='fa "+icon+"' style='font-size: 16px;'></i>&nbsp;"+menuName,
+                    content: "<iframe src='"+url+"' scrolling='auto' width='100%' height='100%' frameborder='0' allowfullscreen='true' webkitallowfullscreen='true' mozallowfullscreen='true' class='f-ifram'></iframe>", //支持传入html
+                    id: tabId
+                });
+                //切换至新添加tab
+                element.tabChange('tabNav', tabId);
+                setIframeHeight();
+            }
+        }
+    });
 }

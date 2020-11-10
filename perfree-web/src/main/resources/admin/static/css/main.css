@@ -11,3 +11,19 @@
     padding: 5px 15px;
     width: auto;
 }
+html{
+    overflow: auto;
+}
+html::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+html::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #adabab;
+}
+
+html::-webkit-scrollbar-track-piece {
+    background: #e8e8e8;
+}
