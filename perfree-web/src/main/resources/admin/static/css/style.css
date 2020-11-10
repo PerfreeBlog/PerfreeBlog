@@ -143,6 +143,9 @@
 .f-iframe-box::-webkit-scrollbar-track-piece {
     background: #e8e8e8;
 }
+#iframe{
+    min-height: 100%;
+}
 
 .f-nav .layui-nav-item:before{
     content: ' ';

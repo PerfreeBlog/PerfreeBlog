@@ -17,7 +17,17 @@ function initPage() {
 
     // 添加
     $("#addBtn").click(function () {
-        alert(1);
+        layer.open({
+            type: 2,
+            shade: false,
+            area: '500px',
+            maxmin: true,
+            content: 'http://www.baidu.com',
+            zIndex: layer.zIndex, //重点1
+            success: function(layero){
+                layer.setTop(layero); //重点2
+            }
+        });
     });
 }
 
