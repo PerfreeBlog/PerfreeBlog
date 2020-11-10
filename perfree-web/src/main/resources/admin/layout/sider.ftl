@@ -1,25 +1,31 @@
-<div class="mc-drawer mdui-drawer mdui-drawer-open mdui-color-white" id="left-drawer">
-    <ul class="mdui-list mdui-list-dense" mdui-collapse="{accordion: true}">
-        <#list menus as menu>
-            <#if menu.childMenu?size <= 0>
-                <li class="mdui-list-item mdui-ripple p-menu-item" data-url="${menu.url}" data-text="${menu.name}">
-                    <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">${menu.icon}</i>
-                    <div class="mdui-list-item-content">${menu.name}</div>
-                </li>
-            <#else>
-                <li class="mdui-collapse-item">
-                    <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-                        <i class="mdui-list-item-icon mdui-icon material-icons mdui-text-color-indigo">${menu.icon}</i>
-                        <div class="mdui-list-item-content">${menu.name}</div>
-                        <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-                    </div>
-                    <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
-                         <#list menu.childMenu as childMenu>
-                            <li class="mdui-list-item mdui-ripple p-menu-item" data-url="${childMenu.url}" data-text="${menu.name}-${childMenu.name}">${childMenu.name}</li>
-                         </#list>
-                    </ul>
-                </li>
-            </#if>
-        </#list>
-    </ul>
+<div class="layui-side f-side">
+    <div class="layui-logo f-logo-text">
+        Perfree
+    </div>
+    <div class="layui-logo f-logo-img">
+        <img src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
+    </div>
+    <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree f-side-nav" lay-filter="side">
+            <#list menus as menu>
+                <#if menu.childMenu?size <= 0>
+                    <li class="layui-nav-item f-nav-item">
+                        <a href="javascript:;" url="${menu.url}">
+                            <i class="fa ${menu.icon}" aria-hidden="true"></i><span class="f-nav-content">${menu.name}</span>
+                        </a>
+                    </li>
+                <#else>
+                    <li class="layui-nav-item f-nav-item">
+                        <a class="" href="javascript:;"><i class="fa ${menu.icon}" aria-hidden="true"></i><span class="f-nav-content">${menu.name}</span></a>
+                        <dl class="layui-nav-child">
+                          <#list menu.childMenu as childMenu>
+                            <dd class="f-child-side"><a href="javascript:;" url="${childMenu.url}">${childMenu.name}</a></dd>
+                          </#list>
+                        </dl>
+                    </li>
+                </#if>
+            </#list>
+        </ul>
+    </div>
 </div>

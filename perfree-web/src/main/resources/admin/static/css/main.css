@@ -1,0 +1,13 @@
+.layui-input, .layui-select, .layui-textarea{
+    height: 30px;
+    line-height: 30px;
+}
+.layui-btn{
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+}
+.layui-form-label {
+    padding: 5px 15px;
+    width: auto;
+}

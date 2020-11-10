@@ -7,31 +7,44 @@
         <meta name="renderer" content="webkit"/>
         <meta name="force-rendering" content="webkit"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-        <link href="/public/libs/mdui/css/mdui.min.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="/public/libs/layui-v2.5.6/layui/css/layui.css">
+        <link href="/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
         <link href="/admin/static/css/style.css" rel="stylesheet"/>
     </head>
-    <body class="mdui-appbar-with-toolbar mdui-theme-primary-indigo mdui-theme-layout-auto mdui-loaded mdui-drawer-body-left mdui-color-grey-50">
-        <!-- 顶栏start -->
-        <#include "layout/header.ftl">
-        <!-- 顶栏end -->
-        <!-- 左侧边栏start -->
-        <#include "layout/sider.ftl">
-        <!-- 左侧边栏end -->
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <!-- 顶栏start -->
+            <#include "layout/header.ftl">
+            <!-- 顶栏end -->
+            <!-- 左侧边栏start -->
+            <#include "layout/sider.ftl">
+            <!-- 左侧边栏end -->
 
-        <!-- 内容start -->
-        <div class="p-container">
-            <div class="p-iframe-title">
-                <span id="p-iframe-title">面板</span>
-                <a class="hide-title" mdui-tooltip="{content: '关闭标题'}"><i class="mdui-icon material-icons">close</i></a>
+            <!-- 内容start -->
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                <div class="f-iframe-box">
+                    <iframe src="/admin/dashboard" frameborder="0" scrolling="no" id="iframe" onload="setIframeHeight(this)" width="100%"></iframe>
+                </div>
             </div>
-            <div class="p-iframe">
-                <iframe id="iframe" scrolling="0" width="100%" height="100%" frameborder="0"></iframe>
-            </div>
+            <!-- 内容ned -->
         </div>
-        <!-- 内容ned -->
 
+        <div id="theme-list">
+            <ul class="theme-list">
+            </ul>
+        </div>
+        <script id="themeTpl" type="text/html">
+            {{#  layui.each(d, function(index, item){ }}
+            <li class="theme" id="{{ item.id }}">
+                <div class="theme-leftLogo" style="background: {{ item.leftLogo }}" bg="{{ item.leftLogo }}" color="{{ item.logoColor }}" borderColor="{{ item.logoBoderColor }}"></div>
+                <div class="theme-leftSide" style="background: {{ item.leftSide }}" bg="{{ item.leftSide }}" color="{{ item.sideColor }}"></div>
+                <div class="theme-header" style="background: {{ item.header }}" bg="{{ item.header }}" color="{{ item.headerColor }}"></div>
+            </li>
+            {{#  }); }}
+        </script>
         <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
-        <script src="/public/libs/mdui/js/mdui.min.js"></script>
+        <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
         <script src="/admin/static/js/main.js"></script>
     </body>
 </html>
