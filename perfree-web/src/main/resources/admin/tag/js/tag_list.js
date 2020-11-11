@@ -10,6 +10,10 @@ initPage();
 function initPage() {
     queryTable();
 
+    layer.config({
+        offset: '20%'
+    });
+
     // 查询
     $("#queryBtn").click(function () {
         queryTable();
@@ -127,6 +131,7 @@ function deleteData(ids) {
             success:function(data){
                 if (data.code === 200){
                     queryTable();
+                    layer.msg(data.msg, {icon: 1});
                 } else {
                     layer.msg(data.msg, {icon: 2});
                 }
