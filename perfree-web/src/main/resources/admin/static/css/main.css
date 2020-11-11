@@ -46,3 +46,15 @@ html::-webkit-scrollbar-track-piece {
 .layui-btn+.layui-btn{
     margin-left: 4px;
 }
+.p-container{
+    padding: 12px;
+}
+.layui-table-cell img{
+    width: 25px;
+}
+.layui-form-select dl dd, .layui-form-select dl dt {
+    line-height: 30px;
+}
+.layui-form-select dl {
+    top: 32px;
+}

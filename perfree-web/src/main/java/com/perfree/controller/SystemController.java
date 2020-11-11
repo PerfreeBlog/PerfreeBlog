@@ -33,7 +33,7 @@ public class SystemController extends BaseController{
     public String adminIndex(Model model) {
         List<Menu> menus = getAdminMenuByUserId();
         model.addAttribute("menus", menus);
-        return "admin/index";
+        return "admin/pages/index";
     }
 
     /**

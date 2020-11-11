@@ -15,7 +15,7 @@ public interface TagMapper {
      * @param tag 搜索内容
      * @return List<Tag>
      */
-    List<Tag> getReportList(Tag tag);
+    List<Tag> getList(Tag tag);
 
     /**
      * 添加标签

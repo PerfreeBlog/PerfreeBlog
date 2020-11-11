@@ -4,4 +4,34 @@
     <select id="getUserByAccount" resultType="com.perfree.model.User">
         select t1.*  from p_user t1 left join p_role t2 on t1.roleId = t2.id where account = #{account}
     </select>
+
+    <resultMap id="LIST_RESULT" type="com.perfree.model.User">
+        <id property="id" column="id"></id>
+        <result property="account" column="account"></result>
+        <result property="userName" column="userName"></result>
+        <result property="password" column="password"></result>
+        <result property="salt" column="salt"></result>
+        <result property="status" column="status"></result>
+        <result property="avatar" column="avatar"></result>
+        <result property="roleId" column="roleId"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <association property="role" javaType="com.perfree.model.Role">
+            <id property="id" column="roleId" />
+            <result property="name" column="roleName"/>
+            <result property="description" column="description"/>
+            <result property="code" column="code"/>
+        </association>
+    </resultMap>
+    <select id="getList" resultMap="LIST_RESULT">
+        select
+        t1.id,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,
+        t2.name roleName,t2.description,t2.code
+        from p_user t1 left join p_role t2 on t1.roleId = t2.id
+        where 1 = 1
+        <if test="userName != null and userName != ''">
+            and t1.userName like concat('%', #{userName,jdbcType=VARCHAR},'%')
+        </if>
+        order by t1.createTime desc
+    </select>
 </mapper>

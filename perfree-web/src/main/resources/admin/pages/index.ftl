@@ -14,10 +14,10 @@
     <body class="layui-layout-body">
         <div class="layui-layout layui-layout-admin">
             <!-- 顶栏start -->
-            <#include "layout/header.ftl">
+            <#include "../layout/header.ftl">
             <!-- 顶栏end -->
             <!-- 左侧边栏start -->
-            <#include "layout/sider.ftl">
+            <#include "../layout/sider.ftl">
             <!-- 左侧边栏end -->
 
             <!-- 内容start -->

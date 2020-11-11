@@ -11,6 +11,6 @@ public class DashboardController extends BaseController {
 
     @RequestMapping("/dashboard")
     public String index() {
-        return "admin/dashboard";
+        return "admin/pages/dashboard";
     }
 }

@@ -26,7 +26,7 @@ public class TagService {
      */
     public Pager<Tag> list(Pager<Tag> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
-        List<Tag> tags = tagMapper.getReportList(pager.getForm());
+        List<Tag> tags = tagMapper.getList(pager.getForm());
         PageInfo<Tag> pageInfo = new PageInfo<>(tags);
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());

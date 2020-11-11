@@ -4,6 +4,8 @@ import com.perfree.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Mapper
 @Component
 public interface UserMapper {
@@ -13,4 +15,11 @@ public interface UserMapper {
      * @return User 用户信息
      */
     User getUserByAccount(String account);
+
+    /**
+     * 用户列表
+     * @param user 数据
+     * @return List<User>
+     */
+    List<User> getList(User user);
 }

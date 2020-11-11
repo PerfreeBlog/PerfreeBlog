@@ -11,7 +11,7 @@
     <link href="/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/admin/static/css/main.css" rel="stylesheet"/>
 </head>
-<body class="layui-layout-body">
+<body>
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
         <div class="layui-form-item">
@@ -29,44 +29,6 @@
 
 <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
-<script>
-    let form,element,layer;
-    layui.use(['layer', 'form', 'element'], function(){
-        form = layui.form;
-        element = layui.element;
-        layer = layui.layer;
-        // 表单验证
-        form.verify({});
-        // 表单提交
-        form.on('submit(addForm)', function(data){
-            $.ajax({
-                type: "POST",
-                url: "/admin/tag/add",
-                contentType:"application/json",
-                data: JSON.stringify(data.field),
-                success:function(data){
-                    if (data.code === 200){
-                            parent.queryTable();
-                            parent.layer.msg("添加成功", {icon: 1});
-                            const index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                    } else {
-                        layer.msg(data.msg, {icon: 2});
-                    }
-                },
-                error: function (data) {
-                    layer.msg("添加失败", {icon: 2});
-                }
-            });
-            return false;
-        });
-    });
-
-    // 取消
-    $(".p-cancel-btn").click(function (){
-        const index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
-    });
-</script>
+<script src="/admin/pages/tag/js/tag_add.js"></script>
 </body>
 </html>

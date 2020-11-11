@@ -10,11 +10,11 @@ public class ArticleController extends BaseController {
 
     @RequestMapping("/article")
     public String index() {
-        return "admin/article/article_list";
+        return "admin/pages/article/article_list";
     }
 
     @RequestMapping("/articleCreate")
     public String articleCreate() {
-        return "admin/article/article_create";
+        return "admin/pages/article/article_create";
     }
 }

@@ -26,7 +26,7 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag")
     public String index() {
-        return "/admin/tag/tag_list";
+        return "admin/pages/tag/tag_list";
     }
 
     /**
@@ -35,7 +35,7 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag/addPage")
     public String addPage() {
-        return "/admin/tag/tag_add";
+        return "admin/pages/tag/tag_add";
     }
 
     /**
@@ -46,7 +46,7 @@ public class TagController extends BaseController {
     public String editPage(@PathVariable("id") String id, Model model) {
         Tag tag = tagService.getById(id);
         model.addAttribute("tag", tag);
-        return "/admin/tag/tag_edit";
+        return "admin/pages/tag/tag_edit";
     }
 
 

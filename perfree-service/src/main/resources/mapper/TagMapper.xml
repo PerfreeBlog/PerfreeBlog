@@ -39,7 +39,7 @@
         </association>
     </resultMap>
     <!-- 标签列表 -->
-    <select id="getReportList" resultMap="LIST_RESULT">
+    <select id="getList" resultMap="LIST_RESULT">
         select t.*,t1.userName from p_tag t left join p_user t1 on t.userId = t1.id
         where 1 = 1
         <if test="name != null and name != ''">
