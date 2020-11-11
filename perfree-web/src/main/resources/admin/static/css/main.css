@@ -38,3 +38,11 @@ html::-webkit-scrollbar-track-piece {
     bottom: 12px;
     right: 12px;
 }
+.layui-btn-xs{
+    height: 22px;
+    line-height: 22px;
+    padding: 0 5px;
+}
+.layui-btn+.layui-btn{
+    margin-left: 4px;
+}

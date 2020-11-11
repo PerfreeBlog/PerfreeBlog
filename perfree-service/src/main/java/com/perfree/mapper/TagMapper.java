@@ -16,4 +16,11 @@ public interface TagMapper {
      * @return List<Tag>
      */
     List<Tag> getReportList(Tag tag);
+
+    /**
+     * 添加标签
+     * @param tag 标签
+     * @return int
+     */
+    int add(Tag tag);
 }

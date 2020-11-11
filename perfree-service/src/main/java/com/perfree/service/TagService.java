@@ -5,11 +5,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
+import com.perfree.common.StringUtil;
 import com.perfree.mapper.TagMapper;
 import com.perfree.model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,5 +32,15 @@ public class TagService {
         pager.setData(pageInfo.getList());
         pager.setCode(Pager.SUCCESS_CODE);
         return pager;
+    }
+
+    /**
+     * 添加标签
+     * @param tag 标签
+     * @return int
+     */
+    public int add(Tag tag) {
+        tag.setCreateTime(new Date());
+        return tagMapper.add(tag);
     }
 }

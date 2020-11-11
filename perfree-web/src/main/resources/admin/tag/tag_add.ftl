@@ -35,21 +35,32 @@
         form = layui.form;
         element = layui.element;
         layer = layui.layer;
+        // 表单验证
         form.verify({});
-
+        // 表单提交
         form.on('submit(addForm)', function(data){
-            console.log(data.elem) //被执行事件的元素DOM对象，一般为button对象
-            console.log(data.form) //被执行提交的form对象，一般在存在form标签时才会返回
-            console.log(data.field) //当前容器的全部表单字段，名值对形式：{name: value}
-            //window.parent.location.reload(); //刷新父页面
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            $.ajax({
+                type: "POST",
+                url: "/admin/tag/add",
+                contentType:"application/json",
+                data: JSON.stringify(data.field),
+                success:function(data){
+                    if (data.code === 200){
+                            parent.queryTable();
+                            parent.layer.msg("添加成功", {icon: 1});
+                            const index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                },
+                error: function (data) {
+                    layer.msg("添加失败", {icon: 2});
+                }
+            });
+            return false;
         });
     });
-
-    // // 确定
-    // $(".p-submit-btn").click(function (){
-    //     console.log(form.val("addForm"));
-    // });
 
     // 取消
     $(".p-cancel-btn").click(function (){

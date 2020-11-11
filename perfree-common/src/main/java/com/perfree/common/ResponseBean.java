@@ -17,6 +17,14 @@ public class ResponseBean {
         this.data = data;
     }
 
+    public static ResponseBean success(String msg, Object data) {
+        return new ResponseBean(SUCCESS_CODE, msg, data);
+    }
+
+    public static ResponseBean fail(String msg, Object data) {
+        return new ResponseBean(ERROR_CODE, msg, data);
+    }
+
     public int getCode() {
         return code;
     }

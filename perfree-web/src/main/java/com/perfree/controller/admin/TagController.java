@@ -35,9 +35,23 @@ public class TagController extends BaseController {
      * 标签管理列表页
      * @return String
      */
-    @RequestMapping("/tag/add")
+    @RequestMapping("/tag/addPage")
     public String addPage() {
         return "/admin/tag/tag_add";
+    }
+
+    /**
+     * 标签管理列表页
+     * @return String
+     */
+    @PostMapping("/tag/add")
+    @ResponseBody
+    public ResponseBean add(@RequestBody Tag tag) {
+        tag.setUserId(getUser().getId());
+        if (tagService.add(tag) > 0) {
+            return ResponseBean.success("添加成功", null);
+        }
+        return ResponseBean.fail("添加失败", null);
     }
 
     /**
