@@ -15,6 +15,17 @@
         insert into p_tag ( name, userId, createTime) VALUES (#{name},#{userId}, #{createTime})
     </insert>
 
+    <update id="update">
+        update p_tag set name = #{name} where id = #{id}
+    </update>
+
+    <delete id="del">
+        DELETE FROM  p_tag  WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <resultMap id="LIST_RESULT" type="com.perfree.model.Tag">
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
@@ -34,5 +45,10 @@
         <if test="name != null and name != ''">
             and name like concat('%', #{name,jdbcType=VARCHAR},'%')
         </if>
+        order by t.createTime desc
+    </select>
+
+    <select id="getById" resultType="com.perfree.model.Tag">
+        select <include refid="BASE_COLUMN"></include> from p_tag where id = #{id}
     </select>
 </mapper>

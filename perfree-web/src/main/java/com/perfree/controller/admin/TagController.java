@@ -7,10 +7,8 @@ import com.perfree.model.Tag;
 import com.perfree.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 标签相关
@@ -44,6 +42,18 @@ public class TagController extends BaseController {
      * 标签管理列表页
      * @return String
      */
+    @GetMapping("/tag/editPage/{id}")
+    public String editPage(@PathVariable("id") String id, Model model) {
+        Tag tag = tagService.getById(id);
+        model.addAttribute("tag", tag);
+        return "/admin/tag/tag_edit";
+    }
+
+
+    /**
+     * 添加标签
+     * @return String
+     */
     @PostMapping("/tag/add")
     @ResponseBody
     public ResponseBean add(@RequestBody Tag tag) {
@@ -58,9 +68,36 @@ public class TagController extends BaseController {
      * 标签管理列表数据
      * @return String
      */
-    @RequestMapping("/tag/list")
+    @PostMapping("/tag/list")
     @ResponseBody
     public Pager<Tag> list(@RequestBody Pager<Tag> pager) {
         return tagService.list(pager);
+    }
+
+    /**
+     * 更新标签
+     * @return String
+     */
+    @PostMapping("/tag/update")
+    @ResponseBody
+    public ResponseBean update(@RequestBody Tag tag) {
+        if (tagService.update(tag) > 0) {
+            return ResponseBean.success("更新成功", null);
+        }
+        return ResponseBean.fail("更新失败", null);
+    }
+
+    /**
+     * 删除标签
+     * @return String
+     */
+    @PostMapping("/tag/del")
+    @ResponseBody
+    public ResponseBean del(@RequestBody String ids) {
+        String[] idArr = ids.split(",");
+        if (tagService.del(idArr) > 0) {
+            return ResponseBean.success("删除成功", null);
+        }
+        return ResponseBean.fail("删除失败", null);
     }
 }

@@ -43,4 +43,31 @@ public class TagService {
         tag.setCreateTime(new Date());
         return tagMapper.add(tag);
     }
+
+    /**
+     * 根据id获取数据
+     * @param id id
+     * @return Tag
+     */
+    public Tag getById(String id) {
+        return tagMapper.getById(id);
+    }
+
+    /**
+     * 更新标签
+     * @param tag tag
+     * @return int
+     */
+    public int update(Tag tag) {
+        return tagMapper.update(tag);
+    }
+
+    /**
+     * 删除标签
+     * @param idArr id数组
+     * @return int
+     */
+    public int del(String[] idArr) {
+        return tagMapper.del(idArr);
+    }
 }
