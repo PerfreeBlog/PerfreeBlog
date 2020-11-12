@@ -15,17 +15,25 @@
 <body>
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
+
         <div class="layui-form-item">
             <label class="layui-form-label">用户名:</label>
             <div class="layui-input-block">
-                <input type="text" name="name" required  lay-verify="required" placeholder="请输入标签名" autocomplete="off" class="layui-input">
+                <input type="text" name="userName" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">账户:</label>
+            <div class="layui-input-block">
+                <input type="text" name="account" required minlength="3" maxlength="12"  lay-verify="required" placeholder="请输入账户" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">密码:</label>
             <div class="layui-input-block">
-                <input type="text" name="password" required  lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text" name="password" required minlength="6" maxlength="12" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
             </div>
         </div>
 

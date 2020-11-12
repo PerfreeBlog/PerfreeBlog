@@ -1,5 +1,10 @@
 package com.perfree.model;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 /**
@@ -7,12 +12,21 @@ import java.util.Date;
  */
 public class User {
     private Long id;
+    @NotBlank(message = "账户不允许为空")
+    @Pattern(regexp ="^[A-Za-z0-9]+$",message = "账户只能填写字母或数字")
+    @Length(min = 3,max = 12,message = "账户长度要在3-12字符之间")
     private String account;
+    @NotBlank(message = "用户名不允许为空")
+    @Length(min = 2,max = 16,message = "用户名长度要在2-16字符之间")
     private String userName;
+    @NotBlank(message = "密码不允许为空")
+    @Length(min = 6,max = 12,message = "密码长度要在6-12字符之间")
     private String password;
     private String salt;
+    @NotNull(message = "状态不允许为空")
     private Integer status;
     private String avatar;
+    @NotNull(message = "角色不允许为空")
     private Long roleId;
     private Date createTime;
     private Date updateTime;

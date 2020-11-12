@@ -3,13 +3,17 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.common.StringUtil;
 import com.perfree.mapper.UserMapper;
 import com.perfree.model.Tag;
 import com.perfree.model.User;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -40,5 +44,35 @@ public class UserService {
         pager.setData(pageInfo.getList());
         pager.setCode(Pager.SUCCESS_CODE);
         return pager;
+    }
+
+    /**
+     * 添加用户
+     * @param user user
+     * @return int
+     */
+    public int add(User user) {
+        user.setSalt(StringUtil.getUUID());
+        user.setPassword(new Md5Hash(user.getPassword(), user.getSalt()).toString());
+        user.setCreateTime(new Date());
+        return userMapper.add(user);
+    }
+
+    /**
+     * 删除用户
+     * @param idArr id数组
+     * @return int
+     */
+    public int del(String[] idArr) {
+        return userMapper.del(idArr);
+    }
+
+    /**
+     * 根据id获取信息
+     * @param id id
+     * @return User
+     */
+    public User getById(String id) {
+        return userMapper.getById(id);
     }
 }

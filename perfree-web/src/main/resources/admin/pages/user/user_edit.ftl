@@ -10,15 +10,66 @@
     <link rel="stylesheet" href="/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/admin/static/css/main.css" rel="stylesheet"/>
+    <link href="/admin/pages/user/css/user_edit.css" rel="stylesheet"/>
 </head>
 <body class="layui-layout-body">
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
-        <input type="hidden" name="id" class="layui-input" value="${tag.id}">
+        <input type="hidden" name="id" class="layui-input" value="${user.id}">
         <div class="layui-form-item">
-            <label class="layui-form-label">标签名:</label>
+            <label class="layui-form-label">用户名:</label>
             <div class="layui-input-block">
-                <input type="text" name="name" required  lay-verify="required" placeholder="请输入标签名" autocomplete="off" class="layui-input" value="${tag.name}">
+                <input type="text" name="userName" value="${user.userName}" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">账户:</label>
+            <div class="layui-input-block">
+                <input type="text" name="account" value="${user.account}" required minlength="3" maxlength="12"  lay-verify="required" placeholder="请输入账户" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码:</label>
+            <div class="layui-input-block">
+                <input type="text" name="password" required minlength="6" maxlength="12" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色: </label>
+            <div class="layui-input-block">
+                <select name="roleId" lay-verify="required" id="roleId">
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态:</label>
+            <div class="layui-input-block">
+                <select name="status" lay-verify="required" id="roleId">
+                    <option value="0">正常</option>
+                    <option value="1">禁用</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">头像:</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="avatar" id="avatar" value="${user.avatar}">
+                <div class="upload-box">
+                    <div class="upload-panel" id="upload">
+                        <i class="fa fa-upload" aria-hidden="true"></i>
+                    </div>
+                    <div class="upload-success-panel" id="uploadSuccessPanel">
+                        <img src="${user.avatar}">
+                        <div class="delete-img-box" id="deleteImg">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="add-btn-box">

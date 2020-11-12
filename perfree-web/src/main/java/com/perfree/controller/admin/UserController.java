@@ -11,11 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,8 +88,8 @@ public class UserController extends BaseController {
      */
     @GetMapping("/user/editPage/{id}")
     public String editPage(@PathVariable("id") String id, Model model) {
-        /*Tag tag = tagService.getById(id);
-        model.addAttribute("tag", tag);*/
+        User user = userService.getById(id);
+        model.addAttribute("user", user);
         return "admin/pages/user/user_edit";
     }
 
@@ -97,11 +100,13 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/add")
     @ResponseBody
-    public ResponseBean add(@RequestBody Tag tag) {
-        /*tag.setUserId(getUser().getId());
-        if (tagService.add(tag) > 0) {
+    public ResponseBean add(@RequestBody @Valid User user) {
+        if (userService.getUserByAccount(user.getAccount()) != null){
+            return ResponseBean.fail("账户已存在", null);
+        }
+        if (userService.add(user) > 0) {
             return ResponseBean.success("添加成功", null);
-        }*/
+        }
         return ResponseBean.fail("添加失败", null);
     }
 
@@ -135,10 +140,10 @@ public class UserController extends BaseController {
     @PostMapping("/user/del")
     @ResponseBody
     public ResponseBean del(@RequestBody String ids) {
-       /* String[] idArr = ids.split(",");
-        if (tagService.del(idArr) > 0) {
+        String[] idArr = ids.split(",");
+        if (userService.del(idArr) > 0) {
             return ResponseBean.success("删除成功", null);
-        }*/
+        }
         return ResponseBean.fail("删除失败", null);
     }
 

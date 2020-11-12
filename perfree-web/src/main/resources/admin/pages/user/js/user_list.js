@@ -1,6 +1,7 @@
-let table;
-layui.use(['table','layer'], function(){
+let table,form;
+layui.use(['table','layer','form'], function(){
     table = layui.table;
+    form = layui.form;
 });
 initPage();
 
@@ -9,6 +10,7 @@ initPage();
  */
 function initPage() {
     queryTable();
+    loadRoleList();
 
     layer.config({
         offset: '20%'
@@ -25,7 +27,7 @@ function initPage() {
             title: "添加用户",
             type: 2,
             offset: '20%',
-            area:  ['400px', '400px'],
+            area:  ['400px', '450px'],
             shadeClose: true,
             anim: 1,
             move: false,
@@ -64,7 +66,8 @@ function queryTable() {
         totalRow: false,
         where: {
             form: {
-                userName: $("#userName").val()
+                userName: $("#userName").val(),
+                roleId: $("#roleId").val(),
             }
         },
         limit: 30,
@@ -125,14 +128,14 @@ function queryTable() {
  */
 function editData(id) {
     layer.open({
-        title: "编辑标签",
+        title: "编辑用户",
         type: 2,
         offset: '20%',
-        area:  ['400px', '140px'],
+        area:  ['400px', '450px'],
         shadeClose: true,
         anim: 1,
         move: false,
-        content: '/admin/tag/editPage/' + id
+        content: '/admin/user/editPage/' + id
     });
 }
 
@@ -144,7 +147,7 @@ function deleteData(ids) {
     layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
         $.ajax({
             type: "POST",
-            url: "/admin/tag/del",
+            url: "/admin/user/del",
             contentType:"application/json",
             data: ids,
             success:function(data){
@@ -160,5 +163,19 @@ function deleteData(ids) {
             }
         });
         layer.close(index);
+    });
+}
+
+/**
+ * 加载角色列表
+ */
+function loadRoleList() {
+    $.get('/admin/role/getRoleList', function (data) {
+        let html = '<option value="">请选择</option>';
+        data.data.forEach(res => {
+            html += ' <option value="' + res.id + '">' + res.name + '</option>';
+        });
+        $("#roleId").html(html);
+        form.render('select');
     });
 }

@@ -22,4 +22,25 @@ public interface UserMapper {
      * @return List<User>
      */
     List<User> getList(User user);
+
+    /**
+     * 添加用户
+     * @param user
+     * @return int
+     */
+    int add(User user);
+
+    /**
+     * 删除用户
+     * @param idArr id数组
+     * @return int
+     */
+    int del(String[] idArr);
+
+    /**
+     * 根据id获取信息
+     * @param id id
+     * @return User
+     */
+    User getById(String id);
 }

@@ -22,11 +22,9 @@ function formEvent() {
     form.verify({});
     // 表单提交
     form.on('submit(addForm)', function(data){
-        console.log(data.field);
-        return false;
-        /*$.ajax({
+        $.ajax({
             type: "POST",
-            url: "/admin/tag/add",
+            url: "/admin/user/add",
             contentType:"application/json",
             data: JSON.stringify(data.field),
             success:function(data){
@@ -43,7 +41,7 @@ function formEvent() {
                 layer.msg("添加失败", {icon: 2});
             }
         });
-        return false;*/
+        return false;
     });
 }
 

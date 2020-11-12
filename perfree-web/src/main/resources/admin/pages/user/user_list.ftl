@@ -15,12 +15,20 @@
     <div class="p-container">
 
         <div class="p-search-panel">
-            <form class="layui-form">
+            <form class="layui-form" lay-filter="searchForm">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">用户名:</label>
                         <div class="layui-input-inline">
                             <input type="text" name="userName" placeholder="请输入用户名" id="userName" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <label class="layui-form-label">角色: </label>
+                        <div class="layui-input-inline">
+                            <select name="roleId" id="roleId">
+                            </select>
                         </div>
                     </div>
                     <div class="layui-inline">
