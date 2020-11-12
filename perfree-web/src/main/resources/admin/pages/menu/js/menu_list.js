@@ -1,8 +1,17 @@
-let table;
-layui.use('table', function(){
+let table,tableEdit,tableTree;
+layui.config({
+    base: '/public/libs/layuiComponents/'
+}).extend({
+    tableEdit:'tableTree/tableEdit',
+    tableTree: 'tableTree/tableTree'
+})
+layui.use(['table','tableEdit','layer',"tableTree"], function(){
     table = layui.table;
+    tableEdit = layui.tableEdit;
+    tableTree = layui.tableTree;
     initPage();
 });
+
 
 /**
  * 页面初始化事件

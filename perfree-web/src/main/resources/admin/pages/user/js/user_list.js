@@ -2,8 +2,8 @@ let table,form;
 layui.use(['table','layer','form'], function(){
     table = layui.table;
     form = layui.form;
+    initPage();
 });
-initPage();
 
 /**
  * 页面初始化事件
