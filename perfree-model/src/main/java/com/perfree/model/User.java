@@ -19,8 +19,6 @@ public class User {
     @NotBlank(message = "用户名不允许为空")
     @Length(min = 2,max = 16,message = "用户名长度要在2-16字符之间")
     private String userName;
-    @NotBlank(message = "密码不允许为空")
-    @Length(min = 6,max = 12,message = "密码长度要在6-12字符之间")
     private String password;
     private String salt;
     @NotNull(message = "状态不允许为空")

@@ -16,7 +16,7 @@
     </insert>
 
     <update id="update">
-        update p_tag set name = #{name} where id = #{id}
+        update p_tag set name = #{name},updateTime=#{updateTime} where id = #{id}
     </update>
 
     <delete id="del">

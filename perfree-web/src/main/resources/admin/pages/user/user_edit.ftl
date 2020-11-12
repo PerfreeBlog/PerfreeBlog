@@ -14,26 +14,19 @@
 </head>
 <body class="layui-layout-body">
 <div class="p-container p-add-panel">
-    <form class="layui-form" lay-filter="addForm">
-        <input type="hidden" name="id" class="layui-input" value="${user.id}">
+    <form class="layui-form" lay-filter="editForm">
+        <input type="hidden" name="id" class="layui-input" value="${userForm.id}">
         <div class="layui-form-item">
             <label class="layui-form-label">用户名:</label>
             <div class="layui-input-block">
-                <input type="text" name="userName" value="${user.userName}" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+                <input type="text" name="userName" value="${userForm.userName}" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">账户:</label>
             <div class="layui-input-block">
-                <input type="text" name="account" value="${user.account}" required minlength="3" maxlength="12"  lay-verify="required" placeholder="请输入账户" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">密码:</label>
-            <div class="layui-input-block">
-                <input type="text" name="password" required minlength="6" maxlength="12" lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+                <input type="text" name="account" disabled value="${userForm.account}" required minlength="3" maxlength="12"  lay-verify="required" placeholder="请输入账户" autocomplete="off" class="layui-input">
             </div>
         </div>
 
@@ -44,13 +37,13 @@
                 </select>
             </div>
         </div>
-
+        <input type="hidden" id="role" value="${userForm.roleId}">
         <div class="layui-form-item">
             <label class="layui-form-label">状态:</label>
             <div class="layui-input-block">
                 <select name="status" lay-verify="required" id="roleId">
-                    <option value="0">正常</option>
-                    <option value="1">禁用</option>
+                    <option value="0" <#if (userForm.status)== 0>selected</#if>>正常</option>
+                    <option value="1" <#if (userForm.status)== 1>selected</#if>>禁用</option>
                 </select>
             </div>
         </div>
@@ -58,13 +51,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">头像:</label>
             <div class="layui-input-block">
-                <input type="hidden" name="avatar" id="avatar" value="${user.avatar}">
+                <input type="hidden" name="avatar" id="avatar" value="${userForm.avatar}">
                 <div class="upload-box">
-                    <div class="upload-panel" id="upload">
+                    <div class="upload-panel" id="upload" <#if (userForm.avatar)?? && (userForm.avatar) != "">style="display: none"</#if>>
                         <i class="fa fa-upload" aria-hidden="true"></i>
                     </div>
-                    <div class="upload-success-panel" id="uploadSuccessPanel">
-                        <img src="${user.avatar}">
+                    <div class="upload-success-panel" id="uploadSuccessPanel" <#if (userForm.avatar)?? && (userForm.avatar) != "">style="display: block"</#if>>
+                        <img src="${userForm.avatar}">
                         <div class="delete-img-box" id="deleteImg">
                             <i class="fa fa-trash" aria-hidden="true"></i>
                         </div>
@@ -73,7 +66,7 @@
             </div>
         </div>
         <div class="add-btn-box">
-            <button type="submit" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-submit-btn">确定</button>
+            <button type="submit" lay-submit lay-filter="editForm" class="layui-btn layui-btn-normal p-submit-btn">确定</button>
             <button type="button" class="layui-btn layui-btn-primary p-cancel-btn">取消</button>
         </div>
     </form>
@@ -81,44 +74,6 @@
 
 <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
-<script>
-    let form,element,layer;
-    layui.use(['layer', 'form', 'element'], function(){
-        form = layui.form;
-        element = layui.element;
-        layer = layui.layer;
-        // 表单验证
-        form.verify({});
-        // 表单提交
-        form.on('submit(addForm)', function(data){
-            $.ajax({
-                type: "POST",
-                url: "/admin/tag/update",
-                contentType:"application/json",
-                data: JSON.stringify(data.field),
-                success:function(data){
-                    if (data.code === 200){
-                            parent.queryTable();
-                            parent.layer.msg("更新成功", {icon: 1});
-                            const index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                    } else {
-                        layer.msg(data.msg, {icon: 2});
-                    }
-                },
-                error: function (data) {
-                    layer.msg("更新失败", {icon: 2});
-                }
-            });
-            return false;
-        });
-    });
-
-    // 取消
-    $(".p-cancel-btn").click(function (){
-        const index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
-    });
-</script>
+<script src="/admin/pages/user/js/user_edit.js"></script>
 </body>
 </html>

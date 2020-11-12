@@ -80,9 +80,9 @@ function queryTable() {
                 templet: function (d) {
                     let html;
                     if (d.status === 0) {
-                        html = "<input type='checkbox' name='status' lay-skin='switch' lay-text='正常|禁用' checked>";
+                        html = "<input type='checkbox' name='status' lay-filter='status' lay-skin='switch' value='" + d.id + "' lay-text='正常|禁用' checked>";
                     } else {
-                        html = "<input type='checkbox' name='status' lay-skin='switch' lay-text='正常|禁用'>";
+                        html = "<input type='checkbox' name='status' lay-filter='status' value='" + d.id + "' lay-skin='switch' lay-text='正常|禁用'>";
                     }
                     return html;
                 }
@@ -98,9 +98,10 @@ function queryTable() {
             {field:'role', title:'角色', templet: "<span>{{d.role.name}}</span>"},
             {field:'createTime', title:'创建时间', sort: true, templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>" },
             {field:'updateTime', title:'更新时间', sort: true, templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"},
-            {field:'id', title:'操作', width:120, fixed: 'right',
+            {field:'id', title:'操作', width:180, fixed: 'right',
                 templet: "<div>" +
                             "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
+                            "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='resetPassword(\"{{d.id}}\")'>重置密码</a>" +
                             "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
                         "</div>"
             },
@@ -119,6 +120,12 @@ function queryTable() {
             pageName: 'pageIndex',
             limitName: 'pageSize'
         }
+    });
+
+    form.on('switch(status)', function (data) {
+        const id = this.value;
+        const status = this.checked? 0 : 1;
+        changeStatus(id, status);
     });
 }
 
@@ -177,5 +184,56 @@ function loadRoleList() {
         });
         $("#roleId").html(html);
         form.render('select');
+    });
+}
+
+/**
+ * 重置密码
+ * @param id
+ */
+function resetPassword(id) {
+    layer.confirm('确定要重置密码为123456吗?', {icon: 3, title:'提示'}, function(index){
+        $.ajax({
+            type: "POST",
+            url: "/admin/user/resetPassword",
+            contentType:"application/json",
+            data: JSON.stringify({id: id}),
+            success:function(data){
+                if (data.code === 200){
+                    queryTable();
+                    layer.msg(data.msg, {icon: 1});
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            },
+            error: function (data) {
+                layer.msg("重置失败", {icon: 2});
+            }
+        });
+        layer.close(index);
+    });
+}
+
+/**
+ * 改变状态
+ * @param id id
+ */
+function changeStatus(id,status) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/user/changeStatus",
+        contentType:"application/json",
+        data: JSON.stringify({id: id,status: status}),
+        success:function(data){
+            if (data.code === 200){
+                queryTable();
+                layer.msg(data.msg, {icon: 1});
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("修改状态失败", {icon: 2});
+        }
     });
 }

@@ -7,6 +7,7 @@ import com.perfree.controller.BaseController;
 import com.perfree.model.Tag;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -89,7 +91,7 @@ public class UserController extends BaseController {
     @GetMapping("/user/editPage/{id}")
     public String editPage(@PathVariable("id") String id, Model model) {
         User user = userService.getById(id);
-        model.addAttribute("user", user);
+        model.addAttribute("userForm", user);
         return "admin/pages/user/user_edit";
     }
 
@@ -101,6 +103,9 @@ public class UserController extends BaseController {
     @PostMapping("/user/add")
     @ResponseBody
     public ResponseBean add(@RequestBody @Valid User user) {
+        if (StringUtils.isBlank(user.getPassword())){
+            return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
+        }
         if (userService.getUserByAccount(user.getAccount()) != null){
             return ResponseBean.fail("账户已存在", null);
         }
@@ -126,10 +131,10 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/update")
     @ResponseBody
-    public ResponseBean update(@RequestBody Tag tag) {
-        /*if (tagService.update(tag) > 0) {
+    public ResponseBean update(@RequestBody @Valid User user) {
+        if (userService.update(user) > 0) {
             return ResponseBean.success("更新成功", null);
-        }*/
+        }
         return ResponseBean.fail("更新失败", null);
     }
 
@@ -141,10 +146,38 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
+        if (Arrays.asList(idArr).contains(getUser().getId().toString())){
+            return ResponseBean.fail("不能删除当前登录账户", null);
+        }
         if (userService.del(idArr) > 0) {
             return ResponseBean.success("删除成功", null);
         }
         return ResponseBean.fail("删除失败", null);
     }
 
+    /**
+     * 重置密码
+     * @return String
+     */
+    @PostMapping("/user/resetPassword")
+    @ResponseBody
+    public ResponseBean resetPassword(@RequestBody User user) {
+        if (userService.resetPassword(user) > 0) {
+            return ResponseBean.success("重置密码为123456成功", null);
+        }
+        return ResponseBean.fail("重置密码失败", null);
+    }
+
+    /**
+     * 更改状态
+     * @return String
+     */
+    @PostMapping("/user/changeStatus")
+    @ResponseBody
+    public ResponseBean changeStatus(@RequestBody User user) {
+        if (userService.changeStatus(user) > 0) {
+            return ResponseBean.success("修改成功", null);
+        }
+        return ResponseBean.fail("修改失败", null);
+    }
 }

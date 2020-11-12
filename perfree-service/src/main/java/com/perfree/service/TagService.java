@@ -59,6 +59,7 @@ public class TagService {
      * @return int
      */
     public int update(Tag tag) {
+        tag.setUpdateTime(new Date());
         return tagMapper.update(tag);
     }
 

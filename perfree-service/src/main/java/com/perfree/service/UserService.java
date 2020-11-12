@@ -75,4 +75,36 @@ public class UserService {
     public User getById(String id) {
         return userMapper.getById(id);
     }
+
+    /**
+     * 更新用户
+     * @param user 用户
+     * @return int
+     */
+    public int update(User user) {
+        user.setUpdateTime(new Date());
+        return userMapper.update(user);
+    }
+
+    /**
+     * 重置密码为123456
+     * @param user user
+     * @return int
+     */
+    public int resetPassword(User user) {
+        user.setSalt(StringUtil.getUUID());
+        user.setPassword(new Md5Hash("123456", user.getSalt()).toString());
+        user.setUpdateTime(new Date());
+        return userMapper.resetPassword(user);
+    }
+
+    /**
+     * 更改状态
+     * @param user user
+     * @return int
+     */
+    public int changeStatus(User user) {
+        user.setUpdateTime(new Date());
+        return userMapper.changeStatus(user);
+    }
 }

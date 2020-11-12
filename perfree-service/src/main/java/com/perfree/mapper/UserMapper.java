@@ -43,4 +43,25 @@ public interface UserMapper {
      * @return User
      */
     User getById(String id);
+
+    /**
+     * 更新用户
+     * @param user 用户
+     * @return int
+     */
+    int update(User user);
+
+    /**
+     * 重置密码
+     * @param user user
+     * @return int
+     */
+    int resetPassword(User user);
+
+    /**
+     * 更改状态
+     * @param user user
+     * @return int
+     */
+    int changeStatus(User user);
 }
