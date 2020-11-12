@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 10/11/2020 17:47:17
+ Date: 12/11/2020 17:03:02
 */
 
 SET NAMES utf8mb4;
@@ -34,7 +34,7 @@ CREATE TABLE `p_menu`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_menu
@@ -47,7 +47,9 @@ INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'fa-comment', 
 INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/dashboard', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
 INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
 INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
-INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 7, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
+INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 9, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
+INSERT INTO `p_menu` VALUES (10, -1, '用户', '/admin/user', 'fa-user', 7, 1, 0, 0, '2020-11-11 13:30:44', '2020-11-11 13:30:46');
+INSERT INTO `p_menu` VALUES (11, -1, '菜单', '/admin/menu', 'fa-bars', 8, 1, 0, 0, '2020-11-12 15:55:30', NULL);
 
 -- ----------------------------
 -- Table structure for p_role
@@ -91,6 +93,8 @@ INSERT INTO `p_role_menu` VALUES (1, 6);
 INSERT INTO `p_role_menu` VALUES (1, 7);
 INSERT INTO `p_role_menu` VALUES (1, 8);
 INSERT INTO `p_role_menu` VALUES (1, 9);
+INSERT INTO `p_role_menu` VALUES (1, 10);
+INSERT INTO `p_role_menu` VALUES (1, 11);
 
 -- ----------------------------
 -- Table structure for p_tag
@@ -104,13 +108,15 @@ CREATE TABLE `p_tag`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_tag
 -- ----------------------------
-INSERT INTO `p_tag` VALUES (1, '1', 0, 1, '2020-09-04 11:43:48', '2020-09-04 11:43:51');
-INSERT INTO `p_tag` VALUES (2, '2', 0, 1, '2020-09-04 13:59:31', '2020-09-04 13:59:33');
+INSERT INTO `p_tag` VALUES (11, '打撒大撒放到', 0, 1, '2020-11-11 01:03:07', NULL);
+INSERT INTO `p_tag` VALUES (13, '我去额去我', 0, 1, '2020-11-11 01:04:06', NULL);
+INSERT INTO `p_tag` VALUES (26, '散打按时', 0, 1, '2020-11-11 04:35:31', NULL);
+INSERT INTO `p_tag` VALUES (27, '1', 0, 1, '2020-11-11 08:53:53', NULL);
 
 -- ----------------------------
 -- Table structure for p_user
@@ -128,11 +134,12 @@ CREATE TABLE `p_user`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
-INSERT INTO `p_user` VALUES (1, 'admin', 'admin', '29f9569a1c59bf2731ea17cec7ca7534', 'ea75fdde081b49c0b654603250d49e5e', 0, NULL, 1, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
+INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, 'https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=', 1, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
+INSERT INTO `p_user` VALUES (9, '12321321', '213qwq2212', 'b0d86782c6487b6d4f1416c33acd93fb', '79a33b4d54374c01bcf0552cd2e4c928', 0, '/avatar/12-11-2020/ffbaff9bbece4c7eaa899aedc5dcd357.jpg', 1, '2020-11-12 06:55:53', '2020-11-12 07:45:30');
 
 SET FOREIGN_KEY_CHECKS = 1;
