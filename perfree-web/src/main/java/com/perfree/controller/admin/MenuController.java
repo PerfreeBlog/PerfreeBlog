@@ -8,10 +8,8 @@ import com.perfree.model.Tag;
 import com.perfree.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -42,8 +40,9 @@ public class MenuController extends BaseController {
      * 菜单添加页
      * @return String
      */
-    @RequestMapping("/menu/addPage")
-    public String addPage() {
+    @RequestMapping("/menu/addPage/{pid}")
+    public String addPage(@PathVariable("pid") String pid, Model model) {
+        model.addAttribute("pid", pid);
         return "admin/pages/menu/menu_add";
     }
 

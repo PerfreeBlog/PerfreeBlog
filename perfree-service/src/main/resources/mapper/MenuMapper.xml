@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.MenuMapper" >
     <insert id="add">
-        insert into p_menu ( name, url, icon,seq,type,target,status,createTime)
-        VALUES (#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status}, #{createTime})
+        insert into p_menu (pid, name, url, icon,seq,type,target,status,createTime)
+        VALUES (#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status}, #{createTime})
     </insert>
     <!-- 获取当前账户所拥有的菜单 -->
     <select id="getParentMenuByUserIdAndType" resultType="com.perfree.model.Menu">
@@ -48,7 +48,7 @@
         order by seq
     </select>
 
-    <select id="getChildMenuList" resultType="com.perfree.model.Menu">
+    <select id="getChildMenuList" resultMap="MENU_LIST_TREE">
          select * from p_menu where pid=#{id} order by seq
     </select>
 </mapper>

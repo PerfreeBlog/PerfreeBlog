@@ -14,6 +14,7 @@
 <body>
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
+        <input type="hidden" name="pid" value="${pid}">
         <div class="layui-form-item">
             <label class="layui-form-label">菜单名:</label>
             <div class="layui-input-block">

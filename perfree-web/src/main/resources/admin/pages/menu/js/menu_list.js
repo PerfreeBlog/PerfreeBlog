@@ -29,16 +29,7 @@ function initPage() {
 
     // 添加
     $("#addBtn").click(function () {
-        layer.open({
-            title: "添加一级菜单",
-            type: 2,
-            offset: '20%',
-            area:  ['400px', '420px'],
-            shadeClose: true,
-            anim: 1,
-            move: false,
-            content: '/admin/menu/addPage'
-        });
+        add();
     });
 
     // 批量删除
@@ -131,11 +122,9 @@ function queryTable() {
             {field:'id', title:'操作', width: 180,
                 templet: function (d) {
                     let html = "<div>"
-                    if (d.pid === -1 || d.pid === '-1'){
-                        html += "<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='editData(\"{{d.id}}\")'>添加</a> ";
-                    }
-                    html +=  "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
-                        "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
+                    html +="<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='add(\""+d.id+"\")'>添加</a> "+
+                        "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\""+d.id+"\")'>编辑</a> " +
+                        "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\""+d.id+"\")'>删除</a>" +
                         "</div>";
                     return html;
                 }
@@ -190,5 +179,21 @@ function deleteData(ids) {
             }
         });
         layer.close(index);
+    });
+}
+
+/**
+ * 添加
+ */
+function add(pid = -1) {
+    layer.open({
+        title: "添加一级菜单",
+        type: 2,
+        offset: '20%',
+        area:  ['400px', '420px'],
+        shadeClose: true,
+        anim: 1,
+        move: false,
+        content: '/admin/menu/addPage/' + pid
     });
 }
