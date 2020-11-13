@@ -4,13 +4,13 @@ import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Menu;
-import com.perfree.model.Tag;
-import com.perfree.model.User;
 import com.perfree.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
@@ -63,7 +63,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping("/menu/add")
     @ResponseBody
-    public ResponseBean add(@RequestBody Menu menu) {
+    public ResponseBean add(@RequestBody @Valid Menu menu) {
         menu.setType(Menu.TYPE_FRONT);
         if (menuService.add(menu) > 0) {
             return ResponseBean.success("添加成功", null);
@@ -77,7 +77,7 @@ public class MenuController extends BaseController {
      */
     @PostMapping("/menu/update")
     @ResponseBody
-    public ResponseBean update(@RequestBody Menu menu) {
+    public ResponseBean update(@RequestBody @Valid Menu menu) {
         if (menuService.update(menu) > 0) {
             return ResponseBean.success("更新成功", null);
         }
