@@ -1,13 +1,14 @@
-let table,treeTable,layPage;
+let table,treeTable,layPage,form;
 layui.config({
     base: '/public/libs/layuiComponents/'
 }).extend({
     treeTable:'treetable-lay/treeTable'
 })
-layui.use(['table','treeTable','laypage'], function(){
+layui.use(['table','treeTable','laypage','form'], function(){
     table = layui.table;
     treeTable = layui.treeTable;
     layPage = layui.laypage;
+    form = layui.form;
     initPage();
 });
 
@@ -30,21 +31,6 @@ function initPage() {
     // 添加
     $("#addBtn").click(function () {
         add();
-    });
-
-    // 批量删除
-    $("#batchDeleteBtn").click(function () {
-        const checkStatus = table.checkStatus('tableBox'),data = checkStatus.data;
-        if (data.length <= 0) {
-            layer.msg("至少选择一条数据", {icon: 2});
-        } else {
-            let ids = "";
-            data.forEach(res => {
-                ids += res.id + ",";
-            });
-            ids = ids.substring(0, ids.length-1);
-            deleteData(ids)
-        }
     });
 }
 
@@ -70,7 +56,7 @@ function queryTable() {
             }
         },
         tree: {
-            iconIndex: 2,
+            iconIndex: 1,
             isPidData: false,
             idName: 'id',
             childName: 'childMenu'
@@ -100,7 +86,6 @@ function queryTable() {
             };
         },
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
             {field:'id', title:'ID', width:80},
             {field:'name', title:'菜单名'},
             {field:'url', title:'菜单链接'},
@@ -136,6 +121,12 @@ function queryTable() {
             $("#tablePage").show();
         }
     });
+
+    form.on('switch(status)', function (data) {
+        const id = this.value;
+        const status = this.checked? 0 : 1;
+        changeStatus(id, status);
+    });
 }
 
 /**
@@ -144,14 +135,14 @@ function queryTable() {
  */
 function editData(id) {
     layer.open({
-        title: "编辑标签",
+        title: "编辑菜单",
         type: 2,
         offset: '20%',
-        area:  ['400px', '140px'],
+        area:  ['400px', '420px'],
         shadeClose: true,
         anim: 1,
         move: false,
-        content: '/admin/tag/editPage/' + id
+        content: '/admin/menu/editPage/' + id
     });
 }
 
@@ -163,7 +154,7 @@ function deleteData(ids) {
     layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
         $.ajax({
             type: "POST",
-            url: "/admin/tag/del",
+            url: "/admin/menu/del",
             contentType:"application/json",
             data: ids,
             success:function(data){
@@ -186,8 +177,12 @@ function deleteData(ids) {
  * 添加
  */
 function add(pid = -1) {
+    let title = "添加一级菜单";
+    if (pid !== -1) {
+        title = "添加子菜单";
+    }
     layer.open({
-        title: "添加一级菜单",
+        title: title,
         type: 2,
         offset: '20%',
         area:  ['400px', '420px'],
@@ -195,5 +190,30 @@ function add(pid = -1) {
         anim: 1,
         move: false,
         content: '/admin/menu/addPage/' + pid
+    });
+}
+
+/**
+ * 改变状态
+ * @param id id
+ * @param status status
+ */
+function changeStatus(id,status) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/menu/changeStatus",
+        contentType:"application/json",
+        data: JSON.stringify({id: id,status: status}),
+        success:function(data){
+            if (data.code === 200){
+                queryTable();
+                layer.msg(data.msg, {icon: 1});
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("修改状态失败", {icon: 2});
+        }
     });
 }

@@ -5,6 +5,31 @@
         insert into p_menu (pid, name, url, icon,seq,type,target,status,createTime)
         VALUES (#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status}, #{createTime})
     </insert>
+
+    <update id="update">
+        update p_menu set
+        name = #{name},updateTime=#{updateTime},url=#{url},icon=#{icon},seq=#{seq},target=#{target},status=#{status}
+        where id = #{id}
+    </update>
+
+    <update id="changeStatus">
+        update p_menu set
+        status=#{status}
+        where id = #{id}
+        or pid = #{id}
+    </update>
+
+    <delete id="del">
+        DELETE FROM p_menu  WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        or pid IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <!-- 获取当前账户所拥有的菜单 -->
     <select id="getParentMenuByUserIdAndType" resultType="com.perfree.model.Menu">
         SELECT distinct t.* from p_menu t
@@ -50,5 +75,9 @@
 
     <select id="getChildMenuList" resultMap="MENU_LIST_TREE">
          select * from p_menu where pid=#{id} order by seq
+    </select>
+
+    <select id="getById" resultType="com.perfree.model.Menu">
+        select * from p_menu where id= #{id}
     </select>
 </mapper>

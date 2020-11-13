@@ -43,4 +43,32 @@ public interface MenuMapper {
      * @return int
      */
     int add(Menu menu);
+
+    /**
+     * 根据id获取菜单信息
+     * @param id id
+     * @return Menu
+     */
+    Menu getById(String id);
+
+    /**
+     * 更新菜单
+     * @param menu menu
+     * @return int
+     */
+    int update(Menu menu);
+
+    /**
+     * 删除菜单
+     * @param idArr idArr
+     * @return int
+     */
+    int del(String[] idArr);
+
+    /**
+     * 更改状态
+     * @param menu menu
+     * @return int
+     */
+    int changeStatus(Menu menu);
 }

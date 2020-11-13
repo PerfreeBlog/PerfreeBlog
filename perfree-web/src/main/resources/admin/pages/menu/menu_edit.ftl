@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>标签</title>
+    <title>菜单</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
@@ -14,11 +14,49 @@
 <body class="layui-layout-body">
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
-        <input type="hidden" name="id" class="layui-input" value="${tag.id}">
+        <input type="hidden" name="id" class="layui-input" value="${menu.id}">
         <div class="layui-form-item">
-            <label class="layui-form-label">标签名:</label>
+            <label class="layui-form-label">菜单名:</label>
             <div class="layui-input-block">
-                <input type="text" name="name" required  lay-verify="required" placeholder="请输入标签名" autocomplete="off" class="layui-input" value="${tag.name}">
+                <input type="text" name="name" value="${menu.name}" required  lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单链接:</label>
+            <div class="layui-input-block">
+                <input type="text" name="url" value="${menu.url}" required  lay-verify="required" placeholder="请输入菜单链接" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item" >
+            <label class="layui-form-label">图标:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="icon" value="${menu.icon}" required  lay-verify="required" placeholder="请输入图标" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态:</label>
+            <div class="layui-input-block">
+                <select name="status" lay-verify="required">
+                    <option value="0" <#if (menu.status)== 0>selected</#if>>正常</option>
+                    <option value="1" <#if (menu.status)== 1>selected</#if>>禁用</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">打开方式:</label>
+            <div class="layui-input-block">
+                <select name="target" lay-verify="required">
+                    <option value="1" <#if (menu.target)== 1>selected</#if>>新窗口</option>
+                    <option value="0" <#if (menu.target)== 0>selected</#if>>本页</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">序号:</label>
+            <div class="layui-input-block">
+                <input type="text" name="seq" value="${menu.seq!''}" oninput = "value=value.replace(/[^\d]/g,'')" placeholder="请输入序号" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="add-btn-box">
@@ -42,7 +80,7 @@
         form.on('submit(addForm)', function(data){
             $.ajax({
                 type: "POST",
-                url: "/admin/tag/update",
+                url: "/admin/menu/update",
                 contentType:"application/json",
                 data: JSON.stringify(data.field),
                 success:function(data){

@@ -56,4 +56,42 @@ public class MenuService {
         menu.setCreateTime(new Date());
         return menuMapper.add(menu);
     }
+
+    /**
+     * 根据id获取菜单信息
+     * @param id id
+     * @return Menu
+     */
+    public Menu getById(String id) {
+        return menuMapper.getById(id);
+    }
+
+    /**
+     * 更新菜单
+     * @param menu menu
+     * @return int
+     */
+    public int update(Menu menu) {
+        menu.setUpdateTime(new Date());
+        return menuMapper.update(menu);
+    }
+
+    /**
+     * 删除菜单
+     * @param idArr idArr
+     * @return int
+     */
+    public int del(String[] idArr) {
+        return menuMapper.del(idArr);
+    }
+
+    /**
+     * 更改状态
+     * @param menu menu
+     * @return int
+     */
+    public int changeStatus(Menu menu) {
+        menu.setUpdateTime(new Date());
+        return menuMapper.changeStatus(menu);
+    }
 }

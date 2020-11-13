@@ -37,12 +37,6 @@
                         </button>
                     </div>
 
-                    <div class="layui-inline">
-                        <button id="batchDeleteBtn" class="layui-btn" type="button">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                            批量删除
-                        </button>
-                    </div>
                 </div>
             </form>
         </div>
