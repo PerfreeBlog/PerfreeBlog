@@ -41,7 +41,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">状态:</label>
             <div class="layui-input-block">
-                <select name="status" lay-verify="required" id="roleId">
+                <select name="status" lay-verify="required">
                     <option value="0" <#if (userForm.status)== 0>selected</#if>>正常</option>
                     <option value="1" <#if (userForm.status)== 1>selected</#if>>禁用</option>
                 </select>

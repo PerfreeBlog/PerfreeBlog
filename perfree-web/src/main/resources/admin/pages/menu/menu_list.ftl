@@ -18,9 +18,9 @@
             <form class="layui-form">
                 <div class="layui-form-item">
                     <div class="layui-inline">
-                        <label class="layui-form-label">标签名:</label>
+                        <label class="layui-form-label">菜单名:</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="tagName" placeholder="请输入标签名" id="tagName" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                            <input type="text" name="name" placeholder="请输入菜单名" id="name" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-inline">
@@ -48,6 +48,7 @@
         </div>
         <div class="p-table-box">
             <table class="layui-hide" id="tableBox" lay-filter="tableBox"></table>
+            <div id="tablePage"></div>
         </div>
     </div>
 

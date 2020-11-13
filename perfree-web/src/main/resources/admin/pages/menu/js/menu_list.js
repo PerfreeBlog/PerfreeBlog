@@ -1,14 +1,13 @@
-let table,tableEdit,tableTree;
+let table,treeTable,layPage;
 layui.config({
     base: '/public/libs/layuiComponents/'
 }).extend({
-    tableEdit:'tableTree/tableEdit',
-    tableTree: 'tableTree/tableTree'
+    treeTable:'treetable-lay/treeTable'
 })
-layui.use(['table','tableEdit','layer',"tableTree"], function(){
+layui.use(['table','treeTable','laypage'], function(){
     table = layui.table;
-    tableEdit = layui.tableEdit;
-    tableTree = layui.tableTree;
+    treeTable = layui.treeTable;
+    layPage = layui.laypage;
     initPage();
 });
 
@@ -31,14 +30,14 @@ function initPage() {
     // 添加
     $("#addBtn").click(function () {
         layer.open({
-            title: "添加标签",
+            title: "添加一级菜单",
             type: 2,
             offset: '20%',
-            area:  ['400px', '140px'],
+            area:  ['400px', '420px'],
             shadeClose: true,
             anim: 1,
             move: false,
-            content: '/admin/tag/addPage'
+            content: '/admin/menu/addPage'
         });
     });
 
@@ -62,49 +61,90 @@ function initPage() {
 /**
  * 查询表格数据
  */
+let pageIndex = 1, pageSize = 20;
 function queryTable() {
-    table.render({
+    treeTable.render({
         elem: '#tableBox',
-        url:'/admin/tag/list',
+        url:'/admin/menu/list',
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         contentType: 'application/json',
-        title: '标签列表',
+        title: '菜单列表',
         totalRow: false,
         where: {
-            form: {
-                name: $("#tagName").val()
+            pageSize: pageSize,
+            pageIndex: pageIndex,
+            form:{
+                name: $("#name").val()
             }
         },
-        limit: 30,
-        cols: [[
-            {type: 'checkbox', fixed: 'left'},
-            {field:'id', title:'ID', width:80, fixed: 'left',sort: true},
-            {field:'name', title:'标签名'},
-            {field:'count', title:'文章数量'},
-            {field:'user', title:'用户名', templet: "<span>{{d.user.userName}}</span>"},
-            {field:'createTime', title:'创建时间', sort: true, templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>" },
-            {field:'updateTime', title:'更新时间', sort: true, templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"},
-            {field:'id', title:'操作', width:120, fixed: 'right',
-                templet: "<div>" +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
-                            "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
-                        "</div>"
-            },
-        ]],
-        page: true,
-        response: {statusCode: 200},
+        tree: {
+            iconIndex: 2,
+            isPidData: false,
+            idName: 'id',
+            childName: 'childMenu'
+        },
         parseData: function(res){
+            layPage.render({
+                elem: 'tablePage',
+                limit: pageSize,
+                count: res.total,
+                curr: res.pageIndex,
+                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                jump: function(obj, first){
+                    pageIndex = obj.curr;
+                    pageSize = obj.limit;
+                    //首次不执行
+                    if(!first){
+                        queryTable();
+                    }
+                }
+            });
+            $("#tablePage").hide();
             return {
-                "code": res.code,
+                "code": res.code === 200 ? 0 : 1,
                 "msg": res.msg,
                 "count": res.total,
                 "data": res.data
             };
         },
-        request: {
-            pageName: 'pageIndex',
-            limitName: 'pageSize'
+        cols: [[
+            {type: 'checkbox', fixed: 'left'},
+            {field:'id', title:'ID', width:80},
+            {field:'name', title:'菜单名'},
+            {field:'url', title:'菜单链接'},
+            {field:'icon', align:'center',title:'图标', templet: "<div><i class='fa {{d.icon}}' aria-hidden='true'></i></div>"},
+            {field:'target', title:'打开方式', templet: "<div>{{d.target === 0 ? '本页' : '新窗口'}}</div>"},
+            {field:'status', title:'状态', templet: function (d) {
+                    let html;
+                    if (d.status === 0) {
+                        html = "<input type='checkbox' name='status' lay-filter='status' lay-skin='switch' value='" + d.id + "' lay-text='正常|禁用' checked>";
+                    } else {
+                        html = "<input type='checkbox' name='status' lay-filter='status' value='" + d.id + "' lay-skin='switch' lay-text='正常|禁用'>";
+                    }
+                    return html;
+                }
+            },
+            {field:'seq', title:'排序'},
+            {field:'createTime', title:'创建时间', templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>" },
+            {field:'updateTime', title:'更新时间',  templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"},
+            {field:'id', title:'操作', width: 180,
+                templet: function (d) {
+                    let html = "<div>"
+                    if (d.pid === -1 || d.pid === '-1'){
+                        html += "<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='editData(\"{{d.id}}\")'>添加</a> ";
+                    }
+                    html +=  "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
+                        "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
+                        "</div>";
+                    return html;
+                }
+            },
+        ]],
+        page: true,
+        response: {statusCode: 200},
+        done: function () {
+            $("#tablePage").show();
         }
     });
 }

@@ -1,5 +1,9 @@
 package com.perfree.model;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -7,16 +11,25 @@ import java.util.List;
  * menu table
  */
 public class Menu {
+    public static int TYPE_FRONT = 0;
+    public static int TYPE_AFTER = 1;
     private Long id;
     private Long pid;
+    @NotBlank(message = "菜单名不允许为空")
+    @Length(max = 30,message = "菜单名最多30个字符")
     private String name;
+    @NotBlank(message = "菜单链接不允许为空")
+    @Length(max = 50,message = "菜单链接最多50个字符")
     private String url;
+    @NotBlank(message = "菜单图标不允许为空")
     private String icon;
     private Integer seq;
     private Integer type;
+    @NotNull(message = "菜单状态不允许为空")
     private Integer status;
     private Date createTime;
     private Date updateTime;
+    @NotNull(message = "打开方式不允许为空")
     private Integer target;
     private List<Menu> childMenu;
 

@@ -9,7 +9,7 @@ layui.use(['layer', 'form', 'element'], function(){
     form.on('submit(addForm)', function(data){
         $.ajax({
             type: "POST",
-            url: "/admin/tag/add",
+            url: "/admin/menu/add",
             contentType:"application/json",
             data: JSON.stringify(data.field),
             success:function(data){

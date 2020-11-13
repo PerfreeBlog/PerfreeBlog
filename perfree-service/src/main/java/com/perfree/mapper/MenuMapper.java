@@ -28,4 +28,19 @@ public interface MenuMapper {
      */
     List<Menu> getChildMenuByUserIdAndType(@Param("id") Long id, @Param("pid") Long pid, @Param("type") Integer type);
 
+    /**
+     * 菜单列表分页
+     * @param menu menu
+     * @return Pager<Menu>
+     */
+    List<Menu> getList(Menu menu);
+
+    List<Menu> getChildMenuList(Long id);
+
+    /**
+     * 添加菜单
+     * @param menu 菜单
+     * @return int
+     */
+    int add(Menu menu);
 }

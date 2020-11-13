@@ -58,3 +58,6 @@ html::-webkit-scrollbar-track-piece {
 .layui-form-select dl {
     top: 32px;
 }
+.hideMargin{
+    margin: 0;
+}
