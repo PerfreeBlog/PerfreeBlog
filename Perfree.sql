@@ -11,11 +11,56 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 12/11/2020 17:03:02
+ Date: 13/11/2020 17:02:29
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for p_attach
+-- ----------------------------
+DROP TABLE IF EXISTS `p_attach`;
+CREATE TABLE `p_attach`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '附件名',
+  `desc` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件描述',
+  `path` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '附件路径',
+  `suffix` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件后缀',
+  `flag` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标识',
+  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of p_attach
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for p_category
+-- ----------------------------
+DROP TABLE IF EXISTS `p_category`;
+CREATE TABLE `p_category`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '分类名',
+  `pid` int(0) NOT NULL DEFAULT -1 COMMENT '父级id',
+  `desc` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
+  `count` int(0) NOT NULL DEFAULT 0 COMMENT '文章数量',
+  `metaKeywords` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'SEO关键字',
+  `metaDescription` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'SEO描述内容',
+  `status` int(0) NOT NULL DEFAULT 0 COMMENT '状态0:正常,1禁用',
+  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of p_category
+-- ----------------------------
+INSERT INTO `p_category` VALUES (1, '1', -1, '1', 0, '	是否单行显示，溢出悬浮展开	是否单行显示，溢出悬浮展开	是否单行显示，溢出悬浮展开	是否单行显示，溢出悬浮展开22222', '1', 0, '2020-11-13 14:50:23', '2020-11-13 07:39:19');
+INSERT INTO `p_category` VALUES (2, '2', 1, '2', 2, '2', '2', 0, '2020-11-13 14:50:48', '2020-11-13 07:39:19');
+INSERT INTO `p_category` VALUES (7, '232', 2, '2323', 0, '23232', '3232', 0, '2020-11-13 07:31:22', NULL);
 
 -- ----------------------------
 -- Table structure for p_menu
@@ -23,7 +68,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `p_menu`;
 CREATE TABLE `p_menu`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `pid` int(0) NULL DEFAULT NULL COMMENT '父级id',
+  `pid` int(0) NULL DEFAULT -1 COMMENT '父级id',
   `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名',
   `url` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单链接',
   `icon` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '菜单图标',
@@ -34,7 +79,7 @@ CREATE TABLE `p_menu`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_menu
@@ -44,12 +89,17 @@ INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'fa-book', 2, 1, 0, 0, '2020
 INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
 INSERT INTO `p_menu` VALUES (4, 2, '新建', '/admin/articleCreate', '', 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
 INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'fa-comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
-INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/dashboard', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
+INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/category', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
 INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
 INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
 INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 9, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
 INSERT INTO `p_menu` VALUES (10, -1, '用户', '/admin/user', 'fa-user', 7, 1, 0, 0, '2020-11-11 13:30:44', '2020-11-11 13:30:46');
 INSERT INTO `p_menu` VALUES (11, -1, '菜单', '/admin/menu', 'fa-bars', 8, 1, 0, 0, '2020-11-12 15:55:30', NULL);
+INSERT INTO `p_menu` VALUES (20, -1, '2', '1', '1', 1, 0, 1, 0, '2020-11-13 03:41:39', '2020-11-13 07:21:06');
+INSERT INTO `p_menu` VALUES (24, 23, 'dsada', 'dsads', 'dsadas', 2, 0, 1, 0, '2020-11-13 03:55:04', NULL);
+INSERT INTO `p_menu` VALUES (27, 26, '3', '3', '3', 3, 0, 1, 0, '2020-11-13 03:55:31', NULL);
+INSERT INTO `p_menu` VALUES (28, -1, '22222', '23333', '1', 45, 0, 0, 0, '2020-11-13 05:13:06', '2020-11-13 05:18:00');
+INSERT INTO `p_menu` VALUES (29, 20, '12', '221', '12', 21, 0, 1, 0, '2020-11-13 05:24:37', NULL);
 
 -- ----------------------------
 -- Table structure for p_role
@@ -134,12 +184,12 @@ CREATE TABLE `p_user`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
 INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, 'https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=', 1, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
-INSERT INTO `p_user` VALUES (9, '12321321', '213qwq2212', 'b0d86782c6487b6d4f1416c33acd93fb', '79a33b4d54374c01bcf0552cd2e4c928', 0, '/avatar/12-11-2020/ffbaff9bbece4c7eaa899aedc5dcd357.jpg', 1, '2020-11-12 06:55:53', '2020-11-12 07:45:30');
+INSERT INTO `p_user` VALUES (9, '12321321', '213qwq221222222', 'b0d86782c6487b6d4f1416c33acd93fb', '79a33b4d54374c01bcf0552cd2e4c928', 0, '/avatar/12-11-2020/ffbaff9bbece4c7eaa899aedc5dcd357.jpg', 1, '2020-11-12 06:55:53', '2020-11-13 05:17:29');
 
 SET FOREIGN_KEY_CHECKS = 1;
