@@ -32,6 +32,16 @@
                             <div id="editorBox">
                                 <div id="editor"></div>
                             </div>
+
+                        </div>
+                    </div>
+
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">摘要:</span>
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="resize: none"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -44,7 +54,32 @@
                             </div>
                         </div>
                         <div class="layui-card-body">
-                            145456456
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">分类:</span>
+                                <div id="category" ></div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">标签:</span>
+                                <div id="tag" ></div>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">SEO关键字:</span>
+                                <input type="text" name="title" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+                            </div>
+
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">SEO描述:</span>
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="resize: none"></textarea>
+                            </div>
+
+                            <div class="layui-form-item article-switch">
+                                <span class="p-form-tip">是否允许评论:</span>
+                                <input type="checkbox" name="switch" lay-text="开启|关闭" lay-skin="switch">
+                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -1,13 +1,19 @@
-let layer,form;
+let layer,form,xmSelect;
 // 当前编辑器类型
 let currEditorType = 'markdown';
 // markdown编辑器
 let markdownEditor;
 // 富文本编辑器
 let richTextEditor;
-layui.use(['layer','form'], function(){
+layui.config({
+    base: '/public/libs/layuiComponents/'
+}).extend({
+    xmSelect:'xm-select/xm-select'
+})
+layui.use(['layer','form','xmSelect'], function(){
     layer = layui.layer;
     form = layui.form;
+    xmSelect = layui.xmSelect;
     layer.config({
         offset: '20%'
     });
@@ -20,6 +26,8 @@ layui.use(['layer','form'], function(){
 function init() {
     initEditor();
     initEvent();
+    initTag();
+    initCategory();
 }
 
 /**
@@ -115,4 +123,73 @@ function initWangEditor() {
         e.preventDefault();
         return false;
     });
+}
+
+/**
+ * 初始化标签选择框
+ */
+function initTag() {
+    xmSelect.render({
+        el: '#tag',
+        tips: '请选择标签',
+        theme: {
+            color: '#1E9FFF',
+        },
+        searchTips: '搜索标签或输入标签名新增',
+        filterable: true,
+        create: function(val, arr){
+            //返回一个创建成功的对象, val是搜索的数据, arr是搜索后的当前页面数据
+            return {
+                name: '创建-' + val,
+                value: val
+            }
+        },
+        data: [
+            {name: '张三', value: 1},
+            {name: '李四', value: 2},
+            {name: '王五', value: 3},
+        ]
+    });
+}
+
+/**
+ * 初始化分类选择框
+ */
+function initCategory() {
+    xmSelect.render({
+        el: '#category',
+        theme: {
+            color: '#1E9FFF',
+        },
+        model: { label: { type: 'text' } },
+        radio: true,
+        tips: '请选择分类',
+        filterable: true,
+        searchTips: '输入分类名搜索',
+        clickClose: true,
+        tree: {
+            show: true,
+            strict: false,
+            expandedKeys: [ -1 ],
+        },
+        height: 'auto',
+        data(){
+            return [
+                {name: '销售员', value: -1, children: [
+                        {name: '张三', value: 100},
+                        {name: '李四1', value: 2},
+                    ]},
+                {name: '奖品', value: -2, children: [
+                        {name: '奖品3', value: -3, children: [
+                                {name: '苹果3', value: 14},
+                                {name: '香蕉3', value: 15},
+                                {name: '葡萄3', value: 16},
+                            ]},
+                        {name: '苹果2', value: 4},
+                        {name: '香蕉2', value: 5},
+                        {name: '葡萄2', value: 6},
+                    ]},
+            ]
+        }
+    })
 }
