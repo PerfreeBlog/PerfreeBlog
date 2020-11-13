@@ -13,42 +13,46 @@
 </head>
 <body class="layui-layout-body">
     <div class="p-container">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="p-search-panel">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">标签名:</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="tagName" placeholder="请输入标签名" id="tagName" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button id="queryBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    查询
+                                </button>
+                            </div>
 
-        <div class="p-search-panel">
-            <form class="layui-form">
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">标签名:</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="tagName" placeholder="请输入标签名" id="tagName" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                            <div class="layui-inline">
+                                <button id="addBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    添加
+                                </button>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button id="batchDeleteBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    批量删除
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="layui-inline">
-                        <button id="queryBtn" class="layui-btn" type="button">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                            查询
-                        </button>
-                    </div>
-
-                    <div class="layui-inline">
-                        <button id="addBtn" class="layui-btn" type="button">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            添加
-                        </button>
-                    </div>
-
-                    <div class="layui-inline">
-                        <button id="batchDeleteBtn" class="layui-btn" type="button">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                            批量删除
-                        </button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+                <div class="p-table-box">
+                    <table class="layui-hide" id="tableBox" lay-filter="tableBox"></table>
+                </div>
+            </div>
         </div>
-        <div class="p-table-box">
-            <table class="layui-hide" id="tableBox" lay-filter="tableBox"></table>
-        </div>
+
     </div>
 
     <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>

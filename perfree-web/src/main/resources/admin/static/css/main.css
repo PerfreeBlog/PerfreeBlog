@@ -48,6 +48,8 @@ html::-webkit-scrollbar-track-piece {
 }
 .p-container{
     padding: 12px;
+    background: #f2f2f2;
+    min-height: 100%;
 }
 .layui-table-cell img{
     width: 25px;
@@ -60,4 +62,13 @@ html::-webkit-scrollbar-track-piece {
 }
 .hideMargin{
     margin: 0;
+}
+html{
+    height: 100%;
+}
+.layui-layout-body{
+    height: 100%;
+}
+.layui-card-body {
+    padding: 15px 15px;
 }

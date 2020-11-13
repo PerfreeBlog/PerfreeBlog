@@ -13,36 +13,39 @@
 </head>
 <body class="layui-layout-body">
     <div class="p-container">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="p-search-panel">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">菜单名:</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="name" placeholder="请输入菜单名" id="name" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button id="queryBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    查询
+                                </button>
+                            </div>
 
-        <div class="p-search-panel">
-            <form class="layui-form">
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">菜单名:</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="name" placeholder="请输入菜单名" id="name" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                            <div class="layui-inline">
+                                <button id="addBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    添加
+                                </button>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="layui-inline">
-                        <button id="queryBtn" class="layui-btn" type="button">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                            查询
-                        </button>
-                    </div>
-
-                    <div class="layui-inline">
-                        <button id="addBtn" class="layui-btn" type="button">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                            添加
-                        </button>
-                    </div>
-
+                    </form>
                 </div>
-            </form>
-        </div>
-        <div class="p-table-box">
-            <table class="layui-hide" id="tableBox" lay-filter="tableBox"></table>
-            <div id="tablePage"></div>
+                <div class="p-table-box">
+                    <table class="layui-hide" id="tableBox" lay-filter="tableBox"></table>
+                    <div id="tablePage"></div>
+                </div>
+            </div>
         </div>
     </div>
 

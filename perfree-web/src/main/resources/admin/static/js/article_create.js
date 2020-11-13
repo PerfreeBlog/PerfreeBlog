@@ -1,10 +1,19 @@
+let layer,form;
 // 当前编辑器类型
 let currEditorType = 'markdown';
 // markdown编辑器
 let markdownEditor;
 // 富文本编辑器
 let richTextEditor;
-init();
+layui.use(['layer','form'], function(){
+    layer = layui.layer;
+    form = layui.form;
+    layer.config({
+        offset: '20%'
+    });
+    init();
+});
+
 /**
  * 页面初始化
  */
@@ -25,7 +34,7 @@ function initEditor() {
  */
 function initEvent() {
     $(".editor-switch-btn").on('click', function () {
-        pConfirm('提示', '确定要更换编辑器吗?更换后编辑器内容将清空!', null, function () {
+        layer.confirm('确定要更换编辑器吗?更换后编辑器内容将清空!', {icon: 3, title:'提示'}, function(index){
             $("#editor").remove();
             $("#editorBox").append('<div id="editor"></div>');
             if (currEditorType === 'markdown') {
@@ -37,7 +46,8 @@ function initEvent() {
                 $(".editor-switch-btn").text("切换富文本编辑器");
                 initMarkdownEditor();
             }
-        })
+            layer.close(index);
+        });
     });
 }
 
