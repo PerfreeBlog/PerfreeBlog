@@ -14,17 +14,17 @@
 html{
     overflow: auto;
 }
-html::-webkit-scrollbar {
+.layui-layout-body::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 
-html::-webkit-scrollbar-thumb {
+.layui-layout-body::-webkit-scrollbar-thumb {
     border-radius: 4px;
     background-color: #adabab;
 }
 
-html::-webkit-scrollbar-track-piece {
+.layui-layout-body::-webkit-scrollbar-track-piece {
     background: #e8e8e8;
 }
 .layui-layer-shade{
@@ -47,9 +47,9 @@ html::-webkit-scrollbar-track-piece {
     margin-left: 4px;
 }
 .p-container{
-    padding: 12px;
+    padding: 6px;
     background: #f2f2f2;
-    min-height: 100%;
+    min-height: calc(100% - 12px);
 }
 .layui-table-cell img{
     width: 25px;
@@ -68,7 +68,11 @@ html{
 }
 .layui-layout-body{
     height: 100%;
+    overflow: auto;
 }
 .layui-card-body {
     padding: 15px 15px;
+}
+.layui-card {
+    margin: 6px;
 }

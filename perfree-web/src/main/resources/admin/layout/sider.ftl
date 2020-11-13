@@ -20,7 +20,7 @@
                         <a class="" href="javascript:;"><i class="fa ${menu.icon}" aria-hidden="true"></i><span class="f-nav-content">${menu.name}</span></a>
                         <dl class="layui-nav-child">
                           <#list menu.childMenu as childMenu>
-                            <dd class="f-child-side"><a href="javascript:;" onclick="openTab('','${childMenu.name}','${childMenu.url}','${menu_index}_${childMenu_index}');">${childMenu.name}</a></dd>
+                            <dd class="f-child-side"><a href="javascript:;" onclick="openTab('','${menu.name + '-' + childMenu.name}','${childMenu.url}','${menu_index}_${childMenu_index}');">${childMenu.name}</a></dd>
                           </#list>
                         </dl>
                     </li>

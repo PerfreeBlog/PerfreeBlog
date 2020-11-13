@@ -1,0 +1,13 @@
+.p-form-tip,.editor-switch-box{
+    font-size: 13px;
+    color: #292929;
+}
+.editor-switch-btn{
+    color: #2F4056;
+    font-size: 13px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.layui-form-item {
+    margin-bottom: 8px;
+}
