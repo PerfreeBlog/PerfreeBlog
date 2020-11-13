@@ -37,9 +37,14 @@
                 </div>
                 <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 p-container-right">
                     <div class="layui-card">
+                        <div class="layui-card-header">
+                            <div class="p-article-btn-box">
+                                <button type="button" class="layui-btn layui-btn-normal">发布</button>
+                                <button type="button" class="layui-btn layui-btn-primary">保存到草稿箱</button>
+                            </div>
+                        </div>
                         <div class="layui-card-body">
-                            卡片式面板面板通常用于非白色背景色的主体内<br>
-                            从而映衬出边框投影
+                            145456456
                         </div>
                     </div>
                 </div>
