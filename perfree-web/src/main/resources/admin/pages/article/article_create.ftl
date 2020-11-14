@@ -36,14 +36,6 @@
                         </div>
                     </div>
 
-                    <div class="layui-card">
-                        <div class="layui-card-body">
-                            <div class="layui-form-item">
-                                <span class="p-form-tip">摘要:</span>
-                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="resize: none"></textarea>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 p-container-right">
                     <div class="layui-card">
@@ -64,6 +56,10 @@
                                 <div id="tag" ></div>
                             </div>
 
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">文章摘要:</span>
+                                <textarea name="desc" placeholder="请输入内容" class="article-textarea layui-textarea" style="resize: none"></textarea>
+                            </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO关键字:</span>
@@ -72,14 +68,24 @@
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO描述:</span>
-                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" style="resize: none"></textarea>
+                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea article-textarea" style="resize: none"></textarea>
                             </div>
 
                             <div class="layui-form-item article-switch">
-                                <span class="p-form-tip">是否允许评论:</span>
-                                <input type="checkbox" name="switch" lay-text="开启|关闭" lay-skin="switch">
+                                <span class="p-form-tip">允许评论:</span>
+                                <input type="checkbox" name="switch" lay-text="允许|不允许" lay-skin="switch">
+
+                                <span class="p-form-tip">置顶:</span>
+                                <input type="checkbox" name="switch" lay-text="置顶|不置顶" lay-skin="switch">
+                            </div>
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">访问密码:</span>
+                                <input type="xxx" name="" placeholder="请输入访问密码" autocomplete="off" class="article-password-input layui-input">
                             </div>
 
+                            <div class="layui-form-item">
+                                <span class="p-form-tip">缩略图:</span>
+                            </div>
                         </div>
                     </div>
                 </div>
