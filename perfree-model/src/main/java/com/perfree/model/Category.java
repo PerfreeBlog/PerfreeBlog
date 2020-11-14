@@ -4,13 +4,15 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * category table
  */
-public class Category {
+public class Category implements Serializable {
+    private static final long serialVersionUID = -3275180034882679507L;
     private Long id;
     private Long pid;
     @NotBlank(message = "分类名不允许为空")
@@ -117,4 +119,20 @@ public class Category {
         this.updateTime = updateTime;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", pid=" + pid +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", count=" + count +
+                ", metaKeywords='" + metaKeywords + '\'' +
+                ", metaDescription='" + metaDescription + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", childCategory=" + childCategory +
+                '}';
+    }
 }

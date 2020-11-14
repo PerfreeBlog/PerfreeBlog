@@ -5,12 +5,14 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * User Table
  */
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = -4338379690203608321L;
     private Long id;
     @NotBlank(message = "账户不允许为空")
     @Pattern(regexp ="^[A-Za-z0-9]+$",message = "账户只能填写字母或数字")

@@ -1,5 +1,6 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.FileUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.common.StringUtil;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -64,18 +66,8 @@ public class UserController extends BaseController {
         try{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
-            String multiFileName = multiFile.getOriginalFilename();
-            String suffix = multiFileName.substring(multiFileName.indexOf("."));
-            String filename = StringUtil.getUUID() + suffix;
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-            String dirPath = "/avatar/" + formatter.format(new Date()) + "/";
-            File dir = new File(uploadPath + dirPath);
-            if (!dir.exists()){
-                dir.mkdirs();
-            }
-            File file = new File(uploadPath + dirPath + filename);
-            multiFile.transferTo(file);
-            return ResponseBean.success("上传成功", dirPath + filename);
+            String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "avatar");
+            return ResponseBean.success("上传成功", path);
         }catch (Exception e){
             return ResponseBean.fail("上传失败", e.getMessage());
         }

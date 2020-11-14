@@ -193,3 +193,17 @@ function initCategory() {
         }
     })
 }
+
+
+function selectImg() {
+    layer.open({
+        title: "选择图片",
+        type: 2,
+        offset: '20%',
+        area:  ['700px', '510px'],
+        shadeClose: true,
+        anim: 1,
+        move: false,
+        content: '/admin/attach/img'
+    });
+}

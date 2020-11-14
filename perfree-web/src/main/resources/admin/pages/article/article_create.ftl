@@ -85,6 +85,7 @@
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">缩略图:</span>
+                                <button type="button" class="layui-btn" onclick="selectImg()">上传图片</button>
                             </div>
                         </div>
                     </div>

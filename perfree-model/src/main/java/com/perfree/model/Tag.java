@@ -1,11 +1,13 @@
 package com.perfree.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * tag Table
  */
-public class Tag {
+public class Tag implements Serializable {
+    private static final long serialVersionUID = 7349480507456460022L;
     private Long id;
     private String name;
     private Long count;

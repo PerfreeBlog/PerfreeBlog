@@ -4,13 +4,15 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * menu table
  */
-public class Menu {
+public class Menu implements Serializable {
+    private static final long serialVersionUID = 7817277417501762477L;
     public static int TYPE_FRONT = 0;
     public static int TYPE_AFTER = 1;
     private Long id;

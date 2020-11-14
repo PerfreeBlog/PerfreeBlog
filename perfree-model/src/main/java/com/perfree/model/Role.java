@@ -1,11 +1,13 @@
 package com.perfree.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * role table
  */
-public class Role {
+public class Role implements Serializable {
+    private static final long serialVersionUID = -7909060114936447269L;
     private Long id;
     private String name;
     private String description;
