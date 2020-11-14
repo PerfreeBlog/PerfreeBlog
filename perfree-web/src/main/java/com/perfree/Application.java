@@ -1,5 +1,7 @@
 package com.perfree;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +12,7 @@ import java.util.Date;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
+    private final Logger logger = LoggerFactory.getLogger(Application.class);
     @Value("${server.port}")
     private int serverPort;
 
@@ -20,6 +23,6 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         InetAddress address = InetAddress.getLocalHost();
-        System.out.println(new Date() + ", " + address + ":"+ serverPort +" >>>>>>>>已启动完成...");
+        logger.info(new Date() + ", " + address + ":"+ serverPort +" >>>>>>>>已启动完成...");
     }
 }
