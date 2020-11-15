@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 15/11/2020 13:47:49
+ Date: 15/11/2020 21:44:02
 */
 
 SET NAMES utf8mb4;
@@ -37,9 +37,18 @@ CREATE TABLE `p_attach`  (
 -- ----------------------------
 -- Records of p_attach
 -- ----------------------------
-INSERT INTO `p_attach` VALUES (1, '96ef23c83008aa227e48deb9c1a1d299.gif', NULL, '\\attach\\20201115\\d975fc2032e44e04a9f8140f297134db.gif', '.gif', NULL, 'img', '2020-11-15 05:43:55', NULL);
-INSERT INTO `p_attach` VALUES (2, '96ef23c83008aa227e48deb9c1a1d299.gif', NULL, '\\attach\\20201115\\e932146150b049d1a854c2f23beb3c6b.gif', '.gif', NULL, 'img', '2020-11-15 05:45:29', NULL);
-INSERT INTO `p_attach` VALUES (3, 'bird.png', NULL, '\\attach\\20201115\\748c7e0e898f41809f13ddbd4dcaf5ba.png', '.png', NULL, 'img', '2020-11-15 05:45:54', NULL);
+INSERT INTO `p_attach` VALUES (4, '96ef23c83008aa227e48deb9c1a1d299.gif', NULL, '/attach/20201115/158f98e261524659be2a8751072b01d8.gif', '.gif', NULL, 'img', '2020-11-15 09:22:00', NULL);
+INSERT INTO `p_attach` VALUES (5, '0445ec983f3da4a21c1632c4cffd699d.jpeg', NULL, '/attach/20201115/c6996abda7b24aa3813b44a8e921b846.jpeg', '.jpeg', NULL, 'img', '2020-11-15 09:23:03', NULL);
+INSERT INTO `p_attach` VALUES (6, 'bird.png', NULL, '/attach/20201115/0a767ed4401f43318d1a808fc4515550.png', '.png', NULL, 'img', '2020-11-15 09:23:06', NULL);
+INSERT INTO `p_attach` VALUES (7, 'macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog-5.jpg', NULL, '/attach/20201115/28c154bd6db94356b9e0581ae2dab6bb.jpg', '.jpg', NULL, 'img', '2020-11-15 09:23:10', NULL);
+INSERT INTO `p_attach` VALUES (8, 'macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog-3.jpg', NULL, '/attach/20201115/41fd89f7dd264f7db67e31fe87f1df13.jpg', '.jpg', NULL, 'img', '2020-11-15 09:23:13', NULL);
+INSERT INTO `p_attach` VALUES (9, 'macOS-Big-Sur-Vector-Wave-Wallpaper-iDownloadBlog.jpg', NULL, '/attach/20201115/200ad7da547b46809112ff40edd51cea.jpg', '.jpg', NULL, 'img', '2020-11-15 09:24:09', NULL);
+INSERT INTO `p_attach` VALUES (10, 'macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog.jpg', NULL, '/attach/20201115/edb6f3da88d54677ac2655c7be5c5d4b.jpg', '.jpg', NULL, 'img', '2020-11-15 09:24:13', NULL);
+INSERT INTO `p_attach` VALUES (11, 'macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog-8.jpg', NULL, '/attach/20201115/194198afefc04f0693905e8fa8abd8a7.jpg', '.jpg', NULL, 'img', '2020-11-15 09:24:16', NULL);
+INSERT INTO `p_attach` VALUES (12, 'macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog-6.jpg', NULL, '/attach/20201115/7b5147fda63f46a48757231aa4a62305.jpg', '.jpg', NULL, 'img', '2020-11-15 09:24:20', NULL);
+INSERT INTO `p_attach` VALUES (13, '1111111', NULL, '111111', '11', NULL, 'other', '2020-11-15 17:29:27', NULL);
+INSERT INTO `p_attach` VALUES (14, 'macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog.jpg', NULL, '/attach/20201115/5e28ae1f48c947b6a73568c4bf11758d.jpg', '.jpg', NULL, 'img', '2020-11-15 09:29:51', NULL);
+INSERT INTO `p_attach` VALUES (15, 'macOS-Big-Sur-Daylight-Wallpaper-iDownloadBlog.jpg', NULL, '/attach/20201115/11e6a324bd234010b6d924774cfd6bba.jpg', '.jpg', NULL, 'img', '2020-11-15 09:32:47', NULL);
 
 -- ----------------------------
 -- Table structure for p_category
