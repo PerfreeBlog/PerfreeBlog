@@ -29,7 +29,7 @@
             </div>
 
             <div class="layui-inline">
-                <button id="addBtn" class="layui-btn" type="button">
+                <button id="uploadBtn" class="layui-btn" type="button">
                     <i class="fa fa-plus" aria-hidden="true"></i>
                     上传图片
                 </button>
@@ -74,19 +74,31 @@
 <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
 <script>
-    let table,form,layer,layPage,flow;
-    layui.use(['table','form','layer','laypage','flow'], function(){
+    let table,form,layer,layPage,flow,upload;
+    layui.use(['table','form','layer','laypage','flow','upload'], function(){
         table = layui.table;
         form = layui.form;
         layer = layui.layer;
         layPage = layui.laypage;
         flow = layui.flow;
+        upload = layui.upload;
         flow.lazyimg();
         layPage.render({
             elem: 'tabBoxPage',
             count: 50 //数据总数，从服务端得到
         });
 
+        upload.render({
+            elem: '#uploadBtn' //绑定元素
+            ,url: '/admin/attach/upload' //上传接口
+            ,acceptMime:  'image/*'
+            ,done: function(res){
+                console.log(res)
+            }
+            ,error: function(){
+                //请求异常回调
+            }
+        });
     });
 </script>
 </body>

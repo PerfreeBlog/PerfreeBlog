@@ -5,14 +5,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文件相关工具类
  */
 public class FileUtil {
 
+    private final static String[] IMG_FILE_TYPE = {"jpg","png","gif","jpeg","tif","raw","svg"};
+    private final static String[] VIDEO_FILE_TYPE = {"avi","mov","rmvb","rm","mp4","flv","3gp","mpg","mlv","mpe","mpeg","vob"};
 
     /**
      * 上传文件
@@ -37,7 +42,7 @@ public class FileUtil {
             // 组装新的文件名
             String filename = StringUtil.getUUID() + suffix;
             // 获取当天日期
-            SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
             // 文件存储的子目录
             String uploadPath = File.separator + categoryPath + File.separator + formatter.format(new Date()) + File.separator;
             // 组装保存的目录
@@ -55,5 +60,21 @@ public class FileUtil {
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * 获取文件类型
+     * @param suffix 后缀名
+     * @return String
+     */
+    public static String getFileType(String suffix) {
+        // 图片类型
+        if (Arrays.asList(IMG_FILE_TYPE).contains(suffix)){
+            return "img";
+        }
+        if (Arrays.asList(VIDEO_FILE_TYPE).contains(suffix)){
+            return "video";
+        }
+        return "other";
     }
 }
