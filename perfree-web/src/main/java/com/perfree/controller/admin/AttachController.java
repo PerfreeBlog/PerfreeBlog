@@ -2,15 +2,18 @@ package com.perfree.controller.admin;
 
 import cn.hutool.core.io.FileTypeUtil;
 import com.perfree.common.FileUtil;
+import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Attach;
+import com.perfree.model.Tag;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -72,5 +75,15 @@ public class AttachController extends BaseController {
         }catch (Exception e){
             return ResponseBean.fail("上传失败", e.getMessage());
         }
+    }
+
+    /**
+     * 附件管理列表数据
+     * @return String
+     */
+    @PostMapping("/attach/list")
+    @ResponseBody
+    public Pager<Attach> list(@RequestBody Pager<Attach> pager) {
+        return attachService.list(pager);
     }
 }

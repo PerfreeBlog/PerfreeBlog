@@ -18,7 +18,7 @@ public class FileUtil {
 
     private final static String[] IMG_FILE_TYPE = {"jpg","png","gif","jpeg","tif","raw","svg"};
     private final static String[] VIDEO_FILE_TYPE = {"avi","mov","rmvb","rm","mp4","flv","3gp","mpg","mlv","mpe","mpeg","vob"};
-
+    private final static String SEPARATOR = "/";
     /**
      * 上传文件
      * @param multiFile 文件
@@ -44,7 +44,7 @@ public class FileUtil {
             // 获取当天日期
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
             // 文件存储的子目录
-            String uploadPath = File.separator + categoryPath + File.separator + formatter.format(new Date()) + File.separator;
+            String uploadPath = SEPARATOR + categoryPath + SEPARATOR + formatter.format(new Date()) + SEPARATOR;
             // 组装保存的目录
             dirPath += uploadPath;
             File dir = new File(dirPath);

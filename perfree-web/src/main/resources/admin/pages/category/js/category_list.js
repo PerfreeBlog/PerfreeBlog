@@ -1,4 +1,5 @@
 let table,treeTable,layPage,form;
+let pageIndex = 1, pageSize = 20;
 layui.config({
     base: '/public/libs/layuiComponents/'
 }).extend({
@@ -38,7 +39,6 @@ function initPage() {
 /**
  * 查询表格数据
  */
-let pageIndex = 1, pageSize = 20;
 function queryTable() {
     treeTable.render({
         elem: '#tableBox',

@@ -5,4 +5,15 @@
         insert into p_attach (`name`, `desc`, `path`, suffix,flag,type,createTime)
         VALUES (#{name},#{desc},#{path}, #{suffix}, #{flag}, #{type}, #{createTime})
     </insert>
+    <select id="getList" resultType="com.perfree.model.Attach">
+        select * from p_attach
+        where 1 = 1
+        <if test="name != null and name != ''">
+            and `name` like concat('%', #{name,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="type != null and type != ''">
+            and `type` = #{type}
+        </if>
+        order by createTime desc
+    </select>
 </mapper>

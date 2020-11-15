@@ -199,11 +199,11 @@ function selectImg() {
     layer.open({
         title: "选择图片",
         type: 2,
-        offset: '20%',
+        offset: '10%',
         area:  ['700px', '510px'],
         shadeClose: true,
         anim: 1,
-        move: false,
+        move: true,
         content: '/admin/attach/img'
     });
 }

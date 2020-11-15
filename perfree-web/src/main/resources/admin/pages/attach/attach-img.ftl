@@ -18,7 +18,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label" style="padding-left: 0;">图片名:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="tagName" placeholder="请输入文件名" id="tagName" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                    <input type="text" name="name" placeholder="请输入图片件名" id="name" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -38,68 +38,24 @@
     </form>
 </div>
 <div class="p-table-box">
-    <div class="img-list-box">
-        <div class="img-box">
-            <img lay-src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
-            <span>好图.jpg</span>
-        </div>
-
-        <div class="img-box">
-            <img lay-src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
-            <span>好图好图好图好图好图好图好图好图好图好图好图.jpg</span>
-        </div>
-
-        <div class="img-box">
-            <img lay-src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
-            <span>好图.jpg</span>
-        </div>
-
-        <div class="img-box">
-            <img lay-src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
-            <span>好图.jpg</span>
-        </div>
-
-        <div class="img-box">
-            <img lay-src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
-            <span>好图.jpg</span>
-        </div>
-
-        <div class="img-box">
-            <img lay-src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
-            <span>好图.jpg</span>
-        </div>
+    <div class="img-list-box" id="tableBox">
     </div>
     <div id="tabBoxPage"></div>
 </div>
+
+<script id="tableTpl" type="text/html">
+    {{#  layui.each(d, function(index, item){ }}
+    <div class="img-box">
+        <img lay-src="{{ item.path }}">
+        <span>{{ item.name }}</span>
+    </div>
+    {{#  }); }}
+    {{#  if(d === null || d.length === 0){ }}
+        暂无数据
+    {{#  } }}
+</script>
 <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
-<script>
-    let table,form,layer,layPage,flow,upload;
-    layui.use(['table','form','layer','laypage','flow','upload'], function(){
-        table = layui.table;
-        form = layui.form;
-        layer = layui.layer;
-        layPage = layui.laypage;
-        flow = layui.flow;
-        upload = layui.upload;
-        flow.lazyimg();
-        layPage.render({
-            elem: 'tabBoxPage',
-            count: 50 //数据总数，从服务端得到
-        });
-
-        upload.render({
-            elem: '#uploadBtn' //绑定元素
-            ,url: '/admin/attach/upload' //上传接口
-            ,acceptMime:  'image/*'
-            ,done: function(res){
-                console.log(res)
-            }
-            ,error: function(){
-                //请求异常回调
-            }
-        });
-    });
-</script>
+<script src="/admin/pages/attach/js/attach-img.js"></script>
 </body>
 </html>
