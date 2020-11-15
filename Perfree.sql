@@ -3,15 +3,15 @@
 
  Source Server         : 本机mysql
  Source Server Type    : MySQL
- Source Server Version : 80021
+ Source Server Version : 80022
  Source Host           : localhost:3306
  Source Schema         : perfree
 
  Target Server Type    : MySQL
- Target Server Version : 80021
+ Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 13/11/2020 17:02:29
+ Date: 15/11/2020 13:47:49
 */
 
 SET NAMES utf8mb4;
@@ -28,14 +28,18 @@ CREATE TABLE `p_attach`  (
   `path` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '附件路径',
   `suffix` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '附件后缀',
   `flag` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标识',
+  `type` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文件类型',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_attach
 -- ----------------------------
+INSERT INTO `p_attach` VALUES (1, '96ef23c83008aa227e48deb9c1a1d299.gif', NULL, '\\attach\\20201115\\d975fc2032e44e04a9f8140f297134db.gif', '.gif', NULL, 'img', '2020-11-15 05:43:55', NULL);
+INSERT INTO `p_attach` VALUES (2, '96ef23c83008aa227e48deb9c1a1d299.gif', NULL, '\\attach\\20201115\\e932146150b049d1a854c2f23beb3c6b.gif', '.gif', NULL, 'img', '2020-11-15 05:45:29', NULL);
+INSERT INTO `p_attach` VALUES (3, 'bird.png', NULL, '\\attach\\20201115\\748c7e0e898f41809f13ddbd4dcaf5ba.png', '.png', NULL, 'img', '2020-11-15 05:45:54', NULL);
 
 -- ----------------------------
 -- Table structure for p_category
@@ -53,7 +57,7 @@ CREATE TABLE `p_category`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_category
@@ -184,12 +188,14 @@ CREATE TABLE `p_user`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
 INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, 'https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=', 1, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
 INSERT INTO `p_user` VALUES (9, '12321321', '213qwq221222222', 'b0d86782c6487b6d4f1416c33acd93fb', '79a33b4d54374c01bcf0552cd2e4c928', 0, '/avatar/12-11-2020/ffbaff9bbece4c7eaa899aedc5dcd357.jpg', 1, '2020-11-12 06:55:53', '2020-11-13 05:17:29');
+INSERT INTO `p_user` VALUES (10, 'love', '李莉', '25cf33fa7efa160fa473c5f720a9667e', '3220fde8863343bc935ba8b0303caf82', 0, '/avatar/13-11-2020/5a5e6a396e304634bd7fea9eec52c61a.jpg', 1, '2020-11-13 12:27:03', NULL);
+INSERT INTO `p_user` VALUES (11, '3213', '2312', '777b52ce8ab46aeb35c84f9dc5245fbf', '0a2eff2c8f194ed3adbb6933913ea893', 0, '\\avatar\\14112020\\d684c95f083048b4afb49be2d8189405.jpg', 1, '2020-11-14 15:03:08', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
