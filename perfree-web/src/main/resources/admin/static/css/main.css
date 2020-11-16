@@ -76,3 +76,46 @@ html{
 .layui-card {
     margin: 6px;
 }
+.p-upload-show{
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.p-upload{
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+.p-upload i{
+    font-size: 22px;
+    color: #615d5d;
+}
+.p-upload-box{
+    display: inline-block;
+    width: 180px;
+    height: 160px;
+    line-height: 160px;
+    border: 1px dashed #e6e6e6;
+    text-align: center;
+}
+.p-show-img{
+    width: 100%;
+    height: 100%;
+}
+.p-delete-img{
+    position: absolute;
+    left: 0;
+    top: 1px;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background: #00000066;
+    color: red;
+    display: none;
+}
+.p-delete-img i{
+    font-size: 22px;
+    cursor: pointer;
+}

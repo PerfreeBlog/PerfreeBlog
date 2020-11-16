@@ -15,6 +15,11 @@ layui.use(['table','form','layer','laypage','flow','upload','laytpl'], function(
     $("#queryBtn").click(function () {
         queryTable();
     });
+
+    $("#tableBox").on("click",".img-box",function () {
+        parent.selectImg($(this).children("img").attr("src"));
+        parent.layer.close(parent.layer.getFrameIndex(window.name));
+    });
 });
 
 /**
@@ -70,15 +75,19 @@ function queryTable() {
  */
 function initUpload() {
     upload.render({
-        elem: '#uploadBtn' //绑定元素
-        ,url: '/admin/attach/upload' //上传接口
+        elem: '#uploadBtn'
+        ,url: '/admin/attach/upload'
         ,acceptMime:  'image/*'
         ,done: function(res){
-            console.log(res)
-            queryTable();
+           if (res.code === 200){
+               parent.layer.close(parent.layer.getFrameIndex(window.name));
+               parent.selectImg(res.data.path);
+           } else {
+               layer.msg(res.msg, {icon: 2});
+           }
         }
         ,error: function(){
-            //请求异常回调
+            layer.msg("上传失败", {icon: 2});
         }
     });
 }

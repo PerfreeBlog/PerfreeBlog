@@ -4399,7 +4399,7 @@ Editor.prototype = {
 
             // 自行创建的，需要配置默认的样式
             $toolbarElem.css('background-color', '#f1f1f1').css('border', '1px solid #ccc');
-            $textContainerElem.css('border', '1px solid #ccc').css('border-top', 'none').css('height', '300px');
+            $textContainerElem.css('border', '1px solid #ccc').css('border-top', 'none').css('height', '680px');
         } else {
             // toolbar 和 text 的选择器都有值，记录属性
             $toolbarElem = $toolbarSelector;

@@ -3,8 +3,6 @@ let layer,form,xmSelect;
 let currEditorType = 'markdown';
 // markdown编辑器
 let markdownEditor;
-// 富文本编辑器
-let richTextEditor;
 layui.config({
     base: '/public/libs/layuiComponents/'
 }).extend({
@@ -24,17 +22,10 @@ layui.use(['layer','form','xmSelect'], function(){
  * 页面初始化
  */
 function init() {
-    initEditor();
+    initMarkdownEditor();;
     initEvent();
     initTag();
     initCategory();
-}
-
-/**
- * 初始化编辑器
- */
-function initEditor() {
-    initMarkdownEditor();
 }
 
 /**
@@ -63,11 +54,10 @@ function initEvent() {
  * 初始化markdown编辑器
  */
 function initMarkdownEditor() {
-    currEditorType = 'markdown';
     markdownEditor = editormd("editor", {
-        placeholder : '文章内容',
+        placeholder : '请输入文章内容',
         width : "100%",
-        height : '600',
+        height : '700',
         syncScrolling : "single",
         path : "/public/libs/editormd/lib/", //注意2：你的路径
         saveHTMLToTextarea : false,
@@ -75,55 +65,27 @@ function initMarkdownEditor() {
         watch : false,
         imageUpload : false,
         imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
-        imageUploadURL : "${proPath }/base/blog/upFile", //注意你后端的上传图片服务地址
         toolbarIcons : function() {
             return [
                 "undo", "redo", "|",
                 "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
                 "h1", "h2", "h3", "h4", "h5", "h6", "|",
                 "list-ul", "list-ol", "hr", "|",
-                "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime", "|",
-                "goto-line", "watch", "preview", "fullscreen", "clear", "search"
+                "link", "reference-link", "customImg", "code", "preformatted-text", "code-block", "table", "datetime", "|",
+                "goto-line", "watch", "preview", "clear", "search"
             ]
         },
+        toolbarIconsClass : {
+            customImg : "fa-picture-o"
+        },
+        toolbarHandlers : {
+            customImg : function(cm, icon, cursor, selection) {
+                openSelectImPanel(2,null,markdownEditor,cm, icon, cursor, selection);
+            }
+        }
     });
 }
 
-/**
- * 初始化富文本编辑器
- */
-function initWangEditor() {
-    currEditorType = 'richText';
-    let E = window.wangEditor;
-    richTextEditor = new E('#editor');
-    richTextEditor.customConfig.menus = [
-        'head',  // 标题
-        'bold',  // 粗体
-        'fontSize',  // 字号
-        'italic',  // 斜体
-        'underline',  // 下划线
-        'strikeThrough',  // 删除线
-        'foreColor',  // 文字颜色
-        'backColor',  // 背景颜色
-        'link',  // 插入链接
-        'list',  // 列表
-        'justify',  // 对齐方式
-        'quote',  // 引用
-        'emoticon',  // 表情
-        'image',  // 插入图片
-        'table',  // 表格
-        'video',  // 插入视频
-        'code',  // 插入代码
-        'undo',  // 撤销
-        'redo'  // 重复
-    ];
-    richTextEditor.create();
-    $(".editorImage").on('click', function (e) {
-        alert(1)
-        e.preventDefault();
-        return false;
-    });
-}
 
 /**
  * 初始化标签选择框
@@ -192,18 +154,4 @@ function initCategory() {
             ]
         }
     })
-}
-
-
-function selectImg() {
-    layer.open({
-        title: "选择图片",
-        type: 2,
-        offset: '10%',
-        area:  ['700px', '510px'],
-        shadeClose: true,
-        anim: 1,
-        move: true,
-        content: '/admin/attach/img'
-    });
 }

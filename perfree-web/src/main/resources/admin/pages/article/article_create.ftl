@@ -26,8 +26,8 @@
                                 <input type="text" name="title" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
                             </div>
 
-                            <div class="editor-switch-box">
-                                当前正在使用<span id="currEditor">MarkDown</span>编辑器,点击 <a class="editor-switch-btn">切换富文本编辑器</a>
+                            <div class="layui-form-item" style="margin: 0">
+                                <span class="p-form-tip">文章内容:</span>
                             </div>
                             <div id="editorBox">
                                 <div id="editor"></div>
@@ -85,8 +85,11 @@
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">缩略图:</span>
-                                <button type="button" class="layui-btn" onclick="selectImg()">上传图片</button>
+                                <div class="p-upload-box" id="file">
+                                    <input type="hidden" name="file">
+                                </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -97,6 +100,7 @@
     <script src="/public/libs/editormd/editormd.js"></script>
     <script src="/public/libs/wangeditor/wangEditor.js"></script>
     <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
+    <script src="/public/js/main.js"></script>
     <script src="/admin/pages/article/js/article_create.js"></script>
 </body>
 </html>

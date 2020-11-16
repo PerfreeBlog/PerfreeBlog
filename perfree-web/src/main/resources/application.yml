@@ -57,7 +57,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: debug
+    com.perfree: error
   file:
     name: ./logs/Perfree.log
     max-history: 7
