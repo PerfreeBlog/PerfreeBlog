@@ -47,7 +47,7 @@ function selectImg(path) {
         $("#" + selectImgId).children(".p-upload").hide();
         $("#" + selectImgId).children(".p-upload-show").show();
     } else {
-        EditorCm.replaceSelection("![]("+path+")\n");
+        EditorCm.replaceSelection("![]("+path+")");
         if(EditorSelection === "") {
             EditorCm.setCursor(EditorCursor.line, EditorCursor.ch + 2);
         }
