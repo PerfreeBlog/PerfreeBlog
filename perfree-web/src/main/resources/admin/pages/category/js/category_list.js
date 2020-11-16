@@ -59,7 +59,7 @@ function queryTable() {
             iconIndex: 1,
             isPidData: false,
             idName: 'id',
-            childName: 'childCategory'
+            childName: 'children'
         },
         parseData: function(res){
             layPage.render({

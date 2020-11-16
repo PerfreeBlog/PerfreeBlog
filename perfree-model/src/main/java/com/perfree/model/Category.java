@@ -29,8 +29,17 @@ public class Category implements Serializable {
     private int status;
     private Date createTime;
     private Date updateTime;
-    private List<Category> childCategory;
+    private List<Category> children;
+    private Long value;
 
+
+    public Long getValue() {
+        return this.id;
+    }
+
+    public void setValue(Long value) {
+        this.value = value;
+    }
     public int getStatus() {
         return status;
     }
@@ -39,12 +48,12 @@ public class Category implements Serializable {
         this.status = status;
     }
 
-    public List<Category> getChildCategory() {
-        return childCategory;
+    public List<Category> getChildren() {
+        return children;
     }
 
-    public void setChildCategory(List<Category> childCategory) {
-        this.childCategory = childCategory;
+    public void setChildren(List<Category> children) {
+        this.children = children;
     }
 
     public Long getId() {
@@ -132,7 +141,7 @@ public class Category implements Serializable {
                 ", status=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
-                ", childCategory=" + childCategory +
+                ", childCategory=" + children +
                 '}';
     }
 }

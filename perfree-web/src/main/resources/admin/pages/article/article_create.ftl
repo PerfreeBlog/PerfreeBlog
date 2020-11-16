@@ -73,7 +73,7 @@
 
                             <div class="layui-form-item article-switch">
                                 <span class="p-form-tip">允许评论:</span>
-                                <input type="checkbox" name="switch" lay-text="允许|不允许" lay-skin="switch">
+                                <input type="checkbox" name="switch" lay-text="允许|不允许" lay-skin="switch" checked>
 
                                 <span class="p-form-tip">置顶:</span>
                                 <input type="checkbox" name="switch" lay-text="置顶|不置顶" lay-skin="switch">

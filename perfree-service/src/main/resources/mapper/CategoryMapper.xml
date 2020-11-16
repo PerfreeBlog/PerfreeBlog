@@ -14,7 +14,7 @@
         <result column="status" property="status"></result>
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
-        <collection property="childCategory"
+        <collection property="children"
                     select="getChildCategory" column="id"></collection>
     </resultMap>
 

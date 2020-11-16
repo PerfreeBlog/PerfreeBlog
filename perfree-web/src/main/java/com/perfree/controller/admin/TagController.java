@@ -79,6 +79,16 @@ public class TagController extends BaseController {
     }
 
     /**
+     * 标签管理列表数据
+     * @return String
+     */
+    @GetMapping("/tag/allList")
+    @ResponseBody
+    public ResponseBean allList() {
+        return ResponseBean.success("获取成功", tagService.allList());
+    }
+
+    /**
      * 更新标签
      * @return String
      */

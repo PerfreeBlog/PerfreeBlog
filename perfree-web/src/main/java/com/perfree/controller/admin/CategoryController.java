@@ -66,6 +66,16 @@ public class CategoryController extends BaseController  {
     }
 
     /**
+     * 获取所有分类
+     * @return String
+     */
+    @GetMapping("/category/allList")
+    @ResponseBody
+    public ResponseBean allList() {
+        return ResponseBean.success("获取成功", categoryService.allList());
+    }
+
+    /**
      * 分类编辑页
      * @return String
      */

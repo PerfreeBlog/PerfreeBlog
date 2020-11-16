@@ -71,4 +71,12 @@ public class TagService {
     public int del(String[] idArr) {
         return tagMapper.del(idArr);
     }
+
+    /**
+     * 获取所有tag
+     * @return List<Tag>
+     */
+    public List<Tag> allList() {
+        return tagMapper.getList(null);
+    }
 }

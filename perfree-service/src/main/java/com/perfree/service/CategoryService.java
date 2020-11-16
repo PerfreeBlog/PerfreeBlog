@@ -79,4 +79,12 @@ public class CategoryService {
         category.setUpdateTime(new Date());
         return categoryMapper.changeStatus(category);
     }
+
+    /**
+     * 获取所有分类
+     * @return List<Category>
+     */
+    public List<Category> allList() {
+        return categoryMapper.getList(null);
+    }
 }
