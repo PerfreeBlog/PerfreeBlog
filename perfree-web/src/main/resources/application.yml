@@ -56,10 +56,9 @@ pagehelper:
   params: count=countSql
 
 logging:
-  file:
-    name: Perfree.log
-    path: ./logs/
-    max-size: 10MB
-    max-history: 7
   level:
     com.perfree: debug
+  file:
+    name: ./logs/Perfree.log
+    max-history: 7
+    max-size: 10MB

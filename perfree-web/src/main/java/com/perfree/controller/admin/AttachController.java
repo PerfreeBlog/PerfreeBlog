@@ -9,6 +9,8 @@ import com.perfree.model.Attach;
 import com.perfree.model.Tag;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("/admin")
 public class AttachController extends BaseController {
+    private final Logger logger = LoggerFactory.getLogger(AttachController.class);
     @Value("${web.upload-path}")
     private String uploadPath;
 
@@ -53,10 +56,12 @@ public class AttachController extends BaseController {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
             if (multiFile == null){
+                logger.error("文件不能为空!");
                 return ResponseBean.fail("文件不能为空!", null);
             }
             String multiFileName = multiFile.getOriginalFilename();
             if (StringUtils.isBlank(multiFileName)){
+                logger.error("文件名不能为空!");
                 return ResponseBean.fail("文件名不能为空!", null);
             }
             String type = FileUtil.getFileType(FileTypeUtil.getType(multiFile.getInputStream()));
@@ -70,9 +75,11 @@ public class AttachController extends BaseController {
             if (attachService.add(attach) > 0){
                 return ResponseBean.success("上传成功", attach);
             } else {
+                logger.error("上传失败: {}",attach.toString());
                 return ResponseBean.fail("上传失败",null);
             }
         }catch (Exception e){
+            logger.error("上传失败: {}", e.getMessage());
             return ResponseBean.fail("上传失败", e.getMessage());
         }
     }

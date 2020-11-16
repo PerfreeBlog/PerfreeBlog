@@ -5,6 +5,8 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Tag;
 import com.perfree.service.TagService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/admin")
 public class TagController extends BaseController {
+    private final Logger logger = LoggerFactory.getLogger(TagController.class);
     @Autowired
     private TagService tagService;
 
@@ -61,6 +64,7 @@ public class TagController extends BaseController {
         if (tagService.add(tag) > 0) {
             return ResponseBean.success("添加成功", null);
         }
+        logger.error("标签添加失败: {}", tag.toString());
         return ResponseBean.fail("添加失败", null);
     }
 
@@ -84,6 +88,7 @@ public class TagController extends BaseController {
         if (tagService.update(tag) > 0) {
             return ResponseBean.success("更新成功", null);
         }
+        logger.error("标签更新失败: {}", tag.toString());
         return ResponseBean.fail("更新失败", null);
     }
 
@@ -98,6 +103,7 @@ public class TagController extends BaseController {
         if (tagService.del(idArr) > 0) {
             return ResponseBean.success("删除成功", null);
         }
+        logger.error("标签删除失败: {}", ids);
         return ResponseBean.fail("删除失败", null);
     }
 }

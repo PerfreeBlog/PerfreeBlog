@@ -3,11 +3,12 @@ package com.perfree.controller.admin;
 import com.perfree.common.FileUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
-import com.perfree.common.StringUtil;
 import com.perfree.controller.BaseController;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileDescriptor;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * 用户相关
@@ -31,6 +28,7 @@ import java.util.Date;
 @Controller
 @RequestMapping("/admin")
 public class UserController extends BaseController {
+    private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Value("${web.upload-path}")
     private String uploadPath;
@@ -69,6 +67,7 @@ public class UserController extends BaseController {
             String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "avatar");
             return ResponseBean.success("上传成功", path);
         }catch (Exception e){
+            logger.error("上传失败: {}", e.getMessage());
             return ResponseBean.fail("上传失败", e.getMessage());
         }
     }
@@ -93,14 +92,17 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResponseBean add(@RequestBody @Valid User user) {
         if (StringUtils.isBlank(user.getPassword())){
+            logger.error("密码不能为空且在6-12字符之间: {}", user.toString());
             return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
         }
         if (userService.getUserByAccount(user.getAccount()) != null){
+            logger.error("账户已存在: {}", user.toString());
             return ResponseBean.fail("账户已存在", null);
         }
         if (userService.add(user) > 0) {
             return ResponseBean.success("添加成功", null);
         }
+        logger.error("用户添加失败: {}", user.toString());
         return ResponseBean.fail("添加失败", null);
     }
 
@@ -124,6 +126,7 @@ public class UserController extends BaseController {
         if (userService.update(user) > 0) {
             return ResponseBean.success("更新成功", null);
         }
+        logger.error("用户更新失败: {}", user.toString());
         return ResponseBean.fail("更新失败", null);
     }
 
@@ -136,11 +139,13 @@ public class UserController extends BaseController {
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
         if (Arrays.asList(idArr).contains(getUser().getId().toString())){
+            logger.error("不能删除当前登录账户: {}", ids);
             return ResponseBean.fail("不能删除当前登录账户", null);
         }
         if (userService.del(idArr) > 0) {
             return ResponseBean.success("删除成功", null);
         }
+        logger.error("用户删除失败: {}", ids);
         return ResponseBean.fail("删除失败", null);
     }
 
@@ -154,6 +159,7 @@ public class UserController extends BaseController {
         if (userService.resetPassword(user) > 0) {
             return ResponseBean.success("重置密码为123456成功", null);
         }
+        logger.error("用户重置密码失败: {}", user.toString());
         return ResponseBean.fail("重置密码失败", null);
     }
 
@@ -167,6 +173,7 @@ public class UserController extends BaseController {
         if (userService.changeStatus(user) > 0) {
             return ResponseBean.success("修改成功", null);
         }
+        logger.error("用户修改失败: {}", user.toString());
         return ResponseBean.fail("修改失败", null);
     }
 }

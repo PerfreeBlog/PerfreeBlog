@@ -5,6 +5,8 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Menu;
 import com.perfree.service.MenuService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin")
 public class MenuController extends BaseController {
-
+    private final Logger logger = LoggerFactory.getLogger(MenuController.class);
     @Autowired
     private MenuService menuService;
     /**
@@ -68,6 +70,7 @@ public class MenuController extends BaseController {
         if (menuService.add(menu) > 0) {
             return ResponseBean.success("添加成功", null);
         }
+        logger.error("菜单添加失败: {}", menu.toString());
         return ResponseBean.fail("添加失败", null);
     }
 
@@ -81,6 +84,7 @@ public class MenuController extends BaseController {
         if (menuService.update(menu) > 0) {
             return ResponseBean.success("更新成功", null);
         }
+        logger.error("菜单更新失败: {}", menu.toString());
         return ResponseBean.fail("更新失败", null);
     }
 
@@ -95,6 +99,7 @@ public class MenuController extends BaseController {
         if (menuService.del(idArr) > 0) {
             return ResponseBean.success("删除成功", null);
         }
+        logger.error("菜单删除失败: {}", ids);
         return ResponseBean.fail("删除失败", null);
     }
 
@@ -108,6 +113,7 @@ public class MenuController extends BaseController {
         if (menuService.changeStatus(menu) > 0) {
             return ResponseBean.success("修改成功", null);
         }
+        logger.error("菜单修改失败: {}", menu.toString());
         return ResponseBean.fail("修改失败", null);
     }
 }

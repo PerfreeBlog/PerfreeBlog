@@ -4,8 +4,9 @@ import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Category;
-import com.perfree.model.Menu;
 import com.perfree.service.CategoryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/admin")
 public class CategoryController extends BaseController  {
-
+    private final Logger logger = LoggerFactory.getLogger(CategoryController.class);
     @Autowired
     private CategoryService categoryService;
 
@@ -49,6 +50,7 @@ public class CategoryController extends BaseController  {
         if (categoryService.add(category) > 0) {
             return ResponseBean.success("添加成功", null);
         }
+        logger.error("分类添加失败: {}",category.toString());
         return ResponseBean.fail("添加失败", null);
     }
 
@@ -84,6 +86,7 @@ public class CategoryController extends BaseController  {
         if (categoryService.del(idArr) > 0) {
             return ResponseBean.success("删除成功", null);
         }
+        logger.error("分类删除失败: {}",ids);
         return ResponseBean.fail("删除失败", null);
     }
 
@@ -97,6 +100,7 @@ public class CategoryController extends BaseController  {
         if (categoryService.update(category) > 0) {
             return ResponseBean.success("更新成功", null);
         }
+        logger.error("分类更新失败: {}", category.toString());
         return ResponseBean.fail("更新失败", null);
     }
 
@@ -110,6 +114,7 @@ public class CategoryController extends BaseController  {
         if (categoryService.changeStatus(category) > 0) {
             return ResponseBean.success("修改成功", null);
         }
+        logger.error("分类修改失败: {}", category.toString());
         return ResponseBean.fail("修改失败", null);
     }
 }
