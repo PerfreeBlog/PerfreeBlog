@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 15/11/2020 21:44:02
+ Date: 17/11/2020 21:13:39
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `p_attach`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_attach
@@ -105,14 +105,10 @@ INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'fa-comment', 
 INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/category', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
 INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
 INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
-INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 9, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
+INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 10, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
 INSERT INTO `p_menu` VALUES (10, -1, '用户', '/admin/user', 'fa-user', 7, 1, 0, 0, '2020-11-11 13:30:44', '2020-11-11 13:30:46');
-INSERT INTO `p_menu` VALUES (11, -1, '菜单', '/admin/menu', 'fa-bars', 8, 1, 0, 0, '2020-11-12 15:55:30', NULL);
-INSERT INTO `p_menu` VALUES (20, -1, '2', '1', '1', 1, 0, 1, 0, '2020-11-13 03:41:39', '2020-11-13 07:21:06');
-INSERT INTO `p_menu` VALUES (24, 23, 'dsada', 'dsads', 'dsadas', 2, 0, 1, 0, '2020-11-13 03:55:04', NULL);
-INSERT INTO `p_menu` VALUES (27, 26, '3', '3', '3', 3, 0, 1, 0, '2020-11-13 03:55:31', NULL);
-INSERT INTO `p_menu` VALUES (28, -1, '22222', '23333', '1', 45, 0, 0, 0, '2020-11-13 05:13:06', '2020-11-13 05:18:00');
-INSERT INTO `p_menu` VALUES (29, 20, '12', '221', '12', 21, 0, 1, 0, '2020-11-13 05:24:37', NULL);
+INSERT INTO `p_menu` VALUES (11, -1, '菜单', '/admin/menu', 'fa-bars', 8, 1, 0, 0, '2020-11-12 15:55:30', '2020-11-17 20:33:28');
+INSERT INTO `p_menu` VALUES (12, -1, '附件', '/admin/attach', 'fa-file-archive-o', 9, 1, 0, 0, '2020-11-17 20:33:26', '2020-11-17 20:33:31');
 
 -- ----------------------------
 -- Table structure for p_role
@@ -158,6 +154,7 @@ INSERT INTO `p_role_menu` VALUES (1, 8);
 INSERT INTO `p_role_menu` VALUES (1, 9);
 INSERT INTO `p_role_menu` VALUES (1, 10);
 INSERT INTO `p_role_menu` VALUES (1, 11);
+INSERT INTO `p_role_menu` VALUES (1, 12);
 
 -- ----------------------------
 -- Table structure for p_tag
