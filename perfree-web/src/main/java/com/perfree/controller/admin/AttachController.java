@@ -6,7 +6,6 @@ import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Attach;
-import com.perfree.model.Tag;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -41,8 +40,8 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/img")
-    public String index() {
-        return "admin/pages/attach/attach-img";
+    public String attachImg() {
+        return "admin/pages/attach/attach_img";
     }
 
     /**
@@ -92,5 +91,23 @@ public class AttachController extends BaseController {
     @ResponseBody
     public Pager<Attach> list(@RequestBody Pager<Attach> pager) {
         return attachService.list(pager);
+    }
+
+    /**
+     * 附件管理列表页
+     * @return String
+     */
+    @RequestMapping("/attach")
+    public String index() {
+        return "admin/pages/attach/attach_list";
+    }
+
+    /**
+     * 附件上传页
+     * @return String
+     */
+    @RequestMapping("/uploadPage")
+    public String uploadPage() {
+        return "admin/pages/attach/attach_upload";
     }
 }

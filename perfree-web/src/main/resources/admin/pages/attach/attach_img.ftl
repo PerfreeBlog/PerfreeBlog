@@ -56,6 +56,6 @@
 </script>
 <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
-<script src="/admin/pages/attach/js/attach-img.js"></script>
+<script src="/admin/pages/attach/js/attach_img.js"></script>
 </body>
 </html>
