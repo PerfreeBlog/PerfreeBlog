@@ -24,7 +24,7 @@
             <div class="layui-body">
                 <div class="layui-tab" lay-allowClose="true" lay-filter="tabNav">
                     <ul class="layui-tab-title content-tab-title">
-                        <li class="layui-this" lay-id="0"><i class='fa fa-home' style='font-size: 16px;'></i></li>
+                        <li class="layui-this" lay-id="1"><i class='fa fa-home' style='font-size: 16px;'></i></li>
                     </ul>
                     <div class="layui-tab-content f-tab-content">
                         <div class="layui-tab-item layui-show">
