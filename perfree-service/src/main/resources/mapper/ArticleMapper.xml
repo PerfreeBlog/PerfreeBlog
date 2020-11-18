@@ -14,4 +14,43 @@
             (#{item.articleId}, #{item.tagId})
         </foreach >
     </insert>
+
+    <resultMap id="LIST_RESULT" type="com.perfree.model.Article">
+        <id property="id" column="id"></id>
+        <result property="title" column="title"></result>
+        <result property="content" column="content"></result>
+        <result property="summary" column="summary"></result>
+        <result property="categoryId" column="categoryId"></result>
+        <result property="metaKeywords" column="metaKeywords"></result>
+        <result property="metaDescription" column="metaDescription"></result>
+        <result property="thumbnail" column="thumbnail"></result>
+        <result property="isTop" column="isTop"></result>
+        <result property="password" column="password"></result>
+        <result property="status" column="status"></result>
+        <result property="commentCount" column="commentCount"></result>
+        <result property="viewCount" column="viewCount"></result>
+        <result property="userId" column="userId"></result>
+        <result property="isComment" column="isComment"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+
+        <association property="user" javaType="com.perfree.model.User">
+            <id property="id" column="userId" />
+            <result property="userName" column="userName"/>
+        </association>
+
+        <association property="category" javaType="com.perfree.model.Category">
+            <id property="id" column="categoryId" />
+            <result property="name" column="categoryName"/>
+        </association>
+        <collection property="tags" select="getArticleTagById" column="id"></collection>
+    </resultMap>
+    <select id="getList" resultMap="LIST_RESULT">
+        select t1.*,t2.name categoryName,t3.userName from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        order by t1.createTime desc
+    </select>
+
+    <select id="getArticleTagById" resultType="com.perfree.model.Tag">
+        select t2.* from p_article_tag t1 left join p_tag t2 on t1.tagId = t2.id where t1.articleId = #{id}
+    </select>
 </mapper>

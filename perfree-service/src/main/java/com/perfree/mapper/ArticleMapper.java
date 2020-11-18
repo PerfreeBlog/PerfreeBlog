@@ -24,4 +24,19 @@ public interface ArticleMapper {
      * @param articleTags articleTags
      */
     void addArticleTag(List<ArticleTag> articleTags);
+
+    /**
+     * 文章列表数据
+     * @param article article
+     * @return   List<Article>
+     */
+    List<Article> getList(Article article);
+
+    /**
+     * 根据文章id获取标签
+     * @param id id
+     * @return List<Tag>
+     */
+    List<Tag> getArticleTagById(String id);
+
 }

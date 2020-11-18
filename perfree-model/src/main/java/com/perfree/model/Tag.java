@@ -10,7 +10,6 @@ public class Tag implements Serializable {
     private static final long serialVersionUID = 7349480507456460022L;
     private Long id;
     private String name;
-    private Long count;
     private Long userId;
     private Date createTime;
     private Date updateTime;
@@ -37,14 +36,6 @@ public class Tag implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getCount() {
-        return count;
-    }
-
-    public void setCount(Long count) {
-        this.count = count;
     }
 
     public Long getUserId() {
@@ -76,7 +67,6 @@ public class Tag implements Serializable {
         return "Tag{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", count=" + count +
                 ", userId=" + userId +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +

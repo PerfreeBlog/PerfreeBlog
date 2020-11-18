@@ -2,65 +2,61 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>面板</title>
+    <title>文章</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link href="/public/libs/mdui/css/mdui.min.css" rel="stylesheet"/>
-    <link href="/admin/static/css/article_list.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="/public/libs/layui-v2.5.6/layui/css/layui.css">
+    <link href="/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/admin/static/css/main.css" rel="stylesheet"/>
 </head>
-<body>
-<div class="p-container">
-    <div class="mdui-table-fluid mdui-shadow-0">
-        <table class="mdui-table mdui-table-selectable">
-            <thead>
-            <tr>
-                <th>Dessert (100g serving)</th>
-                <th class="mdui-table-col-numeric" mdui-tooltip="{content: 'The total amount of food energy in the given serving size.'}">Calories</th>
-                <th class="mdui-table-col-numeric">Fat (g)</th>
-                <th class="mdui-table-col-numeric">Carbs (g)</th>
-                <th class="mdui-table-col-numeric">Protein (g)</th>
-                <th class="mdui-table-col-numeric">Sodium (mg)</th>
-                <th class="mdui-table-col-numeric" mdui-tooltip="{content: 'The amount of calcium as a percentage of the recommended daily amount.'}">Calclum (%)</th>
-                <th class="mdui-table-col-numeric">Lron (%)</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="mdui-table-row-selected">
-                <td>Frozen yogurt</td>
-                <td>159</td>
-                <td>6.0</td>
-                <td>24</td>
-                <td>4.0</td>
-                <td>87</td>
-                <td>14%</td>
-                <td>1%</td>
-            </tr>
-            <tr>
-                <td>Ice cream sandwich</td>
-                <td>237</td>
-                <td>9.0</td>
-                <td>37</td>
-                <td>4.3</td>
-                <td>129</td>
-                <td>8%</td>
-                <td>1%</td>
-            </tr>
-            <tr>
-                <td>Eclair</td>
-                <td>262</td>
-                <td>16.0</td>
-                <td>24</td>
-                <td>6.0</td>
-                <td>337</td>
-                <td>6%</td>
-                <td>7%</td>
-            </tr>
-            </tbody>
-        </table>
+<body class="layui-layout-body">
+    <div class="p-container">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div class="p-search-panel">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">标签名:</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="tagName" placeholder="请输入标签名" id="tagName" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <button id="queryBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                    查询
+                                </button>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button id="addBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                    添加
+                                </button>
+                            </div>
+
+                            <div class="layui-inline">
+                                <button id="batchDeleteBtn" class="layui-btn" type="button">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    批量删除
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="p-table-box">
+                    <table class="layui-hide" id="tableBox" lay-filter="tableBox"></table>
+                </div>
+            </div>
+        </div>
+
     </div>
-</div>
-<script src="/public/libs/mdui/js/mdui.min.js"></script>
+
+    <script src="/public/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
+    <script src="/admin/pages/article/js/article_list.js"></script>
 </body>
 </html>

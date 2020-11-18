@@ -122,3 +122,17 @@ html{
 .p-add-panel{
     background: white;
 }
+.tagBtn{
+    margin-right: 5px;
+    display: inline-block;
+    background: #5fb878;
+    color: white;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 5px;
+    font-size: 13px;
+}
+.tagBtn:hover{
+    background: #5fb878;
+    color: white;
+}

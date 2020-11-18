@@ -1,5 +1,6 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Article;
@@ -50,4 +51,15 @@ public class ArticleController extends BaseController {
         logger.error("文章添加失败: {}", article.toString());
         return ResponseBean.fail("添加失败", null);
     }
+
+    /**
+     * 文章管理列表数据
+     * @return Pager<Article>
+     */
+    @PostMapping("/article/list")
+    @ResponseBody
+    public Pager<Article> list(@RequestBody Pager<Article> pager) {
+        return articleService.list(pager);
+    }
+
 }

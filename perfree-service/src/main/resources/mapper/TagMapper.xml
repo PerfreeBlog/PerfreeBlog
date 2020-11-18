@@ -29,7 +29,6 @@
     <resultMap id="LIST_RESULT" type="com.perfree.model.Tag">
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
-        <result property="count" column="count"></result>
         <result property="userId" column="userId"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>

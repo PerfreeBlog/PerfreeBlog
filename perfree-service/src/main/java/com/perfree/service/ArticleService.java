@@ -1,13 +1,18 @@
 package com.perfree.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.perfree.common.Pager;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Article;
+import com.perfree.model.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ArticleService {
@@ -33,5 +38,20 @@ public class ArticleService {
             articleMapper.addArticleTag(article.getArticleTags());
         }
         return result;
+    }
+
+    /**
+     * 文章管理列表数据
+     * @param pager pager
+     * @return  Pager<Article>
+     */
+    public Pager<Article> list(Pager<Article> pager) {
+        PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
+        List<Article> articles = articleMapper.getList(pager.getForm());
+        PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        pager.setTotal(pageInfo.getTotal());
+        pager.setData(pageInfo.getList());
+        pager.setCode(Pager.SUCCESS_CODE);
+        return pager;
     }
 }

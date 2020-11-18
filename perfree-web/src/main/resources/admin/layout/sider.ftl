@@ -15,7 +15,7 @@
                              <#if menu.url == '/admin/article'>
                                  id="articleListMenu"
                              </#if>
-                           onclick="openTab('${menu.icon}','${menu.name}','${menu.url}','${menu_index}');">
+                           onclick="openTab('${menu.icon}','${menu.name}','${menu.url}','${menu.id}');">
                             <i class="fa ${menu.icon}" aria-hidden="true"></i><span class="f-nav-content">${menu.name}</span>
                         </a>
                     </li>
@@ -28,7 +28,7 @@
                                 <#if childMenu.url == '/admin/article'>
                                     id="articleListMenu"
                                 </#if>
-                                onclick="openTab('','${menu.name + '-' + childMenu.name}','${childMenu.url}','${menu_index}_${childMenu_index}');">${childMenu.name}</a></dd>
+                                onclick="openTab('','${menu.name + '-' + childMenu.name}','${childMenu.url}','${childMenu.id}');">${childMenu.name}</a></dd>
                           </#list>
                         </dl>
                     </li>
