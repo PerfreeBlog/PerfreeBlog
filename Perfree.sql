@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 18/11/2020 14:56:13
+ Date: 18/11/2020 16:44:37
 */
 
 SET NAMES utf8mb4;
@@ -46,6 +46,17 @@ CREATE TABLE `p_article`  (
 -- Records of p_article
 -- ----------------------------
 INSERT INTO `p_article` VALUES (2, '111', '11111', '', 1, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 06:19:56', NULL);
+INSERT INTO `p_article` VALUES (12, '2222222', '22222', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 07:52:12', NULL);
+INSERT INTO `p_article` VALUES (13, '343', '34324233432', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 07:53:43', NULL);
+INSERT INTO `p_article` VALUES (14, '223', '3232323', '', NULL, '', '', '', 1, '', 0, 0, 0, 1, 1, '2020-11-18 07:58:25', NULL);
+INSERT INTO `p_article` VALUES (15, '232321', '321321321', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:04:18', NULL);
+INSERT INTO `p_article` VALUES (16, '123', '321321321', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:11:19', NULL);
+INSERT INTO `p_article` VALUES (17, '231232', '321321321321321', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:11:33', NULL);
+INSERT INTO `p_article` VALUES (18, '23232', '13213213213213', '', 1, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:13:43', NULL);
+INSERT INTO `p_article` VALUES (19, '213', '213213213213', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:14:22', NULL);
+INSERT INTO `p_article` VALUES (20, '23213', '2313213', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:16:20', NULL);
+INSERT INTO `p_article` VALUES (21, '小丁小丁小丁小丁小丁', '小丁\n小丁小丁小丁小丁小丁小丁![](/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg)\n![](/attach/20201118/c72a3e7062544304b4e25fd7464fdc84.jpg)', '', 1, '', '', '/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg', 0, 'b0d062c3dd3afba8d9c73bf627b6f954', 0, 0, 0, 1, 1, '2020-11-18 08:32:21', NULL);
+INSERT INTO `p_article` VALUES (22, '丁', '12321321321321', '', 1, '', '', '/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:34:56', NULL);
 
 -- ----------------------------
 -- Table structure for p_article_tag
@@ -67,6 +78,36 @@ INSERT INTO `p_article_tag` VALUES (3, 40);
 INSERT INTO `p_article_tag` VALUES (4, 39);
 INSERT INTO `p_article_tag` VALUES (4, 38);
 INSERT INTO `p_article_tag` VALUES (4, 40);
+INSERT INTO `p_article_tag` VALUES (15, 40);
+INSERT INTO `p_article_tag` VALUES (15, 39);
+INSERT INTO `p_article_tag` VALUES (15, 38);
+INSERT INTO `p_article_tag` VALUES (15, 37);
+INSERT INTO `p_article_tag` VALUES (15, 36);
+INSERT INTO `p_article_tag` VALUES (15, 35);
+INSERT INTO `p_article_tag` VALUES (16, 40);
+INSERT INTO `p_article_tag` VALUES (17, 39);
+INSERT INTO `p_article_tag` VALUES (17, 38);
+INSERT INTO `p_article_tag` VALUES (17, 37);
+INSERT INTO `p_article_tag` VALUES (17, 36);
+INSERT INTO `p_article_tag` VALUES (18, 40);
+INSERT INTO `p_article_tag` VALUES (18, 39);
+INSERT INTO `p_article_tag` VALUES (18, 38);
+INSERT INTO `p_article_tag` VALUES (18, 37);
+INSERT INTO `p_article_tag` VALUES (19, 40);
+INSERT INTO `p_article_tag` VALUES (19, 39);
+INSERT INTO `p_article_tag` VALUES (19, 38);
+INSERT INTO `p_article_tag` VALUES (19, 37);
+INSERT INTO `p_article_tag` VALUES (20, 39);
+INSERT INTO `p_article_tag` VALUES (20, 38);
+INSERT INTO `p_article_tag` VALUES (20, 37);
+INSERT INTO `p_article_tag` VALUES (20, 36);
+INSERT INTO `p_article_tag` VALUES (21, 39);
+INSERT INTO `p_article_tag` VALUES (21, 40);
+INSERT INTO `p_article_tag` VALUES (21, 38);
+INSERT INTO `p_article_tag` VALUES (21, 41);
+INSERT INTO `p_article_tag` VALUES (22, 41);
+INSERT INTO `p_article_tag` VALUES (22, 40);
+INSERT INTO `p_article_tag` VALUES (22, 39);
 
 -- ----------------------------
 -- Table structure for p_attach
@@ -99,7 +140,7 @@ INSERT INTO `p_attach` VALUES (39, 'all.2020-11-17.log', '23213', '/attach/20201
 INSERT INTO `p_attach` VALUES (40, '3.jpg', '1222', '/attach/20201118/48b47d234cf640cf88069f5175dba56a.jpg', '.jpg', '', 'img', '2020-11-18 02:51:25', '2020-11-18 03:04:33');
 INSERT INTO `p_attach` VALUES (41, '1.jpg', '', '/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg', '.jpg', '', 'img', '2020-11-18 03:05:08', NULL);
 INSERT INTO `p_attach` VALUES (42, '2.jpg', '', '/attach/20201118/c00cf01e0f194565ac78d3c959a27260.jpg', '.jpg', '', 'img', '2020-11-18 03:43:47', NULL);
-INSERT INTO `p_attach` VALUES (43, '3.jpg', '', '/attach/20201118/bda243579efb4958bd29214573da3279.jpg', '.jpg', '', 'img', '2020-11-18 03:43:51', NULL);
+INSERT INTO `p_attach` VALUES (44, '1.jpg', NULL, '/attach/20201118/c72a3e7062544304b4e25fd7464fdc84.jpg', '.jpg', NULL, 'img', '2020-11-18 08:31:35', NULL);
 
 -- ----------------------------
 -- Table structure for p_category
@@ -214,7 +255,6 @@ DROP TABLE IF EXISTS `p_tag`;
 CREATE TABLE `p_tag`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标签名',
-  `count` int(0) NOT NULL DEFAULT 0 COMMENT '文章数量',
   `userId` int(0) NOT NULL COMMENT '添加人',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
@@ -224,23 +264,24 @@ CREATE TABLE `p_tag`  (
 -- ----------------------------
 -- Records of p_tag
 -- ----------------------------
-INSERT INTO `p_tag` VALUES (11, '打撒大撒放到', 0, 1, '2020-11-11 01:03:07', NULL);
-INSERT INTO `p_tag` VALUES (13, '我去额去我', 0, 1, '2020-11-11 01:04:06', NULL);
-INSERT INTO `p_tag` VALUES (26, '散打按时', 0, 1, '2020-11-11 04:35:31', NULL);
-INSERT INTO `p_tag` VALUES (27, '1', 0, 1, '2020-11-11 08:53:53', NULL);
-INSERT INTO `p_tag` VALUES (28, 'aa', 0, 1, '2020-11-18 05:31:06', NULL);
-INSERT INTO `p_tag` VALUES (29, '456', 0, 1, '2020-11-18 05:37:03', NULL);
-INSERT INTO `p_tag` VALUES (30, '789', 0, 1, '2020-11-18 05:37:44', NULL);
-INSERT INTO `p_tag` VALUES (31, '11232', 0, 1, '2020-11-18 05:38:09', NULL);
-INSERT INTO `p_tag` VALUES (32, '撒大事', 0, 1, '2020-11-18 05:39:55', NULL);
-INSERT INTO `p_tag` VALUES (33, '而我却', 0, 1, '2020-11-18 05:41:52', NULL);
-INSERT INTO `p_tag` VALUES (34, '呃呃呃', 0, 1, '2020-11-18 05:42:51', NULL);
-INSERT INTO `p_tag` VALUES (35, '111', 0, 1, '2020-11-18 05:43:07', NULL);
-INSERT INTO `p_tag` VALUES (36, '23223', 0, 1, '2020-11-18 05:44:21', NULL);
-INSERT INTO `p_tag` VALUES (37, '23223大大', 0, 1, '2020-11-18 05:44:27', NULL);
-INSERT INTO `p_tag` VALUES (38, '2323哇啊', 0, 1, '2020-11-18 05:45:02', NULL);
-INSERT INTO `p_tag` VALUES (39, '是大大说的撒', 0, 1, '2020-11-18 05:48:19', NULL);
-INSERT INTO `p_tag` VALUES (40, '萨达', 0, 1, '2020-11-18 06:20:29', NULL);
+INSERT INTO `p_tag` VALUES (11, '打撒大撒放到', 1, '2020-11-11 01:03:07', NULL);
+INSERT INTO `p_tag` VALUES (13, '我去额去我', 1, '2020-11-11 01:04:06', NULL);
+INSERT INTO `p_tag` VALUES (26, '散打按时', 1, '2020-11-11 04:35:31', NULL);
+INSERT INTO `p_tag` VALUES (27, '1', 1, '2020-11-11 08:53:53', NULL);
+INSERT INTO `p_tag` VALUES (28, 'aa', 1, '2020-11-18 05:31:06', NULL);
+INSERT INTO `p_tag` VALUES (29, '456', 1, '2020-11-18 05:37:03', NULL);
+INSERT INTO `p_tag` VALUES (30, '789', 1, '2020-11-18 05:37:44', NULL);
+INSERT INTO `p_tag` VALUES (31, '11232', 1, '2020-11-18 05:38:09', NULL);
+INSERT INTO `p_tag` VALUES (32, '撒大事', 1, '2020-11-18 05:39:55', NULL);
+INSERT INTO `p_tag` VALUES (33, '而我却', 1, '2020-11-18 05:41:52', NULL);
+INSERT INTO `p_tag` VALUES (34, '呃呃呃', 1, '2020-11-18 05:42:51', NULL);
+INSERT INTO `p_tag` VALUES (35, '111', 1, '2020-11-18 05:43:07', NULL);
+INSERT INTO `p_tag` VALUES (36, '23223', 1, '2020-11-18 05:44:21', NULL);
+INSERT INTO `p_tag` VALUES (37, '23223大大', 1, '2020-11-18 05:44:27', NULL);
+INSERT INTO `p_tag` VALUES (38, '2323哇啊', 1, '2020-11-18 05:45:02', NULL);
+INSERT INTO `p_tag` VALUES (39, '是大大说的撒', 1, '2020-11-18 05:48:19', NULL);
+INSERT INTO `p_tag` VALUES (40, '萨达', 1, '2020-11-18 06:20:29', NULL);
+INSERT INTO `p_tag` VALUES (41, '小丁', 1, '2020-11-18 08:31:57', NULL);
 
 -- ----------------------------
 -- Table structure for p_user
@@ -264,8 +305,5 @@ CREATE TABLE `p_user`  (
 -- Records of p_user
 -- ----------------------------
 INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, 'https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=', 1, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
-INSERT INTO `p_user` VALUES (9, '12321321', '213qwq221222222', 'b0d86782c6487b6d4f1416c33acd93fb', '79a33b4d54374c01bcf0552cd2e4c928', 0, '/avatar/12-11-2020/ffbaff9bbece4c7eaa899aedc5dcd357.jpg', 1, '2020-11-12 06:55:53', '2020-11-13 05:17:29');
-INSERT INTO `p_user` VALUES (10, 'love', '李莉', '25cf33fa7efa160fa473c5f720a9667e', '3220fde8863343bc935ba8b0303caf82', 0, '/avatar/13-11-2020/5a5e6a396e304634bd7fea9eec52c61a.jpg', 1, '2020-11-13 12:27:03', NULL);
-INSERT INTO `p_user` VALUES (11, '3213', '2312', '777b52ce8ab46aeb35c84f9dc5245fbf', '0a2eff2c8f194ed3adbb6933913ea893', 0, '\\avatar\\14112020\\d684c95f083048b4afb49be2d8189405.jpg', 1, '2020-11-14 15:03:08', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
