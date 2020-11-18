@@ -58,35 +58,35 @@
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">文章摘要:</span>
-                                <textarea name="desc" placeholder="请输入内容" class="article-textarea layui-textarea" style="resize: none"></textarea>
+                                <textarea name="summary" placeholder="请输入内容" class="article-textarea layui-textarea" style="resize: none"></textarea>
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO关键字:</span>
-                                <input type="text" name="title" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+                                <input type="text" name="metaKeywords" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO描述:</span>
-                                <textarea name="desc" placeholder="请输入内容" class="layui-textarea article-textarea" style="resize: none"></textarea>
+                                <textarea name="metaDescription" placeholder="请输入内容" class="layui-textarea article-textarea" style="resize: none"></textarea>
                             </div>
 
                             <div class="layui-form-item article-switch">
                                 <span class="p-form-tip">允许评论:</span>
-                                <input type="checkbox" name="switch" lay-text="允许|不允许" lay-skin="switch" checked>
+                                <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch" checked>
 
                                 <span class="p-form-tip">置顶:</span>
-                                <input type="checkbox" name="switch" lay-text="置顶|不置顶" lay-skin="switch">
+                                <input type="checkbox" name="isTop" lay-text="置顶|不置顶" lay-skin="switch">
                             </div>
                             <div class="layui-form-item">
                                 <span class="p-form-tip">访问密码:</span>
-                                <input type="xxx" name="" placeholder="请输入访问密码" autocomplete="off" class="article-password-input layui-input">
+                                <input type="text" name="password" placeholder="请输入访问密码" autocomplete="off" class="article-password-input layui-input">
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">缩略图:</span>
-                                <div class="p-upload-box" id="file">
-                                    <input type="hidden" name="file">
+                                <div class="p-upload-box" id="thumbnail">
+                                    <input type="hidden" name="thumbnail">
                                 </div>
                             </div>
 
