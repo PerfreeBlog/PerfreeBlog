@@ -16,7 +16,7 @@ public class Article implements Serializable {
     private static final long serialVersionUID = 4900274588193382137L;
     private Long id;
     @NotBlank(message = "文章标题不允许为空")
-    @Length(min = 3,max = 12,message = "文章标题长度要在1-100字之间")
+    @Length(min = 1,max = 200,message = "文章标题长度要在1-200字之间")
     private String title;
     @NotBlank(message = "文章内容不允许为空")
     private String content;
