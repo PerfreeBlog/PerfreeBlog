@@ -2,7 +2,7 @@ server:
   port: 8080
 
 # spring配置
-web.upload-path: D:/images
+web.upload-path: D:/perfree
 spring:
   resources:
     static-locations: classpath:/,classpath:/themes/,file:${web.upload-path}
@@ -16,8 +16,8 @@ spring:
     content-type: text/html; charset=utf-8
   servlet:
     multipart:
-      max-file-size: 30MB
-      max-request-size: 30MB
+      max-file-size: -1
+      max-request-size: -1
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/perfree?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root

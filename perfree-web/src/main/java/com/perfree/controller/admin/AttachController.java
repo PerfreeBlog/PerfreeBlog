@@ -6,6 +6,7 @@ import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Attach;
+import com.perfree.model.Tag;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -13,14 +14,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URLEncoder;
+import java.util.Map;
 
 /**
  * 附件
@@ -50,7 +53,9 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/upload")
     @ResponseBody
-    public ResponseBean upload(HttpServletRequest request) {
+    public ResponseBean upload(HttpServletRequest request,
+                               @RequestParam(required = false, value = "desc") String desc,
+                               @RequestParam(required = false, value = "flag") String flag) {
         try{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
@@ -63,14 +68,16 @@ public class AttachController extends BaseController {
                 logger.error("文件名不能为空!");
                 return ResponseBean.fail("文件名不能为空!", null);
             }
-            String type = FileUtil.getFileType(FileTypeUtil.getType(multiFile.getInputStream()));
             String suffix = multiFileName.substring(multiFileName.indexOf("."));
+            String type = FileUtil.getFileType(FileTypeUtil.getType(multiFile.getInputStream()),suffix);
             String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "attach");
             Attach attach = new Attach();
             attach.setName(multiFileName);
             attach.setSuffix(suffix);
             attach.setPath(path);
             attach.setType(type);
+            attach.setFlag(flag);
+            attach.setDesc(desc);
             if (attachService.add(attach) > 0){
                 return ResponseBean.success("上传成功", attach);
             } else {
@@ -106,8 +113,101 @@ public class AttachController extends BaseController {
      * 附件上传页
      * @return String
      */
-    @RequestMapping("/uploadPage")
+    @RequestMapping("/attach/uploadPage")
     public String uploadPage() {
         return "admin/pages/attach/attach_upload";
+    }
+
+    /**
+     * 编辑附件信息页
+     * @return String
+     */
+    @GetMapping("/attach/editPage/{id}")
+    public String editPage(@PathVariable("id") String id, Model model) {
+        Attach attach = attachService.getById(id);
+        model.addAttribute("attach", attach);
+        return "admin/pages/attach/attach_edit";
+    }
+
+    /**
+     * 下载文件
+     * @param response response
+     * @param id id
+     * @return String
+     */
+    @GetMapping("/attach/download/{id}")
+    @ResponseBody
+    public String downloadFile(HttpServletResponse response, @PathVariable("id") String id) {
+        Attach attach = attachService.getById(id);
+        File file = new File(uploadPath + attach.getPath());
+        if (file.exists()) {
+            response.setHeader("Content-Type", "application/octet-stream;charset=utf-8");
+            response.setContentType("application/force-download");
+            byte[] buffer = new byte[1024];
+            FileInputStream fis = null;
+            BufferedInputStream bis = null;
+            try{
+                response.addHeader("Content-Disposition", "attachment;fileName="+ URLEncoder.encode(attach.getName(), "UTF-8"));
+                fis = new FileInputStream(file);
+                bis = new BufferedInputStream(fis);
+                OutputStream outputStream = response.getOutputStream();
+                int i = bis.read(buffer);
+                while (i != -1) {
+                    outputStream.write(buffer, 0 , i);
+                    i = bis.read(buffer);
+                }
+                return "下载成功";
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error(e.getMessage());
+            } finally {
+                if (bis != null) {
+                    try {
+                        bis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        logger.error(e.getMessage());
+                    }
+                }
+                if (fis != null) {
+                    try {
+                        fis.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        logger.error(e.getMessage());
+                    }
+                }
+            }
+        }
+        return "下载失败";
+    }
+
+    /**
+     * 删除附件
+     * @return String
+     */
+    @PostMapping("/attach/del")
+    @ResponseBody
+    public ResponseBean del(@RequestBody String ids) {
+        String[] idArr = ids.split(",");
+        if (attachService.del(idArr) > 0) {
+            return ResponseBean.success("删除成功", null);
+        }
+        logger.error("附件删除失败: {}", ids);
+        return ResponseBean.fail("删除失败", null);
+    }
+
+    /**
+     * 更新附件信息
+     * @return ResponseBean
+     */
+    @PostMapping("/attach/update")
+    @ResponseBody
+    public ResponseBean update(@RequestBody Attach attach) {
+        if (attachService.update(attach) > 0) {
+            return ResponseBean.success("更新成功", null);
+        }
+        logger.error("附件更新失败: {}", attach.toString());
+        return ResponseBean.fail("更新失败", null);
     }
 }

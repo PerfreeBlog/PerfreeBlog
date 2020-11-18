@@ -22,4 +22,32 @@ public interface AttachMapper {
      * @return  List<Attach>
      */
     List<Attach> getList(Attach attach);
+
+    /**
+     * 根据id获取附件信息
+     * @param id id
+     * @return Attach
+     */
+    Attach getById(String id);
+
+    /**
+     * 根据id数组获取附件列表
+     * @param idArr idArr
+     * @return List<Attach>
+     */
+    List<Attach> getByIdArr(String[] idArr);
+
+    /**
+     * 批量删除附件
+     * @param idArr idArr
+     * @return int
+     */
+    int del(String[] idArr);
+
+    /**
+     * 更新附件信息
+     * @param attach attach
+     * @return int
+     */
+    int update(Attach attach);
 }

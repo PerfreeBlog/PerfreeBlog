@@ -25,7 +25,7 @@ function initPage() {
             title: "上传附件",
             type: 2,
             offset: '20%',
-            area:  ['400px', '440px'],
+            area:  ['400px', '340px'],
             shadeClose: true,
             anim: 1,
             move: false,
@@ -80,13 +80,16 @@ function queryTable() {
                     let html;
                     switch (d.type){
                         case 'img':
-                            html = "图片";
+                            html = '<i class="layui-icon layui-icon-picture"></i>   图片';
                             break;
                         case 'video':
-                            html = "视频";
+                            html = '<i class="layui-icon layui-icon-video"></i>   视频';
+                            break;
+                        case 'audio':
+                            html = '<i class="layui-icon layui-icon-headset"></i>   音频';
                             break;
                         default:
-                            html = '其他';
+                            html = '<i class="layui-icon layui-icon-survey"></i>   其他';
                             break;
                     }
                     return html;
@@ -97,7 +100,7 @@ function queryTable() {
             {field:'id', title:'操作', width:200, fixed: 'right',
                 templet: "<div>" +
                             "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='previewFile(\"{{d.type}}\",\"{{d.path}}\",\"{{d.name}}\")'>预览</a> " +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>下载</a> " +
+                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='downloadFile(\"{{d.id}}\")'>下载</a> " +
                             "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
                             "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
                         "</div>"
@@ -126,14 +129,14 @@ function queryTable() {
  */
 function editData(id) {
     layer.open({
-        title: "编辑标签",
+        title: "编辑附件信息",
         type: 2,
         offset: '20%',
-        area:  ['400px', '140px'],
+        area:  ['400px', '250px'],
         shadeClose: true,
         anim: 1,
         move: false,
-        content: '/admin/tag/editPage/' + id
+        content: '/admin/attach/editPage/' + id
     });
 }
 
@@ -145,7 +148,7 @@ function deleteData(ids) {
     layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
         $.ajax({
             type: "POST",
-            url: "/admin/tag/del",
+            url: "/admin/attach/del",
             contentType:"application/json",
             data: ids,
             success:function(data){
@@ -186,13 +189,50 @@ function previewFile(type,path,name) {
                     }
                 ]
             }
-            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+            ,anim: 5
         });
     } else if (type === 'video') {
         layer.open({
-            content: 'test'
+            title: name,
+            offset: '20%',
+            type: 1,
+            shadeClose: true,
+            anim: 1,
+            move: true,
+            area:  ['400px', '400px'],
+            content: '<video src="'+path+'" autoplay controls style="height: calc(100% - 3px);width: 100%;outline: none">\n' +
+                '  你的浏览器不支持video\n' +
+                '</video>'
+        });
+    } else if (type === 'audio') {
+        layer.open({
+            title: name,
+            offset: '20%',
+            shadeClose: true,
+            anim: 1,
+            move: true,
+            type: 1,
+            area:  ['400px',"100px"],
+            content: '<audio src="'+path+'" autoplay controls style="background: #f1f3f4;height: calc(100% - 3px);width: 100%;outline: none">\n' +
+                '  你的浏览器不支持video\n' +
+                '</audio>'
         });
     } else {
         layer.msg("暂时不支持该类型文件的预览~", {icon: 2});
     }
+}
+
+/**
+ * 下载文件
+ * @param id
+ */
+function downloadFile(id) {
+    let form=$("<form>");
+    form.attr("style","display:none");
+    form.attr("target","");
+    form.attr("method","get");//提交方式为post
+    form.attr("action","/admin/attach/download/"+id);//定义action
+
+    $("body").append(form);
+    form.submit();
 }

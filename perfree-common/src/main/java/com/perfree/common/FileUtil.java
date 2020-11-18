@@ -14,6 +14,7 @@ import java.util.Date;
 public class FileUtil {
     private final static String[] IMG_FILE_TYPE = {"jpg","png","gif","jpeg","tif","raw","svg"};
     private final static String[] VIDEO_FILE_TYPE = {"avi","mov","rmvb","rm","mp4","flv","3gp","mpg","mlv","mpe","mpeg","vob"};
+    private final static String[] AUDIO_FILE_TYPE = {"mp3","ogg","asf","wma","wav","mp3pro","midi","cd","aac"};
     private final static String SEPARATOR = "/";
     /**
      * 上传文件
@@ -63,13 +64,23 @@ public class FileUtil {
      * @param suffix 后缀名
      * @return String
      */
-    public static String getFileType(String suffix) {
+    public static String getFileType(String type,String suffix) {
+        String d = suffix.replace(".","");
+        if (StringUtils.isNotBlank(type)) {
+            d = type;
+        }
+        if (StringUtils.isBlank(d)) {
+            return "other";
+        }
         // 图片类型
-        if (Arrays.asList(IMG_FILE_TYPE).contains(suffix)){
+        if (Arrays.asList(IMG_FILE_TYPE).contains(d.toLowerCase())){
             return "img";
         }
-        if (Arrays.asList(VIDEO_FILE_TYPE).contains(suffix)){
+        if (Arrays.asList(VIDEO_FILE_TYPE).contains(d.toLowerCase())){
             return "video";
+        }
+        if (Arrays.asList(AUDIO_FILE_TYPE).contains(d.toLowerCase())){
+            return "audio";
         }
         return "other";
     }
