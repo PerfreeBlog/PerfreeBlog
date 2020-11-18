@@ -238,6 +238,9 @@ function openTab(icon,menuName,url,tabId) {
         if(eachcount >= $(".content-tab-title").find('li').length){
             if(flag){
                 element.tabChange('tabNav', tabId);
+                const iframe = $('.f-tab-content>.layui-show>iframe');
+                $(iframe).attr('src', $(iframe).attr('src'));
+                setIframeHeight();
                 return;
             }else{
                 //添加tab
@@ -252,4 +255,11 @@ function openTab(icon,menuName,url,tabId) {
             }
         }
     });
+}
+
+/**
+ * 前往文章列表页
+ */
+function toArticleList() {
+    $("#articleListMenu").click();
 }

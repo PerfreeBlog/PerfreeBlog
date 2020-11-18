@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.ArticleMapper" >
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+          insert into p_article
+          ( title, content, summary,categoryId,metaKeywords,metaDescription,
+          thumbnail,isTop,password,status,userId,isComment,createTime) VALUES
+          (#{title},#{content}, #{summary},#{categoryId},#{metaKeywords},#{metaDescription},
+          #{thumbnail},#{isTop},#{password},#{status},#{userId},#{isComment},#{createTime})
+    </insert>
+    <insert id="addArticleTag">
+         insert into p_article_tag (articleId,tagId)VALUES
+        <foreach collection="list" item="item" index= "index" separator =",">
+            (#{item.articleId}, #{item.tagId})
+        </foreach >
+    </insert>
 </mapper>

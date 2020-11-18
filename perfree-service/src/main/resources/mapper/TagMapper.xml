@@ -11,7 +11,7 @@
         updateTime
     </sql>
 
-    <insert id="add">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
         insert into p_tag ( name, userId, createTime) VALUES (#{name},#{userId}, #{createTime})
     </insert>
 

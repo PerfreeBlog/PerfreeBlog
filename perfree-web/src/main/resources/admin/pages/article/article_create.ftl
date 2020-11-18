@@ -41,8 +41,8 @@
                     <div class="layui-card">
                         <div class="layui-card-header">
                             <div class="p-article-btn-box">
-                                <button type="button" class="layui-btn layui-btn-normal">发布</button>
-                                <button type="button" class="layui-btn layui-btn-primary">保存到草稿箱</button>
+                                <button type="submit" lay-submit lay-filter="publishForm" class="layui-btn layui-btn-normal">发布</button>
+                                <button type="submit" lay-submit lay-filter="draftForm" class="layui-btn layui-btn-primary">保存到草稿箱</button>
                             </div>
                         </div>
                         <div class="layui-card-body">
@@ -58,17 +58,17 @@
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">文章摘要:</span>
-                                <textarea name="summary" placeholder="请输入内容" class="article-textarea layui-textarea" style="resize: none"></textarea>
+                                <textarea name="summary" placeholder="请输入文章摘要" class="article-textarea layui-textarea" style="resize: none"></textarea>
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO关键字:</span>
-                                <input type="text" name="metaKeywords" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+                                <input type="text" name="metaKeywords" placeholder="请输入SEO关键字" autocomplete="off" class="layui-input">
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO描述:</span>
-                                <textarea name="metaDescription" placeholder="请输入内容" class="layui-textarea article-textarea" style="resize: none"></textarea>
+                                <textarea name="metaDescription" placeholder="请输入SEO描述" class="layui-textarea article-textarea" style="resize: none"></textarea>
                             </div>
 
                             <div class="layui-form-item article-switch">

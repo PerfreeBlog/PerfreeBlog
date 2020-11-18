@@ -1,7 +1,13 @@
 package com.perfree.model;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * article table
@@ -9,23 +15,67 @@ import java.util.Date;
 public class Article implements Serializable {
     private static final long serialVersionUID = 4900274588193382137L;
     private Long id;
+    @NotBlank(message = "文章标题不允许为空")
+    @Length(min = 3,max = 12,message = "文章标题长度要在1-100字之间")
     private String title;
+    @NotBlank(message = "文章内容不允许为空")
     private String content;
     private String summary;
     private Long categoryId;
     private String metaKeywords;
     private String metaDescription;
+
     private String thumbnail;
 
+    @NotNull(message = "请选择文章是否置顶")
     private Integer isTop;
     private String password;
+    @NotNull(message = "文章状态不能为空")
     private Integer status;
     private Long commentCount;
     private Long viewCount;
     private Long userId;
+    @NotNull(message = "请选择文章是否允许评论")
     private Integer isComment;
     private Date createTime;
     private Date updateTime;
+
+    private List<Tag> tags;
+    private User user;
+    private Category category;
+    private List<ArticleTag> articleTags;
+
+    public List<ArticleTag> getArticleTags() {
+        return articleTags;
+    }
+
+    public void setArticleTags(List<ArticleTag> articleTags) {
+        this.articleTags = articleTags;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
 
     public Long getId() {

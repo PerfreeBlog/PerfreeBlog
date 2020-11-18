@@ -62,7 +62,7 @@ public class TagController extends BaseController {
     public ResponseBean add(@RequestBody Tag tag) {
         tag.setUserId(getUser().getId());
         if (tagService.add(tag) > 0) {
-            return ResponseBean.success("添加成功", null);
+            return ResponseBean.success("添加成功", tag);
         }
         logger.error("标签添加失败: {}", tag.toString());
         return ResponseBean.fail("添加失败", null);
