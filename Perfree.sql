@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 19/11/2020 14:45:39
+ Date: 19/11/2020 15:45:55
 */
 
 SET NAMES utf8mb4;
@@ -159,12 +159,29 @@ INSERT INTO `p_menu` VALUES (4, 2, '写文章', '/admin/article/addPage', '', 2,
 INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/comment', 'fa-comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
 INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/category', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
 INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
-INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
+INSERT INTO `p_menu` VALUES (8, -1, '主题', '', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
 INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 10, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
 INSERT INTO `p_menu` VALUES (10, -1, '用户', '/admin/user', 'fa-user', 7, 1, 0, 0, '2020-11-11 13:30:44', '2020-11-11 13:30:46');
 INSERT INTO `p_menu` VALUES (11, -1, '菜单', '/admin/menu', 'fa-bars', 8, 1, 0, 0, '2020-11-12 15:55:30', '2020-11-17 20:33:28');
 INSERT INTO `p_menu` VALUES (12, -1, '附件', '/admin/attach', 'fa-file-archive-o', 9, 1, 0, 0, '2020-11-17 20:33:26', '2020-11-17 20:33:31');
-INSERT INTO `p_menu` VALUES (31, -1, '首页', '/home', '', NULL, 0, 1, 0, '2020-11-19 03:41:42', NULL);
+INSERT INTO `p_menu` VALUES (13, 8, '所有主题', '/admin/dashboard', NULL, 1, 1, 0, 0, '2020-11-19 15:26:54', '2020-11-19 15:26:57');
+INSERT INTO `p_menu` VALUES (14, 8, '主题设置', '/admin/dashboard', NULL, 2, 1, 0, 0, '2020-11-19 15:27:36', '2020-11-19 15:27:38');
+INSERT INTO `p_menu` VALUES (15, 8, '安装主题', '/admin/dashboard', NULL, 3, 1, 0, 0, '2020-11-19 15:28:00', '2020-11-19 15:28:02');
+
+-- ----------------------------
+-- Table structure for p_option
+-- ----------------------------
+DROP TABLE IF EXISTS `p_option`;
+CREATE TABLE `p_option`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `key` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'key',
+  `value` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'value',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of p_option
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for p_role
@@ -211,6 +228,9 @@ INSERT INTO `p_role_menu` VALUES (1, 9);
 INSERT INTO `p_role_menu` VALUES (1, 10);
 INSERT INTO `p_role_menu` VALUES (1, 11);
 INSERT INTO `p_role_menu` VALUES (1, 12);
+INSERT INTO `p_role_menu` VALUES (1, 13);
+INSERT INTO `p_role_menu` VALUES (1, 14);
+INSERT INTO `p_role_menu` VALUES (1, 15);
 
 -- ----------------------------
 -- Table structure for p_tag
