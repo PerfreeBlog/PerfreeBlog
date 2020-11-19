@@ -11,12 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class AttachService {
     @Value("${web.upload-path}")
     private String uploadPath;
@@ -39,6 +41,7 @@ public class AttachService {
      * @param pager pager
      * @return Pager<Attach>
      */
+    @Transactional(readOnly = true)
     public Pager<Attach> list(Pager<Attach> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
         List<Attach> attaches = attachMapper.getList(pager.getForm());
@@ -54,6 +57,7 @@ public class AttachService {
      * @param id id
      * @return Attach
      */
+    @Transactional(readOnly = true)
     public Attach getById(String id) {
         return attachMapper.getById(id);
     }

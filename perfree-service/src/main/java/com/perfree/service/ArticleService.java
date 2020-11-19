@@ -5,17 +5,16 @@ import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Article;
-import com.perfree.model.Tag;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
@@ -43,6 +42,7 @@ public class ArticleService {
      * @param pager pager
      * @return  Pager<Article>
      */
+    @Transactional(readOnly = true)
     public Pager<Article> list(Pager<Article> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
         List<Article> articles = articleMapper.getList(pager.getForm());
@@ -100,6 +100,7 @@ public class ArticleService {
      * @param id id
      * @return Article
      */
+    @Transactional(readOnly = true)
     public Article getById(String id) {
         return articleMapper.getById(id);
     }

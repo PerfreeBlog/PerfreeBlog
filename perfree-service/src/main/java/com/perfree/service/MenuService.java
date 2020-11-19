@@ -8,11 +8,13 @@ import com.perfree.model.Menu;
 import com.perfree.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class MenuService {
 
     @Autowired
@@ -23,6 +25,7 @@ public class MenuService {
      * @param id id
      * @return List<Menu>
      */
+    @Transactional(readOnly = true)
     public List<Menu> getAdminMenuByUserId(Long id) {
         List<Menu> menus = menuMapper.getParentMenuByUserIdAndType(id, 1);
         for (Menu menu:menus) {
@@ -37,6 +40,7 @@ public class MenuService {
      * @param pager pager
      * @return Pager<Menu>
      */
+    @Transactional(readOnly = true)
     public Pager<Menu> list(Pager<Menu> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
         List<Menu> menus = menuMapper.getList(pager.getForm());
@@ -62,6 +66,7 @@ public class MenuService {
      * @param id id
      * @return Menu
      */
+    @Transactional(readOnly = true)
     public Menu getById(String id) {
         return menuMapper.getById(id);
     }

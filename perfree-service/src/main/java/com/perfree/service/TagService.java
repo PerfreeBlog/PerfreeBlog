@@ -1,20 +1,19 @@
 package com.perfree.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
-import com.perfree.common.ResponseBean;
-import com.perfree.common.StringUtil;
 import com.perfree.mapper.TagMapper;
 import com.perfree.model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class TagService {
     @Autowired
     private TagMapper tagMapper;
@@ -24,6 +23,7 @@ public class TagService {
      * @param pager 搜索数据
      * @return ResponseBean
      */
+    @Transactional(readOnly = true)
     public Pager<Tag> list(Pager<Tag> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
         List<Tag> tags = tagMapper.getList(pager.getForm());
@@ -49,6 +49,7 @@ public class TagService {
      * @param id id
      * @return Tag
      */
+    @Transactional(readOnly = true)
     public Tag getById(String id) {
         return tagMapper.getById(id);
     }
@@ -76,6 +77,7 @@ public class TagService {
      * 获取所有tag
      * @return List<Tag>
      */
+    @Transactional(readOnly = true)
     public List<Tag> allList() {
         return tagMapper.getList(null);
     }

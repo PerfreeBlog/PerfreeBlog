@@ -23,7 +23,6 @@ public class Menu implements Serializable {
     @NotBlank(message = "菜单链接不允许为空")
     @Length(max = 50,message = "菜单链接最多50个字符")
     private String url;
-    @NotBlank(message = "菜单图标不允许为空")
     private String icon;
     private Integer seq;
     private Integer type;

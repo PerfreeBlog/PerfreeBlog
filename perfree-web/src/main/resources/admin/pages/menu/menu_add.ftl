@@ -30,7 +30,7 @@
         <div class="layui-form-item" >
             <label class="layui-form-label">图标:</label>
             <div class="layui-input-inline">
-                <input type="text" name="icon" required  lay-verify="required" placeholder="请输入图标" autocomplete="off" class="layui-input">
+                <input type="text" name="icon" placeholder="请输入图标" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">

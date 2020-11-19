@@ -5,17 +5,17 @@ import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
 import com.perfree.common.StringUtil;
 import com.perfree.mapper.UserMapper;
-import com.perfree.model.Tag;
 import com.perfree.model.User;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Service
+@Transactional
 public class UserService {
 
     @Autowired
@@ -27,6 +27,7 @@ public class UserService {
      * @param account 账号
      * @return User 用户信息
      */
+    @Transactional(readOnly = true)
     public User getUserByAccount(String account) {
         return userMapper.getUserByAccount(account);
     }
@@ -36,6 +37,7 @@ public class UserService {
      * @param pager 分页数据
      * @return Pager<User>
      */
+    @Transactional(readOnly = true)
     public Pager<User> list(Pager<User> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
         List<User> users = userMapper.getList(pager.getForm());
@@ -72,6 +74,7 @@ public class UserService {
      * @param id id
      * @return User
      */
+    @Transactional(readOnly = true)
     public User getById(String id) {
         return userMapper.getById(id);
     }

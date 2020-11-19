@@ -8,11 +8,13 @@ import com.perfree.model.Category;
 import com.perfree.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional
 public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
@@ -22,6 +24,7 @@ public class CategoryService {
      * @param pager pager
      * @return Pager<Category>
      */
+    @Transactional(readOnly = true)
     public Pager<Category> list(Pager<Category> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
         List<Category> categories = categoryMapper.getList(pager.getForm());
@@ -56,6 +59,7 @@ public class CategoryService {
      * @param id id
      * @return Category
      */
+    @Transactional(readOnly = true)
     public Category getById(String id) {
         return categoryMapper.getById(id);
     }
@@ -84,6 +88,7 @@ public class CategoryService {
      * 获取所有分类
      * @return List<Category>
      */
+    @Transactional(readOnly = true)
     public List<Category> allList() {
         return categoryMapper.getList(null);
     }
