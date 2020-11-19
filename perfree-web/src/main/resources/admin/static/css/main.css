@@ -136,3 +136,7 @@ html{
     background: #5fb878;
     color: white;
 }
+.articleHref{
+    color: #388fd0;
+    font-weight: 600;
+}

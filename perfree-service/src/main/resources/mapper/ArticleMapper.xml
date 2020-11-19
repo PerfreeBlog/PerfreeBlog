@@ -15,6 +15,31 @@
         </foreach >
     </insert>
 
+    <update id="changeTopStatus">
+        update p_article set
+        isTop = #{isTop},
+        updateTime=#{updateTime}
+        where id = #{id}
+    </update>
+    <update id="changeCommentStatus">
+        update p_article set
+        isComment = #{isComment},
+        updateTime=#{updateTime}
+        where id = #{id}
+    </update>
+    <update id="changeStatus">
+        update p_article set
+        status = #{status},
+        updateTime=#{updateTime}
+        where id = #{id}
+    </update>
+    <delete id="del">
+        DELETE FROM  p_article  WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
     <resultMap id="LIST_RESULT" type="com.perfree.model.Article">
         <id property="id" column="id"></id>
         <result property="title" column="title"></result>
@@ -47,6 +72,10 @@
     </resultMap>
     <select id="getList" resultMap="LIST_RESULT">
         select t1.*,t2.name categoryName,t3.userName from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        where 1=1
+        <if test="title != null and title != ''">
+            and t1.title like concat('%', #{title,jdbcType=VARCHAR},'%')
+        </if>
         order by t1.createTime desc
     </select>
 

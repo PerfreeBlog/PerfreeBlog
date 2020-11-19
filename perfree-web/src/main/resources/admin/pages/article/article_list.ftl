@@ -19,9 +19,9 @@
                     <form class="layui-form">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">标签名:</label>
+                                <label class="layui-form-label">文章标题:</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="tagName" placeholder="请输入标签名" id="tagName" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
+                                    <input type="text" name="title" placeholder="请输入文章标题" id="title" onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-inline">
@@ -34,7 +34,7 @@
                             <div class="layui-inline">
                                 <button id="addBtn" class="layui-btn" type="button">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
-                                    添加
+                                    写文章
                                 </button>
                             </div>
 

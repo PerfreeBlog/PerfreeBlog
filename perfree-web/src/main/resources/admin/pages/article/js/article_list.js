@@ -1,6 +1,7 @@
-let table;
-layui.use('table', function(){
+let table,form;
+layui.use(['table','layer','form'], function(){
     table = layui.table;
+    form = layui.form;
     initPage();
 });
 
@@ -21,16 +22,7 @@ function initPage() {
 
     // 添加
     $("#addBtn").click(function () {
-        layer.open({
-            title: "添加标签",
-            type: 2,
-            offset: '20%',
-            area:  ['400px', '140px'],
-            shadeClose: true,
-            anim: 1,
-            move: false,
-            content: '/admin/tag/addPage'
-        });
+        parent.toPage('/admin/article/addPage');
     });
 
     // 批量删除
@@ -64,14 +56,14 @@ function queryTable() {
         totalRow: false,
         where: {
             form: {
-                name: $("#tagName").val()
+                title: $("#title").val()
             }
         },
         limit: 30,
         cols: [[
             {type: 'checkbox', fixed: 'left'},
             {field:'id', title:'ID', width:60, fixed: 'left'},
-            {field:'title', title:'文章标题'},
+            {field:'title', title:'文章标题', templet: '<div><a class="articleHref" href="{{d.id}}">{{d.title}}</a></div>'},
             {field:'category', title:'分类',templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
             {field:'status', width:100,title:'状态',templet: function (d) {
                     let html = '<span>';
@@ -80,9 +72,6 @@ function queryTable() {
                     }
                     if (d.status === 1) {
                         html += "草稿";
-                    }
-                    if (d.status === 2) {
-                        html += "隐藏";
                     }
                     html += '</div>';
                     return html;
@@ -112,12 +101,19 @@ function queryTable() {
             {field:'createTime', title:'创建时间', sort: true, templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>" },
             {field:'updateTime', title:'更新时间', sort: true, templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"},
             {field:'id', title:'操作', width:200, fixed: 'right',
-                templet: "<div>" +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>查看</a> " +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>隐藏</a> " +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
-                            "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
-                        "</div>"
+                templet: function (d) {
+                    let html = "<div>";
+                    if (d.status === 1) {
+                        html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\""+d.id+"\",\"0\")'>发布</a>";
+                    }
+                    if (d.status === 0) {
+                        html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\""+d.id+"\",\"1\")'>草稿</a>";
+                    }
+                    html +="<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\""+d.id+"\")'>编辑</a> " +
+                    "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\""+d.id+"\")'>删除</a>" +
+                    "</div>";
+                    return html;
+                }
             },
         ]],
         page: true,
@@ -135,6 +131,18 @@ function queryTable() {
             limitName: 'pageSize'
         }
     });
+
+    form.on('switch(isTop)', function (data) {
+        const id = this.value;
+        const status = this.checked? 1 : 0;
+        changeTopStatus(id,status);
+    });
+
+    form.on('switch(isComment)', function (data) {
+        const id = this.value;
+        const status = this.checked? 1 : 0;
+        changeCommentStatus(id,status);
+    });
 }
 
 /**
@@ -142,16 +150,7 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    layer.open({
-        title: "编辑标签",
-        type: 2,
-        offset: '20%',
-        area:  ['400px', '140px'],
-        shadeClose: true,
-        anim: 1,
-        move: false,
-        content: '/admin/tag/editPage/' + id
-    });
+    parent.openTab('', '文章-编辑','/admin/article/updatePage/'+id,"-1");
 }
 
 /**
@@ -162,7 +161,7 @@ function deleteData(ids) {
     layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
         $.ajax({
             type: "POST",
-            url: "/admin/tag/del",
+            url: "/admin/article/del",
             contentType:"application/json",
             data: ids,
             success:function(data){
@@ -178,5 +177,76 @@ function deleteData(ids) {
             }
         });
         layer.close(index);
+    });
+}
+
+/**
+ * 更改置顶状态
+ */
+function changeTopStatus(id,status) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/article/changeTopStatus",
+        contentType:"application/json",
+        data: JSON.stringify({id: id,isTop: status}),
+        success:function(data){
+            if (data.code === 200){
+                queryTable();
+                layer.msg(data.msg, {icon: 1});
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("修改状态失败", {icon: 2});
+        }
+    });
+}
+
+/**
+ * 更改是否可以评论
+ */
+function changeCommentStatus(id,status) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/article/changeCommentStatus",
+        contentType:"application/json",
+        data: JSON.stringify({id: id,isComment: status}),
+        success:function(data){
+            if (data.code === 200){
+                queryTable();
+                layer.msg(data.msg, {icon: 1});
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("修改状态失败", {icon: 2});
+        }
+    });
+}
+
+/**
+ * 更改状态
+ * @param id
+ * @param status
+ */
+function changeStatus(id,status) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/article/changeStatus",
+        contentType:"application/json",
+        data: JSON.stringify({id: id,status: status}),
+        success:function(data){
+            if (data.code === 200){
+                queryTable();
+                layer.msg(data.msg, {icon: 1});
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("修改状态失败", {icon: 2});
+        }
     });
 }

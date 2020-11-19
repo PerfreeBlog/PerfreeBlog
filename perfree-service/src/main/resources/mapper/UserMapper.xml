@@ -12,13 +12,15 @@
     </update>
     <update id="resetPassword">
         update p_user set
-        password = #{password},salt=#{salt}
+        password = #{password},salt=#{salt},
+        updateTime=#{updateTime}
         where id = #{id}
     </update>
 
     <update id="changeStatus">
          update p_user set
-        status = #{status}
+        status = #{status},
+        updateTime=#{updateTime}
         where id = #{id}
     </update>
 

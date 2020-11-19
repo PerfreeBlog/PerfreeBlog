@@ -5,17 +5,16 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Article;
 import com.perfree.model.Tag;
+import com.perfree.model.User;
 import com.perfree.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 /**
  * 文章
@@ -35,6 +34,11 @@ public class ArticleController extends BaseController {
     @RequestMapping("/article/addPage")
     public String addPage() {
         return "admin/pages/article/article_create";
+    }
+
+    @RequestMapping("/article/updatePage/{id}")
+    public String updatePage(@PathVariable("id") String id) {
+        return "admin/pages/article/article_update";
     }
 
     /**
@@ -60,6 +64,66 @@ public class ArticleController extends BaseController {
     @ResponseBody
     public Pager<Article> list(@RequestBody Pager<Article> pager) {
         return articleService.list(pager);
+    }
+
+
+    /**
+     * 更改置顶状态
+     * @return String
+     */
+    @PostMapping("/article/changeTopStatus")
+    @ResponseBody
+    public ResponseBean changeTopStatus(@RequestBody Article article) {
+        if (articleService.changeTopStatus(article) > 0) {
+            return ResponseBean.success("修改成功", null);
+        }
+        logger.error("文章修改失败: {}", article.toString());
+        return ResponseBean.fail("修改失败", null);
+    }
+
+
+    /**
+     * 更改文章是否可以评论
+     * @return String
+     */
+    @PostMapping("/article/changeCommentStatus")
+    @ResponseBody
+    public ResponseBean changeCommentStatus(@RequestBody Article article) {
+        if (articleService.changeCommentStatus(article) > 0) {
+            return ResponseBean.success("修改成功", null);
+        }
+        logger.error("文章修改失败: {}", article.toString());
+        return ResponseBean.fail("修改失败", null);
+    }
+
+    /**
+     * 更改文章状态
+     * @return String
+     */
+    @PostMapping("/article/changeStatus")
+    @ResponseBody
+    public ResponseBean changeStatus(@RequestBody Article article) {
+        if (articleService.changeStatus(article) > 0) {
+            return ResponseBean.success("修改成功", null);
+        }
+        logger.error("文章修改失败: {}", article.toString());
+        return ResponseBean.fail("修改失败", null);
+    }
+
+    /**
+     * 删除文章
+     * @param ids ids
+     * @return ResponseBean
+     */
+    @PostMapping("/article/del")
+    @ResponseBody
+    public ResponseBean del(@RequestBody String ids) {
+        String[] idArr = ids.split(",");
+        if (articleService.del(idArr) > 0) {
+            return ResponseBean.success("删除成功", null);
+        }
+        logger.error("文章删除失败: {}", ids);
+        return ResponseBean.fail("删除失败", null);
     }
 
 }

@@ -11,10 +11,7 @@
             <#list menus as menu>
                 <#if menu.childMenu?size <= 0>
                     <li class="layui-nav-item f-nav-item">
-                        <a href="javascript:;"
-                             <#if menu.url == '/admin/article'>
-                                 id="articleListMenu"
-                             </#if>
+                        <a href="javascript:;" data-url="${menu.url}" class="p-menu-item" id="${menu.id}" data-icon="${menu.icon}" data-name="${menu.name}"
                            onclick="openTab('${menu.icon}','${menu.name}','${menu.url}','${menu.id}');">
                             <i class="fa ${menu.icon}" aria-hidden="true"></i><span class="f-nav-content">${menu.name}</span>
                         </a>
@@ -24,11 +21,10 @@
                         <a class="" href="javascript:;"><i class="fa ${menu.icon}" aria-hidden="true"></i><span class="f-nav-content">${menu.name}</span></a>
                         <dl class="layui-nav-child">
                           <#list menu.childMenu as childMenu>
-                            <dd class="f-child-side"><a href="javascript:;"
-                                <#if childMenu.url == '/admin/article'>
-                                    id="articleListMenu"
-                                </#if>
-                                onclick="openTab('','${menu.name + '-' + childMenu.name}','${childMenu.url}','${childMenu.id}');">${childMenu.name}</a></dd>
+                            <dd class="f-child-side">
+                                <a href="javascript:;" class="p-menu-item" data-url="${childMenu.url}" id="${childMenu.id}" data-icon="" data-name="${menu.name + '-' + childMenu.name}"
+                                   onclick="openTab('','${menu.name + '-' + childMenu.name}','${childMenu.url}','${childMenu.id}');">${childMenu.name}</a>
+                            </dd>
                           </#list>
                         </dl>
                     </li>

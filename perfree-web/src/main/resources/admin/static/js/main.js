@@ -258,8 +258,27 @@ function openTab(icon,menuName,url,tabId) {
 }
 
 /**
- * 前往文章列表页
+ * 前往xxx页
  */
-function toArticleList() {
-    $("#articleListMenu").click();
+function toPage(url) {
+    $(".p-menu-item").each(function(){
+        if ($(this).attr("data-url") === url) {
+            $(this).click();
+        }
+    });
+}
+
+/**
+ * 获取菜单的id
+ */
+function getMenuMsg(url) {
+    let menu = {id:'',icon:'',name:''};
+    $(".p-menu-item").each(function(){
+        if ($(this).attr("data-url") === url) {
+            menu.id = $(this).attr("id");
+            menu.icon = $(this).attr("data-icon");
+            menu.name = $(this).attr("data-name");
+        }
+    });
+    return menu;
 }

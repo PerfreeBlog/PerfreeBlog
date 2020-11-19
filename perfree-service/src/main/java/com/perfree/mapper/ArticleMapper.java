@@ -39,4 +39,31 @@ public interface ArticleMapper {
      */
     List<Tag> getArticleTagById(String id);
 
+    /**
+     * 更改文章置顶状态
+     * @param article article
+     * @return int
+     */
+    int changeTopStatus(Article article);
+
+    /**
+     * 更改是否可以评论
+     * @param article article
+     * @return int
+     */
+    int changeCommentStatus(Article article);
+
+    /**
+     * 更改状态
+     * @param article article
+     * @return int
+     */
+    int changeStatus(Article article);
+
+    /**
+     * 删除文章
+     * @param idArr idArr
+     * @return int
+     */
+    int del(String[] idArr);
 }

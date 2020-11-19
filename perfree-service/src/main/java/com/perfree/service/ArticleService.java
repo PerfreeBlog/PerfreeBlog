@@ -54,4 +54,43 @@ public class ArticleService {
         pager.setCode(Pager.SUCCESS_CODE);
         return pager;
     }
+
+    /**
+     * 更改置顶状态
+     * @param article article
+     * @return int
+     */
+    public int changeTopStatus(Article article) {
+        article.setUpdateTime(new Date());
+        return articleMapper.changeTopStatus(article);
+    }
+
+    /**
+     * 更改是否可以评论
+     * @param article article
+     * @return int
+     */
+    public int changeCommentStatus(Article article) {
+        article.setUpdateTime(new Date());
+        return articleMapper.changeCommentStatus(article);
+    }
+
+    /**
+     * 更改文章状态
+     * @param article article
+     * @return int
+     */
+    public int changeStatus(Article article) {
+        article.setUpdateTime(new Date());
+        return articleMapper.changeStatus(article);
+    }
+
+    /**
+     * 删除文章
+     * @param idArr idArr
+     * @return int
+     */
+    public int del(String[] idArr) {
+        return articleMapper.del(idArr);
+    }
 }

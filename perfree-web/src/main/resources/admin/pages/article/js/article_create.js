@@ -65,9 +65,9 @@ function submitArticle(data) {
             if (d.code === 200){
                 location.reload();
                 parent.layer.msg("文章发表成功", {icon: 1})
-                parent.toArticleList();
+                parent.toPage('/admin/article');
             } else {
-                layer.msg("文章发表失败", {icon: 2});
+                layer.msg(d.msg, {icon: 2});
             }
         },
         error: function (data) {

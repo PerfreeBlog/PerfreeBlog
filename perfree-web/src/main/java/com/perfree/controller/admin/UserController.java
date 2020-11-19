@@ -131,7 +131,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 删除标签
+     * 删除用户
      * @return String
      */
     @PostMapping("/user/del")
