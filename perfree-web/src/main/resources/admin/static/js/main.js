@@ -226,7 +226,6 @@ function changeTheme(e){
  * @param {tabid} tabId
  */
 function openTab(icon,menuName,url,tabId) {
-    var element = layui.element;
     var eachcount=0;
     var flag= false;
     $(".content-tab-title").find('li').each(function() {
@@ -239,7 +238,7 @@ function openTab(icon,menuName,url,tabId) {
             if(flag){
                 element.tabChange('tabNav', tabId);
                 const iframe = $('.f-tab-content>.layui-show>iframe');
-                $(iframe).attr('src', $(iframe).attr('src'));
+                $(iframe).attr('src', url);
                 setIframeHeight();
                 return;
             }else{

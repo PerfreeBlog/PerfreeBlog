@@ -33,11 +33,32 @@
         updateTime=#{updateTime}
         where id = #{id}
     </update>
+
+    <update id="update">
+        update p_article set
+        `title` = #{title},
+        `content` = #{content},
+        summary = #{summary},
+        categoryId = #{categoryId},
+        metaKeywords = #{metaKeywords},
+        metaDescription = #{metaDescription},
+        thumbnail = #{thumbnail},
+        isTop = #{isTop},
+        password = #{password},
+        isComment = #{isComment},
+        status = #{status},
+        updateTime=#{updateTime}
+        where id = #{id}
+    </update>
+
     <delete id="del">
         DELETE FROM  p_article  WHERE id IN
         <foreach collection="array" item="id" open="(" separator="," close=")">
             #{id}
         </foreach>
+    </delete>
+    <delete id="deleteTagByArticleId">
+         DELETE FROM  p_article_tag  WHERE articleId = #{id}
     </delete>
 
     <resultMap id="LIST_RESULT" type="com.perfree.model.Article">
@@ -81,5 +102,10 @@
 
     <select id="getArticleTagById" resultType="com.perfree.model.Tag">
         select t2.* from p_article_tag t1 left join p_tag t2 on t1.tagId = t2.id where t1.articleId = #{id}
+    </select>
+
+    <select id="getById" resultMap="LIST_RESULT">
+        select t1.*,t2.name categoryName,t3.userName from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        where t1.id = #{id}
     </select>
 </mapper>

@@ -20,16 +20,19 @@
                 <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
                     <div class="layui-card">
                         <div class="layui-card-body">
+                            <input type="hidden" name="id" value="${article.id}">
                             <div class="layui-form-item">
                                 <span class="p-form-tip">标题:</span>
-                                <input type="text" name="title" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+                                <input type="text" name="title" value="${article.title}" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
                             </div>
 
                             <div class="layui-form-item" style="margin: 0">
                                 <span class="p-form-tip">文章内容:</span>
                             </div>
                             <div id="editorBox">
-                                <div id="editor"></div>
+                                <input type="hidden" value="${article.content}" id="articleContent">
+                                <div id="editor">
+                                </div>
                             </div>
 
                         </div>
@@ -46,46 +49,48 @@
                         </div>
                         <div class="layui-card-body">
                             <div class="layui-form-item">
+                                <input type="hidden" value="${article.categoryId!''}" id="categorySelectValue">
                                 <span class="p-form-tip">分类:</span>
                                 <div id="category" ></div>
                             </div>
 
                             <div class="layui-form-item">
+                                <input type="hidden" value="<#list article.tags as tag>${tag.id},</#list>" id="tagSelectValue">
                                 <span class="p-form-tip">标签:</span>
                                 <div id="tag" ></div>
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">文章摘要:</span>
-                                <textarea name="summary" placeholder="请输入文章摘要" class="article-textarea layui-textarea" style="resize: none"></textarea>
+                                <textarea name="summary" placeholder="请输入文章摘要" class="article-textarea layui-textarea" style="resize: none">${article.summary ! ''}</textarea>
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO关键字:</span>
-                                <input type="text" name="metaKeywords" placeholder="请输入SEO关键字" autocomplete="off" class="layui-input">
+                                <input type="text" name="metaKeywords" placeholder="请输入SEO关键字" autocomplete="off" class="layui-input" value="${article.metaKeywords ! ''}">
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">SEO描述:</span>
-                                <textarea name="metaDescription" placeholder="请输入SEO描述" class="layui-textarea article-textarea" style="resize: none"></textarea>
+                                <textarea name="metaDescription" placeholder="请输入SEO描述" class="layui-textarea article-textarea" style="resize: none">${article.metaDescription!''}</textarea>
                             </div>
 
                             <div class="layui-form-item article-switch">
                                 <span class="p-form-tip">允许评论:</span>
-                                <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch" checked>
+                                <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch" <#if (article.isComment)== 1>checked</#if>>
 
                                 <span class="p-form-tip">置顶:</span>
-                                <input type="checkbox" name="isTop" lay-text="置顶|不置顶" lay-skin="switch">
+                                <input type="checkbox" name="isTop" lay-text="置顶|不置顶" lay-skin="switch" <#if (article.isTop)== 1>checked</#if>>
                             </div>
                             <div class="layui-form-item">
                                 <span class="p-form-tip">访问密码:</span>
-                                <input type="text" name="password" placeholder="请输入访问密码" autocomplete="off" class="article-password-input layui-input">
+                                <input type="text" name="password" placeholder="请输入访问密码" autocomplete="off" class="article-password-input layui-input" value="${article.password}">
                             </div>
 
                             <div class="layui-form-item">
                                 <span class="p-form-tip">缩略图:</span>
                                 <div class="p-upload-box" id="thumbnail">
-                                    <input type="hidden" name="thumbnail">
+                                    <input type="hidden" name="thumbnail" value="${article.thumbnail!''}">
                                 </div>
                             </div>
 
@@ -100,6 +105,6 @@
     <script src="/public/libs/wangeditor/wangEditor.js"></script>
     <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
     <script src="/public/js/main.js"></script>
-    <script src="/admin/pages/article/js/article_create.js"></script>
+    <script src="/admin/pages/article/js/article_update.js"></script>
 </body>
 </html>

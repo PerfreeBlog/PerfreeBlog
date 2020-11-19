@@ -34,6 +34,15 @@ function initSelectImg() {
         $(this).parent(".p-delete-img").parent(".p-upload-show").parent(".p-upload-box").children(".p-upload").show();
         $(this).parent(".p-delete-img").parent(".p-upload-show").parent(".p-upload-box").children(".p-upload-show").hide();
     });
+
+    $(".p-upload-box").each(function () {
+        if ($(this).children("input").val() !== undefined && $(this).children("input").val() !== '') {
+            $(this).children("input").val($(this).children("input").val());
+            $(this).children(".p-upload-show").children(".p-show-img").attr("src", $(this).children("input").val());
+            $(this).children(".p-upload").hide();
+            $(this).children(".p-upload-show").show();
+        }
+    });
 }
 
 /**

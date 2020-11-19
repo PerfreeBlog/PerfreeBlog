@@ -11,6 +11,7 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +27,6 @@ public class ArticleService {
      */
     public int add(Article article) {
         article.setCreateTime(new Date());
-        if (StringUtils.isNotBlank(article.getPassword())) {
-            article.setPassword(new Md5Hash(article.getPassword()).toString());
-        }
         int result = articleMapper.add(article);
         if (article.getArticleTags().size() > 0) {
             article.getArticleTags().forEach(r -> {
@@ -91,6 +89,37 @@ public class ArticleService {
      * @return int
      */
     public int del(String[] idArr) {
+        Arrays.asList(idArr).forEach(r -> {
+            articleMapper.deleteTagByArticleId(r);
+        });
         return articleMapper.del(idArr);
+    }
+
+    /**
+     * 根据id获取文章信息
+     * @param id id
+     * @return Article
+     */
+    public Article getById(String id) {
+        return articleMapper.getById(id);
+    }
+
+    /**
+     * 更新文章
+     * @param article article
+     * @return int
+     */
+    public int update(Article article) {
+        article.setUpdateTime(new Date());
+        // 先删除标签关联
+        articleMapper.deleteTagByArticleId(article.getId().toString());
+        if (article.getArticleTags().size() > 0) {
+            article.getArticleTags().forEach(r -> {
+                r.setArticleId(article.getId());
+            });
+            // 添加标签关联
+            articleMapper.addArticleTag(article.getArticleTags());
+        }
+        return articleMapper.update(article);
     }
 }

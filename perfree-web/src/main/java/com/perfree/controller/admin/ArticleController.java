@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,7 +38,9 @@ public class ArticleController extends BaseController {
     }
 
     @RequestMapping("/article/updatePage/{id}")
-    public String updatePage(@PathVariable("id") String id) {
+    public String updatePage(@PathVariable("id") String id, Model model) {
+        Article article = articleService.getById(id);
+        model.addAttribute("article", article);
         return "admin/pages/article/article_update";
     }
 
@@ -54,6 +57,20 @@ public class ArticleController extends BaseController {
         }
         logger.error("文章添加失败: {}", article.toString());
         return ResponseBean.fail("添加失败", null);
+    }
+
+    /**
+     * 更新文章
+     * @return String
+     */
+    @PostMapping("/article/update")
+    @ResponseBody
+    public ResponseBean update(@RequestBody @Valid Article article) {
+        if (articleService.update(article) > 0) {
+            return ResponseBean.success("更新成功", article);
+        }
+        logger.error("文章更新失败: {}", article.toString());
+        return ResponseBean.fail("更新失败", null);
     }
 
     /**

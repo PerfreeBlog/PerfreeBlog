@@ -66,4 +66,24 @@ public interface ArticleMapper {
      * @return int
      */
     int del(String[] idArr);
+
+    /**
+     * 根据id获取文章信息
+     * @param id id
+     * @return Article
+     */
+    Article getById(String id);
+
+    /**
+     * 删除文章和标签的关联
+     * @param id id
+     */
+    void deleteTagByArticleId(String id);
+
+    /**
+     * 更新文章
+     * @param article article
+     * @return int
+     */
+    int update(Article article);
 }
