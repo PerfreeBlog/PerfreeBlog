@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.UserMapper" >
     <insert id="add">
-        insert into p_user ( account, userName, password,salt,status,avatar,roleId,createTime)
-        VALUES (#{account},#{userName}, #{password},#{salt},#{status},#{avatar},#{roleId},#{createTime})
+        insert into p_user ( account, userName, password,salt,status,avatar,roleId,email,sex,createTime)
+        VALUES (#{account},#{userName}, #{password},#{salt},#{status},#{avatar},#{roleId},#{email},#{sex},#{createTime})
     </insert>
     <update id="update">
         update p_user set
-        userName = #{userName},status = #{status},avatar=#{avatar},roleId=#{roleId},updateTime=#{updateTime}
+        userName = #{userName},status = #{status},avatar=#{avatar},roleId=#{roleId},email=#{email},sex=#{sex},updateTime=#{updateTime}
         where id = #{id}
     </update>
     <update id="resetPassword">
@@ -43,6 +43,8 @@
         <result property="status" column="status"></result>
         <result property="avatar" column="avatar"></result>
         <result property="roleId" column="roleId"></result>
+        <result property="sex" column="sex"></result>
+        <result property="email" column="email"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
         <association property="role" javaType="com.perfree.model.Role">
@@ -54,7 +56,7 @@
     </resultMap>
     <select id="getList" resultMap="LIST_RESULT">
         select
-        t1.id,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,
+        t1.id,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.sex,t1.email,
         t2.name roleName,t2.description,t2.code
         from p_user t1 left join p_role t2 on t1.roleId = t2.id
         where 1 = 1

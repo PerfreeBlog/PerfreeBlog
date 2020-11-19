@@ -21,7 +21,7 @@
                     <div class="layui-card">
                         <div class="layui-card-body">
                             <div class="layui-form-item">
-                                <span class="p-form-tip">标题:</span>
+                                <span class="p-form-tip">标题: </span>
                                 <input type="text" name="title" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
                             </div>
 

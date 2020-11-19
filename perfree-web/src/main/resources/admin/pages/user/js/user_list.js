@@ -26,8 +26,8 @@ function initPage() {
         layer.open({
             title: "添加用户",
             type: 2,
-            offset: '20%',
-            area:  ['400px', '450px'],
+            offset: '15%',
+            area:  ['400px', '550px'],
             shadeClose: true,
             anim: 1,
             move: false,
@@ -76,6 +76,8 @@ function queryTable() {
             {field:'id', title:'ID', width:80, fixed: 'left',sort: true},
             {field:'userName', title:'用户名'},
             {field:'account', title:'账户'},
+            {field:'email', title:'邮箱'},
+            {field:'sex', title:'性别', templet: "<span>{{d.sex == null? '':d.sex === 0 ? '女':'男'}}</span>"},
             {field:'status', title:'状态',
                 templet: function (d) {
                     let html;
@@ -137,8 +139,8 @@ function editData(id) {
     layer.open({
         title: "编辑用户",
         type: 2,
-        offset: '20%',
-        area:  ['400px', '450px'],
+        offset: '15%',
+        area:  ['400px', '520px'],
         shadeClose: true,
         anim: 1,
         move: false,

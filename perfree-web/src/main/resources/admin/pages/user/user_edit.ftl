@@ -17,21 +17,45 @@
     <form class="layui-form" lay-filter="editForm">
         <input type="hidden" name="id" class="layui-input" value="${userForm.id}">
         <div class="layui-form-item">
-            <label class="layui-form-label">用户名:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>用户名:
+            </label>
             <div class="layui-input-block">
                 <input type="text" name="userName" value="${userForm.userName}" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">账户:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>账户:
+            </label>
             <div class="layui-input-block">
                 <input type="text" name="account" disabled value="${userForm.account}" required minlength="3" maxlength="12"  lay-verify="required" placeholder="请输入账户" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">角色: </label>
+            <label class="layui-form-label">邮箱:</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" placeholder="请输入邮箱" value="${userForm.email}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别: </label>
+            <div class="layui-input-block">
+                <select name="sex">
+                    <option value="">请选择</option>
+                    <option value="0" <#if (userForm.sex)== 0>selected</#if>>女</option>
+                    <option value="1" <#if (userForm.sex)== 1>selected</#if>>男</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>角色:
+            </label>
             <div class="layui-input-block">
                 <select name="roleId" lay-verify="required" id="roleId">
                 </select>
@@ -39,7 +63,9 @@
         </div>
         <input type="hidden" id="role" value="${userForm.roleId}">
         <div class="layui-form-item">
-            <label class="layui-form-label">状态:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>状态:
+            </label>
             <div class="layui-input-block">
                 <select name="status" lay-verify="required">
                     <option value="0" <#if (userForm.status)== 0>selected</#if>>正常</option>

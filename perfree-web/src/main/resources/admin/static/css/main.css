@@ -47,7 +47,7 @@ html{
     margin-left: 4px;
 }
 .p-container{
-    padding: 6px;
+    padding: 10px 15px 7px 7px;
     background: #f2f2f2;
     min-height: calc(100% - 12px);
 }
@@ -139,4 +139,9 @@ html{
 .articleHref{
     color: #388fd0;
     font-weight: 600;
+}
+.p-form-required{
+    color: red;
+    position: absolute;
+    left: 8px;
 }

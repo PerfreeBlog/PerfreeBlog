@@ -2,6 +2,7 @@ package com.perfree.model;
 
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -32,6 +33,26 @@ public class User implements Serializable {
     private Date updateTime;
 
     private Role role;
+
+    @Email(message = "请正确填写邮箱")
+    private String email;
+    private Integer sex;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getSex() {
+        return sex;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
 
     public Long getId() {
         return id;

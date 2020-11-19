@@ -15,7 +15,9 @@
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
         <div class="layui-form-item">
-            <label class="layui-form-label">标签名:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>标签名:
+            </label>
             <div class="layui-input-block">
                 <input type="text" name="name" required  lay-verify="required" placeholder="请输入标签名" autocomplete="off" class="layui-input">
             </div>

@@ -5,7 +5,6 @@
     <sql id="BASE_COLUMN">
         id,
         name,
-        count,
         userId,
         createTime,
         updateTime

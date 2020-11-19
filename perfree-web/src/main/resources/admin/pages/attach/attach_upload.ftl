@@ -15,7 +15,9 @@
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
         <div class="layui-form-item">
-            <label class="layui-form-label">文件:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>文件:
+            </label>
             <div class="layui-input-block">
                 <input type="text" name="file" style="cursor: pointer;" id="file" required readonly  lay-verify="required" placeholder="点击选择文件" autocomplete="off" class="layui-input">
             </div>

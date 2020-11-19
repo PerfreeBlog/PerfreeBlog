@@ -16,13 +16,17 @@
     <form class="layui-form" lay-filter="addForm">
         <input type="hidden" name="id" class="layui-input" value="${menu.id}">
         <div class="layui-form-item">
-            <label class="layui-form-label">菜单名:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>菜单名:
+            </label>
             <div class="layui-input-block">
                 <input type="text" name="name" value="${menu.name}" required  lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">菜单链接:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>菜单链接:
+            </label>
             <div class="layui-input-block">
                 <input type="text" name="url" value="${menu.url}" required  lay-verify="required" placeholder="请输入菜单链接" autocomplete="off" class="layui-input">
             </div>
@@ -34,7 +38,9 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">状态:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>状态:
+            </label>
             <div class="layui-input-block">
                 <select name="status" lay-verify="required">
                     <option value="0" <#if (menu.status)== 0>selected</#if>>正常</option>
@@ -44,7 +50,9 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">打开方式:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>打开方式:
+            </label>
             <div class="layui-input-block">
                 <select name="target" lay-verify="required">
                     <option value="1" <#if (menu.target)== 1>selected</#if>>新窗口</option>

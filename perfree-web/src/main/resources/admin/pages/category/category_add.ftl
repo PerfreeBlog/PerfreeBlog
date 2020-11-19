@@ -16,7 +16,9 @@
     <form class="layui-form" lay-filter="addForm">
         <input type="hidden" name="pid" value="${pid}">
         <div class="layui-form-item">
-            <label class="layui-form-label">分类名:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>分类名:
+            </label>
             <div class="layui-input-block">
                 <input type="text" name="name" required  lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
             </div>
@@ -29,7 +31,9 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">状态:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>状态:
+            </label>
             <div class="layui-input-block">
                 <select name="status" lay-verify="required">
                     <option value="0">正常</option>
