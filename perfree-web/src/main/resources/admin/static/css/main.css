@@ -47,7 +47,7 @@ html{
     margin-left: 4px;
 }
 .p-container{
-    padding: 10px 15px 7px 7px;
+    padding: 6px;
     background: #f2f2f2;
     min-height: calc(100% - 12px);
 }
@@ -121,6 +121,7 @@ html{
 }
 .p-add-panel{
     background: white;
+    padding: 10px 15px 7px 7px;
 }
 .tagBtn{
     margin-right: 5px;
