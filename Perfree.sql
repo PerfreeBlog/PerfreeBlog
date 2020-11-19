@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 18/11/2020 16:44:37
+ Date: 19/11/2020 13:38:23
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `p_article`  (
   `thumbnail` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '缩略图',
   `isTop` int(0) NULL DEFAULT 0 COMMENT '是否置顶0:否,1:是',
   `password` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '访问密码',
-  `status` int(0) NULL DEFAULT 0 COMMENT '状态0:已发布,1:草稿,2:隐藏',
+  `status` int(0) NULL DEFAULT 0 COMMENT '状态0:已发布,1:草稿',
   `commentCount` int(0) NULL DEFAULT 0 COMMENT '评论数',
   `viewCount` int(0) NULL DEFAULT 0 COMMENT '访问量',
   `userId` int(0) NOT NULL COMMENT '创建人',
@@ -40,23 +40,12 @@ CREATE TABLE `p_article`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_article
 -- ----------------------------
-INSERT INTO `p_article` VALUES (2, '111', '11111', '', 1, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 06:19:56', NULL);
-INSERT INTO `p_article` VALUES (12, '2222222', '22222', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 07:52:12', NULL);
-INSERT INTO `p_article` VALUES (13, '343', '34324233432', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 07:53:43', NULL);
-INSERT INTO `p_article` VALUES (14, '223', '3232323', '', NULL, '', '', '', 1, '', 0, 0, 0, 1, 1, '2020-11-18 07:58:25', NULL);
-INSERT INTO `p_article` VALUES (15, '232321', '321321321', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:04:18', NULL);
-INSERT INTO `p_article` VALUES (16, '123', '321321321', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:11:19', NULL);
-INSERT INTO `p_article` VALUES (17, '231232', '321321321321321', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:11:33', NULL);
-INSERT INTO `p_article` VALUES (18, '23232', '13213213213213', '', 1, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:13:43', NULL);
-INSERT INTO `p_article` VALUES (19, '213', '213213213213', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:14:22', NULL);
-INSERT INTO `p_article` VALUES (20, '23213', '2313213', '', NULL, '', '', '', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:16:20', NULL);
-INSERT INTO `p_article` VALUES (21, '小丁小丁小丁小丁小丁', '小丁\n小丁小丁小丁小丁小丁小丁![](/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg)\n![](/attach/20201118/c72a3e7062544304b4e25fd7464fdc84.jpg)', '', 1, '', '', '/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg', 0, 'b0d062c3dd3afba8d9c73bf627b6f954', 0, 0, 0, 1, 1, '2020-11-18 08:32:21', NULL);
-INSERT INTO `p_article` VALUES (22, '丁', '12321321321321', '', 1, '', '', '/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg', 0, '', 0, 0, 0, 1, 1, '2020-11-18 08:34:56', NULL);
+INSERT INTO `p_article` VALUES (43, '测试文章', '测试文章', '测试文章', 9, '测试文章', '测试文章', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '123456', 1, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-11-19 03:42:28');
 
 -- ----------------------------
 -- Table structure for p_article_tag
@@ -70,44 +59,7 @@ CREATE TABLE `p_article_tag`  (
 -- ----------------------------
 -- Records of p_article_tag
 -- ----------------------------
-INSERT INTO `p_article_tag` VALUES (2, 39);
-INSERT INTO `p_article_tag` VALUES (2, 38);
-INSERT INTO `p_article_tag` VALUES (3, 39);
-INSERT INTO `p_article_tag` VALUES (3, 38);
-INSERT INTO `p_article_tag` VALUES (3, 40);
-INSERT INTO `p_article_tag` VALUES (4, 39);
-INSERT INTO `p_article_tag` VALUES (4, 38);
-INSERT INTO `p_article_tag` VALUES (4, 40);
-INSERT INTO `p_article_tag` VALUES (15, 40);
-INSERT INTO `p_article_tag` VALUES (15, 39);
-INSERT INTO `p_article_tag` VALUES (15, 38);
-INSERT INTO `p_article_tag` VALUES (15, 37);
-INSERT INTO `p_article_tag` VALUES (15, 36);
-INSERT INTO `p_article_tag` VALUES (15, 35);
-INSERT INTO `p_article_tag` VALUES (16, 40);
-INSERT INTO `p_article_tag` VALUES (17, 39);
-INSERT INTO `p_article_tag` VALUES (17, 38);
-INSERT INTO `p_article_tag` VALUES (17, 37);
-INSERT INTO `p_article_tag` VALUES (17, 36);
-INSERT INTO `p_article_tag` VALUES (18, 40);
-INSERT INTO `p_article_tag` VALUES (18, 39);
-INSERT INTO `p_article_tag` VALUES (18, 38);
-INSERT INTO `p_article_tag` VALUES (18, 37);
-INSERT INTO `p_article_tag` VALUES (19, 40);
-INSERT INTO `p_article_tag` VALUES (19, 39);
-INSERT INTO `p_article_tag` VALUES (19, 38);
-INSERT INTO `p_article_tag` VALUES (19, 37);
-INSERT INTO `p_article_tag` VALUES (20, 39);
-INSERT INTO `p_article_tag` VALUES (20, 38);
-INSERT INTO `p_article_tag` VALUES (20, 37);
-INSERT INTO `p_article_tag` VALUES (20, 36);
-INSERT INTO `p_article_tag` VALUES (21, 39);
-INSERT INTO `p_article_tag` VALUES (21, 40);
-INSERT INTO `p_article_tag` VALUES (21, 38);
-INSERT INTO `p_article_tag` VALUES (21, 41);
-INSERT INTO `p_article_tag` VALUES (22, 41);
-INSERT INTO `p_article_tag` VALUES (22, 40);
-INSERT INTO `p_article_tag` VALUES (22, 39);
+INSERT INTO `p_article_tag` VALUES (43, 43);
 
 -- ----------------------------
 -- Table structure for p_attach
@@ -124,23 +76,12 @@ CREATE TABLE `p_attach`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_attach
 -- ----------------------------
-INSERT INTO `p_attach` VALUES (32, '1.mp3', '', '/attach/20201118/a6770ade777f46c0a20a0ca12b1330ac.mp3', '.mp3', '', 'audio', '2020-11-18 02:32:19', NULL);
-INSERT INTO `p_attach` VALUES (33, '2.jpg', '', '/attach/20201118/12040a5f3c224259b5269e738f97996b.jpg', '.jpg', '', 'img', '2020-11-18 02:38:08', NULL);
-INSERT INTO `p_attach` VALUES (34, '系统配置.xlsx', '', '/attach/20201118/a5ef7598fb6740d3863b8b48020f9651.xlsx', '.xlsx', '', 'other', '2020-11-18 02:39:08', NULL);
-INSERT INTO `p_attach` VALUES (35, '6c4b3ab1798e1b252d81e1357e155bb7.mp4', '21312', '/attach/20201118/3b54691368184e8c83cb54fecd9ee537.mp4', '.mp4', '23213', 'video', '2020-11-18 02:39:17', '2020-11-18 03:04:37');
-INSERT INTO `p_attach` VALUES (36, '平台-9月绩效考核.xlsx', '', '/attach/20201118/d0fd0fbc897940b3b8c97d5cf70d2772.xlsx', '.xlsx', '', 'other', '2020-11-18 02:42:25', NULL);
-INSERT INTO `p_attach` VALUES (37, 'Perfree.zip', '', '/attach/20201118/f0294ccdab97472189f3098a93aba7a9.zip', '.zip', '', 'other', '2020-11-18 02:42:36', NULL);
-INSERT INTO `p_attach` VALUES (38, 'android_111685.rar', '', '/attach/20201118/ff80f880dfde472396dbdc94e19f53bb.rar', '.rar', '', 'other', '2020-11-18 02:44:43', NULL);
-INSERT INTO `p_attach` VALUES (39, 'all.2020-11-17.log', '23213', '/attach/20201118/645a935e24e843a593bea404547baffa.2020-11-17.log', '.2020-11-17.log', '', 'other', '2020-11-18 02:45:28', '2020-11-18 03:04:29');
-INSERT INTO `p_attach` VALUES (40, '3.jpg', '1222', '/attach/20201118/48b47d234cf640cf88069f5175dba56a.jpg', '.jpg', '', 'img', '2020-11-18 02:51:25', '2020-11-18 03:04:33');
-INSERT INTO `p_attach` VALUES (41, '1.jpg', '', '/attach/20201118/ee9d3a3e5fe9402094edcbf4b50e3e8c.jpg', '.jpg', '', 'img', '2020-11-18 03:05:08', NULL);
-INSERT INTO `p_attach` VALUES (42, '2.jpg', '', '/attach/20201118/c00cf01e0f194565ac78d3c959a27260.jpg', '.jpg', '', 'img', '2020-11-18 03:43:47', NULL);
-INSERT INTO `p_attach` VALUES (44, '1.jpg', NULL, '/attach/20201118/c72a3e7062544304b4e25fd7464fdc84.jpg', '.jpg', NULL, 'img', '2020-11-18 08:31:35', NULL);
+INSERT INTO `p_attach` VALUES (45, '1.jpg', '', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', '.jpg', '', 'img', '2020-11-19 03:41:56', NULL);
 
 -- ----------------------------
 -- Table structure for p_category
@@ -163,9 +104,8 @@ CREATE TABLE `p_category`  (
 -- ----------------------------
 -- Records of p_category
 -- ----------------------------
-INSERT INTO `p_category` VALUES (1, '1', -1, '1', 0, '	是否单行显示，溢出悬浮展开	是否单行显示，溢出悬浮展开	是否单行显示，溢出悬浮展开	是否单行显示，溢出悬浮展开22222', '1', 0, '2020-11-13 14:50:23', '2020-11-13 07:39:19');
-INSERT INTO `p_category` VALUES (2, '2', 1, '2', 2, '2', '2', 0, '2020-11-13 14:50:48', '2020-11-13 07:39:19');
 INSERT INTO `p_category` VALUES (7, '232', 2, '2323', 0, '23232', '3232', 0, '2020-11-13 07:31:22', NULL);
+INSERT INTO `p_category` VALUES (9, 'java', -1, '从入门到入土', 0, '', '', 0, '2020-11-19 03:39:51', NULL);
 
 -- ----------------------------
 -- Table structure for p_menu
@@ -192,7 +132,7 @@ CREATE TABLE `p_menu`  (
 INSERT INTO `p_menu` VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, 0, '2020-08-31 17:15:08', '2020-08-31 17:15:10');
 INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'fa-book', 2, 1, 0, 0, '2020-08-31 17:15:39', '2020-08-31 17:15:41');
 INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
-INSERT INTO `p_menu` VALUES (4, 2, '新建', '/admin/article/addPage', '', 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
+INSERT INTO `p_menu` VALUES (4, 2, '写文章', '/admin/article/addPage', '', 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
 INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'fa-comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
 INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/category', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
 INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
@@ -201,6 +141,7 @@ INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 
 INSERT INTO `p_menu` VALUES (10, -1, '用户', '/admin/user', 'fa-user', 7, 1, 0, 0, '2020-11-11 13:30:44', '2020-11-11 13:30:46');
 INSERT INTO `p_menu` VALUES (11, -1, '菜单', '/admin/menu', 'fa-bars', 8, 1, 0, 0, '2020-11-12 15:55:30', '2020-11-17 20:33:28');
 INSERT INTO `p_menu` VALUES (12, -1, '附件', '/admin/attach', 'fa-file-archive-o', 9, 1, 0, 0, '2020-11-17 20:33:26', '2020-11-17 20:33:31');
+INSERT INTO `p_menu` VALUES (31, -1, '首页', '/home', '', NULL, 0, 1, 0, '2020-11-19 03:41:42', NULL);
 
 -- ----------------------------
 -- Table structure for p_role
@@ -259,29 +200,12 @@ CREATE TABLE `p_tag`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 42 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_tag
 -- ----------------------------
-INSERT INTO `p_tag` VALUES (11, '打撒大撒放到', 1, '2020-11-11 01:03:07', NULL);
-INSERT INTO `p_tag` VALUES (13, '我去额去我', 1, '2020-11-11 01:04:06', NULL);
-INSERT INTO `p_tag` VALUES (26, '散打按时', 1, '2020-11-11 04:35:31', NULL);
-INSERT INTO `p_tag` VALUES (27, '1', 1, '2020-11-11 08:53:53', NULL);
-INSERT INTO `p_tag` VALUES (28, 'aa', 1, '2020-11-18 05:31:06', NULL);
-INSERT INTO `p_tag` VALUES (29, '456', 1, '2020-11-18 05:37:03', NULL);
-INSERT INTO `p_tag` VALUES (30, '789', 1, '2020-11-18 05:37:44', NULL);
-INSERT INTO `p_tag` VALUES (31, '11232', 1, '2020-11-18 05:38:09', NULL);
-INSERT INTO `p_tag` VALUES (32, '撒大事', 1, '2020-11-18 05:39:55', NULL);
-INSERT INTO `p_tag` VALUES (33, '而我却', 1, '2020-11-18 05:41:52', NULL);
-INSERT INTO `p_tag` VALUES (34, '呃呃呃', 1, '2020-11-18 05:42:51', NULL);
-INSERT INTO `p_tag` VALUES (35, '111', 1, '2020-11-18 05:43:07', NULL);
-INSERT INTO `p_tag` VALUES (36, '23223', 1, '2020-11-18 05:44:21', NULL);
-INSERT INTO `p_tag` VALUES (37, '23223大大', 1, '2020-11-18 05:44:27', NULL);
-INSERT INTO `p_tag` VALUES (38, '2323哇啊', 1, '2020-11-18 05:45:02', NULL);
-INSERT INTO `p_tag` VALUES (39, '是大大说的撒', 1, '2020-11-18 05:48:19', NULL);
-INSERT INTO `p_tag` VALUES (40, '萨达', 1, '2020-11-18 06:20:29', NULL);
-INSERT INTO `p_tag` VALUES (41, '小丁', 1, '2020-11-18 08:31:57', NULL);
+INSERT INTO `p_tag` VALUES (43, 'java', 1, '2020-11-19 03:39:27', NULL);
 
 -- ----------------------------
 -- Table structure for p_user
@@ -296,6 +220,8 @@ CREATE TABLE `p_user`  (
   `status` int(0) NOT NULL DEFAULT 0 COMMENT '状态:0正常,1禁用',
   `avatar` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '头像',
   `roleId` int(0) NOT NULL COMMENT '角色id',
+  `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `sex` int(0) NULL DEFAULT NULL COMMENT '性别0:女,1男',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -304,6 +230,8 @@ CREATE TABLE `p_user`  (
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
-INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, 'https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=', 1, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
+INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, 'https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=', 1, NULL, NULL, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
+INSERT INTO `p_user` VALUES (12, 'user', 'user', '768f6f5f6fd13559637365e9a727e916', 'f9d785f9e3a845a9a29507c21e8cce6c', 0, '/avatar/20201119/3bd8f23b80d84555944f3fb4379c5e92.jpg', 3, NULL, NULL, '2020-11-19 03:40:08', NULL);
+INSERT INTO `p_user` VALUES (13, '2313', '2312', '9a40013e64454404eb2db4ba0928c0e0', '48d22a963e6c4e7aba30d364e19b833b', 0, '/avatar/20201119/d92cfd18ab3c48a48cfb7e4890997f53.jpg', 1, '', 0, '2020-11-19 05:23:56', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
