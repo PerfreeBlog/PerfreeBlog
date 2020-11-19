@@ -23,7 +23,7 @@
                           <#list menu.childMenu as childMenu>
                             <dd class="f-child-side">
                                 <a href="javascript:;" class="p-menu-item" data-url="${childMenu.url}" id="${childMenu.id}" data-icon="" data-name="${menu.name + '-' + childMenu.name}"
-                                   onclick="openTab('','${menu.name + '-' + childMenu.name}','${childMenu.url}','${childMenu.id}');">${childMenu.name}</a>
+                                   onclick="openTab('','${childMenu.name}','${childMenu.url}','${childMenu.id}');">${childMenu.name}</a>
                             </dd>
                           </#list>
                         </dl>

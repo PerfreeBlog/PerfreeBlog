@@ -150,7 +150,7 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    parent.openTab('', '文章-编辑','/admin/article/updatePage/'+id,"-1");
+    parent.openTab('', '编辑文章','/admin/article/updatePage/'+id,"-1");
 }
 
 /**

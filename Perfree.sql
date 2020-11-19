@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 19/11/2020 15:45:55
+ Date: 19/11/2020 16:15:28
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,7 @@ CREATE TABLE `p_article`  (
 -- ----------------------------
 -- Records of p_article
 -- ----------------------------
-INSERT INTO `p_article` VALUES (43, '测试文章', '测试文章', '测试文章', 9, '测试文章', '测试文章', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '123456', 1, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-11-19 03:42:28');
+INSERT INTO `p_article` VALUES (43, '测试文章', '测试文章', '测试文章', 9, '测试文章', '测试文章', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '123456', 0, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-11-19 07:48:21');
 
 -- ----------------------------
 -- Table structure for p_article_tag
@@ -152,21 +152,21 @@ CREATE TABLE `p_menu`  (
 -- ----------------------------
 -- Records of p_menu
 -- ----------------------------
-INSERT INTO `p_menu` VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, 0, '2020-08-31 17:15:08', '2020-08-31 17:15:10');
-INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'fa-book', 2, 1, 0, 0, '2020-08-31 17:15:39', '2020-08-31 17:15:41');
-INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
-INSERT INTO `p_menu` VALUES (4, 2, '写文章', '/admin/article/addPage', '', 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
-INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/comment', 'fa-comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
-INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/category', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
-INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
-INSERT INTO `p_menu` VALUES (8, -1, '主题', '', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');
-INSERT INTO `p_menu` VALUES (9, -1, '设置', '/admin/dashboard', 'fa-sliders', 10, 1, 0, 0, '2020-08-31 17:19:40', '2020-08-31 17:19:42');
-INSERT INTO `p_menu` VALUES (10, -1, '用户', '/admin/user', 'fa-user', 7, 1, 0, 0, '2020-11-11 13:30:44', '2020-11-11 13:30:46');
-INSERT INTO `p_menu` VALUES (11, -1, '菜单', '/admin/menu', 'fa-bars', 8, 1, 0, 0, '2020-11-12 15:55:30', '2020-11-17 20:33:28');
-INSERT INTO `p_menu` VALUES (12, -1, '附件', '/admin/attach', 'fa-file-archive-o', 9, 1, 0, 0, '2020-11-17 20:33:26', '2020-11-17 20:33:31');
-INSERT INTO `p_menu` VALUES (13, 8, '所有主题', '/admin/dashboard', NULL, 1, 1, 0, 0, '2020-11-19 15:26:54', '2020-11-19 15:26:57');
-INSERT INTO `p_menu` VALUES (14, 8, '主题设置', '/admin/dashboard', NULL, 2, 1, 0, 0, '2020-11-19 15:27:36', '2020-11-19 15:27:38');
-INSERT INTO `p_menu` VALUES (15, 8, '安装主题', '/admin/dashboard', NULL, 3, 1, 0, 0, '2020-11-19 15:28:00', '2020-11-19 15:28:02');
+INSERT INTO `p_menu` VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, 0, '2020-11-19 15:57:28', NULL);
+INSERT INTO `p_menu` VALUES (2, -1, '写文章', '/admin/article/addPage', 'fa-pencil-square-o', 2, 1, 0, 0, '2020-11-19 15:58:06', NULL);
+INSERT INTO `p_menu` VALUES (3, -1, '内容管理', NULL, 'fa-terminal', 3, 1, 0, 0, '2020-11-19 15:58:37', NULL);
+INSERT INTO `p_menu` VALUES (4, -1, '主题管理', NULL, 'fa-tachometer', 4, 1, 0, 0, '2020-11-19 15:59:01', NULL);
+INSERT INTO `p_menu` VALUES (5, 3, '文章管理', '/admin/article', NULL, 1, 1, 0, 0, '2020-11-19 15:59:32', NULL);
+INSERT INTO `p_menu` VALUES (6, 3, '评论管理', '/admin/comment', NULL, 2, 1, 0, 0, '2020-11-19 16:00:01', NULL);
+INSERT INTO `p_menu` VALUES (7, 3, '分类管理', '/admin/category', NULL, 3, 1, 0, 0, '2020-11-19 16:00:46', NULL);
+INSERT INTO `p_menu` VALUES (8, 3, '标签管理', '/admin/tag', NULL, 4, 1, 0, 0, '2020-11-19 16:01:14', NULL);
+INSERT INTO `p_menu` VALUES (9, 3, '附件管理', '/admin/attach', NULL, 5, 1, 0, 0, '2020-11-19 16:01:41', NULL);
+INSERT INTO `p_menu` VALUES (10, 3, '用户管理', '/admin/user', NULL, 6, 1, 0, 0, '2020-11-19 16:02:07', NULL);
+INSERT INTO `p_menu` VALUES (11, 3, '菜单管理', '/admin/menu', NULL, 7, 1, 0, 0, '2020-11-19 16:02:30', NULL);
+INSERT INTO `p_menu` VALUES (12, 4, '所有主题', '/admin/dashboard', NULL, 1, 1, 0, 0, '2020-11-19 16:03:08', NULL);
+INSERT INTO `p_menu` VALUES (13, 4, '主题设置', '/admin/dashboard', NULL, 2, 1, 0, 0, '2020-11-19 16:03:42', NULL);
+INSERT INTO `p_menu` VALUES (14, 4, '安装主题', '/admin/dashboard', NULL, 3, 1, 0, 0, '2020-11-19 16:03:59', NULL);
+INSERT INTO `p_menu` VALUES (15, -1, '网站设置', '/admin/dashboard', 'fa-sliders', 5, 1, 0, 0, '2020-11-19 16:04:37', NULL);
 
 -- ----------------------------
 -- Table structure for p_option
