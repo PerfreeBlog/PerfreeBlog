@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 19/11/2020 16:15:28
+ Date: 19/11/2020 16:45:28
 */
 
 SET NAMES utf8mb4;
@@ -46,6 +46,7 @@ CREATE TABLE `p_article`  (
 -- Records of p_article
 -- ----------------------------
 INSERT INTO `p_article` VALUES (43, '测试文章', '测试文章', '测试文章', 9, '测试文章', '测试文章', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '123456', 0, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-11-19 07:48:21');
+INSERT INTO `p_article` VALUES (44, '哈哈哈哈哈', '哈哈哈哈哈', '哈哈哈哈哈', 9, '哈哈哈哈哈', '哈哈哈哈哈', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '', 0, 0, 0, 1, 1, '2020-11-19 08:18:25', NULL);
 
 -- ----------------------------
 -- Table structure for p_article_tag
@@ -60,6 +61,7 @@ CREATE TABLE `p_article_tag`  (
 -- Records of p_article_tag
 -- ----------------------------
 INSERT INTO `p_article_tag` VALUES (43, 43);
+INSERT INTO `p_article_tag` VALUES (44, 43);
 
 -- ----------------------------
 -- Table structure for p_attach
@@ -154,7 +156,7 @@ CREATE TABLE `p_menu`  (
 -- ----------------------------
 INSERT INTO `p_menu` VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, 0, '2020-11-19 15:57:28', NULL);
 INSERT INTO `p_menu` VALUES (2, -1, '写文章', '/admin/article/addPage', 'fa-pencil-square-o', 2, 1, 0, 0, '2020-11-19 15:58:06', NULL);
-INSERT INTO `p_menu` VALUES (3, -1, '内容管理', NULL, 'fa-terminal', 3, 1, 0, 0, '2020-11-19 15:58:37', NULL);
+INSERT INTO `p_menu` VALUES (3, -1, '内容管理', NULL, 'fa-inbox', 3, 1, 0, 0, '2020-11-19 15:58:37', NULL);
 INSERT INTO `p_menu` VALUES (4, -1, '主题管理', NULL, 'fa-tachometer', 4, 1, 0, 0, '2020-11-19 15:59:01', NULL);
 INSERT INTO `p_menu` VALUES (5, 3, '文章管理', '/admin/article', NULL, 1, 1, 0, 0, '2020-11-19 15:59:32', NULL);
 INSERT INTO `p_menu` VALUES (6, 3, '评论管理', '/admin/comment', NULL, 2, 1, 0, 0, '2020-11-19 16:00:01', NULL);
