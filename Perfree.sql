@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 19/11/2020 13:38:23
+ Date: 19/11/2020 14:45:39
 */
 
 SET NAMES utf8mb4;
@@ -108,6 +108,29 @@ INSERT INTO `p_category` VALUES (7, '232', 2, '2323', 0, '23232', '3232', 0, '20
 INSERT INTO `p_category` VALUES (9, 'java', -1, '从入门到入土', 0, '', '', 0, '2020-11-19 03:39:51', NULL);
 
 -- ----------------------------
+-- Table structure for p_comment
+-- ----------------------------
+DROP TABLE IF EXISTS `p_comment`;
+CREATE TABLE `p_comment`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `articleId` int(0) NOT NULL COMMENT '文章id',
+  `pid` int(0) NULL DEFAULT -1 COMMENT '父级id',
+  `userName` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论人名称',
+  `userId` int(0) NULL DEFAULT NULL COMMENT '用户iD',
+  `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `content` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',
+  `status` int(0) NULL DEFAULT 0 COMMENT '状态:0正常,1:待审核',
+  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of p_comment
+-- ----------------------------
+INSERT INTO `p_comment` VALUES (1, 43, -1, '11111', 1, '1', '1', 0, '2020-11-19 14:39:31', '2020-11-19 06:44:42');
+
+-- ----------------------------
 -- Table structure for p_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `p_menu`;
@@ -133,7 +156,7 @@ INSERT INTO `p_menu` VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 
 INSERT INTO `p_menu` VALUES (2, -1, '文章', NULL, 'fa-book', 2, 1, 0, 0, '2020-08-31 17:15:39', '2020-08-31 17:15:41');
 INSERT INTO `p_menu` VALUES (3, 2, '列表', '/admin/article', NULL, 1, 1, 0, 0, '2020-08-31 17:16:34', '2020-08-31 17:16:36');
 INSERT INTO `p_menu` VALUES (4, 2, '写文章', '/admin/article/addPage', '', 2, 1, 0, 0, '2020-08-31 17:16:58', '2020-08-31 17:17:00');
-INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/dashboard', 'fa-comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
+INSERT INTO `p_menu` VALUES (5, -1, '评论', '/admin/comment', 'fa-comment', 3, 1, 0, 0, '2020-08-31 17:17:29', '2020-08-31 17:17:32');
 INSERT INTO `p_menu` VALUES (6, -1, '分类', '/admin/category', 'fa-bars', 4, 1, 0, 0, '2020-08-31 17:17:55', '2020-08-31 17:17:57');
 INSERT INTO `p_menu` VALUES (7, -1, '标签', '/admin/tag', 'fa-tags', 5, 1, 0, 0, '2020-08-31 17:18:18', '2020-08-31 17:18:20');
 INSERT INTO `p_menu` VALUES (8, -1, '主题', '/admin/dashboard', 'fa-tachometer', 6, 1, 0, 0, '2020-08-31 17:18:51', '2020-08-31 17:18:53');

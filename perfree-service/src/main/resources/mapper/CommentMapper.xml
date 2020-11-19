@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.CommentMapper" >
+
+    <resultMap id="LIST_RESULT" type="com.perfree.model.Comment">
+        <id property="id" column="id"></id>
+        <result property="articleId" column="articleId"></result>
+        <result property="pid" column="pid"></result>
+        <result property="userName" column="userName"></result>
+        <result property="userId" column="userId"></result>
+        <result property="email" column="email"></result>
+        <result property="content" column="content"></result>
+        <result property="status" column="status"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <association property="user" javaType="com.perfree.model.User">
+            <id property="id" column="userId" />
+            <result property="userName" column="userName2"/>
+        </association>
+        <association property="article" javaType="com.perfree.model.Article">
+            <id property="id" column="articleId" />
+            <result property="title" column="title"/>
+        </association>
+    </resultMap>
+
+    <update id="changeStatus">
+        update p_comment set
+        status = #{status},
+        updateTime=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <delete id="del">
+        DELETE FROM  p_comment  WHERE id IN
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getList" resultMap="LIST_RESULT">
+        select t1.*,t2.userName userName2,t3.title from p_comment t1 left join p_user t2 on t1.userId = t2.id
+        left join p_article t3 on t1.articleId = t3.id
+        where 1 = 1
+        <if test="content != null and content != ''">
+            and t1.content like concat('%', #{content,jdbcType=VARCHAR},'%')
+        </if>
+        order by t1.createTime desc
+    </select>
+</mapper>
