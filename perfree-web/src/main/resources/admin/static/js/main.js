@@ -220,10 +220,10 @@ function changeTheme(e){
 
 /**
  * 打开tab
- * @param {图标} icon
- * @param {菜单名} menuName
- * @param {链接} url
- * @param {tabid} tabId
+ * @param  icon
+ * @param  menuName
+ * @param  url
+ * @param tabId
  */
 function openTab(icon,menuName,url,tabId) {
     var eachcount=0;
