@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public class ThemeService {
     public List<Theme> getAllTheme() {
+        System.out.println("11");
         return null;
     }
 
