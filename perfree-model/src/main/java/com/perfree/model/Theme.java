@@ -11,6 +11,24 @@ public class Theme implements Serializable {
     private String description;
     private String updateUrl;
     private String screenshots;
+    private Integer isActive = 0;
+    private String path;
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public Integer getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Integer isActive) {
+        this.isActive = isActive;
+    }
 
     public String getName() {
         return name;
@@ -66,5 +84,19 @@ public class Theme implements Serializable {
 
     public void setScreenshots(String screenshots) {
         this.screenshots = screenshots;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Theme{" +
+                "name='" + name + '\'' +
+                ", version='" + version + '\'' +
+                ", author='" + author + '\'' +
+                ", authorWebSite='" + authorWebSite + '\'' +
+                ", description='" + description + '\'' +
+                ", updateUrl='" + updateUrl + '\'' +
+                ", screenshots='" + screenshots + '\'' +
+                '}';
     }
 }

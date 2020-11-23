@@ -3,6 +3,7 @@ package com.perfree.service;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,4 +23,12 @@ public class OptionService {
         return optionMapper.getOptionByKey(key);
     }
 
+    /**
+     * 根据key更新value
+     * @param option option
+     * @return int
+     */
+    public int updateValueByKey(Option option) {
+        return optionMapper.updateValueByKey(option);
+    }
 }

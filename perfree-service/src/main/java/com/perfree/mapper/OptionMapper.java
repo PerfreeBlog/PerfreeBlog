@@ -13,4 +13,11 @@ public interface OptionMapper {
      * @return Option
      */
     Option getOptionByKey(String key);
+
+    /**
+     * 根据key更新value
+     * @param option option
+     * @return int
+     */
+    int updateValueByKey(Option option);
 }

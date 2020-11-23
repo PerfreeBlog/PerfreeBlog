@@ -1,14 +1,17 @@
 package com.perfree.controller;
 
+import com.perfree.common.Constants;
 import com.perfree.common.ResponseBean;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
+import com.perfree.service.OptionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +27,6 @@ import java.util.UUID;
  */
 @Controller
 public class SystemController extends BaseController{
-
     /**
      * 后台首页
      * @return String
@@ -42,7 +44,8 @@ public class SystemController extends BaseController{
      */
     @RequestMapping("/")
     public String index() {
-        return "themes/perfree/index";
+
+        return "themes/" + currentTheme() + "/index";
     }
 
     /**

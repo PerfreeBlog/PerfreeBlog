@@ -1,1 +1,1 @@
-<a href="/admin">1点击前往后台~</a>
+<a href="/admin">当前perfree主题,点击前往后台~</a>

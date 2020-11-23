@@ -1,0 +1,36 @@
+.p-theme-Abox{
+    padding: 5px;
+}
+.p-theme-box{
+    height: 260px;
+    background: white;
+    overflow: hidden;
+    border-radius: 2px;
+    border: 1px solid #ddd;
+}
+.p-theme-box img{
+    width: 100%;
+    height: calc(100% - 50px);
+}
+.p-theme-info{
+    height: 50px;
+    line-height: 50px;
+    border-top: 1px solid #ddd;
+    padding-left: 15px;
+    padding-right: 15px;
+    text-align: right;
+}
+.theme-name{
+    float: left;
+    font-weight: 600;
+    font-size: 15px;
+    color: #3b3b3c;
+}
+.p-theme-addPanel{
+    text-align: center;
+    line-height: 30px;
+}
+.p-theme-addPanel a{
+    color: #1e9fff;
+    cursor: pointer;
+}

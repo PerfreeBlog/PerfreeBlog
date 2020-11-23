@@ -5,12 +5,13 @@ server:
 web.upload-path: D:/perfree
 spring:
   resources:
-    static-locations: classpath:/,classpath:/themes/,file:${web.upload-path}
+    static-locations: classpath:/,classpath:/themes/,file:./resources/,file:${web.upload-path}
   devtools:
     restart:
       enabled: false
   freemarker:
-    template-loader-path: classpath:/
+    # template-loader-path: file:./resources/
+    template-loader-path: classpath:/,file:./resources/
     charset: UTF-8
     suffix: .ftl
     content-type: text/html; charset=utf-8
