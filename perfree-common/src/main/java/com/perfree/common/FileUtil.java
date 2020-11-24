@@ -84,4 +84,22 @@ public class FileUtil {
         }
         return "other";
     }
+
+    /**
+     * 删除目录
+     * @param file file
+     */
+    public static void deleteDirectory(File file){
+        if(file.isFile()){
+            file.delete();//清理文件
+        }else{
+            File list[] = file.listFiles();
+            if(list!=null){
+                for(File f: list){
+                    deleteDirectory(f);
+                }
+                file.delete();//清理目录
+            }
+        }
+    }
 }

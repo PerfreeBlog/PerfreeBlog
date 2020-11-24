@@ -1,26 +1,37 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.FileUtil;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Theme;
 import com.perfree.service.OptionService;
 import com.perfree.service.ThemeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactory;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
 public class ThemeController extends BaseController {
+    private final Logger logger = LoggerFactory.getLogger(ThemeController.class);
     @Autowired
     private ThemeService themeService;
+    // 生产主题路径
+    private final static String PROD_THEMES_PATH = "resources/themes";
+    // 开发主题路径
+    private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/themes";
 
     @GetMapping("/theme")
     public String themePage(Model model){
@@ -36,5 +47,54 @@ public class ThemeController extends BaseController {
             return ResponseBean.success("主题切换成功", null);
         }
         return ResponseBean.fail("主题切换失败", null);
+    }
+
+    @GetMapping("/theme/setting")
+    public String settingPage(){
+        File file = new File(PROD_THEMES_PATH + "/" + currentTheme() + "/setting.ftl");
+        File devFile = new File(DEV_THEMES_PATH + "/" + currentTheme() + "/setting.ftl");
+        if (file.exists() || devFile.exists()) {
+            return "themes/" + currentTheme() + "/setting";
+        } else {
+            return "admin/pages/theme/setting";
+        }
+
+    }
+
+    /**
+     * 卸载主题
+     * @param theme theme
+     * @return ResponseBean
+     */
+    @PostMapping("/theme/del")
+    @ResponseBody
+    public ResponseBean delTheme(@RequestBody Theme theme){
+        if (themeService.delTheme(theme)) {
+            return ResponseBean.success("主题卸载成功", null);
+        }
+        return ResponseBean.fail("主题卸载失败", null);
+    }
+
+    /**
+     * 安装主题
+     * @return String
+     */
+    @PostMapping("/theme/addTheme")
+    @ResponseBody
+    public ResponseBean addTheme(HttpServletRequest request) {
+        try{
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            MultipartFile multiFile = multipartRequest.getFile("file");
+            if (multiFile == null){
+                return ResponseBean.fail("文件不能为空", null);
+            }
+            if (themeService.addTheme(multiFile)) {
+                return ResponseBean.success("主题安装成功", null);
+            }
+            return ResponseBean.fail("主题安装失败,格式不正确", null);
+        }catch (Exception e){
+            logger.error("主题安装失败: {}", e.getMessage());
+            return ResponseBean.fail("主题安装失败", e.getMessage());
+        }
     }
 }

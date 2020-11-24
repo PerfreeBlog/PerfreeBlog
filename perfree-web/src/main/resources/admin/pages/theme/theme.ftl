@@ -66,20 +66,42 @@
             });
 
             $(".p-theme-container").on("click",".removeThemeBtn",function () {
-                alert(1);
+                const path = $(this).attr("data-path");
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/theme/del",
+                    contentType:"application/json",
+                    data: JSON.stringify({path: path}),
+                    success:function(d){
+                        if (d.code === 200){
+                            parent.layer.msg("卸载主题成功", {icon: 1});
+                            location.reload();
+                        } else {
+                            layer.msg("卸载主题失败", {icon: 2});
+                        }
+                    },
+                    error: function (data) {
+                        layer.msg("卸载主题失败", {icon: 2});
+                    }
+                });
             });
 
             upload.render({
                 elem: '#addTheme',
-                url: '/upload/',
+                url: '/admin/theme/addTheme',
                 accept: "file",
                 acceptMime: "application/zip",
                 exts: "zip",
                 done: function(res){
-                    //上传完毕回调
+                    if (res.code === 200) {
+                        parent.layer.msg("主题安装成功", {icon: 1});
+                        location.reload();
+                    } else {
+                        layer.msg(res.msg, {icon: 2});
+                    }
                 },
                 error: function(){
-                    //请求异常回调
+                    layer.msg("主题安装失败", {icon: 2});
                 }
             });
         </script>

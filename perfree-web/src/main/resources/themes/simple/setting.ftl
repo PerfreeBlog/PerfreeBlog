@@ -1,0 +1,1 @@
+<a href="/admin">当前simple主题,设置页面~</a>

@@ -20,7 +20,7 @@
         </dependency>
     </dependencies>
     <build>
-       <!-- <resources>
+        <!--<resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
