@@ -1,6 +1,7 @@
 package com.perfree.controller;
 
 import com.perfree.common.Constants;
+import com.perfree.common.OptionCache;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.service.MenuService;
@@ -44,6 +45,6 @@ public class BaseController {
      * @return String
      */
     public String currentTheme() {
-        return optionService.getOptionByKey(Constants.WEB_THEME).getValue();
+        return OptionCache.getOption(Constants.WEB_THEME);
     }
 }

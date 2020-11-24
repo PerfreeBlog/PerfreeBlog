@@ -6,6 +6,7 @@ import cn.hutool.setting.Setting;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
 import com.perfree.common.FileUtil;
+import com.perfree.common.OptionCache;
 import com.perfree.model.Option;
 import com.perfree.model.Theme;
 import org.apache.commons.lang3.ArrayUtils;
@@ -39,7 +40,6 @@ public class ThemeService {
         if (files == null) {
             return null;
         }
-        Option web_theme = optionService.getOptionByKey(Constants.WEB_THEME);
         for (File file : files) {
             File settingFile = new File(file.getAbsolutePath() + SEPARATOR + "settings.properties");
             if (settingFile.exists()){
@@ -52,7 +52,7 @@ public class ThemeService {
                 theme.setScreenshots(SEPARATOR + "themes" + SEPARATOR + settingFile.getParentFile().getName() +
                         SEPARATOR + props.get("screenshots").toString());
                 theme.setPath(settingFile.getParentFile().getName());
-                if (settingFile.getParentFile().getName().equals(web_theme.getValue())){
+                if (settingFile.getParentFile().getName().equals(OptionCache.getOption(Constants.WEB_THEME))){
                     theme.setIsActive(1);
                 }
                 theme.setUpdateUrl(props.get("update.url").toString());
@@ -103,7 +103,6 @@ public class ThemeService {
             }
         }
         File file = new File(PROD_THEMES_PATH + SEPARATOR + multiFileName);
-        System.out.println(file.getAbsolutePath());
         multiFile.transferTo(file.getAbsoluteFile());
         File unzip = ZipUtil.unzip(file);
         boolean delete = file.delete();

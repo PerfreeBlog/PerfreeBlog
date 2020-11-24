@@ -1,6 +1,8 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Constants;
 import com.perfree.common.FileUtil;
+import com.perfree.common.OptionCache;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Theme;
@@ -44,6 +46,7 @@ public class ThemeController extends BaseController {
     @ResponseBody
     public ResponseBean switchTheme(@RequestBody Theme theme){
         if (themeService.switchTheme(theme) > 0) {
+            OptionCache.setOption(Constants.WEB_THEME, theme.getPath());
             return ResponseBean.success("主题切换成功", null);
         }
         return ResponseBean.fail("主题切换失败", null);

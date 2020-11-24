@@ -4,6 +4,8 @@ import com.perfree.model.Option;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Mapper
 @Component
 public interface OptionMapper {
@@ -20,4 +22,10 @@ public interface OptionMapper {
      * @return int
      */
     int updateValueByKey(Option option);
+
+    /**
+     * 获取启动时必要缓存的key
+     * @return List<Option>
+     */
+    List<Option> getStartOption();
 }

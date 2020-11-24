@@ -9,4 +9,7 @@
     <select id="getOptionByKey" resultType="com.perfree.model.Option">
         select t.* from p_option t where t.key = #{key}
     </select>
+    <select id="getStartOption" resultType="com.perfree.model.Option">
+         select t.* from p_option t where t.key in ("WEB_THEME")
+    </select>
 </mapper>
