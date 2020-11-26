@@ -7,6 +7,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class OptionService {
@@ -30,5 +32,14 @@ public class OptionService {
      */
     public int updateValueByKey(Option option) {
         return optionMapper.updateValueByKey(option);
+    }
+
+    /**
+     * 批量添加或更新option
+     * @param options options
+     * @return int
+     */
+    public int addOrUpdateOptions(List<Option> options) {
+        return optionMapper.addOrUpdateOptions(options);
     }
 }

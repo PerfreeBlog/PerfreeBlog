@@ -28,4 +28,11 @@ public interface OptionMapper {
      * @return List<Option>
      */
     List<Option> getStartOption();
+
+    /**
+     * 批量插入或更新option
+     * @param options options
+     * @return int
+     */
+    int addOrUpdateOptions(List<Option> options);
 }
