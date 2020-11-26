@@ -27,6 +27,11 @@ public class SettingController extends BaseController {
     }
 
 
+    /**
+     * 保存设置信息
+     * @param param param
+     * @return ResponseBean
+     */
     @PostMapping("/setting/save")
     @ResponseBody
     public ResponseBean saveSetting(@RequestBody HashMap<String, String> param) {
