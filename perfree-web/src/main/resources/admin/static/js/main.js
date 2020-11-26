@@ -96,6 +96,27 @@ function initTheme() {
         laytpl($("#themeTpl").html()).render(data, function(html){
             $(".theme-list").html(html);
         });
+        const themeId = localStorage.getItem("themeId");
+        data.forEach(res => {
+           if (res.id === themeId) {
+               const letLogoBg = res.leftLogo;
+               const letLogoColor = res.logoColor;
+               const letLogoBoderColor = res.logoBoderColor;
+               const leftSideBg = res.leftSide;
+               const leftSideColor = res.sideColor;
+               const headerBg = res.header;
+               const headerColor = res.headerColor;
+               $(".f-side").css("background", leftSideBg);
+               $(".f-side-nav").css("background", leftSideBg);
+               $(".layui-nav-tree .layui-nav-child .f-child-side a").css("color", leftSideColor);
+               $(".layui-nav .f-nav-item a").css("color", leftSideColor);
+               $(".f-logo-text,.f-logo-img").css({background: letLogoBg, color: letLogoColor,"border-color": letLogoBoderColor});
+               $(".f-header").css("background", headerBg);
+               $(".f-nav .layui-nav-item a").css("color", headerColor);
+               $(".f-nav .layui-nav-item .layui-nav-child a").css("color", "#000000");
+           }
+
+        });
     })
 }
 
@@ -198,6 +219,7 @@ function setIframeHeight() {
  * @param {dom} e
  */
 function changeTheme(e){
+    localStorage.setItem("themeId",$(e).attr("id"));
     const letLogoBg = $(e).find(".theme-leftLogo").attr("bg");
     const letLogoColor = $(e).find(".theme-leftLogo").attr("color");
     const letLogoBoderColor = $(e).find(".theme-leftLogo").attr("borderColor");
