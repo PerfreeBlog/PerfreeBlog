@@ -81,4 +81,12 @@ public class TagService {
     public List<Tag> allList() {
         return tagMapper.getList(null);
     }
+
+    /**
+     * 获取标签数量
+     * @return Long
+     */
+    public Long getTagCount() {
+        return tagMapper.getTagCount();
+    }
 }

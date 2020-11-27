@@ -71,4 +71,7 @@
     <select id="getById" resultType="com.perfree.model.User">
         select * from p_user where id = #{id}
     </select>
+    <select id="getUserCount" resultType="java.lang.Long">
+        SELECT count(1) FROM p_user
+    </select>
 </mapper>

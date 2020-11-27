@@ -52,4 +52,20 @@ public class CommentService {
         comment.setUpdateTime(new Date());
         return commentMapper.changeStatus(comment);
     }
+
+    /**
+     * 获取评论数量
+     * @return Long
+     */
+    public Long getCommentCount() {
+        return commentMapper.getCommentCount();
+    }
+
+    /**
+     * 获取最新的22条评论(后台首页)
+     * @return List<Comment>
+     */
+    public List<Comment> getCommentListByDashboard() {
+        return commentMapper.getCommentListByDashboard();
+    }
 }

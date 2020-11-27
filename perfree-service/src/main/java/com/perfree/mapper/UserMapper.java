@@ -64,4 +64,10 @@ public interface UserMapper {
      * @return int
      */
     int changeStatus(User user);
+
+    /**
+     * 获取用户数量
+     * @return Long
+     */
+    Long getUserCount();
 }

@@ -44,4 +44,10 @@ public interface TagMapper {
      * @return int
      */
     int del(String[] idArr);
+
+    /**
+     * 获取标签数量
+     * @return Long
+     */
+    Long getTagCount();
 }

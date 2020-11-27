@@ -86,4 +86,16 @@ public interface ArticleMapper {
      * @return int
      */
     int update(Article article);
+
+    /**
+     * 获取文章数量
+     * @return Long
+     */
+    Long getArticleCount();
+
+    /**
+     * 获取最新的22条文章(后台首页)
+     * @return List<Article
+     */
+    List<Article> getArticleListByDashboard();
 }

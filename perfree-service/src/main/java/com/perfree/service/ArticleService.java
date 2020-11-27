@@ -123,4 +123,20 @@ public class ArticleService {
         }
         return articleMapper.update(article);
     }
+
+    /**
+     * 获取文章数量
+     * @return Long
+     */
+    public Long getArticleCount() {
+        return articleMapper.getArticleCount();
+    }
+
+    /**
+     * 获取最新的22条文章(后台首页)
+     * @return List<Article
+     */
+    public List<Article> getArticleListByDashboard() {
+        return articleMapper.getArticleListByDashboard();
+    }
 }

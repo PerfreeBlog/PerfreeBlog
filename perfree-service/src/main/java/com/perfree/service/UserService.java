@@ -110,4 +110,12 @@ public class UserService {
         user.setUpdateTime(new Date());
         return userMapper.changeStatus(user);
     }
+
+    /**
+     * 获取用户数量
+     * @return Long
+     */
+    public Long getUserCount() {
+        return userMapper.getUserCount();
+    }
 }

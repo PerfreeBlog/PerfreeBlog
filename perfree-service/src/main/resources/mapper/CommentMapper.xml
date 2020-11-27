@@ -46,4 +46,10 @@
         </if>
         order by t1.createTime desc
     </select>
+    <select id="getCommentCount" resultType="java.lang.Long">
+        SELECT count(1) FROM p_comment
+    </select>
+    <select id="getCommentListByDashboard" resultType="com.perfree.model.Comment">
+        SELECT * FROM p_comment ORDER BY createTime DESC limit 0,6
+    </select>
 </mapper>

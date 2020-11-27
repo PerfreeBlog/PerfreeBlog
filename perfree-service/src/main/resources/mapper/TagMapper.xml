@@ -49,4 +49,7 @@
     <select id="getById" resultType="com.perfree.model.Tag">
         select <include refid="BASE_COLUMN"></include> from p_tag where id = #{id}
     </select>
+    <select id="getTagCount" resultType="java.lang.Long">
+        SELECT count(1) FROM p_tag
+    </select>
 </mapper>

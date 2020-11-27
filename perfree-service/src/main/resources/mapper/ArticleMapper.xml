@@ -108,4 +108,10 @@
         select t1.*,t2.name categoryName,t3.userName from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         where t1.id = #{id}
     </select>
+    <select id="getArticleCount" resultType="java.lang.Long">
+        SELECT count(1) FROM p_article
+    </select>
+    <select id="getArticleListByDashboard" resultType="com.perfree.model.Article">
+        SELECT * FROM p_article ORDER BY createTime DESC limit 0,6
+    </select>
 </mapper>

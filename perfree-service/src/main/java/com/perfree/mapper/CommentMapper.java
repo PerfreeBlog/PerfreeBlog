@@ -30,4 +30,15 @@ public interface CommentMapper {
      * @return int
      */
     int changeStatus(Comment comment);
+    /**
+     * 获取评论数量
+     * @return Long
+     */
+    Long getCommentCount();
+
+    /**
+     * 获取最新的22条评论(后台首页)
+     * @return List<Comment>
+     */
+    List<Comment> getCommentListByDashboard();
 }
