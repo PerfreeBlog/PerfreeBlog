@@ -2,3 +2,44 @@
     font-size: 25px;
     color: #676565;
 }
+.p-card-left{
+    display: inline-block;
+    color: #444;
+}
+.p-card-right{
+    float: right;
+}
+.p-card-num{
+    font-size: 25px;
+    padding: 5px;
+    color: #444;
+}
+.p-card-num-text{
+    font-size: 14px;
+}
+.p-card-article-title{
+    color: #494e52;
+    font-weight: 600;
+    cursor: pointer;
+}
+.p-card-article-time,.p-card-comment-time{
+    padding-right: 5px;
+    border-right: 1px solid #a5a0a0;
+    margin-right: 5px;
+}
+.p-cart-article-title:hover{
+    color: #494e52;
+    text-decoration: underline;
+}
+.p-card-comment-user{
+    color: #444;
+    font-weight: 600;
+}
+.p-card-comment-title{
+
+}
+.p-cart-li{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
