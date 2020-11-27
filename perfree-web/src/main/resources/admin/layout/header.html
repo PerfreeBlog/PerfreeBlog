@@ -18,12 +18,14 @@
         </li>
         <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-                <img src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=" class="layui-nav-img">
+                <#if aaa??>
+                    <img src="${user.avatar ! '/public/images/user.png'}" class="layui-nav-img">
+                </#if>
                 Perfree
             </a>
             <dl class="layui-nav-child">
-                <dd><a href="">基本资料</a></dd>
-                <dd><a href="">安全设置</a></dd>
+                <dd><a href="">个人中心</a></dd>
+                <dd><a href="">退出登录</a></dd>
             </dl>
         </li>
     </ul>

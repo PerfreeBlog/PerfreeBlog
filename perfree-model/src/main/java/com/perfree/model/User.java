@@ -36,7 +36,7 @@ public class User implements Serializable {
 
     @Email(message = "请正确填写邮箱")
     private String email;
-    private Integer sex;
+    private Integer sex = -1;
 
     public String getEmail() {
         return email;

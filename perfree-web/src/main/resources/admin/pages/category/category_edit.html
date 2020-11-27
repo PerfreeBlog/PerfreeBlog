@@ -20,13 +20,13 @@
                 <span class="p-form-required">*</span>分类名:
             </label>
             <div class="layui-input-block">
-                <input type="text" name="name" value="${category.name}" required  lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
+                <input type="text" name="name" value="${category.name!''}" required  lay-verify="required" placeholder="请输入菜单名" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述:</label>
             <div class="layui-input-block">
-                <textarea name="desc" style="resize:none;" placeholder="请输入描述" class="layui-textarea">${category.desc}</textarea>
+                <textarea name="desc" style="resize:none;" placeholder="请输入描述" class="layui-textarea">${category.desc!''}</textarea>
             </div>
         </div>
 
@@ -45,14 +45,14 @@
         <div class="layui-form-item" >
             <label class="layui-form-label">SEO关键字:</label>
             <div class="layui-input-inline">
-                <input type="text" value="${category.metaKeywords}" name="metaKeywords" placeholder="请输入SEO关键字" autocomplete="off" class="layui-input">
+                <input type="text" value="${category.metaKeywords!''}" name="metaKeywords" placeholder="请输入SEO关键字" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">SEO描述:</label>
             <div class="layui-input-block">
-                <textarea name="metaDescription" style="resize:none;" placeholder="请输入SEO描述内容" class="layui-textarea">${category.metaDescription}</textarea>
+                <textarea name="metaDescription" style="resize:none;" placeholder="请输入SEO描述内容" class="layui-textarea">${category.metaDescription!''}</textarea>
             </div>
         </div>
         <div class="add-btn-box">

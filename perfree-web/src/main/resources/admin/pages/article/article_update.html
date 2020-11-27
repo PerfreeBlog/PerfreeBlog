@@ -23,14 +23,14 @@
                             <input type="hidden" name="id" value="${article.id}">
                             <div class="layui-form-item">
                                 <span class="p-form-tip">标题:</span>
-                                <input type="text" name="title" value="${article.title}" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+                                <input type="text" name="title" value="${article.title!''}" required  lay-verify="required" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
                             </div>
 
                             <div class="layui-form-item" style="margin: 0">
                                 <span class="p-form-tip">文章内容:</span>
                             </div>
                             <div id="editorBox">
-                                <input type="hidden" value="${article.content}" id="articleContent">
+                                <input type="hidden" value="${article.content!''}" id="articleContent">
                                 <div id="editor">
                                 </div>
                             </div>

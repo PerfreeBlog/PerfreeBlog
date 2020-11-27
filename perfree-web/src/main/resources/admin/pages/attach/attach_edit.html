@@ -18,13 +18,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">描述:</label>
             <div class="layui-input-block">
-                <textarea placeholder="请输入文件描述" name="desc" id="desc" class="layui-textarea" style="resize: none">${attach.desc}</textarea>
+                <textarea placeholder="请输入文件描述" name="desc" id="desc" class="layui-textarea" style="resize: none">${attach.desc!''}</textarea>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">标识:</label>
             <div class="layui-input-block">
-                <input type="text" value="${attach.flag}" name="flag" id="flag" placeholder="请输入文件标识" autocomplete="off" class="layui-input">
+                <input type="text" value="${attach.flag!''}" name="flag" id="flag" placeholder="请输入文件标识" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="add-btn-box">

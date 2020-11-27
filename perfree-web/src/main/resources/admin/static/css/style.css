@@ -2,6 +2,7 @@
     left: 200px;
     border-bottom: 1px solid;
     height: 50px;
+    position: relative;
 }
 .header-right{
     right: 200px;
