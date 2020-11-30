@@ -55,6 +55,16 @@ public class UserController extends BaseController {
     }
 
     /**
+     * 个人中心页
+     * @return String
+     */
+    @RequestMapping("/user/userCenter")
+    public String userCenter(Model model) {
+        model.addAttribute("userForm", userService.getById(getUser().getId().toString()));
+        return "admin/pages/user/user_center";
+    }
+
+    /**
      * 头像上传
      * @return String
      */

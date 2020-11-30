@@ -37,4 +37,6 @@
     font-weight: 900;
     cursor: pointer;
 }
-
+.layui-form-label {
+    width: 80px;
+}

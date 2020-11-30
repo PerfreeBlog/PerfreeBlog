@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/admin/static/css/main.css" rel="stylesheet"/>
-    <link href="/admin/pages/user/css/user_add.css" rel="stylesheet"/>
+    <link href="/admin/pages/user/css/user_edit.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="p-container p-add-panel">

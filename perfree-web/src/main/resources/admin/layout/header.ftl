@@ -21,11 +21,11 @@
                 <#if aaa??>
                     <img src="${user.avatar ! '/public/images/user.png'}" class="layui-nav-img">
                 </#if>
-                Perfree
+                ${user.userName}
             </a>
-            <dl class="layui-nav-child">
-                <dd><a href="">个人中心</a></dd>
-                <dd><a href="" onclick="logout()">退出登录</a></dd>
+            <dl class="layui-nav-child" >
+                <dd lay-unselect><a href="javascript:;" onclick="userCenter()">个人中心</a></dd>
+                <dd lay-unselect><a href="javascript:;" onclick="logout()">退出登录</a></dd>
             </dl>
         </li>
     </ul>

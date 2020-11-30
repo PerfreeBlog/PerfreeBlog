@@ -324,3 +324,10 @@ function logout() {
         }
     });
 }
+
+/**
+ * 个人中心
+ */
+function userCenter() {
+    openTab('', '个人中心','/admin/user/userCenter',"-2");
+}

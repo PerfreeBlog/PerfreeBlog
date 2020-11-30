@@ -54,8 +54,8 @@ public class ThemeController extends BaseController {
 
     @GetMapping("/theme/setting")
     public String settingPage(){
-        File file = new File(PROD_THEMES_PATH + "/" + currentTheme() + "/setting.html");
-        File devFile = new File(DEV_THEMES_PATH + "/" + currentTheme() + "/setting.html");
+        File file = new File(PROD_THEMES_PATH + "/" + currentTheme() + "/setting.ftl");
+        File devFile = new File(DEV_THEMES_PATH + "/" + currentTheme() + "/setting.ftl");
         if (file.exists() || devFile.exists()) {
             return "themes/" + currentTheme() + "/setting";
         } else {
