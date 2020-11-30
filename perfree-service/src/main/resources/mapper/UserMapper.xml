@@ -7,7 +7,14 @@
     </insert>
     <update id="update">
         update p_user set
-        userName = #{userName},status = #{status},avatar=#{avatar},roleId=#{roleId},email=#{email},sex=#{sex},updateTime=#{updateTime}
+        userName = #{userName},
+        <if test="status != null and status != ''">
+            status = #{status},
+        </if>
+        <if test="roleId != null and roleId != ''">
+            roleId=#{roleId},
+        </if>
+       avatar=#{avatar},email=#{email},sex=#{sex},updateTime=#{updateTime}
         where id = #{id}
     </update>
     <update id="resetPassword">

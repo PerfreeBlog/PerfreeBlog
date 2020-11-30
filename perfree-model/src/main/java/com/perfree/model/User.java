@@ -24,10 +24,8 @@ public class User implements Serializable {
     private String userName;
     private String password;
     private String salt;
-    @NotNull(message = "状态不允许为空")
     private Integer status;
     private String avatar;
-    @NotNull(message = "角色不允许为空")
     private Long roleId;
     private Date createTime;
     private Date updateTime;

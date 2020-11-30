@@ -77,7 +77,19 @@ function queryTable() {
             {field:'userName', title:'用户名'},
             {field:'account', title:'账户'},
             {field:'email', title:'邮箱'},
-            {field:'sex', title:'性别', templet: "<span>{{d.sex == null? '':d.sex === 0 ? '女':'男'}}</span>"},
+            {field:'sex', title:'性别', templet: function (d) {
+                    let html;
+                    if (d.sex === 0) {
+                        html = '<span>女</span>';
+                    } else if (d.sex === 1){
+                        html = '<span>男</span>';
+                    } else {
+                        html = '';
+                    }
+                    return html;
+
+                }
+            },
             {field:'status', title:'状态',
                 templet: function (d) {
                     let html;

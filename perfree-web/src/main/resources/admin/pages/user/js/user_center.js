@@ -20,24 +20,21 @@ function formEvent() {
     // 表单验证
     form.verify({});
     // 表单提交
-    form.on('submit(addForm)', function(data){
+    form.on('submit(editForm)', function(data){
         $.ajax({
             type: "POST",
-            url: "/admin/user/add",
+            url: "/admin/user/update",
             contentType:"application/json",
             data: JSON.stringify(data.field),
             success:function(data){
                 if (data.code === 200){
-                    parent.queryTable();
-                    parent.layer.msg("添加成功", {icon: 1});
-                    const index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
+                    layer.msg("修改成功", {icon: 1});
                 } else {
                     layer.msg(data.msg, {icon: 2});
                 }
             },
             error: function (data) {
-                layer.msg("添加失败", {icon: 2});
+                layer.msg("修改失败", {icon: 2});
             }
         });
         return false;
