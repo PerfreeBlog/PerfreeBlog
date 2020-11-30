@@ -303,3 +303,24 @@ function getMenuMsg(url) {
     });
     return menu;
 }
+
+/**
+ * 退出登录
+ */
+function logout() {
+    $.ajax({
+        type: "POST",
+        url: "/logout",
+        contentType:"application/json",
+        success:function(data){
+            if (data.code === 200){
+                window.location.href = "/";
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("退出登录失败", {icon: 2});
+        }
+    });
+}

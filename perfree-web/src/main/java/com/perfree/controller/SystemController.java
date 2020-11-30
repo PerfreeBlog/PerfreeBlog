@@ -2,6 +2,7 @@ package com.perfree.controller;
 
 import com.perfree.common.Constants;
 import com.perfree.common.ResponseBean;
+import com.perfree.controller.admin.ArticleController;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.service.OptionService;
@@ -11,6 +12,8 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +30,7 @@ import java.util.UUID;
  */
 @Controller
 public class SystemController extends BaseController{
+    private final Logger logger = LoggerFactory.getLogger(SystemController.class);
     /**
      * 后台首页
      * @return String
@@ -82,6 +86,23 @@ public class SystemController extends BaseController{
             responseBean = new ResponseBean(ResponseBean.ERROR_CODE, "系统异常", e.getMessage());
         }
         return responseBean;
+    }
+
+    /**
+     * 登录
+     * @return ResponseBean
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/logout")
+    @ResponseBody
+    public ResponseBean logout() {
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            subject.logout();
+            return ResponseBean.success("退出登录成功", null);
+        }catch (Exception e) {
+            logger.error("退出登录失败,{}", e.getMessage());
+            return ResponseBean.fail("退出登录失败", e.getMessage());
+        }
     }
 
     public static void main(String args[]){
