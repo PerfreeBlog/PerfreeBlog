@@ -30,6 +30,12 @@
         updateTime=#{updateTime}
         where id = #{id}
     </update>
+    <update id="updatePassword">
+       update p_user set
+        password = #{password},
+        updateTime=#{updateTime}
+        where id = #{id}
+    </update>
 
     <delete id="del">
         DELETE FROM  p_user  WHERE id IN

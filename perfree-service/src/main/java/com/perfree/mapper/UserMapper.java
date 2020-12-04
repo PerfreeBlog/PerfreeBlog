@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.perfree.model.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -70,4 +71,11 @@ public interface UserMapper {
      * @return Long
      */
     Long getUserCount();
+
+    /**
+     * 修改密码
+     * @param user user
+     * @return int
+     */
+    int updatePassword(User user);
 }

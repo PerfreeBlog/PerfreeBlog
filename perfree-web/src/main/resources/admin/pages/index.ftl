@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+<#assign option = "com.perfree.template.OptionMethod"?new()/>
     <head>
         <meta charset="UTF-8">
-        <title>Perfree</title>
+        <title>${option('WEB_NAME').getValue()}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
         <meta name="renderer" content="webkit"/>
         <meta name="force-rendering" content="webkit"/>

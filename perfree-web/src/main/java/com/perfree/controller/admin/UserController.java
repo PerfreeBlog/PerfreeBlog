@@ -1,5 +1,6 @@
 package com.perfree.controller.admin;
 
+import cn.hutool.core.lang.Validator;
 import com.perfree.common.FileUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
@@ -7,6 +8,7 @@ import com.perfree.controller.BaseController;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * 用户相关
@@ -101,7 +104,7 @@ public class UserController extends BaseController {
     @PostMapping("/user/add")
     @ResponseBody
     public ResponseBean add(@RequestBody @Valid User user) {
-        if (StringUtils.isBlank(user.getPassword())){
+        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 12){
             logger.error("密码不能为空且在6-12字符之间: {}", user.toString());
             return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
         }
@@ -184,6 +187,34 @@ public class UserController extends BaseController {
             return ResponseBean.success("修改成功", null);
         }
         logger.error("用户修改失败: {}", user.toString());
+        return ResponseBean.fail("修改失败", null);
+    }
+
+    /**
+     * 修改密码
+     * @return ResponseBean
+     */
+    @PostMapping("/user/updatePassword")
+    @ResponseBody
+    public ResponseBean updatePassword(@RequestBody HashMap<String, String> param) {
+        String oldPassword = param.get("oldPassword");
+        String newPassword = param.get("newPassword");
+        if (StringUtils.isBlank(oldPassword)) {
+            return ResponseBean.fail("当前密码不能为空", null);
+        }
+        if (StringUtils.isBlank(newPassword) || newPassword.length() < 6 || newPassword.length() > 12) {
+            return ResponseBean.fail("新密码不能为空且在6-12字符之间", null);
+        }
+        User user = userService.getById(getUser().getId().toString());
+        String oldMd5Password = new Md5Hash(oldPassword, user.getSalt()).toString();
+        if (!oldMd5Password.equals(user.getPassword())){
+            return ResponseBean.fail("当前密码错误!", null);
+        }
+        user.setPassword(new Md5Hash(newPassword, user.getSalt()).toString());
+        if (userService.updatePassword(user) > 0) {
+            return ResponseBean.success("修改成功", null);
+        }
+        logger.error("密码修改失败: {}", user.toString());
         return ResponseBean.fail("修改失败", null);
     }
 }

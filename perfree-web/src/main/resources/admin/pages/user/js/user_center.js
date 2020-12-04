@@ -39,6 +39,27 @@ function formEvent() {
         });
         return false;
     });
+
+
+    form.on('submit(passwordForm)', function(data){
+        $.ajax({
+            type: "POST",
+            url: "/admin/user/updatePassword",
+            contentType:"application/json",
+            data: JSON.stringify(data.field),
+            success:function(data){
+                if (data.code === 200){
+                    layer.msg("修改成功", {icon: 1});
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            },
+            error: function (data) {
+                layer.msg("修改失败", {icon: 2});
+            }
+        });
+        return false;
+    });
 }
 
 /**

@@ -88,10 +88,10 @@
             <form class="layui-form" lay-filter="passwordForm">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
-                        旧密码:
+                        当前密码:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userName" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+                        <input type="text" name="oldPassword" required lay-verify="required"  placeholder="请输入当前账户密码" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
                     </div>
                 </div>
 
@@ -100,7 +100,7 @@
                         新密码:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userName" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+                        <input type="text" name="newPassword" required lay-verify="required"  placeholder="请输入新密码" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
                     </div>
                 </div>
 

@@ -1,9 +1,9 @@
 <div class="layui-side f-side">
     <div class="layui-logo f-logo-text">
-        Perfree
+        ${option('WEB_NAME').getValue()}
     </div>
     <div class="layui-logo f-logo-img">
-        <img src="https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=">
+        <img src="/public/images/logo.png">
     </div>
     <div class="layui-side-scroll">
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->

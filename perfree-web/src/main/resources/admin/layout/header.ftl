@@ -18,9 +18,12 @@
         </li>
         <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-                <#if aaa??>
-                    <img src="${user.avatar ! '/public/images/user.png'}" class="layui-nav-img">
+                <#if (user.avatar)?? && (user.avatar) != ''>
+                    <img src="${(user.avatar)}" class="layui-nav-img">
+                <#else>
+                    <img src="/public/images/user.png" class="layui-nav-img">
                 </#if>
+
                 ${user.userName}
             </a>
             <dl class="layui-nav-child" >

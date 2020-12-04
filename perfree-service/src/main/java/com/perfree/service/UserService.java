@@ -118,4 +118,14 @@ public class UserService {
     public Long getUserCount() {
         return userMapper.getUserCount();
     }
+
+    /**
+     * 修改密码
+     * @param user user
+     * @return int
+     */
+    public int updatePassword(User user) {
+        user.setUpdateTime(new Date());
+        return userMapper.updatePassword(user);
+    }
 }
