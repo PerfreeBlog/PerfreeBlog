@@ -3,7 +3,11 @@
         ${option('WEB_NAME').getValue()}
     </div>
     <div class="layui-logo f-logo-img">
-        <img src="/public/images/logo.png">
+        <#if (option('WEB_LOGO').getValue())?? && (option('WEB_LOGO').getValue()) != ''>
+            <img src="${option('WEB_LOGO').getValue()}">
+        <#else>
+            <img src="/public/images/logo.png">
+        </#if>
     </div>
     <div class="layui-side-scroll">
         <!-- 左侧导航区域（可配合layui已有的垂直导航） -->

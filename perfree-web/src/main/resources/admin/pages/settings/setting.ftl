@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">网站Logo</label>
+                    <label class="layui-form-label">网站ICO</label>
                     <div class="layui-input-block">
                         <div class="p-upload-box" id="WEB_LOGO">
                                 <input type="hidden" value="${option('WEB_LOGO').getValue()}" name="WEB_LOGO" value="">

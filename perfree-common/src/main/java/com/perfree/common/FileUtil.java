@@ -12,7 +12,7 @@ import java.util.Date;
  * 文件相关工具类
  */
 public class FileUtil {
-    private final static String[] IMG_FILE_TYPE = {"jpg","png","gif","jpeg","tif","raw","svg"};
+    private final static String[] IMG_FILE_TYPE = {"jpg","png","gif","jpeg","tif","raw","svg","ico"};
     private final static String[] VIDEO_FILE_TYPE = {"avi","mov","rmvb","rm","mp4","flv","3gp","mpg","mlv","mpe","mpeg","vob"};
     private final static String[] AUDIO_FILE_TYPE = {"mp3","ogg","asf","wma","wav","mp3pro","midi","cd","aac"};
     private final static String SEPARATOR = "/";

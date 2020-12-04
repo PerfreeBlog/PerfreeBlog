@@ -8,6 +8,7 @@
         <meta name="renderer" content="webkit"/>
         <meta name="force-rendering" content="webkit"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <link rel="Shortcut Icon" href="/public/images/favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="/public/libs/layui-v2.5.6/layui/css/layui.css">
         <link href="/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
         <link href="/admin/static/css/style.css" rel="stylesheet"/>

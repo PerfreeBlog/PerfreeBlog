@@ -77,7 +77,9 @@ function initUpload() {
     upload.render({
         elem: '#uploadBtn'
         ,url: '/admin/attach/upload'
-        ,acceptMime:  'image/*'
+        ,accept: 'file'
+        ,acceptMime:  'image/*,image/ico'
+        ,exts: 'ico|jpg|png|gif|bmp|jpeg|tif|svg'
         ,done: function(res){
            if (res.code === 200){
                parent.layer.close(parent.layer.getFrameIndex(window.name));
