@@ -1,19 +1,19 @@
-let form,element,layer;
-layui.use(['layer', 'form', 'element'], function(){
+let form, element, layer;
+layui.use(['layer', 'form', 'element'], function () {
     form = layui.form;
     element = layui.element;
     layer = layui.layer;
     // 表单验证
     form.verify({});
     // 表单提交
-    form.on('submit(addForm)', function(data){
+    form.on('submit(addForm)', function (data) {
         $.ajax({
             type: "POST",
             url: "/admin/menu/add",
-            contentType:"application/json",
+            contentType: "application/json",
             data: JSON.stringify(data.field),
-            success:function(data){
-                if (data.code === 200){
+            success: function (data) {
+                if (data.code === 200) {
                     parent.queryTable();
                     parent.layer.msg("添加成功", {icon: 1});
                     const index = parent.layer.getFrameIndex(window.name);
@@ -31,7 +31,7 @@ layui.use(['layer', 'form', 'element'], function(){
 });
 
 // 取消
-$(".p-cancel-btn").click(function (){
+$(".p-cancel-btn").click(function () {
     const index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
 });

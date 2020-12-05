@@ -1,7 +1,8 @@
-let form,element,layer,upload;
+let form, element, layer, upload;
 initPage();
+
 function initPage() {
-    layui.use(['layer', 'form', 'element'], function(){
+    layui.use(['layer', 'form', 'element'], function () {
         form = layui.form;
         element = layui.element;
         layer = layui.layer;
@@ -21,14 +22,14 @@ function formEvent() {
     // 表单验证
     form.verify({});
     // 表单提交
-    form.on('submit(editForm)', function(data){
+    form.on('submit(editForm)', function (data) {
         $.ajax({
             type: "POST",
             url: "/admin/user/update",
-            contentType:"application/json",
+            contentType: "application/json",
             data: JSON.stringify(data.field),
-            success:function(data){
-                if (data.code === 200){
+            success: function (data) {
+                if (data.code === 200) {
                     parent.queryTable();
                     parent.layer.msg("更新成功", {icon: 1});
                     const index = parent.layer.getFrameIndex(window.name);
@@ -50,7 +51,7 @@ function formEvent() {
  */
 function initEvent() {
     // 取消
-    $(".p-cancel-btn").click(function (){
+    $(".p-cancel-btn").click(function () {
         const index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
     });
@@ -79,7 +80,7 @@ function loadRoleList() {
         let html = '<option value="">请选择</option>';
         const role = $("#role").val();
         data.data.forEach(res => {
-            if (role === (res.id+"")){
+            if (role === (res.id + "")) {
                 html += ' <option value="' + res.id + '" selected>' + res.name + '</option>';
             } else {
                 html += ' <option value="' + res.id + '">' + res.name + '</option>';
@@ -99,13 +100,13 @@ function initUpload() {
         elem: '#upload',
         url: '/admin/user/uploadImg',
         accept: 'images',
-        done: function(res, index, upload){
-           if (res.code === 200) {
-               $("#upload").hide();
-               $("#uploadSuccessPanel").show();
-               $("#uploadSuccessPanel > img").attr("src", res.data);
-               $("#avatar").val(res.data);
-           }
+        done: function (res, index, upload) {
+            if (res.code === 200) {
+                $("#upload").hide();
+                $("#uploadSuccessPanel").show();
+                $("#uploadSuccessPanel > img").attr("src", res.data);
+                $("#avatar").val(res.data);
+            }
         }
     });
 }

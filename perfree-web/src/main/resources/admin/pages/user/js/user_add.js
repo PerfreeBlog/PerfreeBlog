@@ -1,7 +1,8 @@
-let form,element,layer,upload;
+let form, element, layer, upload;
 initPage();
+
 function initPage() {
-    layui.use(['layer', 'form', 'element'], function(){
+    layui.use(['layer', 'form', 'element'], function () {
         form = layui.form;
         element = layui.element;
         layer = layui.layer;
@@ -21,14 +22,14 @@ function formEvent() {
     // 表单验证
     form.verify({});
     // 表单提交
-    form.on('submit(addForm)', function(data){
+    form.on('submit(addForm)', function (data) {
         $.ajax({
             type: "POST",
             url: "/admin/user/add",
-            contentType:"application/json",
+            contentType: "application/json",
             data: JSON.stringify(data.field),
-            success:function(data){
-                if (data.code === 200){
+            success: function (data) {
+                if (data.code === 200) {
                     parent.queryTable();
                     parent.layer.msg("添加成功", {icon: 1});
                     const index = parent.layer.getFrameIndex(window.name);
@@ -50,7 +51,7 @@ function formEvent() {
  */
 function initEvent() {
     // 取消
-    $(".p-cancel-btn").click(function (){
+    $(".p-cancel-btn").click(function () {
         const index = parent.layer.getFrameIndex(window.name);
         parent.layer.close(index);
     });
@@ -94,13 +95,13 @@ function initUpload() {
         elem: '#upload',
         url: '/admin/user/uploadImg',
         accept: 'images',
-        done: function(res, index, upload){
-           if (res.code === 200) {
-               $("#upload").hide();
-               $("#uploadSuccessPanel").show();
-               $("#uploadSuccessPanel > img").attr("src", res.data);
-               $("#avatar").val(res.data);
-           }
+        done: function (res, index, upload) {
+            if (res.code === 200) {
+                $("#upload").hide();
+                $("#uploadSuccessPanel").show();
+                $("#uploadSuccessPanel > img").attr("src", res.data);
+                $("#avatar").val(res.data);
+            }
         }
     });
 }

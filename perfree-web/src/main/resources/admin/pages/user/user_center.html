@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>用户</title>
@@ -18,13 +18,15 @@
         <div class="layui-card-header">设置资料</div>
         <div class="layui-card-body">
             <form class="layui-form" lay-filter="editForm">
-                <input type="hidden" name="id" class="layui-input" value="${userForm.id}">
+                <input type="hidden" name="id" class="layui-input" th:value="${userForm.id}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         用户名:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userName" value="${userForm.userName}" required lay-verify="required"  placeholder="请输入用户名" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+                        <input type="text" name="userName" th:value="${userForm.userName}" required
+                               lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input"
+                               minlength="2" maxlength="16">
                     </div>
                 </div>
 
@@ -33,14 +35,17 @@
                         账户:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="account" disabled value="${userForm.account}" required minlength="3" maxlength="12"  lay-verify="required" placeholder="请输入账户" autocomplete="off" class="layui-input">
+                        <input type="text" name="account" disabled th:value="${userForm.account}" required minlength="3"
+                               maxlength="12" lay-verify="required" placeholder="请输入账户" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">邮箱:</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="email" placeholder="请输入邮箱" value="${userForm.email!''}" autocomplete="off" class="layui-input">
+                        <input type="text" name="email" placeholder="请输入邮箱" th:value="${userForm.email}"
+                               autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
@@ -49,8 +54,8 @@
                     <div class="layui-input-inline">
                         <select name="sex">
                             <option value="">请选择</option>
-                            <option value="0" <#if (userForm.sex)== 0>selected</#if>>女</option>
-                            <option value="1" <#if (userForm.sex)== 1>selected</#if>>男</option>
+                            <option value="0" th:attr="selected = ${userForm.sex == 0 ? 'true': 'false'}">女</option>
+                            <option value="1" th:attr="selected = ${userForm.sex == 1 ? 'true': 'false'}">男</option>
                         </select>
                     </div>
                 </div>
@@ -58,13 +63,15 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">头像:</label>
                     <div class="layui-input-inline">
-                        <input type="hidden" name="avatar" id="avatar" value="${userForm.avatar}">
+                        <input type="hidden" name="avatar" id="avatar" th:value="${userForm.avatar}">
                         <div class="upload-box">
-                            <div class="upload-panel" id="upload" <#if (userForm.avatar)?? && (userForm.avatar) != "">style="display: none"</#if>>
+                            <div class="upload-panel" id="upload"
+                                 th:attr="style=${#strings.isEmpty(userForm.avatar)?'':'display: none'}">
                                 <i class="fa fa-upload" aria-hidden="true"></i>
                             </div>
-                            <div class="upload-success-panel" id="uploadSuccessPanel" <#if (userForm.avatar)?? && (userForm.avatar) != "">style="display: block"</#if>>
-                                <img src="${userForm.avatar}">
+                            <div class="upload-success-panel" id="uploadSuccessPanel"
+                                 th:attr="style=${#strings.isEmpty(userForm.avatar)?'':'display: block'}">
+                                <img th:src="${userForm.avatar}">
                                 <div class="delete-img-box" id="deleteImg">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </div>
@@ -75,7 +82,8 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"></label>
                     <div class="layui-input-inline">
-                        <button type="submit" lay-submit lay-filter="editForm" class="layui-btn layui-btn-normal">确认修改</button>
+                        <button type="submit" lay-submit lay-filter="editForm" class="layui-btn layui-btn-normal">确认修改
+                        </button>
                     </div>
                 </div>
             </form>
@@ -91,7 +99,8 @@
                         当前密码:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="oldPassword" required lay-verify="required"  placeholder="请输入当前账户密码" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+                        <input type="text" name="oldPassword" required lay-verify="required" placeholder="请输入当前账户密码"
+                               autocomplete="off" class="layui-input" minlength="2" maxlength="16">
                     </div>
                 </div>
 
@@ -100,14 +109,17 @@
                         新密码:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="newPassword" required lay-verify="required"  placeholder="请输入新密码" autocomplete="off" class="layui-input" minlength="2" maxlength="16">
+                        <input type="text" name="newPassword" required lay-verify="required" placeholder="请输入新密码"
+                               autocomplete="off" class="layui-input" minlength="2" maxlength="16">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label"></label>
                     <div class="layui-input-inline">
-                        <button type="submit" lay-submit lay-filter="passwordForm" class="layui-btn layui-btn-normal">确认修改</button>
+                        <button type="submit" lay-submit lay-filter="passwordForm" class="layui-btn layui-btn-normal">
+                            确认修改
+                        </button>
                     </div>
                 </div>
             </form>

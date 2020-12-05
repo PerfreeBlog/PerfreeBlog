@@ -1,5 +1,5 @@
-let table,form;
-layui.use(['table','layer','form'], function(){
+let table, form;
+layui.use(['table', 'layer', 'form'], function () {
     table = layui.table;
     form = layui.form;
     initPage();
@@ -27,7 +27,7 @@ function initPage() {
             title: "添加用户",
             type: 2,
             offset: '15%',
-            area:  ['400px', '550px'],
+            area: ['400px', '550px'],
             shadeClose: true,
             anim: 1,
             move: false,
@@ -37,7 +37,7 @@ function initPage() {
 
     // 批量删除
     $("#batchDeleteBtn").click(function () {
-        const checkStatus = table.checkStatus('tableBox'),data = checkStatus.data;
+        const checkStatus = table.checkStatus('tableBox'), data = checkStatus.data;
         if (data.length <= 0) {
             layer.msg("至少选择一条数据", {icon: 2});
         } else {
@@ -45,7 +45,7 @@ function initPage() {
             data.forEach(res => {
                 ids += res.id + ",";
             });
-            ids = ids.substring(0, ids.length-1);
+            ids = ids.substring(0, ids.length - 1);
             deleteData(ids)
         }
     });
@@ -58,7 +58,7 @@ function initPage() {
 function queryTable() {
     table.render({
         elem: '#tableBox',
-        url:'/admin/user/list',
+        url: '/admin/user/list',
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         contentType: 'application/json',
@@ -73,15 +73,16 @@ function queryTable() {
         limit: 30,
         cols: [[
             {type: 'checkbox', fixed: 'left'},
-            {field:'id', title:'ID', width:80, fixed: 'left',sort: true},
-            {field:'userName', title:'用户名'},
-            {field:'account', title:'账户'},
-            {field:'email', title:'邮箱'},
-            {field:'sex', title:'性别', templet: function (d) {
+            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
+            {field: 'userName', title: '用户名'},
+            {field: 'account', title: '账户'},
+            {field: 'email', title: '邮箱'},
+            {
+                field: 'sex', title: '性别', templet: function (d) {
                     let html;
                     if (d.sex === 0) {
                         html = '<span>女</span>';
-                    } else if (d.sex === 1){
+                    } else if (d.sex === 1) {
                         html = '<span>男</span>';
                     } else {
                         html = '';
@@ -90,7 +91,8 @@ function queryTable() {
 
                 }
             },
-            {field:'status', title:'状态',
+            {
+                field: 'status', title: '状态',
                 templet: function (d) {
                     let html;
                     if (d.status === 0) {
@@ -101,7 +103,8 @@ function queryTable() {
                     return html;
                 }
             },
-            {field:'avatar', title:'头像', templet: function (d) {
+            {
+                field: 'avatar', title: '头像', templet: function (d) {
                     let html = '';
                     if (d.status === 0) {
                         html = "<img src='" + d.avatar + "' layer-src='" + d.avatar + "'>";
@@ -109,20 +112,31 @@ function queryTable() {
                     return html;
                 }
             },
-            {field:'role', title:'角色', templet: "<span>{{d.role.name}}</span>"},
-            {field:'createTime', title:'创建时间', sort: true, templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>" },
-            {field:'updateTime', title:'更新时间', sort: true, templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"},
-            {field:'id', title:'操作', width:180, fixed: 'right',
+            {field: 'role', title: '角色', templet: "<span>{{d.role.name}}</span>"},
+            {
+                field: 'createTime',
+                title: '创建时间',
+                sort: true,
+                templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+            },
+            {
+                field: 'updateTime',
+                title: '更新时间',
+                sort: true,
+                templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+            },
+            {
+                field: 'id', title: '操作', width: 180, fixed: 'right',
                 templet: "<div>" +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
-                            "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='resetPassword(\"{{d.id}}\")'>重置密码</a>" +
-                            "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
-                        "</div>"
+                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
+                    "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='resetPassword(\"{{d.id}}\")'>重置密码</a>" +
+                    "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
+                    "</div>"
             },
         ]],
         page: true,
         response: {statusCode: 200},
-        parseData: function(res){
+        parseData: function (res) {
             return {
                 "code": res.code,
                 "msg": res.msg,
@@ -138,7 +152,7 @@ function queryTable() {
 
     form.on('switch(status)', function (data) {
         const id = this.value;
-        const status = this.checked? 0 : 1;
+        const status = this.checked ? 0 : 1;
         changeStatus(id, status);
     });
 }
@@ -152,7 +166,7 @@ function editData(id) {
         title: "编辑用户",
         type: 2,
         offset: '15%',
-        area:  ['400px', '520px'],
+        area: ['400px', '520px'],
         shadeClose: true,
         anim: 1,
         move: false,
@@ -165,14 +179,14 @@ function editData(id) {
  * @param ids
  */
 function deleteData(ids) {
-    layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+    layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
         $.ajax({
             type: "POST",
             url: "/admin/user/del",
-            contentType:"application/json",
+            contentType: "application/json",
             data: ids,
-            success:function(data){
-                if (data.code === 200){
+            success: function (data) {
+                if (data.code === 200) {
                     queryTable();
                     layer.msg(data.msg, {icon: 1});
                 } else {
@@ -206,14 +220,14 @@ function loadRoleList() {
  * @param id
  */
 function resetPassword(id) {
-    layer.confirm('确定要重置密码为123456吗?', {icon: 3, title:'提示'}, function(index){
+    layer.confirm('确定要重置密码为123456吗?', {icon: 3, title: '提示'}, function (index) {
         $.ajax({
             type: "POST",
             url: "/admin/user/resetPassword",
-            contentType:"application/json",
+            contentType: "application/json",
             data: JSON.stringify({id: id}),
-            success:function(data){
-                if (data.code === 200){
+            success: function (data) {
+                if (data.code === 200) {
                     queryTable();
                     layer.msg(data.msg, {icon: 1});
                 } else {
@@ -232,14 +246,14 @@ function resetPassword(id) {
  * 改变状态
  * @param id id
  */
-function changeStatus(id,status) {
+function changeStatus(id, status) {
     $.ajax({
         type: "POST",
         url: "/admin/user/changeStatus",
-        contentType:"application/json",
-        data: JSON.stringify({id: id,status: status}),
-        success:function(data){
-            if (data.code === 200){
+        contentType: "application/json",
+        data: JSON.stringify({id: id, status: status}),
+        success: function (data) {
+            if (data.code === 200) {
                 queryTable();
                 layer.msg(data.msg, {icon: 1});
             } else {

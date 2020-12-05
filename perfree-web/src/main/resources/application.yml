@@ -9,12 +9,18 @@ spring:
   devtools:
     restart:
       enabled: false
-  freemarker:
-    # template-loader-path: file:./resources/
-    template-loader-path: classpath:/,file:./resources/
-    charset: UTF-8
-    suffix: .ftl
-    content-type: text/html; charset=utf-8
+  thymeleaf:
+    cache: false
+    #prefix: file:./resources/
+    prefix: classpath:/
+    suffix: .html
+    encoding: UTF-8
+#  freemarker:
+#    # template-loader-path: file:./resources/
+#    template-loader-path: classpath:/,file:./resources/
+#    charset: UTF-8
+#    suffix: .ftl
+#    content-type: text/html; charset=utf-8
   servlet:
     multipart:
       max-file-size: -1

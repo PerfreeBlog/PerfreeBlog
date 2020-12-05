@@ -1,24 +1,19 @@
 package com.perfree.controller.admin;
 
 import com.perfree.common.Constants;
-import com.perfree.common.FileUtil;
 import com.perfree.common.OptionCache;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Theme;
-import com.perfree.service.OptionService;
 import com.perfree.service.ThemeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.freemarker.FreeMarkerConfigurationFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -54,8 +49,8 @@ public class ThemeController extends BaseController {
 
     @GetMapping("/theme/setting")
     public String settingPage(){
-        File file = new File(PROD_THEMES_PATH + "/" + currentTheme() + "/setting.ftl");
-        File devFile = new File(DEV_THEMES_PATH + "/" + currentTheme() + "/setting.ftl");
+        File file = new File(PROD_THEMES_PATH + "/" + currentTheme() + "/setting.html");
+        File devFile = new File(DEV_THEMES_PATH + "/" + currentTheme() + "/setting.html");
         if (file.exists() || devFile.exists()) {
             return "themes/" + currentTheme() + "/setting";
         } else {

@@ -1,5 +1,5 @@
 let table;
-layui.use('table', function(){
+layui.use('table', function () {
     table = layui.table;
     initPage();
 });
@@ -25,7 +25,7 @@ function initPage() {
             title: "上传附件",
             type: 2,
             offset: '20%',
-            area:  ['400px', '340px'],
+            area: ['400px', '340px'],
             shadeClose: true,
             anim: 1,
             move: false,
@@ -35,7 +35,7 @@ function initPage() {
 
     // 批量删除
     $("#batchDeleteBtn").click(function () {
-        const checkStatus = table.checkStatus('tableBox'),data = checkStatus.data;
+        const checkStatus = table.checkStatus('tableBox'), data = checkStatus.data;
         if (data.length <= 0) {
             layer.msg("至少选择一条数据", {icon: 2});
         } else {
@@ -43,7 +43,7 @@ function initPage() {
             data.forEach(res => {
                 ids += res.id + ",";
             });
-            ids = ids.substring(0, ids.length-1);
+            ids = ids.substring(0, ids.length - 1);
             deleteData(ids)
         }
     });
@@ -56,7 +56,7 @@ function initPage() {
 function queryTable() {
     table.render({
         elem: '#tableBox',
-        url:'/admin/attach/list',
+        url: '/admin/attach/list',
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         contentType: 'application/json',
@@ -71,14 +71,15 @@ function queryTable() {
         limit: 30,
         cols: [[
             {type: 'checkbox', fixed: 'left'},
-            {field:'id', title:'ID', width:80, fixed: 'left',sort: true},
-            {field:'name', title:'文件名'},
-            {field:'desc', title:'描述'},
-            {field:'path', title:'路径'},
-            {field:'flag', title:'标识'},
-            {field:'type', title:'类型', templet: function (d) {
+            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
+            {field: 'name', title: '文件名'},
+            {field: 'desc', title: '描述'},
+            {field: 'path', title: '路径'},
+            {field: 'flag', title: '标识'},
+            {
+                field: 'type', title: '类型', templet: function (d) {
                     let html;
-                    switch (d.type){
+                    switch (d.type) {
                         case 'img':
                             html = '<i class="layui-icon layui-icon-picture"></i>   图片';
                             break;
@@ -95,20 +96,31 @@ function queryTable() {
                     return html;
                 }
             },
-            {field:'createTime', title:'创建时间', sort: true, templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>" },
-            {field:'updateTime', title:'更新时间', sort: true, templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"},
-            {field:'id', title:'操作', width:200, fixed: 'right',
+            {
+                field: 'createTime',
+                title: '创建时间',
+                sort: true,
+                templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+            },
+            {
+                field: 'updateTime',
+                title: '更新时间',
+                sort: true,
+                templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+            },
+            {
+                field: 'id', title: '操作', width: 200, fixed: 'right',
                 templet: "<div>" +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='previewFile(\"{{d.type}}\",\"{{d.path}}\",\"{{d.name}}\")'>预览</a> " +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='downloadFile(\"{{d.id}}\")'>下载</a> " +
-                            "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
-                            "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
-                        "</div>"
+                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='previewFile(\"{{d.type}}\",\"{{d.path}}\",\"{{d.name}}\")'>预览</a> " +
+                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='downloadFile(\"{{d.id}}\")'>下载</a> " +
+                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
+                    "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
+                    "</div>"
             },
         ]],
         page: true,
         response: {statusCode: 200},
-        parseData: function(res){
+        parseData: function (res) {
             return {
                 "code": res.code,
                 "msg": res.msg,
@@ -132,7 +144,7 @@ function editData(id) {
         title: "编辑附件信息",
         type: 2,
         offset: '20%',
-        area:  ['400px', '250px'],
+        area: ['400px', '250px'],
         shadeClose: true,
         anim: 1,
         move: false,
@@ -145,14 +157,14 @@ function editData(id) {
  * @param ids
  */
 function deleteData(ids) {
-    layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+    layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
         $.ajax({
             type: "POST",
             url: "/admin/attach/del",
-            contentType:"application/json",
+            contentType: "application/json",
             data: ids,
-            success:function(data){
-                if (data.code === 200){
+            success: function (data) {
+                if (data.code === 200) {
                     queryTable();
                     layer.msg(data.msg, {icon: 1});
                 } else {
@@ -173,7 +185,7 @@ function deleteData(ids) {
  * @param path
  * @param name
  */
-function previewFile(type,path,name) {
+function previewFile(type, path, name) {
     if (type === 'img') {
         layer.photos({
             photos: {
@@ -189,7 +201,7 @@ function previewFile(type,path,name) {
                     }
                 ]
             }
-            ,anim: 5
+            , anim: 5
         });
     } else if (type === 'video') {
         layer.open({
@@ -199,8 +211,8 @@ function previewFile(type,path,name) {
             shadeClose: true,
             anim: 1,
             move: true,
-            area:  ['400px', '400px'],
-            content: '<video src="'+path+'" autoplay controls style="height: calc(100% - 3px);width: 100%;outline: none">\n' +
+            area: ['400px', '400px'],
+            content: '<video src="' + path + '" autoplay controls style="height: calc(100% - 3px);width: 100%;outline: none">\n' +
                 '  你的浏览器不支持video\n' +
                 '</video>'
         });
@@ -212,8 +224,8 @@ function previewFile(type,path,name) {
             anim: 1,
             move: true,
             type: 1,
-            area:  ['400px',"100px"],
-            content: '<audio src="'+path+'" autoplay controls style="background: #f1f3f4;height: calc(100% - 3px);width: 100%;outline: none">\n' +
+            area: ['400px', "100px"],
+            content: '<audio src="' + path + '" autoplay controls style="background: #f1f3f4;height: calc(100% - 3px);width: 100%;outline: none">\n' +
                 '  你的浏览器不支持video\n' +
                 '</audio>'
         });
@@ -227,11 +239,11 @@ function previewFile(type,path,name) {
  * @param id
  */
 function downloadFile(id) {
-    let form=$("<form>");
-    form.attr("style","display:none");
-    form.attr("target","");
-    form.attr("method","get");//提交方式为post
-    form.attr("action","/admin/attach/download/"+id);//定义action
+    let form = $("<form>");
+    form.attr("style", "display:none");
+    form.attr("target", "");
+    form.attr("method", "get");//提交方式为post
+    form.attr("action", "/admin/attach/download/" + id);//定义action
 
     $("body").append(form);
     form.submit();

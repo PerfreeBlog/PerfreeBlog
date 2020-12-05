@@ -1,5 +1,5 @@
 let table;
-layui.use('table', function(){
+layui.use('table', function () {
     table = layui.table;
     initPage();
 });
@@ -21,7 +21,7 @@ function initPage() {
 
     // 批量删除
     $("#batchDeleteBtn").click(function () {
-        const checkStatus = table.checkStatus('tableBox'),data = checkStatus.data;
+        const checkStatus = table.checkStatus('tableBox'), data = checkStatus.data;
         if (data.length <= 0) {
             layer.msg("至少选择一条数据", {icon: 2});
         } else {
@@ -29,7 +29,7 @@ function initPage() {
             data.forEach(res => {
                 ids += res.id + ",";
             });
-            ids = ids.substring(0, ids.length-1);
+            ids = ids.substring(0, ids.length - 1);
             deleteData(ids)
         }
     });
@@ -42,7 +42,7 @@ function initPage() {
 function queryTable() {
     table.render({
         elem: '#tableBox',
-        url:'/admin/comment/list',
+        url: '/admin/comment/list',
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         contentType: 'application/json',
@@ -56,36 +56,44 @@ function queryTable() {
         limit: 30,
         cols: [[
             {type: 'checkbox', fixed: 'left'},
-            {field:'id', title:'ID', width:80, fixed: 'left',sort: true},
-            {field:'userName', width:180, title:'评论人', templet: function (d) {
+            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
+            {
+                field: 'userName', width: 180, title: '评论人', templet: function (d) {
                     let html = "<div>";
                     if (d.user === null || d.user === undefined) {
-                        html+=d.userName;
+                        html += d.userName;
                     } else {
-                        html+=d.user.userName;
+                        html += d.user.userName;
                     }
                     return html;
                 }
             },
-            {field:'content', title:'评论内容'},
-            {field:'article', title:'所属文章',templet:"<div><a href='{{d.article.id}}'>{{d.article.title}}</a></div>"},
-            {field:'status', width:80,title:'状态', templet: "<div>{{d.status === 1? '待审核': '正常'}}</div>"},
-            {field:'createTime',  width:220,title:'评论时间', sort: true, templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>" },
-            {field:'id', title:'操作', width:120, fixed: 'right',
+            {field: 'content', title: '评论内容'},
+            {field: 'article', title: '所属文章', templet: "<div><a href='{{d.article.id}}'>{{d.article.title}}</a></div>"},
+            {field: 'status', width: 80, title: '状态', templet: "<div>{{d.status === 1? '待审核': '正常'}}</div>"},
+            {
+                field: 'createTime',
+                width: 220,
+                title: '评论时间',
+                sort: true,
+                templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+            },
+            {
+                field: 'id', title: '操作', width: 120, fixed: 'right',
                 templet: function (d) {
                     let html = "<div>";
                     if (d.status === 1) {
-                        html += "<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='changeStatus(\""+d.id+"\",\"0\")'>审核</a>";
+                        html += "<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"0\")'>审核</a>";
                     }
-                    html += "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\""+d.id+"\")'>删除</a>" +
-                    "</div>";
+                    html += "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
+                        "</div>";
                     return html;
                 }
             },
         ]],
         page: true,
         response: {statusCode: 200},
-        parseData: function(res){
+        parseData: function (res) {
             return {
                 "code": res.code,
                 "msg": res.msg,
@@ -105,14 +113,14 @@ function queryTable() {
  * @param ids
  */
 function deleteData(ids) {
-    layer.confirm('确定要删除吗?', {icon: 3, title:'提示'}, function(index){
+    layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
         $.ajax({
             type: "POST",
             url: "/admin/comment/del",
-            contentType:"application/json",
+            contentType: "application/json",
             data: ids,
-            success:function(data){
-                if (data.code === 200){
+            success: function (data) {
+                if (data.code === 200) {
                     queryTable();
                     layer.msg(data.msg, {icon: 1});
                 } else {
@@ -132,14 +140,14 @@ function deleteData(ids) {
  * @param id
  * @param status
  */
-function changeStatus(id,status) {
+function changeStatus(id, status) {
     $.ajax({
         type: "POST",
         url: "/admin/comment/changeStatus",
-        contentType:"application/json",
-        data: JSON.stringify({id: id,status: status}),
-        success:function(data){
-            if (data.code === 200){
+        contentType: "application/json",
+        data: JSON.stringify({id: id, status: status}),
+        success: function (data) {
+            if (data.code === 200) {
                 queryTable();
                 layer.msg(data.msg, {icon: 1});
             } else {
