@@ -16,46 +16,46 @@
 <div class="p-container">
     <div class="layui-card">
         <div class="layui-card-body">
-            <form class="layui-form" action="">
+            <form class="layui-form" action="" th:with="Option=${T(com.perfree.template.OptionMethod)}">
                 <div class="layui-form-item">
                     <label class="layui-form-label">网站名称</label>
                     <div class="layui-input-block">
-                        <input type="text" value="${option('WEB_NAME').getValue()}" name="WEB_NAME" required  lay-verify="required" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
+                        <input type="text" th:value="${Option.exec('WEB_NAME').getValue()}" name="WEB_NAME" required  lay-verify="required" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">网站ICO</label>
                     <div class="layui-input-block">
                         <div class="p-upload-box" id="WEB_LOGO">
-                                <input type="hidden" value="${option('WEB_LOGO').getValue()}" name="WEB_LOGO" value="">
+                                <input type="hidden" th:value="${Option.exec('WEB_LOGO').getValue()}" name="WEB_LOGO" value="">
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">网站域名</label>
                     <div class="layui-input-block">
-                            <input type="text" value="${option('WEB_SITE').getValue()}" name="WEB_SITE" value="" placeholder="请输入网站域名" autocomplete="off" class="layui-input">
+                            <input type="text" th:value="${Option.exec('WEB_SITE').getValue()}" name="WEB_SITE" value="" placeholder="请输入网站域名" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">网站标题</label>
                     <div class="layui-input-block">
-                        <input type="text" value="${option('WEB_TITLE').getValue()}" name="WEB_TITLE" placeholder="请输入网站标题" autocomplete="off" class="layui-input">
+                        <input type="text" th:value="${Option.exec('WEB_TITLE').getValue()}" name="WEB_TITLE" placeholder="请输入网站标题" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">网站副标题</label>
                     <div class="layui-input-block">
-                        <input type="text" name="WEB_SUB_TITLE" value="${option('WEB_SUB_TITLE').getValue()}" placeholder="请输入网站副标题" autocomplete="off" class="layui-input">
+                        <input type="text" name="WEB_SUB_TITLE" th:value="${Option.exec('WEB_SUB_TITLE').getValue()}" placeholder="请输入网站副标题" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">META关键字</label>
                     <div class="layui-input-block">
-                        <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键字,英文逗号分割" class="layui-textarea">${option('WEB_META_KEYWORD').getValue()}</textarea>
+                        <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键字,英文逗号分割" class="layui-textarea" th:text="${Option.exec('WEB_META_KEYWORD').getValue()}"></textarea>
                     </div>
                 </div>
 
@@ -63,21 +63,21 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">META描述</label>
                     <div class="layui-input-block">
-                        <textarea name="WEB_META_DESC" placeholder="请输入META描述" class="layui-textarea">${option('WEB_META_DESC').getValue()}</textarea>
+                        <textarea name="WEB_META_DESC" placeholder="请输入META描述" class="layui-textarea" th:text="${Option.exec('WEB_META_DESC').getValue()}"></textarea>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">版权号</label>
                     <div class="layui-input-block">
-                        <input type="text" name="WEB_COPYRIGHT_NUM" value="${option('WEB_COPYRIGHT_NUM').getValue()}" placeholder="请输入版权号,中国区网站需要备案号" autocomplete="off" class="layui-input">
+                        <input type="text" name="WEB_COPYRIGHT_NUM" th:value="${Option.exec('WEB_COPYRIGHT_NUM').getValue()}" placeholder="请输入版权号,中国区网站需要备案号" autocomplete="off" class="layui-input">
                     </div>
                 </div>
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">版权信息</label>
                     <div class="layui-input-block">
-                        <textarea name="WEB_COPYRIGHT" placeholder="请输入版权信息" class="layui-textarea">${option('WEB_COPYRIGHT').getValue()}</textarea>
+                        <textarea name="WEB_COPYRIGHT" placeholder="请输入版权信息" class="layui-textarea" th:text="${Option.exec('WEB_COPYRIGHT').getValue()}"></textarea>
                     </div>
                 </div>
                 <div class="layui-form-item">

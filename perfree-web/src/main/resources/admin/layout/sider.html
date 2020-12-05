@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <div class="layui-side f-side" th:fragment="sider">
-        <div class="layui-logo f-logo-text">
-            Perfree
+    <div class="layui-side f-side" th:fragment="sider" th:with="Option=${T(com.perfree.template.OptionMethod)}">
+        <div class="layui-logo f-logo-text" th:text="${Option.exec('WEB_NAME').getValue()}">
         </div>
         <div class="layui-logo f-logo-img">
-            <img src="/public/images/logo.png">
+            <img th:src="${#strings.isEmpty(Option.exec('WEB_LOGO').getValue())? '/public/images/logo.png' : Option.exec('WEB_LOGO').getValue()}">
         </div>
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree f-side-nav" lay-filter="side">
                 <div th:each="menu : ${menus}">
                     <li class="layui-nav-item f-nav-item" th:if="${menu.childMenu.size() <= 0}">
-                        <a href="javascript:;" onclick="clickMenu(this)"
+                        <a href="javascript:;" onclick="clickMenu(this)" class="p-menu-item"
                            th:attr="data-url=${menu.url},id=${menu.id},data-icon=${menu.icon}, data-name=${menu.name}">
                             <i th:attr="class=${'fa ' + menu.icon}" aria-hidden="true"></i>
                             <span class="f-nav-content" th:text="${menu.name}"></span>
