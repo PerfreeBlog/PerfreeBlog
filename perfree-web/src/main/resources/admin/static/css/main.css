@@ -145,3 +145,12 @@ html{
     position: absolute;
     left: 8px;
 }
+.layui-form-label{
+    color: #4a4a4a;
+}
+.layui-input, .layui-select, .layui-textarea{
+    color: #4a4a4a;
+}
+.layui-textarea{
+    padding: 0 4px;
+}
