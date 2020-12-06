@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8080
 
 # spring配置
 web.upload-path: D:/perfree
@@ -9,12 +9,12 @@ spring:
   devtools:
     restart:
       enabled: false
-  thymeleaf:
-    cache: false
-    #prefix: file:./resources/
-    prefix: classpath:/
-    suffix: .html
-    encoding: UTF-8
+#  thymeleaf:
+#    cache: false
+#    #prefix: file:./resources/
+#    prefix: classpath:/
+#    suffix: .html
+#    encoding: UTF-8
 #  freemarker:
 #    # template-loader-path: file:./resources/
 #    template-loader-path: classpath:/,file:./resources/

@@ -74,8 +74,9 @@
 
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>com.jfinal</groupId>
+            <artifactId>enjoy</artifactId>
+            <version>4.9.02</version>
         </dependency>
 
         <!-- shiro-spring -->
