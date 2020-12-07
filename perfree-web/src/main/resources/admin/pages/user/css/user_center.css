@@ -40,3 +40,9 @@
 .layui-form-label {
     width: 80px;
 }
+.p-hidden{
+    display: none;
+}
+.p-show{
+    display: block;
+}

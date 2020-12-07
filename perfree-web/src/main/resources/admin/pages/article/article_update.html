@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>面板</title>
@@ -20,10 +20,10 @@
             <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
                 <div class="layui-card">
                     <div class="layui-card-body">
-                        <input type="hidden" name="id" th:value="${article.id}">
+                        <input type="hidden" name="id" value="#(article.id)">
                         <div class="layui-form-item">
                             <span class="p-form-tip">标题:</span>
-                            <input type="text" name="title" th:value="${article.title}" required lay-verify="required"
+                            <input type="text" name="title" value="#(article.title)" required lay-verify="required"
                                    placeholder="请输入文章标题" autocomplete="off" class="layui-input">
                         </div>
 
@@ -31,7 +31,7 @@
                             <span class="p-form-tip">文章内容:</span>
                         </div>
                         <div id="editorBox">
-                            <input type="hidden" th:value="${article.content}" id="articleContent">
+                            <input type="hidden" value="#(article.content)" id="articleContent">
                             <div id="editor">
                             </div>
                         </div>
@@ -66,44 +66,45 @@
                         <div class="layui-form-item">
                             <span class="p-form-tip">文章摘要:</span>
                             <textarea name="summary" placeholder="请输入文章摘要" class="article-textarea layui-textarea"
-                                      th:text="${article.summary}" style="resize: none"></textarea>
+                                      style="resize: none">#(article.summary)</textarea>
                         </div>
 
                         <div class="layui-form-item">
                             <span class="p-form-tip">SEO关键字:</span>
                             <input type="text" name="metaKeywords" placeholder="请输入SEO关键字" autocomplete="off"
-                                   class="layui-input" th:value="${article.metaKeywords}">
+                                   class="layui-input" value="#(article.metaKeywords)">
                         </div>
 
                         <div class="layui-form-item">
                             <span class="p-form-tip">SEO描述:</span>
                             <textarea name="metaDescription" placeholder="请输入SEO描述"
-                                      class="layui-textarea article-textarea" th:text="${article.metaDescription}"
-                                      style="resize: none"></textarea>
+                                      class="layui-textarea article-textarea"
+                                      style="resize: none">#(article.metaDescription)</textarea>
                         </div>
 
                         <div class="layui-form-item article-switch">
                             <span class="p-form-tip">允许评论:</span>
                             <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch"
-                                   th:attr="checked = ${article.isComment == 1 ? 'true': 'false'}">
+                                   checked="#(article.isComment == 1 ? 'true': 'false')">
 
                             <span class="p-form-tip">置顶:</span>
                             <input type="checkbox" name="isTop" lay-text="置顶|不置顶" lay-skin="switch"
-                                   th:attr="checked = ${article.isTop == 1 ? 'true': 'false'}">
+                                   checked="#(article.isTop == 1 ? 'true': 'false')">
                         </div>
                         <div class="layui-form-item">
                             <span class="p-form-tip">访问密码:</span>
                             <input type="text" name="password" placeholder="请输入访问密码" autocomplete="off"
-                                   class="article-password-input layui-input" th:value="${article.password}">
+                                   class="article-password-input layui-input" value="#(article.password)">
                         </div>
 
                         <div class="layui-form-item">
                             <span class="p-form-tip">缩略图:</span>
                             <div class="p-upload-box" id="thumbnail">
-                                <input type="hidden" name="thumbnail" th:value="${article.thumbnail}">
+                                <input type="hidden" name="thumbnail" value="#(article.thumbnail)">
                             </div>
                         </div>
-
+                        <input value="#for(tag : article.tags)#(tag.id),#end" id="tagsValue" type="hidden">
+                        <input value="#(article.categoryId)" id="categoryIdValue" type="hidden">
                     </div>
                 </div>
             </div>
@@ -115,10 +116,6 @@
 <script src="/public/libs/wangeditor/wangEditor.js"></script>
 <script src="/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
 <script src="/public/js/main.js"></script>
-<script th:inline="javascript">
-    var tagSelectValue = [[${article.tags}]];
-    var categorySelectValue = [[${article.categoryId}]];
-</script>
 <script src="/admin/pages/article/js/article_update.js"></script>
 </body>
 </html>

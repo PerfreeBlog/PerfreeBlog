@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>分类</title>
@@ -14,13 +14,13 @@
 <body class="layui-layout-body">
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
-        <input type="hidden" name="id" class="layui-input" th:value="${category.id}">
+        <input type="hidden" name="id" class="layui-input" value="#(category.id)">
         <div class="layui-form-item">
             <label class="layui-form-label">
                 <span class="p-form-required">*</span>分类名:
             </label>
             <div class="layui-input-block">
-                <input type="text" name="name" th:value="${category.name}" required lay-verify="required"
+                <input type="text" name="name" value="#(category.name)" required lay-verify="required"
                        placeholder="请输入菜单名" autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -28,7 +28,7 @@
             <label class="layui-form-label">描述:</label>
             <div class="layui-input-block">
                 <textarea name="desc" style="resize:none;" placeholder="请输入描述" class="layui-textarea"
-                          th:text="${category.desc}"></textarea>
+                        >#(category.desc)</textarea>
             </div>
         </div>
 
@@ -38,8 +38,8 @@
             </label>
             <div class="layui-input-block">
                 <select name="status" lay-verify="required">
-                    <option value="0" th:attr="selected = ${category.status == 0 ? 'true': 'false'}">正常</option>
-                    <option value="1" th:attr="selected = ${category.status == 1 ? 'true': 'false'}">禁用</option>
+                    <option value="0" #(category.status == 0 ? 'selected': '')>正常</option>
+                    <option value="1" #(category.status == 1 ? 'selected': '')>禁用</option>
                 </select>
             </div>
         </div>
@@ -47,7 +47,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">SEO关键字:</label>
             <div class="layui-input-inline">
-                <input type="text" th:value="${category.metaKeywords}" name="metaKeywords" placeholder="请输入SEO关键字"
+                <input type="text" value="#(category.metaKeywords)" name="metaKeywords" placeholder="请输入SEO关键字"
                        autocomplete="off" class="layui-input">
             </div>
         </div>
@@ -56,7 +56,7 @@
             <label class="layui-form-label">SEO描述:</label>
             <div class="layui-input-block">
                 <textarea name="metaDescription" style="resize:none;" placeholder="请输入SEO描述内容" class="layui-textarea"
-                          th:text="${category.metaDescription}"></textarea>
+                         >#(category.metaDescription)</textarea>
             </div>
         </div>
         <div class="add-btn-box">

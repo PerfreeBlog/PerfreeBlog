@@ -26,7 +26,6 @@ public class EnjoyConfig {
 
         // 热加载配置能对后续配置产生影响，需要放在最前面
         engine.setDevMode(true);
-
         // 使用 ClassPathSourceFactory 从 class path 与 jar 包中加载模板文件
         engine.setToClassPathSourceFactory();
 

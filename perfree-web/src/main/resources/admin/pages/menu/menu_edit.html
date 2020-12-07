@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
     <head>
         <meta charset="UTF-8">
         <title>菜单</title>
@@ -14,13 +14,13 @@
     <body class="layui-layout-body">
         <div class="p-container p-add-panel">
             <form class="layui-form" lay-filter="addForm">
-                <input type="hidden" name="id" class="layui-input" th:value="${menu.id}">
+                <input type="hidden" name="id" class="layui-input" value="#(menu.id)">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         <span class="p-form-required">*</span>菜单名:
                     </label>
                     <div class="layui-input-block">
-                        <input type="text" name="name" th:value="${menu.name}" required lay-verify="required"
+                        <input type="text" name="name" value="#(menu.name)" required lay-verify="required"
                                placeholder="请输入菜单名" autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -29,14 +29,14 @@
                         <span class="p-form-required">*</span>菜单链接:
                     </label>
                     <div class="layui-input-block">
-                        <input type="text" name="url" th:value="${menu.url}" required lay-verify="required"
+                        <input type="text" name="url" value="#(menu.url)" required lay-verify="required"
                                placeholder="请输入菜单链接" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">图标:</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="icon" th:value="${menu.icon}" placeholder="请输入图标" autocomplete="off"
+                        <input type="text" name="icon" value="#(menu.icon)" placeholder="请输入图标" autocomplete="off"
                                class="layui-input">
                     </div>
                 </div>
@@ -46,8 +46,8 @@
                     </label>
                     <div class="layui-input-block">
                         <select name="status" lay-verify="required">
-                            <option value="0" th:attr="selected = ${menu.status == 0 ? 'true': 'false'}">正常</option>
-                            <option value="1" th:attr="selected = ${menu.status == 1 ? 'true': 'false'}">禁用</option>
+                            <option value="0" #(menu.status == 0 ? 'selected': '')>正常</option>
+                            <option value="1" #(menu.status == 1 ? 'selected': '')>禁用</option>
                         </select>
                     </div>
                 </div>
@@ -58,8 +58,8 @@
                     </label>
                     <div class="layui-input-block">
                         <select name="target" lay-verify="required">
-                            <option value="1" th:attr="selected = ${menu.target == 1 ? 'true': 'false'}">新窗口</option>
-                            <option value="0" th:attr="selected = ${menu.target == 0 ? 'true': 'false'}">本页</option>
+                            <option value="1" #(menu.target == 1 ? 'selected': '')>新窗口</option>
+                            <option value="0" #(menu.target == 0 ? 'selected': '')>本页</option>
                         </select>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">序号:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="seq" th:value="${menu.seq}" oninput="value=value.replace(/[^\d]/g,'')"
+                        <input type="text" name="seq" value="#(menu.seq)" oninput="value=value.replace(/[^\d]/g,'')"
                                placeholder="请输入序号" autocomplete="off" class="layui-input">
                     </div>
                 </div>

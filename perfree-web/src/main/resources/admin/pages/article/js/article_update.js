@@ -121,10 +121,9 @@ function initMarkdownEditor() {
  * 初始化标签选择框
  */
 function initTag() {
-    let initValue = [];
-    tagSelectValue.forEach(res => {
-        initValue.push(res.id);
-    })
+    let tagsValue = $("#tagsValue").val();
+    tagsValue = tagsValue.substr(0, tagsValue.length - 1);
+    let initValue = tagsValue.split(",");
     $.get("/admin/tag/allList", function (res) {
         if (res.code === 200) {
             let tagArr = [];
@@ -194,7 +193,7 @@ function initCategory() {
                 filterable: true,
                 searchTips: '输入分类名搜索',
                 clickClose: true,
-                initValue: [categorySelectValue],
+                initValue: [$("#categoryIdValue").val()],
                 tree: {
                     show: true,
                     strict: false,

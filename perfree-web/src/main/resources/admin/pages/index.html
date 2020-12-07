@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" th:with="Option=${T(com.perfree.template.OptionMethod)}">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${Option.exec('WEB_TITLE').getValue()}"></title>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
@@ -14,9 +14,8 @@
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
-    <div th:replace="admin/layout/header::header"></div>
-    <div th:replace="admin/layout/sider::sider"></div>
-
+    #include("/admin/layout/header.html")
+    #include("/admin/layout/sider.html")
     <!-- 内容start -->
     <div class="layui-body">
         <div class="layui-tab" lay-allowClose="true" lay-filter="tabNav">

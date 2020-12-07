@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>用户</title>
@@ -18,13 +18,13 @@
         <div class="layui-card-header">设置资料</div>
         <div class="layui-card-body">
             <form class="layui-form" lay-filter="editForm">
-                <input type="hidden" name="id" class="layui-input" th:value="${userForm.id}">
+                <input type="hidden" name="id" class="layui-input" value="#(userForm.id)">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         用户名:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userName" th:value="${userForm.userName}" required
+                        <input type="text" name="userName" value="#(userForm.userName)" required
                                lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input"
                                minlength="2" maxlength="16">
                     </div>
@@ -35,7 +35,7 @@
                         账户:
                     </label>
                     <div class="layui-input-inline">
-                        <input type="text" name="account" disabled th:value="${userForm.account}" required minlength="3"
+                        <input type="text" name="account" disabled value="#(userForm.account)" required minlength="3"
                                maxlength="12" lay-verify="required" placeholder="请输入账户" autocomplete="off"
                                class="layui-input">
                     </div>
@@ -44,7 +44,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">邮箱:</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="email" placeholder="请输入邮箱" th:value="${userForm.email}"
+                        <input type="text" name="email" placeholder="请输入邮箱" value="#(userForm.email)"
                                autocomplete="off" class="layui-input">
                     </div>
                 </div>
@@ -54,8 +54,8 @@
                     <div class="layui-input-inline">
                         <select name="sex">
                             <option value="">请选择</option>
-                            <option value="0" th:attr="selected = ${userForm.sex == 0 ? 'true': 'false'}">女</option>
-                            <option value="1" th:attr="selected = ${userForm.sex == 1 ? 'true': 'false'}">男</option>
+                            <option value="0" #(userForm.sex == 0 ? 'selected': '')>女</option>
+                            <option value="1" #(userForm.sex == 1 ? 'selected': '')>男</option>
                         </select>
                     </div>
                 </div>
@@ -63,15 +63,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">头像:</label>
                     <div class="layui-input-inline">
-                        <input type="hidden" name="avatar" id="avatar" th:value="${userForm.avatar}">
+                        <input type="hidden" name="avatar" id="avatar" value="#(userForm.avatar)">
                         <div class="upload-box">
-                            <div class="upload-panel" id="upload"
-                                 th:attr="style=${#strings.isEmpty(userForm.avatar)?'':'display: none'}">
+                            <div class="upload-panel #if(userForm.avatar != null && userForm.avatar != '') p-hidden #end" id="upload">
                                 <i class="fa fa-upload" aria-hidden="true"></i>
                             </div>
-                            <div class="upload-success-panel" id="uploadSuccessPanel"
-                                 th:attr="style=${#strings.isEmpty(userForm.avatar)?'':'display: block'}">
-                                <img th:src="${userForm.avatar}">
+                            <div class="upload-success-panel #if(userForm.avatar != null && userForm.avatar != '') p-show #end" id="uploadSuccessPanel">
+                                <img src="#(userForm.avatar)">
                                 <div class="delete-img-box" id="deleteImg">
                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                 </div>

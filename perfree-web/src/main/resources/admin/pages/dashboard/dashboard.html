@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>面板</title>
@@ -22,7 +22,7 @@
                     <div class="p-card-right"><i class="layui-icon layui-icon-read"></i></div>
                 </div>
                 <div class="layui-card-body">
-                    <div class="p-card-num"><span th:text="${articleCount}"></span> <span
+                    <div class="p-card-num">#(articleCount) <span
                             class="p-card-num-text">篇</span></div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                     <div class="p-card-right"><i class="layui-icon layui-icon-dialogue"></i></div>
                 </div>
                 <div class="layui-card-body">
-                    <div class="p-card-num"><span th:text="${commentCount}"></span> <span
+                    <div class="p-card-num">#(commentCount) <span
                             class="p-card-num-text">条</span></div>
                 </div>
             </div>
@@ -48,7 +48,7 @@
                     <div class="p-card-right"><i class="layui-icon layui-icon-note"></i></div>
                 </div>
                 <div class="layui-card-body">
-                    <div class="p-card-num"><span th:text="${tagCount}"></span> <span class="p-card-num-text">个</span>
+                    <div class="p-card-num">#(tagCount) <span class="p-card-num-text">个</span>
                     </div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     <div class="p-card-right"><i class="layui-icon layui-icon-username"></i></div>
                 </div>
                 <div class="layui-card-body">
-                    <div class="p-card-num"><span th:text="${userCount}"></span> <span class="p-card-num-text">个</span>
+                    <div class="p-card-num">#(userCount) <span class="p-card-num-text">个</span>
                     </div>
                 </div>
             </div>

@@ -37,4 +37,9 @@
     font-weight: 900;
     cursor: pointer;
 }
-
+.p-hidden{
+    display: none;
+}
+.p-show{
+    display: block;
+}

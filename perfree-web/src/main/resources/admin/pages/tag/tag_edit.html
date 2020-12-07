@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>标签</title>
@@ -14,14 +14,14 @@
 <body class="layui-layout-body">
 <div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
-        <input type="hidden" name="id" class="layui-input" th:value="${tag.id}">
+        <input type="hidden" name="id" class="layui-input" value="#(tag.id)">
         <div class="layui-form-item">
             <label class="layui-form-label">
                 <span class="p-form-required">*</span>标签名:
             </label>
             <div class="layui-input-block">
                 <input type="text" name="name" required lay-verify="required" placeholder="请输入标签名" autocomplete="off"
-                       class="layui-input" th:value="${tag.name}">
+                       class="layui-input" value="#(tag.name)">
             </div>
         </div>
         <div class="add-btn-box">
