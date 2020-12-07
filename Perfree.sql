@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 24/11/2020 10:51:59
+ Date: 07/12/2020 16:08:37
 */
 
 SET NAMES utf8mb4;
@@ -45,8 +45,8 @@ CREATE TABLE `p_article`  (
 -- ----------------------------
 -- Records of p_article
 -- ----------------------------
-INSERT INTO `p_article` VALUES (43, '测试文章', '测试文章', '测试文章', 9, '测试文章', '测试文章', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '123456', 0, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-11-19 07:48:21');
-INSERT INTO `p_article` VALUES (44, '哈哈哈哈哈', '哈哈哈哈哈', '哈哈哈哈哈', 9, '哈哈哈哈哈', '哈哈哈哈哈', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '', 0, 0, 0, 1, 1, '2020-11-19 08:18:25', NULL);
+INSERT INTO `p_article` VALUES (43, '测试文章', '测试文章', '撒大声地', 9, '萨达', '大大', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 1, '123456', 0, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-12-07 01:03:10');
+INSERT INTO `p_article` VALUES (44, '哈哈哈哈哈1113213213123', '232132321321哈哈哈哈哈', '哈哈哈哈哈', 9, '哈哈哈哈哈', '哈哈哈哈哈', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '1234', 0, 0, 0, 1, 1, '2020-11-19 08:18:25', '2020-12-05 02:25:52');
 
 -- ----------------------------
 -- Table structure for p_article_tag
@@ -61,7 +61,6 @@ CREATE TABLE `p_article_tag`  (
 -- Records of p_article_tag
 -- ----------------------------
 INSERT INTO `p_article_tag` VALUES (43, 43);
-INSERT INTO `p_article_tag` VALUES (44, 43);
 
 -- ----------------------------
 -- Table structure for p_attach
@@ -78,12 +77,17 @@ CREATE TABLE `p_attach`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 51 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_attach
 -- ----------------------------
 INSERT INTO `p_attach` VALUES (45, '1.jpg', '', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', '.jpg', '', 'img', '2020-11-19 03:41:56', NULL);
+INSERT INTO `p_attach` VALUES (46, '3.jpg', NULL, '/attach/20201126/ba8398c615764fe8a57fe7ee1736e474.jpg', '.jpg', NULL, 'img', '2020-11-26 06:12:40', NULL);
+INSERT INTO `p_attach` VALUES (47, 'favicon.ico', NULL, '/attach/20201204/f024d21538fa4755ba559958bd1db505.ico', '.ico', NULL, 'other', '2020-12-04 07:03:17', NULL);
+INSERT INTO `p_attach` VALUES (48, 'logo.png', NULL, '/attach/20201204/f3c4d66e5f064761ab0713d8e8b8291c.png', '.png', NULL, 'img', '2020-12-04 07:03:58', NULL);
+INSERT INTO `p_attach` VALUES (49, 'favicon.ico', '123', '/attach/20201204/8eea412d088d4149b6d3d0a0de4aa9ed.ico', '.ico', '2313', 'img', '2020-12-04 07:05:11', '2020-12-05 01:56:26');
+INSERT INTO `p_attach` VALUES (50, 'bg.png', '12321', '/attach/20201205/65e4c633a1f54bf18d929e914fe235c0.png', '.png', '32132', 'img', '2020-12-05 01:57:33', NULL);
 
 -- ----------------------------
 -- Table structure for p_category
@@ -107,7 +111,7 @@ CREATE TABLE `p_category`  (
 -- Records of p_category
 -- ----------------------------
 INSERT INTO `p_category` VALUES (7, '232', 2, '2323', 0, '23232', '3232', 0, '2020-11-13 07:31:22', NULL);
-INSERT INTO `p_category` VALUES (9, 'java', -1, '从入门到入土', 0, '', '', 0, '2020-11-19 03:39:51', NULL);
+INSERT INTO `p_category` VALUES (9, 'java', -1, '从入门到入土', 0, '33', '333', 0, '2020-11-19 03:39:51', '2020-12-07 03:26:47');
 
 -- ----------------------------
 -- Table structure for p_comment
@@ -149,7 +153,7 @@ CREATE TABLE `p_menu`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_menu
@@ -168,6 +172,7 @@ INSERT INTO `p_menu` VALUES (11, 3, '菜单管理', '/admin/menu', NULL, 7, 1, 0
 INSERT INTO `p_menu` VALUES (12, 4, '所有主题', '/admin/theme', NULL, 1, 1, 0, 0, '2020-11-19 16:03:08', NULL);
 INSERT INTO `p_menu` VALUES (13, 4, '主题设置', '/admin/theme/setting', NULL, 2, 1, 0, 0, '2020-11-19 16:03:42', NULL);
 INSERT INTO `p_menu` VALUES (15, -1, '网站设置', '/admin/setting', 'fa-sliders', 5, 1, 0, 0, '2020-11-19 16:04:37', NULL);
+INSERT INTO `p_menu` VALUES (32, -1, '1', '1', 'fa-user', NULL, 0, 0, 0, '2020-11-27 08:06:10', '2020-12-07 01:10:05');
 
 -- ----------------------------
 -- Table structure for p_option
@@ -177,13 +182,23 @@ CREATE TABLE `p_option`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `key` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'key',
   `value` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'value',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`, `key`) USING BTREE,
+  UNIQUE INDEX `key`(`key`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 311 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_option
 -- ----------------------------
-INSERT INTO `p_option` VALUES (1, 'WEB_THEME', 'simple');
+INSERT INTO `p_option` VALUES (1, 'WEB_THEME', 'perfree');
+INSERT INTO `p_option` VALUES (20, 'WEB_TITLE', '2321萨达');
+INSERT INTO `p_option` VALUES (21, 'WEB_COPYRIGHT', '21321');
+INSERT INTO `p_option` VALUES (22, 'WEB_SUB_TITLE', '32313撒 ');
+INSERT INTO `p_option` VALUES (23, 'WEB_LOGO', '/attach/20201204/8eea412d088d4149b6d3d0a0de4aa9ed.ico');
+INSERT INTO `p_option` VALUES (24, 'WEB_NAME', 'Perfree');
+INSERT INTO `p_option` VALUES (25, 'WEB_META_KEYWORD', '萨达');
+INSERT INTO `p_option` VALUES (26, 'WEB_SITE', '2323额我去问');
+INSERT INTO `p_option` VALUES (27, 'WEB_META_DESC', '');
+INSERT INTO `p_option` VALUES (28, 'WEB_COPYRIGHT_NUM', '213213');
 
 -- ----------------------------
 -- Table structure for p_role
@@ -250,7 +265,7 @@ CREATE TABLE `p_tag`  (
 -- ----------------------------
 -- Records of p_tag
 -- ----------------------------
-INSERT INTO `p_tag` VALUES (43, 'java', 1, '2020-11-19 03:39:27', NULL);
+INSERT INTO `p_tag` VALUES (43, 'java12', 1, '2020-11-19 03:39:27', '2020-12-07 01:10:50');
 
 -- ----------------------------
 -- Table structure for p_user
@@ -275,8 +290,8 @@ CREATE TABLE `p_user`  (
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
-INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, 'https://secure.gravatar.com/avatar/635e66d06c6c1ed34903fc3afca02dfa?s=65&r=G&d=', 1, NULL, NULL, '2020-08-31 16:43:12', '2020-08-31 16:43:14');
-INSERT INTO `p_user` VALUES (12, 'user', 'user', '768f6f5f6fd13559637365e9a727e916', 'f9d785f9e3a845a9a29507c21e8cce6c', 0, '/avatar/20201119/3bd8f23b80d84555944f3fb4379c5e92.jpg', 3, NULL, NULL, '2020-11-19 03:40:08', NULL);
-INSERT INTO `p_user` VALUES (13, '2313', '2312', '9a40013e64454404eb2db4ba0928c0e0', '48d22a963e6c4e7aba30d364e19b833b', 0, '/avatar/20201119/d92cfd18ab3c48a48cfb7e4890997f53.jpg', 1, '', 0, '2020-11-19 05:23:56', NULL);
+INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, '/avatar/20201207/d5778249c06e4fc58899ca6aef6e3228.jpg', 1, 'perfree@126.com', 1, '2020-08-31 16:43:12', '2020-12-07 01:25:10');
+INSERT INTO `p_user` VALUES (12, 'user', 'user', '768f6f5f6fd13559637365e9a727e916', 'f9d785f9e3a845a9a29507c21e8cce6c', 0, '/avatar/20201205/0b74dd032eb542cc91f7e4dccce89a85.png', 3, '', 0, '2020-11-19 03:40:08', '2020-12-05 02:21:41');
+INSERT INTO `p_user` VALUES (13, '2313', '2312', '9a40013e64454404eb2db4ba0928c0e0', '48d22a963e6c4e7aba30d364e19b833b', 1, '/avatar/20201119/d92cfd18ab3c48a48cfb7e4890997f53.jpg', 1, '', 0, '2020-11-19 05:23:56', '2020-12-07 01:28:12');
 
 SET FOREIGN_KEY_CHECKS = 1;
