@@ -19,8 +19,7 @@ public class EnjoyConfig{
         jfr.setSessionInView(true);
         Engine engine  = JFinalViewResolver.engine;
         engine.setDevMode(true);
-        engine.setToClassPathSourceFactory();
-        engine.setBaseTemplatePath(null);
+        engine.setSourceFactory(new TemplateSourceFactory());
         return jfr;
     }
 }
