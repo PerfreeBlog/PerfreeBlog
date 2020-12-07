@@ -1,4 +1,4 @@
-package com.perfree.template;
+package com.perfree.Directive;
 
 import com.jfinal.template.Directive;
 import com.jfinal.template.Env;

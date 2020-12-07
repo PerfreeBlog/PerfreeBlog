@@ -1,4 +1,4 @@
-package com.perfree.template;
+package com.perfree.Directive;
 
 import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
@@ -6,14 +6,8 @@ import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.annotation.TemplateDirective;
-import com.perfree.model.Category;
 import com.perfree.model.Menu;
-import com.perfree.model.User;
-import com.perfree.service.CategoryService;
 import com.perfree.service.MenuService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
