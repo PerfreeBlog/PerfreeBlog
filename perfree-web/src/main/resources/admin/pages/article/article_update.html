@@ -85,11 +85,11 @@
                         <div class="layui-form-item article-switch">
                             <span class="p-form-tip">允许评论:</span>
                             <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch"
-                                   checked="#(article.isComment == 1 ? 'true': 'false')">
+                                   #(article.isComment == 1 ? 'checked': '')>
 
                             <span class="p-form-tip">置顶:</span>
                             <input type="checkbox" name="isTop" lay-text="置顶|不置顶" lay-skin="switch"
-                                   checked="#(article.isTop == 1 ? 'true': 'false')">
+                                   #(article.isTop == 1 ? 'checked': '')>
                         </div>
                         <div class="layui-form-item">
                             <span class="p-form-tip">访问密码:</span>

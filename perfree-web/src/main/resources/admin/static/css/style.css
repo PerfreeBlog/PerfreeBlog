@@ -258,3 +258,7 @@
 .layui-tab-title li:hover {
     background: #f3f3f3;
 }
+.f-header{
+    left: 200px;
+    position: relative;
+}

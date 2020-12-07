@@ -2,6 +2,7 @@ package com.perfree.controller;
 
 import com.perfree.common.Constants;
 import com.perfree.common.ResponseBean;
+import com.perfree.config.PostAppRunner;
 import com.perfree.controller.admin.ArticleController;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
@@ -40,6 +41,7 @@ public class SystemController extends BaseController{
         List<Menu> menus = getAdminMenuByUserId();
         model.addAttribute("menus", menus);
         model.addAttribute("user", getUser());
+        PostAppRunner.loadDirective();
         return "admin/pages/index";
     }
 

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" th:with="Option=${T(com.perfree.template.OptionMethod)}">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${Option.exec('WEB_TITLE').getValue()}"></title>
+    <title>#option("WEB_TITLE")</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link rel="Shortcut Icon" th:href="${Option.exec('WEB_LOGO').getValue()}" type="image/x-icon"/>
+    <link rel="Shortcut Icon" href="#option('WEB_LOGO')" type="image/x-icon"/>
     <link rel="stylesheet" href="/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/public/css/login.css" rel="stylesheet"/>
     <script type="text/javascript">
@@ -17,7 +17,7 @@
 </head>
 <body class="mdui-theme-primary-indigo">
     <div class="p-login-box mdui-shadow-3">
-        <div class="p-login-box-title" th:text="${Option.exec('WEB_NAME').getValue()}"></div>
+        <div class="p-login-box-title">#option('WEB_NAME')</div>
         <form id="loginForm">
             <div class="p-input-box">
                 <span class="p-input-label">账号:</span>
