@@ -44,9 +44,7 @@ public class PostAppRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args){
         List<Option> options = optionMapper.getStartOption();
-        options.forEach(r -> {
-            OptionCache.setOption(r.getKey(), r.getValue());
-        });
+        options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
 
         PostAppRunner.loadDirective();
     }

@@ -262,3 +262,6 @@
     left: 200px;
     position: relative;
 }
+.layui-nav-tree .layui-nav-child a{
+    padding-left: 50px;
+}
