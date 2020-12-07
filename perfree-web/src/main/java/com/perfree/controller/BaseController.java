@@ -6,6 +6,7 @@ import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
+import com.perfree.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
@@ -17,7 +18,7 @@ import java.util.List;
 @Controller
 public class BaseController {
     @Autowired
-    private OptionService optionService;
+    private UserService userService;
     @Autowired
     private MenuService menuService;
 
@@ -29,6 +30,9 @@ public class BaseController {
         Subject subject = SecurityUtils.getSubject();
         User user=new User();
         BeanUtils.copyProperties(subject.getPrincipals().getPrimaryPrincipal(), user);
+        user = userService.getById(user.getId().toString());
+        user.setPassword(null);
+        user.setSalt(null);
         return user;
     }
 
@@ -36,8 +40,8 @@ public class BaseController {
      * 根据用户id获取后台菜单
      * @return List<Menu>
      */
-    public List<Menu> getAdminMenuByUserId() {
-        return menuService.getAdminMenuByUserId(getUser().getId());
+    public List<Menu> getMenuByUserIdAndType() {
+        return menuService.getMenuByUserIdAndType(getUser().getId(), 1);
     }
 
     /**

@@ -43,8 +43,9 @@
             #{id}
         </foreach>
     </delete>
-    <select id="getUserByAccount" resultType="com.perfree.model.User">
-        select t1.*  from p_user t1 left join p_role t2 on t1.roleId = t2.id where account = #{account}
+    <select id="getUserByAccount" resultMap="LIST_RESULT">
+        select  t1.id,t1.account,t1.password,t1.salt,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.sex,t1.email,
+        t2.name roleName,t2.description,t2.code  from p_user t1 left join p_role t2 on t1.roleId = t2.id where account = #{account}
     </select>
 
     <resultMap id="LIST_RESULT" type="com.perfree.model.User">
@@ -81,8 +82,9 @@
         </if>
         order by t1.createTime desc
     </select>
-    <select id="getById" resultType="com.perfree.model.User">
-        select * from p_user where id = #{id}
+    <select id="getById" resultMap="LIST_RESULT">
+        select  t1.id,t1.password,t1.salt,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.sex,t1.email,
+        t2.name roleName,t2.description,t2.code  from p_user t1 left join p_role t2 on t1.roleId = t2.id where t1.id = #{id}
     </select>
     <select id="getUserCount" resultType="java.lang.Long">
         SELECT count(1) FROM p_user

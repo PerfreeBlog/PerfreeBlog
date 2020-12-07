@@ -1,12 +1,8 @@
 package com.perfree.controller;
 
-import com.perfree.common.Constants;
 import com.perfree.common.ResponseBean;
-import com.perfree.config.PostAppRunner;
-import com.perfree.controller.admin.ArticleController;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
-import com.perfree.service.OptionService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -15,7 +11,6 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,10 +33,9 @@ public class SystemController extends BaseController{
      */
     @RequestMapping("/admin")
     public String adminIndex(Model model) {
-        List<Menu> menus = getAdminMenuByUserId();
+        List<Menu> menus = getMenuByUserIdAndType();
         model.addAttribute("menus", menus);
         model.addAttribute("user", getUser());
-        PostAppRunner.loadDirective();
         return "admin/pages/index";
     }
 
@@ -94,17 +88,11 @@ public class SystemController extends BaseController{
      * 登录
      * @return ResponseBean
      */
-    @RequestMapping(method = RequestMethod.POST, path = "/logout")
-    @ResponseBody
-    public ResponseBean logout() {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            subject.logout();
-            return ResponseBean.success("退出登录成功", null);
-        }catch (Exception e) {
-            logger.error("退出登录失败,{}", e.getMessage());
-            return ResponseBean.fail("退出登录失败", e.getMessage());
-        }
+    @RequestMapping(method = RequestMethod.GET, path = "/logout")
+    public String logout() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "themes/" + currentTheme() + "/index";
     }
 
     public static void main(String args[]){

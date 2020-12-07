@@ -1,0 +1,66 @@
+<div class="m-header">
+    <div class="m-header-logo">
+        <a class="m-header-logo-text" href="/">#option('WEB_NAME','Perfree')</a>
+    </div>
+
+    <div class="m-header-menu">
+        <!-- 菜单部分 -->
+        <ul class="layui-nav" lay-filter="">
+            <li class="layui-nav-item">
+                <a href="/"><i class="fa fa-home"></i> 首页</a>
+            </li>
+            #categories()
+                #if(categories.size() > 0)
+                    <li class="layui-nav-item" lay-unselect>
+                        <a href="javascript:;">
+                            <i class="fa fa-bars"></i> 分类
+                            <span class="down"><i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <dl class="layui-nav-child">
+                            #for(category: categories)
+                                <dd lay-unselect>
+                                    <a href="/category/#(category.id)">
+                                        #(category.name ??)
+                                        <span class="empty"></span>
+                                        <span class="layui-badge-rim">#(category.count ??)</span>
+                                    </a>
+                                </dd>
+                            #end
+                        </dl>
+                    </li>
+                #end
+            #end
+
+            #menus()
+                #for(menu : menus)
+                    <li class="layui-nav-item">
+                        <a href="#(menu.url ??)"><i class="fa #(menu.icon ??)"></i> #(menu.name ??)</a>
+                    </li>
+                #end
+            #end
+        </ul>
+    </div>
+
+    <div class="m-header-user-box">
+        <ul class="layui-nav" lay-filter="">
+            #user()
+                #if(user != null)
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">
+                            <img src="#(user.avatar ??'/public/images/user.png')" alt="" class="user-img"> #(user.userName ??)
+                            <span class="down"><i class="fa fa-angle-down"></i></span>
+                        </a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="/admin"><i class="fa fa-briefcase"></i> 后台管理</a></dd>
+                            <dd><a href="/logout" data-pjax="no"><i class="fa fa-sign-out"></i> 退出登录</a></dd>
+                        </dl>
+                    </li>
+                #else
+                    <a class="m-header-login-btn" data-pjax="no" href="/login">登录</a>
+                    <span class="part">|</span>
+                    <a class="m-header-register-btn" data-pjax="no" href="/register">注册</a>
+                #end
+            #end
+        </ul>
+    </div>
+</div>

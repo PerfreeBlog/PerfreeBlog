@@ -13,6 +13,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * option模板指令
+ */
 @TemplateDirective("option")
 @Component
 public class OptionDirective extends Directive {

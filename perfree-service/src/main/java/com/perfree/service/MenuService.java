@@ -26,13 +26,8 @@ public class MenuService {
      * @return List<Menu>
      */
     @Transactional(readOnly = true)
-    public List<Menu> getAdminMenuByUserId(Long id) {
-        List<Menu> menus = menuMapper.getParentMenuByUserIdAndType(id, 1);
-        for (Menu menu:menus) {
-            List<Menu> childMenus = menuMapper.getChildMenuByUserIdAndType(id, menu.getId(), 1);
-            menu.setChildMenu(childMenus);
-        }
-        return menus;
+    public List<Menu> getMenuByUserIdAndType(Long id,int type) {
+        return menuMapper.getParentMenuByUserIdAndType(id, type);
     }
 
     /**
@@ -98,5 +93,13 @@ public class MenuService {
     public int changeStatus(Menu menu) {
         menu.setUpdateTime(new Date());
         return menuMapper.changeStatus(menu);
+    }
+
+    /**
+     * 获取前台菜单
+     * @return List<Menu>
+     */
+    public List<Menu> getProtalMenus() {
+        return menuMapper.getProtalMenus();
     }
 }

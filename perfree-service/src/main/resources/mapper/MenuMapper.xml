@@ -30,9 +30,27 @@
         </foreach>
     </delete>
 
+    <!-- 定义菜单树形结构 -->
+    <resultMap id="MENU_TREE"
+               type="com.perfree.model.Menu">
+        <result column="id" property="id"></result>
+        <result column="pid" property="pid"></result>
+        <result column="name" property="name"></result>
+        <result column="url" property="url"></result>
+        <result column="icon" property="icon"></result>
+        <result column="seq" property="seq"></result>
+        <result column="type" property="type"></result>
+        <result column="status" property="status"></result>
+        <result column="createTime" property="createTime"></result>
+        <result column="updateTime" property="updateTime"></result>
+        <result column="target" property="target"></result>
+        <collection property="childMenu"
+                    select="getChildMenuByUserIdAndType" column="id=id,type=type,userId=userId"></collection>
+    </resultMap>
+
     <!-- 获取当前账户所拥有的菜单 -->
-    <select id="getParentMenuByUserIdAndType" resultType="com.perfree.model.Menu">
-        SELECT distinct t.* from p_menu t
+    <select id="getParentMenuByUserIdAndType" resultMap="MENU_TREE">
+        SELECT distinct t.*,t3.id userId from p_menu t
         LEFT JOIN p_role_menu t2 on t.id = t2.menuId
         LEFT JOIN p_user t3 on t3.roleId = t2.roleId
         where t3.id = #{id} and t.pid = -1 and t.status = 0 and t.type = #{type}
@@ -40,11 +58,11 @@
     </select>
 
     <!-- 获取当前账户所拥有的子菜单 -->
-    <select id="getChildMenuByUserIdAndType" resultType="com.perfree.model.Menu">
-        SELECT distinct t.* from p_menu t
+    <select id="getChildMenuByUserIdAndType" resultMap="MENU_TREE">
+        SELECT distinct t.*,t3.id userId from p_menu t
         LEFT JOIN p_role_menu t2 on t.id = t2.menuId
         LEFT JOIN p_user t3 on t3.roleId = t2.roleId
-        where t.pid = #{pid} and t.status = 0 and t.type = #{type} and t3.id = #{id}
+        where t.pid = #{id} and t.status = 0 and t.type = #{type} and t3.id = #{userId}
         order by t.seq asc
     </select>
 
@@ -79,5 +97,35 @@
 
     <select id="getById" resultType="com.perfree.model.Menu">
         select * from p_menu where id= #{id}
+    </select>
+
+
+    <resultMap id="PROTAL_MENU_TREE"
+               type="com.perfree.model.Menu">
+        <result column="id" property="id"></result>
+        <result column="pid" property="pid"></result>
+        <result column="name" property="name"></result>
+        <result column="url" property="url"></result>
+        <result column="icon" property="icon"></result>
+        <result column="seq" property="seq"></result>
+        <result column="type" property="type"></result>
+        <result column="status" property="status"></result>
+        <result column="createTime" property="createTime"></result>
+        <result column="updateTime" property="updateTime"></result>
+        <result column="target" property="target"></result>
+        <collection property="childMenu"
+                    select="getProtalChildMenus" column="id"></collection>
+    </resultMap>
+
+    <select id="getProtalMenus" resultMap="PROTAL_MENU_TREE">
+        SELECT distinct t.* from p_menu t
+        where t.pid = -1 and t.status = 0 and t.type = 0
+        order by t.seq asc
+    </select>
+
+    <select id="getProtalChildMenus" resultMap="PROTAL_MENU_TREE">
+          SELECT distinct t.* from p_menu t
+        where t.status = 0 and t.type = 0 and pid=#{id}
+        order by t.seq asc
     </select>
 </mapper>

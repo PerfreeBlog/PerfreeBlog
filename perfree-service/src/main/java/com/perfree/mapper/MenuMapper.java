@@ -19,14 +19,18 @@ public interface MenuMapper {
      */
     List<Menu> getParentMenuByUserIdAndType(@Param("id") Long id, @Param("type") Integer type);
 
+    List<Menu> getProtalMenus();
+
+    List<Menu> getProtalChildMenus();
+
     /**
      * 根据用户id,菜单类型,父级id获取子菜单
-     * @param id 用户id
-     * @param pid 菜单父级id
+     * @param userId 用户id
+     * @param id 菜单父级id
      * @param type 类型
      * @return List<Menu>
      */
-    List<Menu> getChildMenuByUserIdAndType(@Param("id") Long id, @Param("pid") Long pid, @Param("type") Integer type);
+    List<Menu> getChildMenuByUserIdAndType(@Param("userId") Long userId, @Param("id") Long id, @Param("type") Integer type);
 
     /**
      * 菜单列表分页
