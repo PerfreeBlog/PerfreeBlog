@@ -16,7 +16,9 @@ import org.springframework.stereotype.Component;
 
 
 /**
- * ShiroRealm
+ * Custom shiroRealm
+ *
+ * @author Perfree
  */
 @Component
 public class ShiroRealm extends AuthorizingRealm {
@@ -30,13 +32,13 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) throws AuthenticationException{
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) throws AuthenticationException {
         User user = new User();
         try {
             BeanUtils.copyProperties(principals.getPrimaryPrincipal(), user);
         } catch (Exception e) {
-            LOGGER.error("获取授权异常: {}",e.getMessage());
-            throw new AuthenticationException("获取授权异常");
+            LOGGER.error("Get authorization exception: {}", e.getMessage());
+            throw new AuthenticationException("Get authorization exception");
         }
         user = userService.getUserByAccount(user.getAccount());
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
@@ -45,23 +47,23 @@ public class ShiroRealm extends AuthorizingRealm {
     }
 
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException  {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken userToken = (UsernamePasswordToken) token;
         String account = userToken.getUsername();
         User user = userService.getUserByAccount(account);
-        if(user == null) {
-            LOGGER.error("账户不存在: {}",account);
-            throw new UnknownAccountException("账户不存在");
+        if (user == null) {
+            LOGGER.error("Account does not exist: {}", account);
+            throw new UnknownAccountException("Account does not exist");
         }
-        if(user.getPassword() == null) {
-            LOGGER.error("密码为空");
-            throw new IncorrectCredentialsException("密码为空");
-        }else {
+        if (user.getPassword() == null) {
+            LOGGER.error("Password is empty");
+            throw new IncorrectCredentialsException("Password is empty");
+        } else {
             String md5Hash = new Md5Hash(userToken.getPassword(), user.getSalt()).toString();
             userToken.setPassword(md5Hash.toCharArray());
         }
         String password = user.getPassword();
         user.setPassword(null);
-        return new SimpleAuthenticationInfo(user,password,getName());
+        return new SimpleAuthenticationInfo(user, password, getName());
     }
 }

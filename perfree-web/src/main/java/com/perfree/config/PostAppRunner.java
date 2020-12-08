@@ -15,6 +15,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Execute after startup
+ *
+ * @author Perfree
+ */
 @Component
 public class PostAppRunner implements ApplicationRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(PostAppRunner.class);
@@ -25,28 +30,29 @@ public class PostAppRunner implements ApplicationRunner {
         this.optionMapper = optionMapper;
     }
 
+    @Override
+    public void run(ApplicationArguments args) {
+        // Load options and put into memory
+        List<Option> options = optionMapper.getStartOption();
+        options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
+        // Load Template Directive
+        PostAppRunner.loadDirective();
+    }
+
     /**
-     * 加载模板指令
+     * Load Template Directive
      */
     public static void loadDirective() {
         Map<String, Object> beans = DirectiveUtil.getBean();
-        for(Map.Entry<String, Object> entry : beans.entrySet()){
+        for (Map.Entry<String, Object> entry : beans.entrySet()) {
             Object bean = entry.getValue();
             TemplateDirective injectBean = bean.getClass().getAnnotation(TemplateDirective.class);
             Directive directive = (Directive) bean;
             Class<? extends Directive> directiveByName = EnjoyConfig.jfr.getEngine().getEngineConfig().getDirective(injectBean.value());
             if (directiveByName == null) {
+                LOGGER.info("Add Directive: {}", injectBean.value());
                 EnjoyConfig.jfr.addDirective(injectBean.value(), directive.getClass());
             }
         }
     }
-
-    @Override
-    public void run(ApplicationArguments args){
-        List<Option> options = optionMapper.getStartOption();
-        options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
-
-        PostAppRunner.loadDirective();
-    }
-
 }
