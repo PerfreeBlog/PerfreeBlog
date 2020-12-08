@@ -4,8 +4,6 @@ import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Article;
-import com.perfree.model.Tag;
-import com.perfree.model.User;
 import com.perfree.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 
 /**
  * 文章

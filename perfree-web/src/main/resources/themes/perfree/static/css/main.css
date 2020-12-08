@@ -212,19 +212,15 @@ a:hover {
 }
 
 /** 右部 **/
-.m-right-user-info{
+.m-right-search-box{
     background: #ffffff;
     margin-top: 10px;
     border-radius: 5px;
     padding: 10px;
     animation: m-user-info-in;
     animation-duration: 1s;/*动画持续时间*/
-    -webkit-animation:m-user-info-in 1s;/*针对webkit内核*/
+    -webkit-animation:m-right-search-box-in 1s;/*针对webkit内核*/
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
-}
-@keyframes m-user-info-in{
-    0% {opacity: 0;transform: rotate(5deg);}/*初始状态 透明度为0*/
-    100% {opacity: 1;transform: rotate(0deg);}/*结束状态 透明度为1*/
 }
 .m-user-info{
     text-align: center;
