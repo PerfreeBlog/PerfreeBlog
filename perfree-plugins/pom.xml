@@ -9,21 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.perfree</groupId>
-    <artifactId>perfree-common</artifactId>
-
-    <dependencies>
-        <!-- commons-lang3 -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-
-    </dependencies>
+    <artifactId>perfree-plugins</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+<!--        <module>perfree-plugins-exam</module>-->
+<!--        <module>perfree-plugins-exam2</module>-->
+    </modules>
 
 </project>

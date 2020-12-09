@@ -1,12 +1,11 @@
 package com.perfree.controller.admin;
 
 import cn.hutool.core.io.FileTypeUtil;
-import com.perfree.common.FileUtil;
+import com.perfree.commons.FileUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Attach;
-import com.perfree.model.Tag;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -23,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.Map;
 
 /**
  * 附件

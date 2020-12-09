@@ -45,7 +45,6 @@ public class SystemController extends BaseController{
      */
     @RequestMapping("/")
     public String index() {
-
         return "themes/" + currentTheme() + "/index";
     }
 

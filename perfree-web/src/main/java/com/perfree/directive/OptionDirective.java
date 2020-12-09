@@ -6,7 +6,6 @@ import com.jfinal.template.expr.ast.Expr;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.annotation.TemplateDirective;
 import com.perfree.model.Option;
 import com.perfree.service.OptionService;
 import org.apache.commons.lang3.StringUtils;

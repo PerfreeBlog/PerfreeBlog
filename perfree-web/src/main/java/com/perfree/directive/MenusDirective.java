@@ -5,7 +5,6 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.annotation.TemplateDirective;
 import com.perfree.model.Menu;
 import com.perfree.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;

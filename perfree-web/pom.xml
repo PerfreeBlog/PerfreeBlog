@@ -9,13 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.perfree</groupId>
     <artifactId>perfree-web</artifactId>
 
 
     <dependencies>
         <dependency>
             <groupId>com.perfree</groupId>
-            <artifactId>perfree-service</artifactId>
+            <artifactId>perfree-core</artifactId>
             <version>1.0.0</version>
         </dependency>
     </dependencies>

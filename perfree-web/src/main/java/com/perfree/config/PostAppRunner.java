@@ -1,8 +1,8 @@
 package com.perfree.config;
 
 import com.jfinal.template.Directive;
-import com.perfree.annotation.TemplateDirective;
-import com.perfree.common.DirectiveUtil;
+import com.perfree.directive.DirectiveUtil;
+import com.perfree.directive.TemplateDirective;
 import com.perfree.common.OptionCache;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
