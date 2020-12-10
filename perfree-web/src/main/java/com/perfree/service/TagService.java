@@ -89,4 +89,13 @@ public class TagService {
     public Long getTagCount() {
         return tagMapper.getTagCount();
     }
+
+    /**
+     * 获取热门标签
+     * @param count count
+     * @return List<Tag>
+     */
+    public List<Tag> getHotTag(int count) {
+        return tagMapper.getHotTag(count);
+    }
 }

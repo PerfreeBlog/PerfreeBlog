@@ -71,7 +71,6 @@
         <result property="metaDescription" column="metaDescription"></result>
         <result property="thumbnail" column="thumbnail"></result>
         <result property="isTop" column="isTop"></result>
-        <result property="password" column="password"></result>
         <result property="status" column="status"></result>
         <result property="commentCount" column="commentCount"></result>
         <result property="viewCount" column="viewCount"></result>
@@ -115,7 +114,23 @@
         SELECT * FROM p_article ORDER BY createTime DESC limit 0,6
     </select>
 
-    <select id="getHotArticle" resultType="com.perfree.model.Article">
+    <select id="getHotArticle" resultMap="LIST_RESULT">
         select * from p_article
+        where status = 0 order by
+        <if test="type != null and type = 0">
+            commentCount
+        </if>
+        <if test="type != null and type = 1">
+            viewCount
+        </if>
+        desc
+        LIMIT 0,#{count}
+    </select>
+
+    <select id="getLatestArticle" resultMap="LIST_RESULT">
+        select * from p_article
+        where status = 0 order by updateTime
+        desc
+        LIMIT 0,#{count}
     </select>
 </mapper>

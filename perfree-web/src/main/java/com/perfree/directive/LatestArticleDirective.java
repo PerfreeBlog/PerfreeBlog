@@ -13,17 +13,14 @@ import org.springframework.stereotype.Component;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 热门文章
- */
-@TemplateDirective("hotArticle")
+@TemplateDirective("latestArticle")
 @Component
-public class HotArticleDirective extends Directive {
+public class LatestArticleDirective extends Directive {
     private static ArticleService articleService;
 
     @Autowired
     public void setArticleService(ArticleService articleService){
-        HotArticleDirective.articleService = articleService;
+        LatestArticleDirective.articleService = articleService;
     }
 
     public void setExprList(ExprList exprList) {
@@ -34,8 +31,7 @@ public class HotArticleDirective extends Directive {
     public void exec(Env env, Scope scope, Writer writer) {
         HashMap<String, String> para = DirectiveUtil.exprListToMap(exprList);
         int count = Integer.parseInt(para.get("count"));
-        int type = Integer.parseInt(para.get("type"));
-        List<Article> articles = articleService.getHotArticle(count, type);
+        List<Article> articles = articleService.getLatestArticle(count);
         scope.set("articles", articles);
         stat.exec(env, scope, writer);
     }

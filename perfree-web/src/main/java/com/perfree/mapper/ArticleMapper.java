@@ -103,5 +103,11 @@ public interface ArticleMapper {
      * 获取热门文章
      * @return List<Article>
      */
-    List<Article> getHotArticle();
+    List<Article> getHotArticle(@Param("count") int count,@Param("type") int type);
+
+    /**
+     * 获取最新文章
+     * @return List<Article>
+     */
+    List<Article> getLatestArticle(int count);
 }

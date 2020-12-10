@@ -50,4 +50,11 @@ public interface TagMapper {
      * @return Long
      */
     Long getTagCount();
+
+    /**
+     * 获取热门标签
+     * @param count count
+     * @return List<Tag>
+     */
+    List<Tag> getHotTag(int count);
 }

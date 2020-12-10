@@ -1,10 +1,14 @@
 package com.perfree.directive;
 
+import com.jfinal.template.expr.ast.Assign;
+import com.jfinal.template.expr.ast.Expr;
+import com.jfinal.template.expr.ast.ExprList;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,5 +35,15 @@ public class DirectiveUtil implements ApplicationContextAware {
      */
     public static Map<String, Object> getBean(){
         return getApplicationContext().getBeansWithAnnotation(TemplateDirective.class);
+    }
+
+    public static HashMap<String,String> exprListToMap(ExprList exprList){
+        HashMap<String,String> result = new HashMap<>();
+        Expr[] exprArray = exprList.getExprArray();
+        for (Expr expr : exprArray) {
+            Assign assign = (Assign) expr;
+            result.put(assign.getId(),assign.getRight().toString());
+        }
+        return result;
     }
 }

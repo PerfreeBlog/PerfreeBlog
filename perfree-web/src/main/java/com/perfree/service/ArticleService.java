@@ -144,7 +144,11 @@ public class ArticleService {
      * 获取热门文章
      * @return List<Article>
      */
-    public List<Article> getHotArticle() {
-        return articleMapper.getHotArticle();
+    public List<Article> getHotArticle(int count,int type) {
+        return articleMapper.getHotArticle(count,type);
+    }
+
+    public List<Article> getLatestArticle(int count) {
+        return articleMapper.getLatestArticle(count);
     }
 }

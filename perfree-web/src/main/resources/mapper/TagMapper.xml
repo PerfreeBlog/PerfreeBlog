@@ -52,4 +52,10 @@
     <select id="getTagCount" resultType="java.lang.Long">
         SELECT count(1) FROM p_tag
     </select>
+    <select id="getHotTag" resultType="com.perfree.model.Tag">
+    SELECT t.*,IFNULL(t1.articleCount,0) articleCount from p_tag t LEFT JOIN
+    (SELECT tagId, count(1) articleCount FROM `p_article_tag` GROUP BY tagId) t1 ON t.id = t1.tagId
+    ORDER BY t1.articleCount desc
+    LIMIT 0,#{count}
+    </select>
 </mapper>

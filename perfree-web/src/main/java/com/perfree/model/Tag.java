@@ -14,6 +14,16 @@ public class Tag implements Serializable {
     private Date createTime;
     private Date updateTime;
     private User user;
+    private Long articleCount;
+
+    public Long getArticleCount() {
+        return articleCount;
+    }
+
+    public void setArticleCount(Long articleCount) {
+        this.articleCount = articleCount;
+    }
+
     public User getUser() {
         return user;
     }

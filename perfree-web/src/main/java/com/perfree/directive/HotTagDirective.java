@@ -6,24 +6,23 @@ import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.model.Article;
+import com.perfree.model.Tag;
 import com.perfree.service.ArticleService;
+import com.perfree.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * 热门文章
- */
-@TemplateDirective("hotArticle")
+@TemplateDirective("hotTag")
 @Component
-public class HotArticleDirective extends Directive {
-    private static ArticleService articleService;
+public class HotTagDirective extends Directive {
+    private static TagService tagService;
 
     @Autowired
-    public void setArticleService(ArticleService articleService){
-        HotArticleDirective.articleService = articleService;
+    public void setTagService(TagService tagService){
+        HotTagDirective.tagService = tagService;
     }
 
     public void setExprList(ExprList exprList) {
@@ -34,9 +33,8 @@ public class HotArticleDirective extends Directive {
     public void exec(Env env, Scope scope, Writer writer) {
         HashMap<String, String> para = DirectiveUtil.exprListToMap(exprList);
         int count = Integer.parseInt(para.get("count"));
-        int type = Integer.parseInt(para.get("type"));
-        List<Article> articles = articleService.getHotArticle(count, type);
-        scope.set("articles", articles);
+        List<Tag> tags = tagService.getHotTag(count);
+        scope.set("tags", tags);
         stat.exec(env, scope, writer);
     }
 

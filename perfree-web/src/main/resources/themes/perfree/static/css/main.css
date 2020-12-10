@@ -531,14 +531,15 @@ a:hover {
     width: 36px;
     padding: 0;
     position: absolute;
+    background: #79a7f1;
 }
 .m-right-search-box input{
     height: 30px;
     line-height: 30px;
     width: calc(100% - 37px);
     border: 1px solid #ddd;
-    padding-left: 2px;
-    padding-right: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
     color: #403f3f;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
