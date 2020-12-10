@@ -8,7 +8,8 @@ public class HelloWorldPlugin implements Plugin {
         System.out.println("123456456456456455456");
     }
 
-    public void onStart(String xx){
-        System.out.println(xx);
+    @Override
+    public void configEngine() {
+
     }
 }

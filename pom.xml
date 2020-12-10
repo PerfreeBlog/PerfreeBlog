@@ -10,6 +10,12 @@
         <module>perfree-core</module>
     </modules>
 
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <version>2.3.0.RELEASE</version>
+    </parent>
+
     <groupId>com.perfree</groupId>
     <artifactId>Perfree</artifactId>
     <version>1.0.0</version>

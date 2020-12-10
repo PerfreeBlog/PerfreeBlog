@@ -4,8 +4,13 @@ import cn.hutool.core.io.FileUtil;
 import com.jfinal.template.source.FileSource;
 import com.jfinal.template.source.ISource;
 import com.jfinal.template.source.ISourceFactory;
+import com.perfree.plugins.Plugin;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 /**
  * TemplateSource Configuration

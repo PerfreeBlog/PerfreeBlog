@@ -94,13 +94,7 @@ public class PluginsUtil extends ClassLoader{
         classNameList.forEach(className -> {
             try {
                 Class<?> loadClass = loadClass(className);
-                Class<?>[] interfaces = loadClass.getInterfaces();
-                for (Class<?> anInterface : interfaces) {
-                    if (anInterface.getName().equals(Plugin.class.getName())){
-                        Method onStart = loadClass.getMethod("onStart");
-                        onStart.invoke(loadClass.newInstance());
-                    }
-                }
+                pluginInit(loadClass);
                 // 注册Controller
                 if (loadClass.getAnnotation(RestController.class) != null || loadClass.getAnnotation(Controller.class) != null){
                     registerController(loadClass, className);
@@ -111,7 +105,7 @@ public class PluginsUtil extends ClassLoader{
                 }
                 // 注册mapper
                 if (loadClass.getAnnotation(Mapper.class) != null) {
-                    registerMapper(loadClass, className);
+                    registerMapper(className);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -148,12 +142,28 @@ public class PluginsUtil extends ClassLoader{
 
     /**
      * 注册mapper
-     * @param loadClass loadClass
      * @param className className
      */
-    private void registerMapper(Class<?> loadClass, String className){
+    private void registerMapper(String className){
         ClassPathMapperScanner scanner = new ClassPathMapperScanner(defaultListableBeanFactory);
         scanner.registerFilters();
         scanner.doScan(className.substring(0, className.lastIndexOf(".")));
+    }
+
+    /**
+     * 初始化插件
+     * @param loadClass loadClass
+     * @throws Exception e
+     */
+    private void pluginInit(Class<?> loadClass) throws Exception {
+        Class<?>[] interfaces = loadClass.getInterfaces();
+        for (Class<?> anInterface : interfaces) {
+            if (anInterface.getName().equals(Plugin.class.getName())){
+                Method onStart = loadClass.getMethod("onStart");
+                onStart.invoke(loadClass.newInstance());
+                Method configEngine = loadClass.getMethod("configEngine");
+                configEngine.invoke(loadClass.newInstance());
+            }
+        }
     }
 }

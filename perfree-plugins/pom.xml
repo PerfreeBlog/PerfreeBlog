@@ -12,8 +12,8 @@
     <artifactId>perfree-plugins</artifactId>
     <packaging>pom</packaging>
     <modules>
-<!--        <module>perfree-plugins-exam</module>-->
-<!--        <module>perfree-plugins-exam2</module>-->
+        <module>perfree-plugins-exam</module>
+        <module>perfree-plugins-exam2</module>
     </modules>
 
 </project>
