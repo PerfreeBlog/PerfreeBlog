@@ -114,4 +114,8 @@
     <select id="getArticleListByDashboard" resultType="com.perfree.model.Article">
         SELECT * FROM p_article ORDER BY createTime DESC limit 0,6
     </select>
+
+    <select id="getHotArticle" resultType="com.perfree.model.Article">
+        select * from p_article
+    </select>
 </mapper>

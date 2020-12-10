@@ -139,4 +139,12 @@ public class ArticleService {
     public List<Article> getArticleListByDashboard() {
         return articleMapper.getArticleListByDashboard();
     }
+
+    /**
+     * 获取热门文章
+     * @return List<Article>
+     */
+    public List<Article> getHotArticle() {
+        return articleMapper.getHotArticle();
+    }
 }

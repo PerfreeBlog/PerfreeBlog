@@ -1,7 +1,6 @@
 $(document).ready(function () {
     initLayui();
     initEvent();
-    initHitokoto();
     initTagsColor();
 });
 
@@ -60,24 +59,4 @@ function onWindowScroll(e){
         $('.m-right-tags-box').removeClass('hide');
         $('.right-side-container').removeClass('right-side-container-scroll');
     }
-}
-
-/**
- * 初始化一言
- */
-function initHitokoto() {
-    getHitokoto();
-    setTimeout(() => {
-        getHitokoto();
-    }, 10000);
-}
-
-/**
- * 加载一言
- */
-function getHitokoto() {
-    $.get("http://v1.hitokoto.cn?max_length=20", function(result){
-        console.log(result)
-        $("#hitokoto").text(result.hitokoto + " -- " + result.from);
-    });
 }

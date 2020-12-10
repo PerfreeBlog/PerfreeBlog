@@ -1,6 +1,9 @@
 <div class="right-side-container">
     <div class="m-right-search-box">
         <input type="text" placeholder="搜索文章" class="m-search-input">
+        <button type="button" class="layui-btn">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
     </div>
 
 
@@ -14,6 +17,9 @@
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
                     <ul class="m-right-article-list">
+                        #hotArticle(pageSize=5,type=1)
+
+                        #end
                     </ul>
                 </div>
                 <div class="layui-tab-item">

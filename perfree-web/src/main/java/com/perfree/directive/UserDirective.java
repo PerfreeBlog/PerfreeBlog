@@ -22,7 +22,7 @@ public class UserDirective extends Directive {
     private static UserService userService;
 
     @Autowired
-    public void setOptionService(UserService userService){
+    public void setUserService(UserService userService){
         UserDirective.userService = userService;
     }
 

@@ -22,7 +22,7 @@ public class MenusDirective extends Directive {
     private static MenuService menuService;
 
     @Autowired
-    public void setCategoryService(MenuService menuService){
+    public void setMenuService(MenuService menuService){
         MenusDirective.menuService = menuService;
     }
 

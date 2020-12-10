@@ -524,3 +524,23 @@ a:hover {
     0% {opacity: 0;transform: rotate(5deg);}/*初始状态 透明度为0*/
     100% {opacity: 1;transform: rotate(0deg);}/*结束状态 透明度为1*/
 }
+
+.m-right-search-box .layui-btn{
+    height: 30px;
+    line-height: 30px;
+    width: 36px;
+    padding: 0;
+    position: absolute;
+}
+.m-right-search-box input{
+    height: 30px;
+    line-height: 30px;
+    width: calc(100% - 37px);
+    border: 1px solid #ddd;
+    padding-left: 2px;
+    padding-right: 2px;
+    color: #403f3f;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-right: none;
+}

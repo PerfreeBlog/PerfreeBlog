@@ -98,4 +98,10 @@ public interface ArticleMapper {
      * @return List<Article
      */
     List<Article> getArticleListByDashboard();
+
+    /**
+     * 获取热门文章
+     * @return List<Article>
+     */
+    List<Article> getHotArticle();
 }
