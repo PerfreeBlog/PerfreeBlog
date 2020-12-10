@@ -29,6 +29,7 @@
                     <include>**/*.*</include>
                 </includes>
                 <filtering>false</filtering>
+                <targetPath>BOOT-INF/classes</targetPath>
             </resource>
 
         </resources>

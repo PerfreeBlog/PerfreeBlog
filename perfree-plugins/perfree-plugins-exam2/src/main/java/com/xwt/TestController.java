@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class TestController {
     @RequestMapping("/plugins/test")
     public String index (){
-        return "index";
+        return "helloworld/resources/index";
     }
 }

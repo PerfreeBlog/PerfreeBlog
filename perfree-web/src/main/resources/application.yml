@@ -5,7 +5,7 @@ server:
 web.upload-path: D:/perfree
 spring:
   resources:
-    static-locations: classpath:/,classpath:/themes/,file:./resources/,file:${web.upload-path}
+    static-locations: classpath:/public/,classpath:/admin/,classpath:/themes/,file:./resources/,file:${web.upload-path}
   devtools:
     restart:
       enabled: false

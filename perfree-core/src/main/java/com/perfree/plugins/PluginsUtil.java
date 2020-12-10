@@ -17,6 +17,7 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -35,11 +36,7 @@ public class PluginsUtil extends ClassLoader{
      * 初始化插件
      */
     public void initPlugins(){
-        File file = new File("resources/plugins");
-        if (!file.exists()) {
-            return;
-        }
-        File[] jarFiles = file.listFiles((dir, name) -> name.endsWith(".jar"));
+        File[] jarFiles = readJarFiles();
         if (jarFiles == null || jarFiles.length == 0) {
             return;
         }
@@ -60,7 +57,7 @@ public class PluginsUtil extends ClassLoader{
                 classNameList.clear();
             }
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         } finally {
            if (method != null){
                method.setAccessible(accessible);
@@ -68,6 +65,30 @@ public class PluginsUtil extends ClassLoader{
         }
     }
 
+
+    /**
+     * 获取插件目录内所有jar
+     * @return File[]
+     */
+    private File[] readJarFiles() {
+        File file = new File("resources/plugins");
+        List<File> jarFiles = new ArrayList<>();
+        if (!file.exists()) {
+            return null;
+        }
+        File[] files = file.listFiles();
+        if (files == null) {
+            return null;
+        }
+        for (File listFile : files) {
+            File[] jars = listFile.listFiles((dir, name) -> name.endsWith(".jar"));
+            if (jars != null){
+                jarFiles.addAll(Arrays.asList(jars));
+            }
+        }
+        File[] result = new File[jarFiles.size()];
+        return jarFiles.toArray(result);
+    }
 
     /**
      * 初始化获取jar包内所有类
@@ -156,14 +177,11 @@ public class PluginsUtil extends ClassLoader{
      * @throws Exception e
      */
     private void pluginInit(Class<?> loadClass) throws Exception {
-        Class<?>[] interfaces = loadClass.getInterfaces();
-        for (Class<?> anInterface : interfaces) {
-            if (anInterface.getName().equals(Plugin.class.getName())){
-                Method onStart = loadClass.getMethod("onStart");
-                onStart.invoke(loadClass.newInstance());
-                Method configEngine = loadClass.getMethod("configEngine");
-                configEngine.invoke(loadClass.newInstance());
-            }
+        if (Plugin.class.isAssignableFrom(loadClass)) {
+            Method onStart = loadClass.getMethod("onStart");
+            onStart.invoke(loadClass.newInstance());
+            Method configEngine = loadClass.getMethod("configEngine");
+            configEngine.invoke(loadClass.newInstance());
         }
     }
 }
