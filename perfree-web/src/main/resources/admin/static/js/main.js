@@ -93,7 +93,7 @@ function initEvent() {
  * 初始化主题列表
  */
 function initTheme() {
-    $.getJSON("/admin/static/json/theme.json", function (data) {
+    $.getJSON("/static/json/theme.json", function (data) {
         laytpl($("#themeTpl").html()).render(data, function (html) {
             $(".theme-list").html(html);
         });

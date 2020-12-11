@@ -4,7 +4,7 @@ let markdownEditor;
 let categorySelect;
 let tagSelect;
 layui.config({
-    base: '/public/libs/layuiComponents/'
+    base: '/libs/layuiComponents/'
 }).extend({
     xmSelect: 'xm-select/xm-select'
 })
@@ -86,7 +86,7 @@ function initMarkdownEditor() {
         height: '700',
         name: "content",
         syncScrolling: "single",
-        path: "/public/libs/editormd/lib/", //注意2：你的路径
+        path: "/libs/editormd/lib/", //注意2：你的路径
         saveHTMLToTextarea: false,
         tex: true, // 开启科学公式TeX语言支持，默认关闭
         watch: false,

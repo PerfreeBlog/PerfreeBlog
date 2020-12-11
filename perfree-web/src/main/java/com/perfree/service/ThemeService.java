@@ -47,7 +47,7 @@ public class ThemeService {
                 theme.setAuthorWebSite(props.get("author.web.site").toString());
                 theme.setDescription(props.get("description").toString());
                 theme.setName(props.get("name").toString());
-                theme.setScreenshots(SEPARATOR + "themes" + SEPARATOR + settingFile.getParentFile().getName() +
+                theme.setScreenshots(SEPARATOR + settingFile.getParentFile().getName() +
                         SEPARATOR + props.get("screenshots").toString());
                 theme.setPath(settingFile.getParentFile().getName());
                 if (settingFile.getParentFile().getName().equals(OptionCache.getOption(Constants.WEB_THEME))){
