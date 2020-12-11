@@ -36,14 +36,4 @@ public class DirectiveUtil implements ApplicationContextAware {
     public static Map<String, Object> getBean(){
         return getApplicationContext().getBeansWithAnnotation(TemplateDirective.class);
     }
-
-    public static HashMap<String,String> exprListToMap(ExprList exprList){
-        HashMap<String,String> result = new HashMap<>();
-        Expr[] exprArray = exprList.getExprArray();
-        for (Expr expr : exprArray) {
-            Assign assign = (Assign) expr;
-            result.put(assign.getId(),assign.getRight().toString());
-        }
-        return result;
-    }
 }

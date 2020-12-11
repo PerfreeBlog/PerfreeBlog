@@ -1,8 +1,6 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
-import com.jfinal.template.expr.ast.Expr;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
@@ -17,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @TemplateDirective("option")
 @Component
-public class OptionDirective extends Directive {
+public class OptionDirective extends BaseDirective {
 
     private static OptionService optionService;
 
@@ -32,12 +30,11 @@ public class OptionDirective extends Directive {
 
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        Expr expr = this.exprList.getExpr(0);
-        Option optionByKey = optionService.getOptionByKey(expr.toString());
+        Option optionByKey = optionService.getOptionByKey(getParam(0, scope).toString());
         if (optionByKey != null) {
             String defaultValue = null;
             if (this.exprList.length() >= 2){
-                defaultValue = this.exprList.getExpr(1).toString();
+                defaultValue = getParam(1, scope).toString();
             }
             if (StringUtils.isNotBlank(defaultValue) && StringUtils.isBlank(optionByKey.getValue())) {
                 write(writer, defaultValue);

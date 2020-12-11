@@ -1,6 +1,5 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
@@ -15,7 +14,7 @@ import java.util.List;
 
 @TemplateDirective("latestArticle")
 @Component
-public class LatestArticleDirective extends Directive {
+public class LatestArticleDirective extends BaseDirective {
     private static ArticleService articleService;
 
     @Autowired
@@ -29,7 +28,7 @@ public class LatestArticleDirective extends Directive {
 
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        HashMap<String, String> para = DirectiveUtil.exprListToMap(exprList);
+        HashMap<String, String> para = exprListToMap();
         int count = Integer.parseInt(para.get("count"));
         List<Article> articles = articleService.getLatestArticle(count);
         scope.set("articles", articles);

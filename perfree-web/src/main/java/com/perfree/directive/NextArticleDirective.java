@@ -1,6 +1,5 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 @TemplateDirective("nextArticle")
 @Component
-public class NextArticleDirective extends Directive {
+public class NextArticleDirective extends BaseDirective {
 
     private static ArticleService articleService;
 

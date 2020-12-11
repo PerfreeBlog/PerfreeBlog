@@ -1,6 +1,5 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 @TemplateDirective("categories")
 @Component
-public class CategoriesDirective extends Directive {
+public class CategoriesDirective extends BaseDirective {
 
     private static CategoryService categoryService;
 

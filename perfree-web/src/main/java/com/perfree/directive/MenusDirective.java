@@ -1,6 +1,5 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
@@ -17,7 +16,7 @@ import java.util.List;
  */
 @TemplateDirective("menus")
 @Component
-public class MenusDirective extends Directive {
+public class MenusDirective extends BaseDirective {
 
     private static MenuService menuService;
 

@@ -79,8 +79,7 @@ function initComment() {
                 data: {
                     articleId: $("#articleId").val(),
                     pid: $("#pid").val(),
-                    content: content,
-                    captcha: captcha
+                    content: content
                 },
                 type: 'POST',
                 success: function (result) {

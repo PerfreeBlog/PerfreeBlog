@@ -1,6 +1,5 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
@@ -18,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @TemplateDirective("user")
 @Component
-public class UserDirective extends Directive {
+public class UserDirective extends BaseDirective {
     private static UserService userService;
 
     @Autowired

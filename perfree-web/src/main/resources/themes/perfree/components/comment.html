@@ -1,0 +1,24 @@
+<div class="m-comment-edit" id="m-comment-edit">
+    #if(article.isComment == 1)
+        #user()
+            #if(user != null)
+                <form class="layui-form" id="commentForm" method="post">
+                    <input type="hidden" name="articleId" value="#(article.id)" id="articleId">
+                    <input type="hidden" name="pid" id="pid">
+                    <textarea id="comment-edit" placeholder="说点什么吧？"></textarea>
+                    <div class="m-comment-edit-info">
+                        <span class="m-comment-tip">说点什么吧?</span>
+                        <a class="m-comment-cancel-revert">取消回复</a>
+                        <div class="m-comment-send-box">
+                            <button class="layui-btn layui-btn-normal m-comment-edit-submit-btn" lay-submit lay-filter="comment">发表评论</button>
+                        </div>
+                    </div>
+                </form>
+            #else
+                <div class="m-comment-unlogin">
+                    <a href="/login">登录</a>即可评论哦~
+                </div>
+            #end
+        #end
+    #end
+</div>

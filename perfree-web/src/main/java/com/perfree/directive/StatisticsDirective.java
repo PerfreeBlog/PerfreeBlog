@@ -1,6 +1,5 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
@@ -14,7 +13,7 @@ import java.util.HashMap;
 
 @TemplateDirective("statistics")
 @Component
-public class StatisticsDirective  extends Directive {
+public class StatisticsDirective  extends BaseDirective {
 
     private static ArticleService articleService;
     private static CommentService commentService;

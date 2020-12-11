@@ -1,6 +1,5 @@
 package com.perfree.directive;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
@@ -19,8 +18,8 @@ import java.util.Map;
 
 @TemplateDirective("articlePage")
 @Component
-public class ArticlePageDirective extends Directive {
-  private static ArticleService articleService;
+public class ArticlePageDirective extends BaseDirective {
+    private static ArticleService articleService;
 
     @Autowired
     public void setArticleService(ArticleService articleService){
@@ -45,7 +44,7 @@ public class ArticlePageDirective extends Directive {
         } else {
             articlePage.setPageIndex(1);
         }
-        HashMap<String, String> para = DirectiveUtil.exprListToMap(exprList);
+        HashMap<String, String> para = exprListToMap();
         String pageSize = para.get("pageSize");
         if (StringUtils.isBlank(pageSize)) {
             articlePage.setPageSize(10);

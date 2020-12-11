@@ -1,15 +1,7 @@
 .a-container{
-    padding: 15px;
-    padding-top: 10px;
+    padding: 10px 15px 15px;
     background: white;
     border-radius: 5px;
-    animation: a-article-in;
-    animation-duration: 1s;/*动画持续时间*/
-    -webkit-animation:a-article-in 1s;/*针对webkit内核*/
-}
-@keyframes a-article-in{
-    0% {opacity: 0;transform: rotate(5deg);}/*初始状态 透明度为0*/
-    100% {opacity: 1;transform: rotate(0deg);}/*结束状态 透明度为1*/
 }
 .a-article-title{
     font-size: 22px;

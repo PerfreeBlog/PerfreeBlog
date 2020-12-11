@@ -1,9 +1,9 @@
 package com.perfree.config;
 
 import com.jfinal.template.Directive;
+import com.perfree.common.OptionCache;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
-import com.perfree.common.OptionCache;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
 import org.slf4j.Logger;

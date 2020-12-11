@@ -4,14 +4,7 @@
     position: relative;
     overflow: hidden;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    animation: m-article-box-in;
-    animation-duration: 1s;
-    -webkit-animation: m-article-box-in 1s;
     margin-bottom: 10px;
-}
-@keyframes m-article-box-in{
-    0% {opacity: 0;transform: rotate(5deg);}/*初始状态 透明度为0*/
-    100% {opacity: 1;transform: rotate(0deg);}/*结束状态 透明度为1*/
 }
 .m-article-img{
     display: block;
