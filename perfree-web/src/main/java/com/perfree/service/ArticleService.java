@@ -166,4 +166,22 @@ public class ArticleService {
         directivePage.setData(pageInfo.getList());
         return directivePage;
     }
+
+    /**
+     * 获取下一篇文章
+     * @param articleId articleId
+     * @return Article
+     */
+    public Article getNextArticle(Long articleId) {
+        return articleMapper.getNextArticle(articleId);
+    }
+
+    /**
+     * 获取上一篇文章
+     * @param articleId articleId
+     * @return Article
+     */
+    public Article getPreArticle(Long articleId) {
+        return articleMapper.getPreArticle(articleId);
+    }
 }

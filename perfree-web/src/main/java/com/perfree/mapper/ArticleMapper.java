@@ -116,4 +116,18 @@ public interface ArticleMapper {
      * @return List<Article>
      */
     List<Article> frontArticlesList();
+
+    /**
+     * 获取下一篇文章
+     * @param articleId articleId
+     * @return Article
+     */
+    Article getNextArticle(@Param("articleId") Long articleId);
+
+    /**
+     * 获取上一篇文章
+     * @param articleId articleId
+     * @return Article
+     */
+    Article getPreArticle(@Param("articleId") Long articleId);
 }

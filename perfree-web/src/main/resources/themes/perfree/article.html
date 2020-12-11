@@ -1,0 +1,62 @@
+#include("/themes/perfree/layout/layout.html")
+#@layout()
+#define css()
+    <link href="/perfree/static/lib/viewerjs/viewer.min.css" rel="stylesheet">
+    <link href="/perfree/static/lib/prism/prism.css" rel="stylesheet">
+    <link href="/perfree/static/lib/katex/katex.min.css" rel="stylesheet">
+    <link href="/perfree/static/css/article.css" rel="stylesheet">
+#end
+#define content()
+    <div class="a-container">
+        <div class="a-article-title-box">
+            <h2 class="a-article-title">#(article.title ??)</h2>
+        </div>
+        <div class="a-article-info">
+            <span class="a-article-info-btn"><i class="fa fa-eye"></i> #(article.viewCount ??)</span>
+            <span class="a-article-info-btn"><i class="fa fa-comment-o"></i> #(article.commentCount ??)</span>
+            <span class="a-article-info-btn"><i class="fa fa-user-o"></i> #(article.user.userName ??)</span>
+            <span class="a-article-info-btn time"><i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy-MM-dd")</span>
+        </div>
+        <article class="a-article-content" id="article-content">
+            #if(article.thumbnail != null && article.thumbnail != "")
+            <div class="a-article-img-box">
+                <div class="a-article-img" style="background-image: url('#(article.thumbnail)');"></div>
+            </div>
+            #end
+            <div class="a-article-content-detail" id="a-article-content-detail">
+            </div>
+            <textarea id="articleContent" style="display: none">#(article.content ??)</textarea>
+        </article>
+    </div>
+
+
+        <div class="a-switch-article">
+            #preArticle()
+                #if(article)
+                    <a class="a-pre-article" href="#(article.url)" title="#(article.title)">
+                            <i class="fa fa-angle-left"></i> 上一篇
+                    </a>
+                #end
+            #end
+            #nextArticle()
+                #if(article)
+                    <a class="a-next-article" href="#(article.url)" title="#(article.title)">下一篇 <i class="fa fa-angle-right"></i></a>
+                #end
+            #end
+        </div>
+
+    <div class="m-comment-box">
+        <div class="m-comment-box-title">
+            评论
+        </div>
+
+    </div>
+#end
+#define script()
+    <script src="/perfree/static/lib/marked/marked.js"></script>
+    <script src="/perfree/static/lib/viewerjs/viewer.min.js"></script>
+    <script src="/perfree/static/lib/katex/katex.min.js"></script>
+    <script src="/perfree/static/lib/katex/contrib/auto-render.min.js"></script>
+    <script src="/perfree/static/lib/prism/prism.js"></script>
+    <script src="/perfree/static/js/article.js"></script>
+#end

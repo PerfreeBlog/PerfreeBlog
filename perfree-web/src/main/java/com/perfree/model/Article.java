@@ -43,6 +43,7 @@ public class Article implements Serializable {
     private User user;
     private Category category;
     private List<ArticleTag> articleTags;
+    private String url;
 
     public List<ArticleTag> getArticleTags() {
         return articleTags;
@@ -211,5 +212,13 @@ public class Article implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUrl() {
+        return "/article/" + id;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

@@ -5,14 +5,14 @@
         #articlePage(pageSize=10)
             #for(article: articlePage.data)
                 <div class="m-article-box">
-                    #if(article.thumbnail != null)
+                    #if(article.thumbnail != null && article.thumbnail != "")
                         <div class="m-article-img-box">
                             <div class="m-article-img" style="background-image: url('#(article.thumbnail)')"></div>
                         </div>
                     #end
                     <div class="m-article-container">
                         <div class="m-article-title-box">
-                            <a href="#(article.id)" class="m-article-title"><h2>#(article.title)</h2></a>
+                            <a href="#(article.url)" class="m-article-title"><h2>#(article.title)</h2></a>
                         </div>
                         <article class="m-article-content">#(article.content)</article>
                         <hr color="#e1e4e6" SIZE="1">
@@ -24,7 +24,7 @@
                                 <span class="m-article-info-btn"><i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy-MM-dd")</span>
                             </div>
                             <div class="m-article-info-right">
-                                <a class="m-read-more" href="#(article.id)">阅读更多</a>
+                                <a class="m-read-more" href="#(article.url)">阅读更多</a>
                             </div>
                         </div>
                     </div>
