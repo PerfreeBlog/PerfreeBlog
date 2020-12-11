@@ -8,6 +8,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 
+/**
+ * Custom BaseDirective
+ *
+ * @author Perfree
+ */
 public abstract class BaseDirective extends Directive {
 
     public Object getParam(int index, Scope scope) {
@@ -20,7 +25,7 @@ public abstract class BaseDirective extends Directive {
 
     public Integer getParamToInt(int index, Scope scope, Integer defaultValue) {
         Object param = this.getParam(index, scope);
-        if (param != null && !(param instanceof Integer)){
+        if (param != null && !(param instanceof Integer)) {
             String paramStr = param.toString();
             return StringUtils.isBlank(paramStr) ? defaultValue : Integer.valueOf(paramStr);
         } else {
@@ -31,7 +36,7 @@ public abstract class BaseDirective extends Directive {
 
     public Long getParamToLong(int index, Scope scope, Long defaultValue) {
         Object param = this.getParam(index, scope);
-        if (param != null && !(param instanceof Long)){
+        if (param != null && !(param instanceof Long)) {
             String paramStr = param.toString();
             return StringUtils.isBlank(paramStr) ? defaultValue : Long.valueOf(paramStr);
         } else {
@@ -40,12 +45,12 @@ public abstract class BaseDirective extends Directive {
         }
     }
 
-    public HashMap<String,String> exprListToMap(){
-        HashMap<String,String> result = new HashMap<>();
+    public HashMap<String, String> exprListToMap() {
+        HashMap<String, String> result = new HashMap<>();
         Expr[] exprArray = this.exprList.getExprArray();
         for (Expr expr : exprArray) {
             Assign assign = (Assign) expr;
-            result.put(assign.getId(),assign.getRight().toString());
+            result.put(assign.getId(), assign.getRight().toString());
         }
         return result;
     }
