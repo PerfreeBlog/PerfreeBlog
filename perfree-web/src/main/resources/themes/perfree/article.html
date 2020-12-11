@@ -32,15 +32,15 @@
 
         <div class="a-switch-article">
             #preArticle()
-                #if(article)
-                    <a class="a-pre-article" href="#(article.url)" title="#(article.title)">
+                #if(preArticle)
+                    <a class="a-pre-article" href="#(preArticle.url)" title="#(preArticle.title)">
                             <i class="fa fa-angle-left"></i> 上一篇
                     </a>
                 #end
             #end
             #nextArticle()
-                #if(article)
-                    <a class="a-next-article" href="#(article.url)" title="#(article.title)">下一篇 <i class="fa fa-angle-right"></i></a>
+                #if(nextArticle)
+                    <a class="a-next-article" href="#(nextArticle.url)" title="#(nextArticle.title)">下一篇 <i class="fa fa-angle-right"></i></a>
                 #end
             #end
         </div>

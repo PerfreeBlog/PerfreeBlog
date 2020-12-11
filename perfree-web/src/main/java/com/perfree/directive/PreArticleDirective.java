@@ -43,7 +43,7 @@ public class PreArticleDirective extends BaseDirective {
             return ;
         }
         Article article = articleService.getPreArticle(Long.valueOf(articleId));
-        scope.set("article", article);
+        scope.set("preArticle", article);
         stat.exec(env, scope, writer);
     }
 

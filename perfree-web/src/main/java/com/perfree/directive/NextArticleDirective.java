@@ -43,7 +43,7 @@ public class NextArticleDirective extends BaseDirective {
             return ;
         }
         Article article = articleService.getNextArticle(Long.valueOf(articleId));
-        scope.set("article", article);
+        scope.set("nextArticle", article);
         stat.exec(env, scope, writer);
     }
 
