@@ -3,6 +3,7 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -150,5 +151,19 @@ public class ArticleService {
 
     public List<Article> getLatestArticle(int count) {
         return articleMapper.getLatestArticle(count);
+    }
+
+    /**
+     * 前台文章分页
+     * @param directivePage directivePage
+     * @return List<Article>
+     */
+    public DirectivePage frontArticlesPage(DirectivePage directivePage) {
+        PageHelper.startPage(directivePage.getPageIndex(), directivePage.getPageSize());
+        List<Article> articles = articleMapper.frontArticlesList();
+        PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        directivePage.setTotal(pageInfo.getTotal());
+        directivePage.setData(pageInfo.getList());
+        return directivePage;
     }
 }

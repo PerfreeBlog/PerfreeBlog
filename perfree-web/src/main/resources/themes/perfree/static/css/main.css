@@ -4,7 +4,7 @@ html,body{
     margin: 0;
     color: rgba(0, 0, 0, 0.65);
     font-size: 14px;
-    font-family: Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", 微软雅黑, Arial, sans-serif !important;
+    font-family: Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", å¾®è½¯é›…é»‘, Arial, sans-serif !important;
     font-variant: tabular-nums;
     line-height: 1.5715;
     background-color: #fff;
@@ -108,7 +108,7 @@ a:hover {
     100% {top: -50px;}
 }
 
-/** 顶部 */
+/** é¡¶éƒ¨ */
 .m-header{
     height: 50px;
     padding-left: 400px;
@@ -211,15 +211,15 @@ a:hover {
     line-height: 50px;
 }
 
-/** 右部 **/
+/** å³éƒ¨ **/
 .m-right-search-box{
     background: #ffffff;
     margin-top: 10px;
     border-radius: 5px;
     padding: 10px;
     animation: m-user-info-in;
-    animation-duration: 1s;/*动画持续时间*/
-    -webkit-animation:m-right-search-box-in 1s;/*针对webkit内核*/
+    animation-duration: 1s;/*åŠ¨ç”»æŒç»­æ—¶é—´*/
+    -webkit-animation:m-right-search-box-in 1s;/*é’ˆå¯¹webkitå†…æ ¸*/
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .m-user-info{
@@ -340,7 +340,7 @@ a:hover {
 }
 
 
-/** 音乐 */
+/** éŸ³ä¹ */
 .m-music-btn{
     display: block;
     right: 0;
@@ -359,11 +359,11 @@ a:hover {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
     animation: music-btn-in;
-    animation-duration: 1s;/*动画持续时间*/
-    -webkit-animation:music-btn-in 1s;/*针对webkit内核*/
+    animation-duration: 1s;/*åŠ¨ç”»æŒç»­æ—¶é—´*/
+    -webkit-animation:music-btn-in 1s;/*é’ˆå¯¹webkitå†…æ ¸*/
 }
 .m-music-btn-open{
-    right: 160px;
+    right: 260px;
     box-shadow: none;
 }
 .m-music-btn svg{
@@ -372,15 +372,15 @@ a:hover {
     margin-top: 5px;
 }
 @keyframes music-btn-in{
-    0% {right: -40px;opacity: 0;}/*初始状态 透明度为0*/
-    100% {right: 0;opacity: 1;}/*结束状态 透明度为1*/
+    0% {right: -40px;opacity: 0;}/*åˆå§‹çŠ¶æ€ é€æ˜Žåº¦ä¸º0*/
+    100% {right: 0;opacity: 1;}/*ç»“æŸçŠ¶æ€ é€æ˜Žåº¦ä¸º1*/
 }
 .m-music-panel{
     transition: all .8s;
     position: fixed;
-    right: -200px;
+    right: -300px;
     top: 60px;
-    width: 200px;
+    width: 300px;
     height: 400px;
     background: white;
     z-index: 100;
@@ -517,12 +517,12 @@ a:hover {
     width: 240px;
     position: fixed;
     animation: right-side-container-scroll-in;
-    animation-duration: 1s;/*动画持续时间*/
-    -webkit-animation:right-side-container-scroll-in 1s;/*针对webkit内核*/
+    animation-duration: 1s;/*åŠ¨ç”»æŒç»­æ—¶é—´*/
+    -webkit-animation:right-side-container-scroll-in 1s;/*é’ˆå¯¹webkitå†…æ ¸*/
 }
 @keyframes right-side-container-scroll-in{
-    0% {opacity: 0;transform: rotate(5deg);}/*初始状态 透明度为0*/
-    100% {opacity: 1;transform: rotate(0deg);}/*结束状态 透明度为1*/
+    0% {opacity: 0;transform: rotate(5deg);}/*åˆå§‹çŠ¶æ€ é€æ˜Žåº¦ä¸º0*/
+    100% {opacity: 1;transform: rotate(0deg);}/*ç»“æŸçŠ¶æ€ é€æ˜Žåº¦ä¸º1*/
 }
 
 .m-right-search-box .layui-btn{
@@ -544,4 +544,11 @@ a:hover {
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     border-right: none;
+}
+.m-right-user-info{
+    background: #ffffff;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }

@@ -51,4 +51,12 @@ public class BaseController {
     public String currentTheme() {
         return OptionCache.getOption(Constants.WEB_THEME);
     }
+
+    /**
+     * 获取当前启用的主题
+     * @return String
+     */
+    public String currentThemePage() {
+        return "themes/" + OptionCache.getOption(Constants.WEB_THEME);
+    }
 }

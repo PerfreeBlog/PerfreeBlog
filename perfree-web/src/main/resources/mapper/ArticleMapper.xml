@@ -133,4 +133,10 @@
         desc
         LIMIT 0,#{count}
     </select>
+
+    <select id="frontArticlesList" resultMap="LIST_RESULT">
+         select * from p_article
+            where status = 0 order by updateTime
+            desc
+    </select>
 </mapper>

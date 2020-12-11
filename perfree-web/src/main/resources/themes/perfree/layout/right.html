@@ -1,4 +1,31 @@
 <div class="right-side-container">
+
+    <div class="m-right-user-info">
+        <div class="m-user-info">
+            <a><img class="m-user-photo" src="/perfree/static/images/6.gif"></a>
+            <h2 class="m-user-name">Perfree</h2>
+            <span class="m-hitokoto" id="hitokoto">
+                正在加载...
+            </span>
+            <div class="m-user-info-other">
+                #statistics()
+                    <div class="m-info-other">
+                        <span>文章</span>
+                        <span>#(statistics.articleCount)篇</span>
+                    </div>
+                    <div class="m-info-other">
+                        <span>评论</span>
+                        <span>#(statistics.commentCount)条</span>
+                    </div>
+                    <div class="m-info-other">
+                        <span>标签</span>
+                        <span>#(statistics.tagCount)个</span>
+                    </div>
+                #end
+            </div>
+        </div>
+    </div>
+
     <div class="m-right-search-box">
         <input type="text" placeholder="搜索文章" class="m-search-input">
         <button type="button" class="layui-btn">

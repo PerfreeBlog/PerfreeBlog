@@ -110,4 +110,10 @@ public interface ArticleMapper {
      * @return List<Article>
      */
     List<Article> getLatestArticle(int count);
+
+    /**
+     * 获取前台文章列表
+     * @return List<Article>
+     */
+    List<Article> frontArticlesList();
 }
