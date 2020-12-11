@@ -1,19 +1,6 @@
-initContent();
 initMatch();
 initViewer();
 initComment();
-
-/**
- * 内容渲染
- */
-function initContent() {
-    // 内容渲染
-    const articleContent = $("#articleContent").val();
-    if (articleContent === null || articleContent === undefined){
-        return;
-    }
-    document.getElementById('a-article-content-detail').innerHTML = marked(articleContent);
-}
 
 /**
  * 初始化图片查看
