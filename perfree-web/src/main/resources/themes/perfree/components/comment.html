@@ -2,9 +2,10 @@
     #if(article.isComment == 1)
         #user()
             #if(user != null)
-                <form class="layui-form" id="commentForm" method="post">
+                <form class="layui-form" id="commentForm" method="post" action="/comment/submitComment">
                     <input type="hidden" name="articleId" value="#(article.id)" id="articleId">
                     <input type="hidden" name="pid" id="pid">
+                    <input type="hidden" name="anchor" value="#m-comment-edit">
                     <textarea id="comment-edit" placeholder="说点什么吧？"></textarea>
                     <div class="m-comment-edit-info">
                         <span class="m-comment-tip">说点什么吧?</span>

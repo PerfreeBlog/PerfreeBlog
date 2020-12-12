@@ -9,8 +9,9 @@ $(document).ready(function () {
  * 初始化事件监听
  */
 function initEvent() {
+    onWindowScroll()
     // 监听滚动条
-    $("body").scroll(function(e){onWindowScroll(e)});
+    $("body").scroll(function(e){onWindowScroll()});
 
     // 监听返回顶部点击事件
     $('#backtop-box').on('click',function() {
@@ -43,7 +44,7 @@ function initTagsColor() {
  * 滚动条事件,控制是否显示返回顶部
  * @param e
  */
-function onWindowScroll(e){
+function onWindowScroll(){
     let scroll = $("body").scrollTop();
     const rightSideHeight = document.getElementById('m-content-right').offsetHeight + 50;
     if (scroll > 10) {

@@ -60,31 +60,7 @@ function initComment() {
                 notice.error("请填写评论内容");
                 return false;
             }
-            const captcha = $("input[name=captcha]").val();
-            $.ajax({
-                url: "http://127.0.0.1:8080/article/postComment",
-                data: {
-                    articleId: $("#articleId").val(),
-                    pid: $("#pid").val(),
-                    content: content
-                },
-                type: 'POST',
-                success: function (result) {
-                    if (result.state === "ok") {
-                        notice.success("评论成功~");
-                        $.pjax.reload({container:"#content",fragment: '#content'});
-                        $(".captcha").val("");
-                        $(".comment-verify").attr("src",'/commons/captcha?d='+Math.random());
-                    }
-                },
-                error:function () {
-                    notice.error("网络错误，请稍后重试");
-                    $(".captcha").val("");
-                    $(".comment-verify").attr("src",'/commons/captcha?d='+Math.random());
-                    return false;
-                }
-            });
-            return false;
+            return true;
         });
     });
 
