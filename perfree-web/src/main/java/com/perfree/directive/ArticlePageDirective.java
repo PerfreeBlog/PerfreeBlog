@@ -8,13 +8,8 @@ import com.perfree.service.ArticleService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.HandlerMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
-import java.util.Map;
 
 @TemplateDirective("articlePage")
 @Component
@@ -33,17 +28,7 @@ public class ArticlePageDirective extends BaseDirective {
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
         DirectivePage articlePage = new DirectivePage();
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes == null) {
-            return;
-        }
-        HttpServletRequest request = servletRequestAttributes.getRequest();
-        Map urlPathVariables = (Map)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-        if (urlPathVariables != null && urlPathVariables.size() > 0) {
-            articlePage.setPageIndex(Integer.parseInt(urlPathVariables.get("pageIndex").toString()));
-        } else {
-            articlePage.setPageIndex(1);
-        }
+        articlePage.setPageIndex(getModelDataToInt("pageIndex", scope, 1));
         HashMap<String, String> para = exprListToMap();
         String pageSize = para.get("pageSize");
         if (StringUtils.isBlank(pageSize)) {

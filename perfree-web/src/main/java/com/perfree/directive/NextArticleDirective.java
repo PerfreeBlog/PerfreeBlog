@@ -29,16 +29,7 @@ public class NextArticleDirective extends BaseDirective {
 
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        String articleId = "";
-        ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (servletRequestAttributes == null) {
-            return;
-        }
-        HttpServletRequest request = servletRequestAttributes.getRequest();
-        Map urlPathVariables = (Map)request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-        if (urlPathVariables != null && urlPathVariables.size() > 0) {
-            articleId = urlPathVariables.get("articleId").toString();
-        }
+        String articleId = getModelData("articleId", scope).toString();
         if (StringUtils.isBlank(articleId)) {
             return ;
         }

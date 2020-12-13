@@ -14,12 +14,14 @@ public class ArticleController extends BaseController {
     private ArticleService articleService;
 
     @RequestMapping("/articleList/{pageIndex}")
-    public String articleListPage(@PathVariable("pageIndex") int pageIndex) {
+    public String articleListPage(@PathVariable("pageIndex") int pageIndex,Model model) {
+        model.addAttribute("pageIndex", pageIndex);
         return currentThemePage() + "/articleList";
     }
 
     @RequestMapping("/article/{articleId}")
     public String articlePage(@PathVariable("articleId") String articleId, Model model) {
+        model.addAttribute("articleId", articleId);
         model.addAttribute("article", articleService.getById(articleId));
         return currentThemePage() + "/article";
     }
