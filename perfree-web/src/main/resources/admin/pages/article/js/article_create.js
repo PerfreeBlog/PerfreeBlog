@@ -45,6 +45,7 @@ function initEvent() {
  * @param data
  */
 function submitArticle(data) {
+    data.content = markdownEditor.getMarkdown();
     if (categorySelect.getValue().length > 0) {
         data.categoryId = categorySelect.getValue()[0].value;
     }
@@ -84,7 +85,7 @@ function initMarkdownEditor() {
         placeholder: '请输入文章内容',
         width: "100%",
         height: '700',
-        name: "content",
+        name: "mdContent",
         syncScrolling: "single",
         path: "/libs/editormd/lib/", //注意2：你的路径
         saveHTMLToTextarea: false,

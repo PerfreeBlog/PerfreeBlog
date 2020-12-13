@@ -49,7 +49,6 @@ public class ArticleController extends BaseController {
     @PostMapping("/article/add")
     @ResponseBody
     public ResponseBean add(@RequestBody @Valid Article article) {
-        article.setContent(HtmlUtil.escape(article.getContent()));
         article.setUserId(getUser().getId());
         if (articleService.add(article) > 0) {
             return ResponseBean.success("添加成功", article);
@@ -65,7 +64,6 @@ public class ArticleController extends BaseController {
     @PostMapping("/article/update")
     @ResponseBody
     public ResponseBean update(@RequestBody @Valid Article article) {
-        article.setContent(HtmlUtil.escape(article.getContent()));
         if (articleService.update(article) > 0) {
             return ResponseBean.success("更新成功", article);
         }
