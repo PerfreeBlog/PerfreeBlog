@@ -110,7 +110,7 @@
             res.data.forEach(d => {
                 html += '<li class="p-cart-li">\n' +
                     '    <span class="p-card-article-time">' + util.toDateString(d.createTime, "yyyy-MM-dd") + '</span>\n' +
-                    '    <a class="p-card-article-title" href="' + d.id + '">' + d.title + '</a>\n' +
+                    '    <a class="p-card-article-title" href="' + d.url + '" target="_blank">' + d.title + '</a>\n' +
                     '</li>'
             });
 

@@ -66,7 +66,7 @@ function queryTable() {
             {
                 field: 'title',
                 title: '文章标题',
-                templet: '<div><a class="articleHref" href="{{d.id}}">{{d.title}}</a></div>'
+                templet: '<div><a class="articleHref" href="{{d.url}}" target="_blank">{{d.title}}</a></div>'
             },
             {field: 'category', title: '分类', templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
             {

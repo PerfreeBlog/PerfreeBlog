@@ -47,7 +47,7 @@
                         #hotArticle(count=10,type=0)
                             #for(article : articles)
                                 <li class="m-right-article">
-                                    <a href="#(article.id)">#(article.title)</a>
+                                    <a href="#(article.url)">#(article.title)</a>
                                 </li>
                             #else
                                 暂无文章
@@ -60,7 +60,7 @@
                         #latestArticle(count=10)
                             #for(article : articles)
                                 <li class="m-right-article">
-                                    <a href="#(article.id)">#(article.title)</a>
+                                    <a href="#(article.url)">#(article.title)</a>
                                 </li>
                             #else
                                 暂无文章
