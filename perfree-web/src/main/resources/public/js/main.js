@@ -96,3 +96,43 @@ function openSelectImPanel(activeType,id,markdownEditor,cm, icon, cursor, select
         content: '/admin/attach/img'
     });
 }
+
+
+/**
+ * 打开选择视频面板
+ * @param markdownEditor
+ * @param cm
+ * @param icon
+ * @param cursor
+ * @param selection
+ */
+function openSelectVideoPanel(markdownEditor,cm, icon, cursor, selection) {
+    EditorCm = cm;
+    EditorCursor = cursor;
+    EditorIcon = icon;
+    EditorSelection = selection;
+    editor = markdownEditor;
+    layer.open({
+        title: "选择视频",
+        type: 2,
+        offset: '10%',
+        area:  ['700px', '510px'],
+        shadeClose: true,
+        anim: 1,
+        move: true,
+        content: '/admin/attach/video'
+    });
+}
+
+/**
+ * 选择图片
+ * @param path
+ */
+function selectVideo(path) {
+    const str = '<video src="'+path+'" controls="controls" width="100%"></video>\n';
+    EditorCm.replaceSelection(str);
+    if(EditorSelection === "") {
+        EditorCm.setCursor(EditorCursor.line + 1, EditorCursor.ch + str.length);
+    }
+    editor.focus();
+}

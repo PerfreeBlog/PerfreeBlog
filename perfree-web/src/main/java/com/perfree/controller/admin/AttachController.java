@@ -46,6 +46,15 @@ public class AttachController extends BaseController {
     }
 
     /**
+     * 附件-视频选择页
+     * @return String
+     */
+    @RequestMapping("/attach/video")
+    public String attachVideo() {
+        return "admin/pages/attach/attach_video";
+    }
+
+    /**
      * 文件上传
      * @return String
      */

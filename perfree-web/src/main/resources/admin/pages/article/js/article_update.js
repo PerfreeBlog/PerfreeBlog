@@ -97,20 +97,30 @@ function initMarkdownEditor() {
         imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
         toolbarIcons: function () {
             return [
-                "undo", "redo", "|",
+                "undo", "|",
                 "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
                 "h1", "h2", "h3", "h4", "h5", "h6", "|",
-                "list-ul", "list-ol", "hr", "|",
-                "link", "reference-link", "customImg", "code", "preformatted-text", "code-block", "table", "datetime", "|",
+                "list-ul", "list-ol", "hr", "|","customImg","customVideo","|",
+                "link", "reference-link",  "code", "preformatted-text", "code-block", "table", "datetime", "|",
                 "goto-line", "watch", "preview", "clear", "search"
             ]
         },
         toolbarIconsClass: {
-            customImg: "fa-picture-o"
+            customImg: "fa-picture-o",
+            customVideo: "fa-video-camera"
         },
         toolbarHandlers: {
             customImg: function (cm, icon, cursor, selection) {
                 openSelectImPanel(2, null, markdownEditor, cm, icon, cursor, selection);
+            },
+            customVideo: function (cm, icon, cursor, selection) {
+                openSelectVideoPanel(markdownEditor, cm, icon, cursor, selection);
+            }
+        },
+        lang: {
+            toolbar: {
+                customImg: "插入图片",
+                customVideo: "插入视频"
             }
         }
     });
