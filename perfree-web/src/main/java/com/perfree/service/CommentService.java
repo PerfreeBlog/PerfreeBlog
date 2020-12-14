@@ -8,6 +8,8 @@ import com.perfree.mapper.CommentMapper;
 import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.Tag;
+import com.perfree.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,5 +81,12 @@ public class CommentService {
         commentPage.setTotal(pageInfo.getTotal());
         commentPage.setData(pageInfo.getList());
         return commentPage;
+    }
+
+    public int add(Comment comment, User user) {
+        comment.setCreateTime(new Date());
+        comment.setUserId(user.getId());
+        comment.setPid(comment.getPid()==null ? -1: comment.getPid());
+        return commentMapper.add(comment);
     }
 }

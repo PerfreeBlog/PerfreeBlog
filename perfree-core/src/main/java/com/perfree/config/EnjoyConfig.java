@@ -2,6 +2,7 @@ package com.perfree.config;
 
 import com.jfinal.template.Engine;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +31,7 @@ public class EnjoyConfig {
         Engine engine = JFinalViewResolver.engine;
         engine.setDevMode(true);
         engine.setSourceFactory(new TemplateSourceFactory());
+        engine.addSharedMethod(new StringUtils());
         return jfr;
     }
 }
