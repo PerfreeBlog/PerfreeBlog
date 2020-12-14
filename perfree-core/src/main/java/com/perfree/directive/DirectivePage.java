@@ -3,7 +3,7 @@ package com.perfree.directive;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DirectivePage {
+public class DirectivePage<T> {
     //  页码
     private Integer pageIndex;
     // 每页数据量
@@ -16,6 +16,8 @@ public class DirectivePage {
     private String urlPrefix;
 
     private List<Pager> pagers;
+
+    private T form;
 
     public Integer getPageIndex() {
         return pageIndex;
@@ -111,5 +113,13 @@ public class DirectivePage {
             return "disabled";
         }
         return "";
+    }
+
+    public T getForm() {
+        return form;
+    }
+
+    public void setForm(T form) {
+        this.form = form;
     }
 }

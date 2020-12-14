@@ -31,7 +31,7 @@ public class Category implements Serializable {
     private Date updateTime;
     private List<Category> children;
     private Long value;
-
+    private String url;
 
     public Long getValue() {
         return this.id;
@@ -126,6 +126,14 @@ public class Category implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUrl() {
+        return "/category/" + id;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override

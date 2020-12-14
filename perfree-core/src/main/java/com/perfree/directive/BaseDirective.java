@@ -29,6 +29,11 @@ public abstract class BaseDirective extends Directive {
         return null;
     }
 
+    public String getModelDataToStr(String key, Scope scope) {
+        Object modelData = getModelData(key, scope);
+        return modelData == null ? "": modelData.toString();
+    }
+
     public Integer getModelDataToInt(String key, Scope scope, int defaultValue) {
         Object data = this.getModelData(key, scope);
         return CastUtil.objToInteger(data, defaultValue);

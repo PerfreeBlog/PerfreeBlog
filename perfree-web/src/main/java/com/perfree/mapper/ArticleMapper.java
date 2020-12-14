@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -115,7 +116,7 @@ public interface ArticleMapper {
      * 获取前台文章列表
      * @return List<Article>
      */
-    List<Article> frontArticlesList();
+    List<Article> frontArticlesList(HashMap<String, String> param);
 
     /**
      * 获取下一篇文章

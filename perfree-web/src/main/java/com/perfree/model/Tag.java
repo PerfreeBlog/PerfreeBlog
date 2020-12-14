@@ -15,6 +15,7 @@ public class Tag implements Serializable {
     private Date updateTime;
     private User user;
     private Long articleCount;
+    private String url;
 
     public Long getArticleCount() {
         return articleCount;
@@ -70,6 +71,14 @@ public class Tag implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getUrl() {
+        return "/tag/" + id;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override

@@ -131,16 +131,23 @@
     <select id="getLatestArticle" resultMap="LIST_RESULT">
          select t1.*,t2.name categoryName,t3.userName from p_article t1
          left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
-        where t1.status = 0 order by t1.updateTime
+        where t1.status = 0 order by t1.createTime
         desc
         LIMIT 0,#{count}
     </select>
 
     <select id="frontArticlesList" resultMap="LIST_RESULT">
-          select t1.*,t2.name categoryName,t3.userName from p_article t1
-         left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
-            where t1.status = 0 order by t1.updateTime
-            desc
+        select DISTINCT t1.*,t2.name categoryName,t3.userName from p_article t1
+        left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        left join p_article_tag t4 on t1.id = t4.articleId
+        where t1.status = 0
+        <if test="tagId != null and tagId != ''">
+            and t4.tagId = ${tagId}
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            and t1.categoryId = ${categoryId}
+        </if>
+        order by t1.createTime desc
     </select>
 
     <select id="getNextArticle" resultMap="LIST_RESULT">

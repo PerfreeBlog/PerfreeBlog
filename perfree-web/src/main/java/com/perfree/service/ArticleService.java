@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -158,9 +159,9 @@ public class ArticleService {
      * @param directivePage directivePage
      * @return List<Article>
      */
-    public DirectivePage frontArticlesPage(DirectivePage directivePage) {
+    public DirectivePage<HashMap<String, String>> frontArticlesPage(DirectivePage<HashMap<String, String>> directivePage) {
         PageHelper.startPage(directivePage.getPageIndex(), directivePage.getPageSize());
-        List<Article> articles = articleMapper.frontArticlesList();
+        List<Article> articles = articleMapper.frontArticlesList(directivePage.getForm());
         PageInfo<Article> pageInfo = new PageInfo<>(articles);
         directivePage.setTotal(pageInfo.getTotal());
         directivePage.setData(pageInfo.getList());
