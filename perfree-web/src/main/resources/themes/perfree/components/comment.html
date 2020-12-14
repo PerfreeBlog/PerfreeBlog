@@ -73,7 +73,7 @@
             </div>
         #end
 
-        #if(commentPage.pagers.size() > 1)
+        #if(commentPage.pagers)
             <nav class="m-pager-box">
                 <a class="m-pager #(commentPage.preUrlStyle)" href="#(commentPage.preUrl ??)#comments"><</a>
                 #for(page : commentPage.pagers)

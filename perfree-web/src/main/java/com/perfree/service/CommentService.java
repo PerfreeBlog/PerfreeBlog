@@ -24,6 +24,9 @@ public class CommentService {
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
+    private ArticleService articleService;
+
     /**
      * 评论管理列表数据
      * @param pager pager
@@ -45,6 +48,7 @@ public class CommentService {
      * @return int
      */
     public int del(String[] idArr) {
+        articleService.articleCommentSub(idArr);
         return commentMapper.del(idArr);
     }
 
@@ -87,6 +91,7 @@ public class CommentService {
         comment.setCreateTime(new Date());
         comment.setUserId(user.getId());
         comment.setPid(comment.getPid()==null ? -1: comment.getPid());
+        articleService.articleCommentAdd(comment.getArticleId());
         return commentMapper.add(comment);
     }
 }

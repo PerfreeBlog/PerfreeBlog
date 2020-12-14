@@ -185,4 +185,12 @@ public class ArticleService {
     public Article getPreArticle(Long articleId) {
         return articleMapper.getPreArticle(articleId);
     }
+
+    public void articleCommentAdd(Long articleId) {
+        articleMapper.articleCommentAdd(articleId);
+    }
+
+    public void articleCommentSub(String[] idArr) {
+        articleMapper.articleCommentSub(idArr);
+    }
 }

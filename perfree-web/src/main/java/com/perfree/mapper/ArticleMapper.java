@@ -131,4 +131,8 @@ public interface ArticleMapper {
      * @return Article
      */
     Article getPreArticle(@Param("articleId") Long articleId);
+
+    void articleCommentAdd(Long articleId);
+
+    void articleCommentSub(String[] tagIds);
 }

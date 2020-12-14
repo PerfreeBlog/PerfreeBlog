@@ -50,6 +50,18 @@
         updateTime=#{updateTime}
         where id = #{id}
     </update>
+    <update id="articleCommentAdd">
+         update p_article set
+            commentCount = commentCount+1
+            where id = #{articleId}
+    </update>
+    <update id="articleCommentSub">
+        <foreach collection="array" item="id" index="index" open="" close="" separator=";">
+            update p_article
+            set commentCount= commentCount-1
+            where id in (SELECT articleId FROM p_comment where id = #{id})
+        </foreach>
+    </update>
 
     <delete id="del">
         DELETE FROM  p_article  WHERE id IN

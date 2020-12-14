@@ -32,13 +32,15 @@
             #else
                 <div class="m-no-article">这里一篇文章都没有呢</div>
             #end
-            <nav class="m-pager-box">
-                <a class="m-pager #(articlePage.preUrlStyle)" href="#(articlePage.preUrl ??)"><</a>
-                #for(page : articlePage.pagers)
-                    <a class="m-pager #(page.style)" href="#(page.url ??)">#(page.text ??)</a>
-                #end
-                <a class="m-pager #(articlePage.nextUrlStyle)" href="#(articlePage.nextUrl ??)">></a>
-            </nav>
+            #if(articlePage.pagers)
+                <nav class="m-pager-box">
+                    <a class="m-pager #(articlePage.preUrlStyle)" href="#(articlePage.preUrl ??)"><</a>
+                    #for(page : articlePage.pagers)
+                        <a class="m-pager #(page.style)" href="#(page.url ??)">#(page.text ??)</a>
+                    #end
+                    <a class="m-pager #(articlePage.nextUrlStyle)" href="#(articlePage.nextUrl ??)">></a>
+                </nav>
+            #end
         #end
     </div>
 #end

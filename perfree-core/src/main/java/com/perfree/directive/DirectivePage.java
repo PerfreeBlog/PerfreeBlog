@@ -68,6 +68,9 @@ public class DirectivePage<T> {
     }
 
     public void initPagers() {
+        if (total == 0){
+            return;
+        }
         long pageSum = (total - 1) / pageSize + 1;
         pagers = new ArrayList<>();
         for (int i = 1; i <= pageSum; i++) {
@@ -81,6 +84,9 @@ public class DirectivePage<T> {
             }
             pager.setText(String.valueOf(i));
             pager.setUrl(urlPrefix + i);
+            if (pageIndex == i) {
+                pager.setUrl("javascript:;");
+            }
             pagers.add(pager);
         }
     }
