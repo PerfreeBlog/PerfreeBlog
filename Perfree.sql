@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 07/12/2020 16:08:37
+ Date: 14/12/2020 11:27:57
 */
 
 SET NAMES utf8mb4;
@@ -40,13 +40,13 @@ CREATE TABLE `p_article`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_article
 -- ----------------------------
-INSERT INTO `p_article` VALUES (43, '测试文章', '测试文章', '撒大声地', 9, '萨达', '大大', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 1, '123456', 0, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-12-07 01:03:10');
-INSERT INTO `p_article` VALUES (44, '哈哈哈哈哈1113213213123', '232132321321哈哈哈哈哈', '哈哈哈哈哈', 9, '哈哈哈哈哈', '哈哈哈哈哈', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', 0, '1234', 0, 0, 0, 1, 1, '2020-11-19 08:18:25', '2020-12-05 02:25:52');
+INSERT INTO `p_article` VALUES (43, '测试文章', '本文总结了一些简单的Python数学操作,如均值、方差、标准差,函数方程,求导等\n\n## 均值、方差、标准差\n\n```python\n# 数据集\n# 1, 2, 3, 4, 5\nimport numpy as np\n\narr = [1, 2, 3, 4, 5]\n# 均值\narr_mean = np.mean(arr)\nprint(\"arr均值=%f\" % arr_mean)\n# 方差\narr_var = np.var(arr)\nprint(\"arr方差=%f\" % arr_var)\n# 标准差\narr_std = np.std(arr)\nprint(\"arr标准差=%f\" % arr_std)\n```\n\n输出\n\n```bash\narr均值=3.000000\narr方差=2.000000\narr标准差=1.414214\n```\n\n## 简单方程求解\n\n```python\n# 题目\n# 2x-8=0\nfrom sympy import *\nx= symbols(\'x\')\nprint(solve(2 * x - 8,x))\n```\n\n输出\n\n```bash\n[4]\n```\n\n\n\n## 二元一次方程求解\n\n```python\n# 题目\n# 3x−y=3\n# 3x+y=9\nfrom sympy import *\n\nx, y = symbols(\'x,y\')\nprint(solve([3 * x - y - 3, 3 * x + y - 9], [x, y]))\n```\n\n输出\n\n```bash\n{x: 2, y: 3}\n```\n\n## 一元二次方程求解\n\n```python\n# 题目\n# x²+2x+1=0\nfrom sympy import *\n\nx = symbols(\'x\')\nprint(solve(x ** 2 + 2 * x + 1, x))\n```\n\n输出\n\n```bash\n[-1]\n```\n\n\n\n## 求解线性方程组\n\n```python\n# 题目:\n# x₁+3x₂+4x₃=8\n# 2x₁+x₂+6x₃=12\n# 2x₁+3x₂+4x₃=3\nimport numpy as np\nimport scipy as sp\nimport scipy.linalg\n\na = np.array([[1, 2, 2], [3, 1, 6], [4, 5, 4]])\nb = np.array([8, 12, 3])\nprint(sp.linalg.solve(a, b))\n```\n\n输出:\n\n```bash\n[-7.7   2.4   5.45]\n```\n\n## 求解非线性方程组\n\n```python\n# 题目\n# 5x₁+3=0\n# 4x₃²-2sin(x₁x₂)=0\n# x₁x₂-1.5=0\nfrom math import sin, cos\nfrom scipy import optimize\n\ndef f(x):\n    x1, x2, x3 = x.tolist()\n    return [5 * x1 + 3, 4 * x3 * x3 - 2 * sin(x1 * x2), x1 * x2 - 1.5]\n\n\n# f 计算方程组的误差,[1，1，1]是未知数的初始值\nresult = optimize.fsolve(f, [1, 1, 1])\nprint(result)  # x1,x2,x3的值\nprint(f(result))  # 方程组的误差\n```\n\n输出\n\n```bash\n[-0.6        -2.5        -0.70622057]\n[0.0, -9.126033262418787e-14, 5.329070518200751e-15]\n```\n\n## 求导数\n\n```python\n# 题目\n# 已知f(x) = x**2\n# 求f\'(x)\n# 求f\'(1)\nx = Symbol(\'x\')\ny = x ** 2\ndx = diff(y, x)\nprint(\"y =\", dx)\nu = lambdify(x, dx)\nprint(u(1))\n```\n\n输出\n\n```bash\ny = 2*x\n2\n```\n\n```python\n# 题目\n# 已知f(x)=2x**2+3x\n# 求f\'(x)\n# 求f\'(1)\ndef f(x):\n    return 2 * x ** 2 + 3 * x ** 2\n\n\nprint(derivative(f, 1))\n```\n\n输出\n\n```bash\n10.0\n```', '撒大声地', 9, '萨达', '大大', '/attach/20201126/ba8398c615764fe8a57fe7ee1736e474.jpg', 1, '', 0, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-12-11 05:36:34');
+INSERT INTO `p_article` VALUES (45, '测试啊', '测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊', '测试啊', 11, '测试啊', '测试啊', '', 0, '', 0, 0, 0, 1, 1, '2020-12-11 09:19:03', NULL);
 
 -- ----------------------------
 -- Table structure for p_article_tag
@@ -61,6 +61,8 @@ CREATE TABLE `p_article_tag`  (
 -- Records of p_article_tag
 -- ----------------------------
 INSERT INTO `p_article_tag` VALUES (43, 43);
+INSERT INTO `p_article_tag` VALUES (45, 44);
+INSERT INTO `p_article_tag` VALUES (45, 43);
 
 -- ----------------------------
 -- Table structure for p_attach
@@ -105,13 +107,14 @@ CREATE TABLE `p_category`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_category
 -- ----------------------------
 INSERT INTO `p_category` VALUES (7, '232', 2, '2323', 0, '23232', '3232', 0, '2020-11-13 07:31:22', NULL);
-INSERT INTO `p_category` VALUES (9, 'java', -1, '从入门到入土', 0, '33', '333', 0, '2020-11-19 03:39:51', '2020-12-07 03:26:47');
+INSERT INTO `p_category` VALUES (9, 'java', -1, '从入门到入土', 0, '33', '333', 0, '2020-11-19 03:39:51', '2020-12-11 03:08:57');
+INSERT INTO `p_category` VALUES (11, '213232323', -1, '321321', 0, '321321', '321321', 0, '2020-12-11 03:08:53', '2020-12-11 03:09:03');
 
 -- ----------------------------
 -- Table structure for p_comment
@@ -121,9 +124,7 @@ CREATE TABLE `p_comment`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `articleId` int(0) NOT NULL COMMENT '文章id',
   `pid` int(0) NULL DEFAULT -1 COMMENT '父级id',
-  `userName` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论人名称',
   `userId` int(0) NULL DEFAULT NULL COMMENT '用户iD',
-  `email` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
   `content` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',
   `status` int(0) NULL DEFAULT 0 COMMENT '状态:0正常,1:待审核',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
@@ -134,7 +135,6 @@ CREATE TABLE `p_comment`  (
 -- ----------------------------
 -- Records of p_comment
 -- ----------------------------
-INSERT INTO `p_comment` VALUES (1, 43, -1, '11111', 1, '1', '1', 0, '2020-11-19 14:39:31', '2020-11-19 06:44:42');
 
 -- ----------------------------
 -- Table structure for p_menu
@@ -153,7 +153,7 @@ CREATE TABLE `p_menu`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_menu
@@ -172,7 +172,8 @@ INSERT INTO `p_menu` VALUES (11, 3, '菜单管理', '/admin/menu', NULL, 7, 1, 0
 INSERT INTO `p_menu` VALUES (12, 4, '所有主题', '/admin/theme', NULL, 1, 1, 0, 0, '2020-11-19 16:03:08', NULL);
 INSERT INTO `p_menu` VALUES (13, 4, '主题设置', '/admin/theme/setting', NULL, 2, 1, 0, 0, '2020-11-19 16:03:42', NULL);
 INSERT INTO `p_menu` VALUES (15, -1, '网站设置', '/admin/setting', 'fa-sliders', 5, 1, 0, 0, '2020-11-19 16:04:37', NULL);
-INSERT INTO `p_menu` VALUES (32, -1, '1', '1', 'fa-user', NULL, 0, 0, 0, '2020-11-27 08:06:10', '2020-12-07 01:10:05');
+INSERT INTO `p_menu` VALUES (32, -1, '归档', '/page/archive', 'fa-calendar', 1, 0, 0, 0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
+INSERT INTO `p_menu` VALUES (33, -1, '朋友', '/page/link', 'fa-user-o', 2, 0, 1, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
 
 -- ----------------------------
 -- Table structure for p_option
@@ -184,7 +185,7 @@ CREATE TABLE `p_option`  (
   `value` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'value',
   PRIMARY KEY (`id`, `key`) USING BTREE,
   UNIQUE INDEX `key`(`key`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 311 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 312 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_option
@@ -260,12 +261,13 @@ CREATE TABLE `p_tag`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_tag
 -- ----------------------------
 INSERT INTO `p_tag` VALUES (43, 'java12', 1, '2020-11-19 03:39:27', '2020-12-07 01:10:50');
+INSERT INTO `p_tag` VALUES (44, '222332', 1, '2020-12-11 03:15:06', '2020-12-11 03:15:08');
 
 -- ----------------------------
 -- Table structure for p_user
