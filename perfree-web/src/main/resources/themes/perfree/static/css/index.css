@@ -32,14 +32,19 @@
 }
 .m-article-title h2{
     font-weight: 400;
-    color: #575757;
+    color: #4a4a4a;
     font-size: 1.35rem;
     margin-bottom: 0.1em;
+}
+.m-article-content{
+    color: #757575;
 }
 .m-article-info-box{
     width: 100%;
     margin-top: 3px;
     position: relative;
+    color: #737373;
+    font-size: 12px;
 }
 .m-article-info-left{
     display: inline-block;

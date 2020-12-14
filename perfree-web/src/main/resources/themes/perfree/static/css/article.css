@@ -4,10 +4,9 @@
     border-radius: 5px;
 }
 .a-article-title{
-    font-size: 22px;
-    font-weight: 500;
-    margin: 0;
     text-align: center;
+    font-size: 21px;
+    font-weight: 600;
 }
 .a-article-info{
     border-bottom: 1px solid #e0d8d8;
@@ -17,7 +16,7 @@
     text-align: center;
 }
 .a-article-info-btn{
-    font-size: 13px;
+    font-size: 12px;
 }
 .a-article-info-btn:nth-of-type(n+2){
     margin-left: 5px;
