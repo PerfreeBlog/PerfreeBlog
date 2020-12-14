@@ -193,4 +193,23 @@
         ORDER BY
             t1.id desc LIMIT 0,1
     </select>
+
+
+    <resultMap id="ARCHIVE_RESULT" type="com.perfree.model.Archive">
+        <result property="date" column="date"></result>
+        <collection property="articles"
+                    select="getArticleByDate" column="date"></collection>
+    </resultMap>
+    <select id="frontArchivePage" resultMap="ARCHIVE_RESULT">
+        	SELECT DISTINCT t.* from (SELECT DATE_FORMAT(createTime,'%Y年%m月') AS date
+            FROM `p_article` ) t ORDER BY t.date desc
+    </select>
+
+    <select id="getArticleByDate" resultMap="LIST_RESULT">
+        select DISTINCT t1.*,t2.name categoryName,t3.userName from p_article t1
+        left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        left join p_article_tag t4 on t1.id = t4.articleId
+        where t1.status = 0 and DATE_FORMAT(t1.createTime,'%Y年%m月') = #{date}
+        order by t1.createTime desc
+    </select>
 </mapper>

@@ -1,0 +1,76 @@
+.m-archive-statistics-title{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}
+.m-archive-link{
+    text-decoration: none!important;
+    color: inherit!important;
+    display: block;
+    line-height: 35px;
+    font-size: 14px;
+}
+.m-archive-link:hover{
+    text-decoration: none!important;
+    color: #79a7f1!important;
+}
+.m-archive-title{
+    font-weight: 400!important;
+    color: #575757!important;
+    font-size: 1.35rem!important;
+    margin-bottom: 0.1em!important;
+}
+.layui-timeline-title{
+    background: #f2f6fc;
+    font-size: 15px;
+    padding: 8px;
+    border-radius: 5px;
+}
+.layui-timeline-axis {
+    color: #79a7f1;
+    top: 7px;
+    font-size: 12px;
+}
+
+.layui-colla-title {
+    position: relative;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 15px 0 28px;
+    background-color: #f2f6fc;
+    cursor: pointer;
+    font-size: 14px;
+    overflow: hidden;
+    color: #606266;
+}
+.layui-colla-icon {
+    left: 8px;
+    font-size: 12px;
+}
+.layui-badge-rim, .layui-colla-content, .layui-colla-item, .layui-collapse, .layui-elem-field, .layui-form-pane .layui-form-item[pane], .layui-form-pane .layui-form-label, .layui-input, .layui-layedit, .layui-layedit-tool, .layui-quote-nm, .layui-select, .layui-tab-bar, .layui-tab-card, .layui-tab-title, .layui-tab-title .layui-this:after, .layui-textarea {
+    border-color: #f2f6fc;
+}
+.layui-timeline-item {
+    position: relative;
+    padding-bottom: 12px;
+}
+
+.layui-timeline-item:before {
+    top: 18px;
+}
+.layui-timeline-content {
+    padding-left: 20px;
+}
+.layui-collapse{
+    border-radius: 5px;
+    overflow: hidden;
+}
+.m-archive-statistics-box{
+    margin-bottom: 10px;
+    text-align: center;
+}
+.m-statistics{
+    height: 25px;
+    line-height: 25px;
+}

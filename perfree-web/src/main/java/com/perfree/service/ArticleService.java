@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.ArticleMapper;
+import com.perfree.model.Archive;
 import com.perfree.model.Article;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -192,5 +193,19 @@ public class ArticleService {
 
     public void articleCommentSub(String[] idArr) {
         articleMapper.articleCommentSub(idArr);
+    }
+
+    /**
+     * 获取归档列表
+     * @param articlePage articlePage
+     * @return DirectivePage<HashMap<String, String>>
+     */
+    public DirectivePage<HashMap<String, String>> frontArchivePage(DirectivePage<HashMap<String, String>> articlePage) {
+        PageHelper.startPage(articlePage.getPageIndex(), articlePage.getPageSize());
+        List<Archive> archives = articleMapper.frontArchivePage();
+        PageInfo<Archive> pageInfo = new PageInfo<>(archives);
+        articlePage.setTotal(pageInfo.getTotal());
+        articlePage.setData(pageInfo.getList());
+        return articlePage;
     }
 }

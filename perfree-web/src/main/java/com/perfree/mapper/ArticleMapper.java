@@ -1,5 +1,6 @@
 package com.perfree.mapper;
 
+import com.perfree.model.Archive;
 import com.perfree.model.Article;
 import com.perfree.model.ArticleTag;
 import com.perfree.model.Tag;
@@ -7,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -135,4 +137,12 @@ public interface ArticleMapper {
     void articleCommentAdd(Long articleId);
 
     void articleCommentSub(String[] tagIds);
+
+    /**
+     * 获取归档列表
+     * @return List<Archive>
+     */
+    List<Archive> frontArchivePage();
+
+    List<Article> getArticleByDate(String date);
 }

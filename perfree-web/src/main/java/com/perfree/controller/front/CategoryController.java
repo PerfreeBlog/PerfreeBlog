@@ -1,5 +1,6 @@
 package com.perfree.controller.front;
 
+import com.perfree.common.Constants;
 import com.perfree.controller.BaseController;
 import com.perfree.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class CategoryController extends BaseController {
     public String articleListPage(@PathVariable("pageIndex") int pageIndex, @PathVariable("categoryId") String categoryId, Model model) {
         model.addAttribute("pageIndex", pageIndex);
         model.addAttribute("categoryId", categoryId);
+        model.addAttribute("url", Constants.ARTICLE_CATEGORY + categoryId  + "/");
         return currentThemePage() + "/articleList";
     }
 
@@ -25,6 +27,7 @@ public class CategoryController extends BaseController {
     public String articleListPage(@PathVariable("categoryId") String categoryId, Model model) {
         model.addAttribute("pageIndex", 1);
         model.addAttribute("categoryId", categoryId);
+        model.addAttribute("url", Constants.ARTICLE_CATEGORY + categoryId  + "/");
         return currentThemePage() + "/articleList";
     }
 }

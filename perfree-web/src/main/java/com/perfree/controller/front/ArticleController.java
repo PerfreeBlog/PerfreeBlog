@@ -1,5 +1,6 @@
 package com.perfree.controller.front;
 
+import com.perfree.common.Constants;
 import com.perfree.controller.BaseController;
 import com.perfree.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class ArticleController extends BaseController {
 
     @RequestMapping("/articleList/{pageIndex}")
     public String articleListPage(@PathVariable("pageIndex") int pageIndex,Model model) {
+        model.addAttribute("url", Constants.ARTICLE_LIST);
         model.addAttribute("pageIndex", pageIndex);
         return currentThemePage() + "/articleList";
     }
