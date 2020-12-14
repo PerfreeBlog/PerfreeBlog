@@ -11,9 +11,7 @@ public class Comment implements Serializable {
     private Long id;
     private Long pid;
     private Long articleId;
-    private String userName;
     private Long userId;
-    private String email;
     private String content;
 
     private Integer status;
@@ -22,6 +20,8 @@ public class Comment implements Serializable {
 
     private User user;
     private Article article;
+
+    private Comment parent;
     public Article getArticle() {
         return article;
     }
@@ -62,13 +62,6 @@ public class Comment implements Serializable {
         this.articleId = articleId;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public Long getUserId() {
         return userId;
@@ -78,13 +71,6 @@ public class Comment implements Serializable {
         this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getContent() {
         return content;
@@ -118,4 +104,11 @@ public class Comment implements Serializable {
         this.updateTime = updateTime;
     }
 
+    public Comment getParent() {
+        return parent;
+    }
+
+    public void setParent(Comment parent) {
+        this.parent = parent;
+    }
 }

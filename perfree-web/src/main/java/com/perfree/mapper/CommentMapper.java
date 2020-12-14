@@ -5,6 +5,7 @@ import com.perfree.model.Comment;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -41,4 +42,9 @@ public interface CommentMapper {
      * @return List<Comment>
      */
     List<Comment> getCommentListByDashboard();
+
+
+    List<Comment> getCommentByArticleId(HashMap<String, String> form);
+
+    List<Comment> getParentComment(String id);
 }

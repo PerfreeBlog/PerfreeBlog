@@ -1,5 +1,6 @@
 package com.perfree.model;
 
+import com.perfree.common.Constants;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -129,7 +130,7 @@ public class Category implements Serializable {
     }
 
     public String getUrl() {
-        return "/category/" + id;
+        return Constants.ARTICLE_CATEGORY + id;
     }
 
     public void setUrl(String url) {

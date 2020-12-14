@@ -1,5 +1,7 @@
 package com.perfree.model;
 
+import com.perfree.common.Constants;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -74,7 +76,7 @@ public class Tag implements Serializable {
     }
 
     public String getUrl() {
-        return "/tag/" + id;
+        return Constants.ARTICLE_TAG + id;
     }
 
     public void setUrl(String url) {

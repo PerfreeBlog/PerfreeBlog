@@ -6,16 +6,17 @@
         <id property="id" column="id"></id>
         <result property="articleId" column="articleId"></result>
         <result property="pid" column="pid"></result>
-        <result property="userName" column="userName"></result>
         <result property="userId" column="userId"></result>
-        <result property="email" column="email"></result>
         <result property="content" column="content"></result>
         <result property="status" column="status"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
         <association property="user" javaType="com.perfree.model.User">
             <id property="id" column="userId" />
-            <result property="userName" column="userName2"/>
+            <result property="userName" column="userName"></result>
+            <result property="avatar" column="avatar"></result>
+            <result property="sex" column="sex"></result>
+            <result property="email" column="email"></result>
         </association>
         <association property="article" javaType="com.perfree.model.Article">
             <id property="id" column="articleId" />
@@ -38,7 +39,7 @@
     </delete>
 
     <select id="getList" resultMap="LIST_RESULT">
-        select t1.*,t2.userName userName2,t3.title from p_comment t1 left join p_user t2 on t1.userId = t2.id
+        select t1.*,t2.userName,t2.avatar,t2.sex,t2.email,t3.title from p_comment t1 left join p_user t2 on t1.userId = t2.id
         left join p_article t3 on t1.articleId = t3.id
         where 1 = 1
         <if test="content != null and content != ''">
@@ -51,5 +52,36 @@
     </select>
     <select id="getCommentListByDashboard" resultType="com.perfree.model.Comment">
         SELECT * FROM p_comment ORDER BY createTime DESC limit 0,6
+    </select>
+
+
+    <resultMap id="COMMENT_RESULT" type="com.perfree.model.Comment">
+        <id property="id" column="id"></id>
+        <result property="articleId" column="articleId"></result>
+        <result property="pid" column="pid"></result>
+        <result property="userId" column="userId"></result>
+        <result property="content" column="content"></result>
+        <result property="status" column="status"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <association select="getParentComment" property="parent" column="id"></association>
+        <association property="user" javaType="com.perfree.model.User">
+            <id property="id" column="userId" />
+            <result property="userName" column="userName"></result>
+            <result property="avatar" column="avatar"></result>
+            <result property="sex" column="sex"></result>
+            <result property="email" column="email"></result>
+        </association>
+    </resultMap>
+    <select id="getCommentByArticleId" resultMap="COMMENT_RESULT">
+        select t1.*,t2.userName,t2.avatar,t2.sex,t2.email from p_comment t1 left join p_user t2 on t1.userId = t2.id
+        where t1.articleId = #{articleId}
+        order by t1.createTime desc
+    </select>
+
+    <select id="getParentComment" resultMap="COMMENT_RESULT">
+        select t1.*,t2.userName,t2.avatar,t2.sex,t2.email from p_comment t1 left join p_user t2 on t1.userId = t2.id
+        where t1.pid = #{id}
+        order by t1.createTime desc
     </select>
 </mapper>

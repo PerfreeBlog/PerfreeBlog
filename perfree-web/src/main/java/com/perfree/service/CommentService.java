@@ -3,7 +3,9 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.CommentMapper;
+import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -67,5 +70,14 @@ public class CommentService {
      */
     public List<Comment> getCommentListByDashboard() {
         return commentMapper.getCommentListByDashboard();
+    }
+
+    public DirectivePage<HashMap<String, String>> getCommentByArticleId(DirectivePage<HashMap<String, String>> commentPage) {
+        PageHelper.startPage(commentPage.getPageIndex(), commentPage.getPageSize());
+        List<Comment> comments = commentMapper.getCommentByArticleId(commentPage.getForm());
+        PageInfo<Comment> pageInfo = new PageInfo<>(comments);
+        commentPage.setTotal(pageInfo.getTotal());
+        commentPage.setData(pageInfo.getList());
+        return commentPage;
     }
 }

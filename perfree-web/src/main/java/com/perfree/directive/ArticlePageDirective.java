@@ -4,6 +4,7 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
+import com.perfree.common.Constants;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
 import org.apache.commons.lang3.StringUtils;
@@ -30,20 +31,20 @@ public class ArticlePageDirective extends BaseDirective {
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
         HashMap<String, String> query = new HashMap<>();
-        String url = "/articleList";
+        String url = Constants.ARTICLE_LIST;
         DirectivePage<HashMap<String, String>> articlePage = new DirectivePage<>();
         articlePage.setPageIndex(getModelDataToInt("pageIndex", scope, 1));
 
         String tagId = getModelDataToStr("tagId", scope);
         if (StringUtils.isNotBlank(tagId)) {
             query.put("tagId", tagId);
-            url = "/tag/" + tagId;
+            url = Constants.ARTICLE_TAG + tagId + "/";
         }
 
         String categoryId = getModelDataToStr("categoryId", scope);
         if (StringUtils.isNotBlank(categoryId)) {
             query.put("categoryId", categoryId);
-            url = "/category/" + categoryId;
+            url = Constants.ARTICLE_CATEGORY + categoryId  + "/";
         }
 
         articlePage.setForm(query);
@@ -57,6 +58,7 @@ public class ArticlePageDirective extends BaseDirective {
         articlePage = articleService.frontArticlesPage(articlePage);
         articlePage.setUrlPrefix(url);
         articlePage.initPagers();
+
         scope.set("articlePage", articlePage);
         stat.exec(env, scope, writer);
     }

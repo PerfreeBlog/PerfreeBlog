@@ -58,15 +58,7 @@ function queryTable() {
             {type: 'checkbox', fixed: 'left'},
             {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
             {
-                field: 'userName', width: 180, title: '评论人', templet: function (d) {
-                    let html = "<div>";
-                    if (d.user === null || d.user === undefined) {
-                        html += d.userName;
-                    } else {
-                        html += d.user.userName;
-                    }
-                    return html;
-                }
+                field: 'userName', width: 180, title: '评论人', templet: "<div>{{d.user.userName}}</div>"
             },
             {field: 'content', title: '评论内容'},
             {field: 'article', title: '所属文章', templet: "<div><a href='{{d.article.id}}'>{{d.article.title}}</a></div>"},

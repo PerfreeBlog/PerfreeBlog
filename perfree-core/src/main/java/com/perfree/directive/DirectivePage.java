@@ -80,7 +80,7 @@ public class DirectivePage<T> {
                 pager.setStyle("");
             }
             pager.setText(String.valueOf(i));
-            pager.setUrl(urlPrefix + "/" + i);
+            pager.setUrl(urlPrefix + i);
             pagers.add(pager);
         }
     }
@@ -89,7 +89,7 @@ public class DirectivePage<T> {
         if ((pageIndex - 1) <= 0) {
             return "javascript:;";
         }
-        return urlPrefix + "/" + (pageIndex - 1);
+        return urlPrefix + (pageIndex - 1);
     }
 
     public String getNextUrl() {
@@ -97,7 +97,7 @@ public class DirectivePage<T> {
         if ((pageIndex + 1) > pageSum) {
             return "javascript:;";
         }
-        return urlPrefix + "/" + (pageIndex + 1);
+        return urlPrefix + (pageIndex + 1);
     }
 
     public String getPreUrlStyle() {

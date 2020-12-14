@@ -23,3 +23,64 @@
         #end
     #end
 </div>
+#commentPage(pageSize=8)
+    <div class="m-comment-list" id="comments">
+        #for(comment : commentPage.data)
+        <div class="m-comment-detail-box layui-clear">
+            <div class="m-comment-detail-left">
+                <img src="#(comment.user.avatar ?? '/images/user.png')" class="m-comment-detail-img">
+            </div>
+            <div class="m-comment-detail-right">
+                <div class="m-comment-detail-right-top">
+                    <span class="m-comment-detail-user">#(comment.user.userName??)</span>
+                    <span class="m-comment-detail-time time">#date(comment.createTime, "yyyy-MM-dd HH:mm:ss")</span>
+                </div>
+                <div class="m-comment-detail-content">
+                    #(comment.content ??)
+                </div>
+                #if(article.isComment == 1)
+                    #user()
+                        #if(user != null)
+                            <div class="m-comment-right-bottom">
+                                <a class="m-comment-detail-revert-btn" data-id="#(comment.id)" data-author="#(comment.user.userName ??)">回复</a>
+                            </div>
+                        #end
+                    #end
+                #end
+
+                #if(comment.parent)
+                    <div class="m-comment-detail-box parentComment layui-clear">
+                        <div class="m-comment-detail-left">
+                            <img src="#(comment.parent.user.avatar ?? '/images/user.png')" class="m-comment-detail-img">
+                        </div>
+                        <div class="m-comment-detail-right">
+                            <div class="m-comment-detail-right-top">
+                                <span class="m-comment-detail-user">#(comment.parent.user.userName ??)</span>
+                                <span class="m-comment-detail-time time">#date(comment.parent.createTime, "yyyy-MM-dd HH:mm:ss")</span>
+                            </div>
+                            <div class="m-comment-detail-content">
+                                #(comment.parent.content ??)
+                            </div>
+                        </div>
+                    </div>
+                #end
+
+            </div>
+        </div>
+        #else
+            <div class="no-comment">
+                <i class="fa fa-volume-up" aria-hidden="true"></i> 还没有人评论哦~赶快抢占沙发吧~
+            </div>
+        #end
+
+        #if(commentPage.pagers.size() > 1)
+            <nav class="m-pager-box">
+                <a class="m-pager #(commentPage.preUrlStyle)" href="#(commentPage.preUrl ??)#comments"><</a>
+                #for(page : commentPage.pagers)
+                <a class="m-pager #(page.style)" href="#(page.url ??)#comments">#(page.text ??)</a>
+                #end
+                <a class="m-pager #(commentPage.nextUrlStyle)" href="#(commentPage.nextUrl ??)#comments">></a>
+            </nav>
+        #end
+    </div>
+#end
