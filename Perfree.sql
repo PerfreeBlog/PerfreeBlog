@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 14/12/2020 11:27:57
+ Date: 15/12/2020 11:24:43
 */
 
 SET NAMES utf8mb4;
@@ -40,13 +40,11 @@ CREATE TABLE `p_article`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_article
 -- ----------------------------
-INSERT INTO `p_article` VALUES (43, '测试文章', '本文总结了一些简单的Python数学操作,如均值、方差、标准差,函数方程,求导等\n\n## 均值、方差、标准差\n\n```python\n# 数据集\n# 1, 2, 3, 4, 5\nimport numpy as np\n\narr = [1, 2, 3, 4, 5]\n# 均值\narr_mean = np.mean(arr)\nprint(\"arr均值=%f\" % arr_mean)\n# 方差\narr_var = np.var(arr)\nprint(\"arr方差=%f\" % arr_var)\n# 标准差\narr_std = np.std(arr)\nprint(\"arr标准差=%f\" % arr_std)\n```\n\n输出\n\n```bash\narr均值=3.000000\narr方差=2.000000\narr标准差=1.414214\n```\n\n## 简单方程求解\n\n```python\n# 题目\n# 2x-8=0\nfrom sympy import *\nx= symbols(\'x\')\nprint(solve(2 * x - 8,x))\n```\n\n输出\n\n```bash\n[4]\n```\n\n\n\n## 二元一次方程求解\n\n```python\n# 题目\n# 3x−y=3\n# 3x+y=9\nfrom sympy import *\n\nx, y = symbols(\'x,y\')\nprint(solve([3 * x - y - 3, 3 * x + y - 9], [x, y]))\n```\n\n输出\n\n```bash\n{x: 2, y: 3}\n```\n\n## 一元二次方程求解\n\n```python\n# 题目\n# x²+2x+1=0\nfrom sympy import *\n\nx = symbols(\'x\')\nprint(solve(x ** 2 + 2 * x + 1, x))\n```\n\n输出\n\n```bash\n[-1]\n```\n\n\n\n## 求解线性方程组\n\n```python\n# 题目:\n# x₁+3x₂+4x₃=8\n# 2x₁+x₂+6x₃=12\n# 2x₁+3x₂+4x₃=3\nimport numpy as np\nimport scipy as sp\nimport scipy.linalg\n\na = np.array([[1, 2, 2], [3, 1, 6], [4, 5, 4]])\nb = np.array([8, 12, 3])\nprint(sp.linalg.solve(a, b))\n```\n\n输出:\n\n```bash\n[-7.7   2.4   5.45]\n```\n\n## 求解非线性方程组\n\n```python\n# 题目\n# 5x₁+3=0\n# 4x₃²-2sin(x₁x₂)=0\n# x₁x₂-1.5=0\nfrom math import sin, cos\nfrom scipy import optimize\n\ndef f(x):\n    x1, x2, x3 = x.tolist()\n    return [5 * x1 + 3, 4 * x3 * x3 - 2 * sin(x1 * x2), x1 * x2 - 1.5]\n\n\n# f 计算方程组的误差,[1，1，1]是未知数的初始值\nresult = optimize.fsolve(f, [1, 1, 1])\nprint(result)  # x1,x2,x3的值\nprint(f(result))  # 方程组的误差\n```\n\n输出\n\n```bash\n[-0.6        -2.5        -0.70622057]\n[0.0, -9.126033262418787e-14, 5.329070518200751e-15]\n```\n\n## 求导数\n\n```python\n# 题目\n# 已知f(x) = x**2\n# 求f\'(x)\n# 求f\'(1)\nx = Symbol(\'x\')\ny = x ** 2\ndx = diff(y, x)\nprint(\"y =\", dx)\nu = lambdify(x, dx)\nprint(u(1))\n```\n\n输出\n\n```bash\ny = 2*x\n2\n```\n\n```python\n# 题目\n# 已知f(x)=2x**2+3x\n# 求f\'(x)\n# 求f\'(1)\ndef f(x):\n    return 2 * x ** 2 + 3 * x ** 2\n\n\nprint(derivative(f, 1))\n```\n\n输出\n\n```bash\n10.0\n```', '撒大声地', 9, '萨达', '大大', '/attach/20201126/ba8398c615764fe8a57fe7ee1736e474.jpg', 1, '', 0, 0, 0, 1, 1, '2020-11-19 03:42:24', '2020-12-11 05:36:34');
-INSERT INTO `p_article` VALUES (45, '测试啊', '测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊测试啊', '测试啊', 11, '测试啊', '测试啊', '', 0, '', 0, 0, 0, 1, 1, '2020-12-11 09:19:03', NULL);
 
 -- ----------------------------
 -- Table structure for p_article_tag
@@ -84,12 +82,6 @@ CREATE TABLE `p_attach`  (
 -- ----------------------------
 -- Records of p_attach
 -- ----------------------------
-INSERT INTO `p_attach` VALUES (45, '1.jpg', '', '/attach/20201119/2fb8202d31fc48a2854cd683c683a4bb.jpg', '.jpg', '', 'img', '2020-11-19 03:41:56', NULL);
-INSERT INTO `p_attach` VALUES (46, '3.jpg', NULL, '/attach/20201126/ba8398c615764fe8a57fe7ee1736e474.jpg', '.jpg', NULL, 'img', '2020-11-26 06:12:40', NULL);
-INSERT INTO `p_attach` VALUES (47, 'favicon.ico', NULL, '/attach/20201204/f024d21538fa4755ba559958bd1db505.ico', '.ico', NULL, 'other', '2020-12-04 07:03:17', NULL);
-INSERT INTO `p_attach` VALUES (48, 'logo.png', NULL, '/attach/20201204/f3c4d66e5f064761ab0713d8e8b8291c.png', '.png', NULL, 'img', '2020-12-04 07:03:58', NULL);
-INSERT INTO `p_attach` VALUES (49, 'favicon.ico', '123', '/attach/20201204/8eea412d088d4149b6d3d0a0de4aa9ed.ico', '.ico', '2313', 'img', '2020-12-04 07:05:11', '2020-12-05 01:56:26');
-INSERT INTO `p_attach` VALUES (50, 'bg.png', '12321', '/attach/20201205/65e4c633a1f54bf18d929e914fe235c0.png', '.png', '32132', 'img', '2020-12-05 01:57:33', NULL);
 
 -- ----------------------------
 -- Table structure for p_category
@@ -112,9 +104,6 @@ CREATE TABLE `p_category`  (
 -- ----------------------------
 -- Records of p_category
 -- ----------------------------
-INSERT INTO `p_category` VALUES (7, '232', 2, '2323', 0, '23232', '3232', 0, '2020-11-13 07:31:22', NULL);
-INSERT INTO `p_category` VALUES (9, 'java', -1, '从入门到入土', 0, '33', '333', 0, '2020-11-19 03:39:51', '2020-12-11 03:08:57');
-INSERT INTO `p_category` VALUES (11, '213232323', -1, '321321', 0, '321321', '321321', 0, '2020-12-11 03:08:53', '2020-12-11 03:09:03');
 
 -- ----------------------------
 -- Table structure for p_comment
@@ -130,10 +119,28 @@ CREATE TABLE `p_comment`  (
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_comment
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for p_link
+-- ----------------------------
+DROP TABLE IF EXISTS `p_link`;
+CREATE TABLE `p_link`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '网站名',
+  `logo` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '网站logo',
+  `desc` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '网站描述',
+  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of p_link
 -- ----------------------------
 
 -- ----------------------------
@@ -171,6 +178,7 @@ INSERT INTO `p_menu` VALUES (10, 3, '用户管理', '/admin/user', NULL, 6, 1, 0
 INSERT INTO `p_menu` VALUES (11, 3, '菜单管理', '/admin/menu', NULL, 7, 1, 0, 0, '2020-11-19 16:02:30', NULL);
 INSERT INTO `p_menu` VALUES (12, 4, '所有主题', '/admin/theme', NULL, 1, 1, 0, 0, '2020-11-19 16:03:08', NULL);
 INSERT INTO `p_menu` VALUES (13, 4, '主题设置', '/admin/theme/setting', NULL, 2, 1, 0, 0, '2020-11-19 16:03:42', NULL);
+INSERT INTO `p_menu` VALUES (14, 3, '友链管理', '/admin/link', NULL, 8, 1, 0, 0, '2020-12-15 09:07:00', NULL);
 INSERT INTO `p_menu` VALUES (15, -1, '网站设置', '/admin/setting', 'fa-sliders', 5, 1, 0, 0, '2020-11-19 16:04:37', NULL);
 INSERT INTO `p_menu` VALUES (32, -1, '归档', '/page/archive', 'fa-calendar', 1, 0, 0, 0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
 INSERT INTO `p_menu` VALUES (33, -1, '朋友', '/page/link', 'fa-user-o', 2, 0, 1, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
@@ -268,6 +276,8 @@ CREATE TABLE `p_tag`  (
 -- ----------------------------
 INSERT INTO `p_tag` VALUES (43, 'java12', 1, '2020-11-19 03:39:27', '2020-12-07 01:10:50');
 INSERT INTO `p_tag` VALUES (44, '222332', 1, '2020-12-11 03:15:06', '2020-12-11 03:15:08');
+INSERT INTO `p_tag` VALUES (45, '222', 1, '2020-12-15 01:49:05', NULL);
+INSERT INTO `p_tag` VALUES (46, '222', 1, '2020-12-15 01:49:35', NULL);
 
 -- ----------------------------
 -- Table structure for p_user
@@ -293,7 +303,5 @@ CREATE TABLE `p_user`  (
 -- Records of p_user
 -- ----------------------------
 INSERT INTO `p_user` VALUES (1, 'admin', 'admin', 'd8c4bf31094a3fa994e4d249df0b53a3', '53328f9638c84bb4aac05c5dbbd85677', 0, '/avatar/20201207/d5778249c06e4fc58899ca6aef6e3228.jpg', 1, 'perfree@126.com', 1, '2020-08-31 16:43:12', '2020-12-07 01:25:10');
-INSERT INTO `p_user` VALUES (12, 'user', 'user', '768f6f5f6fd13559637365e9a727e916', 'f9d785f9e3a845a9a29507c21e8cce6c', 0, '/avatar/20201205/0b74dd032eb542cc91f7e4dccce89a85.png', 3, '', 0, '2020-11-19 03:40:08', '2020-12-05 02:21:41');
-INSERT INTO `p_user` VALUES (13, '2313', '2312', '9a40013e64454404eb2db4ba0928c0e0', '48d22a963e6c4e7aba30d364e19b833b', 1, '/avatar/20201119/d92cfd18ab3c48a48cfb7e4890997f53.jpg', 1, '', 0, '2020-11-19 05:23:56', '2020-12-07 01:28:12');
 
 SET FOREIGN_KEY_CHECKS = 1;

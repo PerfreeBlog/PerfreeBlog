@@ -55,8 +55,8 @@
     <select id="getCommentCount" resultType="java.lang.Long">
         SELECT count(1) FROM p_comment
     </select>
-    <select id="getCommentListByDashboard" resultType="com.perfree.model.Comment">
-        SELECT * FROM p_comment ORDER BY createTime DESC limit 0,6
+    <select id="getCommentListByDashboard" resultMap="COMMENT_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.sex,t2.email FROM p_comment t1 left join p_user t2 on t1.userId = t2.id ORDER BY createTime DESC limit 0,6
     </select>
 
 
