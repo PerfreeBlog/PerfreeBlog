@@ -572,3 +572,6 @@ a:hover {
     font-size: 18px;
     font-weight: 700;
 }
+.layui-nav .layui-nav-item a:hover{
+    color: #79a7f1;
+}
