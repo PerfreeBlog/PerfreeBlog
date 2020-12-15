@@ -566,3 +566,9 @@ a:hover {
     -ms-user-select: none;
     user-select: none;
 }
+.m-container-title{
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 700;
+}

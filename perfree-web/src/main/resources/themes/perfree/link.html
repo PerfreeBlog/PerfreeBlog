@@ -1,9 +1,27 @@
 #include("/themes/perfree/layout/layout.html")
 #@layout()
+#define css()
+    <link href="/perfree/static/css/link.css" rel="stylesheet">
+#end
 #define content()
     #linkPage(pageSize=10)
-        #for(link: linkPage.data)
-            #(link.name)
-        #end
+        <div class="m-container">
+            <h2 class="m-container-title">友链</h2>
+            <ul class="m-link-container">
+                #for(link: linkPage.data)
+                    <li class="m-link-box">
+                       <section class="m-link">
+                           <section class="m-link-title">
+                               <a href="#(link.address)" target="_blank">#subStr(link.name, 20)</a>
+                           </section>
+                           <section class="m-link-content">
+                               <section class="m-link-desc">#subStr(link.desc,35)</section>
+                               <img src="#(link.logo)">
+                           </section>
+                       </section>
+                    </li>
+                #end
+            </ul>
+        </div>
     #end
 #end
