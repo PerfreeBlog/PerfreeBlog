@@ -25,7 +25,7 @@ function initPage() {
             title: "添加友链",
             type: 2,
             offset: '20%',
-            area: ['400px', '320px'],
+            area: ['400px', '360px'],
             shadeClose: true,
             anim: 1,
             move: false,
@@ -72,6 +72,7 @@ function queryTable() {
             {type: 'checkbox', fixed: 'left'},
             {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
             {field: 'name', title: '网站名'},
+            {field: 'address', title: '网站地址'},
             {field: 'desc', title: '网站描述'},
             {field: 'logo', title: '网站logo', templet: function (d) {
                             return "<img src='"+d.logo+"'>";
@@ -123,7 +124,7 @@ function editData(id) {
         title: "编辑友链",
         type: 2,
         offset: '20%',
-        area: ['400px', '320px'],
+        area: ['400px', '360px'],
         shadeClose: true,
         anim: 1,
         move: false,

@@ -157,4 +157,5 @@ html{
 }
 .layui-textarea{
     padding: 0 4px;
+    line-height: 20px;
 }

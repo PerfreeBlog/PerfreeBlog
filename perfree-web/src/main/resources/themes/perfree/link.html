@@ -1,5 +1,9 @@
 #include("/themes/perfree/layout/layout.html")
 #@layout()
 #define content()
-    123
+    #linkPage(pageSize=10)
+        #for(link: linkPage.data)
+            #(link.name)
+        #end
+    #end
 #end

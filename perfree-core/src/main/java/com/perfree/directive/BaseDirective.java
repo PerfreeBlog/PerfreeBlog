@@ -70,4 +70,16 @@ public abstract class BaseDirective extends Directive {
         }
         return result;
     }
+
+    public int getExprParamToInt(String key, Integer defaultValue) {
+        HashMap<String, String> params = this.exprListToMap();
+        String param = params.get(key);
+        return CastUtil.strToInteger(param,defaultValue);
+    }
+
+    public long getExprParamToLong(String key, Long defaultValue) {
+        HashMap<String, String> params = this.exprListToMap();
+        String param = params.get(key);
+        return CastUtil.strToLong(param,defaultValue);
+    }
 }

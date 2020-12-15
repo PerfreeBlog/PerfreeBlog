@@ -3,13 +3,16 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.LinkMapper;
+import com.perfree.model.Article;
 import com.perfree.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -44,5 +47,14 @@ public class LinkService {
 
     public int del(String[] idArr) {
         return linkMapper.del(idArr);
+    }
+
+    public DirectivePage<HashMap<String, String>> frontList(DirectivePage<HashMap<String, String>> linkPage) {
+        PageHelper.startPage(linkPage.getPageIndex(), linkPage.getPageSize());
+        List<Link> links = linkMapper.frontList(linkPage.getForm());
+        PageInfo<Link> pageInfo = new PageInfo<>(links);
+        linkPage.setTotal(pageInfo.getTotal());
+        linkPage.setData(pageInfo.getList());
+        return linkPage;
     }
 }

@@ -22,4 +22,18 @@ public class CastUtil {
         Integer result = (Integer) obj;
         return result == null ? defaultValue : result;
     }
+
+    public static Integer strToInteger(String str, int defaultValue) {
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
+        return Integer.parseInt(str);
+    }
+
+    public static Long strToLong(String str, long defaultValue) {
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
+        return Long.parseLong(str);
+    }
 }

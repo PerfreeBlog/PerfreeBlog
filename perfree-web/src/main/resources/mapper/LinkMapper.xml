@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.LinkMapper" >
     <insert id="add">
-         insert into p_link ( `name`, logo,`desc`, createTime) VALUES (#{name},#{logo},#{desc}, #{createTime})
+         insert into p_link ( `name`, logo,`desc`,address, createTime) VALUES (#{name},#{logo},#{desc},#{address}, #{createTime})
     </insert>
     <update id="update">
-        update p_link set `name` = #{name},logo = #{logo},`desc`=#{desc},updateTime=#{updateTime} where id = #{id}
+        update p_link set `name` = #{name},logo = #{logo},address = #{address},`desc`=#{desc},updateTime=#{updateTime} where id = #{id}
     </update>
     <delete id="del">
         DELETE FROM  p_link  WHERE id IN
@@ -21,5 +21,8 @@
     </select>
     <select id="getById" resultType="com.perfree.model.Link">
         select * from p_link where id=#{id}
+    </select>
+    <select id="frontList" resultType="com.perfree.model.Link">
+        select * from p_link
     </select>
 </mapper>

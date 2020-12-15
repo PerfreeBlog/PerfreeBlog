@@ -9,6 +9,7 @@ public class Link implements Serializable {
     private String name;
     private String logo;
     private String desc;
+    private String address;
     private Date createTime;
     private Date updateTime;
 
@@ -58,5 +59,13 @@ public class Link implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

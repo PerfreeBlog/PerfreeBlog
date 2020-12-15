@@ -31,12 +31,7 @@ public class ArchivePageDirective extends BaseDirective{
         DirectivePage<HashMap<String, String>> articlePage = new DirectivePage<>();
         articlePage.setPageIndex(getModelDataToInt("pageIndex", scope, 1));
         HashMap<String, String> para = exprListToMap();
-        String pageSize = para.get("pageSize");
-        if (StringUtils.isBlank(pageSize)) {
-            articlePage.setPageSize(10);
-        } else {
-            articlePage.setPageSize(Integer.parseInt(para.get("pageSize")));
-        }
+        articlePage.setPageSize(getExprParamToInt("pageSize", 10));
         articlePage = articleService.frontArchivePage(articlePage);
         articlePage.setUrlPrefix(url);
         articlePage.initPagers();

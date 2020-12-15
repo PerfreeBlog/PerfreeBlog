@@ -5,7 +5,6 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.common.Constants;
 import com.perfree.service.CommentService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,13 +25,7 @@ public class CommentPageDirective extends BaseDirective{
         Integer commentIndex = getModelDataToInt("commentIndex", scope, 1);
         DirectivePage<HashMap<String, String>> commentPage = new DirectivePage<>();
         commentPage.setPageIndex(commentIndex);
-        HashMap<String, String> para = exprListToMap();
-        String pageSize = para.get("pageSize");
-        if (StringUtils.isBlank(pageSize)) {
-            commentPage.setPageSize(10);
-        } else {
-            commentPage.setPageSize(Integer.parseInt(para.get("pageSize")));
-        }
+        commentPage.setPageSize(getExprParamToInt("pageSize", 10));
         HashMap<String, String> query = new HashMap<>();
         String articleId = getModelDataToStr("articleId", scope);
         query.put("articleId", articleId);

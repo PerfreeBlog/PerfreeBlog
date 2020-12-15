@@ -1,9 +1,11 @@
 package com.perfree.mapper;
 
+import com.perfree.model.Article;
 import com.perfree.model.Link;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -19,5 +21,7 @@ public interface LinkMapper {
     int update(Link link);
 
     int del(String[] idArr);
+
+    List<Link> frontList(HashMap<String, String> form);
 
 }
