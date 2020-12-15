@@ -4,7 +4,7 @@
     <link href="/perfree/static/css/link.css" rel="stylesheet">
 #end
 #define content()
-    #linkPage(pageSize=10)
+    #linkPage(pageSize=21)
         <div class="m-container">
             <h2 class="m-container-title">友链</h2>
             <ul class="m-link-container">
@@ -23,5 +23,15 @@
                 #end
             </ul>
         </div>
+
+        #if(linkPage.pagers)
+        <nav class="m-pager-box">
+            <a class="m-pager #(linkPage.preUrlStyle)" href="#(linkPage.preUrl ??)"><</a>
+            #for(page : linkPage.pagers)
+            <a class="m-pager #(page.style)" href="#(page.url ??)">#(page.text ??)</a>
+            #end
+            <a class="m-pager #(linkPage.nextUrlStyle)" href="#(linkPage.nextUrl ??)">></a>
+        </nav>
+        #end
     #end
 #end
