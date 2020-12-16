@@ -4,7 +4,7 @@ html,body{
     margin: 0;
     color: rgba(0, 0, 0, 0.65);
     font-size: 14px;
-    font-family: "Source Sans Pro","Hiragino Sans GB","Microsoft Yahei",SimSun,Helvetica,Arial,Sans-serif,monospace;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
     font-variant: tabular-nums;
     line-height: 1.5715;
     background-color: #fff;
@@ -574,4 +574,18 @@ a:hover {
 }
 .layui-nav .layui-nav-item a:hover{
     color: #79a7f1;
+}
+.layui-nav-child {
+    -webkit-box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    border: none;
+}
+.m-footer-left{
+    float: left;
+}
+.m-footer-right{
+    float: right;
+}
+.m-footer-right a,.m-footer-left a{
+    color: inherit;
 }

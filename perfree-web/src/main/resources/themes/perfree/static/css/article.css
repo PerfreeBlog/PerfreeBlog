@@ -494,6 +494,8 @@ pre{
 }
 .m-comment-detail-box{
     margin-top: 15px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 8px;
 }
 .m-comment-detail-left{
     height: 35px;
@@ -571,10 +573,10 @@ pre{
     color: inherit;
 }
 .parentComment{
-    background: #fff;
+    background: #fbfbfb;
     padding: 8px;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid #d1d1d1;
     position: relative;
     margin-top: 10px;
 }

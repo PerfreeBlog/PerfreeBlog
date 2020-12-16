@@ -30,7 +30,6 @@ public class User implements Serializable {
     private Date updateTime;
 
     private Role role;
-
     @Email(message = "请正确填写邮箱")
     private String email;
     private Integer sex = -1;
@@ -139,20 +138,10 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", account='" + account + '\'' +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", salt='" + salt + '\'' +
-                ", status=" + status +
-                ", avatar='" + avatar + '\'' +
-                ", roleId=" + roleId +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", role=" + role +
-                '}';
+    public boolean hasAdmin() {
+        if (role == null) {
+            return false;
+        }
+        return role.getCode().equals("admin") || role.getCode().equals("superAdmin");
     }
 }

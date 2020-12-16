@@ -43,7 +43,7 @@
     font-size: 12px;
 }
 .layui-badge-rim, .layui-colla-content, .layui-colla-item, .layui-collapse, .layui-elem-field, .layui-form-pane .layui-form-item[pane], .layui-form-pane .layui-form-label, .layui-input, .layui-layedit, .layui-layedit-tool, .layui-quote-nm, .layui-select, .layui-tab-bar, .layui-tab-card, .layui-tab-title, .layui-tab-title .layui-this:after, .layui-textarea {
-    border-color: #f2f6fc;
+    border-color: #dadfe6;
 }
 .layui-timeline-item {
     position: relative;
