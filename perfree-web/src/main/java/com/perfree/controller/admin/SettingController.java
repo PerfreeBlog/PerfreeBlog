@@ -23,7 +23,7 @@ public class SettingController extends BaseController {
 
     @GetMapping("/setting")
     public String index() {
-        return "admin/pages/settings/setting";
+        return view("static/admin/pages/settings/setting.html");
     }
 
 

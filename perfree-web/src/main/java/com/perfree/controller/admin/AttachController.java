@@ -42,7 +42,7 @@ public class AttachController extends BaseController {
      */
     @RequestMapping("/attach/img")
     public String attachImg() {
-        return "admin/pages/attach/attach_img";
+        return view("static/admin/pages/attach/attach_img.html");
     }
 
     /**
@@ -51,7 +51,7 @@ public class AttachController extends BaseController {
      */
     @RequestMapping("/attach/video")
     public String attachVideo() {
-        return "admin/pages/attach/attach_video";
+        return view("static/admin/pages/attach/attach_video.html");
     }
 
     /**
@@ -113,7 +113,7 @@ public class AttachController extends BaseController {
      */
     @RequestMapping("/attach")
     public String index() {
-        return "admin/pages/attach/attach_list";
+        return view("static/admin/pages/attach/attach_list.html");
     }
 
     /**
@@ -122,7 +122,7 @@ public class AttachController extends BaseController {
      */
     @RequestMapping("/attach/uploadPage")
     public String uploadPage() {
-        return "admin/pages/attach/attach_upload";
+        return view("static/admin/pages/attach/attach_upload.html");
     }
 
     /**
@@ -133,7 +133,7 @@ public class AttachController extends BaseController {
     public String editPage(@PathVariable("id") String id, Model model) {
         Attach attach = attachService.getById(id);
         model.addAttribute("attach", attach);
-        return "admin/pages/attach/attach_edit";
+        return view("static/admin/pages/attach/attach_edit.html");
     }
 
     /**

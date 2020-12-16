@@ -10,8 +10,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
@@ -32,11 +34,20 @@ public class PostAppRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
+        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
+        dataSourceBuilder.url("jdbc:mysql://127.0.0.1:3306/perfree?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
+        dataSourceBuilder.username("root");
+        dataSourceBuilder.password("215607..");
+        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
+        DataSource dataSource = dataSourceBuilder.build();
+        DynamicDataSource.setDataSource(dataSource);
         // Load options and put into memory
-        List<Option> options = optionMapper.getStartOption();
-        options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
-        // Load Template Directive
-        PostAppRunner.loadDirective();
+        if (DynamicDataSource.getDataSource() != null) {
+            List<Option> options = optionMapper.getStartOption();
+            options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
+            // Load Template Directive
+            PostAppRunner.loadDirective();
+        }
     }
 
     /**

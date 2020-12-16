@@ -36,7 +36,7 @@ public class SystemController extends BaseController{
         List<Menu> menus = getMenuByUserIdAndType();
         model.addAttribute("menus", menus);
         model.addAttribute("user", getUser());
-        return "admin/pages/index";
+        return view("static/admin/pages/index.html");
     }
 
     /**
@@ -45,7 +45,7 @@ public class SystemController extends BaseController{
      */
     @RequestMapping("/")
     public String index() {
-        return "themes/" + currentTheme() + "/index";
+        return view(currentThemePage() + "/index.html");
     }
 
     /**
@@ -54,7 +54,7 @@ public class SystemController extends BaseController{
      */
     @RequestMapping("/login")
     public String login() {
-        return "public/login";
+        return view("static/public/login.html");
     }
 
     /**
@@ -91,7 +91,7 @@ public class SystemController extends BaseController{
     public String logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "themes/" + currentTheme() + "/index";
+        return view(currentThemePage() + "/index.html");
     }
 
     public static void main(String args[]){

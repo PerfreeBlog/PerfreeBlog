@@ -20,7 +20,7 @@ public class CategoryController extends BaseController {
         model.addAttribute("pageIndex", pageIndex);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("url", Constants.ARTICLE_CATEGORY + categoryId  + "/");
-        return currentThemePage() + "/articleList";
+        return view(currentThemePage() + "/articleList.html");
     }
 
     @RequestMapping("/category/{categoryId}")
@@ -28,6 +28,6 @@ public class CategoryController extends BaseController {
         model.addAttribute("pageIndex", 1);
         model.addAttribute("categoryId", categoryId);
         model.addAttribute("url", Constants.ARTICLE_CATEGORY + categoryId  + "/");
-        return currentThemePage() + "/articleList";
+        return view(currentThemePage() + "/articleList.html");
     }
 }

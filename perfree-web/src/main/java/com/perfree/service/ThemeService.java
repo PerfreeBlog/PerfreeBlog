@@ -22,7 +22,7 @@ public class ThemeService {
     // 生产主题路径
     private final static String PROD_THEMES_PATH = "resources/themes";
     // 开发主题路径
-    private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/themes";
+    private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";
     private final static String SEPARATOR = "/";
 
     @Autowired
@@ -47,7 +47,7 @@ public class ThemeService {
                 theme.setAuthorWebSite(props.get("author.web.site").toString());
                 theme.setDescription(props.get("description").toString());
                 theme.setName(props.get("name").toString());
-                theme.setScreenshots(SEPARATOR + settingFile.getParentFile().getName() +
+                theme.setScreenshots("/static/themes" + SEPARATOR + settingFile.getParentFile().getName() +
                         SEPARATOR + props.get("screenshots").toString());
                 theme.setPath(settingFile.getParentFile().getName());
                 if (settingFile.getParentFile().getName().equals(OptionCache.getOption(Constants.WEB_THEME))){

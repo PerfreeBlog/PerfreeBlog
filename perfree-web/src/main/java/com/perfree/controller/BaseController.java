@@ -57,6 +57,15 @@ public class BaseController {
      * @return String
      */
     public String currentThemePage() {
-        return "themes/" + OptionCache.getOption(Constants.WEB_THEME);
+        return "static/themes/" + OptionCache.getOption(Constants.WEB_THEME);
+    }
+
+    /**
+     * 多出这个方法是因为直接返回的话,idea报黄线且不能自动链接至该文件(该死的强迫症)
+     * @param viewPath viewPath
+     * @return String
+     */
+    public String view(String viewPath) {
+        return viewPath;
     }
 }

@@ -27,7 +27,7 @@ public class CategoryController extends BaseController  {
      */
     @RequestMapping("/category")
     public String index() {
-        return "admin/pages/category/category_list";
+        return view("static/admin/pages/category/category_list.html");
     }
 
     /**
@@ -37,7 +37,7 @@ public class CategoryController extends BaseController  {
     @RequestMapping("/category/addPage/{pid}")
     public String addPage(@PathVariable("pid") String pid, Model model) {
         model.addAttribute("pid", pid);
-        return "admin/pages/category/category_add";
+        return view("static/admin/pages/category/category_add.html");
     }
 
     /**
@@ -82,7 +82,7 @@ public class CategoryController extends BaseController  {
     @RequestMapping("/category/editPage/{id}")
     public String editPage(@PathVariable("id") String id, Model model) {
         model.addAttribute("category", categoryService.getById(id));
-        return "admin/pages/category/category_edit";
+        return view("static/admin/pages/category/category_edit.html");
     }
 
     /**

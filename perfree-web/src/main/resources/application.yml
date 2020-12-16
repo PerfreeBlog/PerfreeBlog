@@ -2,31 +2,17 @@ server:
   port: 8081
 
 # spring配置
-web.upload-path: D:/perfree
+web.upload-path: D:/perfree/
 spring:
-  resources:
-    static-locations: classpath:/public/,classpath:/admin/,classpath:/themes/,file:./resources/,file:${web.upload-path}
   devtools:
     restart:
       enabled: false
-#  thymeleaf:
-#    cache: false
-#    #prefix: file:./resources/
-#    prefix: classpath:/
-#    suffix: .html
-#    encoding: UTF-8
-#  freemarker:
-#    # template-loader-path: file:./resources/
-#    template-loader-path: classpath:/,file:./resources/
-#    charset: UTF-8
-#    suffix: .ftl
-#    content-type: text/html; charset=utf-8
   servlet:
     multipart:
       max-file-size: -1
       max-request-size: -1
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/perfree?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://196.196.16.2:3306/perfree?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 215607..
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -49,6 +35,9 @@ spring:
             delete-allow: true
             drop-table-allow: true
             multi-statement-allow: true
+  mvc:
+    view:
+      prefix: /
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.perfree.model

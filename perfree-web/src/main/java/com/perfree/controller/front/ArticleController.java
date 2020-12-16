@@ -27,7 +27,7 @@ public class ArticleController extends BaseController {
     public String articleListPage(@PathVariable("pageIndex") int pageIndex,Model model) {
         model.addAttribute("url", Constants.ARTICLE_LIST);
         model.addAttribute("pageIndex", pageIndex);
-        return currentThemePage() + "/articleList";
+        return view(currentThemePage() + "/articleList.html");
     }
 
     @RequestMapping("/article/{articleId}")
@@ -40,7 +40,7 @@ public class ArticleController extends BaseController {
         cacheCount(articleId, IpUtil.getIpAddr(request));
         model.addAttribute("articleId", articleId);
         model.addAttribute("article", articleService.getById(articleId));
-        return currentThemePage() + "/article";
+        return view(currentThemePage() + "/article.html");
     }
 
 

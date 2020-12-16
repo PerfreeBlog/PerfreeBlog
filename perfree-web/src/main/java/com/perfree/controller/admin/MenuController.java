@@ -26,7 +26,7 @@ public class MenuController extends BaseController {
      */
     @RequestMapping("/menu")
     public String index() {
-        return "admin/pages/menu/menu_list";
+        return view("static/admin/pages/menu/menu_list.html");
     }
 
     /**
@@ -46,7 +46,7 @@ public class MenuController extends BaseController {
     @RequestMapping("/menu/addPage/{pid}")
     public String addPage(@PathVariable("pid") String pid, Model model) {
         model.addAttribute("pid", pid);
-        return "admin/pages/menu/menu_add";
+        return view("static/admin/pages/menu/menu_add.html");
     }
 
     /**
@@ -56,7 +56,7 @@ public class MenuController extends BaseController {
     @RequestMapping("/menu/editPage/{id}")
     public String editPage(@PathVariable("id") String id, Model model) {
         model.addAttribute("menu", menuService.getById(id));
-        return "admin/pages/menu/menu_edit";
+        return view("static/admin/pages/menu/menu_edit.html");
     }
 
     /**

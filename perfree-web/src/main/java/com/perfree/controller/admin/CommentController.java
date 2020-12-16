@@ -28,7 +28,7 @@ public class CommentController extends BaseController {
      */
     @RequestMapping("/comment")
     public String index() {
-        return "admin/pages/comment/comment_list";
+        return view("static/admin/pages/comment/comment_list.html");
     }
 
     /**

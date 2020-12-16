@@ -18,6 +18,10 @@ public class Attach implements Serializable {
     private Date createTime;
     private Date updateTime;
 
+    public String getUrl() {
+        return "/static" + path;
+    }
+
     public Long getId() {
         return id;
     }

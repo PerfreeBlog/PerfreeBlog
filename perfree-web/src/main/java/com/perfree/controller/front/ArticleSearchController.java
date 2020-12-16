@@ -14,7 +14,7 @@ public class ArticleSearchController extends BaseController {
         model.addAttribute("url", Constants.ARTICLE_SEARCH);
         model.addAttribute("title", title);
         model.addAttribute("pageIndex", 1);
-        return currentThemePage() + "/search";
+        return view(currentThemePage() + "/search.html");
     }
 
     @RequestMapping("/article/search/{pageIndex}")
@@ -22,6 +22,6 @@ public class ArticleSearchController extends BaseController {
         model.addAttribute("url", Constants.ARTICLE_SEARCH);
         model.addAttribute("title", title);
         model.addAttribute("pageIndex", pageIndex);
-        return currentThemePage() + "/search";
+        return view(currentThemePage() + "/search.html");
     }
 }

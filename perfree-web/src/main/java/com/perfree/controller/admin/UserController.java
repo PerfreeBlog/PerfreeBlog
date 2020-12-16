@@ -44,7 +44,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/user")
     public String index() {
-        return "admin/pages/user/user_list";
+        return view("static/admin/pages/user/user_list.html");
     }
 
     /**
@@ -53,7 +53,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/user/addPage")
     public String addPage() {
-        return "admin/pages/user/user_add";
+        return view("static/admin/pages/user/user_add.html");
     }
 
     /**
@@ -63,7 +63,7 @@ public class UserController extends BaseController {
     @RequestMapping("/user/userCenter")
     public String userCenter(Model model) {
         model.addAttribute("userForm", userService.getById(getUser().getId().toString()));
-        return "admin/pages/user/user_center";
+        return view("static/admin/pages/user/user_center.html");
     }
 
     /**
@@ -77,7 +77,7 @@ public class UserController extends BaseController {
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
             String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "avatar");
-            return ResponseBean.success("上传成功", path);
+            return ResponseBean.success("上传成功", "/static" + path);
         }catch (Exception e){
             logger.error("上传失败: {}", e.getMessage());
             return ResponseBean.fail("上传失败", e.getMessage());
@@ -92,7 +92,7 @@ public class UserController extends BaseController {
     public String editPage(@PathVariable("id") String id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("userForm", user);
-        return "admin/pages/user/user_edit";
+        return view("static/admin/pages/user/user_edit.html");
     }
 
 

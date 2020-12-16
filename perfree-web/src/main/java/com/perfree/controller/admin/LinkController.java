@@ -27,7 +27,7 @@ public class LinkController extends BaseController {
      */
     @RequestMapping("/link")
     public String index() {
-        return "admin/pages/link/link_list";
+        return view("static/admin/pages/link/link_list.html");
     }
 
     /**
@@ -46,7 +46,7 @@ public class LinkController extends BaseController {
      */
     @RequestMapping("/link/addPage")
     public String addPage() {
-        return "admin/pages/link/link_add";
+        return view("static/admin/pages/link/link_add.html");
     }
 
     /**
@@ -71,7 +71,7 @@ public class LinkController extends BaseController {
     public String editPage(@PathVariable("id") String id, Model model) {
         Link link = linkService.getById(id);
         model.addAttribute("link", link);
-        return "admin/pages/link/link_edit";
+        return view("static/admin/pages/link/link_edit.html");
     }
 
     /**

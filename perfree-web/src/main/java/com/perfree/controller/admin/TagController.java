@@ -29,7 +29,7 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag")
     public String index() {
-        return "admin/pages/tag/tag_list";
+        return view("static/admin/pages/tag/tag_list.html");
     }
 
     /**
@@ -38,7 +38,7 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag/addPage")
     public String addPage() {
-        return "admin/pages/tag/tag_add";
+        return view("static/admin/pages/tag/tag_add.html");
     }
 
     /**
@@ -49,7 +49,7 @@ public class TagController extends BaseController {
     public String editPage(@PathVariable("id") String id, Model model) {
         Tag tag = tagService.getById(id);
         model.addAttribute("tag", tag);
-        return "admin/pages/tag/tag_edit";
+        return view("static/admin/pages/tag/tag_edit.html");
     }
 
 

@@ -35,7 +35,7 @@ public class DashboardController extends BaseController {
         model.addAttribute("commentCount", commentService.getCommentCount());
         model.addAttribute("tagCount", tagService.getTagCount());
         model.addAttribute("userCount", userService.getUserCount());
-        return "admin/pages/dashboard/dashboard";
+        return view("static/admin/pages/dashboard/dashboard.html");
     }
 
     /**

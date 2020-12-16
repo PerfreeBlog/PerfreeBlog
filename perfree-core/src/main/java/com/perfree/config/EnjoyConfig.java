@@ -24,7 +24,6 @@ public class EnjoyConfig {
     @Bean(name = "jfinalViewResolver")
     public JFinalViewResolver getJFinalViewResolver() {
         jfr = new JFinalViewResolver();
-        jfr.setSuffix(".html");
         jfr.setContentType("text/html;charset=UTF-8");
         jfr.setOrder(0);
         jfr.setSessionInView(true);

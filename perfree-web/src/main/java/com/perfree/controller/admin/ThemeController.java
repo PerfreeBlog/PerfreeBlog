@@ -28,13 +28,13 @@ public class ThemeController extends BaseController {
     // 生产主题路径
     private final static String PROD_THEMES_PATH = "resources/themes";
     // 开发主题路径
-    private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/themes";
+    private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";
 
     @GetMapping("/theme")
     public String themePage(Model model){
         List<Theme> themeList = themeService.getAllTheme();
         model.addAttribute("themeList",themeList);
-        return "admin/pages/theme/theme";
+        return view("static/admin/pages/theme/theme.html");
     }
 
     @PostMapping("/theme/switch")
@@ -52,9 +52,9 @@ public class ThemeController extends BaseController {
         File file = new File(PROD_THEMES_PATH + "/" + currentTheme() + "/setting.html");
         File devFile = new File(DEV_THEMES_PATH + "/" + currentTheme() + "/setting.html");
         if (file.exists() || devFile.exists()) {
-            return "themes/" + currentTheme() + "/setting";
+            return view("static/themes/" + currentTheme() + "/setting.html");
         } else {
-            return "admin/pages/theme/setting";
+            return view("static/admin/pages/theme/setting.html");
         }
 
     }

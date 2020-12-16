@@ -1,6 +1,5 @@
 package com.perfree.controller.admin;
 
-import cn.hutool.http.HtmlUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
@@ -27,19 +26,19 @@ public class ArticleController extends BaseController {
 
     @RequestMapping("/article")
     public String index() {
-        return "admin/pages/article/article_list";
+        return view("static/admin/pages/article/article_list.html");
     }
 
     @RequestMapping("/article/addPage")
     public String addPage() {
-        return "admin/pages/article/article_create";
+        return view("static/admin/pages/article/article_create.html");
     }
 
     @RequestMapping("/article/updatePage/{id}")
     public String updatePage(@PathVariable("id") String id, Model model) {
         Article article = articleService.getById(id);
         model.addAttribute("article", article);
-        return "admin/pages/article/article_update";
+        return view("/static/admin/pages/article/article_update.html");
     }
 
     /**

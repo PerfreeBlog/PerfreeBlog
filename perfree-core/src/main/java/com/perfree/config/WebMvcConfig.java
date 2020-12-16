@@ -1,5 +1,6 @@
 package com.perfree.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -13,11 +14,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    @Value("${web.upload-path}")
+    private String uploadPath;
     public static ResourceHandlerRegistry registry;
 
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations(
+                        "classpath:/static/",
+                        "file:./resources/",
+                        "file:" + uploadPath
+                );
         WebMvcConfig.registry = registry;
     }
 
@@ -26,6 +35,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new HtmlInterceptor())
                 .addPathPatterns("/**");
+        registry.addInterceptor(new DataSourceInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/install",
+                        "/static/**"
+                );
     }
 
 
