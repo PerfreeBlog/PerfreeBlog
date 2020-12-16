@@ -37,9 +37,9 @@ public class ArticleController extends BaseController {
             articleId = split[0];
             model.addAttribute("commentIndex", split[1]);
         }
+        cacheCount(articleId, IpUtil.getIpAddr(request));
         model.addAttribute("articleId", articleId);
         model.addAttribute("article", articleService.getById(articleId));
-        cacheCount(articleId, IpUtil.getIpAddr(request));
         return currentThemePage() + "/article";
     }
 
