@@ -588,7 +588,7 @@ pre{
     left: 30px;
     width: 8px;
     height: 5px;
-    background: url(/perfree/static/images/arrow.png) 0 -49px no-repeat;
+    background: url(/static/themes/perfree/static/images/arrow.png) 0 -49px no-repeat;
 }
 .no-comment{
     text-align: center;

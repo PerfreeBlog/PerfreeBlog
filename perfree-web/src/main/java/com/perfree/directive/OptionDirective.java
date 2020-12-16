@@ -31,16 +31,18 @@ public class OptionDirective extends BaseDirective {
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
         Option optionByKey = optionService.getOptionByKey(getParam(0, scope).toString());
+        String defaultValue = null;
+        if (this.exprList.length() >= 2){
+            defaultValue = getParam(1, scope).toString();
+        }
         if (optionByKey != null) {
-            String defaultValue = null;
-            if (this.exprList.length() >= 2){
-                defaultValue = getParam(1, scope).toString();
-            }
             if (StringUtils.isNotBlank(defaultValue) && StringUtils.isBlank(optionByKey.getValue())) {
                 write(writer, defaultValue);
             } else {
                 write(writer, optionByKey.getValue());
             }
+        } else {
+            write(writer, defaultValue);
         }
     }
 
