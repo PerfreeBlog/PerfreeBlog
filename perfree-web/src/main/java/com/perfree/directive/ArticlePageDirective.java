@@ -42,6 +42,13 @@ public class ArticlePageDirective extends BaseDirective {
             query.put("categoryId", categoryId);
         }
 
+        String title = getModelDataToStr("title", scope);
+        if (StringUtils.isNotBlank(title)) {
+            query.put("title", title);
+            articlePage.setQueryParamName("title");
+            articlePage.setQueryParam(title);
+        }
+
         articlePage.setForm(query);
         articlePage.setPageSize(getExprParamToInt("pageSize", 10));
         articlePage = articleService.frontArticlesPage(articlePage);

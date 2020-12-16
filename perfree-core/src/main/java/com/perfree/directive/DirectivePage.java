@@ -1,5 +1,7 @@
 package com.perfree.directive;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,9 @@ public class DirectivePage<T> {
     private Object data;
 
     private String urlPrefix;
+
+    private String queryParam;
+    private String queryParamName;
 
     private List<Pager> pagers;
 
@@ -86,6 +91,10 @@ public class DirectivePage<T> {
             pager.setUrl(urlPrefix + i);
             if (pageIndex == i) {
                 pager.setUrl("javascript:;");
+            } else {
+                if (StringUtils.isNotBlank(queryParamName)) {
+                    pager.setUrl(pager.getUrl() + "?" + queryParamName + "=" + queryParam);
+                }
             }
             pagers.add(pager);
         }
@@ -95,6 +104,9 @@ public class DirectivePage<T> {
         if ((pageIndex - 1) <= 0) {
             return "javascript:;";
         }
+        if (StringUtils.isNotBlank(queryParamName)) {
+            return urlPrefix + (pageIndex - 1) + "?" + queryParamName + "=" + queryParam;
+        }
         return urlPrefix + (pageIndex - 1);
     }
 
@@ -102,6 +114,9 @@ public class DirectivePage<T> {
         long pageSum = (total - 1) / pageSize + 1;
         if ((pageIndex + 1) > pageSum) {
             return "javascript:;";
+        }
+        if (StringUtils.isNotBlank(queryParamName)) {
+            return urlPrefix + (pageIndex + 1) + "?" + queryParamName + "=" + queryParam;
         }
         return urlPrefix + (pageIndex + 1);
     }
@@ -127,5 +142,22 @@ public class DirectivePage<T> {
 
     public void setForm(T form) {
         this.form = form;
+    }
+
+    public String getQueryParam() {
+        return queryParam;
+    }
+
+    public void setQueryParam(String queryParam) {
+        this.queryParam = queryParam;
+    }
+
+
+    public String getQueryParamName() {
+        return queryParamName;
+    }
+
+    public void setQueryParamName(String queryParamName) {
+        this.queryParamName = queryParamName;
     }
 }

@@ -12,4 +12,5 @@ public class Constants {
     public static final String ARTICLE_CATEGORY = "/category/";
 
     public static final String ARTICLE_ARTICLE = "/article/";
+    public static final String ARTICLE_SEARCH = "/article/search/";
 }
