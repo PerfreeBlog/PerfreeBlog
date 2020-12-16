@@ -1,18 +1,27 @@
 package com.perfree.controller.front;
 
 import com.perfree.common.Constants;
+import com.perfree.commons.IpUtil;
 import com.perfree.controller.BaseController;
+import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class ArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;
+    //缓存
+    private static final CacheManager cacheManager = CacheManager.newInstance();
 
     @RequestMapping("/articleList/{pageIndex}")
     public String articleListPage(@PathVariable("pageIndex") int pageIndex,Model model) {
@@ -22,7 +31,7 @@ public class ArticleController extends BaseController {
     }
 
     @RequestMapping("/article/{articleId}")
-    public String articlePage(@PathVariable("articleId") String articleId, Model model) {
+    public String articlePage(@PathVariable("articleId") String articleId, Model model, HttpServletRequest request) {
         if (articleId.contains("-")) {
             String[] split = articleId.split("-");
             articleId = split[0];
@@ -30,6 +39,26 @@ public class ArticleController extends BaseController {
         }
         model.addAttribute("articleId", articleId);
         model.addAttribute("article", articleService.getById(articleId));
+        cacheCount(articleId, IpUtil.getIpAddr(request));
         return currentThemePage() + "/article";
+    }
+
+
+    /**
+     * 缓存访问量
+     * @param articleId articleId
+     * @param Ip Ip
+     */
+    public void cacheCount(String articleId,String Ip){
+        Article article = articleService.getById(articleId);
+        //查询缓存
+        Ehcache cache = cacheManager.getEhcache("articleHits");
+        Element element = cache.get(Ip+articleId+"_count");
+        if(element==null){
+            long count = article.getViewCount() == null?0:article.getViewCount();
+            count++;
+            cache.put(new Element(Ip+articleId+"_count",count));
+            articleService.articleViewCountAdd(article.getId());
+        }
     }
 }

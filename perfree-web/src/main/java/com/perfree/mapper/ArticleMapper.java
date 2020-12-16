@@ -144,4 +144,7 @@ public interface ArticleMapper{
     List<Archive> frontArchivePage();
 
     List<Article> getArticleByDate(String date);
+
+    void articleViewCountAdd(Long articleId);
+
 }

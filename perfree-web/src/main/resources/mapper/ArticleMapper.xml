@@ -62,6 +62,11 @@
             where id in (SELECT articleId FROM p_comment where id = #{id})
         </foreach>
     </update>
+    <update id="articleViewCountAdd">
+        update p_article set
+            viewCount = viewCount+1
+            where id = #{articleId}
+    </update>
 
     <delete id="del">
         DELETE FROM  p_article  WHERE id IN

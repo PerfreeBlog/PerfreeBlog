@@ -69,3 +69,6 @@ logging:
     name: ./logs/Perfree.log
     max-history: 7
     max-size: 10MB
+cache:
+  ehcache:
+    config: ehcache.xml

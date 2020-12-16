@@ -208,4 +208,8 @@ public class ArticleService{
         articlePage.setData(pageInfo.getList());
         return articlePage;
     }
+
+    public void articleViewCountAdd(Long articleId) {
+        articleMapper.articleViewCountAdd(articleId);
+    }
 }
