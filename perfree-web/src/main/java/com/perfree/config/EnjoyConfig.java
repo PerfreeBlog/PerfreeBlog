@@ -1,8 +1,9 @@
 package com.perfree.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.jfinal.template.Engine;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
-import org.apache.commons.lang3.StringUtils;
+import com.perfree.shared.OptionShared;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,7 +31,8 @@ public class EnjoyConfig {
         Engine engine = JFinalViewResolver.engine;
         engine.setDevMode(true);
         engine.setSourceFactory(new TemplateSourceFactory());
-        engine.addSharedMethod(new StringUtils());
+        engine.addSharedMethod(new StrUtil());
+        engine.addSharedMethod(new OptionShared());
         return jfr;
     }
 }

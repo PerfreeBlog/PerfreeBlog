@@ -31,7 +31,7 @@ public class ArticleController extends BaseController {
     }
 
     @RequestMapping("/article/{articleId}")
-    public String articlePage(@PathVariable("articleId") String articleId, Model model, HttpServletRequest request) {
+    public String articlePage(@PathVariable("articleId") String articleId,Model model, HttpServletRequest request) {
         if (articleId.contains("-")) {
             String[] split = articleId.split("-");
             articleId = split[0];

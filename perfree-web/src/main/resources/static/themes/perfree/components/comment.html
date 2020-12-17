@@ -21,6 +21,10 @@
                 </div>
             #end
         #end
+    #else
+        <div class="no-comment">
+            该文章已关闭评论功能
+        </div>
     #end
 </div>
 #commentPage(pageSize=8)
@@ -28,7 +32,7 @@
         #for(comment : commentPage.data)
         <div class="m-comment-detail-box layui-clear">
             <div class="m-comment-detail-left">
-                <img src="#(comment.user.avatar ?? '/images/user.png')" class="m-comment-detail-img">
+                <img src="#(isBlank(comment.user.avatar) ? '/static/public/images/user.png' : comment.user.avatar)" class="m-comment-detail-img">
             </div>
             <div class="m-comment-detail-right">
                 <div class="m-comment-detail-right-top">
@@ -51,7 +55,7 @@
                 #if(comment.parent)
                     <div class="m-comment-detail-box parentComment layui-clear">
                         <div class="m-comment-detail-left">
-                            <img src="#(comment.parent.user.avatar ?? '/images/user.png')" class="m-comment-detail-img">
+                            <img src="#(isBlank(comment.parent.user.avatar) ? '/static/public/images/user.png' : comment.parent.user.avatar)" class="m-comment-detail-img">
                         </div>
                         <div class="m-comment-detail-right">
                             <div class="m-comment-detail-right-top">
@@ -68,9 +72,11 @@
             </div>
         </div>
         #else
-            <div class="no-comment">
-                <i class="fa fa-volume-up" aria-hidden="true"></i> 还没有人评论~赶快抢占沙发吧~
-            </div>
+            #if(article.isComment == 1)
+                <div class="no-comment">
+                    <i class="fa fa-volume-up" aria-hidden="true"></i> 还没有人评论~赶快抢占沙发吧~
+                </div>
+            #end
         #end
 
         #if(commentPage.pagers)

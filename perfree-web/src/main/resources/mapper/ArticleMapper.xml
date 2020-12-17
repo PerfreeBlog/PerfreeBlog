@@ -4,9 +4,9 @@
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
           insert into p_article
           ( title, content, summary,categoryId,metaKeywords,metaDescription,
-          thumbnail,isTop,password,status,userId,isComment,createTime) VALUES
+          thumbnail,isTop,status,userId,isComment,createTime) VALUES
           (#{title},#{content}, #{summary},#{categoryId},#{metaKeywords},#{metaDescription},
-          #{thumbnail},#{isTop},#{password},#{status},#{userId},#{isComment},#{createTime})
+          #{thumbnail},#{isTop},#{status},#{userId},#{isComment},#{createTime})
     </insert>
     <insert id="addArticleTag">
          insert into p_article_tag (articleId,tagId)VALUES
@@ -44,7 +44,6 @@
         metaDescription = #{metaDescription},
         thumbnail = #{thumbnail},
         isTop = #{isTop},
-        password = #{password},
         isComment = #{isComment},
         status = #{status},
         updateTime=#{updateTime}

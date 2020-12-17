@@ -28,7 +28,6 @@ public class Article implements Serializable {
 
     @NotNull(message = "请选择文章是否置顶")
     private Integer isTop;
-    private String password;
     @NotNull(message = "文章状态不能为空")
     private Integer status;
     private Long commentCount;
@@ -148,14 +147,6 @@ public class Article implements Serializable {
 
     public void setIsTop(Integer isTop) {
         this.isTop = isTop;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Integer getStatus() {

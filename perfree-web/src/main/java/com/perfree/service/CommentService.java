@@ -2,13 +2,11 @@ package com.perfree.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.perfree.common.Constants;
 import com.perfree.common.Pager;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.CommentMapper;
-import com.perfree.model.Article;
-import com.perfree.model.Comment;
-import com.perfree.model.Tag;
-import com.perfree.model.User;
+import com.perfree.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +24,9 @@ public class CommentService {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private OptionService optionService;
 
     /**
      * 评论管理列表数据
@@ -88,6 +89,12 @@ public class CommentService {
     }
 
     public int add(Comment comment, User user) {
+        Option optionByKey = optionService.getOptionByKey(Constants.WEB_COMMENT_IS_REVIEW);
+        if (optionByKey != null && StringUtils.isNotBlank(optionByKey.getValue()) && optionByKey.getValue().equals("1")){
+            comment.setStatus(Constants.COMMENT_STATUS_REVIEW);
+        } else {
+            comment.setStatus(Constants.COMMENT_STATUS_NORMAL);
+        }
         comment.setCreateTime(new Date());
         comment.setUserId(user.getId());
         comment.setPid(comment.getPid()==null ? -1: comment.getPid());

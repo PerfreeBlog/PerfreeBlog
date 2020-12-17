@@ -23,7 +23,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">网站名称</label>
                     <div class="layui-input-block">
-                        <input type="text" value="#option('WEB_NAME')" name="WEB_NAME" required  lay-verify="required" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
+                        <input type="text" value="#option('WEB_NAME')" name="WEB_NAME" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -49,9 +49,10 @@
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">网站副标题</label>
+                    <label class="layui-form-label">评论需审核</label>
                     <div class="layui-input-block">
-                        <input type="text" name="WEB_SUB_TITLE" value="#option('WEB_SUB_TITLE')" placeholder="请输入网站副标题" autocomplete="off" class="layui-input">
+                        <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="1" title="开启" #(optionCompare('WEB_COMMENT_IS_REVIEW', '1') ? 'checked': '')>
+                        <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="0" title="关闭" #(optionCompare('WEB_COMMENT_IS_REVIEW', '0') ? 'checked': '')>
                     </div>
                 </div>
 

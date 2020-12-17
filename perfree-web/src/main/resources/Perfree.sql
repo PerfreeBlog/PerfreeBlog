@@ -9,7 +9,6 @@ CREATE TABLE `p_article`  (
   `metaDescription` varchar(512) NULL DEFAULT NULL COMMENT 'SEO描述',
   `thumbnail` varchar(256) NULL DEFAULT NULL COMMENT '缩略图',
   `isTop` int(0) NULL DEFAULT 0 COMMENT '是否置顶0:否,1:是',
-  `password` varchar(64) NULL DEFAULT NULL COMMENT '访问密码',
   `status` int(0) NULL DEFAULT 0 COMMENT '状态0:已发布,1:草稿',
   `commentCount` int(0) NULL DEFAULT 0 COMMENT '评论数',
   `viewCount` int(0) NULL DEFAULT 0 COMMENT '访问量',
