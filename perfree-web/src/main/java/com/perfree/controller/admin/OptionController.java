@@ -3,6 +3,8 @@ package com.perfree.controller.admin;
 
 import com.perfree.controller.BaseController;
 import com.perfree.service.OptionService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class OptionController extends BaseController {
     @Autowired
     private OptionService optionService;

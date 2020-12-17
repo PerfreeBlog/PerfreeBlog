@@ -7,6 +7,8 @@ import com.perfree.controller.BaseController;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,7 @@ import java.util.HashMap;
  */
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class UserController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 

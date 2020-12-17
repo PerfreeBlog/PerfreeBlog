@@ -4,6 +4,8 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Option;
 import com.perfree.service.OptionService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class SettingController extends BaseController {
 
     @Autowired

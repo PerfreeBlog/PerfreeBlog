@@ -5,6 +5,8 @@ import com.perfree.controller.BaseController;
 import com.perfree.model.Tag;
 import com.perfree.service.RoleService;
 import com.perfree.service.UserService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class RoleController extends BaseController {
 
     @Autowired

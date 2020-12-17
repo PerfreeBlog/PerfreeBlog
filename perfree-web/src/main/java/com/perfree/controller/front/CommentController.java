@@ -22,6 +22,7 @@ public class CommentController extends BaseController {
     private CommentService commentService;
     @Autowired
     private ArticleService articleService;
+
     @RequestMapping("/comment/submitComment")
     @RequiresRoles(value={"admin", "superAdmin","user"}, logical= Logical.OR)
     public void submitComment(Comment comment,String anchor, HttpServletRequest request, HttpServletResponse response)throws IOException {

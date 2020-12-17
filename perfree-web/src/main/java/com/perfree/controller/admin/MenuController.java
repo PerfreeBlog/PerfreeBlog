@@ -5,6 +5,8 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Menu;
 import com.perfree.service.MenuService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class MenuController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(MenuController.class);
     @Autowired

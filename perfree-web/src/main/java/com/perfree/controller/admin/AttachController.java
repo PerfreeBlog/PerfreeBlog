@@ -8,6 +8,8 @@ import com.perfree.controller.BaseController;
 import com.perfree.model.Attach;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ import java.net.URLEncoder;
  */
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class AttachController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(AttachController.class);
     @Value("${web.upload-path}")

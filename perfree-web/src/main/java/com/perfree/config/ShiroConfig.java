@@ -53,6 +53,7 @@ public class ShiroConfig {
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionIdUrlRewritingEnabled(false);
+        sessionManager.setGlobalSessionTimeout(2160000);
         return sessionManager;
     }
 

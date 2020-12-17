@@ -6,6 +6,8 @@ import com.perfree.controller.BaseController;
 import com.perfree.model.Comment;
 import com.perfree.model.Menu;
 import com.perfree.service.CommentService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class CommentController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(TagController.class);
     @Autowired

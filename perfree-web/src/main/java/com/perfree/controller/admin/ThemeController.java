@@ -6,6 +6,8 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Theme;
 import com.perfree.service.ThemeService;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
+@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class ThemeController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(ThemeController.class);
     @Autowired
