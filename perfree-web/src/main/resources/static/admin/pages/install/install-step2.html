@@ -76,10 +76,12 @@
                         layer.close(loadIndex);
                         window.location.href = "/install/step3";
                     } else {
+                        layer.close(loadIndex);
                         layer.msg(data.msg, {icon: 2});
                     }
                 },
                 error: function (data) {
+                    layer.close(loadIndex);
                     layer.msg("添加失败", {icon: 2});
                 }
             });
