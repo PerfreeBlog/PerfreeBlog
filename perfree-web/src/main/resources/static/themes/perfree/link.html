@@ -15,8 +15,8 @@
                                <a href="#(link.address)" target="_blank">#subStr(link.name, 20)</a>
                            </section>
                            <section class="m-link-content">
-                               <section class="m-link-desc">#subStr(link.desc,35)</section>
-                               <img src="#(link.logo)">
+                               <section class="m-link-desc">#(isBlank(link.desc) ? '暂无描述': link.desc)</section>
+                               <img src="#(isBlank(link.logo) ? '/static/themes/perfree/static/images/nopic.jpg': link.logo)">
                            </section>
                        </section>
                     </li>

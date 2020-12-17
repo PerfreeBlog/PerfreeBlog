@@ -12,6 +12,9 @@
                     #end
                     <div class="m-article-container">
                         <div class="m-article-title-box">
+                            #if(article.isTop == 1)
+                                <span class="layui-badge m-top">置顶</span>
+                            #end
                             <a href="#(article.url)" class="m-article-title"><h2>#(article.title)</h2></a>
                         </div>
                         <article class="m-article-content">#mdSummary(article.content,200)...</article>

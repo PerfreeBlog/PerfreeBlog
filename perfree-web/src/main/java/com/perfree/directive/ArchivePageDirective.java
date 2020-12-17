@@ -5,7 +5,6 @@ import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.service.ArticleService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +29,6 @@ public class ArchivePageDirective extends BaseDirective{
         String url = getModelDataToStr("url", scope);
         DirectivePage<HashMap<String, String>> articlePage = new DirectivePage<>();
         articlePage.setPageIndex(getModelDataToInt("pageIndex", scope, 1));
-        HashMap<String, String> para = exprListToMap();
         articlePage.setPageSize(getExprParamToInt("pageSize", 10));
         articlePage = articleService.frontArchivePage(articlePage);
         articlePage.setUrlPrefix(url);

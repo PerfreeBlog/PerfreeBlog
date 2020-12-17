@@ -154,6 +154,7 @@
     </select>
 
     <select id="frontArticlesList" resultMap="LIST_RESULT">
+        SELECT t.* from (
         select DISTINCT t1.*,t2.name categoryName,t3.userName from p_article t1
         left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         left join p_article_tag t4 on t1.id = t4.articleId
@@ -168,6 +169,7 @@
             and t1.title like concat('%', #{title,jdbcType=VARCHAR},'%')
         </if>
         order by t1.createTime desc
+        ) t order by t.isTop desc
     </select>
 
     <select id="getNextArticle" resultMap="LIST_RESULT">

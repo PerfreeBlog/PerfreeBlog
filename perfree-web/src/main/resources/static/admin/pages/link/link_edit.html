@@ -44,17 +44,17 @@
             </label>
             <div class="layui-input-block">
                  <textarea name="desc" placeholder="请输入网站描述"
-                           class="layui-textarea article-textarea" style="resize: none">#(link.desc)</textarea>
+                           class="layui-textarea article-textarea" style="resize: none">#(link.desc??)</textarea>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">
-                <span class="p-form-required">*</span>网站logo:
+                网站logo:
             </label>
             <div class="layui-input-block">
-                <input type="text" name="logo" required lay-verify="required" placeholder="请输入网站logo地址" autocomplete="off"
-                       class="layui-input" value="#(link.logo)">
+                <input type="text" name="logo" placeholder="请输入网站logo地址" autocomplete="off"
+                       class="layui-input" value="#(link.logo??)">
             </div>
         </div>
         <div class="add-btn-box">

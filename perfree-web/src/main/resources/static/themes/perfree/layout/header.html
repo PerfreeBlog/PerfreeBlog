@@ -1,6 +1,6 @@
 <div class="m-header">
     <div class="m-header-logo">
-        <a class="m-header-logo-text" href="/">#option('WEB_NAME','Perfree')</a>
+        <a class="m-header-logo-text" href="/">#option('WEB_NAME','未设置')</a>
     </div>
 
     <div class="m-header-menu">
@@ -47,11 +47,7 @@
                 #if(user != null)
                     <li class="layui-nav-item">
                         <a href="javascript:;">
-                            #if(isBlank(user.avatar))
-                                <img src="/static/public/images/user.png" alt="" class="user-img"> #(user.userName ??)
-                            #else
-                                <img src="#(user.avatar)" alt="" class="user-img"> #(user.userName ??)
-                            #end
+                            <img src=" #(isBlank(user.avatar) ? '/static/public/images/user.png': user.avatar)" alt="" class="user-img"> #(user.userName ??)
                             <span class="down"><i class="fa fa-angle-down"></i></span>
                         </a>
                         <dl class="layui-nav-child">
