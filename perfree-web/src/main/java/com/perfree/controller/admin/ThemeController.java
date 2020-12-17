@@ -26,7 +26,7 @@ public class ThemeController extends BaseController {
     @Autowired
     private ThemeService themeService;
     // 生产主题路径
-    private final static String PROD_THEMES_PATH = "resources/themes";
+    private final static String PROD_THEMES_PATH = "resources/static/themes";
     // 开发主题路径
     private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";
 

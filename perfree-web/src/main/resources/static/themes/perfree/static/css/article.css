@@ -459,8 +459,7 @@ pre{
     color: inherit;
 }
 .a-next-article{
-    position: absolute;
-    right: 0;
+    float: right;
 }
 
 .m-comment-box{

@@ -1,11 +1,15 @@
 package com.perfree.config;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.setting.dialect.Props;
 import com.jfinal.template.Directive;
 import com.perfree.common.OptionCache;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -14,6 +18,7 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
 
@@ -34,19 +39,29 @@ public class PostAppRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-        dataSourceBuilder.url("jdbc:mysql://127.0.0.1:3306/perfree?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
-        dataSourceBuilder.username("root");
-        dataSourceBuilder.password("215607..");
-        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-        DataSource dataSource = dataSourceBuilder.build();
-        DynamicDataSource.setDataSource(dataSource);
+        // Load Template Directive
+        PostAppRunner.loadDirective();
+
+        File file = new File("resources/db.properties");
+        if (!file.exists()) {
+            return;
+        }
+        Props dbSetting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
+        String installStatus = dbSetting.getStr("installStatus");
+        if (StringUtils.isNotBlank(installStatus)) {
+            DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
+            dataSourceBuilder.url(dbSetting.getStr("url"));
+            dataSourceBuilder.username(dbSetting.getStr("username"));
+            dataSourceBuilder.password(dbSetting.getStr("password"));
+            dataSourceBuilder.driverClassName(dbSetting.getStr("driverClassName"));
+            DataSource dataSource = dataSourceBuilder.build();
+            DynamicDataSource.setDataSource(dataSource);
+        }
+        dbSetting.autoLoad(true);
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
             List<Option> options = optionMapper.getStartOption();
             options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
-            // Load Template Directive
-            PostAppRunner.loadDirective();
         }
     }
 

@@ -54,7 +54,7 @@ public class SystemController extends BaseController{
      */
     @RequestMapping("/login")
     public String login() {
-        return view("static/public/login.html");
+        return view("static/admin/pages/login/login.html");
     }
 
     /**

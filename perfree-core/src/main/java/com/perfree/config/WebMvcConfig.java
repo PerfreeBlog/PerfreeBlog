@@ -24,7 +24,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations(
                         "classpath:/static/",
-                        "file:./resources/",
+                        "file:./resources/static/",
+                        "file:./resources/plugin/",
                         "file:" + uploadPath
                 );
         WebMvcConfig.registry = registry;
@@ -39,6 +40,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/install",
+                        "/install/step2",
+                        "/install/addDatabase",
                         "/static/**"
                 );
     }

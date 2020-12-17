@@ -22,9 +22,8 @@
         <fileSet>
             <directory>${basedir}/src/main/resources</directory>
             <includes>
-                <include>admin/**</include>
-                <include>themes/**</include>
-                <include>public/**</include>
+                <include>static/**</include>
+                <include>Perfree.sql</include>
             </includes>
             <outputDirectory>resources</outputDirectory>
             <fileMode>0644</fileMode>

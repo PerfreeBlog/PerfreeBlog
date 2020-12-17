@@ -42,7 +42,7 @@ public class OptionDirective extends BaseDirective {
                 write(writer, optionByKey.getValue());
             }
         } else {
-            write(writer, defaultValue);
+            write(writer, StringUtils.isBlank(defaultValue) ? "" : defaultValue);
         }
     }
 
