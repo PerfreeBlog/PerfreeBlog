@@ -26,13 +26,13 @@ public class InstallService {
     private OptionMapper optionMapper;
 
     public void addDatabase(Database database) throws Exception{
-        String format = "jdbc:mysql://%s:%s/perfree?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
+        String format = "jdbc:mysql://%s:%s/perfree?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
         String url = String.format(format, database.getAddress(), database.getPort());
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.url(url);
         dataSourceBuilder.username(database.getUserName());
         dataSourceBuilder.password(database.getPassword());
-        dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
+        dataSourceBuilder.driverClassName("com.mysql.jdbc.Driver");
         DataSource dataSource = dataSourceBuilder.build();
         DynamicDataSource.setDataSource(dataSource);
         Connection connection = dataSource.getConnection();
@@ -52,7 +52,7 @@ public class InstallService {
         setting.setProperty("url",url);
         setting.setProperty("username",database.getUserName());
         setting.setProperty("password",database.getPassword());
-        setting.setProperty("driverClassName","com.mysql.cj.jdbc.Driver");
+        setting.setProperty("driverClassName","com.mysql.jdbc.Driver");
         setting.setProperty("installStatus","dbSuccess");
         setting.store(file.getAbsolutePath());
 

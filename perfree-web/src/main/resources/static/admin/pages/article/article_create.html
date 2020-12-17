@@ -20,6 +20,9 @@
             <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
                 <div class="layui-card">
                     <div class="layui-card-body">
+                        <div class="layui-input-inline"  style="display: none;">
+                            <select lay-verify="" type="hidden"></select>
+                        </div>
                         <div class="layui-form-item">
                             <span class="p-form-tip">标题: </span>
                             <input type="text" name="title" required lay-verify="required" placeholder="请输入文章标题"
@@ -41,10 +44,10 @@
                 <div class="layui-card">
                     <div class="layui-card-header">
                         <div class="p-article-btn-box">
-                            <button type="submit" lay-submit lay-filter="publishForm"
+                            <button type="button" lay-submit lay-filter="publishForm"
                                     class="layui-btn layui-btn-normal">发布
                             </button>
-                            <button type="submit" lay-submit lay-filter="draftForm" class="layui-btn layui-btn-primary">
+                            <button type="button" lay-submit lay-filter="draftForm" class="layui-btn layui-btn-primary">
                                 保存到草稿箱
                             </button>
                         </div>

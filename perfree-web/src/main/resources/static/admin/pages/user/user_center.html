@@ -18,6 +18,9 @@
         <div class="layui-card-header">设置资料</div>
         <div class="layui-card-body">
             <form class="layui-form" lay-filter="editForm">
+                <div class="layui-input-inline"  style="display: none;">
+                    <select lay-verify="" type="hidden"></select>
+                </div>
                 <input type="hidden" name="id" class="layui-input" value="#(userForm.id)">
                 <div class="layui-form-item">
                     <label class="layui-form-label">
@@ -80,7 +83,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"></label>
                     <div class="layui-input-inline">
-                        <button type="submit" lay-submit lay-filter="editForm" class="layui-btn layui-btn-normal">确认修改
+                        <button type="button" lay-submit lay-filter="editForm" class="layui-btn layui-btn-normal">确认修改
                         </button>
                     </div>
                 </div>
@@ -92,6 +95,9 @@
         <div class="layui-card-header">修改密码</div>
         <div class="layui-card-body">
             <form class="layui-form" lay-filter="passwordForm">
+                <div class="layui-input-inline"  style="display: none;">
+                    <select lay-verify="" type="hidden"></select>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">
                         当前密码:
@@ -115,7 +121,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"></label>
                     <div class="layui-input-inline">
-                        <button type="submit" lay-submit lay-filter="passwordForm" class="layui-btn layui-btn-normal">
+                        <button type="button" lay-submit lay-filter="passwordForm" class="layui-btn layui-btn-normal">
                             确认修改
                         </button>
                     </div>

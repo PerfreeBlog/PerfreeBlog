@@ -20,6 +20,9 @@
         </div>
         <div class="layui-card-body">
             <form class="layui-form" action="">
+                <div class="layui-input-inline"  style="display: none;">
+                    <select lay-verify="" type="hidden"></select>
+                </div>
                 <h3>管理员账号配置</h3>
                 <div class="install-form-box">
                     <b>用户名</b>
@@ -38,7 +41,7 @@
 
 
                 <div class="button-box">
-                    <button type="submit" lay-submit lay-filter="addForm" class="layui-btn next-btn">完成安装</button>
+                    <button type="button" lay-submit lay-filter="addForm" class="layui-btn next-btn">完成安装</button>
                 </div>
             </form>
         </div>

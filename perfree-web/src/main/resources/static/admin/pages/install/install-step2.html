@@ -20,6 +20,9 @@
         </div>
         <div class="layui-card-body">
             <form class="layui-form" action="">
+                <div class="layui-input-inline"  style="display: none;">
+                    <select lay-verify="" type="hidden"></select>
+                </div>
                 <h3>数据库配置</h3>
                 <div class="install-form-box">
                     <b>数据库地址</b>
@@ -43,7 +46,7 @@
 
                 <div class="button-box">
                     <a type="button" class="layui-btn pre-btn" href="/install">上一步</a>
-                    <button type="submit" lay-submit lay-filter="addForm" class="layui-btn next-btn">下一步</button>
+                    <button type="button" lay-submit lay-filter="addForm" class="layui-btn next-btn">下一步</button>
                 </div>
             </form>
         </div>

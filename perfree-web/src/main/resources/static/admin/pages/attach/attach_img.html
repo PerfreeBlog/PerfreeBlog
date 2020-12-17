@@ -14,12 +14,14 @@
 <body class="layui-layout-body">
 <div class="p-search-panel">
     <form class="layui-form">
+        <div class="layui-input-inline"  style="display: none;">
+            <select lay-verify="" type="hidden"></select>
+        </div>
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label" style="padding-left: 0;">图片名:</label>
                 <div class="layui-input-inline">
                     <input type="text" name="name" placeholder="请输入图片名" id="name"
-                           onkeydown="if(event.keyCode===13){event.keyCode=0;event.returnValue=false;}"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>

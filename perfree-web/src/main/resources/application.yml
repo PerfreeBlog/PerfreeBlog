@@ -15,7 +15,7 @@ spring:
     url: jdbc:mysql://196.196.16.2:3306/perfree?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 215607..
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
     druid:
       initial-size: 5
       max-active: 20

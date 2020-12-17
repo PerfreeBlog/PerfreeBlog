@@ -111,7 +111,7 @@ function queryTable() {
             {
                 field: 'id', title: '操作', width: 200, fixed: 'right',
                 templet: "<div>" +
-                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='previewFile(\"{{d.type}}\",\"{{d.path}}\",\"{{d.name}}\")'>预览</a> " +
+                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='previewFile(\"{{d.type}}\",\"{{d.url}}\",\"{{d.name}}\")'>预览</a> " +
                     "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='downloadFile(\"{{d.id}}\")'>下载</a> " +
                     "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
                     "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +

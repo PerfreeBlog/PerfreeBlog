@@ -21,7 +21,7 @@
         </dependency>
     </dependencies>
     <build>
-        <resources>
+       <!-- <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
@@ -30,7 +30,7 @@
                 </excludes>
                 <filtering>true</filtering>
             </resource>
-        </resources>
+        </resources>-->
         <finalName>perfree-web</finalName>
         <plugins>
             <plugin>
