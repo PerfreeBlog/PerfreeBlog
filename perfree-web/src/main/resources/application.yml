@@ -2,7 +2,7 @@ server:
   port: 8081
 
 # spring配置
-web.upload-path: D:/perfree/
+web.upload-path: resources/upload/
 spring:
   devtools:
     restart:

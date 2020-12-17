@@ -94,6 +94,14 @@ public class SystemController extends BaseController{
         return view(currentThemePage() + "/index.html");
     }
 
+    /**
+     * 权限异常
+     */
+    @RequestMapping("/403")
+    public String unauthorized() {
+        return view("/403.html", "/403.html", "static/admin/pages/exception/403.html");
+    }
+
     public static void main(String args[]){
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
         System.out.println(uuid);

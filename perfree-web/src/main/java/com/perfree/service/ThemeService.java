@@ -4,8 +4,8 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
-import com.perfree.commons.FileUtil;
 import com.perfree.common.OptionCache;
+import com.perfree.commons.FileUtil;
 import com.perfree.model.Option;
 import com.perfree.model.Theme;
 import org.apache.commons.lang3.ArrayUtils;
@@ -19,12 +19,6 @@ import java.util.List;
 
 @Service
 public class ThemeService {
-    // 生产主题路径
-    private final static String PROD_THEMES_PATH = "resources/static/themes";
-    // 开发主题路径
-    private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";
-    private final static String SEPARATOR = "/";
-
     @Autowired
     private OptionService optionService;
 
@@ -34,12 +28,12 @@ public class ThemeService {
      */
     public List<Theme> getAllTheme(){
         List<Theme> list = new ArrayList<>();
-        File[] files = ArrayUtils.addAll(getThemeList(PROD_THEMES_PATH), getThemeList(DEV_THEMES_PATH));
+        File[] files = ArrayUtils.addAll(getThemeList(Constants.PROD_THEMES_PATH), getThemeList(Constants.DEV_THEMES_PATH));
         if (files == null) {
             return null;
         }
         for (File file : files) {
-            File settingFile = new File(file.getAbsolutePath() + SEPARATOR + "settings.properties");
+            File settingFile = new File(file.getAbsolutePath() + Constants.SEPARATOR + "settings.properties");
             if (settingFile.exists()){
                 Props props = new Props(settingFile, CharsetUtil.UTF_8);
                 Theme theme = new Theme();
@@ -47,10 +41,10 @@ public class ThemeService {
                 theme.setAuthorWebSite(props.get("author.web.site").toString());
                 theme.setDescription(props.get("description").toString());
                 theme.setName(props.get("name").toString());
-                theme.setScreenshots("/static/themes" + SEPARATOR + settingFile.getParentFile().getName() +
-                        SEPARATOR + props.get("screenshots").toString());
+                theme.setScreenshots("/static/themes/" + settingFile.getParentFile().getName() +
+                        Constants.SEPARATOR + props.get("screenshots").toString());
                 theme.setPath(settingFile.getParentFile().getName());
-                if (settingFile.getParentFile().getName().equals(OptionCache.getOption(Constants.WEB_THEME))){
+                if (settingFile.getParentFile().getName().equals(OptionCache.getOption(Constants.OPTION_WEB_THEME))){
                     theme.setIsActive(1);
                 }
                 theme.setUpdateUrl(props.get("update.url").toString());
@@ -81,7 +75,7 @@ public class ThemeService {
      */
     public int switchTheme(Theme theme) {
         Option option = new Option();
-        option.setKey(Constants.WEB_THEME);
+        option.setKey(Constants.OPTION_WEB_THEME);
         option.setValue(theme.getPath());
         return optionService.updateValueByKey(option);
     }
@@ -93,18 +87,18 @@ public class ThemeService {
      */
     public boolean addTheme(MultipartFile multiFile) throws Exception {
         String multiFileName = multiFile.getOriginalFilename();
-        File dir = new File(PROD_THEMES_PATH);
+        File dir = new File(Constants.PROD_THEMES_PATH);
         if (!dir.exists()){
             boolean mkdirs = dir.mkdirs();
             if (!mkdirs) {
                 throw new Exception("创建目录失败!" + dir.getAbsolutePath());
             }
         }
-        File file = new File(PROD_THEMES_PATH + SEPARATOR + multiFileName);
+        File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + multiFileName);
         multiFile.transferTo(file.getAbsoluteFile());
         File unzip = ZipUtil.unzip(file);
         boolean delete = file.delete();
-        File settingFile = new File(unzip.getAbsolutePath() + SEPARATOR + "settings.properties");
+        File settingFile = new File(unzip.getAbsolutePath() + "/settings.properties");
         if (settingFile.exists()){
             return true;
         }
@@ -119,7 +113,7 @@ public class ThemeService {
      */
     public boolean delTheme(Theme theme) {
         try{
-            File file = new File(PROD_THEMES_PATH + SEPARATOR + theme.getPath());
+            File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + theme.getPath());
             if (file.exists()) {
                 FileUtil.deleteDirectory(file);
             }

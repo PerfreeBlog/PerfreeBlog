@@ -53,7 +53,7 @@ public class FileUtil {
                 }
             }
             File file = new File(dirPath + filename);
-            multiFile.transferTo(file);
+            multiFile.transferTo(file.getAbsoluteFile());
             return uploadPath + filename;
         }catch (Exception e){
             throw new Exception(e.getMessage());

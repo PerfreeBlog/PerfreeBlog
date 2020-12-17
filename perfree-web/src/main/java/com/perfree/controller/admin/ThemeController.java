@@ -18,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.List;
 
 @Controller
@@ -28,10 +27,6 @@ public class ThemeController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(ThemeController.class);
     @Autowired
     private ThemeService themeService;
-    // 生产主题路径
-    private final static String PROD_THEMES_PATH = "resources/static/themes";
-    // 开发主题路径
-    private final static String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";
 
     @GetMapping("/theme")
     public String themePage(Model model){
@@ -44,7 +39,7 @@ public class ThemeController extends BaseController {
     @ResponseBody
     public ResponseBean switchTheme(@RequestBody Theme theme){
         if (themeService.switchTheme(theme) > 0) {
-            OptionCache.setOption(Constants.WEB_THEME, theme.getPath());
+            OptionCache.setOption(Constants.OPTION_WEB_THEME, theme.getPath());
             return ResponseBean.success("主题切换成功", null);
         }
         return ResponseBean.fail("主题切换失败", null);
@@ -52,13 +47,7 @@ public class ThemeController extends BaseController {
 
     @GetMapping("/theme/setting")
     public String settingPage(){
-        File file = new File(PROD_THEMES_PATH + "/" + currentTheme() + "/setting.html");
-        File devFile = new File(DEV_THEMES_PATH + "/" + currentTheme() + "/setting.html");
-        if (file.exists() || devFile.exists()) {
-            return view("static/themes/" + currentTheme() + "/setting.html");
-        } else {
-            return view("static/admin/pages/theme/setting.html");
-        }
+        return view("/setting.html", "/setting.html", "static/admin/pages/theme/setting.html");
 
     }
 

@@ -130,7 +130,7 @@ public class Category implements Serializable {
     }
 
     public String getUrl() {
-        return Constants.ARTICLE_CATEGORY + id;
+        return Constants.URL_ARTICLE_CATEGORY + id;
     }
 
     public void setUrl(String url) {

@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -49,7 +50,7 @@ public class BaseController {
      * @return String
      */
     public String currentTheme() {
-        return OptionCache.getOption(Constants.WEB_THEME);
+        return OptionCache.getOption(Constants.OPTION_WEB_THEME);
     }
 
     /**
@@ -57,7 +58,7 @@ public class BaseController {
      * @return String
      */
     public String currentThemePage() {
-        return "static/themes/" + OptionCache.getOption(Constants.WEB_THEME);
+        return "static/themes/" + OptionCache.getOption(Constants.OPTION_WEB_THEME);
     }
 
     /**
@@ -67,5 +68,22 @@ public class BaseController {
      */
     public String view(String viewPath) {
         return viewPath;
+    }
+
+    /**
+     * 自动判断返回哪个页面
+     * @param validPath 要判断的地址
+     * @param themeViewPath 该页面在主题中的路径
+     * @param adminViewPath 该页面在系统中的路径
+     * @return String
+     */
+    public String view(String validPath, String themeViewPath, String adminViewPath) {
+        File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + currentTheme() + validPath);
+        File devFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme() + validPath);
+        if (file.exists() || devFile.exists()) {
+            return view("static/themes/" + currentTheme() + themeViewPath);
+        } else {
+            return view(adminViewPath);
+        }
     }
 }

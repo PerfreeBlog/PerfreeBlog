@@ -31,7 +31,7 @@ public class CommentPageDirective extends BaseDirective{
         query.put("articleId", articleId);
         commentPage.setForm(query);
         commentPage = commentService.getCommentByArticleId(commentPage);
-        commentPage.setUrlPrefix(Constants.ARTICLE_ARTICLE + articleId + "-");
+        commentPage.setUrlPrefix(Constants.URL_ARTICLE + articleId + "-");
         commentPage.initPagers();
 
         scope.set("commentPage", commentPage);

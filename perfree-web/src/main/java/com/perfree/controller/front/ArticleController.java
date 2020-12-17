@@ -25,7 +25,7 @@ public class ArticleController extends BaseController {
 
     @RequestMapping("/articleList/{pageIndex}")
     public String articleListPage(@PathVariable("pageIndex") int pageIndex,Model model) {
-        model.addAttribute("url", Constants.ARTICLE_LIST);
+        model.addAttribute("url", Constants.URL_ARTICLE_LIST);
         model.addAttribute("pageIndex", pageIndex);
         return view(currentThemePage() + "/articleList.html");
     }

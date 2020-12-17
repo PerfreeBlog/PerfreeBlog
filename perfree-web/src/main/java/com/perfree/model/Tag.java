@@ -76,7 +76,7 @@ public class Tag implements Serializable {
     }
 
     public String getUrl() {
-        return Constants.ARTICLE_TAG + id;
+        return Constants.URL_ARTICLE_TAG + id;
     }
 
     public void setUrl(String url) {

@@ -40,6 +40,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/install",
+                        "/404",
+                        "/403",
+                        "/500",
                         "/install/step2",
                         "/install/addDatabase",
                         "/static/**"

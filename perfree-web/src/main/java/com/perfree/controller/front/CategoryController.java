@@ -19,7 +19,7 @@ public class CategoryController extends BaseController {
     public String articleListPage(@PathVariable("pageIndex") int pageIndex, @PathVariable("categoryId") String categoryId, Model model) {
         model.addAttribute("pageIndex", pageIndex);
         model.addAttribute("categoryId", categoryId);
-        model.addAttribute("url", Constants.ARTICLE_CATEGORY + categoryId  + "/");
+        model.addAttribute("url", Constants.URL_ARTICLE_CATEGORY + categoryId  + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 
@@ -27,7 +27,7 @@ public class CategoryController extends BaseController {
     public String articleListPage(@PathVariable("categoryId") String categoryId, Model model) {
         model.addAttribute("pageIndex", 1);
         model.addAttribute("categoryId", categoryId);
-        model.addAttribute("url", Constants.ARTICLE_CATEGORY + categoryId  + "/");
+        model.addAttribute("url", Constants.URL_ARTICLE_CATEGORY + categoryId  + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 }

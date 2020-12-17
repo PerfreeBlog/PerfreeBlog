@@ -89,7 +89,7 @@ public class CommentService {
     }
 
     public int add(Comment comment, User user) {
-        Option optionByKey = optionService.getOptionByKey(Constants.WEB_COMMENT_IS_REVIEW);
+        Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_COMMENT_IS_REVIEW);
         if (optionByKey != null && StringUtils.isNotBlank(optionByKey.getValue()) && optionByKey.getValue().equals("1")){
             comment.setStatus(Constants.COMMENT_STATUS_REVIEW);
         } else {

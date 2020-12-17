@@ -14,7 +14,7 @@ public class TagController extends BaseController {
     public String articleListPage(@PathVariable("pageIndex") int pageIndex,@PathVariable("tagId") String tagId, Model model) {
         model.addAttribute("pageIndex", pageIndex);
         model.addAttribute("tagId", tagId);
-        model.addAttribute("url", Constants.ARTICLE_TAG + tagId + "/");
+        model.addAttribute("url", Constants.URL_ARTICLE_TAG + tagId + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 
@@ -22,7 +22,7 @@ public class TagController extends BaseController {
     public String articleListPage(@PathVariable("tagId") String tagId, Model model) {
         model.addAttribute("pageIndex", 1);
         model.addAttribute("tagId", tagId);
-        model.addAttribute("url", Constants.ARTICLE_TAG + tagId + "/");
+        model.addAttribute("url", Constants.URL_ARTICLE_TAG + tagId + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 }
