@@ -106,7 +106,7 @@ function queryTable() {
             {
                 field: 'avatar', title: '头像', templet: function (d) {
                     let html = '';
-                    if (d.status === 0) {
+                    if (d.avatar !== null && d.avatar !== '') {
                         html = "<img src='" + d.avatar + "' layer-src='" + d.avatar + "'>";
                     }
                     return html;
