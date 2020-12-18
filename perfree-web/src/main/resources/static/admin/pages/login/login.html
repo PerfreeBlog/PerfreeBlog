@@ -2,12 +2,12 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>#option("WEB_TITLE")</title>
+    <title>#(SEO_TITLE ?? WEB_TITLE ?? '登录')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link rel="Shortcut Icon" href="#option('WEB_LOGO')" type="image/x-icon"/>
+    <link rel="Shortcut Icon" href="#option('WEB_LOGO','/static/public/images/favicon.ico')" type="image/x-icon"/>
     <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/static/admin/pages/login/css/login.css" rel="stylesheet"/>
     <script type="text/javascript">
@@ -17,7 +17,7 @@
 </head>
 <body class="mdui-theme-primary-indigo">
     <div class="p-login-box mdui-shadow-3">
-        <div class="p-login-box-title">#option('WEB_NAME')</div>
+        <div class="p-login-box-title">#option('WEB_NAME','登录')</div>
         <form id="loginForm">
             <div class="layui-input-inline"  style="display: none;">
                 <select lay-verify="" type="hidden"></select>
@@ -34,7 +34,7 @@
         </form>
         <button type="button" class="layui-btn layui-btn-normal p-login-btn">登录</button>
         <p class="p-login-box-bottom">
-            还没有账号? 点击<a class="mdui-text-color-theme p-register-btn">注册</a>
+            还没有账号? 点击<a class="mdui-text-color-theme p-register-btn" href="/register">注册</a>
         </p>
     </div>
     <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>

@@ -1,5 +1,7 @@
 package com.perfree.common;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -15,7 +17,7 @@ public class OptionCache {
      * @return String
      */
     public static String getOption(String key) {
-        return optionMap.get(key);
+        return StringUtils.isBlank(optionMap.get(key)) ? null : optionMap.get(key);
     }
 
     /**

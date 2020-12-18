@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>#(SEO_TITLE ?? WEB_TITLE ?? '注册')</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link rel="Shortcut Icon" href="#option('WEB_LOGO','/static/public/images/favicon.ico')" type="image/x-icon"/>
+    <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
+    <link href="/static/admin/pages/register/css/register.css" rel="stylesheet"/>
+    <script type="text/javascript">
+        if (window !== top)
+            top.location.href = location.href;
+    </script>
+</head>
+<body class="mdui-theme-primary-indigo">
+    <div class="p-login-box mdui-shadow-3">
+        <div class="p-login-box-title">#option('WEB_NAME', '注册')</div>
+        <form class="layui-form" lay-filter="addForm">
+            <div class="layui-input-inline"  style="display: none;">
+                <select lay-verify="" type="hidden"></select>
+            </div>
+            <div class="p-input-box">
+                <span class="p-input-label"><span class="p-form-required">*</span>昵称:</span>
+                <input class="p-input" type="text" name="userName" required lay-verify="required" placeholder="请输入昵称"/>
+            </div>
+
+            <div class="p-input-box">
+                <span class="p-input-label"><span class="p-form-required">*</span>账号:</span>
+                <input class="p-input" type="text" name="account" required lay-verify="required" placeholder="请输入账号"/>
+            </div>
+
+            <div class="p-input-box">
+                <span class="p-input-label"><span class="p-form-required">*</span>密码:</span>
+                <input class="p-input" type="password" name="password" required lay-verify="required" placeholder="请输入密码"/>
+            </div>
+
+            <div class="p-input-box">
+                <span class="p-input-label">邮箱:</span>
+                <input class="p-input" type="email" name="email" placeholder="请输入邮箱地址"/>
+            </div>
+            <button type="button" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-login-btn">注册</button>
+        </form>
+        <p class="p-login-box-bottom">
+            已有账号? 点击<a class="mdui-text-color-theme p-register-btn" href="/login">登录</a>
+        </p>
+    </div>
+    <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
+    <script src="/static/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
+    <script src="/static/admin/pages/register/js/register.js"></script>
+</body>
+</html>
