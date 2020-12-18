@@ -1,5 +1,7 @@
 package com.perfree.controller;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
 import com.perfree.common.Constants;
 import com.perfree.common.ResponseBean;
 import com.perfree.model.Menu;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -86,24 +90,26 @@ public class SystemController extends BaseController{
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doLogin")
     @ResponseBody
-    public ResponseBean doLogin(User user,Boolean rememberMe, HttpSession session) {
-        ResponseBean responseBean;
+    public ResponseBean doLogin(@RequestBody User user,Boolean rememberMe, HttpSession session) {
         if(rememberMe == null) {
             rememberMe = false;
         }
         try {
+            if (StringUtils.isBlank(user.getCaptcha()) ||
+                    !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString())){
+                return ResponseBean.fail("验证码错误", null);
+            }
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(),rememberMe);
             Subject subject = SecurityUtils.getSubject();
             subject.login(usernamePasswordToken);
-            responseBean = new ResponseBean(ResponseBean.SUCCESS_CODE, "登录成功", null);
+            return ResponseBean.success("登录成功", null);
         }catch (IncorrectCredentialsException e) {
-            responseBean = new ResponseBean(ResponseBean.ERROR_CODE, "密码错误", e.getMessage());
+            return ResponseBean.fail("密码错误", e.getMessage());
         }catch (UnknownAccountException e) {
-            responseBean = new ResponseBean(ResponseBean.ERROR_CODE, "账户不存在", e.getMessage());
+            return ResponseBean.fail("账户不存在", e.getMessage());
         }catch (Exception e) {
-            responseBean = new ResponseBean(ResponseBean.ERROR_CODE, "系统异常", e.getMessage());
+            return ResponseBean.fail("系统异常", e.getMessage());
         }
-        return responseBean;
     }
 
     /**
@@ -145,5 +151,24 @@ public class SystemController extends BaseController{
         }
         logger.error("注册失败: {}", user.toString());
         return ResponseBean.fail("注册失败", null);
+    }
+
+    /**
+     * 验证码
+     */
+    @RequestMapping(method = RequestMethod.GET, path = "/captcha")
+    public void captcha(HttpSession session, HttpServletResponse response) {
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        try {
+            session.setAttribute("CAPTCHA_CODE", lineCaptcha.getCode().toUpperCase());
+            response.setContentType("image/png");
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expire", 0);
+            lineCaptcha.write(response.getOutputStream());
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("验证码生成失败: {}", e.getMessage());
+        }
     }
 }

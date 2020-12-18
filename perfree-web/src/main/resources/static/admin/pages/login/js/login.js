@@ -1,44 +1,31 @@
-var element, layer;
-layui.use(['element', 'layer'], function () {
+let form, element, layer;
+layui.use(['layer', 'form', 'element'], function () {
+    form = layui.form;
     element = layui.element;
     layer = layui.layer;
     layer.config({
         offset: '10%'
     });
-});
-
-$(".p-login-btn").on('click', function () {
-    let account = $("input[name=account]").val();
-    let password = $("input[name=password]").val();
-    if (account === undefined || account === '' || account.length < 1){
-        layer.msg("请输入账号", {icon: 2});
-        return;
-    }
-    if (password === undefined || password === '' || password.length < 1){
-        layer.msg("请输入密码", {icon: 2});
-        return;
-    }
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        url: "/doLogin" ,
-        data: $('#loginForm').serialize(),
-        success: function (result) {
-            if (result.code === 200) {
-                location.href='/';
-            } else {
-                layer.msg(result.msg, {icon: 2});
+    // 表单验证
+    form.verify({});
+    // 表单提交
+    form.on('submit(addForm)', function (data) {
+        $.ajax({
+            type: "POST",
+            url: "/doLogin",
+            contentType: "application/json",
+            data: JSON.stringify(data.field),
+            success: function (data) {
+                if (data.code === 200) {
+                    window.location.href="/";
+                } else {
+                    layer.msg(data.msg, {icon: 2});
+                }
+            },
+            error: function (data) {
+                layer.msg("注册失败", {icon: 2});
             }
-        },
-        error : function() {
-            layer.msg("网络错误,请稍候重试", {icon: 2});
-        }
+        });
+        return false;
     });
-});
-
-// 回车事件
-$(document).keyup(function(event){
-    if(event.keyCode === 13){
-        $(".p-login-btn").trigger("click");
-    }
 });

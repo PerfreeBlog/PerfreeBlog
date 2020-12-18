@@ -28,6 +28,7 @@ public class User implements Serializable {
     private Long roleId;
     private Date createTime;
     private Date updateTime;
+    private String captcha;
 
     private Role role;
     @Email(message = "请正确填写邮箱")
@@ -143,5 +144,13 @@ public class User implements Serializable {
             return false;
         }
         return role.getCode().equals("admin") || role.getCode().equals("superAdmin");
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
     }
 }
