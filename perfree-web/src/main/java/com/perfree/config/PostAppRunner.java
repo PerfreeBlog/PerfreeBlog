@@ -4,11 +4,9 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.jfinal.template.Directive;
-import com.perfree.common.OptionCache;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
-import com.perfree.mapper.OptionMapper;
-import com.perfree.model.Option;
+import com.perfree.service.OptionService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,10 +28,10 @@ import java.util.Map;
 public class PostAppRunner implements ApplicationRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(PostAppRunner.class);
 
-    private final OptionMapper optionMapper;
+    private final OptionService optionService;
 
-    public PostAppRunner(OptionMapper optionMapper) {
-        this.optionMapper = optionMapper;
+    public PostAppRunner(OptionService optionService) {
+        this.optionService = optionService;
     }
 
     @Override
@@ -60,8 +57,7 @@ public class PostAppRunner implements ApplicationRunner {
         dbSetting.autoLoad(true);
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
-            List<Option> options = optionMapper.getStartOption();
-            options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
+            optionService.initOptionCache();
         }
     }
 

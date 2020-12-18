@@ -1,4 +1,4 @@
-package com.perfree.config;
+package com.perfree.interceptor;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 

@@ -4,7 +4,13 @@ public class Constants {
     // option
     public static final String OPTION_WEB_THEME = "WEB_THEME"; // 网站主题
     public static final String OPTION_WEB_COMMENT_IS_REVIEW = "WEB_COMMENT_IS_REVIEW"; // 评论审核
+    public static final String OPTION_WEB_TITLE = "WEB_TITLE"; // 网站标题
+    public static final String OPTION_WEB_META_KEYWORD = "WEB_META_KEYWORD";
+    public static final String OPTION_WEB_META_DESC = "WEB_META_DESC";
 
+    public static final String SEO_TITLE = "SEO_TITLE"; // 网站标题
+    public static final String SEO_KEYWORD = "SEO_KEYWORD"; // 网站关键字
+    public static final String SEO_DESC = "SEO_DESC"; // 网站描述
 
     // url
     public static final String URL_ARTICLE_LIST = "/articleList/"; // 文章列表

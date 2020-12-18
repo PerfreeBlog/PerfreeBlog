@@ -82,4 +82,10 @@ public abstract class BaseDirective extends Directive {
         String param = params.get(key);
         return CastUtil.strToLong(param,defaultValue);
     }
+
+    public Boolean getExprParamToBool(String key, Boolean defaultValue) {
+        HashMap<String, String> params = this.exprListToMap();
+        String param = params.get(key);
+        return CastUtil.strToBool(param, defaultValue);
+    }
 }

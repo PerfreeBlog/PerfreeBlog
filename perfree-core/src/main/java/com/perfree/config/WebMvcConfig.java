@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import com.perfree.interceptor.*;
 
 /**
  * Web configuration
@@ -46,6 +47,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/install/step2",
                         "/install/addDatabase",
                         "/static/**"
+                );
+
+        registry.addInterceptor(new EnjoyInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/install",
+                        "/install/step2",
+                        "/install/step3"
                 );
     }
 

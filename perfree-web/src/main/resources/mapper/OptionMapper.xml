@@ -20,6 +20,6 @@
         select t.* from p_option t where t.key = #{key}
     </select>
     <select id="getStartOption" resultType="com.perfree.model.Option">
-         select t.* from p_option t where t.key in ("WEB_THEME")
+         select t.* from p_option t where t.key in ("WEB_THEME", "WEB_TITLE","WEB_META_KEYWORD","WEB_META_DESC")
     </select>
 </mapper>

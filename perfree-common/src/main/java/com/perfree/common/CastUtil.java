@@ -36,4 +36,11 @@ public class CastUtil {
         }
         return Long.parseLong(str);
     }
+
+    public static Boolean strToBool(String str, Boolean defaultValue){
+        if (StringUtils.isBlank(str)) {
+            return defaultValue;
+        }
+        return Boolean.valueOf(str);
+    }
 }

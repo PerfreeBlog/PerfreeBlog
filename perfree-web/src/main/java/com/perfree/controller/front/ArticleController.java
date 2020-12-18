@@ -38,8 +38,12 @@ public class ArticleController extends BaseController {
             model.addAttribute("commentIndex", split[1]);
         }
         cacheCount(articleId, IpUtil.getIpAddr(request));
+        Article article = articleService.getById(articleId);
         model.addAttribute("articleId", articleId);
-        model.addAttribute("article", articleService.getById(articleId));
+        model.addAttribute("article", article);
+        model.addAttribute(Constants.SEO_TITLE, article.getTitle());
+        model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
+        model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
         return view(currentThemePage() + "/article.html");
     }
 

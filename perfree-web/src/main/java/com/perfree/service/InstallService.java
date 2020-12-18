@@ -24,7 +24,7 @@ import java.util.List;
 public class InstallService {
 
     @Autowired
-    private OptionMapper optionMapper;
+    private OptionService optionService;
 
     public void addDatabase(Database database) throws Exception{
         String format = "jdbc:mysql://%s:%s/perfree?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
@@ -57,7 +57,6 @@ public class InstallService {
         setting.setProperty("installStatus","dbSuccess");
         setting.store(file.getAbsolutePath());
 
-        List<Option> options = optionMapper.getStartOption();
-        options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
+        optionService.initOptionCache();
     }
 }

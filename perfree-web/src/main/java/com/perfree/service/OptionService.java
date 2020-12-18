@@ -1,5 +1,6 @@
 package com.perfree.service;
 
+import com.perfree.common.OptionCache;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,9 @@ public class OptionService {
      * @return int
      */
     public int updateValueByKey(Option option) {
-        return optionMapper.updateValueByKey(option);
+        int count = optionMapper.updateValueByKey(option);
+        initOptionCache();
+        return count;
     }
 
     /**
@@ -40,6 +43,14 @@ public class OptionService {
      * @return int
      */
     public int addOrUpdateOptions(List<Option> options) {
-        return optionMapper.addOrUpdateOptions(options);
+        int count = optionMapper.addOrUpdateOptions(options);
+        initOptionCache();
+        return count;
+    }
+
+    public void initOptionCache() {
+        List<Option> options = optionMapper.getStartOption();
+        OptionCache.clear();
+        options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
     }
 }

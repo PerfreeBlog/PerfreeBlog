@@ -28,4 +28,11 @@ public class OptionCache {
         optionMap.put(key, value);
     }
 
+    /**
+     * 清空
+     */
+    public static void clear() {
+        optionMap.clear();
+    }
+
 }
