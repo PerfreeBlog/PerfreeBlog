@@ -17,7 +17,7 @@ layui.use(['layer', 'form', 'element'], function () {
             data: JSON.stringify(data.field),
             success: function (data) {
                 if (data.code === 200) {
-                    layer.confirm('注册成功,点击确定前往登录', {icon: 1, title:'提示'}, function(index){
+                    layer.alert('注册成功,点击确定前往登录', {icon: 1, title:'提示',closeBtn: false}, function(index){
                         window.location.href="/login";
                         layer.close(index);
                     });
