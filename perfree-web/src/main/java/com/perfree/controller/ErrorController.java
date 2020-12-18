@@ -30,4 +30,18 @@ public class ErrorController extends BaseController{
     public ResponseEntity<?> error500(){
         return ResponseEntity.status(500).build();
     }
+
+    /**
+     * 权限异常
+     */
+    @RequestMapping(value="/403",produces = {"text/html"})
+    public String unauthorizedPage() {
+        return view("/403.html", "/403.html", "static/admin/pages/exception/403.html");
+    }
+
+    @RequestMapping(value = "/403")
+    @ResponseBody
+    public ResponseEntity<?> unauthorized(){
+        return ResponseEntity.status(403).build();
+    }
 }

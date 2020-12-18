@@ -7,7 +7,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 控制首页地址
@@ -32,6 +32,7 @@ public class SystemController extends BaseController{
      * @return String
      */
     @RequestMapping("/admin")
+    @RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
     public String adminIndex(Model model) {
         List<Menu> menus = getMenuByUserIdAndType();
         model.addAttribute("menus", menus);
@@ -92,20 +93,5 @@ public class SystemController extends BaseController{
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return view(currentThemePage() + "/index.html");
-    }
-
-    /**
-     * 权限异常
-     */
-    @RequestMapping("/403")
-    public String unauthorized() {
-        return view("/403.html", "/403.html", "static/admin/pages/exception/403.html");
-    }
-
-    public static void main(String args[]){
-        String uuid = UUID.randomUUID().toString().replaceAll("-","");
-        System.out.println(uuid);
-        String md5Hash = new Md5Hash("111111", uuid).toString();
-        System.out.println(md5Hash);
     }
 }
