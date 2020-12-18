@@ -3,6 +3,7 @@ package com.perfree.controller.admin;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
+import com.perfree.common.Constants;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Database;
@@ -32,16 +33,28 @@ public class InstallController extends BaseController {
 
     @RequestMapping("/install")
     public String installPage() {
+        String installStatus = getInstallStatus();
+        if (StringUtils.isNotBlank(installStatus)) {
+            return "redirect:/404";
+        }
         return view("static/admin/pages/install/install.html");
     }
 
     @RequestMapping("/install/step2")
     public String installStep2Page() {
+        String installStatus = getInstallStatus();
+        if (StringUtils.isNotBlank(installStatus)) {
+            return "redirect:/404";
+        }
         return view("static/admin/pages/install/install-step2.html");
     }
 
     @RequestMapping("/install/step3")
     public String installStep3Page() {
+        String installStatus = getInstallStatus();
+        if (StringUtils.isNotBlank(installStatus) && installStatus.equals("success")) {
+            return "redirect:/404";
+        }
         return view("static/admin/pages/install/install-step3.html");
     }
 
@@ -49,6 +62,10 @@ public class InstallController extends BaseController {
     @ResponseBody
     public ResponseBean addDatabase(@RequestBody @Valid Database database) {
         try {
+            String installStatus = getInstallStatus();
+            if (StringUtils.isNotBlank(installStatus)) {
+                return ResponseBean.fail("数据库信息已配置,请勿重复配置", null);
+            }
             installService.addDatabase(database);
             return ResponseBean.success("配置成功", null);
         } catch (Exception e) {
@@ -61,6 +78,10 @@ public class InstallController extends BaseController {
     @RequestMapping("/install/addAdminUser")
     @ResponseBody
     public ResponseBean addAdminUser(@RequestBody User user) {
+        String installStatus = getInstallStatus();
+        if (StringUtils.isNotBlank(installStatus) && installStatus.equals("success")) {
+            return ResponseBean.fail("安装程序已完成,请在后台手动添加用户", null);
+        }
         user.setUserName(user.getAccount());
         user.setRoleId(1L);
         user.setStatus(0);
@@ -71,7 +92,7 @@ public class InstallController extends BaseController {
             return ResponseBean.fail("账户已存在", null);
         }
         if (userService.add(user) > 0) {
-            File file = new File("resources/db.properties");
+            File file = new File(Constants.DB_PROPERTIES_PATH);
             Props setting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
             setting.setProperty("installStatus","success");
             setting.store(file.getAbsolutePath());

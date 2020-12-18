@@ -5,6 +5,7 @@ import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
+import com.perfree.common.Constants;
 import com.perfree.common.OptionCache;
 import com.perfree.config.DynamicDataSource;
 import com.perfree.mapper.OptionMapper;
@@ -47,7 +48,7 @@ public class InstallService {
         for (int i = 0; i < split.length - 1; i++){
             SqlExecutor.execute(connection, split[i]);
         }
-        File file = new File("resources/db.properties");
+        File file = new File(Constants.DB_PROPERTIES_PATH);
         Props setting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
         setting.setProperty("url",url);
         setting.setProperty("username",database.getUserName());

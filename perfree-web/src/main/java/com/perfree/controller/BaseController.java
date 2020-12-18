@@ -1,5 +1,8 @@
 package com.perfree.controller;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
 import com.perfree.common.OptionCache;
 import com.perfree.model.Menu;
@@ -85,5 +88,18 @@ public class BaseController {
         } else {
             return view(adminViewPath);
         }
+    }
+
+    /**
+     * 获取安装进度
+     * @return String
+     */
+    public String getInstallStatus() {
+        File file = new File(Constants.DB_PROPERTIES_PATH);
+        if (!file.exists()) {
+            return null;
+        }
+        Props dbSetting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
+        return dbSetting.getStr("installStatus");
     }
 }

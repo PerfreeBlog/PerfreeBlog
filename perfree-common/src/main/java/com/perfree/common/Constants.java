@@ -23,4 +23,6 @@ public class Constants {
 
     public static final String RESOURCES_DIR = "resources"; // resources路径
     public static final String PLUGINS_DIR = "resources/plugins"; // 插件
+
+    public static final String DB_PROPERTIES_PATH = "resources/db.properties"; // 数据库配置文件地址
 }
