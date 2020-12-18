@@ -131,8 +131,7 @@ public class SystemController extends BaseController{
     @ResponseBody
     public ResponseBean doRegister(@RequestBody @Valid User user) {
         Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);
-        if (optionByKey == null || StringUtils.isBlank(optionByKey.getValue())
-                || optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
+        if (optionByKey != null && optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
             return ResponseBean.fail("网站已关闭注册功能", null);
         }
         if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 ||

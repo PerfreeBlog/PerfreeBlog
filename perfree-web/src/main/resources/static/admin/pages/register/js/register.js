@@ -14,7 +14,7 @@ layui.use(['layer', 'form', 'element'], function () {
             type: "POST",
             url: "/doRegister",
             contentType: "application/json",
-            data: data.field,
+            data: JSON.stringify(data.field),
             success: function (data) {
                 if (data.code === 200) {
                     layer.alert('注册成功,点击确定前往登录', {icon: 1, title:'提示',closeBtn: false}, function(index){
