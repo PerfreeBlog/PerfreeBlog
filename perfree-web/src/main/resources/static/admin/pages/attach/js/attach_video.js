@@ -74,21 +74,27 @@ function queryTable() {
  * 初始化上传
  */
 function initUpload() {
+    let loadIndex;
     upload.render({
         elem: '#uploadBtn'
         , url: '/admin/attach/upload'
         , accept: 'file'
         , acceptMime: 'video/*'
         , exts: 'avi|mov|rmvb|rm|mp4|flv|3gp|mpg|mlv|mpe|mpeg|vob'
+        ,choose: function (obj) {
+            loadIndex = layer.load();
+        }
         , done: function (res) {
+            layer.close(loadIndex);
             if (res.code === 200) {
                 parent.layer.close(parent.layer.getFrameIndex(window.name));
-                parent.selectImg(res.data.url);
+                parent.selectVideo(res.data.url);
             } else {
                 layer.msg(res.msg, {icon: 2});
             }
         }
         , error: function () {
+            layer.close(loadIndex);
             layer.msg("上传失败", {icon: 2});
         }
     });

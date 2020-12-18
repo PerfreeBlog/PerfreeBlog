@@ -14,9 +14,11 @@ layui.use(['layer', 'form', 'element'], function () {
         bindAction: '#add',
         accept: 'file',
         choose: function (obj) {
+            loadIndex = layer.load();
             let files = obj.pushFile();
             obj.preview(function (index, file, result) {
                 $("#file").val(file.name);
+                layer.close(loadIndex);
             });
         },
         error: function () {

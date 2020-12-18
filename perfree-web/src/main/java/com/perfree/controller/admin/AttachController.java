@@ -78,7 +78,7 @@ public class AttachController extends BaseController {
                 logger.error("文件名不能为空!");
                 return ResponseBean.fail("文件名不能为空!", null);
             }
-            String suffix = multiFileName.substring(multiFileName.indexOf("."));
+            String suffix = multiFileName.substring(multiFileName.lastIndexOf("."));
             String type = FileUtil.getFileType(FileTypeUtil.getType(multiFile.getInputStream()),suffix);
             String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "attach");
             Attach attach = new Attach();
