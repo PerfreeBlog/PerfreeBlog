@@ -7,6 +7,8 @@ public class Constants {
     public static final String OPTION_WEB_TITLE = "WEB_TITLE"; // 网站标题
     public static final String OPTION_WEB_META_KEYWORD = "WEB_META_KEYWORD";
     public static final String OPTION_WEB_META_DESC = "WEB_META_DESC";
+    public static final String OPTION_WEB_IS_REGISTER = "WEB_IS_REGISTER";// 是否允许注册新用户
+
 
     public static final String SEO_TITLE = "SEO_TITLE"; // 网站标题
     public static final String SEO_KEYWORD = "SEO_KEYWORD"; // 网站关键字
@@ -21,6 +23,9 @@ public class Constants {
 
     public static final int COMMENT_STATUS_NORMAL = 0; // 评论不需要审核
     public static final int COMMENT_STATUS_REVIEW = 1; // 评论需审核
+
+    public static final int REGISTER_YES = 0; // 允许注册新用户
+    public static final int REGISTER_NO = 1; // 不允许注册新用户
 
     public static final String PROD_THEMES_PATH = "resources/static/themes"; // 生产主题路径
     public static final String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";// 开发主题路径

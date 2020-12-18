@@ -3,7 +3,9 @@ package com.perfree.controller;
 import com.perfree.common.Constants;
 import com.perfree.common.ResponseBean;
 import com.perfree.model.Menu;
+import com.perfree.model.Option;
 import com.perfree.model.User;
+import com.perfree.service.OptionService;
 import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -35,6 +37,8 @@ public class SystemController extends BaseController{
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
     @Autowired
     private UserService userService;
+    @Autowired
+    private OptionService optionService;
 
     /**
      * 后台首页
@@ -120,7 +124,13 @@ public class SystemController extends BaseController{
     @RequestMapping(method = RequestMethod.POST, path = "/doRegister")
     @ResponseBody
     public ResponseBean doRegister(@RequestBody @Valid User user) {
-        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 12){
+        Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);
+        if (optionByKey == null || StringUtils.isBlank(optionByKey.getValue())
+                || optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
+            return ResponseBean.fail("网站已关闭注册功能", null);
+        }
+        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 ||
+                user.getPassword().length() > 12){
             logger.error("密码不能为空且在6-12字符之间: {}", user.toString());
             return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
         }

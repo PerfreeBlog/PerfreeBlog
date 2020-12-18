@@ -57,6 +57,14 @@
                 </div>
 
                 <div class="layui-form-item">
+                    <label class="layui-form-label">允许注册新用户</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="1" title="允许" #(optionCompare('WEB_IS_REGISTER', '1') ? 'checked': '')>
+                        <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="0" title="不允许" #(optionCompare('WEB_IS_REGISTER', '0') ? 'checked': '')>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
                     <label class="layui-form-label">META关键字</label>
                     <div class="layui-input-block">
                         <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键字,英文逗号分割" class="layui-textarea">#option('WEB_META_KEYWORD')</textarea>
