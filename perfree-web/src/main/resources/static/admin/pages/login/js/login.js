@@ -23,7 +23,7 @@ layui.use(['layer', 'form', 'element'], function () {
                 }
             },
             error: function (data) {
-                layer.msg("注册失败", {icon: 2});
+                layer.msg("登录失败", {icon: 2});
             }
         });
         return false;
