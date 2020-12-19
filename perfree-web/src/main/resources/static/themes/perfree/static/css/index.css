@@ -31,8 +31,8 @@
 .m-article-title:hover{
 }
 .m-article-title h2{
-    font-weight: 400;
-    color: #4a4a4a;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.65);
     font-size: 1.35rem;
     margin-bottom: 0.1em;
 }
@@ -43,7 +43,7 @@
     width: 100%;
     margin-top: 3px;
     position: relative;
-    color: #737373;
+    color: #616161;
     font-size: 12px;
 }
 .m-article-info-left{
