@@ -604,3 +604,17 @@ pre{
 .p-form-required{
     color: red;
 }
+
+@media screen and (max-width:700px) {
+    .m-comment-edit-info{
+        height: auto;
+    }
+    .m-comment-input {
+        width: calc(100% - 10px);
+        margin-bottom: 3px;
+    }
+    .m-comment-send-box {
+        position: inherit;
+        left: 1px;
+    }
+}

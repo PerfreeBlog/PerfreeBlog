@@ -32,7 +32,7 @@ public class CommentController extends BaseController {
 
     @RequestMapping("/comment/submitComment")
     @ResponseBody
-    public ResponseBean submitComment(@RequestBody @Valid Comment comment){
+    public ResponseBean submitComment(@RequestBody Comment comment){
         Article article = articleService.getById(comment.getArticleId().toString());
         if(article.getIsComment() == 0) {
             return ResponseBean.error(-1,"该文章已关闭评论功能" , null);

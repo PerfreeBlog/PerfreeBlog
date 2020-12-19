@@ -592,3 +592,50 @@ a:hover {
 .m-top{
     top: -2px;
 }
+
+@media screen and (max-width:1700px) {
+    .m-header,.m-content,.m-footer {
+        padding-left: 300px;
+        padding-right: 300px;
+    }
+}
+
+@media screen and (max-width:1400px) {
+    .m-header,.m-content,.m-footer {
+        padding-left: 240px;
+        padding-right: 240px;
+    }
+}
+
+@media screen and (max-width:1200px) {
+    .m-header,.m-content,.m-footer {
+        padding-left: 150px;
+        padding-right: 150px;
+    }
+}
+
+@media screen and (max-width:1000px) {
+    .m-header,.m-content,.m-footer {
+        padding-left: 80px;
+        padding-right: 80px;
+    }
+}
+
+@media screen and (max-width:900px) {
+    .m-header,.m-content,.m-footer {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+@media screen and (max-width:700px) {
+    .m-content-left,.m-content-right {
+        width: 100%;
+    }
+    .backtop-box-open {
+        display: none;
+    }
+    .m-header-user-box {
+        display: none;
+    }
+}

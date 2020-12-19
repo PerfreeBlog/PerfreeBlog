@@ -61,3 +61,20 @@
 .m-link-title a:hover{
     color: #79a7f1;
 }
+
+
+@media screen and (max-width:1400px) {
+    .m-link-box {
+        width: calc(50% - 10px);
+        padding: 5px;
+        color: #606266;
+    }
+}
+
+@media screen and (max-width:700px) {
+    .m-link-box {
+        width: calc(100% - 10px);
+        padding: 5px;
+        color: #606266;
+    }
+}
