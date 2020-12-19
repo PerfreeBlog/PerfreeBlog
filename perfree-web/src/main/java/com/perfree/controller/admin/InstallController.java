@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
+import com.perfree.common.GravatarUtil;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Database;
@@ -85,6 +86,7 @@ public class InstallController extends BaseController {
         user.setUserName(user.getAccount());
         user.setRoleId(1L);
         user.setStatus(0);
+        user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
         if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 12){
             return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
         }
