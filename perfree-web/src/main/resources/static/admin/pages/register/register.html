@@ -41,6 +41,18 @@
                 <span class="p-input-label">邮箱:</span>
                 <input class="p-input" type="email" name="email" placeholder="请输入邮箱地址"/>
             </div>
+
+            <div class="p-input-box captcha-group-box">
+                <span class="p-input-label">验证码:</span><br>
+                <div class="layui-inline captcha-group">
+                    <div class="layui-input-inline captcha-input-box">
+                        <input type="text" name="captcha" placeholder="请输入验证码" required lay-verify="required" autocomplete="off" class="layui-input captcha-input">
+                    </div>
+                    <div class="layui-input-inline captcha-box">
+                        <img src="/captcha" onclick="this.src='/captcha?d='+Math.random();">
+                    </div>
+                </div>
+            </div>
             <button type="button" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-login-btn">注册</button>
         </form>
         <p class="p-login-box-bottom">
