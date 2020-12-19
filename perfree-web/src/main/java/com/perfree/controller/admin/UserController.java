@@ -1,5 +1,6 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.GravatarUtil;
 import com.perfree.commons.FileUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
@@ -114,6 +115,9 @@ public class UserController extends BaseController {
             logger.error("账户已存在: {}", user.toString());
             return ResponseBean.fail("账户已存在", null);
         }
+        if (StringUtils.isBlank(user.getAvatar())){
+            user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
+        }
         if (userService.add(user) > 0) {
             return ResponseBean.success("添加成功", null);
         }
@@ -138,6 +142,9 @@ public class UserController extends BaseController {
     @PostMapping("/user/update")
     @ResponseBody
     public ResponseBean update(@RequestBody @Valid User user) {
+        if (StringUtils.isBlank(user.getAvatar())){
+            user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
+        }
         if (userService.update(user) > 0) {
             return ResponseBean.success("更新成功", null);
         }

@@ -55,11 +55,9 @@
             where id = #{articleId}
     </update>
     <update id="articleCommentSub">
-        <foreach collection="array" item="id" index="index" open="" close="" separator=";">
-            update p_article
+        update p_article
             set commentCount= commentCount-1
             where id in (SELECT articleId FROM p_comment where id = #{id})
-        </foreach>
     </update>
     <update id="articleViewCountAdd">
         update p_article set
@@ -127,7 +125,7 @@
         SELECT count(1) FROM p_article
     </select>
     <select id="getArticleListByDashboard" resultType="com.perfree.model.Article">
-        SELECT * FROM p_article ORDER BY createTime DESC limit 0,6
+        SELECT * FROM p_article ORDER BY createTime DESC limit 0,24
     </select>
 
     <select id="getHotArticle" resultMap="LIST_RESULT">

@@ -49,20 +49,20 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">邮箱:</label>
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>邮箱:
+            </label>
             <div class="layui-input-block">
-                <input type="text" name="email" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
+                <input type="text" name="email" required lay-verify="required" placeholder="请输入邮箱" autocomplete="off" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">性别: </label>
+            <label class="layui-form-label">
+                网站:
+            </label>
             <div class="layui-input-block">
-                <select name="sex">
-                    <option value="">请选择</option>
-                    <option value="0">女</option>
-                    <option value="1">男</option>
-                </select>
+                <input type="text" name="website"  placeholder="网站或博客地址" autocomplete="off" class="layui-input">
             </div>
         </div>
 

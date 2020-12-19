@@ -38,12 +38,12 @@
             </div>
 
             <div class="p-input-box">
-                <span class="p-input-label">邮箱:</span>
-                <input class="p-input" type="email" name="email" placeholder="请输入邮箱地址"/>
+                <span class="p-input-label"><span class="p-form-required">*</span>邮箱:</span>
+                <input class="p-input" type="email" name="email" required lay-verify="required" placeholder="请输入邮箱地址"/>
             </div>
 
             <div class="p-input-box captcha-group-box">
-                <span class="p-input-label">验证码:</span><br>
+                <span class="p-input-label"><span class="p-form-required">*</span>验证码:</span><br>
                 <div class="layui-inline captcha-group">
                     <div class="layui-input-inline captcha-input-box">
                         <input type="text" name="captcha" placeholder="请输入验证码" required lay-verify="required" autocomplete="off" class="layui-input captcha-input">

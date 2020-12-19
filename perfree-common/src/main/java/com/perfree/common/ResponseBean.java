@@ -25,6 +25,10 @@ public class ResponseBean {
         return new ResponseBean(ERROR_CODE, msg, data);
     }
 
+    public static ResponseBean error(int code, String msg, Object data) {
+        return new ResponseBean(code, msg, data);
+    }
+
     public int getCode() {
         return code;
     }

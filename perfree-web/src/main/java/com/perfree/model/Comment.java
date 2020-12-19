@@ -1,5 +1,10 @@
 package com.perfree.model;
 
+import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -10,9 +15,17 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 7817277417501762472L;
     private Long id;
     private Long pid;
+    @NotNull(message = "文章id不允许为空")
     private Long articleId;
     private Long userId;
+    @NotBlank(message = "评论内容不允许为空")
     private String content;
+    private String avatar;
+    private String website;
+    @NotBlank(message = "邮箱不允许为空")
+    @Email(message = "请正确填写邮箱")
+    private String email;
+    private String userName;
 
     private Integer status;
     private Date createTime;
@@ -110,5 +123,37 @@ public class Comment implements Serializable {
 
     public void setParent(Comment parent) {
         this.parent = parent;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

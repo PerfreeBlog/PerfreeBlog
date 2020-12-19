@@ -29,11 +29,12 @@ public class User implements Serializable {
     private Date createTime;
     private Date updateTime;
     private String captcha;
+    private String website;
 
     private Role role;
+    @NotBlank(message = "邮箱不允许为空")
     @Email(message = "请正确填写邮箱")
     private String email;
-    private Integer sex = -1;
 
     public String getEmail() {
         return email;
@@ -41,14 +42,6 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getSex() {
-        return sex;
-    }
-
-    public void setSex(Integer sex) {
-        this.sex = sex;
     }
 
     public Long getId() {
@@ -152,5 +145,13 @@ public class User implements Serializable {
 
     public void setCaptcha(String captcha) {
         this.captcha = captcha;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
     }
 }

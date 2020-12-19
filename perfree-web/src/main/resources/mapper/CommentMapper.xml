@@ -11,22 +11,19 @@
         <result property="status" column="status"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
-        <association property="user" javaType="com.perfree.model.User">
-            <id property="id" column="userId" />
-            <result property="userName" column="userName"></result>
-            <result property="avatar" column="avatar"></result>
-            <result property="sex" column="sex"></result>
-            <result property="email" column="email"></result>
-        </association>
+        <result property="avatar" column="avatar"></result>
+        <result property="website" column="website"></result>
+        <result property="email" column="email"></result>
+        <result property="userName" column="userName"></result>
         <association property="article" javaType="com.perfree.model.Article">
             <id property="id" column="articleId" />
             <result property="title" column="title"/>
         </association>
     </resultMap>
 
-    <insert id="add">
-        insert into p_comment (articleId, `pid`, `userId`, content,status,createTime)
-        VALUES (#{articleId},#{pid},#{userId}, #{content}, #{status}, #{createTime})
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into p_comment (articleId, `pid`, `userId`, content,status, avatar,website,email,userName,createTime)
+        VALUES (#{articleId},#{pid},#{userId}, #{content}, #{status}, #{avatar},#{website},#{email},#{userName},#{createTime})
     </insert>
 
     <update id="changeStatus">
@@ -44,7 +41,7 @@
     </delete>
 
     <select id="getList" resultMap="LIST_RESULT">
-        select t1.*,t2.userName,t2.avatar,t2.sex,t2.email,t3.title from p_comment t1 left join p_user t2 on t1.userId = t2.id
+        select t1.*,t3.title from p_comment t1
         left join p_article t3 on t1.articleId = t3.id
         where 1 = 1
         <if test="content != null and content != ''">
@@ -56,7 +53,7 @@
         SELECT count(1) FROM p_comment
     </select>
     <select id="getCommentListByDashboard" resultMap="COMMENT_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.sex,t2.email FROM p_comment t1 left join p_user t2 on t1.userId = t2.id ORDER BY createTime DESC limit 0,6
+        SELECT t1.* FROM p_comment t1 ORDER BY createTime DESC limit 0,24
     </select>
 
 
@@ -69,24 +66,21 @@
         <result property="status" column="status"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
+        <result property="avatar" column="avatar"></result>
+        <result property="website" column="website"></result>
+        <result property="email" column="email"></result>
+        <result property="userName" column="userName"></result>
         <association select="getParentComment" property="parent" column="pid"></association>
-        <association property="user" javaType="com.perfree.model.User">
-            <id property="id" column="userId" />
-            <result property="userName" column="userName"></result>
-            <result property="avatar" column="avatar"></result>
-            <result property="sex" column="sex"></result>
-            <result property="email" column="email"></result>
-        </association>
     </resultMap>
     <select id="getCommentByArticleId" resultMap="COMMENT_RESULT">
-        select t1.*,t2.userName,t2.avatar,t2.sex,t2.email from p_comment t1 left join p_user t2 on t1.userId = t2.id
+        select t1.* from p_comment t1
         where t1.articleId = #{articleId} and t1.status = 0
-        order by t1.createTime asc
+        order by t1.createTime desc
     </select>
 
     <select id="getParentComment" resultMap="COMMENT_RESULT">
-        select t1.*,t2.userName,t2.avatar,t2.sex,t2.email from p_comment t1 left join p_user t2 on t1.userId = t2.id
+        select t1.* from p_comment t1
         where t1.id = #{pid}
-        order by t1.createTime asc
+        order by t1.createTime desc
     </select>
 </mapper>

@@ -47,7 +47,6 @@ public class ArticleController extends BaseController {
         return view(currentThemePage() + "/article.html");
     }
 
-
     /**
      * 缓存访问量
      * @param articleId articleId
@@ -58,7 +57,7 @@ public class ArticleController extends BaseController {
         //查询缓存
         Ehcache cache = cacheManager.getEhcache("articleHits");
         Element element = cache.get(Ip+articleId+"_count");
-        if(element==null){
+        if(element==null && article != null){
             long count = article.getViewCount() == null?0:article.getViewCount();
             count++;
             cache.put(new Element(Ip+articleId+"_count",count));

@@ -25,8 +25,6 @@ public class CommentService {
     @Autowired
     private ArticleService articleService;
 
-    @Autowired
-    private OptionService optionService;
 
     /**
      * 评论管理列表数据
@@ -88,16 +86,8 @@ public class CommentService {
         return commentPage;
     }
 
-    public int add(Comment comment, User user) {
-        Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_COMMENT_IS_REVIEW);
-        if (optionByKey != null && StringUtils.isNotBlank(optionByKey.getValue()) &&
-                optionByKey.getValue().equals(String.valueOf(Constants.COMMENT_STATUS_REVIEW))){
-            comment.setStatus(Constants.COMMENT_STATUS_REVIEW);
-        } else {
-            comment.setStatus(Constants.COMMENT_STATUS_NORMAL);
-        }
+    public int add(Comment comment) {
         comment.setCreateTime(new Date());
-        comment.setUserId(user.getId());
         comment.setPid(comment.getPid()==null ? -1: comment.getPid());
         articleService.articleCommentAdd(comment.getArticleId());
         return commentMapper.add(comment);

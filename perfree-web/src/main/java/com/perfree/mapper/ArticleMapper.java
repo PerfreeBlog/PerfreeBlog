@@ -135,7 +135,7 @@ public interface ArticleMapper{
 
     void articleCommentAdd(Long articleId);
 
-    void articleCommentSub(String[] tagIds);
+    void articleCommentSub(String commentId);
 
     /**
      * 获取归档列表

@@ -192,7 +192,9 @@ public class ArticleService{
     }
 
     public void articleCommentSub(String[] idArr) {
-        articleMapper.articleCommentSub(idArr);
+        for (String id : idArr) {
+            articleMapper.articleCommentSub(id);
+        }
     }
 
     /**

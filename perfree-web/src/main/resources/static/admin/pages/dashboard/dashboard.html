@@ -132,7 +132,7 @@
             res.data.forEach(d => {
                 html += '<li class="p-cart-li">\n' +
                     '    <span class="p-card-comment-time">' + util.toDateString(d.createTime, "yyyy-MM-dd") + '</span>\n' +
-                    '    <span class="p-card-comment-user">' + d.user.userName + '</span>\n' +
+                    '    <a class="p-card-comment-user">' + d.userName + ':</a>\n' +
                     '    <span class="p-card-comment-title">' + d.content + '</span>\n' +
                     '</li>'
             });

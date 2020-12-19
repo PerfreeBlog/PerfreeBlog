@@ -3,6 +3,7 @@ package com.perfree.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import com.perfree.common.Constants;
+import com.perfree.common.GravatarUtil;
 import com.perfree.common.ResponseBean;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
@@ -149,6 +150,7 @@ public class SystemController extends BaseController{
         }
         user.setStatus(0);
         user.setRoleId(2L);
+        user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
         if (userService.add(user) > 0) {
             return ResponseBean.success("注册成功", null);
         }

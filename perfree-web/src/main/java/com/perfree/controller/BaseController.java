@@ -11,6 +11,7 @@ import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
 import com.perfree.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,11 @@ public class BaseController {
     public User getUser(){
         Subject subject = SecurityUtils.getSubject();
         User user=new User();
-        BeanUtils.copyProperties(subject.getPrincipals().getPrimaryPrincipal(), user);
+        PrincipalCollection principals = subject.getPrincipals();
+        if (principals == null) {
+            return null;
+        }
+        BeanUtils.copyProperties(principals.getPrimaryPrincipal(), user);
         user = userService.getById(user.getId().toString());
         user.setPassword(null);
         user.setSalt(null);

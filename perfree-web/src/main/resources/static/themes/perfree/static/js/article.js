@@ -37,8 +37,8 @@ function initComment() {
         notice: 'notice/notice'
     })
     // 评论框初始化
-    layui.use(['form','notice'], function(){
-        const form=layui.form,notice = layui.notice;
+    layui.use(['form','notice','layer'], function(){
+        const form=layui.form,notice = layui.notice,layer=layui.layer;
         notice.options = {
             closeButton:true,//显示关闭按钮
             debug:false,//启用debug
@@ -60,12 +60,43 @@ function initComment() {
                 notice.error("请填写评论内容");
                 return false;
             }
-            return true;
+            let loadIndex = layer.load();
+            $.ajax({
+                type: "POST",
+                url: "/comment/submitComment",
+                contentType: "application/json",
+                data: JSON.stringify(data.field),
+                success: function (res) {
+                    if (res.code === 200) {
+                        notice.success("评论成功");
+                        $("#pid").val('');
+                        $("input[name='userName']").val('');
+                        $("input[name='email']").val('');
+                        $("input[name='website']").val('');
+                        $("#comment-edit").val('');
+                        $(".m-comment-box-title").after($("#m-comment-edit"));
+                        $(".m-comment-tip").show();
+                        $(".m-comment-cancel-revert").hide();
+                        $("#commentsBox").load("/article/"+data.field.articleId+" #comments",null,function(){
+                            location.hash = "#comment-"+ res.data.id;
+                            layer.close(loadIndex);
+                        });
+                    } else {
+                        layer.close(loadIndex);
+                        notice.error(res.msg);
+                    }
+                },
+                error: function () {
+                    layer.close(loadIndex);
+                    notice.error("评论失败");
+                }
+            });
+            return false;
         });
     });
 
     // 回复按钮点击事件
-    $('.m-comment-detail-revert-btn').on('click',function() {
+    $('#commentsBox').on('click','.m-comment-detail-revert-btn',function() {
         $(this).parent().parent().append($("#m-comment-edit"));
         $(".m-comment-tip").hide();
         $(".m-comment-cancel-revert").show();
@@ -73,7 +104,7 @@ function initComment() {
     });
 
     // 取消回复
-    $('.m-comment-cancel-revert').on('click',function() {
+    $('#commentsBox').on('click','.m-comment-cancel-revert',function() {
         $(".m-comment-box-title").after($("#m-comment-edit"));
         $(".m-comment-tip").show();
         $(".m-comment-cancel-revert").hide();

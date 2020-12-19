@@ -1,26 +1,23 @@
 <div class="m-comment-edit" id="m-comment-edit">
     #if(article.isComment == 1)
-        #user()
-            #if(user != null)
-                <form class="layui-form" id="commentForm" method="post" action="/comment/submitComment">
-                    <input type="hidden" name="articleId" value="#(article.id)" id="articleId">
-                    <input type="hidden" name="pid" id="pid">
-                    <input type="hidden" name="anchor" value="#m-comment-edit">
-                    <textarea id="comment-edit" name="content" placeholder="说点什么吧？"></textarea>
-                    <div class="m-comment-edit-info">
-                        <span class="m-comment-tip">说点什么吧?</span>
-                        <a class="m-comment-cancel-revert">取消回复</a>
-                        <div class="m-comment-send-box">
-                            <button class="layui-btn layui-btn-normal m-comment-edit-submit-btn" lay-submit lay-filter="comment">发表评论</button>
-                        </div>
-                    </div>
-                </form>
-            #else
-                <div class="m-comment-unlogin">
-                    <a href="/login">登录</a>即可评论~
+        <form class="layui-form" id="commentForm">
+            <input type="hidden" name="articleId" value="#(article.id)" id="articleId">
+            <input type="hidden" name="pid" id="pid">
+            <textarea id="comment-edit" name="content" placeholder="说点什么吧？"></textarea>
+            <div class="m-comment-edit-info">
+                #user()
+                    #if(user == null)
+                        <input type="text" placeholder="姓名或昵称(必填)" class="m-comment-input" name="userName">
+                        <input type="text" placeholder="邮箱地址(必填)" class="m-comment-input" name="email">
+                        <input type="text" placeholder="网站或博客地址" class="m-comment-input" name="website">
+                    #end
+                #end
+                <a class="m-comment-cancel-revert">取消回复</a>
+                <div class="m-comment-send-box">
+                    <button class="layui-btn layui-btn-normal m-comment-edit-submit-btn" lay-submit lay-filter="comment">发表评论</button>
                 </div>
-            #end
-        #end
+            </div>
+        </form>
     #else
         <div class="no-comment">
             该文章已关闭评论功能
@@ -28,38 +25,35 @@
     #end
 </div>
 #commentPage(pageSize=8)
+<div id="commentsBox">
     <div class="m-comment-list" id="comments">
         #for(comment : commentPage.data)
-        <div class="m-comment-detail-box layui-clear">
+        <div class="m-comment-detail-box layui-clear" id="comment-#(comment.id)">
             <div class="m-comment-detail-left">
-                <img src="#(isBlank(comment.user.avatar) ? '/static/public/images/user.png' : comment.user.avatar)" class="m-comment-detail-img">
+                <img src="#(isBlank(comment.avatar) ? '/static/public/images/user.png' : comment.avatar)" class="m-comment-detail-img">
             </div>
             <div class="m-comment-detail-right">
                 <div class="m-comment-detail-right-top">
-                    <span class="m-comment-detail-user">#(comment.user.userName??)</span>
+                    <span class="m-comment-detail-user">#(comment.userName??)</span>
                     <span class="m-comment-detail-time time">#date(comment.createTime, "yyyy-MM-dd HH:mm:ss")</span>
                 </div>
                 <div class="m-comment-detail-content">
                     #(comment.content ??)
                 </div>
                 #if(article.isComment == 1)
-                    #user()
-                        #if(user != null)
-                            <div class="m-comment-right-bottom">
-                                <a class="m-comment-detail-revert-btn" data-id="#(comment.id)" data-author="#(comment.user.userName ??)">回复</a>
-                            </div>
-                        #end
-                    #end
+                    <div class="m-comment-right-bottom">
+                        <a class="m-comment-detail-revert-btn" data-id="#(comment.id)" data-author="#(comment.userName ??)">回复</a>
+                    </div>
                 #end
 
                 #if(comment.parent)
                     <div class="m-comment-detail-box parentComment layui-clear">
                         <div class="m-comment-detail-left">
-                            <img src="#(isBlank(comment.parent.user.avatar) ? '/static/public/images/user.png' : comment.parent.user.avatar)" class="m-comment-detail-img">
+                            <img src="#(isBlank(comment.parent.avatar) ? '/static/public/images/user.png' : comment.parent.avatar)" class="m-comment-detail-img">
                         </div>
                         <div class="m-comment-detail-right">
                             <div class="m-comment-detail-right-top">
-                                <span class="m-comment-detail-user">#(comment.parent.user.userName ??)</span>
+                                <span class="m-comment-detail-user">#(comment.parent.userName ??)</span>
                                 <span class="m-comment-detail-time time">#date(comment.parent.createTime, "yyyy-MM-dd HH:mm:ss")</span>
                             </div>
                             <div class="m-comment-detail-content">
@@ -89,4 +83,5 @@
             </nav>
         #end
     </div>
+</div>
 #end

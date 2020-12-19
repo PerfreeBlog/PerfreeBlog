@@ -62,6 +62,27 @@ CREATE TABLE `p_comment`  (
   `userId` int(0) NULL DEFAULT NULL COMMENT '用户iD',
   `content` varchar(2048) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '评论内容',
   `status` int(0) NULL DEFAULT 0 COMMENT '状态:0正常,1:待审核',
+  `avatar` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '头像',
+  `website` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '网站地址',
+  `email` varchar(256) CHARACTER SET utf8mb4 NOT NULL COMMENT '邮箱',
+  `userName` varchar(256) CHARACTER SET utf8mb4 NOT NULL COMMENT '评论人',
+  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+  `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
+
+drop table if exists `p_user`;
+CREATE TABLE `p_user`  (
+  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `account` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '账户',
+  `userName` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '账户名',
+  `password` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '密码',
+  `salt` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '盐值',
+  `status` int(0) NOT NULL DEFAULT 0 COMMENT '状态:0正常,1禁用',
+  `avatar` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '头像',
+  `roleId` int(0) NOT NULL COMMENT '角色id',
+  `email` varchar(128) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '邮箱',
+  `website` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '网站地址',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -131,22 +152,6 @@ CREATE TABLE `p_tag`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
 
-drop table if exists `p_user`;
-CREATE TABLE `p_user`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `account` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '账户',
-  `userName` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '账户名',
-  `password` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '密码',
-  `salt` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '盐值',
-  `status` int(0) NOT NULL DEFAULT 0 COMMENT '状态:0正常,1禁用',
-  `avatar` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '头像',
-  `roleId` int(0) NOT NULL COMMENT '角色id',
-  `email` varchar(128) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '邮箱',
-  `sex` int(0) NULL DEFAULT NULL COMMENT '性别0:女,1男',
-  `createTime` datetime(0) NOT NULL COMMENT '创建时间',
-  `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
 
 INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (1, 'WEB_THEME', 'perfree');
 INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (1, '管理员', '网站管理员', 'admin', '2020-12-17 13:11:31', NULL);

@@ -550,7 +550,7 @@ pre{
 }
 .m-comment-send-box{
     position: absolute;
-    right: 0;
+    right: 10px;
     display: inline-block;
     height: 30px;
 }
@@ -592,4 +592,15 @@ pre{
 .no-comment{
     text-align: center;
     margin-top: 18px;
+}
+
+.m-comment-input{
+    border: 1px solid #949494;
+    height: 30px;
+    padding: 3px;
+    border-radius: 3px;
+    color: inherit;
+}
+.p-form-required{
+    color: red;
 }

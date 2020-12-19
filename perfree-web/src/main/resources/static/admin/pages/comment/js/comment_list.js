@@ -58,10 +58,13 @@ function queryTable() {
             {type: 'checkbox', fixed: 'left'},
             {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
             {
-                field: 'userName', width: 180, title: '评论人', templet: "<div>{{d.user.userName}}</div>"
+                field: 'userName', width: 180, title: '评论人', templet: "<div>{{d.userName}}</div>"
+            },
+            {
+                field: 'email', width: 180, title: '邮箱', templet: "<div>{{d.email}}</div>"
             },
             {field: 'content', title: '评论内容'},
-            {field: 'article', title: '所属文章', templet: "<div><a href='{{d.article.id}}'>{{d.article.title}}</a></div>"},
+            {field: 'article', title: '所属文章', templet: "<div><a href='{{d.article.url}}' target='_blank'>{{d.article.title}}</a></div>"},
             {field: 'status', width: 80, title: '状态', templet: "<div>{{d.status === 1? '待审核': '正常'}}</div>"},
             {
                 field: 'createTime',

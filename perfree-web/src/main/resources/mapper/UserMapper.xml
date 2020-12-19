@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.UserMapper" >
     <insert id="add">
-        insert into p_user ( account, userName, password,salt,status,avatar,roleId,email,sex,createTime)
-        VALUES (#{account},#{userName}, #{password},#{salt},#{status},#{avatar},#{roleId},#{email},#{sex},#{createTime})
+        insert into p_user ( account, userName, password,salt,status,avatar,roleId,email,website,createTime)
+        VALUES (#{account},#{userName}, #{password},#{salt},#{status},#{avatar},#{roleId},#{email},#{website},#{createTime})
     </insert>
     <update id="update">
         update p_user set
@@ -14,7 +14,7 @@
         <if test="roleId != null and roleId != ''">
             roleId=#{roleId},
         </if>
-       avatar=#{avatar},email=#{email},sex=#{sex},updateTime=#{updateTime}
+       avatar=#{avatar},email=#{email},website=#{website},updateTime=#{updateTime}
         where id = #{id}
     </update>
     <update id="resetPassword">
@@ -44,7 +44,7 @@
         </foreach>
     </delete>
     <select id="getUserByAccount" resultMap="LIST_RESULT">
-        select  t1.id,t1.account,t1.password,t1.salt,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.sex,t1.email,
+        select  t1.id,t1.account,t1.password,t1.salt,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.website,t1.email,
         t2.name roleName,t2.description,t2.code  from p_user t1 left join p_role t2 on t1.roleId = t2.id where account = #{account}
     </select>
 
@@ -57,7 +57,7 @@
         <result property="status" column="status"></result>
         <result property="avatar" column="avatar"></result>
         <result property="roleId" column="roleId"></result>
-        <result property="sex" column="sex"></result>
+        <result property="website" column="website"></result>
         <result property="email" column="email"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
@@ -70,7 +70,7 @@
     </resultMap>
     <select id="getList" resultMap="LIST_RESULT">
         select
-        t1.id,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.sex,t1.email,
+        t1.id,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.website,t1.email,
         t2.name roleName,t2.description,t2.code
         from p_user t1 left join p_role t2 on t1.roleId = t2.id
         where 1 = 1
@@ -83,7 +83,7 @@
         order by t1.createTime desc
     </select>
     <select id="getById" resultMap="LIST_RESULT">
-        select  t1.id,t1.password,t1.salt,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.sex,t1.email,
+        select  t1.id,t1.password,t1.salt,t1.account,t1.userName,t1.status,t1.avatar,t1.roleId,t1.createTime,t1.updateTime,t1.website,t1.email,
         t2.name roleName,t2.description,t2.code  from p_user t1 left join p_role t2 on t1.roleId = t2.id where t1.id = #{id}
     </select>
     <select id="getUserCount" resultType="java.lang.Long">
