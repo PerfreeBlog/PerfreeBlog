@@ -1,7 +1,6 @@
-initMatch();
 initViewer();
 initComment();
-
+hljs.initHighlightingOnLoad();
 /**
  * 初始化图片查看
  */

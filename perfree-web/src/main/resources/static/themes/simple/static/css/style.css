@@ -1,0 +1,97 @@
+html,body{
+    margin: 0;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 14px;
+    line-height: 1.5715;
+    background-color: #fff;
+    font-feature-settings: 'tnum';
+}
+*{
+    margin: 0;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-variant: tabular-nums;
+    padding: 0;
+}
+.layout{
+    width: 980px;
+    margin: auto;
+}
+.header{
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    margin-top: 10px;
+}
+.header-a-a{
+    width: 50%;
+    float: left;
+}
+.logo{
+    color: #4c4c4c;
+    font-size: 2.5em;
+    text-decoration: none;
+    font-weight: 600;
+}
+.header-a-b{
+    width: 50%;
+    float: right;
+    text-align: right;
+    margin-top: 40px;
+}
+
+.desc{
+    margin: 0;
+    font-size: 15px;
+    color: #999;
+}
+
+.searchInput{
+    height: 26px;
+    outline: 0;
+    padding-right: 30px;
+    border: 1px solid #ddd;
+    width: 240px;
+    padding-left: 3px;
+}
+.clear{
+    clear: both;
+}
+.search-btn{
+    border: none;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    background: transparent url(/static/themes/simple/static/images/icon-search.png) no-repeat center center;
+    direction: ltr;
+    text-indent: -9999em;
+    margin-left: -30px;
+    cursor: pointer;
+}
+.center-left{
+    width: calc(100% - 250px);
+    float: left;
+    padding-right: 10px;
+}
+.center-right{
+    width: 240px;
+    float: right;
+}
+ul{
+    list-style: none;
+}
+.card-ul a{
+    color: #3354AA;
+    text-decoration: none;
+    border-bottom: 1px solid #EEE;
+}
+.card-ul li{
+    line-height: 30px;
+}
+.card,.card{
+    margin-bottom: 10px;
+}
+.footer{
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+}

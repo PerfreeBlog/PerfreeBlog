@@ -9,7 +9,6 @@ html,body{
     line-height: 1.5715;
     background-color: #fff;
     font-feature-settings: 'tnum';
-    overflow: auto;
 }
 body::-webkit-scrollbar-track-piece,body::-webkit-scrollbar-track-piece {
     background: #eee;

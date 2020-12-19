@@ -63,7 +63,8 @@ public class SystemController extends BaseController{
      * @return String
      */
     @RequestMapping("/")
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("url", Constants.URL_ARTICLE_LIST);
         return view(currentThemePage() + "/index.html");
     }
 

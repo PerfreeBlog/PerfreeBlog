@@ -1,0 +1,31 @@
+<div class="center-right">
+    <div class="card">
+        <h3>最新文章</h3>
+        <ul class="card-ul">
+            #latestArticle(count=10)
+                #for(article : articles)
+                    <li>
+                        <a href="#(article.url)">#(article.title)</a>
+                    </li>
+                #else
+                    暂无文章
+                #end
+            #end
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>分类</h3>
+        <ul class="card-ul">
+            #categories()
+                #for(category: categories)
+                    <li>
+                        <a href="#(category.url)"> #(category.name ??)</a>
+                    </li>
+                #else
+                    暂无分类
+                #end
+            #end
+        </ul>
+    </div>
+</div>
