@@ -3,6 +3,7 @@ CREATE TABLE `p_article`  (
   `id` int(0) NOT NULL AUTO_INCREMENT,
   `title` varchar(256) NOT NULL COMMENT '文章标题',
   `content` longtext NULL COMMENT '文章内容',
+  `type` varchar(32) NULL DEFAULT NULL COMMENT '文章类型:article文章,page页面',
   `summary` varchar(1024) NULL DEFAULT NULL COMMENT '文章摘要',
   `categoryId` int(0) NULL DEFAULT NULL COMMENT '所属分类',
   `metaKeywords` varchar(512) NULL DEFAULT NULL COMMENT 'SEO关键字',
@@ -110,6 +111,7 @@ CREATE TABLE `p_menu`  (
   `seq` int(0) NULL DEFAULT NULL COMMENT '排序序号',
   `type` int(0) NOT NULL DEFAULT 0 COMMENT '菜单类型0:前台,1:后台',
   `target` int(0) NULL DEFAULT 0 COMMENT '菜单打开方式:0本页,1:新窗口',
+    `articleId` int(0) NULL DEFAULT NULL COMMENT '关联的菜单id',
   `status` int(0) NOT NULL DEFAULT 0 COMMENT '菜单状态0:启用,1禁用',
   `createTime` datetime(0) NOT NULL COMMENT '创建时间',
   `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
@@ -191,6 +193,7 @@ INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES (14, 3, '友链管理', '/admin/link', NULL, 8, 1, 0, 0, '2020-12-15 09:07:00', NULL);
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES (15, -1, '网站设置', '/admin/setting', 'fa-sliders', 5, 1, 0, 0, '2020-11-19 16:04:37', NULL);
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES (16, -1, '归档', '/page/archive', 'fa-calendar', 1, 0, 0, 0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES (17, -1, '朋友', '/page/link', 'fa-user-o', 2, 0, 1, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
-INSERT INTO `p_article`(`id`, `title`, `content`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (4, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, '2020-12-19 14:10:54', '2020-12-19 14:19:43');
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES (17, -1, '友链', '/page/link', 'fa-user-o', 2, 0, 1, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
+INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, '2020-12-19 14:10:54', '2020-12-20 20:09:30');
+
 

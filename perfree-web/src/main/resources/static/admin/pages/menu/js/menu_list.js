@@ -95,6 +95,7 @@ function queryTable() {
                 title: '图标',
                 templet: "<div><i class='fa {{d.icon}}' aria-hidden='true'></i></div>"
             },
+            {field: 'article', title: '关联页面', templet: "<div>{{d.article === null ? '' : d.article.title}}</div>"},
             {field: 'target', title: '打开方式', templet: "<div>{{d.target === 0 ? '本页' : '新窗口'}}</div>"},
             {
                 field: 'status', title: '状态', templet: function (d) {
@@ -153,7 +154,7 @@ function editData(id) {
         title: "编辑菜单",
         type: 2,
         offset: '20%',
-        area: ['400px', '420px'],
+        area: ['400px', '460px'],
         shadeClose: true,
         anim: 1,
         move: false,
@@ -200,7 +201,7 @@ function add(pid = -1) {
         title: title,
         type: 2,
         offset: '20%',
-        area: ['400px', '420px'],
+        area: ['400px', '460px'],
         shadeClose: true,
         anim: 1,
         move: false,

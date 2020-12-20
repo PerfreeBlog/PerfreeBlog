@@ -36,4 +36,8 @@ public class Constants {
     public static final String PLUGINS_DIR = "resources/plugins"; // 插件
 
     public static final String DB_PROPERTIES_PATH = "resources/db.properties"; // 数据库配置文件地址
+
+    public static final String ARTICLE_TYPE_ARTICLE = "article"; // 文章类型:文章
+    public static final String ARTICLE_TYPE_PAGE = "page"; // 文章类型:页面
+
 }

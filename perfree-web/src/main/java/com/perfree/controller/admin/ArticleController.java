@@ -27,6 +27,7 @@ public class ArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;
 
+
     @RequestMapping("/article")
     public String index() {
         return view("static/admin/pages/article/article_list.html");

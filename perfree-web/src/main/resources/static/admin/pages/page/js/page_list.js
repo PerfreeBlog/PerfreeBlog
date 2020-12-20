@@ -22,7 +22,7 @@ function initPage() {
 
     // 添加
     $("#addBtn").click(function () {
-        parent.toPage('/admin/article/addPage');
+        parent.openTab('', '添加页面', '/admin/page/addPage', "-3");
     });
 
     // 批量删除
@@ -57,7 +57,7 @@ function queryTable() {
         where: {
             form: {
                 title: $("#title").val(),
-                type: "article"
+                type: "page"
             }
         },
         limit: 30,
@@ -66,7 +66,7 @@ function queryTable() {
             {field: 'id', title: 'ID', width: 60, fixed: 'left'},
             {
                 field: 'title',
-                title: '文章标题',
+                title: '标题',
                 templet: '<div><a class="articleHref" href="{{d.url}}" target="_blank">{{d.title}}</a></div>'
             },
             {field: 'category', title: '分类', templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
@@ -80,17 +80,6 @@ function queryTable() {
                         html += "草稿";
                     }
                     html += '</div>';
-                    return html;
-                }
-            },
-            {
-                field: 'isTop', width: 100, title: '是否置顶', templet: function (d) {
-                    let html;
-                    if (d.isTop === 1) {
-                        html = "<input type='checkbox' name='isTop' lay-filter='isTop' lay-skin='switch' value='" + d.id + "' lay-text='置顶|不置顶' checked>";
-                    } else {
-                        html = "<input type='checkbox' name='isTop' lay-filter='isTop' value='" + d.id + "' lay-skin='switch' lay-text='置顶|不置顶'>";
-                    }
                     return html;
                 }
             },
@@ -151,12 +140,6 @@ function queryTable() {
         }
     });
 
-    form.on('switch(isTop)', function (data) {
-        const id = this.value;
-        const status = this.checked ? 1 : 0;
-        changeTopStatus(id, status);
-    });
-
     form.on('switch(isComment)', function (data) {
         const id = this.value;
         const status = this.checked ? 1 : 0;
@@ -169,7 +152,7 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    parent.openTab('', '编辑文章', '/admin/article/updatePage/' + id, "-1");
+    parent.openTab('', '编辑页面', '/admin/page/updatePage/' + id, "-4");
 }
 
 /**
@@ -180,7 +163,7 @@ function deleteData(ids) {
     layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
         $.ajax({
             type: "POST",
-            url: "/admin/article/del",
+            url: "/admin/page/del",
             contentType: "application/json",
             data: ids,
             success: function (data) {
@@ -199,28 +182,6 @@ function deleteData(ids) {
     });
 }
 
-/**
- * 更改置顶状态
- */
-function changeTopStatus(id, status) {
-    $.ajax({
-        type: "POST",
-        url: "/admin/article/changeTopStatus",
-        contentType: "application/json",
-        data: JSON.stringify({id: id, isTop: status}),
-        success: function (data) {
-            if (data.code === 200) {
-                queryTable();
-                layer.msg(data.msg, {icon: 1});
-            } else {
-                layer.msg(data.msg, {icon: 2});
-            }
-        },
-        error: function (data) {
-            layer.msg("修改状态失败", {icon: 2});
-        }
-    });
-}
 
 /**
  * 更改是否可以评论

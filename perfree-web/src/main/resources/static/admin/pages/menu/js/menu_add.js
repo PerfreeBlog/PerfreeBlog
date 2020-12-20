@@ -3,6 +3,7 @@ layui.use(['layer', 'form', 'element'], function () {
     form = layui.form;
     element = layui.element;
     layer = layui.layer;
+    loadMenuList();
     // 表单验证
     form.verify({});
     // 表单提交
@@ -35,3 +36,17 @@ $(".p-cancel-btn").click(function () {
     const index = parent.layer.getFrameIndex(window.name);
     parent.layer.close(index);
 });
+
+/**
+ * 加载页面列表
+ */
+function loadMenuList() {
+    $.get('/admin/page/getPageList', function (data) {
+        let html = '<option value="">请选择</option>';
+        data.data.forEach(res => {
+            html += ' <option value="' + res.id + '">' + res.id + '-' + res.title + '</option>';
+        });
+        $("#articleId").html(html);
+        form.render('select');
+    });
+}

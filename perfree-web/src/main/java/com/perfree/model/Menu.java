@@ -33,6 +33,8 @@ public class Menu implements Serializable {
     @NotNull(message = "打开方式不允许为空")
     private Integer target;
     private List<Menu> childMenu;
+    private Long articleId;
+    private Article article;
 
     public List<Menu> getChildMenu() {
         return childMenu;
@@ -130,19 +132,19 @@ public class Menu implements Serializable {
         this.updateTime = updateTime;
     }
 
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "id=" + id +
-                ", pid=" + pid +
-                ", name='" + name + '\'' +
-                ", url='" + url + '\'' +
-                ", icon='" + icon + '\'' +
-                ", seq=" + seq +
-                ", type=" + type +
-                ", status=" + status +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                '}';
+    public Long getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(Long articleId) {
+        this.articleId = articleId;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
     }
 }

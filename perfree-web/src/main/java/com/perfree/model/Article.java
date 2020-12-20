@@ -1,5 +1,6 @@
 package com.perfree.model;
 
+import com.perfree.common.Constants;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -37,6 +38,7 @@ public class Article implements Serializable {
     private Integer isComment;
     private Date createTime;
     private Date updateTime;
+    private String type;
 
     private List<Tag> tags;
     private User user;
@@ -206,10 +208,18 @@ public class Article implements Serializable {
     }
 
     public String getUrl() {
-        return "/article/" + id;
+        return Constants.URL_ARTICLE + id;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

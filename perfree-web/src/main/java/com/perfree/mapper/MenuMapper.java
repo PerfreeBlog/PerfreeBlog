@@ -1,5 +1,6 @@
 package com.perfree.mapper;
 
+import com.perfree.model.Article;
 import com.perfree.model.Menu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -23,6 +24,7 @@ public interface MenuMapper {
 
     List<Menu> getProtalChildMenus();
 
+    Article getArticleById(String articleId);
     /**
      * 根据用户id,菜单类型,父级id获取子菜单
      * @param userId 用户id
@@ -75,4 +77,9 @@ public interface MenuMapper {
      * @return int
      */
     int changeStatus(Menu menu);
+
+    void delMenuArticleId(String articleId);
+
+    Menu getMenuByUrl(String url);
+
 }

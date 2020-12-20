@@ -102,4 +102,14 @@ public class MenuService {
     public List<Menu> getProtalMenus() {
         return menuMapper.getProtalMenus();
     }
+
+    public void delMenuArticleId(String[] idArr) {
+        for (String id : idArr) {
+            menuMapper.delMenuArticleId(id);
+        }
+    }
+
+    public Menu getMenuByUrl(String url) {
+        return menuMapper.getMenuByUrl(url);
+    }
 }

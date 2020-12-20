@@ -36,6 +36,18 @@
                                placeholder="请输入菜单链接" autocomplete="off" class="layui-input">
                     </div>
                 </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        关联页面:
+                    </label>
+                    <div class="layui-input-block">
+                        <select name="articleId" lay-verify="required" id="articleId">
+                        </select>
+                    </div>
+                </div>
+                <input type="hidden" id="article-id" value="#(menu.articleId)">
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">图标:</label>
                     <div class="layui-input-inline">
@@ -91,6 +103,7 @@
                 form = layui.form;
                 element = layui.element;
                 layer = layui.layer;
+                loadMenuList();
                 // 表单验证
                 form.verify({});
                 // 表单提交
@@ -123,6 +136,25 @@
                 const index = parent.layer.getFrameIndex(window.name);
                 parent.layer.close(index);
             });
+
+            /**
+             * 加载页面列表
+             */
+            function loadMenuList() {
+                $.get('/admin/page/getPageList', function (data) {
+                    const articleId = $("#article-id").val();
+                    let html = '<option value="">请选择</option>';
+                    data.data.forEach(res => {
+                        if (articleId === (res.id + "")) {
+                            html += ' <option value="' + res.id + '" selected>' + res.id + '-' + res.title + '</option>';
+                        } else {
+                            html += ' <option value="' + res.id + '">' + res.id + '-' + res.title + '</option>';
+                        }
+                    });
+                    $("#articleId").html(html);
+                    form.render('select');
+                });
+            }
         </script>
     </body>
 </html>

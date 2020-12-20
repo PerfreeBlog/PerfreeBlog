@@ -214,4 +214,8 @@ public class ArticleService{
     public void articleViewCountAdd(Long articleId) {
         articleMapper.articleViewCountAdd(articleId);
     }
+
+    public List<Article> getPageList() {
+        return articleMapper.getPageList();
+    }
 }
