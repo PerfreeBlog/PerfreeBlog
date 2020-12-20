@@ -522,20 +522,15 @@ pre{
     color: #7f7f7f;
 }
 .m-comment-detail-revert-btn{
-    background: #79a7f1;
-    color: white;
     width: 45px;
     height: 21px;
     line-height: 22px;
-    text-align: center;
     border-radius: 3px;
     display: inline-block;
     margin-top: 3px;
     font-size: 13px;
 }
 .m-comment-detail-revert-btn:hover{
-    color: white;
-    background: #4e8bec;
 }
 .m-comment-captcha{
     display: inline-block;
@@ -572,22 +567,10 @@ pre{
     color: inherit;
 }
 .parentComment{
-    background: #fbfbfb;
     padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #d1d1d1;
     position: relative;
     margin-top: 10px;
-}
-.parentComment:before{
-    content: "";
-    display: block;
-    position: absolute;
-    top: -5px;
-    left: 30px;
-    width: 8px;
-    height: 5px;
-    background: url(/static/themes/perfree/static/images/arrow.png) 0 -49px no-repeat;
+    border-bottom: none;
 }
 .no-comment{
     text-align: center;

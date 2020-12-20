@@ -70,17 +70,17 @@
         <result property="website" column="website"></result>
         <result property="email" column="email"></result>
         <result property="userName" column="userName"></result>
-        <association select="getParentComment" property="parent" column="pid"></association>
+        <association select="getChildComment" property="child" column="id"></association>
     </resultMap>
     <select id="getCommentByArticleId" resultMap="COMMENT_RESULT">
         select t1.* from p_comment t1
-        where t1.articleId = #{articleId} and t1.status = 0
+        where t1.articleId = #{articleId} and t1.status = 0 and pid = -1
         order by t1.createTime desc
     </select>
 
-    <select id="getParentComment" resultMap="COMMENT_RESULT">
+    <select id="getChildComment" resultMap="COMMENT_RESULT">
         select t1.* from p_comment t1
-        where t1.id = #{pid}
+        where t1.pid = #{id} and t1.status = 0
         order by t1.createTime desc
     </select>
 </mapper>

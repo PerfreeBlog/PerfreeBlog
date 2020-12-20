@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * comment table
@@ -34,7 +35,7 @@ public class Comment implements Serializable {
     private User user;
     private Article article;
 
-    private Comment parent;
+    private List<Comment> child;
     public Article getArticle() {
         return article;
     }
@@ -117,13 +118,6 @@ public class Comment implements Serializable {
         this.updateTime = updateTime;
     }
 
-    public Comment getParent() {
-        return parent;
-    }
-
-    public void setParent(Comment parent) {
-        this.parent = parent;
-    }
 
     public String getAvatar() {
         return avatar;
@@ -155,5 +149,13 @@ public class Comment implements Serializable {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public List<Comment> getChild() {
+        return child;
+    }
+
+    public void setChild(List<Comment> child) {
+        this.child = child;
     }
 }

@@ -1,0 +1,32 @@
+.p-comment-box{
+    width: 100%;
+}
+.p-required{
+    color: red;
+}
+.p-comment{
+    width: 100%;
+    min-height: 80px;
+    padding: 3px;
+    outline: none;
+    border: 1px solid #ddd;
+    color: inherit;
+}
+.p-comment-label{
+    display: block;
+    font-weight: bold;
+}
+.p-comment-input{
+    width: 100%;
+    padding: 3px;
+    outline: none;
+    border: 1px solid #ddd;
+    color: inherit;
+}
+.p-form-item{
+    margin-top: 10px;
+}
+.p-submit-comment{
+    padding: 3px;
+    cursor: pointer;
+}

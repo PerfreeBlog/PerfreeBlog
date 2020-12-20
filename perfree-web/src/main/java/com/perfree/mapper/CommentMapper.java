@@ -46,7 +46,7 @@ public interface CommentMapper {
 
     List<Comment> getCommentByArticleId(HashMap<String, String> form);
 
-    List<Comment> getParentComment(String pid);
+    List<Comment> getChildComment(String id);
 
     int add(Comment comment);
 

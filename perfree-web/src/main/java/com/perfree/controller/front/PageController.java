@@ -18,6 +18,7 @@ public class PageController extends BaseController {
     @RequestMapping("/page/{pageName}/{pageIndex}")
     public String page(@PathVariable("pageName") String pageName,@PathVariable("pageIndex") int pageIndex, Model model) {
         model.addAttribute("url", "/page/" + pageName + "/");
+        model.addAttribute("pageIndex", pageIndex);
         return view(currentThemePage() + "/" + pageName + ".html");
     }
 }

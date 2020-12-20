@@ -1,0 +1,53 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <title>#(SEO_TITLE ?? WEB_TITLE ?? '未设置')</title>
+    <meta name="keywords" content="#(SEO_KEYWORD ??)">
+    <meta name="description" content="#(SEO_DESC ??)">
+    <link rel="Shortcut Icon" href="#option('WEB_LOGO','/static/public/images/favicon.ico')" type="image/x-icon"/>
+    <link href="/static/themes/simple/static/css/style.css" rel="stylesheet">
+    <link href="/static/themes/simple/static/lib/highlight/styles/github.css" rel="stylesheet">
+    <link href="/static/public/components/comment/comment.css" rel="stylesheet">
+    <link href="/static/themes/simple/static/css/index.css" rel="stylesheet">
+</head>
+<body>
+<div class="layout">
+    #include("/static/themes/simple/inc/_header.html")
+    <div class="center">
+        <div class="center-left">
+            <div class="article-box">
+                <h2 class="article-title">
+                    <a href="#(article.url)">#(article.title)</a>
+                </h2>
+                <div class="article-info">
+                    <span>作者:#(article.user.userName ??)</span>
+                    <span>时间:#date(article.createTime, "yyyy-MM-dd")</span>
+                    <span>浏览:#(article.viewCount ??)</span>
+                    <span>评论:#(article.commentCount ??)</span>
+                </div>
+                <div class="article-content">
+                    #mdToHtml(article.content??)
+                </div>
+            </div>
+
+            <div>
+                #include("/static/public/components/comment/comment.html")
+            </div>
+
+        </div>
+        #include("/static/themes/simple/inc/_right.html")
+        <div class="clear"></div>
+    </div>
+    #include("/static/themes/simple/inc/_footer.html")
+</div>
+<script src="/static/themes/perfree/static/lib/highlight/highlight.pack.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>

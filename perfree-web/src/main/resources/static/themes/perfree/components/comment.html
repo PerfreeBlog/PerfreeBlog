@@ -46,21 +46,28 @@
                     </div>
                 #end
 
-                #if(comment.parent)
-                    <div class="m-comment-detail-box parentComment layui-clear">
-                        <div class="m-comment-detail-left">
-                            <img src="#(isBlank(comment.parent.avatar) ? '/static/public/images/user.png' : comment.parent.avatar)" class="m-comment-detail-img">
-                        </div>
-                        <div class="m-comment-detail-right">
-                            <div class="m-comment-detail-right-top">
-                                <span class="m-comment-detail-user">#(comment.parent.userName ??)</span>
-                                <span class="m-comment-detail-time time">#date(comment.parent.createTime, "yyyy-MM-dd HH:mm:ss")</span>
+                #if(comment.child)
+                    #for(childComment: comment.child)
+                        <div class="m-comment-detail-box parentComment layui-clear">
+                            <div class="m-comment-detail-left">
+                                <img src="#(isBlank(childComment.avatar) ? '/static/public/images/user.png' : childComment.avatar)" class="m-comment-detail-img">
                             </div>
-                            <div class="m-comment-detail-content">
-                                #(comment.parent.content ??)
+                            <div class="m-comment-detail-right">
+                                <div class="m-comment-detail-right-top">
+                                    <span class="m-comment-detail-user">#(childComment.userName ??)</span>
+                                    <span class="m-comment-detail-time time">#date(childComment.createTime, "yyyy-MM-dd HH:mm:ss")</span>
+                                </div>
+                                <div class="m-comment-detail-content">
+                                    #(childComment.content ??)
+                                </div>
+                                #if(article.isComment == 1)
+                                <div class="m-comment-right-bottom">
+                                    <a class="m-comment-detail-revert-btn" data-id="#(comment.id)" data-author="#(comment.userName ??)">回复</a>
+                                </div>
+                                #end
                             </div>
                         </div>
-                    </div>
+                    #end
                 #end
 
             </div>

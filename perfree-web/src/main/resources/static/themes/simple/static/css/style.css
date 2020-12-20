@@ -26,6 +26,9 @@ html,body{
     width: 50%;
     float: left;
 }
+.center{
+    min-height: calc(100% - 150px);
+}
 .logo{
     color: #4c4c4c;
     font-size: 2.5em;
