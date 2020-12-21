@@ -195,8 +195,8 @@ INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (14, 3, '友链管理', '/admin/link', NULL, 8, 1, 0, NULL, 0, '2020-12-15 09:07:00', NULL);
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (15, -1, '网站设置', '/admin/setting', 'fa-sliders', 5, 1, 0, NULL, 0, '2020-11-19 16:04:37', NULL);
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (16, 3, '页面管理', '/admin/page', NULL, 2, 1, 0, NULL, 0, '2020-12-21 08:23:30', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (17, -1, '归档', '/page/archive', 'fa-calendar', 1, 0, 0, NULL, 0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (18, -1, '友链', '/page/link', 'fa-user-o', 2, 0, 0, NULL, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (17, -1, '归档', '/archive', 'fa-calendar', 1, 0, 0, NULL, 0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (18, -1, '友链', '/link', 'fa-user-o', 2, 0, 0, NULL, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
 
 INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, '2020-12-19 14:10:54', '2020-12-20 20:09:30');
 
