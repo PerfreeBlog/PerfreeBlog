@@ -91,6 +91,7 @@ public class DirectivePage<T> {
             pager.setUrl(urlPrefix + i);
             if (pageIndex == i) {
                 pager.setUrl("");
+                pager.setStyle("disabled");
             } else {
                 if (StringUtils.isNotBlank(queryParamName)) {
                     pager.setUrl(pager.getUrl() + "?" + queryParamName + "=" + queryParam);

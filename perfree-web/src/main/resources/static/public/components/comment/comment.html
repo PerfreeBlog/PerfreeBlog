@@ -1,4 +1,4 @@
-#commentPage(pageSize=8)
+#commentPage(pageSize=1)
     ### 评论列表
     <div class="p-comment-list-box" id="commentListBox">
         <div id="commentList">
@@ -86,14 +86,5 @@
         </form>
     </div>
 
-
-    #if(commentPage.pagers)
-        <nav class="m-pager-box">
-            <a class="m-pager #(commentPage.preUrlStyle)" href="#(isBlank(commentPage.preUrl)?'javascript:;': commentPage.preUrl + '#commentList')"><</a>
-            #for(page : commentPage.pagers)
-            <a class="m-pager #(page.style)" href="#(isBlank(page.url)?'javascript:;': page.url + '#commentList')">#(page.text ??)</a>
-            #end
-            <a class="m-pager #(commentPage.nextUrlStyle)" href="#(isBlank(commentPage.preUrl)?'javascript:;': commentPage.preUrl + '#commentList')">></a>
-        </nav>
-    #end
+    #pageRender(commentPage, anchor="#commentList",preText="上一页",nextText="下一页")
 #end

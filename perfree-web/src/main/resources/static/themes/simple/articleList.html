@@ -39,15 +39,7 @@
                     暂无文章
                 #end
 
-                #if(articlePage.pagers)
-                    <nav class="m-pager-box">
-                        <a class="m-pager #(articlePage.preUrlStyle)" href="#(isBlank(articlePage.preUrl)?'javascript:;':articlePage.preUrl)">上一页</a>
-                        #for(page : articlePage.pagers)
-                        <a class="m-pager #(page.style)" href="#(isBlank(page.url)?'javascript:;':page.url)">#(page.text ??)</a>
-                        #end
-                        <a class="m-pager #(articlePage.nextUrlStyle)" href="#(isBlank(articlePage.preUrl)?'javascript:;':articlePage.preUrl)">下一页</a>
-                    </nav>
-                #end
+                #pageRender(articlePage, preText="上一页",nextText="下一页")
             #end
         </div>
         #include("/static/themes/simple/inc/_right.html")

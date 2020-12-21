@@ -65,8 +65,10 @@ public abstract class BaseDirective extends Directive {
         HashMap<String, String> result = new HashMap<>();
         Expr[] exprArray = this.exprList.getExprArray();
         for (Expr expr : exprArray) {
-            Assign assign = (Assign) expr;
-            result.put(assign.getId(), assign.getRight().toString());
+            if (expr instanceof Assign){
+                Assign assign = (Assign) expr;
+                result.put(assign.getId(), assign.getRight().toString());
+            }
         }
         return result;
     }
@@ -75,6 +77,12 @@ public abstract class BaseDirective extends Directive {
         HashMap<String, String> params = this.exprListToMap();
         String param = params.get(key);
         return CastUtil.strToInteger(param,defaultValue);
+    }
+
+    public String getExprParamToStr(String key) {
+        HashMap<String, String> params = this.exprListToMap();
+        String result = params.get(key);
+        return StringUtils.isBlank(result)?"":result;
     }
 
     public long getExprParamToLong(String key, Long defaultValue) {
