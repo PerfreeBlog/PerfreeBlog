@@ -1,4 +1,4 @@
-#commentPage(pageSize=1)
+#commentPage(pageSize=10)
     ### 评论列表
     <div class="p-comment-list-box" id="commentListBox">
         <div id="commentList">
@@ -12,7 +12,7 @@
                                #(comment.userName??)
                             </span>
                             <span class="p-comment-time">
-                                评论于 #date(comment.createTime, "yyyy-MM-dd HH:mm:ss")
+                                #timeAgo(comment.createTime)
                             </span>
                         </div>
                         <div class="p-comment-content">
@@ -32,11 +32,11 @@
                                                      #(childComment.userName??)
                                                 </span>
                                             <span class="p-comment-time">
-                                                    评论于 #date(childComment.createTime, "yyyy-MM-dd HH:mm:ss")
+                                                    #timeAgo(childComment.createTime)
                                                 </span>
                                         </div>
                                         <div class="p-comment-content">
-                                            #(childComment.content ??)
+                                           <a class="p-reply-user" href="#comment-#(childComment.parent.id??)">@#(childComment.parent.userName??)</a> #(childComment.content ??)
                                         </div>
                                         <div class="p-comment-reply">
                                             <a class="p-comment-reply-btn" data-pid="#(childComment.id)" data-topPid="#(comment.id)">回复</a>
@@ -58,20 +58,22 @@
         <h3>发表评论</h3>
         <a class="p-cancel-reply">取消回复</a>
         <form id="commentForm" onsubmit="return false">
-            <div class="p-form-item">
-                <label class="p-comment-label"><span class="p-required">*</span>名称</label>
-                <input name="userName" type="text" required="required" class="p-comment-input">
-            </div>
+            #if(!loginUser)
+                <div class="p-form-item">
+                    <label class="p-comment-label"><span class="p-required">*</span>名称</label>
+                    <input name="userName" type="text" required="required" class="p-comment-input">
+                </div>
 
-            <div class="p-form-item">
-                <label class="p-comment-label"><span class="p-required">*</span>邮箱</label>
-                <input name="email" type="email" required="required" class="p-comment-input">
-            </div>
+                <div class="p-form-item">
+                    <label class="p-comment-label"><span class="p-required">*</span>邮箱</label>
+                    <input name="email" type="email" required="required" class="p-comment-input">
+                </div>
 
-            <div class="p-form-item">
-                <label class="p-comment-label">网址</label>
-                <input name="website" type="text" class="p-comment-input">
-            </div>
+                <div class="p-form-item">
+                    <label class="p-comment-label">网址</label>
+                    <input name="website" type="text" class="p-comment-input">
+                </div>
+            #end
 
             <div class="p-form-item">
                 <label class="p-comment-label"><span class="p-required">*</span>内容</label>

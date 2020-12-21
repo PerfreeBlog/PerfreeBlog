@@ -37,6 +37,8 @@ public class Comment implements Serializable {
     private Article article;
 
     private List<Comment> child;
+    private Comment parent;
+
     public Article getArticle() {
         return article;
     }
@@ -166,5 +168,13 @@ public class Comment implements Serializable {
 
     public void setTopPid(Long topPid) {
         this.topPid = topPid;
+    }
+
+    public Comment getParent() {
+        return parent;
+    }
+
+    public void setParent(Comment parent) {
+        this.parent = parent;
     }
 }

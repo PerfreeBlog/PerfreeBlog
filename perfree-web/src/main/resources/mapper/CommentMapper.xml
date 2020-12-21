@@ -72,8 +72,26 @@
         <result property="website" column="website"></result>
         <result property="email" column="email"></result>
         <result property="userName" column="userName"></result>
-        <association select="getChildComment" property="child" column="id"></association>
+        <association select="getParentCommentByPid" property="parent" column="pid"></association>
+        <collection select="getChildComment" property="child" column="id"></collection>
     </resultMap>
+
+    <resultMap id="PARENT_COMMENT_RESULT" type="com.perfree.model.Comment">
+        <id property="id" column="id"></id>
+        <result property="articleId" column="articleId"></result>
+        <result property="pid" column="pid"></result>
+        <result property="topPid" column="topPid"></result>
+        <result property="userId" column="userId"></result>
+        <result property="content" column="content"></result>
+        <result property="status" column="status"></result>
+        <result property="createTime" column="createTime"></result>
+        <result property="updateTime" column="updateTime"></result>
+        <result property="avatar" column="avatar"></result>
+        <result property="website" column="website"></result>
+        <result property="email" column="email"></result>
+        <result property="userName" column="userName"></result>
+    </resultMap>
+
     <select id="getCommentByArticleId" resultMap="COMMENT_RESULT">
         select t1.* from p_comment t1
         where t1.articleId = #{articleId} and t1.status = 0 and topPid = -1
@@ -83,6 +101,12 @@
     <select id="getChildComment" resultMap="COMMENT_RESULT">
         select t1.* from p_comment t1
         where t1.topPid = #{id} and t1.status = 0
-        order by t1.createTime desc
+        order by t1.createTime asc
+    </select>
+
+
+    <select id="getParentCommentByPid" resultMap="PARENT_COMMENT_RESULT">
+        select t1.* from p_comment t1
+        where t1.id = #{pid} and t1.status = 0
     </select>
 </mapper>

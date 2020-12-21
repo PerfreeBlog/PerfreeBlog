@@ -48,6 +48,8 @@ public interface CommentMapper {
 
     List<Comment> getChildComment(String id);
 
+    Comment getParentCommentByPid(String pid);
+
     int add(Comment comment);
 
 }

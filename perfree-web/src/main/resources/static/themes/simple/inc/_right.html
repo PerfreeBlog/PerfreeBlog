@@ -4,24 +4,30 @@
             <li>
                 <a href="/">首页</a>
             </li>
-            #user()
-                #if(user != null)
-                    #if(user.hasAdmin())
-                        <li>
-                            <a href="/admin">后台管理(#(user.userName))</a>
-                        </li>
-                    #end
+            #menus()
+                #for(menu : menus)
                     <li>
-                        <a href="/logout">退出登录(#(user.userName))</a>
-                    </li>
-                #else
-                    <li>
-                        <a href="/login">登录</a>
+                        <a href="#(menu.url ??)"> #(menu.name ??)</a>
                     </li>
                 #end
             #end
+            #if(loginUser)
+                #if(loginUser.hasAdmin())
+                    <li>
+                        <a href="/admin">后台管理(#(loginUser.userName))</a>
+                    </li>
+                #end
+                <li>
+                    <a href="/logout">退出登录(#(loginUser.userName))</a>
+                </li>
+            #else
+                <li>
+                    <a href="/login">登录</a>
+                </li>
+            #end
         </ul>
     </div>
+
     <div class="card">
         <h3>最新文章</h3>
         <ul class="card-ul">

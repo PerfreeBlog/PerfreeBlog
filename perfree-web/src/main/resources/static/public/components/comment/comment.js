@@ -35,8 +35,16 @@ function submitComment() {
                     location.hash = "#comment-"+ result.data.id;
                 });
                 alert("评论成功");
+            } else if (result.code === -1) {
+                alert("该文章已关闭评论功能");
+            }else if (result.code === -2) {
+                alert("请填写名称");
+            }else if (result.code === -3) {
+                alert("请填写邮箱");
+            }else if (result.code === -4) {
+                alert("评论过于频繁,请稍候再试");
             } else {
-                alert("评论失败:"+result.msg);
+                alert("评论失败,请联系管理员");
             }
         },
         error : function() {

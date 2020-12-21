@@ -8,7 +8,6 @@ import com.perfree.common.OptionCache;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.service.MenuService;
-import com.perfree.service.OptionService;
 import com.perfree.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -78,10 +77,13 @@ public class BaseController {
         return viewPath;
     }
 
-    public String pageView(String viewPath) {
+    public String pageView(String viewPath, Menu menu ) {
         File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  viewPath);
         File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
         if (!file.exists() && !devFile.exists()) {
+            if (menu != null){
+                return view("static/admin/pages/exception/page.html");
+            }
             return "redirect:/404";
         }
         return viewPath;

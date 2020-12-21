@@ -11,4 +11,14 @@
     >
     </cache>
 
+    <cache
+            name="commentCache"
+            maxElementsInMemory="500"
+            eternal="false"
+            timeToIdleSeconds="60"
+            timeToLiveSeconds="60"
+            overflowToDisk="true"
+    >
+    </cache>
+
 </ehcache>
