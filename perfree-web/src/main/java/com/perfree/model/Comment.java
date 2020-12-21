@@ -16,6 +16,7 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 7817277417501762472L;
     private Long id;
     private Long pid;
+    private Long topPid;
     @NotNull(message = "文章id不允许为空")
     private Long articleId;
     private Long userId;
@@ -157,5 +158,13 @@ public class Comment implements Serializable {
 
     public void setChild(List<Comment> child) {
         this.child = child;
+    }
+
+    public Long getTopPid() {
+        return topPid;
+    }
+
+    public void setTopPid(Long topPid) {
+        this.topPid = topPid;
     }
 }

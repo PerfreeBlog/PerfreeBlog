@@ -90,7 +90,7 @@ public class DirectivePage<T> {
             pager.setText(String.valueOf(i));
             pager.setUrl(urlPrefix + i);
             if (pageIndex == i) {
-                pager.setUrl("javascript:;");
+                pager.setUrl("");
             } else {
                 if (StringUtils.isNotBlank(queryParamName)) {
                     pager.setUrl(pager.getUrl() + "?" + queryParamName + "=" + queryParam);
@@ -102,7 +102,7 @@ public class DirectivePage<T> {
 
     public String getPreUrl() {
         if ((pageIndex - 1) <= 0) {
-            return "javascript:;";
+            return "";
         }
         if (StringUtils.isNotBlank(queryParamName)) {
             return urlPrefix + (pageIndex - 1) + "?" + queryParamName + "=" + queryParam;
@@ -113,7 +113,7 @@ public class DirectivePage<T> {
     public String getNextUrl() {
         long pageSum = (total - 1) / pageSize + 1;
         if ((pageIndex + 1) > pageSum) {
-            return "javascript:;";
+            return "";
         }
         if (StringUtils.isNotBlank(queryParamName)) {
             return urlPrefix + (pageIndex + 1) + "?" + queryParamName + "=" + queryParam;

@@ -60,6 +60,7 @@ CREATE TABLE `p_comment`  (
   `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `articleId` int(0) NOT NULL COMMENT '文章id',
   `pid` int(0) NULL DEFAULT -1 COMMENT '父级id',
+  `topPid` int(0) NULL DEFAULT -1 COMMENT '顶层父级id',
   `userId` int(0) NULL DEFAULT NULL COMMENT '用户iD',
   `content` varchar(2048) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '评论内容',
   `status` int(0) NULL DEFAULT 0 COMMENT '状态:0正常,1:待审核',

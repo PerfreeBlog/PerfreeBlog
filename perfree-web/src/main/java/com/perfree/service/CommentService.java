@@ -89,6 +89,7 @@ public class CommentService {
     public int add(Comment comment) {
         comment.setCreateTime(new Date());
         comment.setPid(comment.getPid()==null ? -1: comment.getPid());
+        comment.setTopPid(comment.getTopPid()==null ? -1: comment.getTopPid());
         articleService.articleCommentAdd(comment.getArticleId());
         return commentMapper.add(comment);
     }

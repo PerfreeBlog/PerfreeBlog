@@ -1,5 +1,7 @@
 .p-comment-box{
     width: 100%;
+    position: relative;
+    margin-top: 10px;
 }
 .p-required{
     color: red;
@@ -29,4 +31,50 @@
 .p-submit-comment{
     padding: 3px;
     cursor: pointer;
+}
+.p-comment-avatar{
+    width: 32px;
+    height: 32px;
+}
+.p-comment-right{
+    width: calc(100% - 40px);
+    float: right;
+}
+.clear{
+    clear: both;
+}
+.p-comment-name{
+    font-weight: bold;
+    color: #3354AA;
+    font-size: 15px;
+}
+.p-comment-time{
+    font-size: 13px;
+    color: #6f6e6e;
+}
+.p-comment-list-box{
+    margin-top: 12px;
+}
+.p-comment-item{
+    margin-top: 8px;
+}
+.p-comment-reply{
+    text-align: right;
+    padding-right: 20px;
+    color: #3354AA;
+}
+.p-comment-reply-btn{
+    cursor: pointer;
+}
+.p-comment-parent{
+    border: 1px solid #EEE;
+    padding: 10px;
+}
+.p-cancel-reply{
+    cursor: pointer;
+    color: #3354AA;
+    position: absolute;
+    right: 0;
+    top: 8px;
+    display: none;
 }

@@ -75,6 +75,10 @@ public class BaseController {
      * @return String
      */
     public String view(String viewPath) {
+        return viewPath;
+    }
+
+    public String pageView(String viewPath) {
         File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  viewPath);
         File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
         if (!file.exists() && !devFile.exists()) {
