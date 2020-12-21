@@ -27,6 +27,8 @@ public class Constants {
     public static final int REGISTER_YES = 0; // 允许注册新用户
     public static final int REGISTER_NO = 1; // 不允许注册新用户
 
+    public static final String PROD_RESOURCES_PATH = "resources"; // 生产资源路径
+    public static final String DEV_RESOURCES_PATH = "perfree-web/src/main/resources";// 开发资源路径
     public static final String PROD_THEMES_PATH = "resources/static/themes"; // 生产主题路径
     public static final String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";// 开发主题路径
 

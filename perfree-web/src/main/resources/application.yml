@@ -41,8 +41,6 @@ spring:
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.perfree.model
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #pagehelper配置
 pagehelper:
@@ -53,7 +51,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: error
+    com.perfree: info
   file:
     name: ./logs/Perfree.log
     max-history: 7

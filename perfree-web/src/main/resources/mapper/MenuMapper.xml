@@ -158,4 +158,8 @@
     <select id="getMenuByUrl" resultType="com.perfree.model.Menu">
         select * from p_menu where url= #{url}
     </select>
+
+    <select id="getRegisterMenu" resultType="com.perfree.model.Menu">
+        select * from p_menu where status= 0 and type = 0
+    </select>
 </mapper>

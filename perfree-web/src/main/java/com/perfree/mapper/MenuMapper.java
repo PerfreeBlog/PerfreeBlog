@@ -82,4 +82,6 @@ public interface MenuMapper {
 
     Menu getMenuByUrl(String url);
 
+    List<Menu> getRegisterMenu();
+
 }

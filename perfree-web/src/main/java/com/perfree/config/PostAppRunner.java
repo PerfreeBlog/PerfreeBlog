@@ -4,8 +4,10 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.jfinal.template.Directive;
+import com.perfree.common.Constants;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
+import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -29,9 +31,11 @@ public class PostAppRunner implements ApplicationRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(PostAppRunner.class);
 
     private final OptionService optionService;
+    private final MenuService menuService;
 
-    public PostAppRunner(OptionService optionService) {
+    public PostAppRunner(OptionService optionService,MenuService menuService) {
         this.optionService = optionService;
+        this.menuService = menuService;
     }
 
     @Override
@@ -39,7 +43,7 @@ public class PostAppRunner implements ApplicationRunner {
         // Load Template Directive
         PostAppRunner.loadDirective();
 
-        File file = new File("resources/db.properties");
+        File file = new File(Constants.DB_PROPERTIES_PATH);
         if (!file.exists()) {
             return;
         }
@@ -58,6 +62,8 @@ public class PostAppRunner implements ApplicationRunner {
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
             optionService.initOptionCache();
+            menuService.registerMenuPage();
+
         }
     }
 

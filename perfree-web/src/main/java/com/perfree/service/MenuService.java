@@ -3,13 +3,23 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.commons.RegisterRequestMapping;
+import com.perfree.controller.front.PageController;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.util.ReflectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.lang.reflect.Array;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -82,6 +92,10 @@ public class MenuService {
      * @return int
      */
     public int del(String[] idArr) {
+        for (String id : idArr) {
+            Menu byId = menuMapper.getById(id);
+            RegisterRequestMapping.unregisterRequestMapping(byId.getUrl());
+        }
         return menuMapper.del(idArr);
     }
 
@@ -111,5 +125,45 @@ public class MenuService {
 
     public Menu getMenuByUrl(String url) {
         return menuMapper.getMenuByUrl(url);
+    }
+
+    /**
+     * 注册所有的菜单url规则
+     */
+    public void registerMenuPage() {
+        List<Menu> menus = menuMapper.getRegisterMenu();
+        List<String> patterns = new ArrayList<>();
+        List<String> patternsPageIndex = new ArrayList<>();
+        menus.forEach(r -> {
+            if (RegisterRequestMapping.isUrlPattern(r.getUrl())){
+                patterns.add(r.getUrl());
+                patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
+            }
+        });
+        String[] patternArr = new String[patterns.size()];
+        String[] patternPageIndexArr = new String[patternsPageIndex.size()];
+        Method method_name = ReflectionUtils.findMethod(PageController.class, "pages", HttpServletRequest.class,
+                HttpServletResponse.class, Model.class);
+        RegisterRequestMapping.registerRequestMapping(PageController.class,method_name, patterns.toArray(patternArr));
+
+        Method methodName = ReflectionUtils.findMethod(PageController.class, "pages", int.class,HttpServletRequest.class,
+                HttpServletResponse.class, Model.class);
+        RegisterRequestMapping.registerRequestMapping(PageController.class,methodName, patternsPageIndex.toArray(patternPageIndexArr));
+    }
+
+    /**
+     * 根据url注册RequestMapping
+     * @param url url
+     */
+    public void registerMenuPageByUrl(String url) {
+        String[] patternArr = {url};
+        String[] patternPageIndexArr = {RegisterRequestMapping.urlPageIndex(url)};
+        Method method_name = ReflectionUtils.findMethod(PageController.class, "pages", HttpServletRequest.class,
+                HttpServletResponse.class, Model.class);
+        RegisterRequestMapping.registerRequestMapping(PageController.class,method_name, patternArr);
+
+        Method methodName = ReflectionUtils.findMethod(PageController.class, "pages", int.class,HttpServletRequest.class,
+                HttpServletResponse.class, Model.class);
+        RegisterRequestMapping.registerRequestMapping(PageController.class,methodName, patternPageIndexArr);
     }
 }

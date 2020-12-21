@@ -75,6 +75,11 @@ public class BaseController {
      * @return String
      */
     public String view(String viewPath) {
+        File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  viewPath);
+        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
+        if (!file.exists() && !devFile.exists()) {
+            return "redirect:/404";
+        }
         return viewPath;
     }
 

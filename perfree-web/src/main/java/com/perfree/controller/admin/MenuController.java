@@ -2,6 +2,7 @@ package com.perfree.controller.admin;
 
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
+import com.perfree.commons.RegisterRequestMapping;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Menu;
 import com.perfree.service.MenuService;
@@ -75,6 +76,7 @@ public class MenuController extends BaseController {
         }
         menu.setType(Menu.TYPE_FRONT);
         if (menuService.add(menu) > 0) {
+            menuService.registerMenuPageByUrl(menu.getUrl());
             return ResponseBean.success("添加成功", null);
         }
         logger.error("菜单添加失败: {}", menu.toString());
@@ -89,10 +91,13 @@ public class MenuController extends BaseController {
     @ResponseBody
     public ResponseBean update(@RequestBody @Valid Menu menu) {
         Menu menuByUrl = menuService.getMenuByUrl(menu.getUrl());
-        if (menuByUrl != null && menuByUrl.getId().equals(menu.getId())) {
+        if (menuByUrl != null && !menuByUrl.getId().equals(menu.getId())) {
             return ResponseBean.fail("菜单链接已存在", null);
         }
+        Menu oldMenu = menuService.getById(menu.getId().toString());
         if (menuService.update(menu) > 0) {
+            RegisterRequestMapping.unregisterRequestMapping(oldMenu.getUrl());
+            menuService.registerMenuPageByUrl(menu.getUrl());
             return ResponseBean.success("更新成功", null);
         }
         logger.error("菜单更新失败: {}", menu.toString());
@@ -121,7 +126,13 @@ public class MenuController extends BaseController {
     @PostMapping("/menu/changeStatus")
     @ResponseBody
     public ResponseBean changeStatus(@RequestBody Menu menu) {
+        Menu oldMenu = menuService.getById(menu.getId().toString());
         if (menuService.changeStatus(menu) > 0) {
+            if (menu.getStatus() == 1){
+                RegisterRequestMapping.unregisterRequestMapping(oldMenu.getUrl());
+            } else {
+                menuService.registerMenuPageByUrl(oldMenu.getUrl());
+            }
             return ResponseBean.success("修改成功", null);
         }
         logger.error("菜单修改失败: {}", menu.toString());
