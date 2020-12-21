@@ -25,6 +25,8 @@ public class InstallService {
 
     @Autowired
     private OptionService optionService;
+    @Autowired
+    private MenuService menuService;
 
     public void addDatabase(Database database) throws Exception{
         String format = "jdbc:mysql://%s:%s/perfree?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
@@ -58,5 +60,6 @@ public class InstallService {
         setting.store(file.getAbsolutePath());
 
         optionService.initOptionCache();
+        menuService.registerMenuPage();
     }
 }

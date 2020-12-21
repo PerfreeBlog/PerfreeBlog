@@ -60,6 +60,7 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
                 List<String> arrList = new ArrayList<>(patterns);
                 arrList.remove(pattern);
                 arrList.remove(urlPageIndex(pattern));
+                LOGGER.info("url:{} 已从规则中移除",pattern);
                 requestMappingHandlerMapping.unregisterMapping(menuRequest.getRequestMappingInfo());
                 if (arrList.size() > 0) {
                     String[] newPatterns = new String[arrList.size()];

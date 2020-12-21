@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -164,7 +163,7 @@ public class SystemController extends BaseController{
      */
     @RequestMapping(method = RequestMethod.GET, path = "/captcha")
     public void captcha(HttpSession session, HttpServletResponse response) {
-        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
+        LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100,4,4);
         try {
             session.setAttribute("CAPTCHA_CODE", lineCaptcha.getCode().toUpperCase());
             response.setContentType("image/png");

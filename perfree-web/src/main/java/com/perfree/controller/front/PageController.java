@@ -44,9 +44,4 @@ public class PageController extends BaseController {
         return view(currentThemePage() + Constants.SEPARATOR + url + ".html");
     }
 
-
-    public static void main(String[] args) {
-        String str = "/archive/2";
-        System.out.println(str.substring(0, str.lastIndexOf("/")));
-    }
 }
