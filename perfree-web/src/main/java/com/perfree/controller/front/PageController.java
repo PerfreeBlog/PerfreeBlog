@@ -1,5 +1,6 @@
 package com.perfree.controller.front;
 
+import com.perfree.common.Constants;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Article;
 import com.perfree.model.Menu;
@@ -19,19 +20,19 @@ public class PageController extends BaseController {
     @Autowired
     private MenuService menuService;
 
-    @RequestMapping("/page/{pageName}")
+    @RequestMapping(value = "/page/{pageName}",produces = {"text/html"})
     public String page(@PathVariable("pageName") String pageName, Model model) {
         setArticle(pageName, model);
-        model.addAttribute("url", "/page/" + pageName + "/");
-        return view(currentThemePage() + "/" + pageName + ".html");
+        model.addAttribute("url", "/page/" + pageName + Constants.SEPARATOR);
+        return view(currentThemePage() + Constants.SEPARATOR + pageName + ".html");
     }
 
     @RequestMapping("/page/{pageName}/{pageIndex}")
     public String page(@PathVariable("pageName") String pageName,@PathVariable("pageIndex") int pageIndex, Model model) {
         setArticle(pageName, model);
-        model.addAttribute("url", "/page/" + pageName + "/");
+        model.addAttribute("url", "/page/" + pageName + Constants.SEPARATOR);
         model.addAttribute("pageIndex", pageIndex);
-        return view(currentThemePage() + "/" + pageName + ".html");
+        return view(currentThemePage() + Constants.SEPARATOR + pageName + ".html");
     }
 
     private void setArticle (String pageName, Model model) {

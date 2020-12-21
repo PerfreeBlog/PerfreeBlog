@@ -69,6 +69,10 @@ public class MenuController extends BaseController {
     @PostMapping("/menu/add")
     @ResponseBody
     public ResponseBean add(@RequestBody @Valid Menu menu) {
+        Menu menuByUrl = menuService.getMenuByUrl(menu.getUrl());
+        if (menuByUrl != null) {
+            return ResponseBean.fail("菜单链接已存在", null);
+        }
         menu.setType(Menu.TYPE_FRONT);
         if (menuService.add(menu) > 0) {
             return ResponseBean.success("添加成功", null);
@@ -84,6 +88,10 @@ public class MenuController extends BaseController {
     @PostMapping("/menu/update")
     @ResponseBody
     public ResponseBean update(@RequestBody @Valid Menu menu) {
+        Menu menuByUrl = menuService.getMenuByUrl(menu.getUrl());
+        if (menuByUrl != null && menuByUrl.getId().equals(menu.getId())) {
+            return ResponseBean.fail("菜单链接已存在", null);
+        }
         if (menuService.update(menu) > 0) {
             return ResponseBean.success("更新成功", null);
         }
