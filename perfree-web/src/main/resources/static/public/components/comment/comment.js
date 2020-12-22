@@ -35,6 +35,8 @@ function submitComment() {
                     location.hash = "#comment-"+ result.data.id;
                 });
                 alert("评论成功");
+            }else if (result.code === 201) {
+                alert("评论成功,正在等待管理员审核");
             } else if (result.code === -1) {
                 alert("该文章已关闭评论功能");
             }else if (result.code === -2) {

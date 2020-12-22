@@ -75,7 +75,10 @@ public class CommentController extends BaseController {
             comment.setStatus(Constants.COMMENT_STATUS_NORMAL);
         }
         if (commentService.add(comment) > 0) {
-            return ResponseBean.success("评论成功", comment);
+            if (comment.getStatus() == Constants.COMMENT_STATUS_NORMAL) {
+                return ResponseBean.success("评论成功", comment);
+            }
+            return ResponseBean.error(201 ,"评论成功,正在等待管理员审核", null);
         }
         return ResponseBean.fail("评论失败", null);
     }

@@ -58,7 +58,6 @@ function submitComment() {
         data: JSON.stringify(data),
         success: function (result) {
             if (result.code === 200) {
-                console.log( $("#content"))
                 $("#content").val('');
                 cancelReply();
                 const article = $("#articleId").val();
@@ -66,6 +65,10 @@ function submitComment() {
                     location.hash = "#comment-"+ result.data.id;
                 });
                 notice.success("评论成功");
+            } else if (result.code === 201) {
+                $("#content").val('');
+                cancelReply();
+                notice.success("评论成功,正在等待管理员审核");
             } else if (result.code === -1) {
                 notice.error("该文章已关闭评论功能");
             }else if (result.code === -2) {
