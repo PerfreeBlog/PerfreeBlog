@@ -1,4 +1,4 @@
-#commentPage(pageSize=10)
+#commentPage(pageSize=6)
     ### 评论列表
     <div class="p-comment-list-box" id="commentListBox">
         <div id="commentList">
@@ -49,6 +49,8 @@
                     </div>
                     <div class="clear"></div>
                 </div>
+            #else
+            暂无评论
             #end
         </div>
     </div>
@@ -61,12 +63,12 @@
             #if(!loginUser)
                 <div class="p-form-item">
                     <label class="p-comment-label"><span class="p-required">*</span>名称</label>
-                    <input name="userName" type="text" required="required" class="p-comment-input">
+                    <input name="userName" type="text" class="p-comment-input">
                 </div>
 
                 <div class="p-form-item">
                     <label class="p-comment-label"><span class="p-required">*</span>邮箱</label>
-                    <input name="email" type="email" required="required" class="p-comment-input">
+                    <input name="email" type="text" class="p-comment-input">
                 </div>
 
                 <div class="p-form-item">
@@ -77,7 +79,7 @@
 
             <div class="p-form-item">
                 <label class="p-comment-label"><span class="p-required">*</span>内容</label>
-                <textarea class="p-comment" id="content" name="content" required="required"></textarea>
+                <textarea class="p-comment" id="content" name="content"></textarea>
             </div>
             <input type="hidden" name="pid" id="pid">
             <input type="hidden" name="topPid" id="topPid">

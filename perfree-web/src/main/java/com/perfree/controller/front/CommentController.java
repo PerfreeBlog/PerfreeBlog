@@ -3,6 +3,7 @@ package com.perfree.controller.front;
 import com.perfree.common.Constants;
 import com.perfree.common.GravatarUtil;
 import com.perfree.common.ResponseBean;
+import com.perfree.common.ValidUtil;
 import com.perfree.commons.IpUtil;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Article;
@@ -38,7 +39,7 @@ public class CommentController extends BaseController {
 
     @RequestMapping("/comment/submitComment")
     @ResponseBody
-    public ResponseBean submitComment(@RequestBody Comment comment, HttpServletRequest request){
+    public ResponseBean submitComment(@RequestBody @Valid Comment comment, HttpServletRequest request){
         Article article = articleService.getById(comment.getArticleId().toString());
         if(article.getIsComment() == 0) {
             return ResponseBean.error(-1,"该文章已关闭评论功能" , null);
@@ -50,6 +51,9 @@ public class CommentController extends BaseController {
             }
             if (StringUtils.isBlank(comment.getEmail())) {
                 return ResponseBean.error(-3,"请填写邮箱" , null);
+            }
+            if (!ValidUtil.isEmail(comment.getEmail())) {
+                return ResponseBean.error(-5,"请正确填写邮箱" , null);
             }
             if (!canComment(IpUtil.getIpAddr(request), comment.getArticleId().toString())) {
                 return ResponseBean.error(-4 ,"评论过于频繁,请稍候再试", null);

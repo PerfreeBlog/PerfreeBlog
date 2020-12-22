@@ -35,14 +35,6 @@
         </ul>
     </div>
 
-    #if(archivePage.pagers)
-        <nav class="m-pager-box">
-            <a class="m-pager #(archivePage.preUrlStyle)" href="#(archivePage.preUrl ??)"><</a>
-            #for(page : archivePage.pagers)
-            <a class="m-pager #(page.style)" href="#(page.url ??)">#(page.text ??)</a>
-            #end
-            <a class="m-pager #(archivePage.nextUrlStyle)" href="#(archivePage.nextUrl ??)">></a>
-        </nav>
-    #end
+    #pageRender(archivePage, preText="上一页",nextText="下一页")
 #end
 #end

@@ -473,131 +473,19 @@ pre{
     border-left: 3px solid #79a7f1;
     padding-left: 5px;
 }
-.m-comment-edit{
-    margin-top: 10px;
+.p-submit-comment{
+    background: #79a7f1;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 6px;
 }
 .layui-layedit {
     border-radius: 5px;
-}
-.m-comment-edit-info{
-    position: relative;
-    height: 30px;
-    line-height: 30px;
-    margin-top: 5px;
-}
-.m-comment-edit-submit-btn{
-    height: 30px;
-    line-height: 30px;
-    border-radius: 5px;
-    background-color: #79a7f1;
-}
-.m-comment-detail-box{
-    margin-top: 15px;
-    border-bottom: 1px solid #eaeaea;
-    padding-bottom: 8px;
-}
-.m-comment-detail-left{
-    height: 35px;
-    overflow: hidden;
-    width: 35px;
-    float: left;
-}
-.m-comment-detail-img{
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-}
-.m-comment-detail-right{
-    width: calc(100% - 53px);
-    float: left;
-    margin-left: 8px;
-}
-.m-comment-detail-user{
-    font-size: 14px;
-    color: #7f7f7f;
-}
-.m-comment-detail-time{
-    font-size: 12px;
-    margin-left: 5px;
-    color: #7f7f7f;
-}
-.m-comment-detail-revert-btn{
-    width: 45px;
-    height: 21px;
-    line-height: 22px;
-    border-radius: 3px;
-    display: inline-block;
-    margin-top: 3px;
-    font-size: 13px;
-}
-.m-comment-detail-revert-btn:hover{
-}
-.m-comment-captcha{
-    display: inline-block;
-    width: 120px;
-    height: 100%;
-    position: relative;
-    top: 1px;
-}
-.m-comment-verify{
-    height: 100%;
-    cursor: pointer;
-}
-.m-comment-send-box{
-    position: absolute;
-    right: 10px;
-    display: inline-block;
-    height: 30px;
-}
-.m-comment-unlogin{
-    width: 100%;
-    line-height: 30px;
-    text-align: center;
-}
-.m-comment-cancel-revert{
-    display: none;
-}
-#comment-edit{
-    width: calc(100% - 10px);
-    padding: 5px;
-    height: 80px;
-    resize: none;
-    border-radius: 5px;
-    border-color: #949494;
-    color: inherit;
-}
-.parentComment{
-    padding: 8px;
-    position: relative;
-    margin-top: 10px;
-    border-bottom: none;
-}
-.no-comment{
-    text-align: center;
-    margin-top: 18px;
-}
-
-.m-comment-input{
-    border: 1px solid #949494;
-    height: 30px;
-    padding: 3px;
-    border-radius: 3px;
-    color: inherit;
 }
 .p-form-required{
     color: red;
 }
 
 @media screen and (max-width:700px) {
-    .m-comment-edit-info{
-        height: auto;
-    }
-    .m-comment-input {
-        width: calc(100% - 10px);
-        margin-bottom: 3px;
-    }
-    .m-comment-send-box {
-        position: inherit;
-        left: 1px;
-    }
 }

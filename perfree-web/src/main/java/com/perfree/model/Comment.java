@@ -1,8 +1,5 @@
 package com.perfree.model;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -24,8 +21,6 @@ public class Comment implements Serializable {
     private String content;
     private String avatar;
     private String website;
-    @NotBlank(message = "邮箱不允许为空")
-    @Email(message = "请正确填写邮箱")
     private String email;
     private String userName;
 

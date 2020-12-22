@@ -43,8 +43,10 @@ function submitComment() {
                 alert("请填写邮箱");
             }else if (result.code === -4) {
                 alert("评论过于频繁,请稍候再试");
+            } else if (result.code === -5) {
+                alert("请正确填写邮箱");
             } else {
-                alert("评论失败,请联系管理员");
+                alert(result.msg);
             }
         },
         error : function() {

@@ -43,25 +43,23 @@
 
     <div class="m-header-user-box">
         <ul class="layui-nav" lay-filter="">
-            #user()
-                #if(user != null)
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <img src=" #(isBlank(user.avatar) ? '/static/public/images/user.png': user.avatar)" alt="" class="user-img"> #(user.userName ??)
-                            <span class="down"><i class="fa fa-angle-down"></i></span>
-                        </a>
-                        <dl class="layui-nav-child">
-                            #if(user.hasAdmin())
-                                <dd><a href="/admin"><i class="fa fa-briefcase"></i> 后台管理</a></dd>
-                            #end
-                            <dd><a href="/logout" data-pjax="no"><i class="fa fa-sign-out"></i> 退出登录</a></dd>
-                        </dl>
-                    </li>
-                #else
-                    <a class="m-header-login-btn" data-pjax="no" href="/login">登录</a>
-                    <span class="part">|</span>
-                    <a class="m-header-register-btn" data-pjax="no" href="/register">注册</a>
-                #end
+            #if(loginUser)
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src=" #(isBlank(loginUser.avatar) ? '/static/public/images/user.png': loginUser.avatar)" alt="" class="user-img"> #(loginUser.userName ??)
+                        <span class="down"><i class="fa fa-angle-down"></i></span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        #if(loginUser.hasAdmin())
+                            <dd><a href="/admin"><i class="fa fa-briefcase"></i> 后台管理</a></dd>
+                        #end
+                        <dd><a href="/logout" data-pjax="no"><i class="fa fa-sign-out"></i> 退出登录</a></dd>
+                    </dl>
+                </li>
+            #else
+                <a class="m-header-login-btn" data-pjax="no" href="/login">登录</a>
+                <span class="part">|</span>
+                <a class="m-header-register-btn" data-pjax="no" href="/register">注册</a>
             #end
         </ul>
     </div>

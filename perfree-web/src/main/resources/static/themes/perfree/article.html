@@ -3,6 +3,7 @@
 #define css()
     <link href="/static/themes/perfree/static/lib/viewerjs/viewer.min.css" rel="stylesheet">
     <link href="/static/themes/perfree/static/lib/highlight/styles/atom-one-dark.css" rel="stylesheet">
+    <link href="/static/public/components/comment/comment.css" rel="stylesheet">
     <link href="/static/themes/perfree/static/css/article.css" rel="stylesheet">
 #end
 #define content()
@@ -47,11 +48,12 @@
         <div class="m-comment-box-title">
             评论
         </div>
-        #include("/static/themes/perfree/components/comment.html")
+        #include("/static/public/components/comment/comment.html")
     </div>
 #end
 #define script()
     <script src="/static/themes/perfree/static/lib/viewerjs/viewer.min.js"></script>
     <script src="/static/themes/perfree/static/lib/highlight/highlight.pack.js"></script>
     <script src="/static/themes/perfree/static/js/article.js"></script>
+    <script src="/static/themes/perfree/static/js/comment.js"></script>
 #end

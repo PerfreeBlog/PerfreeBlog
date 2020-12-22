@@ -78,3 +78,24 @@
         color: #606266;
     }
 }
+.m-comment-box{
+    background: white;
+    margin-top: 8px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.m-comment-box-title{
+    line-height: 25px;
+    border-left: 3px solid #79a7f1;
+    padding-left: 5px;
+}
+.p-submit-comment{
+    background: #79a7f1;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 4px 6px;
+}
+.a-article-content-detail{
+    margin-bottom: 15px;
+}

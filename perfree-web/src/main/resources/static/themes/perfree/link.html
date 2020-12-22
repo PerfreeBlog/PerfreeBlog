@@ -1,12 +1,17 @@
 #include("/static/themes/perfree/layout/layout.html")
 #@layout()
 #define css()
+    <link href="/static/public/components/comment/comment.css" rel="stylesheet">
+    <link href="/static/themes/perfree/static/css/article.css" rel="stylesheet">
     <link href="/static/themes/perfree/static/css/link.css" rel="stylesheet">
 #end
 #define content()
-    #linkPage(pageSize=21)
+    #linkPage(pageSize=99)
         <div class="m-container">
             <h2 class="m-container-title">友链</h2>
+            #if(article)
+                <div class="a-article-content-detail"> #mdToHtml(article.content ??)</div>
+            #end
             <ul class="m-link-container">
                 #for(link: linkPage.data)
                     <li class="m-link-box">
@@ -23,15 +28,16 @@
                 #end
             </ul>
         </div>
-
-        #if(linkPage.pagers)
-        <nav class="m-pager-box">
-            <a class="m-pager #(linkPage.preUrlStyle)" href="#(linkPage.preUrl ??)"><</a>
-            #for(page : linkPage.pagers)
-            <a class="m-pager #(page.style)" href="#(page.url ??)">#(page.text ??)</a>
-            #end
-            <a class="m-pager #(linkPage.nextUrlStyle)" href="#(linkPage.nextUrl ??)">></a>
-        </nav>
+        #if(article)
+            <div class="m-comment-box">
+                <div class="m-comment-box-title">
+                    评论
+                </div>
+                #include("/static/public/components/comment/comment.html")
+            </div>
         #end
     #end
+#end
+#define script()
+    <script src="/static/themes/perfree/static/js/comment.js"></script>
 #end
