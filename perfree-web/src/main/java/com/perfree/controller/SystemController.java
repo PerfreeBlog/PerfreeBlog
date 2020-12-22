@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -162,7 +163,11 @@ public class SystemController extends BaseController{
      * 验证码
      */
     @RequestMapping(method = RequestMethod.GET, path = "/captcha")
-    public void captcha(HttpSession session, HttpServletResponse response) {
+    public void captcha(String d,HttpSession session, HttpServletResponse response) throws IOException {
+        if (StringUtils.isBlank(d)){
+            response.sendRedirect("/captcha?d="+ Math.random() );
+            return;
+        }
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100,4,4);
         try {
             session.setAttribute("CAPTCHA_CODE", lineCaptcha.getCode().toUpperCase());
