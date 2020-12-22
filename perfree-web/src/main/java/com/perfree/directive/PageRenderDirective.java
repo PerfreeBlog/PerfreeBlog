@@ -23,7 +23,7 @@ public class PageRenderDirective extends BaseDirective {
         String anchor = getExprParamToStr("anchor");
         String preText = getExprParamToStr("preText");
         String nextText = getExprParamToStr("nextText");
-        if (param != null) {
+        if (param != null && param.getPagers() != null) {
             String pagerHtmlFormat = "<nav class='m-pager-box'>" +
                     "<a class='m-pager %s' href='%s'>%s</a>"+
                     "%s"+

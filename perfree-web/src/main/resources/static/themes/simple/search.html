@@ -32,7 +32,7 @@
                             <span>评论:#(article.commentCount ??)</span>
                         </div>
                         <div class="article-content">
-                            #mdToHtml(article.content??)
+                            #mdSummary(article.content,200)...
                         </div>
                     </div>
                 #else

@@ -18,7 +18,6 @@
 <div class="layout">
     #include("/static/themes/simple/inc/_header.html")
     <div class="center">
-      123
         <div class="center-left">
             #articlePage(pageSize=5)
                 #for(article: articlePage.data)
@@ -33,7 +32,7 @@
                             <span>评论:#(article.commentCount ??)</span>
                         </div>
                         <div class="article-content">
-                            #mdToHtml(article.content??)
+                            #mdSummary(article.content,200)...
                         </div>
                     </div>
                 #else
