@@ -13,6 +13,7 @@ public class Theme implements Serializable {
     private String screenshots;
     private Integer isActive = 0;
     private String path;
+    private String absolutePath;
 
     public String getPath() {
         return path;
@@ -86,17 +87,11 @@ public class Theme implements Serializable {
         this.screenshots = screenshots;
     }
 
+    public String getAbsolutePath() {
+        return absolutePath;
+    }
 
-    @Override
-    public String toString() {
-        return "Theme{" +
-                "name='" + name + '\'' +
-                ", version='" + version + '\'' +
-                ", author='" + author + '\'' +
-                ", authorWebSite='" + authorWebSite + '\'' +
-                ", description='" + description + '\'' +
-                ", updateUrl='" + updateUrl + '\'' +
-                ", screenshots='" + screenshots + '\'' +
-                '}';
+    public void setAbsolutePath(String absolutePath) {
+        this.absolutePath = absolutePath;
     }
 }

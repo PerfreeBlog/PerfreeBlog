@@ -8,7 +8,11 @@ import com.perfree.common.OptionCache;
 import com.perfree.commons.FileUtil;
 import com.perfree.model.Option;
 import com.perfree.model.Theme;
+import com.perfree.model.ThemeFile;
+import com.perfree.model.TreeNode;
+import de.rototor.pdfbox.graphics2d.IPdfBoxGraphics2DFontTextDrawer;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -121,5 +125,84 @@ public class ThemeService {
         }catch (Exception e) {
             return false;
         }
+    }
+
+
+    public File getThemeDir(String path) {
+        File prodThemeFile = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + path);
+        File devThemeFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + path);
+        File themeFile = null;
+        if (prodThemeFile.exists()) {
+            themeFile = prodThemeFile;
+        } else {
+            if (devThemeFile.exists()) {
+                themeFile = devThemeFile;
+            }
+        }
+        return themeFile;
+    }
+
+    public Theme getThemeByPath(String path) {
+        Theme theme = new Theme();
+        File themeDir = getThemeDir(path);
+        if (themeDir == null) {
+            return null;
+        }
+
+        // 读取主题名称
+        File settingFile = new File(themeDir.getAbsolutePath() + Constants.SEPARATOR + "settings.properties");
+        if (settingFile.exists()){
+            Props props = new Props(settingFile, CharsetUtil.UTF_8);
+            theme.setName(props.get("name").toString());
+            theme.setPath(settingFile.getParentFile().getName());
+            theme.setAbsolutePath(themeDir.getAbsolutePath());
+        }
+        return theme;
+    }
+
+
+    /**
+     * 根据主题获取主题内文件列表
+     * @param path path
+     * @return List<ThemeFile>
+     */
+    public List<TreeNode> getFileListByTheme(String path) {
+        File themeDir = getThemeDir(path);
+        if (themeDir == null) {
+            return null;
+        }
+        return getFileListByFile(themeDir);
+    }
+
+    public List<TreeNode> getFileListByFile(File dir) {
+        List<TreeNode> result = new ArrayList<>();
+        for (File file : dir.listFiles()) {
+            ThemeFile themeFile = new ThemeFile();
+            TreeNode treeNode = new TreeNode();
+            treeNode.setTitle(file.getName());
+            themeFile.setFilePath(file.getAbsolutePath());
+            themeFile.setFileName(file.getName());
+            List<TreeNode> childThemeFile = new ArrayList<>();
+            if (file.isDirectory()) {
+                childThemeFile = getFileListByFile(file);
+                themeFile.setFileType("dir");
+            } else {
+                themeFile.setFileType(file.getName().substring(file.getName().lastIndexOf(".")).replace(".",""));
+            }
+            treeNode.setObj(themeFile);
+            treeNode.setChildren(childThemeFile);
+            if (!themeFile.getFileType().equals("dir")){
+                if (themeFile.getFileType().equals("html") || themeFile.getFileType().equals("css") ||
+                        themeFile.getFileType().equals("js")){
+                    result.add(treeNode);
+                }
+            } else {
+                // 如果是目录,空的不要
+                if (treeNode.getChildren().size() > 0) {
+                    result.add(treeNode);
+                }
+            }
+        }
+        return result;
     }
 }

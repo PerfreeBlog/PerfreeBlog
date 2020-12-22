@@ -24,6 +24,9 @@
                 <img src="#(theme.screenshots)">
                 <div class="p-theme-info">
                     <span class="theme-name">#(theme.name)</span>
+                    <button type="button"
+                            class="layui-btn layui-btn-danger editThemeBtn" data-path="#(theme.path)" data-name="#(theme.name)">编辑
+                    </button>
                     #if(theme.isActive != 1)
                     <button type="button"
                             class="layui-btn layui-btn-danger removeThemeBtn" data-path="#(theme.path)">卸载
@@ -90,6 +93,11 @@
                 layer.msg("卸载主题失败", {icon: 2});
             }
         });
+    });
+
+    $(".p-theme-container").on("click", ".editThemeBtn", function () {
+        const path = $(this).attr("data-path");
+        parent.openTab('', '编辑主题', '/admin/theme/edit?path=' + path, "-5");
     });
 
     upload.render({

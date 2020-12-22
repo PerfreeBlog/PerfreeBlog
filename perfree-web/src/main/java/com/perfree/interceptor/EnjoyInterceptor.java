@@ -3,11 +3,14 @@ package com.perfree.interceptor;
 import com.perfree.common.Constants;
 import com.perfree.common.OptionCache;
 import com.perfree.commons.SpringBeanUtils;
+import com.perfree.controller.admin.ThemeController;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 public class EnjoyInterceptor implements HandlerInterceptor {
+    private final Logger logger = LoggerFactory.getLogger(EnjoyInterceptor.class);
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         return true;
@@ -41,16 +45,20 @@ public class EnjoyInterceptor implements HandlerInterceptor {
     }
 
     private void setUser(Map<String, Object> model){
-        UserService userService = SpringBeanUtils.getBean(UserService.class);
-        Subject subject = SecurityUtils.getSubject();
-        User user = new User();
-        PrincipalCollection principals = subject.getPrincipals();
-        if (principals != null) {
-            BeanUtils.copyProperties(principals.getPrimaryPrincipal(), user);
-            user = userService.getById(user.getId().toString());
-            user.setPassword(null);
-            user.setSalt(null);
-            model.put(Constants.LOGIN_USER, user);
-        }
+       try{
+           UserService userService = SpringBeanUtils.getBean(UserService.class);
+           Subject subject = SecurityUtils.getSubject();
+           User user = new User();
+           PrincipalCollection principals = subject.getPrincipals();
+           if (principals != null) {
+               BeanUtils.copyProperties(principals.getPrimaryPrincipal(), user);
+               user = userService.getById(user.getId().toString());
+               user.setPassword(null);
+               user.setSalt(null);
+               model.put(Constants.LOGIN_USER, user);
+           }
+       } catch (Exception e){
+           logger.error(e.getMessage());
+       }
     }
 }

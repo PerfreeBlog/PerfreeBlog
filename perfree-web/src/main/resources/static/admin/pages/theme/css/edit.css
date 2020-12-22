@@ -1,0 +1,13 @@
+.CodeMirror {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', serif;
+    height: 750px;
+}
+.layui-tree-iconClick .layui-icon-file {
+    color: #1E9FFF;
+}
+.saveFileBtn{
+    position: absolute;
+    right: 16px;
+    top: 6px;
+    background: #3e404a;
+}
