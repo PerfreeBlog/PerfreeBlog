@@ -49,7 +49,7 @@
                         <input type="text" name="captcha" placeholder="请输入验证码" required lay-verify="required" autocomplete="off" class="layui-input captcha-input">
                     </div>
                     <div class="layui-input-inline captcha-box">
-                        <img src="/captcha" onclick="this.src='/captcha?d='+Math.random();">
+                        <img onclick="this.src='/captcha?d='+Math.random();" id="captcha">
                     </div>
                 </div>
             </div>

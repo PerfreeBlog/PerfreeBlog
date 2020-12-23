@@ -1,4 +1,5 @@
 let form, element, layer;
+$("#captcha").attr("src", '/captcha?d='+Math.random());
 layui.use(['layer', 'form', 'element'], function () {
     form = layui.form;
     element = layui.element;
@@ -29,3 +30,10 @@ layui.use(['layer', 'form', 'element'], function () {
         return false;
     });
 });
+
+document.onkeydown = function (event) {
+    var e = event || window.event;
+    if (e && e.keyCode === 13) {
+        $(".p-login-btn").click();
+    }
+};

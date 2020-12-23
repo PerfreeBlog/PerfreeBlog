@@ -1,4 +1,5 @@
 let form, element, layer;
+$("#captcha").attr("src", '/captcha?d='+Math.random());
 layui.use(['layer', 'form', 'element'], function () {
     form = layui.form;
     element = layui.element;

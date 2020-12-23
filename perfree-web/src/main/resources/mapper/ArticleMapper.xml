@@ -58,7 +58,7 @@
     <update id="articleCommentSub">
         update p_article
             set commentCount= commentCount-1
-            where id in (SELECT articleId FROM p_comment where id = #{id})
+            where id in (SELECT articleId FROM p_comment where id = #{id} or pid = #{id})
     </update>
     <update id="articleViewCountAdd">
         update p_article set
