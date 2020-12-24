@@ -62,6 +62,12 @@ public class InstallController extends BaseController {
     @RequestMapping("/install/addDatabase")
     @ResponseBody
     public ResponseBean addDatabase(@RequestBody @Valid Database database) {
+        if (database.getType().equals("mysql")) {
+            if (StringUtils.isBlank(database.getAddress()) || StringUtils.isBlank(database.getUserName()) ||
+                StringUtils.isBlank(database.getPassword()) || StringUtils.isBlank(database.getPort())) {
+                return ResponseBean.fail("请完整填写数据库信息", null);
+            }
+        }
         try {
             String installStatus = getInstallStatus();
             if (StringUtils.isNotBlank(installStatus)) {

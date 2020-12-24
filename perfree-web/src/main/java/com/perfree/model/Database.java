@@ -1,10 +1,14 @@
 package com.perfree.model;
 
+import javax.validation.constraints.NotBlank;
+
 public class Database {
     private String address;
     private String port;
     private String userName;
     private String password;
+    @NotBlank(message = "数据库类型不允许为空")
+    private String type;
 
     public String getAddress() {
         return address;
@@ -36,5 +40,13 @@ public class Database {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

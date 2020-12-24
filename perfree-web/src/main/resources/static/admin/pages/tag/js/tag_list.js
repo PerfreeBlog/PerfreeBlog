@@ -77,13 +77,13 @@ function queryTable() {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
-                templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+                templet: "<span>{{d.createTime == null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
                 sort: true,
-                templet: "<span>{{layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+                templet: "<span>{{d.updateTime ==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'id', title: '操作', width: 120, fixed: 'right',

@@ -71,7 +71,7 @@ function queryTable() {
                 width: 220,
                 title: '评论时间',
                 sort: true,
-                templet: "<span>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+                templet: "<span>{{d.createTime == null ?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'id', title: '操作', width: 120, fixed: 'right',

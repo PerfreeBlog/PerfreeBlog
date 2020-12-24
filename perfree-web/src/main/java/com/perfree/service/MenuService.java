@@ -132,6 +132,9 @@ public class MenuService {
      */
     public void registerMenuPage() {
         List<Menu> menus = menuMapper.getRegisterMenu();
+        if (menus == null || menus.size() <= 0 ){
+            return;
+        }
         List<String> patterns = new ArrayList<>();
         List<String> patternsPageIndex = new ArrayList<>();
         menus.forEach(r -> {

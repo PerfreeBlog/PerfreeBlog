@@ -52,8 +52,10 @@ public class PostAppRunner implements ApplicationRunner {
         if (StringUtils.isNotBlank(installStatus)) {
             DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
             dataSourceBuilder.url(dbSetting.getStr("url"));
-            dataSourceBuilder.username(dbSetting.getStr("username"));
-            dataSourceBuilder.password(dbSetting.getStr("password"));
+            if (dbSetting.getStr("type").equals("mysql")){
+                dataSourceBuilder.username(dbSetting.getStr("username"));
+                dataSourceBuilder.password(dbSetting.getStr("password"));
+            }
             dataSourceBuilder.driverClassName(dbSetting.getStr("driverClassName"));
             DataSource dataSource = dataSourceBuilder.build();
             DynamicDataSource.setDataSource(dataSource);
