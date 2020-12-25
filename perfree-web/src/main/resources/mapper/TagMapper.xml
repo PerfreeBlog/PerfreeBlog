@@ -41,7 +41,8 @@
         select t.*,t1.userName from p_tag t left join p_user t1 on t.userId = t1.id
         where 1 = 1
         <if test="name != null and name != ''">
-            and name like concat('%', #{name,jdbcType=VARCHAR},'%')
+            <bind name="name" value="'%' + _parameter.name + '%'" />
+            and name like  #{name,jdbcType=VARCHAR}
         </if>
         order by t.createTime desc
     </select>

@@ -16,7 +16,8 @@
     <select id="getList" resultType="com.perfree.model.Link">
         select * from p_link where 1=1
         <if test="name != null and name != ''">
-            and `name` like concat('%', #{name,jdbcType=VARCHAR},'%')
+            <bind name="name" value="'%' + _parameter.name + '%'" />
+            and `name` like #{name,jdbcType=VARCHAR}
         </if>
     </select>
     <select id="getById" resultType="com.perfree.model.Link">

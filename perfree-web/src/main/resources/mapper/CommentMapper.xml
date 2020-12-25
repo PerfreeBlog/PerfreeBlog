@@ -50,7 +50,8 @@
         left join p_article t3 on t1.articleId = t3.id
         where 1 = 1
         <if test="content != null and content != ''">
-            and t1.content like concat('%', #{content,jdbcType=VARCHAR},'%')
+            <bind name="content" value="'%' + _parameter.content + '%'" />
+            and t1.content like #{content,jdbcType=VARCHAR}
         </if>
         order by t1.createTime desc
     </select>

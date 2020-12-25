@@ -110,7 +110,8 @@
         select t1.*,t2.name categoryName,t3.userName from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         where 1=1
         <if test="title != null and title != ''">
-            and t1.title like concat('%', #{title,jdbcType=VARCHAR},'%')
+            <bind name="title" value="'%' + _parameter.title + '%'" />
+            and t1.title like #{title,jdbcType=VARCHAR}
         </if>
         <if test="type != null and type != ''">
             and t1.type = #{type}
@@ -168,7 +169,8 @@
             and t1.categoryId = #{categoryId}
         </if>
         <if test="title != null and title != ''">
-            and t1.title like concat('%', #{title,jdbcType=VARCHAR},'%')
+            <bind name="title" value="'%' + _parameter.title + '%'" />
+            and t1.title like #{title,jdbcType=VARCHAR}
         </if>
         order by t1.createTime desc
         ) t order by t.isTop desc

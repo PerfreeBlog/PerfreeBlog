@@ -107,7 +107,8 @@
     <select id="getList" resultMap="MENU_LIST_TREE">
         select * from p_menu where pid = -1 and type = 0
         <if test="name != null and name != ''">
-            and name like concat('%', #{name,jdbcType=VARCHAR},'%')
+            <bind name="name" value="'%' + _parameter.name + '%'" />
+            and name like #{name,jdbcType=VARCHAR}
         </if>
         order by seq
     </select>
