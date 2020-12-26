@@ -27,6 +27,7 @@
                 <excludes>
                     <exclude>static/**</exclude>
                     <exclude>Perfree.sql</exclude>
+                    <exclude>Perfree-sqlite.sql</exclude>
                 </excludes>
                 <filtering>true</filtering>
             </resource>
