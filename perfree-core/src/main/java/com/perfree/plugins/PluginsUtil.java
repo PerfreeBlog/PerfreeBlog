@@ -1,14 +1,12 @@
 package com.perfree.plugins;
 
 import com.perfree.commons.SpringBeanUtils;
-import org.apache.ibatis.annotations.Mapper;
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.io.File;
@@ -24,12 +22,15 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class PluginsUtil extends ClassLoader{
+    private final Logger logger = LoggerFactory.getLogger(PluginsUtil.class);
     private DefaultListableBeanFactory defaultListableBeanFactory = null;
     private final List<String> classNameList = new ArrayList<>();
+    private URLClassLoader classLoader = null;
 
     public PluginsUtil() {
         ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) SpringBeanUtils.getApplicationContext();
         defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
+        classLoader = (URLClassLoader) configurableApplicationContext.getClassLoader();
     }
 
     /**
@@ -49,7 +50,7 @@ public class PluginsUtil extends ClassLoader{
                 if (!accessible) {
                     method.setAccessible(true);
                 }
-                URLClassLoader classLoader = (URLClassLoader) ClassLoader.getSystemClassLoader();
+                logger.info("加载插件:{}", jarFile.getName());
                 URL url = jarFile.toURI().toURL();
                 method.invoke(classLoader, url);
                 initClassNameList(jarFile);
@@ -58,6 +59,7 @@ public class PluginsUtil extends ClassLoader{
             }
         }catch (Exception e) {
             e.printStackTrace();
+            logger.error("加载插件出现异常:{}", e.getMessage());
         } finally {
            if (method != null){
                method.setAccessible(accessible);
@@ -114,10 +116,19 @@ public class PluginsUtil extends ClassLoader{
         // 加载class,注册进入springboot bean
         classNameList.forEach(className -> {
             try {
-                Class<?> loadClass = loadClass(className);
-                pluginInit(loadClass);
+                Class<?> loadClass = classLoader.loadClass(className);
+                if (PluginController.class.isAssignableFrom(loadClass)) {
+                    registerController(loadClass, className);
+                }
+                if (PluginService.class.isAssignableFrom(loadClass)) {
+                    registerService(loadClass, className);
+                }
+                if (PluginMapper.class.isAssignableFrom(loadClass)) {
+                    registerMapper(className);
+                }
+                // pluginInit(loadClass);
                 // 注册Controller
-                if (loadClass.getAnnotation(RestController.class) != null || loadClass.getAnnotation(Controller.class) != null){
+               /* if (loadClass.getAnnotation(RestController.class) != null || loadClass.getAnnotation(Controller.class) != null){
                     registerController(loadClass, className);
                 }
                 // 注册service
@@ -127,7 +138,7 @@ public class PluginsUtil extends ClassLoader{
                 // 注册mapper
                 if (loadClass.getAnnotation(Mapper.class) != null) {
                     registerMapper(className);
-                }
+                }*/
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -144,11 +155,12 @@ public class PluginsUtil extends ClassLoader{
      */
     private void registerController(Class<?> loadClass, String className) throws Exception {
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(loadClass);
-        defaultListableBeanFactory.registerBeanDefinition(className,beanDefinitionBuilder.getBeanDefinition());
+        defaultListableBeanFactory.registerBeanDefinition(loadClass.getSimpleName(),beanDefinitionBuilder.getBeanDefinition());
         final RequestMappingHandlerMapping requestMappingHandlerMapping = SpringBeanUtils.getApplicationContext().getBean(RequestMappingHandlerMapping.class);
         Method method=requestMappingHandlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods",Object.class);
         method.setAccessible(true);
-        method.invoke(requestMappingHandlerMapping, className);
+        method.invoke(requestMappingHandlerMapping, loadClass.getSimpleName());
+        logger.info("注册controller:{}", className);
     }
 
     /**
@@ -158,7 +170,8 @@ public class PluginsUtil extends ClassLoader{
      */
     private void registerService(Class<?> loadClass, String className){
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.rootBeanDefinition(loadClass);
-        defaultListableBeanFactory.registerBeanDefinition(className,beanDefinitionBuilder.getBeanDefinition());
+        defaultListableBeanFactory.registerBeanDefinition(loadClass.getSimpleName(),beanDefinitionBuilder.getBeanDefinition());
+        logger.info("注册service:{}", className);
     }
 
     /**
@@ -169,6 +182,7 @@ public class PluginsUtil extends ClassLoader{
         ClassPathMapperScanner scanner = new ClassPathMapperScanner(defaultListableBeanFactory);
         scanner.registerFilters();
         scanner.doScan(className.substring(0, className.lastIndexOf(".")));
+        logger.info("注册mapper:{}", className);
     }
 
     /**

@@ -1,11 +1,10 @@
 package com.exam.service;
 
 import com.exam.mapper.HelloWorldMapper;
+import com.perfree.plugins.PluginService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class HelloWorldService {
+public class HelloWorldService extends PluginService {
 
     @Autowired
     private HelloWorldMapper helloWorldMapper;
@@ -13,4 +12,9 @@ public class HelloWorldService {
     public String index() {
         return helloWorldMapper.index();
     }
+
+    public String index2() {
+        return helloWorldMapper.index();
+    }
+
 }
