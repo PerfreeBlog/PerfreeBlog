@@ -17,7 +17,7 @@
     </parent>
 
     <groupId>com.perfree</groupId>
-    <artifactId>Perfree</artifactId>
+    <artifactId>PerfreeProject</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
 
