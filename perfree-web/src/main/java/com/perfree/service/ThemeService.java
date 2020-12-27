@@ -37,7 +37,7 @@ public class ThemeService {
             return null;
         }
         for (File file : files) {
-            File settingFile = new File(file.getAbsolutePath() + Constants.SEPARATOR + "settings.properties");
+            File settingFile = new File(file.getAbsolutePath() + Constants.SEPARATOR + "theme.properties");
             if (settingFile.exists()){
                 Props props = new Props(settingFile, CharsetUtil.UTF_8);
                 Theme theme = new Theme();
@@ -51,7 +51,6 @@ public class ThemeService {
                 if (settingFile.getParentFile().getName().equals(OptionCache.getOption(Constants.OPTION_WEB_THEME))){
                     theme.setIsActive(1);
                 }
-                theme.setUpdateUrl(props.get("update.url").toString());
                 theme.setVersion(props.get("version").toString());
                 list.add(theme);
             }
@@ -102,7 +101,7 @@ public class ThemeService {
         multiFile.transferTo(file.getAbsoluteFile());
         File unzip = ZipUtil.unzip(file);
         boolean delete = file.delete();
-        File settingFile = new File(unzip.getAbsolutePath() + "/settings.properties");
+        File settingFile = new File(unzip.getAbsolutePath() + "/theme.properties");
         if (settingFile.exists()){
             return true;
         }
@@ -150,7 +149,7 @@ public class ThemeService {
         }
 
         // 读取主题名称
-        File settingFile = new File(themeDir.getAbsolutePath() + Constants.SEPARATOR + "settings.properties");
+        File settingFile = new File(themeDir.getAbsolutePath() + Constants.SEPARATOR + "theme.properties");
         if (settingFile.exists()){
             Props props = new Props(settingFile, CharsetUtil.UTF_8);
             theme.setName(props.get("name").toString());

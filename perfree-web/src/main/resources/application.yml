@@ -1,7 +1,8 @@
 server:
+  # 端口
   port: 8080
 
-# spring配置
+# 默认文件上传地址
 web.upload-path: resources/upload/
 spring:
   devtools:
@@ -9,7 +10,9 @@ spring:
       enabled: false
   servlet:
     multipart:
+      # 单个文件上传允许最大大小,默认-1为不限制,如需限制大小改为具体的大小即可,如100MB
       max-file-size: -1
+      # 总上传的数据大小,默认-1为不限制,如需限制大小改为具体的大小即可,如100MB
       max-request-size: -1
   datasource:
     url: jdbc:mysql://196.196.16.2:3306/perfree?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
@@ -51,7 +54,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: info
+    com.perfree: error
   file:
     name: ./logs/Perfree.log
     max-history: 7
