@@ -1,6 +1,6 @@
 server:
   # 端口
-  port: 8080
+  port: 8089
 
 # 默认文件上传地址
 web.upload-path: resources/upload/
@@ -55,6 +55,7 @@ pagehelper:
 logging:
   level:
     com.perfree: error
+    com.perfree.config.PostAppRunner: info
   file:
     name: ./logs/Perfree.log
     max-history: 7

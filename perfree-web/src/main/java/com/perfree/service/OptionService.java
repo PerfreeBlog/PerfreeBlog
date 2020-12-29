@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Transactional
@@ -43,9 +44,17 @@ public class OptionService {
      * @return int
      */
     public int addOrUpdateOptions(List<Option> options) {
-        int count = optionMapper.addOrUpdateOptions(options);
+        AtomicReference<Integer> count = new AtomicReference<>(0);
+        options.forEach(o -> {
+            Option optionByKey = optionMapper.getOptionByKey(o.getKey());
+            if (optionByKey != null) {
+                count.updateAndGet(v -> v + optionMapper.updateValueByKey(o));
+            } else {
+                count.updateAndGet(v -> v + optionMapper.addOption(o));
+            }
+        });
         initOptionCache();
-        return count;
+        return count.get();
     }
 
     public void initOptionCache() {

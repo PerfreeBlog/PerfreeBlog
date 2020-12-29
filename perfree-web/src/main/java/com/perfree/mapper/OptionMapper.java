@@ -30,9 +30,9 @@ public interface OptionMapper {
     List<Option> getStartOption();
 
     /**
-     * 批量插入或更新option
-     * @param options options
+     * 插入option
+     * @param option option
      * @return int
      */
-    int addOrUpdateOptions(List<Option> options);
+    int addOption(Option option);
 }

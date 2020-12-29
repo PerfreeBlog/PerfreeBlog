@@ -90,14 +90,9 @@ CREATE TABLE "p_menu" (
 );
 
 CREATE TABLE "p_option" (
-  "id" integer NOT NULL,
+  "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
   "key" text(256) NOT NULL,
-  "value" text(512),
-  PRIMARY KEY ("id", "key")
-);
-CREATE UNIQUE INDEX "key"
-ON "p_option" (
-  "key"
+  "value" text(512)
 );
 
 CREATE TABLE "p_role" (
