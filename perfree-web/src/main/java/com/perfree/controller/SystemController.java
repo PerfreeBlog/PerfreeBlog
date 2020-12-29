@@ -141,9 +141,9 @@ public class SystemController extends BaseController{
             return ResponseBean.fail("验证码错误", null);
         }
         if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 ||
-                user.getPassword().length() > 12){
-            logger.error("密码不能为空且在6-12字符之间: {}", user.toString());
-            return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
+                user.getPassword().length() > 18){
+            logger.error("密码不能为空且在6-18字符之间: {}", user.toString());
+            return ResponseBean.fail("密码不能为空且在6-18字符之间", null);
         }
         if (userService.getUserByAccount(user.getAccount()) != null){
             logger.error("账户已存在: {}", user.toString());

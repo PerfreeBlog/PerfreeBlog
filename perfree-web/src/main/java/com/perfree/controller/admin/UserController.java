@@ -107,9 +107,9 @@ public class UserController extends BaseController {
     @PostMapping("/user/add")
     @ResponseBody
     public ResponseBean add(@RequestBody @Valid User user) {
-        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 12){
-            logger.error("密码不能为空且在6-12字符之间: {}", user.toString());
-            return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
+        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 18){
+            logger.error("密码不能为空且在6-18字符之间: {}", user.toString());
+            return ResponseBean.fail("密码不能为空且在6-18字符之间", null);
         }
         if (userService.getUserByAccount(user.getAccount()) != null){
             logger.error("账户已存在: {}", user.toString());
@@ -211,8 +211,8 @@ public class UserController extends BaseController {
         if (StringUtils.isBlank(oldPassword)) {
             return ResponseBean.fail("当前密码不能为空", null);
         }
-        if (StringUtils.isBlank(newPassword) || newPassword.length() < 6 || newPassword.length() > 12) {
-            return ResponseBean.fail("新密码不能为空且在6-12字符之间", null);
+        if (StringUtils.isBlank(newPassword) || newPassword.length() < 6 || newPassword.length() > 18) {
+            return ResponseBean.fail("新密码不能为空且在6-18字符之间", null);
         }
         User user = userService.getById(getUser().getId().toString());
         String oldMd5Password = new Md5Hash(oldPassword, user.getSalt()).toString();

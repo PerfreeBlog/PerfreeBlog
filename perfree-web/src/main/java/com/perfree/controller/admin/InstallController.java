@@ -93,8 +93,8 @@ public class InstallController extends BaseController {
         user.setRoleId(1L);
         user.setStatus(0);
         user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
-        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 12){
-            return ResponseBean.fail("密码不能为空且在6-12字符之间", null);
+        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 18){
+            return ResponseBean.fail("密码不能为空且在6-18字符之间", null);
         }
         if (userService.getUserByAccount(user.getAccount()) != null){
             return ResponseBean.fail("账户已存在", null);
