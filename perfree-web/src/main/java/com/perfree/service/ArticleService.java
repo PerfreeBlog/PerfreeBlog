@@ -7,6 +7,7 @@ import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ public class ArticleService{
     @Autowired
     private ArticleMapper articleMapper;
 
+    @Autowired
+    private CategoryService categoryService;
+
     /**
      * 添加文章
      * @param article article
@@ -36,6 +40,9 @@ public class ArticleService{
             });
             // 添加标签关联
             articleMapper.addArticleTag(article.getArticleTags());
+        }
+        if (article.getCategoryId() != null) {
+            categoryService.addCount(article.getCategoryId());
         }
         return result;
     }
@@ -93,6 +100,10 @@ public class ArticleService{
      */
     public int del(String[] idArr) {
         Arrays.asList(idArr).forEach(r -> {
+            Article article = articleMapper.getById(r);
+            if (article.getCategoryId() != null) {
+                categoryService.subCount(article.getCategoryId());
+            }
             articleMapper.deleteTagByArticleId(r);
         });
         return articleMapper.del(idArr);
@@ -123,6 +134,15 @@ public class ArticleService{
             });
             // 添加标签关联
             articleMapper.addArticleTag(article.getArticleTags());
+        }
+        // 先将原分类数量减一
+        Article oldArticle = articleMapper.getById(article.getId().toString());
+        if (oldArticle.getCategoryId() != null){
+            categoryService.subCount(oldArticle.getCategoryId());
+        }
+        // 将新分类数量加一
+        if (article.getCategoryId() != null){
+            categoryService.addCount(article.getCategoryId());
         }
         return articleMapper.update(article);
     }

@@ -24,8 +24,8 @@ public class Constants {
     public static final int COMMENT_STATUS_NORMAL = 0; // 评论不需要审核
     public static final int COMMENT_STATUS_REVIEW = 1; // 评论需审核
 
-    public static final int REGISTER_YES = 0; // 允许注册新用户
-    public static final int REGISTER_NO = 1; // 不允许注册新用户
+    public static final int REGISTER_YES = 1; // 允许注册新用户
+    public static final int REGISTER_NO = 0; // 不允许注册新用户
 
     public static final String PROD_RESOURCES_PATH = "resources"; // 生产资源路径
     public static final String DEV_RESOURCES_PATH = "perfree-web/src/main/resources";// 开发资源路径

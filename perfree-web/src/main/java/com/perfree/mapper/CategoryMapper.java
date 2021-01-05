@@ -58,4 +58,8 @@ public interface CategoryMapper {
      * @return int
      */
     int changeStatus(Category category);
+
+    void addCount(Long id);
+
+    void subCount(Long id);
 }

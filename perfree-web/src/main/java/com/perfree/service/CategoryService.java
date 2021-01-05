@@ -92,4 +92,12 @@ public class CategoryService {
     public List<Category> allList() {
         return categoryMapper.getList(null);
     }
+
+    public void addCount(Long id) {
+        categoryMapper.addCount(id);
+    }
+
+    public void subCount(Long categoryId) {
+        categoryMapper.subCount(categoryId);
+    }
 }

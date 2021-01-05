@@ -22,6 +22,11 @@
         insert into p_category (pid, `name`, `desc`, metaKeywords,metaDescription,status,createTime)
         VALUES (#{pid},#{name},#{desc}, #{metaKeywords}, #{metaDescription}, #{status}, #{createTime})
     </insert>
+    <update id="addCount">
+        update p_category set
+         `count` = `count`+1
+        where id = #{id}
+    </update>
 
     <update id="update">
          update p_category set
@@ -33,6 +38,11 @@
          update p_category set
         updateTime=#{updateTime},status=#{status}
         where id = #{id} or pid = #{id}
+    </update>
+    <update id="subCount">
+       update p_category set
+         `count` = `count`-1
+        where id = #{id}
     </update>
 
     <delete id="del">
