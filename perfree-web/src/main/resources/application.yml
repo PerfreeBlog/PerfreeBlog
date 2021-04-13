@@ -1,6 +1,10 @@
 server:
   # 端口
   port: 8080
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/javascript,text/css
+    min-response-size: 2048
 
 # 默认文件上传地址
 web.upload-path: resources/upload/
