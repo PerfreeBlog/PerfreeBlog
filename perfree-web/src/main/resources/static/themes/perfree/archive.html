@@ -19,9 +19,9 @@
                     <div class="layui-timeline-content layui-text">
                         <div class="layui-collapse">
                             <div class="layui-colla-item">
-                                <div class="layui-colla-title m-no-select">#(archive.date)</div>
+                                <div class="layui-colla-title m-no-select">#(archive.date??)</div>
                                 <div class="layui-colla-content #if(for.index < 3)layui-show#end">
-                                    #for(archiveArticle: archive.articles)
+                                    #for(archiveArticle: archive.articles??)
                                         <a href="#(archiveArticle.url)" class="m-archive-link">
                                             #date(archiveArticle.createTime, "MM/dd")：&nbsp;#(archiveArticle.title)
                                         </a>

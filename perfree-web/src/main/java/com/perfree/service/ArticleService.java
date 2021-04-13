@@ -3,6 +3,7 @@ package com.perfree.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Pager;
+import com.perfree.config.DynamicDataSource;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Archive;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -226,7 +224,12 @@ public class ArticleService{
      */
     public DirectivePage<HashMap<String, String>> frontArchivePage(DirectivePage<HashMap<String, String>> articlePage) {
         PageHelper.startPage(articlePage.getPageIndex(), articlePage.getPageSize());
-        List<Archive> archives = articleMapper.frontArchivePage();
+        List<Archive> archives;
+        if (DynamicDataSource.dataSourceType.equals("mysql")) {
+            archives = articleMapper.frontArchivePage();
+        } else {
+            archives = articleMapper.frontArchivePageBySqlite();
+        }
         PageInfo<Archive> pageInfo = new PageInfo<>(archives);
         articlePage.setTotal(pageInfo.getTotal());
         articlePage.setData(pageInfo.getList());

@@ -3,6 +3,13 @@ $(document).ready(function () {
     initEvent();
     initTagsColor();
     initHitokoto();
+
+    $(".m-user-info").mouseover(function(){
+        $(".m-right-user-info").css("background-image","url('/themes/perfree/static/images/feather.gif')");
+    });
+    $(".m-user-info").mouseleave(function(){
+        $(".m-right-user-info").css("background-image", 'none');
+    })
 });
 
 /**
@@ -81,3 +88,4 @@ function getHitokoto() {
         $("#hitokoto").text(result.hitokoto + " -- " + result.from);
     });
 }
+

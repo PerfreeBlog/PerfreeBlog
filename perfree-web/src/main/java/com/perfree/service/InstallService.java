@@ -64,7 +64,7 @@ public class InstallService {
         }
 
         DataSource dataSource = dataSourceBuilder.build();
-        DynamicDataSource.setDataSource(dataSource);
+        DynamicDataSource.setDataSource(dataSource, setting.getStr("type"));
         Connection connection = dataSource.getConnection();
         FileReader fileReader = new FileReader(sqlFile);
         String createSql = fileReader.readString();

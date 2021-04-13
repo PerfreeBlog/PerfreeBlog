@@ -11,13 +11,14 @@ import javax.sql.DataSource;
 public class DynamicDataSource extends AbstractRoutingDataSource {
     // 数据源集合
     public static DataSource dataSource = null;
-
+    public static String dataSourceType;
     /**
      * 设置数据源
      * @param dataSource 数据源
      */
-    public static void setDataSource(DataSource dataSource) {
+    public static void setDataSource(DataSource dataSource,String dataSourceType) {
         DynamicDataSource.dataSource = dataSource;
+        DynamicDataSource.dataSourceType = dataSourceType;
     }
 
     /**

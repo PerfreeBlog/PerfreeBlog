@@ -58,7 +58,7 @@ public class PostAppRunner implements ApplicationRunner {
             }
             dataSourceBuilder.driverClassName(dbSetting.getStr("driverClassName"));
             DataSource dataSource = dataSourceBuilder.build();
-            DynamicDataSource.setDataSource(dataSource);
+            DynamicDataSource.setDataSource(dataSource,dbSetting.getStr("type"));
         }
         dbSetting.autoLoad(true);
         // Load options and put into memory

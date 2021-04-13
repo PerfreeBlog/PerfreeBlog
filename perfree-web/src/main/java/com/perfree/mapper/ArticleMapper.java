@@ -149,4 +149,6 @@ public interface ArticleMapper{
 
     List<Article> getPageList();
 
+    List<Archive> frontArchivePageBySqlite();
+
 }
