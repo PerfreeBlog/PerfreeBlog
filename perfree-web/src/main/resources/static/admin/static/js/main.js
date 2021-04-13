@@ -162,6 +162,7 @@ function switchSide() {
         $(".f-nav-item").animate({width: "200px"}, 150);
         $(".layui-nav-more").show();
         $(".layui-nav-tree>.f-nav-item>a").css("text-align", "left");
+        $(".layui-nav>.layui-nav-item>.layui-nav-child>dd>a").animate({padding: "0 30px", paddingLeft: "50px"}, 150);
         isOpen = true;
         layer.closeAll();
     }

@@ -32,6 +32,8 @@ public class ArticleService{
      * @return int
      */
     public int add(Article article) {
+        article.setViewCount(0L);
+        article.setCommentCount(0L);
         article.setCreateTime(new Date());
         int result = articleMapper.add(article);
         if (article.getArticleTags().size() > 0) {
