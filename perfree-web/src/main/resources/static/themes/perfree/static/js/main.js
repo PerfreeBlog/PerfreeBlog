@@ -25,7 +25,7 @@ function initEvent() {
 function initLayui() {
     layui.config({
         version: true,
-        base:  '/templates/meet/static/lib/layui/lay/modules/'
+        base: '/static/public/libs/layuiComponents/'
     }).use('element', function(){
         const element = layui.element;
     });
