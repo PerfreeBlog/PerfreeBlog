@@ -42,6 +42,7 @@ public class CategoryService {
      */
     public int add(Category category) {
         category.setCreateTime(new Date());
+        category.setCount(0L);
         return categoryMapper.add(category);
     }
 

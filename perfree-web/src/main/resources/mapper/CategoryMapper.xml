@@ -19,8 +19,8 @@
     </resultMap>
 
     <insert id="add">
-        insert into p_category (pid, `name`, `desc`, metaKeywords,metaDescription,status,createTime)
-        VALUES (#{pid},#{name},#{desc}, #{metaKeywords}, #{metaDescription}, #{status}, #{createTime})
+        insert into p_category (pid, `name`, `desc`, metaKeywords,metaDescription,status,createTime,`count`)
+        VALUES (#{pid},#{name},#{desc}, #{metaKeywords}, #{metaDescription}, #{status}, #{createTime},#{count})
     </insert>
     <update id="addCount">
         update p_category set
