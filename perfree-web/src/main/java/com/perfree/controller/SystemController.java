@@ -9,6 +9,7 @@ import com.perfree.model.Menu;
 import com.perfree.model.Option;
 import com.perfree.model.User;
 import com.perfree.service.OptionService;
+import com.perfree.service.SEOService;
 import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -21,17 +22,16 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 
 /**
@@ -44,6 +44,8 @@ public class SystemController extends BaseController{
     private UserService userService;
     @Autowired
     private OptionService optionService;
+    @Autowired
+    private SEOService seoService;
 
     /**
      * 后台首页
@@ -180,5 +182,20 @@ public class SystemController extends BaseController{
             e.printStackTrace();
             logger.error("验证码生成失败: {}", e.getMessage());
         }
+    }
+
+    @GetMapping("/robots.txt")
+    public void robotsTxt(HttpServletResponse response) throws IOException {
+        Writer writer = response.getWriter();
+        String lineSeparator = System.getProperty("line.separator", "\n");
+        writer.append("User-agent: *").append(lineSeparator);
+        writer.append("Disallow:").append("/admin/*").append(lineSeparator);
+    }
+
+    @GetMapping("/sitemap.xml")
+    public void createSiteMapXml(HttpServletResponse response) throws IOException {
+        response.setContentType(MediaType.APPLICATION_XML_VALUE);
+        Writer writer = response.getWriter();
+        writer.append(seoService.createSiteMapXmlContent());
     }
 }
