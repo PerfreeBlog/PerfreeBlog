@@ -93,4 +93,13 @@ public class CommentService {
         articleService.articleCommentAdd(comment.getArticleId());
         return commentMapper.add(comment);
     }
+
+    /**
+     * @description 最近的评论
+     * @author Perfree
+     * @date 2021/4/23 10:56
+     */
+    public List<Comment> getRecentComment(int count) {
+        return commentMapper.getRecentComment(count);
+    }
 }

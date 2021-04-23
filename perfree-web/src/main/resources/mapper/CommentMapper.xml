@@ -114,4 +114,8 @@
         select t1.* from p_comment t1
         where t1.id = #{pid} and t1.status = 0
     </select>
+
+    <select id="getRecentComment" resultMap="COMMENT_RESULT">
+        SELECT t1.* FROM p_comment t1 ORDER BY createTime DESC limit 0,#{count}
+    </select>
 </mapper>

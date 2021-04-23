@@ -52,4 +52,6 @@ public interface CommentMapper {
 
     int add(Comment comment);
 
+    List<Comment> getRecentComment(int count);
+
 }
