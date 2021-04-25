@@ -46,7 +46,7 @@
             #if(loginUser)
                 <li class="layui-nav-item">
                     <a href="javascript:;">
-                        <img src=" #(isBlank(loginUser.avatar) ? '/static/public/images/user.png': loginUser.avatar)" alt="" class="user-img"> #(loginUser.userName ??)
+                        <img src=" #(isBlank(loginUser.avatar) ? '/static/public/images/user.png': loginUser.avatar.replace('http://www.gravatar.com/','https://gravatar.loli.net/'))" alt="" class="user-img"> #(loginUser.userName ??)
                         <span class="down"><i class="fa fa-angle-down"></i></span>
                     </a>
                     <dl class="layui-nav-child">
