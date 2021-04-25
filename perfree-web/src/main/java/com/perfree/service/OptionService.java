@@ -1,6 +1,7 @@
 package com.perfree.service;
 
 import com.perfree.common.OptionCache;
+import com.perfree.config.DynamicDataSource;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,13 @@ public class OptionService {
             if (optionByKey != null) {
                 count.updateAndGet(v -> v + optionMapper.updateValueByKey(o));
             } else {
-                count.updateAndGet(v -> v + optionMapper.addOption(o));
+                if (DynamicDataSource.dataSourceType.equals("mysql")) {
+                    count.updateAndGet(v -> v + optionMapper.addOption(o));
+                } else {
+                    int maxId = optionMapper.getMaxId() + 1;
+                    o.setId(Long.parseLong(String.valueOf(maxId)));
+                    count.updateAndGet(v -> v + optionMapper.addOptionBySqlite(o));
+                }
             }
         });
         initOptionCache();

@@ -7,6 +7,12 @@
         values
             (#{key},#{value})
     </insert>
+    <insert id="addOptionBySqlite">
+          insert into p_option
+        (`id`,`key`,`value`)
+        values
+            (#{id},#{key},#{value})
+    </insert>
     <update id="updateValueByKey">
         update p_option set
         `value` = #{value}
@@ -17,5 +23,8 @@
     </select>
     <select id="getStartOption" resultType="com.perfree.model.Option">
          select t.* from p_option t where t.key in ("WEB_THEME", "WEB_TITLE","WEB_META_KEYWORD","WEB_META_DESC")
+    </select>
+    <select id="getMaxId" resultType="java.lang.Integer">
+        select MAX(id) FROM p_option
     </select>
 </mapper>

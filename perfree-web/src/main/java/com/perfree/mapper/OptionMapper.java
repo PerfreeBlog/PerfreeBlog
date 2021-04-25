@@ -35,4 +35,10 @@ public interface OptionMapper {
      * @return int
      */
     int addOption(Option option);
+
+    int addOptionBySqlite(Option o);
+
+    Integer getMaxId();
+
 }
+
