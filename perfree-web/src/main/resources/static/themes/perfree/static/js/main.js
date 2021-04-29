@@ -18,8 +18,10 @@ $(document).ready(function () {
 function initEvent() {
     onWindowScroll()
     // 监听滚动条
-    $("body").scroll(function(e){onWindowScroll()});
 
+    window.addEventListener('scroll', function(e){
+        onWindowScroll()
+    })
     // 监听返回顶部点击事件
     $('#backtop-box').on('click',function() {
         $('body,html').animate({scrollTop: 0 },300);
@@ -63,9 +65,11 @@ function onWindowScroll(){
     }
     if (scroll > rightSideHeight) {
         $('.m-right-tags-box').addClass('hide');
+        $('.m-right-search-box').addClass('hide');
         $('.right-side-container').addClass('right-side-container-scroll');
     } else {
         $('.m-right-tags-box').removeClass('hide');
+        $('.m-right-search-box').removeClass('hide');
         $('.right-side-container').removeClass('right-side-container-scroll');
     }
 }

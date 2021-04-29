@@ -33,9 +33,27 @@
 
             #menus()
                 #for(menu : menus)
-                    <li class="layui-nav-item">
-                        <a href="#(menu.url ??)"><i class="fa #(menu.icon ??)"></i> #(menu.name ??)</a>
-                    </li>
+                    #if(menu.childMenu !=null && menu.childMenu.size() > 0)
+                        <li class="layui-nav-item" lay-unselect>
+                            <a href="javascript:;">
+                                <i class="fa fa-#(menu.icon ?? 'bars')"></i> #(menu.name ??)
+                                <span class="down"><i class="fa fa-angle-down"></i></span>
+                            </a>
+                            <dl class="layui-nav-child">
+                                #for(children: menu.childMenu)
+                                    <dd lay-unselect>
+                                        <a href="#(children.url)" target="#(children.target == 0 ? '_self' : '_blank')">
+                                            #(children.name ??)
+                                        </a>
+                                    </dd>
+                                #end
+                            </dl>
+                        </li>
+                    #else
+                        <li class="layui-nav-item">
+                            <a href="#(menu.url ??)" target="#(menu.target == 0 ? '_self' : '_blank')"><i class="fa #(menu.icon ??)"></i> #(menu.name ??)</a>
+                        </li>
+                    #end
                 #end
             #end
         </ul>

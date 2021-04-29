@@ -16,7 +16,6 @@ html,body{
     line-height: 1.5715;
     background-color: #fff;
     font-feature-settings: 'tnum';
-    overflow: auto;
 }
 body::-webkit-scrollbar-track-piece,body::-webkit-scrollbar-track-piece {
     background: #eee;
@@ -76,6 +75,7 @@ a:hover {
     margin-right: 10px;
     margin-bottom: 10px;
     transition: all .8s;
+    position: relative;
 }
 .m-content-right{
     width: 240px;
@@ -89,6 +89,11 @@ a:hover {
     box-shadow: 0 -1px 2px 0 #00000008;
     padding-left: 400px;
     padding-right: 400px;
+    z-index: 100;
+    position: relative;
+}
+.layui-tab-bar{
+    display: none;
 }
 
 .backtop-box{
@@ -611,6 +616,9 @@ a:hover {
     .m-header,.m-content,.m-footer {
         padding-left: 240px;
         padding-right: 240px;
+    }
+    .f-floor{
+        display: none;
     }
 }
 
