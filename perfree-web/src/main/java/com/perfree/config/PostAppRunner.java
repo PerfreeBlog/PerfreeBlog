@@ -64,7 +64,7 @@ public class PostAppRunner implements ApplicationRunner {
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
             optionService.initOptionCache();
-            menuService.registerMenuPage();
+            // menuService.registerMenuPage();
 
         }
     }
