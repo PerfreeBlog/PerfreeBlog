@@ -76,7 +76,7 @@ public class InstallService {
         setting.store(file.getAbsolutePath());
 
         optionService.initOptionCache();
-       // menuService.registerMenuPage();
+        menuService.registerMenuPage();
     }
 
     public static void initSqliteFile(String filePath) throws Exception {

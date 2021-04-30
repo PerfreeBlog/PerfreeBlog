@@ -2,12 +2,15 @@ package com.perfree.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.perfree.common.Constants;
+import com.perfree.common.OptionCache;
 import com.perfree.common.Pager;
 import com.perfree.commons.RegisterRequestMapping;
 import com.perfree.controller.front.PageController;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,7 @@ import org.springframework.util.ReflectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -137,10 +141,16 @@ public class MenuService {
         }
         List<String> patterns = new ArrayList<>();
         List<String> patternsPageIndex = new ArrayList<>();
+        String themePath = "static/themes/" + OptionCache.getOption(Constants.OPTION_WEB_THEME);
         menus.forEach(r -> {
-            if (RegisterRequestMapping.isUrlPattern(r.getUrl())){
-                patterns.add(r.getUrl());
-                patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
+            if (RegisterRequestMapping.isUrlPattern(r.getUrl()) && StringUtils.isNotBlank(r.getUrl())
+                    && r.getUrl().startsWith("/") && !r.getUrl().equals("/")){
+                File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + r.getUrl() + ".html");
+                File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + r.getUrl() + ".html");
+                if (file.exists() || devFile.exists()) {
+                    patterns.add(r.getUrl());
+                    patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
+                }
             }
         });
         String[] patternArr = new String[patterns.size()];
@@ -159,6 +169,12 @@ public class MenuService {
      * @param url url
      */
     public void registerMenuPageByUrl(String url) {
+        String themePath = "static/themes/" + OptionCache.getOption(Constants.OPTION_WEB_THEME);
+        File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
+        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
+        if (!file.exists() && !devFile.exists()) {
+            return;
+        }
         String[] patternArr = {url};
         String[] patternPageIndexArr = {RegisterRequestMapping.urlPageIndex(url)};
         Method method_name = ReflectionUtils.findMethod(PageController.class, "pages", HttpServletRequest.class,
