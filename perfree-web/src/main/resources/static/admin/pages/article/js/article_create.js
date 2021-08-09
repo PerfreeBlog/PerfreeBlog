@@ -105,7 +105,8 @@ function initMarkdownEditor() {
         },
         toolbarIconsClass: {
             customImg: "fa-picture-o",
-            customVideo: "fa-video-camera"
+            customVideo: "fa-video-camera",
+            customMusic: "fa-music"
         },
         toolbarHandlers: {
             customImg: function (cm, icon, cursor, selection) {

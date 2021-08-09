@@ -199,9 +199,10 @@ function previewFile(type, path, name) {
                         "src": path,
                         "thumb": path
                     }
-                ]
+                ],
             }
-            , anim: 5
+            , anim: 5,
+            offset: "40px"
         });
     } else if (type === 'video') {
         layer.open({
