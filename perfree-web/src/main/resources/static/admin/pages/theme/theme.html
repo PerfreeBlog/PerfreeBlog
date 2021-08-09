@@ -75,23 +75,26 @@
     });
 
     $(".p-theme-container").on("click", ".removeThemeBtn", function () {
-        const path = $(this).attr("data-path");
-        $.ajax({
-            type: "POST",
-            url: "/admin/theme/del",
-            contentType: "application/json",
-            data: JSON.stringify({path: path}),
-            success: function (d) {
-                if (d.code === 200) {
-                    parent.layer.msg("卸载主题成功", {icon: 1});
-                    location.reload();
-                } else {
+        layer.confirm('卸载将直接删除主题,确定要卸载吗?', {icon: 3, title: '提示'}, function (index) {
+            const path = $(this).attr("data-path");
+            $.ajax({
+                type: "POST",
+                url: "/admin/theme/del",
+                contentType: "application/json",
+                data: JSON.stringify({path: path}),
+                success: function (d) {
+                    if (d.code === 200) {
+                        parent.layer.msg("卸载主题成功", {icon: 1});
+                        location.reload();
+                    } else {
+                        layer.msg("卸载主题失败", {icon: 2});
+                    }
+                },
+                error: function (data) {
                     layer.msg("卸载主题失败", {icon: 2});
                 }
-            },
-            error: function (data) {
-                layer.msg("卸载主题失败", {icon: 2});
-            }
+            });
+            layer.close(index);
         });
     });
 
