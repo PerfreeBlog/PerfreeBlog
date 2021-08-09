@@ -4,7 +4,9 @@ import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.common.Constants;
+import com.perfree.model.Article;
 import com.perfree.service.CommentService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,10 @@ public class CommentPageDirective extends BaseDirective{
         commentPage.setPageSize(getExprParamToInt("pageSize", 10));
         HashMap<String, String> query = new HashMap<>();
         String articleId = getModelDataToStr("articleId", scope);
+        if (StringUtils.isBlank(articleId)) {
+            Article article = (Article) getModelData("article", scope);
+            articleId = article.getId().toString();
+        }
         query.put("articleId", articleId);
         commentPage.setForm(query);
         commentPage = commentService.getCommentByArticleId(commentPage);
