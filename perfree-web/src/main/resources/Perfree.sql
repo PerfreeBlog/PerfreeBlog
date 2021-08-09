@@ -160,8 +160,8 @@ INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (1, 'WEB_THEME', 'perfree');
 INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (2, 'WEB_IS_REGISTER', '1');
 INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (3, 'WEB_COMMENT_IS_REVIEW', '0');
 
-INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (1, '管理员', '网站管理员', 'admin', '2020-12-17 13:11:31', NULL);
-INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (2, '用户', '网站用户', 'user', '2020-12-17 13:11:50', NULL);
+INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (1, '管理员', '网站管理员', 'admin', now(), now());
+INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (2, '用户', '网站用户', 'user', now(), now());
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 1);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 2);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 3);
@@ -180,25 +180,26 @@ INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 15);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 16);
 
 
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, NULL, 0, '2020-11-19 15:57:28', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (2, -1, '写文章', '/admin/article/addPage', 'fa-pencil-square-o', 2, 1, 0, NULL, 0, '2020-11-19 15:58:06', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (3, -1, '内容管理', NULL, 'fa-inbox', 3, 1, 0, NULL, 0, '2020-11-19 15:58:37', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (4, -1, '主题管理', NULL, 'fa-tachometer', 4, 1, 0, NULL, 0, '2020-11-19 15:59:01', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (5, 3, '文章管理', '/admin/article', NULL, 1, 1, 0, NULL, 0, '2020-11-19 15:59:32', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (6, 3, '评论管理', '/admin/comment', NULL, 3, 1, 0, NULL, 0, '2020-11-19 16:00:01', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (7, 3, '分类管理', '/admin/category', NULL, 4, 1, 0, NULL, 0, '2020-11-19 16:00:46', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (8, 3, '标签管理', '/admin/tag', NULL, 5, 1, 0, NULL, 0, '2020-11-19 16:01:14', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (9, 3, '附件管理', '/admin/attach', NULL, 6, 1, 0, NULL, 0, '2020-11-19 16:01:41', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (10, 3, '用户管理', '/admin/user', NULL, 7, 1, 0, NULL, 0, '2020-11-19 16:02:07', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (11, 3, '菜单管理', '/admin/menu', NULL, 8, 1, 0, NULL, 0, '2020-11-19 16:02:30', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (12, 4, '所有主题', '/admin/theme', NULL, 1, 1, 0, NULL, 0, '2020-11-19 16:03:08', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (13, 4, '主题设置', '/admin/theme/setting', NULL, 2, 1, 0, NULL, 0, '2020-11-19 16:03:42', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (14, 3, '友链管理', '/admin/link', NULL, 8, 1, 0, NULL, 0, '2020-12-15 09:07:00', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (15, -1, '网站设置', '/admin/setting', 'fa-sliders', 5, 1, 0, NULL, 0, '2020-11-19 16:04:37', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (16, 3, '页面管理', '/admin/page', NULL, 2, 1, 0, NULL, 0, '2020-12-21 08:23:30', NULL);
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (17, -1, '归档', '/archive', 'fa-calendar', 1, 0, 0, NULL, 0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
-INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (18, -1, '友链', '/link', 'fa-user-o', 2, 0, 0, NULL, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (2, -1, '写文章', '/admin/article/addPage', 'fa-pencil-square-o', 2, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (3, -1, '内容管理', NULL, 'fa-inbox', 3, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (4, -1, '主题管理', NULL, 'fa-tachometer', 4, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (5, 3, '文章管理', '/admin/article', NULL, 1, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (6, 3, '评论管理', '/admin/comment', NULL, 3, 1, 0, NULL, 0, now() now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (7, 3, '分类管理', '/admin/category', NULL, 4, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (8, 3, '标签管理', '/admin/tag', NULL, 5, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (9, 3, '附件管理', '/admin/attach', NULL, 6, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (10, 3, '用户管理', '/admin/user', NULL, 7, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (11, 3, '菜单管理', '/admin/menu', NULL, 8, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (12, 4, '所有主题', '/admin/theme', NULL, 1, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (13, 4, '主题设置', '/admin/theme/setting', NULL, 2, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (14, 3, '友链管理', '/admin/link', NULL, 8, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (15, -1, '网站设置', '/admin/setting', 'fa-sliders', 5, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (16, 3, '页面管理', '/admin/page', NULL, 2, 1, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (17, -1, '归档', '/archive', 'fa-calendar', 1, 0, 0, NULL, 0, now(), now());
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (18, -1, '友链', '/link', 'fa-user-o', 2, 0, 0, NULL, 0, now(), now());
 
-INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, '2020-12-19 14:10:54', '2020-12-20 20:09:30');
-
+INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, now(), now());
+INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (2, '友链', '友链', 'page', '', NULL, '', '', '', 0, 0, 1, 1, 1, 1, now(), now()));
+UPDATE `p_menu` SET `articleId` = 2 WHERE `id` = 18;
 
