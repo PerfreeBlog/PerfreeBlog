@@ -54,4 +54,10 @@ public interface CommentMapper {
 
     List<Comment> getRecentComment(int count);
 
+    /**
+     * @description 根据id获取评论
+     * @param id  id
+     * @author Perfree
+     */
+    Comment getById(Long id);
 }

@@ -12,6 +12,7 @@ import com.perfree.model.Option;
 import com.perfree.model.User;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
+import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -36,6 +37,8 @@ public class CommentController extends BaseController {
     private ArticleService articleService;
     @Autowired
     private OptionService optionService;
+    @Autowired
+    private MailService mailService;
 
     @RequestMapping("/comment/submitComment")
     @ResponseBody
@@ -76,8 +79,10 @@ public class CommentController extends BaseController {
         }
         if (commentService.add(comment) > 0) {
             if (comment.getStatus() == Constants.COMMENT_STATUS_NORMAL) {
+                mailService.commentMailSend(comment);
                 return ResponseBean.success("评论成功", comment);
             }
+            mailService.commentMailSend(comment);
             return ResponseBean.error(201 ,"评论成功,正在等待管理员审核", null);
         }
         return ResponseBean.fail("评论失败", null);

@@ -118,4 +118,7 @@
     <select id="getRecentComment" resultMap="COMMENT_RESULT">
         SELECT t1.* FROM p_comment t1 ORDER BY createTime DESC limit 0,#{count}
     </select>
+    <select id="getById" resultType="com.perfree.model.Comment">
+        select t1.* from p_comment t1 where t1.id = #{id}
+    </select>
 </mapper>

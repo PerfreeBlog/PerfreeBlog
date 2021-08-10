@@ -58,8 +58,9 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: error
+    com.perfree: DEBUG
     com.perfree.config.PostAppRunner: info
+    com.perfree.Application: info
   file:
     name: ./logs/Perfree.log
     max-history: 7

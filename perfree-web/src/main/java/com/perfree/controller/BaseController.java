@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
-import com.perfree.common.OptionCache;
+import com.perfree.common.OptionCacheUtil;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.service.MenuService;
@@ -57,7 +57,7 @@ public class BaseController {
      * @return String
      */
     public String currentTheme() {
-        return OptionCache.getOption(Constants.OPTION_WEB_THEME);
+        return OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
     }
 
     /**
@@ -65,7 +65,7 @@ public class BaseController {
      * @return String
      */
     public String currentThemePage() {
-        return "static/themes/" + OptionCache.getOption(Constants.OPTION_WEB_THEME);
+        return "static/themes/" + OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
     }
 
     /**

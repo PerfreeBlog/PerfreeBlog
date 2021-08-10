@@ -1,11 +1,12 @@
 package com.perfree.service;
 
-import com.perfree.common.OptionCache;
 import com.perfree.config.DynamicDataSource;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Service
 @Transactional
 public class OptionService {
+    private static final CacheManager cacheManager = CacheManager.newInstance();
     @Autowired
     private OptionMapper optionMapper;
 
@@ -35,7 +37,10 @@ public class OptionService {
      */
     public int updateValueByKey(Option option) {
         int count = optionMapper.updateValueByKey(option);
-        initOptionCache();
+        if (count > 0) {
+           Ehcache cache = cacheManager.getEhcache("optionData");
+           cache.put(new Element(option.getKey(),option.getValue()));
+        }
         return count;
     }
 
@@ -59,14 +64,16 @@ public class OptionService {
                     count.updateAndGet(v -> v + optionMapper.addOptionBySqlite(o));
                 }
             }
+            Ehcache cache = cacheManager.getEhcache("optionData");
+            cache.put(new Element(o.getKey(), o.getValue()));
         });
-        initOptionCache();
         return count.get();
     }
 
     public void initOptionCache() {
         List<Option> options = optionMapper.getStartOption();
-        OptionCache.clear();
-        options.forEach(r -> OptionCache.setOption(r.getKey(), r.getValue()));
+        Ehcache cache = cacheManager.getEhcache("optionData");
+        cache.removeAll();
+        options.forEach(r ->  cache.put(new Element(r.getKey(),  r.getValue())));
     }
 }

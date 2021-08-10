@@ -21,4 +21,14 @@
     >
     </cache>
 
+    <cache
+            name="optionData"
+            maxElementsInMemory="10000"
+            eternal="false"
+            timeToIdleSeconds="0"
+            timeToLiveSeconds="0"
+            overflowToDisk="true"
+    >
+    </cache>
+
 </ehcache>

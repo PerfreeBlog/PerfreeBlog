@@ -1,9 +1,8 @@
 package com.perfree.interceptor;
 
 import com.perfree.common.Constants;
-import com.perfree.common.OptionCache;
+import com.perfree.common.OptionCacheUtil;
 import com.perfree.commons.SpringBeanUtils;
-import com.perfree.controller.admin.ThemeController;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import org.apache.shiro.SecurityUtils;
@@ -12,8 +11,6 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,9 +29,9 @@ public class EnjoyInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (modelAndView != null) {
             Map<String, Object> model = modelAndView.getModel();
-            model.putIfAbsent(Constants.OPTION_WEB_TITLE, OptionCache.getOption(Constants.OPTION_WEB_TITLE));
-            model.putIfAbsent(Constants.OPTION_WEB_META_KEYWORD, OptionCache.getOption(Constants.OPTION_WEB_META_KEYWORD));
-            model.putIfAbsent(Constants.OPTION_WEB_META_DESC, OptionCache.getOption(Constants.OPTION_WEB_META_DESC));
+            model.putIfAbsent(Constants.OPTION_WEB_TITLE, OptionCacheUtil.getValue(Constants.OPTION_WEB_TITLE));
+            model.putIfAbsent(Constants.OPTION_WEB_META_KEYWORD, OptionCacheUtil.getValue(Constants.OPTION_WEB_META_KEYWORD));
+            model.putIfAbsent(Constants.OPTION_WEB_META_DESC, OptionCacheUtil.getValue(Constants.OPTION_WEB_META_DESC));
             setUser(model);
         }
     }

@@ -102,4 +102,14 @@ public class CommentService {
     public List<Comment> getRecentComment(int count) {
         return commentMapper.getRecentComment(count);
     }
+
+    /** 
+     * @description 根据id获取评论
+     * @param id  id
+     * @return com.perfree.model.Comment 
+     * @author Perfree
+     */ 
+    public Comment getById(Long id) {
+        return commentMapper.getById(id);
+    }
 }

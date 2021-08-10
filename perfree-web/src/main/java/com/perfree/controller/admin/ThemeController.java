@@ -1,15 +1,16 @@
 package com.perfree.controller.admin;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
 import com.perfree.common.Constants;
-import com.perfree.common.OptionCache;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Theme;
 import com.perfree.model.TreeNode;
 import com.perfree.service.ThemeService;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
@@ -29,6 +30,7 @@ import java.util.List;
 @RequestMapping("/admin")
 @RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class ThemeController extends BaseController {
+    private static final CacheManager cacheManager = CacheManager.newInstance();
     private final Logger logger = LoggerFactory.getLogger(ThemeController.class);
     @Autowired
     private ThemeService themeService;
@@ -58,7 +60,8 @@ public class ThemeController extends BaseController {
     @ResponseBody
     public ResponseBean switchTheme(@RequestBody Theme theme){
         if (themeService.switchTheme(theme) > 0) {
-            OptionCache.setOption(Constants.OPTION_WEB_THEME, theme.getPath());
+            Ehcache cache = cacheManager.getEhcache("optionData");
+            cache.put(new Element(Constants.OPTION_WEB_THEME, theme.getPath()));
             return ResponseBean.success("主题切换成功", null);
         }
         return ResponseBean.fail("主题切换失败", null);

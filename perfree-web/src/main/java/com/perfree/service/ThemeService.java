@@ -4,15 +4,15 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
-import com.perfree.common.OptionCache;
+import com.perfree.common.OptionCacheUtil;
 import com.perfree.commons.FileUtil;
 import com.perfree.model.Option;
 import com.perfree.model.Theme;
 import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
-import de.rototor.pdfbox.graphics2d.IPdfBoxGraphics2DFontTextDrawer;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,6 +23,7 @@ import java.util.List;
 
 @Service
 public class ThemeService {
+
     @Autowired
     private OptionService optionService;
 
@@ -48,7 +49,7 @@ public class ThemeService {
                 theme.setScreenshots("/static/themes/" + settingFile.getParentFile().getName() +
                         Constants.SEPARATOR + props.get("screenshots").toString());
                 theme.setPath(settingFile.getParentFile().getName());
-                if (settingFile.getParentFile().getName().equals(OptionCache.getOption(Constants.OPTION_WEB_THEME))){
+                if (settingFile.getParentFile().getName().equals(OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME))){
                     theme.setIsActive(1);
                 }
                 theme.setVersion(props.get("version").toString());

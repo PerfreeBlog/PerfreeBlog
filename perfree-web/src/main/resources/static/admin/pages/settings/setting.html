@@ -16,81 +16,137 @@
 <div class="p-container">
     <div class="layui-card">
         <div class="layui-card-body">
-            <form class="layui-form" action="">
-                <div class="layui-input-inline"  style="display: none;">
-                    <select lay-verify="" type="hidden"></select>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">网站名称</label>
-                    <div class="layui-input-block">
-                        <input type="text" value="#option('WEB_NAME')" name="WEB_NAME" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">网站ICO</label>
-                    <div class="layui-input-block">
-                        <div class="p-upload-box" id="WEB_LOGO">
-                                <input type="hidden" value="#option('WEB_LOGO')" name="WEB_LOGO" value="">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">网站域名</label>
-                    <div class="layui-input-block">
-                            <input type="text" value="#option('WEB_SITE')" name="WEB_SITE" value="" placeholder="请输入网站域名" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">基础设置</li>
+                    <li>邮箱服务</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <form class="layui-form" action="">
+                            <div class="layui-input-inline"  style="display: none;">
+                                <select lay-verify="" type="hidden"></select>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">网站名称</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="#option('WEB_NAME')" name="WEB_NAME" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">网站ICO</label>
+                                <div class="layui-input-block">
+                                    <div class="p-upload-box" id="WEB_LOGO">
+                                            <input type="hidden" value="#option('WEB_LOGO')" name="WEB_LOGO" value="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">网站域名</label>
+                                <div class="layui-input-block">
+                                        <input type="text" value="#option('WEB_SITE')" name="WEB_SITE" value="" placeholder="请输入网站域名,如http://yinpengfei.com" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">网站标题</label>
-                    <div class="layui-input-block">
-                        <input type="text" value="#option('WEB_TITLE')" name="WEB_TITLE" placeholder="请输入网站标题" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">网站标题</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="#option('WEB_TITLE')" name="WEB_TITLE" placeholder="请输入网站标题" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">评论需审核</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="1" title="开启" #(optionCompare('WEB_COMMENT_IS_REVIEW', '1') ? 'checked': '')>
-                        <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="0" title="关闭" #(optionCompare('WEB_COMMENT_IS_REVIEW', '0') ? 'checked': '')>
-                    </div>
-                </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">评论需审核</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="1" title="开启" #(optionCompare('WEB_COMMENT_IS_REVIEW', '1') ? 'checked': '')>
+                                    <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="0" title="关闭" #(optionCompare('WEB_COMMENT_IS_REVIEW', '0') ? 'checked': '')>
+                                </div>
+                            </div>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">允许注册新用户</label>
-                    <div class="layui-input-block">
-                        <input type="radio" name="WEB_IS_REGISTER" value="1" title="允许" #(optionCompare('WEB_IS_REGISTER', '1') ? 'checked': '')>
-                        <input type="radio" name="WEB_IS_REGISTER" value="0" title="不允许" #(optionCompare('WEB_IS_REGISTER', '0') ? 'checked': '')>
-                    </div>
-                </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">允许注册新用户</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="WEB_IS_REGISTER" value="1" title="允许" #(optionCompare('WEB_IS_REGISTER', '1') ? 'checked': '')>
+                                    <input type="radio" name="WEB_IS_REGISTER" value="0" title="不允许" #(optionCompare('WEB_IS_REGISTER', '0') ? 'checked': '')>
+                                </div>
+                            </div>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">META关键字</label>
-                    <div class="layui-input-block">
-                        <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键字,英文逗号分割" class="layui-textarea">#option('WEB_META_KEYWORD')</textarea>
-                    </div>
-                </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">META关键字</label>
+                                <div class="layui-input-block">
+                                    <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键字,英文逗号分割" class="layui-textarea">#option('WEB_META_KEYWORD')</textarea>
+                                </div>
+                            </div>
 
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">META描述</label>
-                    <div class="layui-input-block">
-                        <textarea name="WEB_META_DESC" placeholder="请输入META描述" class="layui-textarea">#option('WEB_META_DESC')</textarea>
-                    </div>
-                </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">META描述</label>
+                                <div class="layui-input-block">
+                                    <textarea name="WEB_META_DESC" placeholder="请输入META描述" class="layui-textarea">#option('WEB_META_DESC')</textarea>
+                                </div>
+                            </div>
 
-                <div class="layui-form-item">
-                    <label class="layui-form-label">版权信息</label>
-                    <div class="layui-input-block">
-                        <textarea name="WEB_COPYRIGHT" placeholder="请输入版权信息" class="layui-textarea">#option('WEB_COPYRIGHT')</textarea>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">版权信息</label>
+                                <div class="layui-input-block">
+                                    <textarea name="WEB_COPYRIGHT" placeholder="请输入版权信息" class="layui-textarea">#option('WEB_COPYRIGHT')</textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="optionForm">保存设置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="layui-tab-item">
+                        <form class="layui-form" action="">
+                            <div class="layui-input-inline"  style="display: none;">
+                                <select lay-verify="" type="hidden"></select>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">SMTP服务</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="#option('SMTP_SERVER')" name="SMTP_SERVER" placeholder="请输入SMTP服务器,如smtp.126.com" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">邮箱账户</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="#option('SMTP_EMAIL')" name="SMTP_EMAIL" placeholder="请输入邮箱账户" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">授权码</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="#option('SMTP_AUTH')" name="SMTP_AUTH" placeholder="请输入授权码" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">端口</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="#option('SMTP_PORT')" name="SMTP_PORT" placeholder="请输入服务端口,一般默认是25" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">评论是否邮件通知</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="COMMENT_IS_SEND_MAIL" value="1" title="通知" #(optionCompare('COMMENT_IS_SEND_MAIL', '1') ? 'checked': '')>
+                                    <input type="radio" name="COMMENT_IS_SEND_MAIL" value="0" title="不通知" #(optionCompare('COMMENT_IS_SEND_MAIL', '0') ? 'checked': '')>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="optionForm2">保存设置</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit lay-filter="optionForm">保存设置</button>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -103,26 +159,34 @@
     layui.use(['layer','form'], function() {
         layer = layui.layer;
         form = layui.form;
+        form.on('submit(optionForm2)', function(data){
+            save(data);
+            return false;
+        });
         form.on('submit(optionForm)', function(data){
-            $.ajax({
-                type: "POST",
-                url: "/admin/setting/save",
-                contentType:"application/json",
-                data: JSON.stringify(data.field),
-                success:function(d){
-                    if (d.code === 200){
-                        parent.layer.msg("保存成功", {icon: 1})
-                    } else {
-                        layer.msg(d.msg, {icon: 2});
-                    }
-                },
-                error: function (data) {
-                    layer.msg("保存失败", {icon: 2});
-                }
-            });
+            save(data);
             return false;
         });
     });
+
+    function save(data) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/setting/save",
+            contentType:"application/json",
+            data: JSON.stringify(data.field),
+            success:function(d){
+                if (d.code === 200){
+                    parent.layer.msg("保存成功", {icon: 1})
+                } else {
+                    layer.msg(d.msg, {icon: 2});
+                }
+            },
+            error: function (data) {
+                layer.msg("保存失败", {icon: 2});
+            }
+        });
+    }
 </script>
 </body>
 </html>

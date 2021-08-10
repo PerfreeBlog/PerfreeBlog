@@ -8,6 +8,7 @@ import com.perfree.common.ResponseBean;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
 import com.perfree.model.User;
+import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
 import com.perfree.service.SEOService;
 import com.perfree.service.UserService;
@@ -46,6 +47,8 @@ public class SystemController extends BaseController{
     private OptionService optionService;
     @Autowired
     private SEOService seoService;
+    @Autowired
+    private MailService mailService;
 
     /**
      * 后台首页
