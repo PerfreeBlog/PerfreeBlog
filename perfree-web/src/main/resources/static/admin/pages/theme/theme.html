@@ -75,8 +75,8 @@
     });
 
     $(".p-theme-container").on("click", ".removeThemeBtn", function () {
+        const path = $(this).attr("data-path");
         layer.confirm('卸载将直接删除主题,确定要卸载吗?', {icon: 3, title: '提示'}, function (index) {
-            const path = $(this).attr("data-path");
             $.ajax({
                 type: "POST",
                 url: "/admin/theme/del",
@@ -89,12 +89,13 @@
                     } else {
                         layer.msg("卸载主题失败", {icon: 2});
                     }
+                    layer.close(index);
                 },
                 error: function (data) {
                     layer.msg("卸载主题失败", {icon: 2});
+                    layer.close(index);
                 }
             });
-            layer.close(index);
         });
     });
 
