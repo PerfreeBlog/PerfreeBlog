@@ -78,4 +78,11 @@ public interface UserMapper {
      * @return int
      */
     int updatePassword(User user);
+
+    /**
+     * @description 根据邮箱和账户查找
+     * @return com.perfree.model.User
+     * @author Perfree
+     */
+    User getUserByAccountAndEmail(@Param("account") String account,@Param("email") String email);
 }

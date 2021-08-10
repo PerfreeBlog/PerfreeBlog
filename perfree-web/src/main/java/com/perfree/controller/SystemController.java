@@ -2,9 +2,11 @@ package com.perfree.controller;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.util.RandomUtil;
 import com.perfree.common.Constants;
 import com.perfree.common.GravatarUtil;
 import com.perfree.common.ResponseBean;
+import com.perfree.common.StringUtil;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
 import com.perfree.model.User;
@@ -19,6 +21,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +36,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -92,6 +96,24 @@ public class SystemController extends BaseController{
     }
 
     /**
+     * 忘记密码
+     * @return String
+     */
+    @RequestMapping("/restPassword")
+    public String restPassword() {
+        return view("/restPassword.html", "/restPassword.html", "static/admin/pages/restPassword/restPassword.html");
+    }
+
+    /**
+     * 忘记密码
+     * @return String
+     */
+    @RequestMapping("/restPasswordStep2")
+    public String restPasswordStep2() {
+        return view("/restPassword-step2.html", "/restPassword-step2.html", "static/admin/pages/restPassword/restPassword-step2.html");
+    }
+
+    /**
      * 登录
      * @return ResponseBean
      */
@@ -117,6 +139,67 @@ public class SystemController extends BaseController{
         }catch (Exception e) {
             return ResponseBean.fail("系统异常", e.getMessage());
         }
+    }
+
+    /**
+     * @description  重置密码 step1
+     * @return com.perfree.common.ResponseBean
+     * @author Perfree
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/doRestPassword")
+    @ResponseBody
+    public ResponseBean doRestPassword(@RequestBody User user, HttpSession session) {
+        if (StringUtils.isBlank(user.getCaptcha()) ||
+                !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString())){
+            return ResponseBean.fail("验证码错误", null);
+        }
+        User queryUser = userService.getUserByAccountAndEmail(user.getAccount(), user.getEmail());
+        if (queryUser == null) {
+            return ResponseBean.fail("账户不存在", null);
+        }
+        Object sessionRestPassword = session.getAttribute("REST-CAPTCHA");
+        if (sessionRestPassword != null) {
+            return ResponseBean.fail("邮件重复发送,请两分钟后再试", null);
+        }
+        try {
+            String random = RandomUtil.randomString(6);
+            mailService.passwordMail(user, random);
+            session.setAttribute("REST-CAPTCHA", random);
+            session.setAttribute("REST-ID", queryUser.getId());
+            session.setMaxInactiveInterval(120);
+            return ResponseBean.success("验证码发送成功", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.fail("发送邮件出错", e.getMessage());
+        }
+    }
+
+    /**
+     * @description  重置密码 step2
+     * @return com.perfree.common.ResponseBean
+     * @author Perfree
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/doRestPasswordStep2")
+    @ResponseBody
+    public ResponseBean doRestPasswordStep2(@RequestBody User user, HttpSession session) {
+        Object sessionRestPassword = session.getAttribute("REST-CAPTCHA");
+        Object sessionRestID = session.getAttribute("REST-ID");
+        if (sessionRestPassword == null || sessionRestID == null) {
+            return ResponseBean.fail("验证码已过期", null);
+        }
+        if (StringUtils.isBlank(user.getCaptcha()) ||
+                !user.getCaptcha().equals(sessionRestPassword.toString())){
+            return ResponseBean.fail("验证码错误", null);
+        }
+        User byId = userService.getById(sessionRestID.toString());
+        byId.setSalt(StringUtil.getUUID());
+        byId.setPassword(new Md5Hash(user.getPassword(), user.getSalt()).toString());
+        byId.setUpdateTime(new Date());
+        int update = userService.update(byId);
+        if (update > 0) {
+            return ResponseBean.success("密码修改成功", null);
+        }
+        return ResponseBean.fail("密码修改失败", null);
     }
 
     /**

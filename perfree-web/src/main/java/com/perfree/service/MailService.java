@@ -5,6 +5,8 @@ import cn.hutool.core.text.StrFormatter;
 import com.perfree.common.OptionCacheUtil;
 import com.perfree.model.Article;
 import com.perfree.model.Comment;
+import com.perfree.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,18 +90,28 @@ public class MailService {
 
     /**
      * @description 密码
-     * @param helper helper
      * @author Perfree
      */
-    public void passwordMail(MimeMessageHelper helper) throws MessagingException {
-        helper.setTo(OptionCacheUtil.getValue("SMTP_EMAIL"));
-        helper.setSubject("来自[Perfree]站点的新消息");
-        helper.setText("<div style='margin: 100px auto;background-color: #fff;width: 866px;border: 1px solid #F1F0F0;box-shadow: 0 0 5px #f1f0f0;'>\n" +
-                "\t<h2 style='width: 866px;height: 78px;padding-top: 10px;padding-left: 28px;background-color: #F7F7F7;margin: 0; padding: 0;line-height: 78px;display: block;text-align: center;'>Perfree</h2>\n" +
+    public void passwordMail(User user, String random) throws Exception {
+            if (StringUtils.isBlank(OptionCacheUtil.getValue("SMTP_SERVER"))) {
+                return;
+            }
+            if (javaMailSender == null) {
+                setJavaMailSender();
+            }
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message,true);
+            helper.setFrom(OptionCacheUtil.getValue("SMTP_EMAIL"));
+            helper.setTo(user.getEmail());
+            helper.setSubject("来自["+OptionCacheUtil.getValue("WEB_NAME")+"]站点的新消息");
+            String html = StrFormatter.format("<div style='margin: 100px auto;background-color: #fff;width: 866px;border: 1px solid #F1F0F0;box-shadow: 0 0 5px #f1f0f0;'>\n" +
+                "\t<h2 style='width: 866px;height: 78px;padding-top: 10px;padding-left: 28px;background-color: #F7F7F7;margin: 0; padding: 0;line-height: 78px;display: block;text-align: center;'>{}</h2>\n" +
                 "\t<div style='padding-left: 20px;padding-right20px;'>\n" +
-                "\t\t<p> 您正在执行找回密码操作,验证码:9527,验证码将在5分钟后失效 </p>\n" +
+                "\t\t<p> 您正在执行找回密码操作,验证码:{},验证码将在2分钟后失效 </p>\n" +
                 "\t</div>\n" +
-                "</div>",true);
+                "</div>", OptionCacheUtil.getValue("WEB_NAME"), random);
+            helper.setText(html,true);
+            javaMailSender.send(message);
     }
 
     /**

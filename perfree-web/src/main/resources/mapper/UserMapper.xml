@@ -90,4 +90,7 @@
     <select id="getUserCount" resultType="java.lang.Long">
         SELECT count(1) FROM p_user
     </select>
+    <select id="getUserByAccountAndEmail" resultType="com.perfree.model.User">
+        select * FROM p_user where account = #{account} and email = #{email}
+    </select>
 </mapper>

@@ -128,4 +128,13 @@ public class UserService {
         user.setUpdateTime(new Date());
         return userMapper.updatePassword(user);
     }
+
+    /**
+     * @description 根据邮箱和账户查找
+     * @return com.perfree.model.User
+     * @author Perfree
+     */
+    public User getUserByAccountAndEmail(String account, String email) {
+        return userMapper.getUserByAccountAndEmail(account, email);
+    }
 }
