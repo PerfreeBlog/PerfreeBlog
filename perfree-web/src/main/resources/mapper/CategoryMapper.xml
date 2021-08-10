@@ -62,7 +62,7 @@
             <bind name="name" value="'%' + _parameter.name + '%'" />
             and name like #{name,jdbcType=VARCHAR}
         </if>
-        order by createTime
+        order by createTime desc
     </select>
 
     <select id="getChildCategory" resultMap="CATEGORY_LIST_TREE">
