@@ -58,7 +58,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: DEBUG
+    com.perfree: error
     com.perfree.config.PostAppRunner: info
     com.perfree.Application: info
   file:

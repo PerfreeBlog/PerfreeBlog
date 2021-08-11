@@ -27,6 +27,9 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
         if (method_name == null) {
             return;
         }
+        if (patternArr.length == 0) {
+            return;
+        }
         PatternsRequestCondition patterns = new PatternsRequestCondition(patternArr);
         RequestMappingInfo mapping_info = new RequestMappingInfo("name", patterns, null, null, null, null, null, null);
         try {

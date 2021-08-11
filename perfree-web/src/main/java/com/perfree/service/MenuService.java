@@ -141,12 +141,14 @@ public class MenuService {
         menus.forEach(r -> {
             if (RegisterRequestMapping.isUrlPattern(r.getUrl()) && StringUtils.isNotBlank(r.getUrl())
                     && r.getUrl().startsWith("/") && !r.getUrl().equals("/")){
-                File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + r.getUrl() + ".html");
+                /*  File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + r.getUrl() + ".html");
                 File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + r.getUrl() + ".html");
                 if (file.exists() || devFile.exists()) {
                     patterns.add(r.getUrl());
                     patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
-                }
+                }*/
+                patterns.add(r.getUrl());
+                patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
             }
         });
         String[] patternArr = new String[patterns.size()];
