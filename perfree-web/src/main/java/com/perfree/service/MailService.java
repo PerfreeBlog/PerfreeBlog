@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -45,9 +44,7 @@ public class MailService {
             if (OptionCacheUtil.getValue("COMMENT_IS_SEND_MAIL").equals("0")) {
                 return;
             }
-            if (javaMailSender == null) {
-                setJavaMailSender();
-            }
+            setJavaMailSender();
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message,true);
             helper.setFrom(OptionCacheUtil.getValue("SMTP_EMAIL"));
@@ -96,9 +93,7 @@ public class MailService {
             if (StringUtils.isBlank(OptionCacheUtil.getValue("SMTP_SERVER"))) {
                 return;
             }
-            if (javaMailSender == null) {
-                setJavaMailSender();
-            }
+            setJavaMailSender();
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message,true);
             helper.setFrom(OptionCacheUtil.getValue("SMTP_EMAIL"));
@@ -126,7 +121,7 @@ public class MailService {
         javaMailSender.setDefaultEncoding("UTF-8");
         Properties properties = new Properties();
         properties.setProperty("mail.smtp.timeout", "3000");
-        if (!Objects.equals(OptionCacheUtil.getValue("SMTP_PORT"), "25")){
+        if (!OptionCacheUtil.getValue("SMTP_PORT").equals("25")){
             properties.setProperty("mail.smtp.auth", "true");
             properties.setProperty("mail.smtp.socketFactory.port", OptionCacheUtil.getValue("SMTP_PORT"));
             properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");

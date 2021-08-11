@@ -126,7 +126,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">端口</label>
                                 <div class="layui-input-block">
-                                    <input type="text" value="#option('SMTP_PORT')" name="SMTP_PORT" placeholder="请输入服务端口,一般默认是25" autocomplete="off" class="layui-input">
+                                    <input type="text" value="#option('SMTP_PORT')" name="SMTP_PORT" placeholder="请输入服务端口" autocomplete="off" class="layui-input">
+                                    <p style="color: #4D4D4D">如465,设置完后请同时把服务器对应的端口权限放开,非必要不建议设置25端口,如果是阿里云服务器需要用25端口的话,需要去阿里云申请解封端口</p>
                                 </div>
                             </div>
 
