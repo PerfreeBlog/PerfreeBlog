@@ -1,7 +1,7 @@
 package com.perfree.config;
 
-import cn.hutool.core.io.FileUtil;
-import com.jfinal.template.source.FileSource;
+import com.jfinal.template.source.ClassPathSourceFactory;
+import com.jfinal.template.source.FileSourceFactory;
 import com.jfinal.template.source.ISource;
 import com.jfinal.template.source.ISourceFactory;
 import com.perfree.common.Constants;
@@ -18,7 +18,7 @@ public class TemplateSourceFactory implements ISourceFactory {
 
     @Override
     public ISource getSource(String s, String s1, String s2) {
-        File file = new File(Constants.RESOURCES_DIR + s1);
+        /*File file = new File(Constants.RESOURCES_DIR + s1);
         if (file.exists()) {
             return new FileSource(Constants.RESOURCES_DIR, s1, s2);
         }
@@ -37,7 +37,15 @@ public class TemplateSourceFactory implements ISourceFactory {
         if (notFoundProjectFile.exists()) {
             return new FileSource(FileUtil.file("").getAbsolutePath(), paths, s2);
         }
-        return null;
+        return null;*/
+
+        ISource iSource;
+        try{
+            iSource = new ClassPathSourceFactory().getSource(null, s1, s2);
+        }catch (Exception e) {
+            iSource = new FileSourceFactory().getSource(Constants.RESOURCES_DIR, s1, s2);
+        }
+        return iSource;
     }
 
     public String view(String validPath, String themeViewPath, String adminViewPath) {
