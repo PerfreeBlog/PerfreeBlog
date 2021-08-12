@@ -7,6 +7,7 @@ import com.jfinal.template.Directive;
 import com.perfree.common.Constants;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
+import com.perfree.plugins.PluginsUtil;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
 import org.apache.commons.lang3.StringUtils;
@@ -67,6 +68,8 @@ public class PostAppRunner implements ApplicationRunner {
             menuService.registerMenuPage();
 
         }
+        // TODO 加载插件
+        // new PluginsUtil().initPlugins();
     }
 
     /**

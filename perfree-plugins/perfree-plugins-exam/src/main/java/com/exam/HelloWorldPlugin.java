@@ -10,6 +10,5 @@ public class HelloWorldPlugin implements Plugin {
 
     @Override
     public void configEngine() {
-
     }
 }

@@ -2,7 +2,6 @@ package com.perfree;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.perfree.config.UniqueNameGenerator;
-import com.perfree.plugins.PluginsUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +21,6 @@ public class Application implements CommandLineRunner {
 
     public static void main(String[] args){
         SpringApplication.run(Application.class, args);
-        /*new PluginsUtil().initPlugins();*/
     }
 
     @Override

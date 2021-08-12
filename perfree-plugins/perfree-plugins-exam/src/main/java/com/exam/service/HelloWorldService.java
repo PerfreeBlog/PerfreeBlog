@@ -14,7 +14,7 @@ public class HelloWorldService extends PluginService {
     }
 
     public String index2() {
-        return helloWorldMapper.index();
+        return helloWorldMapper.index2();
     }
 
 }

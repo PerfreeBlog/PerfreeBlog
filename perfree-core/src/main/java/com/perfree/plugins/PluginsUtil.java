@@ -1,6 +1,12 @@
 package com.perfree.plugins;
 
+import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.setting.dialect.Props;
+import com.jfinal.template.Directive;
+import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.perfree.commons.SpringBeanUtils;
+import com.perfree.directive.BaseDirective;
+import com.perfree.directive.TemplateDirective;
 import org.mybatis.spring.mapper.ClassPathMapperScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +26,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 public class PluginsUtil extends ClassLoader{
     private final Logger logger = LoggerFactory.getLogger(PluginsUtil.class);
@@ -53,7 +61,7 @@ public class PluginsUtil extends ClassLoader{
                 logger.info("加载插件:{}", jarFile.getName());
                 URL url = jarFile.toURI().toURL();
                 method.invoke(classLoader, url);
-                initClassNameList(jarFile);
+                initClassNameListAndSetting(jarFile);
                 registryBean();
                 classNameList.clear();
             }
@@ -83,9 +91,8 @@ public class PluginsUtil extends ClassLoader{
             return null;
         }
         for (File listFile : files) {
-            File[] jars = listFile.listFiles((dir, name) -> name.endsWith(".jar"));
-            if (jars != null){
-                jarFiles.addAll(Arrays.asList(jars));
+            if (listFile.getName().endsWith(".jar")){
+                jarFiles.add(listFile);
             }
         }
         File[] result = new File[jarFiles.size()];
@@ -93,11 +100,11 @@ public class PluginsUtil extends ClassLoader{
     }
 
     /**
-     * 初始化获取jar包内所有类
+     * 初始化获取jar包内所有类和配置文件
      * @param jarFile jarFile
      * @throws IOException IOException
      */
-    private void initClassNameList(File jarFile) throws IOException {
+    private void initClassNameListAndSetting(File jarFile) throws IOException {
         Enumeration<JarEntry> entries = new JarFile(jarFile).entries();
         while (entries.hasMoreElements()) {
             JarEntry jarEntry = entries.nextElement();
@@ -105,6 +112,10 @@ public class PluginsUtil extends ClassLoader{
             if (!jarEntry.isDirectory() && entryName.endsWith(".class")) {
                 String className = entryName.replace("/", ".").substring(0, entryName.length() - 6);
                 classNameList.add(className);
+            }
+            // TODO 读取插件的配置文件
+            if (entryName.equals("plugin.properties")) {
+                // Props props = new Props(jarFile.getPath()+ "", CharsetUtil.UTF_8);
             }
         }
     }
@@ -126,6 +137,10 @@ public class PluginsUtil extends ClassLoader{
                 if (PluginMapper.class.isAssignableFrom(loadClass)) {
                     registerMapper(className);
                 }
+                if (BaseDirective.class.isAssignableFrom(loadClass)) {
+                    registerTemplateDirective(loadClass);
+                }
+                
                 // pluginInit(loadClass);
                 // 注册Controller
                /* if (loadClass.getAnnotation(RestController.class) != null || loadClass.getAnnotation(Controller.class) != null){
@@ -144,6 +159,19 @@ public class PluginsUtil extends ClassLoader{
             }
 
         });
+    }
+
+    /**
+     * @description 渲染模板指令
+     */
+    private void registerTemplateDirective(Class<?> loadClass) throws InstantiationException, IllegalAccessException {
+        TemplateDirective injectBean = loadClass.getAnnotation(TemplateDirective.class);
+        Class<? extends Directive> directiveByName = JFinalViewResolver.me().getEngine().getEngineConfig().getDirective(injectBean.value());
+        if (directiveByName == null) {
+            logger.info("Add Directive: {}", injectBean.value());
+            Directive directive = (Directive) loadClass.newInstance();
+            JFinalViewResolver.me().addDirective(injectBean.value(), directive.getClass());
+        }
     }
 
 

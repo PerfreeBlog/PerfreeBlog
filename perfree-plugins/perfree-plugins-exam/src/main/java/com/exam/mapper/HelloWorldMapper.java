@@ -7,6 +7,5 @@ public interface HelloWorldMapper extends PluginMapper {
     @Select("select count(1) from `p_user`")
     String index();
 
-    @Select("select count(1) from `p_article`")
     String index2();
 }
