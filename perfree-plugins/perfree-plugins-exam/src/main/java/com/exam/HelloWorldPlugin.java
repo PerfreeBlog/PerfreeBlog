@@ -9,6 +9,17 @@ public class HelloWorldPlugin implements Plugin {
     }
 
     @Override
-    public void configEngine() {
+    public void onUpdate() {
+
+    }
+
+    @Override
+    public void onInstall() {
+
+    }
+
+    @Override
+    public void onUnInstall() {
+
     }
 }

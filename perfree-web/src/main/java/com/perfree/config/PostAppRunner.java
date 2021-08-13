@@ -68,8 +68,8 @@ public class PostAppRunner implements ApplicationRunner {
             menuService.registerMenuPage();
 
         }
-        // TODO 加载插件
-        // new PluginsUtil().initPlugins();
+        // 加载插件
+         new PluginsUtil().initPlugins();
     }
 
     /**

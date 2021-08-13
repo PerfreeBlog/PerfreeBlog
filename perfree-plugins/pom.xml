@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>perfree-plugins-exam</module>
+        <module>helloworld</module>
     </modules>
 
 </project>

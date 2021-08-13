@@ -154,7 +154,18 @@ CREATE TABLE `p_tag`  (
                           `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
-
+drop table if exists `p_plugin`;
+CREATE TABLE `p_plugin`  (
+                       `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                       `name` varchar(256) CHARACTER SET utf8mb4 NULL COMMENT '插件名',
+                       `path` varchar(256) CHARACTER SET utf8mb4 NOT NULL COMMENT '路径',
+                       `desc` varchar(512) CHARACTER SET utf8mb4 NULL COMMENT '插件描述',
+                       `version` varchar(64) CHARACTER SET utf8mb4 NULL COMMENT '版本',
+                       `author` varchar(64) CHARACTER SET utf8mb4 NULL COMMENT '作者',
+                       `createTime` datetime(0) NOT NULL COMMENT '创建时间',
+                       `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                       PRIMARY KEY (`id`) USING BTREE
+)ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
 
 INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (1, 'WEB_THEME', 'perfree');
 INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (2, 'WEB_IS_REGISTER', '1');
@@ -178,7 +189,7 @@ INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 13);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 14);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 15);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 16);
-
+INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (1, 19);
 
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (1, -1, '主页', '/admin/dashboard', 'fa-home', 1, 1, 0, NULL, 0, '2020-11-19 15:57:28', NULL);
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (2, -1, '写文章', '/admin/article/addPage', 'fa-pencil-square-o', 2, 1, 0, NULL, 0, '2020-11-19 15:58:06', NULL);
@@ -198,6 +209,7 @@ INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (16, 3, '页面管理', '/admin/page', NULL, 2, 1, 0, NULL, 0, '2020-12-21 08:23:30', NULL);
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (17, -1, '归档', '/archive', 'fa-calendar', 1, 0, 0, NULL, 0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (18, -1, '友链', '/link', 'fa-user-o', 2, 0, 0, NULL, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES (19, -1, '插件管理', '/admin/plugin', 'fa-leaf', 6, 1, 0, NULL, 0, '2021-08-13 14:02:27', NULL);
 
 INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, now(), now());
 INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (2, '友链', '友链', 'page', '', NULL, '', '', '', 0, 0, 1, 1, 1, 1, now(), now());

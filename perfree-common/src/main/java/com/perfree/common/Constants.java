@@ -31,6 +31,8 @@ public class Constants {
     public static final String DEV_RESOURCES_PATH = "perfree-web/src/main/resources";// 开发资源路径
     public static final String PROD_THEMES_PATH = "resources/static/themes"; // 生产主题路径
     public static final String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";// 开发主题路径
+    public static final String PLUGIN_PATH = "resources/plugins"; // 插件目录
+    public static final String UPLOAD_TEMP_PATH = "resources/temp"; // 临时目录
 
     public static final String SEPARATOR = "/"; // 路径
 
