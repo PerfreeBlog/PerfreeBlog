@@ -10,6 +10,7 @@ import com.perfree.common.StringUtil;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
 import com.perfree.model.User;
+import com.perfree.plugins.PluginBeanRegister;
 import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
 import com.perfree.service.SEOService;
@@ -53,6 +54,8 @@ public class SystemController extends BaseController{
     private SEOService seoService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private PluginBeanRegister pluginBeanRegister;
 
     /**
      * 后台首页

@@ -25,7 +25,7 @@ public class HelloWorldController extends PluginController {
 
     @RequestMapping("/pp3")
     public String index3 (Model model) {
-        model.addAttribute("article", "啊啊啊啊啊啊啊啊啊");
+        model.addAttribute("article", "插件测试html");
         return "/static/index.html";
     }
 }

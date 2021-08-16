@@ -7,7 +7,8 @@ import com.jfinal.template.Directive;
 import com.perfree.common.Constants;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
-import com.perfree.plugins.PluginsUtil;
+import com.perfree.plugins.PluginBeanRegister;
+import com.perfree.plugins.PluginsUtils;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
 import org.apache.commons.lang3.StringUtils;
@@ -33,10 +34,13 @@ public class PostAppRunner implements ApplicationRunner {
 
     private final OptionService optionService;
     private final MenuService menuService;
+    private final PluginBeanRegister pluginBeanRegister;
 
-    public PostAppRunner(OptionService optionService,MenuService menuService) {
+
+    public PostAppRunner(OptionService optionService,MenuService menuService,PluginBeanRegister pluginBeanRegister) {
         this.optionService = optionService;
         this.menuService = menuService;
+        this.pluginBeanRegister = pluginBeanRegister;
     }
 
     @Override
@@ -69,7 +73,7 @@ public class PostAppRunner implements ApplicationRunner {
 
         }
         // 加载插件
-         new PluginsUtil().initPlugins();
+        PluginsUtils.initPlugins();
     }
 
     /**

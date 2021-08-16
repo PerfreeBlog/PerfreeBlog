@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class HelloWorldService extends PluginService {
 
-    @Autowired
-    private HelloWorldMapper helloWorldMapper;
+ /*  @Autowired
+   private HelloWorldMapper helloWorldMapper;*/
+
 
     public String index() {
-        return helloWorldMapper.index();
+        return "插件:helloWorld";
     }
 
     public String index2() {
-        return helloWorldMapper.index2();
+        return "插件:helloWorld2";
     }
 
 }
