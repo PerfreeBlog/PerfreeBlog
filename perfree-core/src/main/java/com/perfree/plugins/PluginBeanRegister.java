@@ -1,6 +1,8 @@
 package com.perfree.plugins;
 
 import com.perfree.commons.SpringBeanUtils;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -69,11 +71,14 @@ public class PluginBeanRegister {
      */
     public static void removeBean(Class<?> loadClass) {
       try{
-          LOGGER.info("扩展插件 => 移除bean:{}", loadClass.getSimpleName());
+          if (loadClass.getAnnotation(Mapper.class) != null) {
+              return;
+          }
           DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) SpringBeanUtils.getApplicationContext()
                   .getAutowireCapableBeanFactory();
           defaultListableBeanFactory.destroyBean(loadClass);
           defaultListableBeanFactory.removeBeanDefinition(lowerFirstCase(loadClass.getSimpleName()));
+          LOGGER.info("扩展插件 => 移除bean:{}", loadClass.getSimpleName());
       }catch (Exception e) {
           e.printStackTrace();
           LOGGER.error("扩展插件 => 移除bean:{}，出错：{}", loadClass.getSimpleName(),e.getMessage());
@@ -87,12 +92,18 @@ public class PluginBeanRegister {
      */
     public static void registerBeanDefinition(Class<?> loadClass ) {
         try {
-            String beanName = lowerFirstCase(loadClass.getSimpleName());
-            ApplicationContext ctx = SpringBeanUtils.getApplicationContext();
-            DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) ctx.getAutowireCapableBeanFactory();
-            BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(loadClass);
-            defaultListableBeanFactory.registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
-            LOGGER.info("扩展插件 => 注册bean:{} 成功", beanName);
+            if (loadClass.getAnnotation(Mapper.class) != null) {
+                SqlSessionFactory sqlSessionFactory = SpringBeanUtils.getBean(SqlSessionFactory.class);
+                sqlSessionFactory.getConfiguration().addMapper(loadClass);
+                LOGGER.info("扩展插件 => 注册mapper:{} 成功", loadClass.getSimpleName());
+            } else {
+                String beanName = lowerFirstCase(loadClass.getSimpleName());
+                ApplicationContext ctx = SpringBeanUtils.getApplicationContext();
+                DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) ctx.getAutowireCapableBeanFactory();
+                BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(loadClass);
+                defaultListableBeanFactory.registerBeanDefinition(beanName, beanDefinitionBuilder.getBeanDefinition());
+                LOGGER.info("扩展插件 => 注册bean:{} 成功", beanName);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("扩展插件 => 注册bean出错:{}", e.getMessage());

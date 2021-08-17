@@ -60,24 +60,27 @@ function queryTable() {
         limit: 30,
         cols: [[
             {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
-            {field: 'name', title: '插件名'},
-            {field: 'version', title: '版本'},
+            {field: 'name', title: '插件名',  width: 180},
+            {field: 'version', title: '版本',  width: 100},
             {field: 'desc', title: '描述'},
-            {field: 'author', title: '作者'},
+            {field: 'author', title: '作者',  width: 100},
+            {field: 'path', title: '路径',  width: 220},
             {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
-                templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+                templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>",
+                width: 180
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
                 sort: true,
-                templet: "<span>{{d.updateTime == null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
+                templet: "<span>{{d.updateTime == null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>",
+                width: 180
             },
             {
-                field: 'id', title: '操作', width: 120, fixed: 'right',
+                field: 'id', title: '操作', width: 80, fixed: 'right',
                 templet: "<div>" +
                     "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>卸载</a>" +
                     "</div>"

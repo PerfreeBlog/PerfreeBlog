@@ -13,7 +13,9 @@ import com.perfree.directive.TemplateDirective;
 import org.apache.ibatis.annotations.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +26,10 @@ import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -180,7 +185,8 @@ public class PluginsUtils extends ClassLoader{
                     PluginBeanRegister.registerBeanDefinition(loadClass);
                     serviceList.add(loadClass);
                 }
-                if (loadClass.getAnnotation(Mapper.class) != null) {
+                if (loadClass.getAnnotation(Mapper.class) != null || loadClass.getAnnotation(Component.class) != null ||
+                        loadClass.getAnnotation(Repository.class) != null) {
                     PluginBeanRegister.registerBeanDefinition(loadClass);
                 }
                 if (BaseDirective.class.isAssignableFrom(loadClass)) {
@@ -296,7 +302,7 @@ public class PluginsUtils extends ClassLoader{
                 if (loadClass.getAnnotation(Service.class) != null) {
                     PluginBeanRegister.removeBean(loadClass);
                 }
-                if (loadClass.getAnnotation(Mapper.class) != null) {
+                if (loadClass.getAnnotation(Component.class) != null || loadClass.getAnnotation(Repository.class) != null) {
                     PluginBeanRegister.removeBean(loadClass);
                 }
                 if (Plugin.class.isAssignableFrom(loadClass) && type == Constants.PLUGIN_TYPE_UNINSTALL){

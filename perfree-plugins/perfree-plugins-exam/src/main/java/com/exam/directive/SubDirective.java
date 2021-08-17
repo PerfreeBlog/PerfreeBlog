@@ -8,8 +8,12 @@ import com.perfree.directive.BaseDirective;
 import com.perfree.directive.TemplateDirective;
 import org.springframework.stereotype.Component;
 
+/**
+ * @description 扩展插件,自定义模板指令示例
+ * @author Perfree
+ * @date 2021/8/17 15:08
+ */
 @TemplateDirective("sub")
-@Component
 public class SubDirective extends BaseDirective {
     public void setExprList(ExprList exprList) {
         super.setExprList(exprList);

@@ -7,26 +7,32 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * @description 扩展插件: controller示例
+ * @author Perfree
+ * @date 2021/8/17 15:08
+ */
 @Controller
 public class HelloWorldController{
 
     @Autowired
     private HelloWorldService helloWorldService;
-    @RequestMapping("/pp")
+
+    @RequestMapping("/plugin/test1")
     @ResponseBody
-    public String index1 () {
-        return helloWorldService.index();
+    public String test1 () {
+        return "插件测试:返回字符串";
     }
 
-    @RequestMapping("/pp2")
+    @RequestMapping("/plugin/test2")
     @ResponseBody
-    public String index2 () {
-        return helloWorldService.index2();
+    public String test2 () {
+        return helloWorldService.test2();
     }
 
-    @RequestMapping("/pp3")
+    @RequestMapping("/plugin/test3")
     public String index3 (Model model) {
-        model.addAttribute("article", "插件测试html");
+        model.addAttribute("article", "插件测试: 返回html");
         return "/static/index.html";
     }
 }

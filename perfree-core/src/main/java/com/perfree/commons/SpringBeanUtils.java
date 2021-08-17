@@ -1,5 +1,6 @@
 package com.perfree.commons;
 
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -25,6 +26,14 @@ public class SpringBeanUtils implements ApplicationContextAware {
      */
     public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
+    }
+
+    /**
+     * 获取mapper
+     */
+    public static <T> T getMapper(Class<T> clazz) {
+        SqlSessionFactory sqlSessionFactory = getBean(SqlSessionFactory.class);
+        return sqlSessionFactory.openSession().getMapper(clazz);
     }
 
     /**
