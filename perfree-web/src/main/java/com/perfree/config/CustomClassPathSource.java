@@ -4,8 +4,16 @@ import cn.hutool.core.lang.JarClassLoader;
 import com.jfinal.template.EngineConfig;
 import com.jfinal.template.source.ClassPathSource;
 import com.jfinal.template.source.ISource;
+import com.perfree.commons.SpringBeanUtils;
 import com.perfree.plugins.PluginsUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
@@ -32,18 +40,29 @@ public class CustomClassPathSource implements ISource {
     }
 
     public CustomClassPathSource(String baseTemplatePath, String fileName, String encoding) {
-        this.finalFileName = buildFinalFileName(baseTemplatePath, fileName);
-        this.fileName = fileName;
-        this.encoding= encoding;
-        for (JarClassLoader jarClassLoader : PluginsUtils.jarClassLoaderList) {
-            this.classLoader = jarClassLoader;
-            this.url = classLoader.getResource(finalFileName);
+        try {
+            HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+            RequestMappingHandlerMapping handlerMapping = SpringBeanUtils.getBean(RequestMappingHandlerMapping.class);
+            HandlerExecutionChain handlerChain = handlerMapping.getHandler(request);
+            if (handlerChain == null) {
+                throw new IllegalArgumentException("File not found in CLASSPATH or JAR : \"" + finalFileName + "\"");
+            }
+            HandlerMethod handler = (HandlerMethod) handlerChain.getHandler();
+            Object bean = handler.getBean();
+            this.finalFileName = buildFinalFileName(baseTemplatePath, fileName);
+            this.fileName = fileName;
+            this.encoding= encoding;
+            this.classLoader = bean.getClass().getClassLoader();
+            this.url = this.classLoader.getResource(finalFileName);
             if (url != null) {
                 processIsInJarAndlastModified();
                 return;
             }
+            throw new IllegalArgumentException("File not found in CLASSPATH or JAR : \"" + finalFileName + "\"");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("File not found in CLASSPATH or JAR : \"" + finalFileName + "\"");
         }
-        throw new IllegalArgumentException("File not found in CLASSPATH or JAR : \"" + finalFileName + "\"");
     }
 
     protected void processIsInJarAndlastModified() {
