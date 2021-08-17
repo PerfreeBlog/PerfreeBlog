@@ -46,4 +46,9 @@ public class Constants {
 
     public  static final String LOGIN_USER = "loginUser";
 
+    public  static final int PLUGIN_TYPE_START = 1;
+    public  static final int PLUGIN_TYPE_UPDATE = 2;
+    public  static final int PLUGIN_TYPE_INSTALL = 3;
+    public  static final int PLUGIN_TYPE_UNINSTALL = 4;
+
 }

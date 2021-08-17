@@ -26,9 +26,9 @@ public class PluginBeanRegister {
      */
     public static void registerMapping(String controllerName) {
         try {
-            RequestMappingHandlerMapping requestMappingHandlerMapping = (RequestMappingHandlerMapping) SpringBeanUtils.getApplicationContext()
-                    .getBean("requestMappingHandlerMapping");
-            Method method = requestMappingHandlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods", Object.class);
+            Object controller = SpringBeanUtils.getBean(controllerName);
+            RequestMappingHandlerMapping requestMappingHandlerMapping = SpringBeanUtils.getApplicationContext().getBean(RequestMappingHandlerMapping.class);
+            Method method = requestMappingHandlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods",Object.class);
             method.setAccessible(true);
             method.invoke(requestMappingHandlerMapping, controllerName);
             LOGGER.info("扩展插件 => 注册controller handle:{}", controllerName);
@@ -54,8 +54,8 @@ public class PluginBeanRegister {
                 RequestMappingInfo requestMappingInfo = (RequestMappingInfo)createMappingMethod.invoke(requestMappingHandlerMapping, specificMethod, loadClass);
                 if (requestMappingInfo != null) {
                     requestMappingHandlerMapping.unregisterMapping(requestMappingInfo);
+                    LOGGER.info("扩展插件 => 移除controller handle:{}", loadClass.getSimpleName());
                 }
-                LOGGER.info("扩展插件 => 移除controller handle:{}", loadClass.getSimpleName());
             } catch (Exception e) {
                 e.printStackTrace();
                 LOGGER.error("扩展插件 => 移除controller handle出错:{}", e.getMessage());
@@ -68,10 +68,16 @@ public class PluginBeanRegister {
      * @author Perfree
      */
     public static void removeBean(Class<?> loadClass) {
-        LOGGER.info("扩展插件 => 移除bean:{}", loadClass.getSimpleName());
-        DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) SpringBeanUtils.getApplicationContext()
-                .getAutowireCapableBeanFactory();
-        defaultListableBeanFactory.removeBeanDefinition(lowerFirstCase(loadClass.getSimpleName()));
+      try{
+          LOGGER.info("扩展插件 => 移除bean:{}", loadClass.getSimpleName());
+          DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) SpringBeanUtils.getApplicationContext()
+                  .getAutowireCapableBeanFactory();
+          defaultListableBeanFactory.destroyBean(loadClass);
+          defaultListableBeanFactory.removeBeanDefinition(lowerFirstCase(loadClass.getSimpleName()));
+      }catch (Exception e) {
+          e.printStackTrace();
+          LOGGER.error("扩展插件 => 移除bean:{}，出错：{}", loadClass.getSimpleName(),e.getMessage());
+      }
     }
 
     /**

@@ -1,9 +1,6 @@
 package com.perfree.config;
 
-import com.jfinal.template.source.ClassPathSourceFactory;
-import com.jfinal.template.source.FileSourceFactory;
-import com.jfinal.template.source.ISource;
-import com.jfinal.template.source.ISourceFactory;
+import com.jfinal.template.source.*;
 import com.perfree.common.Constants;
 import com.perfree.common.OptionCacheUtil;
 
@@ -43,7 +40,11 @@ public class TemplateSourceFactory implements ISourceFactory {
         try{
             iSource = new ClassPathSourceFactory().getSource(null, s1, s2);
         }catch (Exception e) {
-            iSource = new FileSourceFactory().getSource(Constants.RESOURCES_DIR, s1, s2);
+            try{
+                iSource =  new CustomClassPathSource(null, s1, s2);
+            } catch (Exception e2) {
+                iSource = new FileSourceFactory().getSource(Constants.RESOURCES_DIR, s1, s2);
+            }
         }
         return iSource;
     }

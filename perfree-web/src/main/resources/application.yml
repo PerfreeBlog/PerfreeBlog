@@ -9,6 +9,8 @@ server:
 # 默认文件上传地址
 web.upload-path: resources/upload/
 spring:
+  aop:
+    proxy-target-class: true
   devtools:
     restart:
       enabled: false

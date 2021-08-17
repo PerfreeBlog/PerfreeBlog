@@ -49,12 +49,15 @@ public class PluginService {
                 /*if (pluginSetting.getStr("plugin.version").equals(setting.getStr("plugin.version"))){
                     return ResponseBean.fail("插件安装失败:当前版本的插件已存在", null);
                 }*/
-                PluginsUtils.unloadJarFiles(pluginFile);
+                PluginsUtils.unloadJarFiles(pluginFile, Constants.PLUGIN_TYPE_UPDATE);
+                File copyPlugin = FileUtil.copy(file, pluginFile, false);
+                FileUtil.del(file);
+                PluginsUtils.installJar(copyPlugin, Constants.PLUGIN_TYPE_UPDATE);
                 return ResponseBean.success("插件更新成功", null);
             }
             File copyPlugin = FileUtil.copy(file, pluginFile, false);
             FileUtil.del(file);
-            PluginsUtils.installJar(copyPlugin);
+            PluginsUtils.installJar(copyPlugin, Constants.PLUGIN_TYPE_INSTALL);
             return ResponseBean.success("插件安装成功", null);
         }catch (Exception e) {
             e.printStackTrace();

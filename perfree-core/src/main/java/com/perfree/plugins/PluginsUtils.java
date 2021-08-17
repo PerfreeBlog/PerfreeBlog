@@ -6,6 +6,8 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.Setting;
 import com.jfinal.template.Directive;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
+import com.perfree.common.Constants;
+import com.perfree.commons.SpringBeanUtils;
 import com.perfree.directive.BaseDirective;
 import com.perfree.directive.TemplateDirective;
 import org.slf4j.Logger;
@@ -32,7 +34,7 @@ public class PluginsUtils extends ClassLoader{
     private static final List<String> classNameList = new ArrayList<>();
     private static JarClassLoader jarClassLoader  = null;
     private static final List<HashMap<String, JarClassLoader>> jarClassLoaders = new ArrayList<>();
-
+    public static final List<JarClassLoader> jarClassLoaderList = new ArrayList<>();
     /**
      * 初始化插件
      */
@@ -43,7 +45,7 @@ public class PluginsUtils extends ClassLoader{
         }
         try{
             for (File jarFile : jarFiles) {
-                installJar(jarFile);
+                installJar(jarFile, Constants.PLUGIN_TYPE_START);
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -55,14 +57,15 @@ public class PluginsUtils extends ClassLoader{
      * @description 安装jar
      * @author Perfree
      */
-    public static void installJar(File file) throws Exception {
+    public static void installJar(File file, int type) throws Exception {
         try {
             jarClassLoader = JarClassLoader.loadJar(file);
             HashMap<String, JarClassLoader> currClassLoader = new HashMap<>();
             currClassLoader.put(file.getName(), jarClassLoader);
             jarClassLoaders.add(currClassLoader);
+            jarClassLoaderList.add(jarClassLoader);
             initClassNameList(file);
-            registryBean();
+            registryBean(type);
             classNameList.clear();
         }catch (Exception e) {
             e.printStackTrace();
@@ -156,10 +159,10 @@ public class PluginsUtils extends ClassLoader{
     /**
      * 注册bean
      */
-    private static void registryBean(){
+    private static void registryBean(int type){
         try {
             List<Class<?>> controllerList = new ArrayList<>();
-
+            List<Class<?>> serviceList = new ArrayList<>();
             Class<?> pluginInitClass = null;
             Class<?> templateDirectiveClass = null;
             // 加载class,注册进入springboot bean
@@ -171,6 +174,7 @@ public class PluginsUtils extends ClassLoader{
                 }
                 if (PluginService.class.isAssignableFrom(loadClass)) {
                     PluginBeanRegister.registerBeanDefinition(loadClass);
+                    serviceList.add(loadClass);
                 }
                 if (PluginMapper.class.isAssignableFrom(loadClass)) {
                     PluginBeanRegister.registerBeanDefinition(loadClass);
@@ -181,6 +185,12 @@ public class PluginsUtils extends ClassLoader{
                 if (Plugin.class.isAssignableFrom(loadClass)){
                     pluginInitClass = loadClass;
                 }
+            }
+
+            // 这里必须要先尝试获取下serviceBean,否则二次注册controller会出错
+            for (Class<?> serviceClass : serviceList) {
+                Object service = SpringBeanUtils.getBean(PluginBeanRegister.lowerFirstCase(serviceClass.getSimpleName()));
+                logger.info("扩展插件 => service Bean 注册验证:{}", service.getClass().getName());
             }
             // 注册controller handle
             controllerList.forEach(loadClass -> {
@@ -194,7 +204,7 @@ public class PluginsUtils extends ClassLoader{
 
             // 执行初始方法
             if (pluginInitClass != null) {
-                pluginInit(pluginInitClass, 1);
+                pluginInit(pluginInitClass, type);
             }
 
         } catch (Exception e) {
@@ -247,15 +257,21 @@ public class PluginsUtils extends ClassLoader{
      * @param file  file
      * @author Perfree
      */ 
-    public static void unloadJarFiles(File file) throws Exception {
+    public static void unloadJarFiles(File file, int type) throws Exception {
+        HashMap<String, JarClassLoader> removeClassLoader = null;
         for (HashMap<String, JarClassLoader> classLoader : jarClassLoaders) {
             if (classLoader.get(file.getName()) != null) {
                 initClassNameList(file);
-                removeBean(classLoader.get(file.getName()));
+                removeBean(classLoader.get(file.getName()), type);
                 classNameList.clear();
                 classLoader.get(file.getName()).close();
-                System.out.println(forceDelete(file));
+                removeClassLoader = classLoader;
+                forceDelete(file);
             }
+        }
+        if (removeClassLoader != null) {
+            jarClassLoaders.remove(removeClassLoader);
+            jarClassLoaderList.remove(removeClassLoader.get(file.getName()));
         }
     }
 
@@ -263,14 +279,15 @@ public class PluginsUtils extends ClassLoader{
      * @description 移除bean
      * @author Perfree
      */
-    public static void removeBean(JarClassLoader classLoader) {
+    public static void removeBean(JarClassLoader classLoader, int type) {
         try {
+            Class<?> controllerLoadClass = null;
             for (String className : classNameList) {
                 Class<?> loadClass = null;
                 loadClass = classLoader.loadClass(className);
                 if (PluginController.class.isAssignableFrom(loadClass)) {
-                    PluginBeanRegister.unregisterController(loadClass);
                     PluginBeanRegister.removeBean(loadClass);
+                    controllerLoadClass = loadClass;
                 }
                 if (PluginService.class.isAssignableFrom(loadClass)) {
                     PluginBeanRegister.removeBean(loadClass);
@@ -278,10 +295,11 @@ public class PluginsUtils extends ClassLoader{
                 if (PluginMapper.class.isAssignableFrom(loadClass)) {
                     PluginBeanRegister.removeBean(loadClass);
                 }
-                if (Plugin.class.isAssignableFrom(loadClass)){
-                    pluginInit(loadClass, 4);
+                if (Plugin.class.isAssignableFrom(loadClass) && type == Constants.PLUGIN_TYPE_UNINSTALL){
+                    pluginInit(loadClass, type);
                 }
             }
+            PluginBeanRegister.unregisterController(controllerLoadClass);
         } catch (Exception e) {
             e.printStackTrace();
         }

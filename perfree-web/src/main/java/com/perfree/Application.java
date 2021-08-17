@@ -9,11 +9,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication(exclude = { DruidDataSourceAutoConfigure.class})
 @ComponentScan(nameGenerator = UniqueNameGenerator.class)
 @EnableAsync
+@EnableAspectJAutoProxy
 public class Application implements CommandLineRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(Application.class);
     @Value("${server.port}")
