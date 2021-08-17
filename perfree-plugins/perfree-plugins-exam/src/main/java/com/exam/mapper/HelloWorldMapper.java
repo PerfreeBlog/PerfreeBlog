@@ -1,9 +1,12 @@
 package com.exam.mapper;
 
-import com.perfree.plugins.PluginMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.stereotype.Component;
 
-public interface HelloWorldMapper extends PluginMapper {
+@Mapper
+@Component
+public interface HelloWorldMapper{
     @Select("select count(1) from `p_user`")
     String index();
 

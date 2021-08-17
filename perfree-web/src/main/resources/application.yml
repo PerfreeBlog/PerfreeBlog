@@ -60,7 +60,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: error
+    com.perfree: debug
     com.perfree.config.PostAppRunner: info
     com.perfree.Application: info
     com.perfree.plugins: info

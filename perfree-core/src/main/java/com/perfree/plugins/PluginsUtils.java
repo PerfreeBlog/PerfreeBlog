@@ -10,8 +10,12 @@ import com.perfree.common.Constants;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.directive.BaseDirective;
 import com.perfree.directive.TemplateDirective;
+import org.apache.ibatis.annotations.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -168,15 +172,15 @@ public class PluginsUtils extends ClassLoader{
             // 加载class,注册进入springboot bean
             for (String className : classNameList) {
                 Class<?> loadClass = jarClassLoader.loadClass(className);
-                if (PluginController.class.isAssignableFrom(loadClass)) {
+                if (loadClass.getAnnotation(Controller.class) != null || loadClass.getAnnotation(RestController.class) != null) {
                     PluginBeanRegister.registerBeanDefinition(loadClass);
                     controllerList.add(loadClass);
                 }
-                if (PluginService.class.isAssignableFrom(loadClass)) {
+                if (loadClass.getAnnotation(Service.class) != null) {
                     PluginBeanRegister.registerBeanDefinition(loadClass);
                     serviceList.add(loadClass);
                 }
-                if (PluginMapper.class.isAssignableFrom(loadClass)) {
+                if (loadClass.getAnnotation(Mapper.class) != null) {
                     PluginBeanRegister.registerBeanDefinition(loadClass);
                 }
                 if (BaseDirective.class.isAssignableFrom(loadClass)) {
@@ -285,14 +289,14 @@ public class PluginsUtils extends ClassLoader{
             for (String className : classNameList) {
                 Class<?> loadClass = null;
                 loadClass = classLoader.loadClass(className);
-                if (PluginController.class.isAssignableFrom(loadClass)) {
+                if (loadClass.getAnnotation(Controller.class) != null || loadClass.getAnnotation(RestController.class) != null) {
                     PluginBeanRegister.removeBean(loadClass);
                     controllerLoadClass = loadClass;
                 }
-                if (PluginService.class.isAssignableFrom(loadClass)) {
+                if (loadClass.getAnnotation(Service.class) != null) {
                     PluginBeanRegister.removeBean(loadClass);
                 }
-                if (PluginMapper.class.isAssignableFrom(loadClass)) {
+                if (loadClass.getAnnotation(Mapper.class) != null) {
                     PluginBeanRegister.removeBean(loadClass);
                 }
                 if (Plugin.class.isAssignableFrom(loadClass) && type == Constants.PLUGIN_TYPE_UNINSTALL){

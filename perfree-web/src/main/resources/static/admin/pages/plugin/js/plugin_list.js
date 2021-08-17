@@ -27,7 +27,7 @@ function initPage() {
         exts: "jar",
         done: function (res) {
             if (res.code === 200) {
-                parent.layer.msg("插件安装成功", {icon: 1});
+                parent.layer.msg(res.msg, {icon: 1});
                 location.reload();
             } else {
                 layer.msg(res.msg, {icon: 2});
@@ -46,7 +46,7 @@ function initPage() {
 function queryTable() {
     table.render({
         elem: '#tableBox',
-        url: '/admin/link/list',
+        url: '/admin/plugin/list',
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         contentType: 'application/json',
@@ -54,7 +54,7 @@ function queryTable() {
         totalRow: false,
         where: {
             form: {
-                name: $("#linkName").val()
+                name: $("#pluginName").val()
             }
         },
         limit: 30,
@@ -79,8 +79,7 @@ function queryTable() {
             {
                 field: 'id', title: '操作', width: 120, fixed: 'right',
                 templet: "<div>" +
-                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
-                    "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +
+                    "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>卸载</a>" +
                     "</div>"
             },
         ]],
@@ -107,10 +106,10 @@ function queryTable() {
  * @param ids
  */
 function deleteData(ids) {
-    layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
+    layer.confirm('确定要卸载吗?', {icon: 3, title: '提示'}, function (index) {
         $.ajax({
             type: "POST",
-            url: "/admin/link/del",
+            url: "/admin/plugin/del",
             contentType: "application/json",
             data: ids,
             success: function (data) {
@@ -122,7 +121,7 @@ function deleteData(ids) {
                 }
             },
             error: function (data) {
-                layer.msg("删除失败", {icon: 2});
+                layer.msg("卸载失败", {icon: 2});
             }
         });
         layer.close(index);

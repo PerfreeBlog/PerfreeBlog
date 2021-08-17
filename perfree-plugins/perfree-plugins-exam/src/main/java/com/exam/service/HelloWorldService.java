@@ -1,10 +1,9 @@
 package com.exam.service;
 
-import com.exam.mapper.HelloWorldMapper;
-import com.perfree.plugins.PluginService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class HelloWorldService extends PluginService {
+@Service
+public class HelloWorldService{
 
  /*  @Autowired
    private HelloWorldMapper helloWorldMapper;*/
