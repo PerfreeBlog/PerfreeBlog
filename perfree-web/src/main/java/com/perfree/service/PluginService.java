@@ -161,7 +161,7 @@ public class PluginService {
         try {
             Plugin plugin = pluginsMapper.getById(id);
             File pluginFile = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + plugin.getPath());
-            PluginsUtils.unloadJarFiles(pluginFile, Constants.PLUGIN_TYPE_UPDATE);
+            PluginsUtils.unloadJarFiles(pluginFile, Constants.PLUGIN_TYPE_UNINSTALL);
             pluginsMapper.delById(plugin.getId());
             return true;
         } catch (Exception e) {

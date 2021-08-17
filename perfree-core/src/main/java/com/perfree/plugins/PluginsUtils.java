@@ -214,7 +214,11 @@ public class PluginsUtils extends ClassLoader{
 
             // 执行初始方法
             if (pluginInitClass != null) {
-                pluginInit(pluginInitClass, type);
+                if (type == Constants.PLUGIN_TYPE_INSTALL) {
+                    pluginInit(pluginInitClass, type);
+
+                }
+                pluginInit(pluginInitClass, Constants.PLUGIN_TYPE_START);
             }
 
         } catch (Exception e) {
@@ -295,6 +299,13 @@ public class PluginsUtils extends ClassLoader{
             for (String className : classNameList) {
                 Class<?> loadClass = null;
                 loadClass = classLoader.loadClass(className);
+                if (Plugin.class.isAssignableFrom(loadClass) && type == Constants.PLUGIN_TYPE_UNINSTALL){
+                    pluginInit(loadClass, type);
+                }
+            }
+            for (String className : classNameList) {
+                Class<?> loadClass = null;
+                loadClass = classLoader.loadClass(className);
                 if (loadClass.getAnnotation(Controller.class) != null || loadClass.getAnnotation(RestController.class) != null) {
                     PluginBeanRegister.removeBean(loadClass);
                     controllerLoadClass = loadClass;
@@ -304,9 +315,6 @@ public class PluginsUtils extends ClassLoader{
                 }
                 if (loadClass.getAnnotation(Component.class) != null || loadClass.getAnnotation(Repository.class) != null) {
                     PluginBeanRegister.removeBean(loadClass);
-                }
-                if (Plugin.class.isAssignableFrom(loadClass) && type == Constants.PLUGIN_TYPE_UNINSTALL){
-                    pluginInit(loadClass, type);
                 }
             }
             PluginBeanRegister.unregisterController(controllerLoadClass);

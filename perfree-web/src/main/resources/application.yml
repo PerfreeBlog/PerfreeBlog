@@ -63,7 +63,7 @@ logging:
     com.perfree: error
     com.perfree.config.PostAppRunner: info
     com.perfree.Application: info
-    #com.perfree.plugins: info
+    com.perfree.plugins: info
   file:
     name: ./logs/Perfree.log
     max-history: 7
