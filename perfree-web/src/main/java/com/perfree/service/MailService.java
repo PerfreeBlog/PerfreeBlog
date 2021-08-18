@@ -50,13 +50,17 @@ public class MailService {
             helper.setFrom(OptionCacheUtil.getValue("SMTP_EMAIL"));
             if (comment.getPid() != -1) {
                 Comment parentComment = commentService.getById(comment.getPid());
-                helper.setTo(parentComment.getEmail());
+                if (!parentComment.getEmail().equals(OptionCacheUtil.getValue("SMTP_EMAIL"))) {
+                    helper.setTo(parentComment.getEmail());
+                    commentMailContent(comment, helper);
+                    javaMailSender.send(message);
+                }
+            }
+            if (!comment.getEmail().equals(OptionCacheUtil.getValue("SMTP_EMAIL"))){
+                helper.setTo(OptionCacheUtil.getValue("SMTP_EMAIL"));
                 commentMailContent(comment, helper);
                 javaMailSender.send(message);
             }
-            helper.setTo(OptionCacheUtil.getValue("SMTP_EMAIL"));
-            commentMailContent(comment, helper);
-            javaMailSender.send(message);
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("邮箱服务出错:{}", e.getMessage());
