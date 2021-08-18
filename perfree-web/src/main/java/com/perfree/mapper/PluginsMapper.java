@@ -21,4 +21,5 @@ public interface PluginsMapper {
 
     void update(Plugin plugin);
 
+    List<Plugin> getAll();
 }

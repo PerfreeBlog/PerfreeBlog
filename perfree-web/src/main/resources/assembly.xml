@@ -25,6 +25,8 @@
                 <include>static/**</include>
                 <include>Perfree.sql</include>
                 <include>Perfree-sqlite.sql</include>
+                <include>update.sql</include>
+                <include>update-sqlite.sql</include>
             </includes>
             <outputDirectory>resources</outputDirectory>
             <fileMode>0644</fileMode>

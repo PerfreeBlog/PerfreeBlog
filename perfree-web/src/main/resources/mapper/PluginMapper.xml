@@ -23,6 +23,9 @@
     <select id="getById" resultType="com.perfree.model.Plugin">
         select * from p_plugin where `id` = #{id}
     </select>
+    <select id="getAll" resultType="com.perfree.model.Plugin">
+        select * from p_plugin
+    </select>
 
     <delete id="delById">
         DELETE FROM  p_plugin  WHERE id = #{id}

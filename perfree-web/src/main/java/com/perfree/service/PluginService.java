@@ -170,4 +170,12 @@ public class PluginService {
             return false;
         }
     }
+
+    /**
+     * @description 获取所有插件
+     * @author Perfree
+     */
+    public List<Plugin> getAll() {
+        return pluginsMapper.getAll();
+    }
 }

@@ -38,22 +38,23 @@ import java.util.jar.JarFile;
  * @author Perfree
  * @date 2021/8/13 11:56
  */
-public class PluginsUtils extends ClassLoader{
+@Component
+public class PluginsUtils{
     private static final Logger logger = LoggerFactory.getLogger(PluginsUtils.class);
     private static final List<String> classNameList = new ArrayList<>();
     private static JarClassLoader jarClassLoader  = null;
     private static final List<HashMap<String, JarClassLoader>> jarClassLoaders = new ArrayList<>();
     public static final List<JarClassLoader> jarClassLoaderList = new ArrayList<>();
+
     /**
      * 初始化插件
      */
-    public static void initPlugins(){
-        File[] jarFiles = readJarFiles();
-        if (jarFiles == null || jarFiles.length == 0) {
+    public static void initPlugins(List<File> pluginFiles){
+        if (pluginFiles == null || pluginFiles.size() == 0) {
             return;
         }
         try{
-            for (File jarFile : jarFiles) {
+            for (File jarFile : pluginFiles) {
                 installJar(jarFile, Constants.PLUGIN_TYPE_START);
             }
         }catch (Exception e) {
@@ -81,30 +82,6 @@ public class PluginsUtils extends ClassLoader{
             logger.error("加载插件出现异常:{}", e.getMessage());
             throw new Exception("加载插件出现异常:" + e.getMessage());
         }
-    }
-
-
-    /**
-     * 获取插件目录内所有jar
-     * @return File[]
-     */
-    private static File[] readJarFiles() {
-        File file = new File("resources/plugins");
-        List<File> jarFiles = new ArrayList<>();
-        if (!file.exists()) {
-            return null;
-        }
-        File[] files = file.listFiles();
-        if (files == null) {
-            return null;
-        }
-        for (File listFile : files) {
-            if (listFile.getName().endsWith(".jar")){
-                jarFiles.add(listFile);
-            }
-        }
-        File[] result = new File[jarFiles.size()];
-        return jarFiles.toArray(result);
     }
 
     /**
@@ -323,25 +300,27 @@ public class PluginsUtils extends ClassLoader{
         }
     }
 
-    public static boolean forceDelete(File file) {
+    /**
+     * @description 强制删除
+     * @author Perfree
+     */
+    public static void forceDelete(File file) {
         if (!file.exists()) {
-            return false;
+            return;
         }
-
         boolean result = file.delete();
         if (result) {
-            return true;
+            return;
         }
         int tryCount = 0;
-        while (!result && tryCount++ < 10) {
+        while (!result && tryCount++ < 5) {
             System.gc();
             try {
-                Thread.sleep(100);
+                Thread.sleep(150);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             result = file.delete();
         }
-        return result;
     }
 }

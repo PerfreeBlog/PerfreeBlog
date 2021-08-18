@@ -8,7 +8,7 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <groupId>com.perfree</groupId>
     <artifactId>perfree-web</artifactId>
@@ -23,15 +23,17 @@
     </dependencies>
     <build>
         <resources>
-            <!--<resource>
+            <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>static/**</exclude>
                     <exclude>Perfree.sql</exclude>
                     <exclude>Perfree-sqlite.sql</exclude>
+                    <exclude>update.sql</exclude>
+                    <exclude>update-sqlite.sql</exclude>
                 </excludes>
                 <filtering>true</filtering>
-            </resource>-->
+            </resource>
         </resources>
         <finalName>perfree-web</finalName>
         <plugins>
