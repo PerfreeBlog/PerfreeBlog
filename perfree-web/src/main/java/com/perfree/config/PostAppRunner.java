@@ -80,6 +80,14 @@ public class PostAppRunner implements ApplicationRunner {
             menuService.registerMenuPage();
             initPlugins();
         }
+        File update = new File("resources/update.sql");
+        File updateSqlite = new File("resources/update-sqlite.sql");
+        if (update.exists()) {
+            update.delete();
+        }
+        if (updateSqlite.exists()) {
+            updateSqlite.delete();
+        }
     }
 
     /**
@@ -109,8 +117,6 @@ public class PostAppRunner implements ApplicationRunner {
                        LOGGER.info("执行update sql出错，SQL语句: {}，错误信息：{}", split[i],e.getMessage());
                    }
                 }
-                new File("resources/update.sql").delete();
-                new File("resources/update-sqlite.sql").delete();
             }
         }catch (Exception e) {
             e.printStackTrace();
