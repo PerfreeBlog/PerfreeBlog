@@ -64,3 +64,11 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 3. 执行maven install
 4. 运行perfree-web下的Application.java即可
 ```
+
+## 后期开发计划
+* 整体界面美化
+* api接口开发
+* 增加搜索引擎
+* 优化插件开发方式
+* 新增一款免费博客主题
+* 新增一款免费相册插件
