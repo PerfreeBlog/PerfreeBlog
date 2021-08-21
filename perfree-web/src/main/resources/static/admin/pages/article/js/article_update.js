@@ -145,7 +145,7 @@ function initTag() {
                 el: '#tag',
                 tips: '请选择标签',
                 theme: {
-                    color: '#5FB878',
+                    color: '#1E9FFF',
                 },
                 initValue: initValue,
                 searchTips: '搜索标签或输入标签名新增',
@@ -195,7 +195,7 @@ function initCategory() {
             categorySelect = xmSelect.render({
                 el: '#category',
                 theme: {
-                    color: '#5FB878',
+                    color: '#1E9FFF',
                 },
                 model: {label: {type: 'text'}},
                 radio: true,

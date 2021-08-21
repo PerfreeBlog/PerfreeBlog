@@ -48,8 +48,52 @@ html{
 }
 .p-container{
     padding: 6px;
-    background: #f2f2f2;
+    background: #eff2f5;
     min-height: calc(100% - 12px);
+}
+.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
+    background-color: #eff2f5;
+}
+.layui-laypage .layui-laypage-curr .layui-laypage-em {
+    background-color: #4a9fff;
+}
+.layui-laypage a:hover {
+    color: #4a9fff;
+}
+.layui-laypage input:focus, .layui-laypage select:focus {
+    border-color: #4a9fff!important;
+}
+#queryBtn,#addBtn,#uploadBtn,.addBtn {
+    background-color: #4a9fff;
+}
+#batchDeleteBtn{
+    background-color: #FF5722;
+}
+.layui-form-onswitch {
+    border-color: #4a9fff;
+    background-color: #4a9fff;
+}
+.layui-tab-brief>.layui-tab-title .layui-this {
+    color: #4a9fff;
+}
+.layui-form-select dl dd.layui-this {
+    background-color: #4a9fff;
+}
+.layui-btn-primary:hover {
+    border-color: #4a9fff;
+}
+.layui-form-checked[lay-skin=primary] i {
+    border-color: #4a9fff!important;
+    background-color: #4a9fff;
+}
+.layui-form-checked, .layui-form-checked:hover{
+    border-color: #4a9fff!important;
+}
+.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after {
+    border-bottom: 2px solid #4a9fff;
+}
+.layui-form-radio>i:hover, .layui-form-radioed>i {
+    color: #4a9fff;
 }
 .p-add-panel form{
     padding-right: 10px;
