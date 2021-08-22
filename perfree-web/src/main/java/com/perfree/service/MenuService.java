@@ -170,7 +170,10 @@ public class MenuService {
         String themePath = "static/themes/" + OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
         File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
         File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
-        if (!file.exists() && !devFile.exists()) {
+
+        File pageFile = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  themePath + "/page.html");
+        File devPageFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + "/page.html");
+        if (!file.exists() && !devFile.exists() && !pageFile.exists() && !devPageFile.exists()) {
             return;
         }
         String[] patternArr = {url};

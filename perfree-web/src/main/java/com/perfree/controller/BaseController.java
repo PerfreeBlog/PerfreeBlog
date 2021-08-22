@@ -77,16 +77,33 @@ public class BaseController {
         return viewPath;
     }
 
+    /**
+     * 渲染page
+     * @return String
+     */
     public String pageView(String viewPath, Menu menu ) {
         File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  viewPath);
         File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
         if (!file.exists() && !devFile.exists()) {
             if (menu != null){
-                return view("static/admin/pages/exception/page.html");
+                return universalPage();
             }
             return "redirect:/404";
         }
         return viewPath;
+    }
+
+    /**
+     * 返回通用的page
+     * @return String
+     */
+    public String universalPage(){
+        File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  currentThemePage() + "/page.html");
+        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + currentThemePage() + "/page.html");
+        if (!file.exists() && !devFile.exists()) {
+            return view("static/admin/pages/exception/page.html");
+        }
+        return currentThemePage() + "/page.html";
     }
 
     /**
