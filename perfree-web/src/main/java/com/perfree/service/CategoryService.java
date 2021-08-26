@@ -101,4 +101,12 @@ public class CategoryService {
     public void subCount(Long categoryId) {
         categoryMapper.subCount(categoryId);
     }
+
+    /**
+     * 获取分类列表(API)
+     * @return List<Category>
+     */
+    public List<Category> getApiList() {
+        return categoryMapper.getList(null);
+    }
 }

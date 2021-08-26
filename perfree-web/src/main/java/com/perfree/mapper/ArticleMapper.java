@@ -151,4 +151,7 @@ public interface ArticleMapper{
 
     List<Archive> frontArchivePageBySqlite();
 
+    List<Article> apiList(Article form);
+
+    List<Article> getApiHotArticleList(@Param("type") int type);
 }

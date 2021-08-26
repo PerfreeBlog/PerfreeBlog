@@ -32,7 +32,6 @@ import java.util.Map;
 
 /**
  * Execute after startup
- *
  * @author Perfree
  */
 @Component
@@ -52,9 +51,7 @@ public class PostAppRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) {
-        // Load Template Directive
         PostAppRunner.loadDirective();
-
         File file = new File(Constants.DB_PROPERTIES_PATH);
         if (!file.exists()) {
             return;
@@ -91,7 +88,7 @@ public class PostAppRunner implements ApplicationRunner {
     }
 
     /**
-     * @description 如果存在update.sql则执行update
+     * @description 如果存在update.sql则执行update,此处更新方式待修改
      * @author Perfree
      */
     private void updateSql() {

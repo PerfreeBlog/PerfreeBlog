@@ -243,4 +243,54 @@ public class ArticleService{
     public List<Article> getPageList() {
         return articleMapper.getPageList();
     }
+
+    /**
+     * 获取文章列表(API)
+     * @param pager pager
+     * @return Pager<Article>
+     */
+    public Pager<Article> apiList(Pager<Article> pager) {
+        PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
+        List<Article> articles = articleMapper.apiList(pager.getForm());
+        PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        pager.setTotal(pageInfo.getTotal());
+        pager.setData(pageInfo.getList());
+        pager.setCode(Pager.SUCCESS_CODE);
+        return pager;
+    }
+
+    /**
+     * 获取最热文章分页数据(API)
+     * @param pager pager
+     * @return Pager<Article>
+     */
+    public Pager<Article> getApiHotArticleList(Pager<Article> pager, int type) {
+        PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
+        List<Article> articles = articleMapper.getApiHotArticleList(type);
+        PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        pager.setTotal(pageInfo.getTotal());
+        pager.setData(pageInfo.getList());
+        pager.setCode(Pager.SUCCESS_CODE);
+        return pager;
+    }
+
+    /**
+     * 获取文章归档数据
+     * @param pager pager
+     * @return Pager<Archive>
+     */
+    public Pager<Archive> getApiArchive(Pager<Archive> pager) {
+        PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
+        List<Archive> archives;
+        if (DynamicDataSource.dataSourceType.equals("mysql")) {
+            archives = articleMapper.frontArchivePage();
+        } else {
+            archives = articleMapper.frontArchivePageBySqlite();
+        }
+        PageInfo<Archive> pageInfo = new PageInfo<>(archives);
+        pager.setTotal(pageInfo.getTotal());
+        pager.setData(pageInfo.getList());
+        pager.setCode(Pager.SUCCESS_CODE);
+        return pager;
+    }
 }

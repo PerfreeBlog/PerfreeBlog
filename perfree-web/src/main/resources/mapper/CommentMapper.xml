@@ -121,4 +121,10 @@
     <select id="getById" resultType="com.perfree.model.Comment">
         select t1.* from p_comment t1 where t1.id = #{id}
     </select>
+
+    <select id="getApiCommentByArticleId" resultMap="COMMENT_RESULT">
+        select t1.* from p_comment t1
+        where t1.articleId = #{articleId} and t1.status = 0 and topPid = -1
+        order by t1.createTime desc
+    </select>
 </mapper>

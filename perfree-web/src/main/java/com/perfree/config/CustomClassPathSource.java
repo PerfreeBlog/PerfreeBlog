@@ -1,11 +1,8 @@
 package com.perfree.config;
 
-import cn.hutool.core.lang.JarClassLoader;
 import com.jfinal.template.EngineConfig;
-import com.jfinal.template.source.ClassPathSource;
 import com.jfinal.template.source.ISource;
 import com.perfree.commons.SpringBeanUtils;
-import com.perfree.plugins.PluginsUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.method.HandlerMethod;
@@ -13,14 +10,18 @@ import org.springframework.web.servlet.HandlerExecutionChain;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.HashMap;
 
+/**
+ * 自定义模板资源ISource
+ * Custom Template ISource
+ *
+ * @author Perfree
+ */
 public class CustomClassPathSource implements ISource {
     protected String finalFileName;
     protected String fileName;
@@ -42,7 +43,6 @@ public class CustomClassPathSource implements ISource {
     public CustomClassPathSource(String baseTemplatePath, String fileName, String encoding) {
         try {
             HttpServletRequest request =((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-
             RequestMappingHandlerMapping handlerMapping = SpringBeanUtils.getBean(RequestMappingHandlerMapping.class);
             HandlerExecutionChain handlerChain = handlerMapping.getHandler(request);
             if (handlerChain == null) {
@@ -96,7 +96,6 @@ public class CustomClassPathSource implements ISource {
         if (finalFileName.charAt(0) == '/') {
             finalFileName = finalFileName.substring(1);
         }
-
         return finalFileName;
     }
 
@@ -116,21 +115,17 @@ public class CustomClassPathSource implements ISource {
      * 模板文件在 jar 包文件之内则不支持热加载
      */
     public boolean isModified() {
-        return isInJar ? false : lastModified != getLastModified();
+        return !isInJar && lastModified != getLastModified();
     }
 
     public StringBuilder getContent() {
-        // 与 FileSorce 不同，ClassPathSource 在构造方法中已经初始化了 lastModified
-        // 下面的代码可以去掉，在此仅为了避免继承类忘了在构造中初始化 lastModified 的防卫式代码
-        if (!isInJar) {		// 如果模板文件不在 jar 包文件之中，则需要更新 lastModified 值
+        if (!isInJar) {
             lastModified = getLastModified();
         }
-
         InputStream inputStream = classLoader.getResourceAsStream(finalFileName);
         if (inputStream == null) {
             throw new RuntimeException("File not found : \"" + finalFileName + "\"");
         }
-
         return loadFile(inputStream, encoding);
     }
 
@@ -138,7 +133,6 @@ public class CustomClassPathSource implements ISource {
         StringBuilder ret = new StringBuilder();
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, encoding))) {
-            // br = new BufferedReader(new FileReader(fileName));
             String line = br.readLine();
             if (line != null) {
                 ret.append(line);
@@ -156,11 +150,9 @@ public class CustomClassPathSource implements ISource {
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("In Jar File: ").append(isInJar).append("\n");
-        sb.append("File name: ").append(fileName).append("\n");
-        sb.append("Final file name: ").append(finalFileName).append("\n");
-        sb.append("Last modified: ").append(lastModified).append("\n");
-        return sb.toString();
+        return "In Jar File: " + isInJar + "\n" +
+                "File name: " + fileName + "\n" +
+                "Final file name: " + finalFileName + "\n" +
+                "Last modified: " + lastModified + "\n";
     }
 }

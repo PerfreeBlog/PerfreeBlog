@@ -112,4 +112,18 @@ public class CommentService {
     public Comment getById(Long id) {
         return commentMapper.getById(id);
     }
+
+    /**
+     * 根据文章id获取评论分页数据(API)
+     * @param pager pager
+     * @return Pager<Comment>
+     */
+    public Pager<Comment> getApiCommentByArticleId(Pager<Comment> pager) {
+        PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
+        List<Comment> comments = commentMapper.getApiCommentByArticleId(pager.getForm());
+        PageInfo<Comment> pageInfo = new PageInfo<>(comments);
+        pager.setTotal(pageInfo.getTotal());
+        pager.setData(pageInfo.getList());
+        return pager;
+    }
 }

@@ -9,9 +9,9 @@ import javax.sql.DataSource;
  * @author Perfree
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
-    // 数据源集合
     public static DataSource dataSource = null;
     public static String dataSourceType;
+
     /**
      * 设置数据源
      * @param dataSource 数据源

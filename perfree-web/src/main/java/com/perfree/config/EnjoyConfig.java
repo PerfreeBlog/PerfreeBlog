@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Enjoy template config
- *
  * @author Perfree
  */
 @Configuration
@@ -17,11 +16,6 @@ public class EnjoyConfig {
 
     public static JFinalViewResolver jfr = null;
 
-    /**
-     * injection jfinalViewResolver
-     *
-     * @return JFinalViewResolver
-     */
     @Bean(name = "jfinalViewResolver")
     public JFinalViewResolver getJFinalViewResolver() {
         jfr = new JFinalViewResolver();

@@ -88,7 +88,6 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
 
         try {
             HttpServletResponse httpServletResponse = (HttpServletResponse) resp;
-            //设置编码，否则中文字符在重定向时会变为空字符串
             httpServletResponse.setCharacterEncoding("UTF-8");
             httpServletResponse.setContentType("application/json; charset=utf-8");
             httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

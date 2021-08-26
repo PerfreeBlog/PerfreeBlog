@@ -60,4 +60,6 @@ public interface CommentMapper {
      * @author Perfree
      */
     Comment getById(Long id);
+
+    List<Comment> getApiCommentByArticleId(Comment comment);
 }

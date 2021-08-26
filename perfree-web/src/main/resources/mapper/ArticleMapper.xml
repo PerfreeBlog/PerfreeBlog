@@ -251,4 +251,37 @@
            SELECT DISTINCT t.* from (SELECT strftime('%Y年%m月',datetime(createTime/1000, 'unixepoch', 'localtime')) AS date
             FROM `p_article` where `type`= 'article' ) t ORDER BY t.date desc
     </select>
+
+    <select id="apiList" resultMap="LIST_RESULT">
+        SELECT t.* from (
+        select DISTINCT t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1
+        left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        left join p_article_tag t4 on t1.id = t4.articleId
+        where t1.status = 0 and t1.type= 'article'
+        <if test="tagId != null and tagId != ''">
+            and t4.tagId = #{tagId}
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            and t1.categoryId = #{categoryId}
+        </if>
+        <if test="title != null and title != ''">
+            <bind name="title" value="'%' + _parameter.title + '%'" />
+            and t1.title like #{title,jdbcType=VARCHAR}
+        </if>
+        order by t1.createTime desc
+        ) t order by t.isTop desc
+    </select>
+
+    <select id="getApiHotArticleList" resultMap="LIST_RESULT">
+        select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1
+        left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        where t1.status = 0 and t1.type= 'article' order by
+        <if test="type != null and type = 0">
+            t1.commentCount
+        </if>
+        <if test="type != null and type = 1">
+            t1.viewCount
+        </if>
+        desc
+    </select>
 </mapper>

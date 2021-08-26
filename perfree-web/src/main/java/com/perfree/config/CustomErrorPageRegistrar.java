@@ -5,6 +5,11 @@ import org.springframework.boot.web.server.ErrorPageRegistrar;
 import org.springframework.boot.web.server.ErrorPageRegistry;
 import org.springframework.http.HttpStatus;
 
+/**
+ * 注册错误页
+ * Register Error Page
+ * @author Perfree
+ */
 public class CustomErrorPageRegistrar implements ErrorPageRegistrar {
     @Override
     public void registerErrorPages(ErrorPageRegistry errorPageRegistry) {
@@ -12,7 +17,6 @@ public class CustomErrorPageRegistrar implements ErrorPageRegistrar {
         ErrorPage page500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500");
         ErrorPage page403 = new ErrorPage(HttpStatus.FORBIDDEN, "/403");
         ErrorPage page405 = new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/404");
-
         errorPageRegistry.addErrorPages(page404, page500,page403,page405);
     }
 }

@@ -18,8 +18,8 @@ public class Pager<T> implements Serializable {
     @ApiModelProperty(value="页码",name="pageIndex",example="1")
     private Integer pageIndex = 1;
     // 每页数据量
-    @ApiModelProperty(value="每页数据量",name="pageSize",example="10")
-    private Integer pageSize = 10;
+    @ApiModelProperty(value="每页数据量",name="pageSize",example="30")
+    private Integer pageSize = 30;
     // 总条数
     @ApiModelProperty(value="总条数",name="total",example="100")
     private Long total;
