@@ -1,4 +1,3 @@
-drop table if exists `p_plugin`;
 CREATE TABLE `p_plugin`  (
                              `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
                              `name` varchar(256) CHARACTER SET utf8mb4 NULL COMMENT '插件名',
