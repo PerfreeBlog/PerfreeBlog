@@ -16,6 +16,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -79,6 +81,11 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setSuccessUrl("/");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+
+        Map<String, Filter> filterMap = new HashMap<>();
+        filterMap.put("jwt", new JwtFilter());
+        shiroFilterFactoryBean.setFilters(filterMap);
+
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         filterChainDefinitionMap.put("/login", "anon");
         filterChainDefinitionMap.put("/doLogin", "anon");
@@ -89,8 +96,10 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/404", "anon");
         filterChainDefinitionMap.put("/500", "anon");
         filterChainDefinitionMap.put("/403", "anon");
+        filterChainDefinitionMap.put("/api/401", "anon");
         filterChainDefinitionMap.put("/install", "anon");
         filterChainDefinitionMap.put("/admin/**", "user");
+       /* filterChainDefinitionMap.put("/api/**", "jwt");*/
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

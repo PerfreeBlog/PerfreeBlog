@@ -7,6 +7,7 @@ import com.perfree.common.Constants;
 import com.perfree.common.GravatarUtil;
 import com.perfree.common.ResponseBean;
 import com.perfree.common.StringUtil;
+import com.perfree.commons.JwtUtils;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
 import com.perfree.model.User;
@@ -15,6 +16,8 @@ import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
 import com.perfree.service.SEOService;
 import com.perfree.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -38,12 +41,14 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * 控制首页地址
  */
 @Controller
+@Api(tags = "用户操作模块API")
 public class SystemController extends BaseController{
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
     @Autowired
@@ -122,7 +127,8 @@ public class SystemController extends BaseController{
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doLogin")
     @ResponseBody
-    public ResponseBean doLogin(@RequestBody User user,Boolean rememberMe, HttpSession session) {
+    @ApiOperation(value = "登录")
+    public ResponseBean doLogin(@RequestBody User user,Boolean rememberMe, HttpSession session, HttpServletResponse response) {
         if(rememberMe == null) {
             rememberMe = false;
         }
@@ -134,7 +140,15 @@ public class SystemController extends BaseController{
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(),rememberMe);
             Subject subject = SecurityUtils.getSubject();
             subject.login(usernamePasswordToken);
-            return ResponseBean.success("登录成功", null);
+            User userByAccount = userService.getUserByAccount(user.getAccount());
+            String md5Hash = new Md5Hash(userByAccount.getPassword(), user.getSalt()).toString();
+            String token = JwtUtils.sign(userByAccount.getAccount(), md5Hash);
+            userByAccount.setPassword(null);
+            userByAccount.setSalt(null);
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("user", userByAccount);
+            result.put("token", token);
+            return ResponseBean.success("登录成功", result);
         }catch (IncorrectCredentialsException e) {
             return ResponseBean.fail("密码错误", e.getMessage());
         }catch (UnknownAccountException e) {

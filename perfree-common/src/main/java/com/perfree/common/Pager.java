@@ -1,5 +1,8 @@
 package com.perfree.common;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -7,35 +10,31 @@ import java.util.Map;
 /**
  * 分页工具类
  */
+@ApiModel(value="分页信息",description="全局分页信息")
 public class Pager<T> implements Serializable {
     public static final int SUCCESS_CODE = 200;
     public static final int ERROR_CODE = 500;
     //  页码
-    private Integer pageIndex;
+    @ApiModelProperty(value="页码",name="pageIndex",example="1")
+    private Integer pageIndex = 1;
     // 每页数据量
-    private Integer pageSize;
+    @ApiModelProperty(value="每页数据量",name="pageSize",example="10")
+    private Integer pageSize = 10;
     // 总条数
+    @ApiModelProperty(value="总条数",name="total",example="100")
     private Long total;
     // 携带参数实体类
+    @ApiModelProperty(value="查询参数",name="form",example="{}")
     private T form;
-    // 排序参数
-    private List<Map<String, String>> sort;
-    // 携带参数
-    private Map<String, Object> params;
     // 数据集
+    @ApiModelProperty(value="分页数据",name="data",example="[{},{}]")
     private Object data;
     // 响应码
+    @ApiModelProperty(value="响应码",name="code",example="200")
     private int code;
     // 响应消息
+    @ApiModelProperty(value="响应消息",name="msg",example="success")
     private String msg;
-
-    public Map<String, Object> getParams() {
-        return params;
-    }
-
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
-    }
 
     public Integer getPageIndex() {
         return pageIndex;
@@ -67,14 +66,6 @@ public class Pager<T> implements Serializable {
 
     public void setForm(T form) {
         this.form = form;
-    }
-
-    public List<Map<String, String>> getSort() {
-        return sort;
-    }
-
-    public void setSort(List<Map<String, String>> sort) {
-        this.sort = sort;
     }
 
     public Object getData() {

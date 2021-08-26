@@ -119,7 +119,10 @@
         <if test="type != null and type != ''">
             and t1.type = #{type}
         </if>
-        order by t1.createTime desc
+        <if test="type == null or type == ''">
+            and t1.type = 'article'
+        </if>
+        order by t1.isTop desc,t1.createTime desc
     </select>
 
     <select id="getArticleTagById" resultType="com.perfree.model.Tag">
