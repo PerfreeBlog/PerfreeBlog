@@ -258,12 +258,6 @@
         left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         left join p_article_tag t4 on t1.id = t4.articleId
         where t1.status = 0 and t1.type= 'article'
-        <if test="tagId != null and tagId != ''">
-            and t4.tagId = #{tagId}
-        </if>
-        <if test="categoryId != null and categoryId != ''">
-            and t1.categoryId = #{categoryId}
-        </if>
         <if test="title != null and title != ''">
             <bind name="title" value="'%' + _parameter.title + '%'" />
             and t1.title like #{title,jdbcType=VARCHAR}

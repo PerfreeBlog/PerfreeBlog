@@ -32,4 +32,5 @@ public class Application implements CommandLineRunner {
         LOGGER.info("--------------------启动成功------------------------");
         LOGGER.info("--------------------访问端口{}---------------------", serverPort);
     }
+
 }

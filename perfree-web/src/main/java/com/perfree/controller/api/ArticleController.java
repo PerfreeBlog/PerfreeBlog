@@ -6,11 +6,10 @@ import com.perfree.controller.BaseApiController;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Article API Controller

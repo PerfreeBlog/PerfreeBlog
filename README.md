@@ -42,6 +42,11 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 ### 主题编辑
 ![主题编辑](./screenshot/6.jpg)
 
+## 使用案例
+1. [Perfree](https://www.yinpengfei.com)
+2. [张三疯](https://www.zsfyyds.com)
+3. [Z先生](http://houhou.zsir.asia)
+
 ## 技术栈
 以下包含了所使用到的技术栈及开发环境版本
 
@@ -64,10 +69,3 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 3. 执行maven install
 4. 运行perfree-web下的Application.java即可
 ```
-
-## 后期开发计划
-* 整体界面美化
-* ~~api接口开发(已完成)~~
-* 优化插件开发方式
-* 新增一款免费博客主题
-* 新增一款免费相册插件
