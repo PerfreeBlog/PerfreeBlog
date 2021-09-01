@@ -224,7 +224,7 @@
     </resultMap>
     <select id="frontArchivePage" resultMap="ARCHIVE_RESULT">
         	SELECT DISTINCT t.* from (SELECT DATE_FORMAT(createTime,'%Y年%m月') AS date
-            FROM `p_article` where `type`= 'article' ) t ORDER BY t.date desc
+            FROM `p_article` where `type`= 'article'  and `status` = 0) t ORDER BY t.date desc
     </select>
 
     <select id="getArticleByDateSqlite" resultMap="LIST_RESULT">
@@ -249,7 +249,7 @@
 
     <select id="frontArchivePageBySqlite" resultMap="ARCHIVE_RESULT_SQLITE">
            SELECT DISTINCT t.* from (SELECT strftime('%Y年%m月',datetime(createTime/1000, 'unixepoch', 'localtime')) AS date
-            FROM `p_article` where `type`= 'article' ) t ORDER BY t.date desc
+            FROM `p_article` where `type`= 'article' and `status` = 0 ) t ORDER BY t.date desc
     </select>
 
     <select id="apiList" resultMap="LIST_RESULT">
