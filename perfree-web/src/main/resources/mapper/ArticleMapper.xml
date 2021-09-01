@@ -134,7 +134,7 @@
         where t1.id = #{id}
     </select>
     <select id="getArticleCount" resultType="java.lang.Long">
-        SELECT count(1) FROM p_article where `type`= 'article'
+        SELECT count(1) FROM p_article where `type`= 'article' and `status` = 0
     </select>
     <select id="getArticleListByDashboard" resultType="com.perfree.model.Article">
         SELECT * FROM p_article where `type`= 'article' ORDER BY createTime DESC limit 0,24
