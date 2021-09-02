@@ -179,7 +179,7 @@
             and t1.title like #{title,jdbcType=VARCHAR}
         </if>
         order by t1.createTime desc
-        ) t order by t.isTop desc
+        ) t order by t.isTop desc,t.createTime desc
     </select>
 
     <select id="getNextArticle" resultMap="LIST_RESULT">
@@ -263,7 +263,7 @@
             and t1.title like #{title,jdbcType=VARCHAR}
         </if>
         order by t1.createTime desc
-        ) t order by t.isTop desc
+        ) t order by t.isTop desc,t.createTime desc
     </select>
 
     <select id="getApiHotArticleList" resultMap="LIST_RESULT">
