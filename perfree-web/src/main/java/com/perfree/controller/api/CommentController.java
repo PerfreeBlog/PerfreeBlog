@@ -1,5 +1,6 @@
 package com.perfree.controller.api;
 
+import cn.hutool.http.HtmlUtil;
 import com.perfree.common.*;
 import com.perfree.commons.IpUtil;
 import com.perfree.controller.BaseApiController;
@@ -76,6 +77,7 @@ public class CommentController extends BaseApiController {
         } else {
             comment.setStatus(Constants.COMMENT_STATUS_NORMAL);
         }
+        comment.setContent(HtmlUtil.filter(comment.getContent()));
         if (commentService.add(comment) > 0) {
             if (comment.getStatus() == Constants.COMMENT_STATUS_NORMAL) {
                 mailService.commentMailSend(comment);

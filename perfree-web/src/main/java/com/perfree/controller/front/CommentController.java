@@ -1,5 +1,6 @@
 package com.perfree.controller.front;
 
+import cn.hutool.http.HtmlUtil;
 import com.perfree.common.Constants;
 import com.perfree.common.GravatarUtil;
 import com.perfree.common.ResponseBean;
@@ -77,6 +78,7 @@ public class CommentController extends BaseController {
         } else {
             comment.setStatus(Constants.COMMENT_STATUS_NORMAL);
         }
+        comment.setContent(HtmlUtil.filter(comment.getContent()));
         if (commentService.add(comment) > 0) {
             if (comment.getStatus() == Constants.COMMENT_STATUS_NORMAL) {
                 mailService.commentMailSend(comment);
