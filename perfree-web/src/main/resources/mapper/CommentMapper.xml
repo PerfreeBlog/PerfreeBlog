@@ -56,7 +56,7 @@
         order by t1.createTime desc
     </select>
     <select id="getCommentCount" resultType="java.lang.Long">
-        SELECT count(1) FROM p_comment  and `status` = 0
+        SELECT count(1) FROM p_comment  where `status` = 0
     </select>
     <select id="getCommentListByDashboard" resultMap="COMMENT_RESULT">
         SELECT t1.* FROM p_comment t1 ORDER BY createTime DESC limit 0,24
