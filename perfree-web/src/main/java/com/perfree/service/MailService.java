@@ -41,7 +41,7 @@ public class MailService {
     @Async
     public void commentMailSend(Comment comment){
         try {
-            if (OptionCacheUtil.getValue("COMMENT_IS_SEND_MAIL").equals("0")) {
+            if (StringUtils.isBlank(OptionCacheUtil.getValue("COMMENT_IS_SEND_MAIL")) || OptionCacheUtil.getValue("COMMENT_IS_SEND_MAIL").equals("0")) {
                 return;
             }
             setJavaMailSender();
