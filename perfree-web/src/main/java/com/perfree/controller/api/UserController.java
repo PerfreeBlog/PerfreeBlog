@@ -27,9 +27,9 @@ public class UserController extends BaseApiController {
         return ResponseBean.success("success", getLoginUser(request));
     }
 
-    @PostMapping("/getById")
+    @GetMapping("/getById")
     @ApiOperation(value = "根据用户ID获取用户信息", notes = "根据用户ID获取用户信息")
-    public ResponseBean getById(@ApiParam(name="userId",value="用户ID",required=true) @RequestBody String userId) {
+    public ResponseBean getById(@ApiParam(name="userId",value="用户ID",required=true) @RequestParam String userId) {
         User user = userService.getById(userId);
         user.setPassword(null);
         user.setSalt(null);

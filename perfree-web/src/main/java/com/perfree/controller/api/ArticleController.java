@@ -22,9 +22,9 @@ public class ArticleController extends BaseApiController {
     @Autowired
     private ArticleService articleService;
 
-    @PostMapping("/getArticleById")
+    @GetMapping("/getArticleById")
     @ApiOperation(value = "根据文章ID获取文章数据", notes = "根据文章ID获取文章数据")
-    public ResponseBean getArticleById(@ApiParam(name="articleId",value="文章ID",required=true) @RequestBody String articleId) {
+    public ResponseBean getArticleById(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") String articleId) {
         Article article = articleService.getById(articleId);
         return ResponseBean.success("success", article);
     }
@@ -49,16 +49,16 @@ public class ArticleController extends BaseApiController {
         return articleService.getApiHotArticleList(pager, 0);
     }
 
-    @PostMapping("/getPreArticle")
+    @GetMapping("/getPreArticle")
     @ApiOperation(value = "根据文章ID获取上一篇文章", notes = "根据文章ID获取上一篇文章数据")
-    public ResponseBean getPreArticle(@ApiParam(name="articleId",value="文章ID",required=true) @RequestBody Long articleId) {
+    public ResponseBean getPreArticle(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") Long articleId) {
         Article article = articleService.getPreArticle(articleId);
         return ResponseBean.success("success", article);
     }
 
-    @PostMapping("/getNextArticle")
+    @GetMapping("/getNextArticle")
     @ApiOperation(value = "根据文章ID获取下一篇文章", notes = "根据文章ID获取下一篇文章数据")
-    public ResponseBean getNextArticle(@ApiParam(name="articleId",value="文章ID",required=true) @RequestBody Long articleId) {
+    public ResponseBean getNextArticle(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") Long articleId) {
         Article article = articleService.getNextArticle(articleId);
         return ResponseBean.success("success", article);
     }

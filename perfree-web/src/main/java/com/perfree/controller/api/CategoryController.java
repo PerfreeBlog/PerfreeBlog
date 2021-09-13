@@ -21,9 +21,9 @@ public class CategoryController extends BaseApiController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/getById")
+    @GetMapping("/getById")
     @ApiOperation(value = "根据分类ID获取分类信息", notes = "根据分类ID获取分类信息")
-    public ResponseBean getById(@ApiParam(name="categoryId",value="分类ID",required=true) @RequestBody String categoryId) {
+    public ResponseBean getById(@ApiParam(name="categoryId",value="分类ID",required=true) @RequestParam("categoryId") String categoryId) {
         Category category = categoryService.getById(categoryId);
         return ResponseBean.success("success", category);
     }

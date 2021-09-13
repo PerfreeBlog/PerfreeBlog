@@ -21,9 +21,9 @@ public class TagController extends BaseApiController {
     @Autowired
     private TagService tagService;
 
-    @PostMapping("/getById")
+    @GetMapping("/getById")
     @ApiOperation(value = "根据标签ID获取标签信息", notes = "根据标签ID获取标签信息")
-    public ResponseBean getById(@ApiParam(name="tagId",value="标签ID",required=true) @RequestBody String tagId) {
+    public ResponseBean getById(@ApiParam(name="tagId",value="标签ID",required=true) @RequestParam("tagId") String tagId) {
         Tag tag = tagService.getById(tagId);
         return ResponseBean.success("success", tag);
     }
