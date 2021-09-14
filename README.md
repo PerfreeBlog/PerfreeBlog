@@ -7,6 +7,8 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 * ~~社区论坛: [http://bbs.perfree.org](http://bbs.perfree.org) 暂时停止使用~~
 * 演示站点: [https://www.yinpengfei.com](https://www.yinpengfei.com)
 
+> QQ交流群: 938402724
+
 ## 特性
 * 设计简洁，界面美观
 * 采用[Markdown](https://www.markdownguide.org/)编辑器,支持一键插入视频、图片
