@@ -58,8 +58,8 @@ public class ArticleController extends BaseApiController {
 
     @GetMapping("/getNextArticle")
     @ApiOperation(value = "根据文章ID获取下一篇文章", notes = "根据文章ID获取下一篇文章数据")
-    public ResponseBean getNextArticle(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") Long articleId) {
-        Article article = articleService.getNextArticle(articleId);
+    public ResponseBean getNextArticle(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") String articleId) {
+        Article article = articleService.getNextArticle(Long.valueOf(articleId));
         return ResponseBean.success("success", article);
     }
 
