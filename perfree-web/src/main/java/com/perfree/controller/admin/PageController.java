@@ -19,7 +19,7 @@ import java.util.List;
 
 @RequestMapping("/admin")
 @Controller
-@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
+@RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
 public class PageController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(PageController.class);
     @Autowired

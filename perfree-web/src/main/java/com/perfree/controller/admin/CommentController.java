@@ -5,6 +5,7 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Comment;
 import com.perfree.model.Menu;
+import com.perfree.model.User;
 import com.perfree.service.CommentService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -30,6 +31,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @RequestMapping("/comment")
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     public String index() {
         return view("static/admin/pages/comment/comment_list.html");
     }
@@ -39,9 +41,14 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/list")
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     @ResponseBody
     public Pager<Comment> list(@RequestBody Pager<Comment> pager) {
-        return commentService.list(pager);
+        User user = getUser();
+        if (user.getRole().getCode().equals("contribute")) {
+            return commentService.list(pager, user.getId().toString());
+        }
+        return commentService.list(pager, null);
     }
 
     /**
@@ -49,6 +56,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/del")
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     @ResponseBody
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
@@ -64,6 +72,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/changeStatus")
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     @ResponseBody
     public ResponseBean changeStatus(@RequestBody Comment comment) {
         if (commentService.changeStatus(comment) > 0) {

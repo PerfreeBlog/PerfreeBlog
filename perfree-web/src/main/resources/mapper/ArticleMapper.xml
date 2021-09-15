@@ -119,8 +119,11 @@
         <if test="type != null and type != ''">
             and t1.type = #{type}
         </if>
-        <if test="type == null or type == ''">
+        <if test="type == null and type == ''">
             and t1.type = 'article'
+        </if>
+        <if test="userId != null and userId != ''">
+            and t1.userId = #{userId}
         </if>
         order by t1.isTop desc,t1.createTime desc
     </select>

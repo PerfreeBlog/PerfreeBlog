@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
+@RequiresRoles(value={"admin"}, logical= Logical.OR)
 public class OptionController extends BaseController {
     @Autowired
     private OptionService optionService;

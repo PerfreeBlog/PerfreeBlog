@@ -51,4 +51,7 @@ public class Constants {
     public  static final int PLUGIN_TYPE_INSTALL = 3;
     public  static final int PLUGIN_TYPE_UNINSTALL = 4;
 
+
+    public  static final int ARTICLE_STATUS_AUDIT = 2;
+
 }

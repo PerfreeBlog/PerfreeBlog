@@ -1,4 +1,5 @@
 let table, form;
+let roleCode = $("#roleCode").val();
 layui.use(['table', 'layer', 'form'], function () {
     table = layui.table;
     form = layui.form;
@@ -79,6 +80,9 @@ function queryTable() {
                     if (d.status === 1) {
                         html += "草稿";
                     }
+                    if (d.status === 2) {
+                        html += "待审核";
+                    }
                     html += '</div>';
                     return html;
                 }
@@ -86,6 +90,14 @@ function queryTable() {
             {
                 field: 'isTop', width: 100, title: '是否置顶', templet: function (d) {
                     let html;
+                    if (roleCode === "contribute") {
+                        if (d.isTop === 1) {
+                            html = "置顶";
+                        } else {
+                            html = "不置顶";
+                        }
+                        return html;
+                    }
                     if (d.isTop === 1) {
                         html = "<input type='checkbox' name='isTop' lay-filter='isTop' lay-skin='switch' value='" + d.id + "' lay-text='置顶|不置顶' checked>";
                     } else {
@@ -97,6 +109,14 @@ function queryTable() {
             {
                 field: 'isComment', width: 100, title: '允许评论', templet: function (d) {
                     let html;
+                    if (roleCode === "contribute") {
+                        if (d.isComment === 1) {
+                            html = "允许";
+                        } else {
+                            html = "不允许";
+                        }
+                        return html;
+                    }
                     if (d.isComment === 1) {
                         html = "<input type='checkbox' name='isComment' lay-filter='isComment' lay-skin='switch' value='" + d.id + "' lay-text='允许|不允许' checked>";
                     } else {
@@ -122,11 +142,13 @@ function queryTable() {
                 field: 'id', title: '操作', width: 200, fixed: 'right',
                 templet: function (d) {
                     let html = "<div>";
-                    if (d.status === 1) {
-                        html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"0\")'>发布</a>";
-                    }
-                    if (d.status === 0) {
-                        html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"1\")'>草稿</a>";
+                    if (roleCode !== "contribute") {
+                        if (d.status === 1 || d.status === 2) {
+                            html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"0\")'>发布</a>";
+                        }
+                        if (d.status === 0) {
+                            html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"1\")'>草稿</a>";
+                        }
                     }
                     html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"" + d.id + "\")'>编辑</a> " +
                         "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +

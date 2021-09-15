@@ -18,7 +18,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
+@RequiresRoles(value={"admin"}, logical= Logical.OR)
 public class SettingController extends BaseController {
 
     @Autowired

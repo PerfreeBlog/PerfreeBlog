@@ -31,9 +31,9 @@ public class CommentService {
      * @param pager pager
      * @return Pager<Comment>
      */
-    public Pager<Comment> list(Pager<Comment> pager) {
+    public Pager<Comment> list(Pager<Comment> pager, String userId) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
-        List<Comment> comments = commentMapper.getList(pager.getForm());
+        List<Comment> comments = commentMapper.getList(pager.getForm().getContent(), userId);
         PageInfo<Comment> pageInfo = new PageInfo<>(comments);
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());

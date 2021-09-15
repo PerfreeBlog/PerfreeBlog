@@ -53,6 +53,9 @@
             <bind name="content" value="'%' + _parameter.content + '%'" />
             and t1.content like #{content,jdbcType=VARCHAR}
         </if>
+        <if test="userId != null and userId != ''">
+           and t3.userId = #{userId}
+        </if>
         order by t1.createTime desc
     </select>
     <select id="getCommentCount" resultType="java.lang.Long">

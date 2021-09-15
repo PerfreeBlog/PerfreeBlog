@@ -28,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RequestMapping("/admin")
 @Controller
-@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
+@RequiresRoles(value={"admin"}, logical= Logical.OR)
 public class PluginController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(PluginController.class);
 

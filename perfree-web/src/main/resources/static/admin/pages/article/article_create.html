@@ -47,9 +47,11 @@
                             <button type="button" lay-submit lay-filter="publishForm"
                                     class="layui-btn layui-btn-normal">发布
                             </button>
+                            #if(loginUser.role.code != "contribute")
                             <button type="button" lay-submit lay-filter="draftForm" class="layui-btn layui-btn-primary">
                                 保存到草稿箱
                             </button>
+                            #end
                         </div>
                     </div>
                     <div class="layui-card-body">
@@ -81,6 +83,15 @@
                                       class="layui-textarea article-textarea" style="resize: none"></textarea>
                         </div>
 
+                        #if(loginUser.role.code == "contribute")
+                        <div class="layui-form-item article-switch" style="display: none">
+                            <span class="p-form-tip">允许评论:</span>
+                            <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch" checked>
+
+                            <span class="p-form-tip">置顶:</span>
+                            <input type="checkbox" name="isTop" lay-text="置顶|不置顶" lay-skin="switch">
+                        </div>
+                        #else
                         <div class="layui-form-item article-switch">
                             <span class="p-form-tip">允许评论:</span>
                             <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch" checked>
@@ -88,6 +99,8 @@
                             <span class="p-form-tip">置顶:</span>
                             <input type="checkbox" name="isTop" lay-text="置顶|不置顶" lay-skin="switch">
                         </div>
+                        #end
+
 
                         <div class="layui-form-item">
                             <span class="p-form-tip">缩略图:</span>

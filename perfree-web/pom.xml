@@ -23,17 +23,17 @@
     </dependencies>
     <build>
         <resources>
-            <resource>
+            <!--<resource>
                 <directory>src/main/resources</directory>
-                <!--<excludes>
+                <excludes>
                     <exclude>static/**</exclude>
                     <exclude>Perfree.sql</exclude>
                     <exclude>Perfree-sqlite.sql</exclude>
                     <exclude>update.sql</exclude>
                     <exclude>update-sqlite.sql</exclude>
-                </excludes>-->
+                </excludes>
                 <filtering>true</filtering>
-            </resource>
+            </resource>-->
         </resources>
         <finalName>perfree-web</finalName>
         <plugins>

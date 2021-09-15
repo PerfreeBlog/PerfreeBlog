@@ -28,7 +28,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
+@RequiresRoles(value={"admin"}, logical= Logical.OR)
 public class ThemeController extends BaseController {
     private static final CacheManager cacheManager = CacheManager.newInstance();
     private final Logger logger = LoggerFactory.getLogger(ThemeController.class);

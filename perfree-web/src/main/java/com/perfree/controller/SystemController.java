@@ -67,7 +67,7 @@ public class SystemController extends BaseController{
      * @return String
      */
     @RequestMapping("/admin")
-    @RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
+    @RequiresRoles(value={"admin","editor","contribute", "user"}, logical= Logical.OR)
     public String adminIndex(Model model) {
         List<Menu> menus = getMenuByUserIdAndType();
         model.addAttribute("menus", menus);

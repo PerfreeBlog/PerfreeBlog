@@ -30,7 +30,6 @@ import java.net.URLEncoder;
  */
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
 public class AttachController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(AttachController.class);
     @Value("${web.upload-path}")
@@ -44,6 +43,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/img")
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     public String attachImg() {
         return view("static/admin/pages/attach/attach_img.html");
     }
@@ -53,6 +53,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/video")
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     public String attachVideo() {
         return view("static/admin/pages/attach/attach_video.html");
     }
@@ -63,6 +64,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/upload")
     @ResponseBody
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     public ResponseBean upload(HttpServletRequest request,
                                @RequestParam(required = false, value = "desc") String desc,
                                @RequestParam(required = false, value = "flag") String flag) {
@@ -106,6 +108,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/list")
     @ResponseBody
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     public Pager<Attach> list(@RequestBody Pager<Attach> pager) {
         return attachService.list(pager);
     }
@@ -115,6 +118,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach")
+    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
     public String index() {
         return view("static/admin/pages/attach/attach_list.html");
     }
@@ -124,6 +128,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/uploadPage")
+    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
     public String uploadPage() {
         return view("static/admin/pages/attach/attach_upload.html");
     }
@@ -133,6 +138,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @GetMapping("/attach/editPage/{id}")
+    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
     public String editPage(@PathVariable("id") String id, Model model) {
         Attach attach = attachService.getById(id);
         model.addAttribute("attach", attach);
@@ -147,6 +153,7 @@ public class AttachController extends BaseController {
      */
     @GetMapping("/attach/download/{id}")
     @ResponseBody
+    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
     public String downloadFile(HttpServletResponse response, @PathVariable("id") String id) {
         Attach attach = attachService.getById(id);
         File file = new File(uploadPath + attach.getPath());
@@ -198,6 +205,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/del")
     @ResponseBody
+    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
         if (attachService.del(idArr) > 0) {
@@ -213,6 +221,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/update")
     @ResponseBody
+    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
     public ResponseBean update(@RequestBody Attach attach) {
         if (attachService.update(attach) > 0) {
             return ResponseBean.success("更新成功", null);

@@ -3,6 +3,7 @@ package com.perfree.mapper;
 
 import com.perfree.model.Comment;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -13,10 +14,10 @@ import java.util.List;
 public interface CommentMapper {
     /**
      * 评论列表数据
-     * @param comment comment
+     * @param content content
      * @return List<Comment>
      */
-    List<Comment> getList(Comment comment);
+    List<Comment> getList(@Param("content") String content, @Param("userId") String userId);
 
     /**
      * 删除评论

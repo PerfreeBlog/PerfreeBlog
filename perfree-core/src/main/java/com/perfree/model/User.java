@@ -136,7 +136,8 @@ public class User implements Serializable {
         if (role == null) {
             return false;
         }
-        return role.getCode().equals("admin") || role.getCode().equals("superAdmin");
+        return role.getCode().equals("admin") || role.getCode().equals("editor") ||
+                role.getCode().equals("contribute") || role.getCode().equals("user");
     }
 
     public String getCaptcha() {
