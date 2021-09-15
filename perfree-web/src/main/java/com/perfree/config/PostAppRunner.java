@@ -18,6 +18,7 @@ import com.perfree.service.PluginService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -37,6 +38,9 @@ import java.util.Map;
 @Component
 public class PostAppRunner implements ApplicationRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(PostAppRunner.class);
+
+    @Value("${version}")
+    private String version;
 
     private final OptionService optionService;
     private final MenuService menuService;
@@ -72,18 +76,12 @@ public class PostAppRunner implements ApplicationRunner {
         dbSetting.autoLoad(true);
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
-            updateSql();
+            if (dbSetting.getStr("dataVersion") == null || !dbSetting.getStr("dataVersion").equals(version)) {
+                updateSql();
+            }
             optionService.initOptionCache();
             menuService.registerMenuPage();
             initPlugins();
-        }
-        File update = new File("resources/update.sql");
-        File updateSqlite = new File("resources/update-sqlite.sql");
-        if (update.exists()) {
-            update.delete();
-        }
-        if (updateSqlite.exists()) {
-            updateSqlite.delete();
         }
     }
 
@@ -103,6 +101,11 @@ public class PostAppRunner implements ApplicationRunner {
                 DataSource dataSource = SpringBeanUtils.getBean(DataSource.class);
                 FileReader fileReader = new FileReader(sqlFile);
                 String createSql = fileReader.readString();
+                if (createSql.contains("--version-" + version)) {
+                    createSql = createSql.substring(createSql.indexOf("--version-" + version));
+                } else {
+                    return;
+                }
                 String[] split = createSql.split(";");
                 Connection connection = dataSource.getConnection();
                 for (int i = 0; i < split.length - 1; i++){
@@ -114,6 +117,10 @@ public class PostAppRunner implements ApplicationRunner {
                        LOGGER.info("执行update sql出错，SQL语句: {}，错误信息：{}", split[i],e.getMessage());
                    }
                 }
+                File file = new File(Constants.DB_PROPERTIES_PATH);
+                Props dbSetting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
+                dbSetting.setProperty("dataVersion", version);
+                dbSetting.store(file.getAbsolutePath());
             }
         }catch (Exception e) {
             e.printStackTrace();

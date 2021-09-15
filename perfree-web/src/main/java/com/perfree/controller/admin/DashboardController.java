@@ -9,6 +9,7 @@ import com.perfree.service.UserService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/admin")
 public class DashboardController extends BaseController {
+    @Value("${version}")
+    private String version;
 
     @Autowired
     private ArticleService articleService;
@@ -38,6 +41,7 @@ public class DashboardController extends BaseController {
         model.addAttribute("commentCount", commentService.getCommentCount());
         model.addAttribute("tagCount", tagService.getTagCount());
         model.addAttribute("userCount", userService.getUserCount());
+        model.addAttribute("version", version);
         return view("static/admin/pages/dashboard/dashboard.html");
     }
 

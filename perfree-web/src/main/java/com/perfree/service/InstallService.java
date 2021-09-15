@@ -9,6 +9,7 @@ import com.perfree.common.Constants;
 import com.perfree.config.DynamicDataSource;
 import com.perfree.model.Database;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,8 @@ public class InstallService {
     private OptionService optionService;
     @Autowired
     private MenuService menuService;
+    @Value("${version}")
+    private String version;
 
     public void addDatabase(Database database) throws Exception{
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
@@ -73,6 +76,7 @@ public class InstallService {
             SqlExecutor.execute(connection, split[i]);
         }
         setting.setProperty("installStatus","dbSuccess");
+        setting.setProperty("dataVersion", version);
         setting.store(file.getAbsolutePath());
 
         optionService.initOptionCache();
