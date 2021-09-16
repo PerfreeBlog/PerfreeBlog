@@ -103,6 +103,7 @@ public class PostAppRunner implements ApplicationRunner {
                 String createSql = fileReader.readString();
                 if (createSql.contains("--version-" + version)) {
                     createSql = createSql.substring(createSql.indexOf("--version-" + version));
+                    createSql = createSql.replace("--version-" + version,"");
                 } else {
                     return;
                 }
