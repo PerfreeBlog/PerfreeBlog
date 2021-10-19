@@ -97,6 +97,31 @@ function openSelectImPanel(activeType,id,markdownEditor,cm, icon, cursor, select
     });
 }
 
+/**
+ * 打开选择附件面板
+ * @param markdownEditor
+ * @param cm
+ * @param icon
+ * @param cursor
+ * @param selection
+ */
+function openSelectAttachPanel(markdownEditor,cm, icon, cursor, selection) {
+    EditorCm = cm;
+    EditorCursor = cursor;
+    EditorIcon = icon;
+    EditorSelection = selection;
+    editor = markdownEditor;
+    layer.open({
+        title: "选择附件",
+        type: 2,
+        offset: '10%',
+        area:  ['700px', '510px'],
+        shadeClose: true,
+        anim: 1,
+        move: true,
+        content: '/admin/attach/attach'
+    });
+}
 
 /**
  * 打开选择视频面板
@@ -125,11 +150,24 @@ function openSelectVideoPanel(markdownEditor,cm, icon, cursor, selection) {
 }
 
 /**
- * 选择图片
+ * 选择视频
  * @param path
  */
 function selectVideo(path) {
     const str = '<video src="'+path+'" controls="controls" width="100%"></video>\n';
+    EditorCm.replaceSelection(str);
+    if(EditorSelection === "") {
+        EditorCm.setCursor(EditorCursor.line + 1, EditorCursor.ch + str.length);
+    }
+    editor.focus();
+}
+
+/**
+ * 选择附件
+ * @param path
+ */
+function selectAttach(name,path) {
+    const str = '['+name+']('+path+' "'+name+'")\n';
     EditorCm.replaceSelection(str);
     if(EditorSelection === "") {
         EditorCm.setCursor(EditorCursor.line + 1, EditorCursor.ch + str.length);

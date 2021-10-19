@@ -59,6 +59,16 @@ public class AttachController extends BaseController {
     }
 
     /**
+     * 附件-附件选择页
+     * @return String
+     */
+    @RequestMapping("/attach/attach")
+    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    public String attachAttach() {
+        return view("static/admin/pages/attach/attach_attach.html");
+    }
+
+    /**
      * 文件上传
      * @return String
      */
