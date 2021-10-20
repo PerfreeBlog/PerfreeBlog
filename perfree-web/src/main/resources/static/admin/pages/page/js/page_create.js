@@ -98,14 +98,15 @@ function initMarkdownEditor() {
                 "undo", "|",
                 "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
                 "h1", "h2", "h3", "h4", "h5", "h6", "|",
-                "list-ul", "list-ol", "hr", "|","customImg","customVideo","|",
+                "list-ul", "list-ol", "hr", "|","customImg","customVideo", "customAttach","|",
                 "link", "reference-link",  "code", "preformatted-text", "code-block", "table", "datetime", "|",
                 "goto-line", "watch", "preview", "clear", "search"
             ]
         },
         toolbarIconsClass: {
             customImg: "fa-picture-o",
-            customVideo: "fa-video-camera"
+            customVideo: "fa-video-camera",
+            customAttach: "fa-file-archive-o"
         },
         toolbarHandlers: {
             customImg: function (cm, icon, cursor, selection) {
@@ -113,12 +114,16 @@ function initMarkdownEditor() {
             },
             customVideo: function (cm, icon, cursor, selection) {
                 openSelectVideoPanel(markdownEditor, cm, icon, cursor, selection);
+            },
+            customAttach: function (cm, icon, cursor, selection) {
+                openSelectAttachPanel(markdownEditor, cm, icon, cursor, selection);
             }
         },
         lang: {
             toolbar: {
                 customImg: "插入图片",
-                customVideo: "插入视频"
+                customVideo: "插入视频",
+                customAttach: "插入附件"
            }
        }
     });
