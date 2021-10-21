@@ -26,10 +26,14 @@ function initEvent() {
     $(".f-switch-side-btn").click(function () {
         switchSide();
     });
+    $(".p-side-shadow").click(function () {
+        switchSide();
+    });
+
 
     // 点击菜单事件
-    $(".f-nav-item,.f-child-side").click(function () {
-        if ($(this).find(".layui-nav-child").length > 0 && !isOpen) {
+    $(".p-menu-item").click(function () {
+        if (!$(".p-side-shadow").is(':hidden')) {
             switchSide();
         }
     });
@@ -131,38 +135,10 @@ function initTheme() {
  */
 function switchSide() {
     if (isOpen) {
-        $(".layui-header").animate({left: "50px"}, 150);
-        $(".header-right").animate({right: "50px"}, 150);
-        $(".layui-side").animate({width: "50px"}, 150);
-        $(".f-child-side").css("display", "none");
-        $(".f-nav-content").hide();
-        $(".layui-nav>.f-nav-item>a").animate({padding: "0, 0"}, 150);
-        $(".layui-body").animate({left: "50px"}, 150);
-        $(".f-logo-text").hide();
-        $(".f-logo-img").show();
-        $(".f-switch-btn-on").hide();
-        $(".f-switch-btn-off").show();
-        $(".f-nav-item").animate({width: "50px"}, 150);
-        $(".f-nav-item a").css({padding: "0 15px"});
-        $(".layui-nav-more").hide();
-        $(".layui-nav-tree>.f-nav-item>a").css("text-align", "center");
+        $(".f-layout").removeClass("f-show-side")
         isOpen = false;
     } else {
-        $(".layui-header").animate({left: "200px"}, 150);
-        $(".header-right").animate({right: "200px"}, 150);
-        $(".layui-side").animate({width: "200px"}, 150);
-        $(".f-child-side").css("display", "block");
-        $(".f-nav-content").show();
-        $(".layui-nav>.layui-nav-item>a").animate({padding: "0, 20px"}, 150);
-        $(".layui-body").animate({left: "200px"}, 150);
-        $(".f-logo-text").show();
-        $(".f-logo-img").hide();
-        $(".f-switch-btn-on").show();
-        $(".f-switch-btn-off").hide();
-        $(".f-nav-item").animate({width: "200px"}, 150);
-        $(".layui-nav-more").show();
-        $(".layui-nav-tree>.f-nav-item>a").css("text-align", "left");
-        $(".layui-nav>.layui-nav-item>.layui-nav-child>dd>a").animate({padding: "0 30px", paddingLeft: "50px"}, 150);
+        $(".f-layout").addClass("f-show-side")
         isOpen = true;
         layer.closeAll();
     }
