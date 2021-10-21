@@ -69,24 +69,26 @@ function queryTable() {
         },
         limit: 30,
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
-            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
-            {field: 'name', title: '标签名'},
-            {field: 'user', title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
+            {type: 'checkbox'},
+            {field: 'id', title: 'ID', width: 80, sort: true},
+            {field: 'name', minWidth: 160,title: '标签名'},
+            {field: 'user', minWidth: 100,title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
             {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.createTime == null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.updateTime ==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 120, fixed: 'right',
+                field: 'id', title: '操作', width: 120,
                 templet: "<div>" +
                     "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
                     "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +

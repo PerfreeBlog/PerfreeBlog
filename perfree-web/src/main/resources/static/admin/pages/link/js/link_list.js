@@ -69,12 +69,12 @@ function queryTable() {
         },
         limit: 30,
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
-            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
-            {field: 'name', title: '网站名'},
-            {field: 'address', title: '网站地址'},
-            {field: 'desc', title: '网站描述'},
-            {field: 'logo', title: '网站logo', templet: function (d) {
+            {type: 'checkbox'},
+            {field: 'id', title: 'ID', width: 80, sort: true},
+            {field: 'name',   minWidth: 160,title: '网站名'},
+            {field: 'address',   minWidth: 220,title: '网站地址'},
+            {field: 'desc',   minWidth: 260,title: '网站描述'},
+            {field: 'logo',   minWidth: 100,title: '网站logo', templet: function (d) {
                             return "<img src='"+d.logo+"'>";
                     }
             },
@@ -82,16 +82,18 @@ function queryTable() {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.updateTime == null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 120, fixed: 'right',
+                field: 'id', title: '操作', width: 120,
                 templet: "<div>" +
                     "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
                     "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>删除</a>" +

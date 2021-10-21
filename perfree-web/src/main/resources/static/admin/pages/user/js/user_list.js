@@ -72,14 +72,14 @@ function queryTable() {
         },
         limit: 30,
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
-            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
-            {field: 'userName', title: '用户名'},
-            {field: 'account', title: '账户'},
-            {field: 'email', title: '邮箱'},
-            {field: 'website', title: '网站'},
+            {type: 'checkbox'},
+            {field: 'id', title: 'ID', width: 80,  sort: true},
+            {field: 'userName', minWidth: 100,title: '用户名'},
+            {field: 'account', minWidth: 160,title: '账户'},
+            {field: 'email', minWidth: 210,title: '邮箱'},
+            {field: 'website', minWidth: 210,title: '网站'},
             {
-                field: 'status', title: '状态',
+                field: 'status', minWidth: 100,title: '状态',
                 templet: function (d) {
                     let html;
                     if (d.status === 0) {
@@ -91,7 +91,7 @@ function queryTable() {
                 }
             },
             {
-                field: 'avatar', title: '头像', templet: function (d) {
+                field: 'avatar', minWidth: 100,title: '头像', templet: function (d) {
                     let html = '';
                     if (d.avatar !== null && d.avatar !== '') {
                         html = "<img src='" + d.avatar + "' layer-src='" + d.avatar + "'>";
@@ -99,21 +99,23 @@ function queryTable() {
                     return html;
                 }
             },
-            {field: 'role', title: '角色', templet: "<span>{{d.role.name}}</span>"},
+            {field: 'role', minWidth: 120,title: '角色', templet: "<span>{{d.role.name}}</span>"},
             {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.createTime == null? '' :layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.updateTime == null ? '' :layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 180, fixed: 'right',
+                field: 'id', title: '操作', width: 180,
                 templet: "<div>" +
                     "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"{{d.id}}\")'>编辑</a> " +
                     "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='resetPassword(\"{{d.id}}\")'>重置密码</a>" +

@@ -70,14 +70,14 @@ function queryTable() {
         },
         limit: 30,
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
-            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
-            {field: 'name', title: '文件名'},
-            {field: 'desc', title: '描述'},
-            {field: 'path', title: '路径'},
-            {field: 'flag', title: '标识'},
+            {type: 'checkbox'},
+            {field: 'id', title: 'ID', width: 80, sort: true},
+            {field: 'name',  minWidth: 180,title: '文件名'},
+            {field: 'desc',  minWidth: 160,title: '描述'},
+            {field: 'path',  minWidth: 310,title: '路径'},
+            {field: 'flag',  minWidth: 80,title: '标识'},
             {
-                field: 'type', title: '类型', templet: function (d) {
+                field: 'type',  minWidth: 80,title: '类型', templet: function (d) {
                     let html;
                     switch (d.type) {
                         case 'img':
@@ -100,16 +100,18 @@ function queryTable() {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.updateTime==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 200, fixed: 'right',
+                field: 'id', title: '操作', width: 200,
                 templet: "<div>" +
                     "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='previewFile(\"{{d.type}}\",\"{{d.url}}\",\"{{d.name}}\")'>预览</a> " +
                     "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='downloadFile(\"{{d.id}}\")'>下载</a> " +

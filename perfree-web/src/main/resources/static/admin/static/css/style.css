@@ -33,7 +33,7 @@
     background-color: #1d1f26;
 }
 .layui-side-scroll{
-    height: calc(100% - 61px);
+    height: calc(100% - 192px);
 }
 
 .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after{
@@ -293,7 +293,37 @@
 .f-side,.f-header,.layui-body{
     transition: left .5s,margin-left .5s;
 }
-
+.f-side-user-box img{
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border: 4px solid #44576b;
+    box-sizing: border-box;
+}
+.f-side-user-box{
+    margin-top: 15px;
+    border-bottom: 1px solid #23262e;
+}
+.f-side-user-box a{
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 10px;
+}
+.f-side-user-box p{
+    display: block;
+    width: 100%;
+    height: 25px;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-size: 12px;
+    white-space: nowrap;
+    line-height: 25px;
+    overflow: hidden;
+}
 @media screen and (max-width: 768px){
     .f-show-side .p-side-shadow{
         display: block;

@@ -63,16 +63,17 @@ function queryTable() {
         },
         limit: 30,
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
-            {field: 'id', title: 'ID', width: 60, fixed: 'left'},
+            {type: 'checkbox'},
+            {field: 'id', title: 'ID', width: 60},
             {
                 field: 'title',
                 title: '文章标题',
+                minWidth: 260,
                 templet: '<div><a class="articleHref" href="{{d.url}}" target="_blank">{{d.title}}</a></div>'
             },
-            {field: 'category', title: '分类', templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
+            {field: 'category', title: '分类',  minWidth: 160,templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
             {
-                field: 'status', width: 100, title: '状态', templet: function (d) {
+                field: 'status', minWidth: 100, title: '状态', templet: function (d) {
                     let html = '<span>';
                     if (d.status === 0) {
                         html += "已发布";
@@ -88,7 +89,7 @@ function queryTable() {
                 }
             },
             {
-                field: 'isTop', width: 100, title: '是否置顶', templet: function (d) {
+                field: 'isTop', minWidth: 100, title: '是否置顶', templet: function (d) {
                     let html;
                     if (roleCode === "contribute") {
                         if (d.isTop === 1) {
@@ -107,7 +108,7 @@ function queryTable() {
                 }
             },
             {
-                field: 'isComment', width: 100, title: '允许评论', templet: function (d) {
+                field: 'isComment', minWidth: 100, title: '允许评论', templet: function (d) {
                     let html;
                     if (roleCode === "contribute") {
                         if (d.isComment === 1) {
@@ -125,21 +126,23 @@ function queryTable() {
                     return html;
                 }
             },
-            {field: 'user', width: 80, title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
+            {field: 'user', minWidth: 80, title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
             {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
+                minWidth: 160,
                 sort: true,
                 templet: "<span>{{d.updateTime==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 200, fixed: 'right',
+                field: 'id', title: '操作', width: 140,
                 templet: function (d) {
                     let html = "<div>";
                     if (roleCode !== "contribute") {

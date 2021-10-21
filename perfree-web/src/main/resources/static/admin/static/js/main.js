@@ -216,8 +216,10 @@ function changeTheme(e) {
     $(".f-side").css("background", leftSideBg);
     $(".f-side-nav").css("background", leftSideBg);
     $(".layui-nav-tree .layui-nav-child .f-child-side a").css("color", leftSideColor);
+    $(".f-side-user-box p").css("color", leftSideColor);
     $(".layui-nav .f-nav-item a").css("color", leftSideColor);
     $(".f-logo-text,.f-logo-img").css({background: letLogoBg, color: letLogoColor, "border-color": letLogoBoderColor});
+    $(".f-side-user-box").css("border-color", letLogoBoderColor);
     $(".f-header").css("background", headerBg);
     $(".f-nav .layui-nav-item a").css("color", headerColor);
     $(".f-nav .layui-nav-item .layui-nav-child a").css("color", "#000000");

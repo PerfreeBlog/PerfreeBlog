@@ -55,26 +55,27 @@ function queryTable() {
         },
         limit: 30,
         cols: [[
-            {type: 'checkbox', fixed: 'left'},
-            {field: 'id', title: 'ID', width: 80, fixed: 'left', sort: true},
+            {type: 'checkbox'},
+            {field: 'id', title: 'ID', width: 80, sort: true},
             {
-                field: 'userName', width: 180, title: '评论人', templet: "<div>{{d.userName}}</div>"
+                field: 'userName', minWidth: 180, title: '评论人', templet: "<div>{{d.userName}}</div>"
             },
             {
-                field: 'email', width: 180, title: '邮箱', templet: "<div>{{d.email}}</div>"
+                field: 'email', minWidth: 180, title: '邮箱', templet: "<div>{{d.email}}</div>"
             },
-            {field: 'content', title: '评论内容'},
-            {field: 'article', title: '所属文章', templet: "<div><a href='{{d.article.url}}' target='_blank'>{{d.article.title}}</a></div>"},
-            {field: 'status', width: 80, title: '状态', templet: "<div>{{d.status === 1? '待审核': '正常'}}</div>"},
+            {field: 'content', title: '评论内容', minWidth: 240},
+            {field: 'article', title: '所属文章', minWidth: 240, templet: "<div><a href='{{d.article.url}}' target='_blank'>{{d.article.title}}</a></div>"},
+            {field: 'status', minWidth: 80, title: '状态', templet: "<div>{{d.status === 1? '待审核': '正常'}}</div>"},
             {
                 field: 'createTime',
                 width: 220,
                 title: '评论时间',
                 sort: true,
+                minWidth: 160,
                 templet: "<span>{{d.createTime == null ?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 120, fixed: 'right',
+                field: 'id', title: '操作', width: 60,
                 templet: function (d) {
                     let html = "<div>";
                     if (d.status === 1) {

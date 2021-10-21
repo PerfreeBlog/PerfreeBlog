@@ -87,18 +87,19 @@ function queryTable() {
         },
         cols: [[
             {field: 'id', title: 'ID', width: 80},
-            {field: 'name', title: '菜单名'},
-            {field: 'url', title: '菜单链接'},
+            {field: 'name', minWidth: 160,title: '菜单名'},
+            {field: 'url', minWidth: 200,title: '菜单链接'},
             {
                 field: 'icon',
                 align: 'center',
                 title: '图标',
+                minWidth: 80,
                 templet: "<div><i class='fa {{d.icon}}' aria-hidden='true'></i></div>"
             },
-            {field: 'article', title: '关联页面', templet: "<div>{{d.article === null ? '' : d.article.title}}</div>"},
-            {field: 'target', title: '打开方式', templet: "<div>{{d.target === 0 ? '本页' : '新窗口'}}</div>"},
+            {field: 'article', minWidth: 160,title: '关联页面', templet: "<div>{{d.article === null ? '' : d.article.title}}</div>"},
+            {field: 'target', minWidth: 160,title: '打开方式', templet: "<div>{{d.target === 0 ? '本页' : '新窗口'}}</div>"},
             {
-                field: 'status', title: '状态', templet: function (d) {
+                field: 'status', minWidth: 100,title: '状态', templet: function (d) {
                     let html;
                     if (d.status === 0) {
                         html = "<input type='checkbox' name='status' lay-filter='status' lay-skin='switch' value='" + d.id + "' lay-text='正常|禁用' checked>";
@@ -108,15 +109,17 @@ function queryTable() {
                     return html;
                 }
             },
-            {field: 'seq', title: '排序'},
+            {field: 'seq', minWidth: 80,title: '排序'},
             {
                 field: 'createTime',
                 title: '创建时间',
+                minWidth: 160,
                 templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
+                minWidth: 160,
                 templet: "<span>{{d.updateTime == null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {

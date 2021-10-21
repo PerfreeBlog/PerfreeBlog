@@ -87,13 +87,13 @@ function queryTable() {
         },
         cols: [[
             {field: 'id', title: 'ID', width: 80},
-            {field: 'name', title: '分类名'},
-            {field: 'desc', title: '描述'},
-            {field: 'count', align: 'center', title: '文章数量'},
-            {field: 'metaKeywords', title: 'SEO关键字'},
-            {field: 'metaDescription', title: 'SEO描述内容'},
+            {field: 'name', minWidth: 160,title: '分类名'},
+            {field: 'desc', minWidth: 260,title: '描述'},
+            {field: 'count', minWidth: 80,align: 'center', title: '文章数量'},
+            {field: 'metaKeywords', minWidth: 160,title: 'SEO关键字'},
+            {field: 'metaDescription', minWidth: 160,title: 'SEO描述内容'},
             {
-                field: 'status', title: '状态', templet: function (d) {
+                field: 'status', minWidth: 100,title: '状态', templet: function (d) {
                     let html;
                     if (d.status === 0) {
                         html = "<input type='checkbox' name='status' lay-filter='status' lay-skin='switch' value='" + d.id + "' lay-text='正常|禁用' checked>";
@@ -106,15 +106,17 @@ function queryTable() {
             {
                 field: 'createTime',
                 title: '创建时间',
+                minWidth: 160,
                 templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
+                minWidth: 160,
                 templet: "<span>{{d.updateTime ==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 180,
+                field: 'id', title: '操作', width: 160,
                 templet: function (d) {
                     let html = "<div>"
                     html += "<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='add(\"" + d.id + "\")'>添加</a> " +
