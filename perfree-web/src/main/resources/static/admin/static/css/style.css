@@ -7,10 +7,10 @@
 
 .layui-layout-admin .layui-side{
     position: fixed;
-    left: -200px;
+    left: -240px;
     top: 0;
     z-index: 9999;
-    width: 200px;
+    width: 240px;
 }
 .layui-layout-admin .layui-side{
     background: #1d1f26;
@@ -279,16 +279,16 @@
     background: rgba(0, 0, 0, .5);
 }
 .f-show-side .layui-body{
-    left: 200px;
+    left: 240px;
 }
 .f-show-side .layui-side{
     left: 0;
 }
 .f-show-side .f-header{
-    margin-left: 200px;
+    margin-left: 240px;
 }
 .f-show-side .layui-body{
-    left: 200px;
+    left: 240px;
 }
 .f-side,.f-header,.layui-body{
     transition: left .5s,margin-left .5s;
@@ -323,6 +323,9 @@
     white-space: nowrap;
     line-height: 25px;
     overflow: hidden;
+}
+.layui-side-scroll,.layui-nav-tree{
+    width: 240px;
 }
 @media screen and (max-width: 768px){
     .f-show-side .p-side-shadow{
