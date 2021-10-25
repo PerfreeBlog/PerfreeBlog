@@ -34,6 +34,9 @@
                            data-url="#(childMenu.url)" id="#(childMenu.id)" data-icon="#(childMenu.icon)"
                            data-name="#(childMenu.name)"
                            onclick="clickMenu(this);">
+                            #if(childMenu.icon)
+                            <i class="fa #(childMenu.icon)" aria-hidden="true"></i>
+                            #end
                             #(childMenu.name)
                         </a>
                     </dd>

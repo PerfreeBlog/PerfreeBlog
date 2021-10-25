@@ -157,10 +157,11 @@ function editData(id) {
         title: "编辑菜单",
         type: 2,
         offset: '20%',
-        area: ['400px', '460px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 460),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/menu/editPage/' + id
     });
 }
@@ -204,10 +205,11 @@ function add(pid = -1) {
         title: title,
         type: 2,
         offset: '20%',
-        area: ['400px', '460px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 460),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/menu/addPage/' + pid
     });
 }

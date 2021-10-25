@@ -24,7 +24,6 @@
                 <div class="layui-card-body">
                     <div class="p-card-num">#(articleCount) <span
                             class="p-card-num-text">篇</span></div>
-                    <div id="echArticleCount" class="line-home-a"></div>
                 </div>
             </div>
         </div>
@@ -38,7 +37,6 @@
                 <div class="layui-card-body">
                     <div class="p-card-num">#(commentCount) <span
                             class="p-card-num-text">条</span></div>
-                    <div id="echCommentCount" class="line-home-a"></div>
                 </div>
             </div>
         </div>
@@ -52,7 +50,6 @@
                 <div class="layui-card-body">
                     <div class="p-card-num">#(tagCount) <span class="p-card-num-text">个</span>
                     </div>
-                    <div id="echTagCount" class="line-home-a"></div>
                 </div>
             </div>
         </div>
@@ -66,21 +63,9 @@
                 <div class="layui-card-body">
                     <div class="p-card-num">#(userCount) <span class="p-card-num-text">个</span>
                     </div>
-                    <div id="echUserCount" class="line-home-a"></div>
                 </div>
             </div>
         </div>
-
-       <!-- <div class="layui-col-xs12 layui-col-sm12 layui-col-md6" style="margin-top: 5px">
-            <div class="layui-card">
-                <div class="layui-card-header">
-                    <div class="p-card-left">文章统计</div>
-                </div>
-                <div class="layui-card-body">
-                    <div id="articleStatics"></div>
-                </div>
-            </div>
-        </div>-->
 
         <div class="layui-col-xs12 layui-col-sm12 layui-col-md6" style="margin-top: 5px">
             <div class="layui-card">
@@ -112,8 +97,6 @@
 </div>
 <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/static/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
-<script type="text/javascript" src="/static/public/libs/echarts/echarts.min.js"></script>
-<script type="text/javascript" src="/static/public/libs/echarts/echarts.themez.js"></script>
 <script>
     let util, layer;
     layui.use(['util', 'layer'], function () {
@@ -164,58 +147,8 @@
             layer.msg("加载最新评论失败", {icon: 2});
         }
 
-        initDataTrendChart()
     });
 
-    function dataTrendOption(color) {
-        color = color || "#00c292";
-        return {
-            color: color, toolbox: {show: false, feature: {saveAsImage: {}}},
-            grid: {left: '-1%', right: '0', bottom: '0', top: '5px', containLabel: false},
-            xAxis: [{type: 'category', boundaryGap: false, splitLine: {show: false}, data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']}],
-            yAxis: [{type: 'value', splitLine: {show: false}}],
-            series: [{
-                name: '用户', type: 'line', stack: '总量', smooth: true, symbol: "none", clickable: false, areaStyle: {},
-                data: [randomData(), randomData(), randomData(), randomData(), randomData(), randomData(), randomData()]
-            }]
-        }
-    }
-
-    function randomData() {
-        return Math.round(Math.random() * 500);
-    }
-
-    /**
-     * 近一周数量涨幅图表
-     */
-    function initDataTrendChart() {
-        var echArticleCount = echarts.init($("#echArticleCount")[0]);
-        var echCommentCount = echarts.init($("#echCommentCount")[0]);
-        var echTagCount = echarts.init($("#echTagCount")[0]);
-        var echUserCount = echarts.init($("#echUserCount")[0]);
-
-        echArticleCount.setOption(dataTrendOption("#00c292"));
-        echCommentCount.setOption(dataTrendOption("#ab8ce4"));
-        echTagCount.setOption(dataTrendOption("#03a9f3"));
-        echUserCount.setOption(dataTrendOption("#fb9678"));
-        echartsResize([echArticleCount, echCommentCount,echTagCount, echUserCount])
-    }
-
-    function echartsResize(element) {
-        var element = element || [];
-        window.addEventListener("resize", function () {
-            var isResize = localStorage.getItem("isResize");
-            // if (isResize == "false") {
-            for (let i = 0; i < element.length; i++) {
-                element[i].resize();
-            }
-            // }
-        });
-    }
-
-    function articleStaticsOp() {
-
-    }
 </script>
 </body>
 </html>

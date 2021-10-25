@@ -27,10 +27,11 @@ function initPage() {
             title: "添加用户",
             type: 2,
             offset: '15%',
-            area: ['400px', '550px'],
+            area: common.layerArea($("html")[0].clientWidth, 400, 550),
             shadeClose: true,
             anim: 1,
-            move: false,
+            resize: true,
+            maxmin: true,
             content: '/admin/user/addPage'
         });
     });
@@ -74,10 +75,10 @@ function queryTable() {
         cols: [[
             {type: 'checkbox'},
             {field: 'id', title: 'ID', width: 80,  sort: true},
-            {field: 'userName', minWidth: 100,title: '用户名'},
+            {field: 'userName', minWidth: 80,title: '用户名'},
             {field: 'account', minWidth: 160,title: '账户'},
-            {field: 'email', minWidth: 210,title: '邮箱'},
-            {field: 'website', minWidth: 210,title: '网站'},
+            {field: 'email', minWidth: 190,title: '邮箱'},
+            {field: 'website', minWidth: 190,title: '网站'},
             {
                 field: 'status', minWidth: 100,title: '状态',
                 templet: function (d) {
@@ -91,7 +92,7 @@ function queryTable() {
                 }
             },
             {
-                field: 'avatar', minWidth: 100,title: '头像', templet: function (d) {
+                field: 'avatar', minWidth: 80,title: '头像', templet: function (d) {
                     let html = '';
                     if (d.avatar !== null && d.avatar !== '') {
                         html = "<img src='" + d.avatar + "' layer-src='" + d.avatar + "'>";
@@ -155,10 +156,11 @@ function editData(id) {
         title: "编辑用户",
         type: 2,
         offset: '15%',
-        area: ['400px', '520px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 520),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/user/editPage/' + id
     });
 }

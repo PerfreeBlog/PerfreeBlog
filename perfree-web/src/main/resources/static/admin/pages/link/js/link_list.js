@@ -25,10 +25,11 @@ function initPage() {
             title: "添加友链",
             type: 2,
             offset: '20%',
-            area: ['400px', '360px'],
+            area: common.layerArea($("html")[0].clientWidth, 400, 360),
             shadeClose: true,
             anim: 1,
-            move: false,
+            resize: true,
+            maxmin: true,
             content: '/admin/link/addPage'
         });
     });
@@ -126,10 +127,11 @@ function editData(id) {
         title: "编辑友链",
         type: 2,
         offset: '20%',
-        area: ['400px', '360px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 300),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/link/editPage/' + id
     });
 }

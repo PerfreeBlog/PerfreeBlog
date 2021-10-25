@@ -25,10 +25,11 @@ function initPage() {
             title: "添加标签",
             type: 2,
             offset: '20%',
-            area: ['400px', '140px'],
+            area: common.layerArea($("html")[0].clientWidth, 400, 140),
             shadeClose: true,
             anim: 1,
-            move: false,
+            resize: true,
+            maxmin: true,
             content: '/admin/tag/addPage'
         });
     });
@@ -121,10 +122,11 @@ function editData(id) {
         title: "编辑标签",
         type: 2,
         offset: '20%',
-        area: ['400px', '140px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 140),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/tag/editPage/' + id
     });
 }

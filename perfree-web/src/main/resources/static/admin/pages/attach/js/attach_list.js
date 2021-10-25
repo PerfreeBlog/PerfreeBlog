@@ -25,10 +25,11 @@ function initPage() {
             title: "上传附件",
             type: 2,
             offset: '20%',
-            area: ['400px', '340px'],
+            area: common.layerArea($("html")[0].clientWidth, 400, 340),
             shadeClose: true,
             anim: 1,
-            move: false,
+            resize: true,
+            maxmin: true,
             content: '/admin/attach/uploadPage'
         });
     });
@@ -146,10 +147,11 @@ function editData(id) {
         title: "编辑附件信息",
         type: 2,
         offset: '20%',
-        area: ['400px', '250px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 250),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/attach/editPage/' + id
     });
 }
@@ -209,12 +211,13 @@ function previewFile(type, path, name) {
     } else if (type === 'video') {
         layer.open({
             title: name,
-            offset: '20%',
+            offset: '5%',
             type: 1,
             shadeClose: true,
             anim: 1,
-            move: true,
-            area: ['400px', '400px'],
+            resize: true,
+            maxmin: true,
+            area: ['90%', '90%'],
             content: '<video src="' + path + '" autoplay controls style="height: calc(100% - 3px);width: 100%;outline: none">\n' +
                 '  你的浏览器不支持video\n' +
                 '</video>'
@@ -225,7 +228,8 @@ function previewFile(type, path, name) {
             offset: '20%',
             shadeClose: true,
             anim: 1,
-            move: true,
+            resize: true,
+            maxmin: true,
             type: 1,
             area: ['400px', "100px"],
             content: '<audio src="' + path + '" autoplay controls style="background: #f1f3f4;height: calc(100% - 3px);width: 100%;outline: none">\n' +

@@ -58,3 +58,10 @@
 .line-home-a{
     height: 60px;
 }
+.p-card-num .layui-icon{
+    font-size: 42px;
+    margin-right: 20px;
+}
+.layui-card-body{
+    padding: 20px;
+}

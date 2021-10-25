@@ -150,10 +150,11 @@ function editData(id) {
         title: "编辑分类",
         type: 2,
         offset: '10%',
-        area: ['400px', '520px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 520),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/category/editPage/' + id
     });
 }
@@ -197,10 +198,11 @@ function add(pid = -1) {
         title: title,
         type: 2,
         offset: '10%',
-        area: ['400px', '520px'],
+        area: common.layerArea($("html")[0].clientWidth, 400, 520),
         shadeClose: true,
         anim: 1,
-        move: false,
+        resize: true,
+        maxmin: true,
         content: '/admin/category/addPage/' + pid
     });
 }

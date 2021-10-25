@@ -21,6 +21,14 @@
                         return tf(t.getSeconds());
                 }
             })
+        },
+        layerArea: function (clientWidth, width, height) {
+            var a = clientWidth - width;
+            if(a > 10) {
+                return [width + 'px', height + 'px']
+            } else{
+                return ['100%', height + 'px']
+            }
         }
     }
     window.common = new common();
