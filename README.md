@@ -22,7 +22,23 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 * 安装部署简单
 * 支持[mysql](https://www.mysql.com)/[sqlite](https://www.sqlite.org)数据库
 
-## 界面预览
+## 主题支持
+### fly
+![fly](./screenshot/fly.jpg)
+
+### indigo
+![indigo](./screenshot/indigo.jpg)
+
+### admas
+![admas](./screenshot/admas.jpg)
+
+### perfree
+![perfree](./screenshot/perfree.jpg)
+
+### simple
+![simple](./screenshot/simple.jpg)
+
+## 后台界面
 ### 写文章
 ![写文章](./screenshot/0.jpg)
 
