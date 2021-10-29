@@ -9,6 +9,15 @@ public class Database {
     private String password;
     @NotBlank(message = "数据库类型不允许为空")
     private String type;
+    private int installType;
+
+    public int getInstallType() {
+        return installType;
+    }
+
+    public void setInstallType(int installType) {
+        this.installType = installType;
+    }
 
     public String getAddress() {
         return address;

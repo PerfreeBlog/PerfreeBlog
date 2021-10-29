@@ -3,6 +3,8 @@ package com.perfree.service;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.db.Entity;
+import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
@@ -17,6 +19,7 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 @Service
 public class InstallService {
@@ -28,7 +31,7 @@ public class InstallService {
     @Value("${version}")
     private String version;
 
-    public void addDatabase(Database database) throws Exception{
+    public boolean addDatabase(Database database) throws Exception{
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         File file = new File(Constants.DB_PROPERTIES_PATH);
         Props setting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
@@ -69,6 +72,12 @@ public class InstallService {
         DataSource dataSource = dataSourceBuilder.build();
         DynamicDataSource.setDataSource(dataSource, setting.getStr("type"));
         Connection connection = dataSource.getConnection();
+
+        List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option where `key` = 'DATA_VERSION'", new EntityListHandler());
+
+        if (entityList != null && entityList.size() > 0 && database.getInstallType() == 1){
+            return false;
+        }
         FileReader fileReader = new FileReader(sqlFile);
         String createSql = fileReader.readString();
         String[] split = createSql.split(";");
@@ -77,10 +86,12 @@ public class InstallService {
         }
         setting.setProperty("installStatus","dbSuccess");
         setting.setProperty("dataVersion", version);
+        SqlExecutor.execute(connection, "INSERT INTO `p_option`(`key`, `value`) VALUES ('DATA_VERSION', '"+version+"')");
         setting.store(file.getAbsolutePath());
 
         optionService.initOptionCache();
         menuService.registerMenuPage();
+        return true;
     }
 
     public static void initSqliteFile(String filePath) throws Exception {

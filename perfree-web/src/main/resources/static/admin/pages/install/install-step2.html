@@ -84,17 +84,41 @@
         form.verify({});
         // 表单提交
         form.on('submit(addForm)', function (data) {
+            install(1, data);
+            return false;
+        });
+
+
+        /**
+         * 安装
+         * @param type 1: 正常,2:覆盖数据库
+         * @param formData formData
+         */
+        function install(type,formData) {
             let loadIndex = layer.load("正在配置中...");
+            formData.field.installType = type;
             $.ajax({
                 type: "POST",
                 url: "/install/addDatabase",
                 contentType: "application/json",
-                data: JSON.stringify(data.field),
+                data: JSON.stringify(formData.field),
                 success: function (data) {
                     if (data.code === 200) {
                         layer.close(loadIndex);
                         window.location.href = "/install/step3";
-                    } else {
+                    } else if (data.code === -1) {
+                        layer.confirm('检测到数据库已存在,是否跳过数据库初始化?重新初始化数据库将造成已存在的数据丢失', {
+                            icon: 3,
+                            title:'提示',
+                            btn:['跳过','重新安装'],
+                            closeBtn: 0
+                        }, function(index){
+                            layer.close(index);
+                            window.location.href = "/install/step3";
+                        }, function(){
+                            install(2, formData);
+                        });
+                    }else {
                         layer.close(loadIndex);
                         layer.msg(data.msg, {icon: 2});
                     }
@@ -104,8 +128,7 @@
                     layer.msg("添加失败", {icon: 2});
                 }
             });
-            return false;
-        });
+        }
     });
 </script>
 </body>
