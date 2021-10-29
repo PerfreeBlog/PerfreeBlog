@@ -76,6 +76,7 @@ public class InstallService {
         List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option", new EntityListHandler());
 
         if (entityList != null && entityList.size() > 0 && database.getInstallType() == 1){
+            setting.store(file.getAbsolutePath());
             return false;
         }
         FileReader fileReader = new FileReader(sqlFile);
