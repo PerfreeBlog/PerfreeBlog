@@ -73,7 +73,7 @@ public class InstallService {
         DynamicDataSource.setDataSource(dataSource, setting.getStr("type"));
         Connection connection = dataSource.getConnection();
 
-        List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option where `key` = 'DATA_VERSION'", new EntityListHandler());
+        List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option", new EntityListHandler());
 
         if (entityList != null && entityList.size() > 0 && database.getInstallType() == 1){
             return false;
@@ -86,7 +86,6 @@ public class InstallService {
         }
         setting.setProperty("installStatus","dbSuccess");
         setting.setProperty("dataVersion", version);
-        SqlExecutor.execute(connection, "INSERT INTO `p_option`(`key`, `value`) VALUES ('DATA_VERSION', '"+version+"')");
         setting.store(file.getAbsolutePath());
 
         optionService.initOptionCache();
