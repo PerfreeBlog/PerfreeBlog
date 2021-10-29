@@ -73,12 +73,15 @@ public class InstallService {
         DynamicDataSource.setDataSource(dataSource, setting.getStr("type"));
         Connection connection = dataSource.getConnection();
 
-        List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option", new EntityListHandler());
-
-        if (entityList != null && entityList.size() > 0 && database.getInstallType() == 1){
-            setting.store(file.getAbsolutePath());
-            return false;
+        try{
+            List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option", new EntityListHandler());
+            if (entityList != null && entityList.size() > 0 && database.getInstallType() == 1){
+                setting.store(file.getAbsolutePath());
+                return false;
+            }
+        }catch (Exception e) {
         }
+
         FileReader fileReader = new FileReader(sqlFile);
         String createSql = fileReader.readString();
         String[] split = createSql.split(";");
