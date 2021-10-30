@@ -8,14 +8,12 @@ import com.perfree.common.GravatarUtil;
 import com.perfree.common.ResponseBean;
 import com.perfree.common.StringUtil;
 import com.perfree.commons.JwtUtils;
+import com.perfree.commons.Update;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
 import com.perfree.model.User;
 import com.perfree.plugins.PluginBeanRegister;
-import com.perfree.service.MailService;
-import com.perfree.service.OptionService;
-import com.perfree.service.SEOService;
-import com.perfree.service.UserService;
+import com.perfree.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
@@ -61,6 +59,9 @@ public class SystemController extends BaseController{
     private MailService mailService;
     @Autowired
     private PluginBeanRegister pluginBeanRegister;
+
+    @Autowired
+    private UpdateService updateService;
 
     /**
      * 后台首页
@@ -300,5 +301,20 @@ public class SystemController extends BaseController{
         response.setContentType(MediaType.APPLICATION_XML_VALUE);
         Writer writer = response.getWriter();
         writer.append(seoService.createSiteMapXmlContent());
+    }
+
+    @GetMapping("/qwer")
+    @ResponseBody
+    public Update qwer() {
+        Update update = updateService.checkUpdate();
+        if (update != null) {
+            updateService.backup();
+            String filePath = updateService.downloadUpdate(update);
+            if (StringUtils.isNotBlank(filePath)) {
+                updateService.update(filePath);
+            }
+        }
+        //updateService.update("update/perfree-web-1.2.5.zip");
+        return update;
     }
 }

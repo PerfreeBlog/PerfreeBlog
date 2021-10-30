@@ -9,6 +9,8 @@ server:
 version: 1.2.5
 # 默认文件上传地址
 web.upload-path: resources/upload/
+# 程序升级备份目录
+web.backup-path: backup
 spring:
   aop:
     proxy-target-class: true

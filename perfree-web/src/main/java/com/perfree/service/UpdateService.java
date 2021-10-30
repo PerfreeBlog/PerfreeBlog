@@ -3,19 +3,24 @@ package com.perfree.service;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.StreamProgress;
 import cn.hutool.core.lang.Console;
+import cn.hutool.core.util.RuntimeUtil;
+import cn.hutool.core.util.ZipUtil;
 import cn.hutool.http.HttpRequest;
 import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.perfree.commons.Update;
+import com.perfree.commons.YamlUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.util.HashMap;
+import java.io.IOException;
 
 @Service
 public class UpdateService {
@@ -24,6 +29,14 @@ public class UpdateService {
     private String backupPath;
     @Value("${version}")
     private String version;
+
+
+    @Value("${server.port}")
+    private int port;
+
+    @Value("${web.upload-path}")
+    private String uploadPath;
+
 
 
     /**
@@ -54,8 +67,64 @@ public class UpdateService {
         FileUtil.copy(new File("start.sh"), new File(backupPath + "/start.sh"), true);
     }
 
-    public void update(){
+    /**
+     * @description 更新操作
+     * @author Perfree
+     * @date 2021/10/30 10:32
+     */
+    public boolean update(String updateFilePath){
+        File file = new File(updateFilePath);
+        File unZipDir = new File("update/unzip");
+        if (unZipDir.exists()) {
+            FileUtil.del(unZipDir.getAbsoluteFile());
+        }
+        // 解压
+        ZipUtil.unzip(file.getAbsoluteFile(), unZipDir.getAbsoluteFile());
+        // 修改配置文件
+        File ymlFile = new File("update/unzip/perfree-web/config/application.yml");
+        if (!ymlFile.exists()) {
+            LOGGER.error("系统更新 -> 更新包的yml文件不存在");
+            return false;
+        }
+        try {
+            YamlUtils.setYmlFile(ymlFile);
+            YamlUtils.saveOrUpdateByKey("web.backup-path", backupPath);
+            YamlUtils.saveOrUpdateByKey("server.port", port);
+            YamlUtils.saveOrUpdateByKey("web.upload-path", uploadPath);
+            YamlUtils.close();
+        }catch (Exception e) {
+            LOGGER.error("系统更新 -> 修改更新包的yml文件失败");
+            e.printStackTrace();
+            return false;
+        }
 
+        // 执行更新脚本
+        String osName = System.getProperty("os.name").toLowerCase();
+        File perfreeWebDir = new File("update/unzip/perfree-web");
+        if (osName.contains("win")) {
+            File execBat = new File("exec.bat");
+            Runtime rt = Runtime.getRuntime();
+            Process ps=null;
+            try {
+                ps = rt.exec("cmd.exe /c start " + execBat.getAbsolutePath() + " " + perfreeWebDir.getAbsolutePath() + " " + port);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else if (osName.contains("linux")) {
+            File execBat = new File("exec.sh");
+            Runtime rt = Runtime.getRuntime();
+            Process ps=null;
+            try {
+                rt.exec("sed -i 's/\\r//' " + execBat.getAbsolutePath());
+                ps = rt.exec("bash -c" + execBat.getAbsolutePath() + " " + perfreeWebDir.getAbsolutePath() + " " + port);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            LOGGER.error("系统更新 -> 不支持的系统类型,请进行手动更新");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -63,7 +132,7 @@ public class UpdateService {
      * @author Perfree
      * @date 2021/10/29 15:01
      */
-    public HashMap<String, String> checkUpdate(){
+    public Update checkUpdate(){
         String result = HttpUtil.get("https://gitee.com/api/v5/repos/perfree/PerfreeBlog/releases/latest");
         JSONObject jsonObject = JSONUtil.parseObj(result);
         String tag_name = jsonObject.getStr("tag_name");
@@ -73,16 +142,21 @@ public class UpdateService {
         }
         String name = jsonObject.getStr("name");
         String body = jsonObject.getStr("body");
-        JSONArray assets = jsonObject.getJSONArray("assets");
-        JSONObject assetsObject = assets.getJSONObject(0);
-        String browser_download_url = assetsObject.getStr("browser_download_url");
 
-        HashMap<String, String> updateMap = new HashMap<>();
-        updateMap.put("tag_name",tag_name);
-        updateMap.put("name",name);
-        updateMap.put("body",body);
-        updateMap.put("browser_download_url",browser_download_url);
-        return updateMap;
+        Update update = new Update();
+
+        JSONArray assets = jsonObject.getJSONArray("assets");
+        for (Object asset : assets) {
+            JSONObject assetJson = JSONUtil.parseObj(asset);
+            if (StringUtils.isNotBlank(assetJson.getStr("name")) && assetJson.getStr("name").contains(".zip")) {
+                update.setFileName(assetJson.getStr("name"));
+                update.setBrowserDownloadUrl(assetJson.getStr("browser_download_url"));
+            }
+        }
+        update.setBody(body);
+        update.setName(name);
+        update.setTagName(tag_name);
+        return update;
     }
 
     /**
@@ -90,9 +164,9 @@ public class UpdateService {
      * @author Perfree
      * @date 2021/10/29 16:08
      */
-    public String downloadUpdate(String url) {
+    public String downloadUpdate(Update update) {
         try {
-            HttpResponse response = HttpRequest.get(url).timeout(-1).setFollowRedirects(true).executeAsync();
+            HttpResponse response = HttpRequest.get(update.getBrowserDownloadUrl()).timeout(-1).setFollowRedirects(true).executeAsync();
             if (response.isOk()) {
                 File file = new File("update");
                 if (!file.exists()) {
@@ -114,9 +188,7 @@ public class UpdateService {
                         Console.log("下载完成！");
                     }
                 });
-                String[] split = url.split("/");
-                String updateFileName = split[split.length-1];
-                return "update/" + updateFileName;
+                return "update/" + update.getFileName();
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -127,8 +199,6 @@ public class UpdateService {
     }
 
     public static void main(String[] args) {
-       /* HashMap<String, String> stringStringHashMap = checkUpdate();
-        LOGGER.info(stringStringHashMap.toString());*/
-        //downloadUpdate("https://gitee.com/perfree/PerfreeBlog/attach_files/861560/download");
+      ZipUtil.unzip("C:\\Users\\Administrator\\Desktop\\perfree-web\\update\\perfree-web-1.2.5.zip");
     }
 }
