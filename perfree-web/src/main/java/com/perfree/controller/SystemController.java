@@ -325,18 +325,10 @@ public class SystemController extends BaseController{
         }
     }
 
-    @GetMapping("/qwer")
+    @GetMapping("/update")
     @ResponseBody
-    public Update qwer() {
-        Update update = updateService.checkUpdate();
-        if (update != null) {
-            updateService.backup();
-            String filePath = updateService.downloadUpdate(update);
-            if (StringUtils.isNotBlank(filePath)) {
-                updateService.update(filePath);
-            }
-        }
-        updateService.update("update/perfree-web-1.2.5.zip");
-        return update;
+    public ResponseBean update() {
+        updateService.asyncUpdate();
+        return ResponseBean.success("调用异步更新", null);
     }
 }

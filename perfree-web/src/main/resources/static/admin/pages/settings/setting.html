@@ -180,6 +180,7 @@
 <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/static/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
 <script src="/static/public/js/main.js"></script>
+<script src="/static/public/js/reconnecting-websocket.min.js"></script>
 <script>
     let layer,form,element;
     layui.use(['layer','form','element'], function() {
@@ -221,8 +222,39 @@
         $(".update-content").on('click', '#update', function () {
             layer.confirm('是否确认更新?', {title: '提示'}, function (index) {
                 layer.close(index);
+                startUpdate();
             });
         });
+
+        var ws = null;
+        function startUpdate() {
+            $(".update-console").show();
+            if (ws != null) {
+                ws.close();
+            }
+            startWebsocket();
+        }
+
+        function startWebsocket() {
+            var url = 'ws://'+window.location.host+'/websocket';
+            var ws = new ReconnectingWebSocket(url);
+            ws.onopen = function (e) {
+                console.log("Connection open ...");
+                $.get("/update",function(data){});
+            };
+            ws.onmessage = function (e) {
+                let dataJson = JSON.parse(e.data);
+                $(".update-console").append("<p>"+dataJson.message +"</p>");
+                if ($(".update-console").children().length > 100) {
+                    $(".update-console").children().first().remove();
+                }
+                $(".update-console").scrollTop($(".update-console")[0].scrollHeight);
+            };
+            ws.onclose = function (e) {
+            };
+            ws.onerror =function (e) {
+            };
+        }
     });
 
     function save(data) {

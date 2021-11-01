@@ -19,6 +19,19 @@
 .update-content{
     display: none;
 }
+.update-console{
+    display: none;
+    height: 400px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 15px;
+    overflow: auto;
+    background: #1d1f26;
+    color: #e3e3e3;
+}
+.update-console p:hover {
+    background: #333642;
+}
 .p-upload-box {
     display: inline-block;
     width: 110px;

@@ -8,7 +8,6 @@ $(function () {
     initEvent();
     initTheme();
     setIframeHeight();
-    checkUpdate();
 });
 
 /**

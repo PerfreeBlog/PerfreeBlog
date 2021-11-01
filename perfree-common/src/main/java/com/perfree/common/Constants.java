@@ -54,4 +54,7 @@ public class Constants {
 
     public  static final int ARTICLE_STATUS_AUDIT = 2;
 
+
+    public  static final int WEBSOCKET_TYPE_UPDATE = 1;
+
 }

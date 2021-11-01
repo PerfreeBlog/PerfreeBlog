@@ -11,12 +11,16 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.perfree.common.Constants;
 import com.perfree.commons.Update;
+import com.perfree.commons.WebSocketMsg;
 import com.perfree.commons.YamlUtils;
+import com.perfree.controller.WebSocketServer;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -43,6 +47,31 @@ public class UpdateService {
     private String uploadPath;
 
 
+    @Async
+    public void asyncUpdate(){
+        try{
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始检查更新..."));
+            Update update = checkUpdate();
+            if (update != null) {
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "检测到更新包:"+update.getFileName()));
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始备份当前程序包..."));
+                backup();
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "当前程序包备份完成"));
+                String filePath = downloadUpdate(update);
+                if (StringUtils.isNotBlank(filePath)) {
+                    WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始执行更新..."));
+                    update(filePath);
+                } else {
+                    WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新包下载失败,请重试!"));
+                }
+            } else {
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "未检查到更新,请重试!"));
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("系统更新 -> 更新失败:{}", e.getMessage());
+        }
+    }
 
     /**
      * @description 备份当前程序
@@ -83,10 +112,13 @@ public class UpdateService {
             FileUtil.del(unZipDir.getAbsoluteFile());
         }
         // 解压
+        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "正在解压更新包"));
         ZipUtil.unzip(file.getAbsoluteFile(), unZipDir.getAbsoluteFile());
         // 修改配置文件
+        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "修改更新包配置文件"));
         File ymlFile = new File("update/unzip/perfree-web/config/application.yml");
         if (!ymlFile.exists()) {
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新包的配置文件不存在,请重试"));
             LOGGER.error("系统更新 -> 更新包的yml文件不存在");
             return false;
         }
@@ -97,12 +129,14 @@ public class UpdateService {
             YamlUtils.saveOrUpdateByKey("web.upload-path", uploadPath);
             YamlUtils.close();
         }catch (Exception e) {
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "修改更新包的配置文件失败,请重试"));
             LOGGER.error("系统更新 -> 修改更新包的yml文件失败");
             e.printStackTrace();
             return false;
         }
 
         // 执行更新脚本
+        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始执行更新脚本"));
         String osName = System.getProperty("os.name").toLowerCase();
         System.out.println(osName);
         File perfreeWebDir = new File("update/unzip/perfree-web");
@@ -114,6 +148,8 @@ public class UpdateService {
                 asynExeLocalComand(null, bat);
             } catch (IOException e) {
                 e.printStackTrace();
+                LOGGER.error("系统更新 -> 更新失败,请进行手动更新");
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新失败,请进行手动更新"));
             }
         } else if (osName.contains("linux")) {
             File execBat = new File("exec.sh");
@@ -124,9 +160,11 @@ public class UpdateService {
             } catch (Exception e) {
                 e.printStackTrace();
                 LOGGER.error("系统更新 -> 更新失败,请进行手动更新");
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新失败,请进行手动更新"));
             }
         } else {
             LOGGER.error("系统更新 -> 不支持的系统类型,请进行手动更新");
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "不支持的系统类型,请进行手动更新"));
             return false;
         }
         return true;
@@ -173,6 +211,8 @@ public class UpdateService {
      */
     public String downloadUpdate(Update update) {
         try {
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始下载更新包..."));
+            update.setBrowserDownloadUrl(update.getBrowserDownloadUrl().replace("https://github.com", "https://github.com.cnpmjs.org"));
             HttpResponse response = HttpRequest.get(update.getBrowserDownloadUrl()).timeout(-1).setFollowRedirects(true).executeAsync();
             if (response.isOk()) {
                 File file = new File("update");
@@ -182,17 +222,16 @@ public class UpdateService {
                 response.writeBody(file.getAbsoluteFile(), new StreamProgress() {
                     @Override
                     public void start() {
-                        Console.log("开始下载。。。。");
                     }
 
                     @Override
                     public void progress(long progressSize) {
-                        Console.log("已下载：{}", FileUtil.readableFileSize(progressSize));
+                        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "已下载" +  FileUtil.readableFileSize(progressSize)));
                     }
 
                     @Override
                     public void finish() {
-                        Console.log("下载完成！");
+                        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新包下载完成"));
                     }
                 });
                 return "update/" + update.getFileName();
