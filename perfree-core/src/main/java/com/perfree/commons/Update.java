@@ -5,8 +5,29 @@ public class Update {
     private String name;
     private String browserDownloadUrl;
     private String body;
+    private Long size;
+
+    private String sizeString;
 
     private String fileName;
+
+    public String getSizeString() {
+        return sizeString;
+    }
+
+    public void setSizeString(String sizeString) {
+        this.sizeString = sizeString;
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+
+
+    public void setSize(Long size) {
+        this.size = size;
+    }
 
     public String getFileName() {
         return fileName;

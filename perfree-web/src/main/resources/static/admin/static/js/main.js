@@ -8,6 +8,7 @@ $(function () {
     initEvent();
     initTheme();
     setIframeHeight();
+    checkUpdate();
 });
 
 /**
@@ -323,4 +324,19 @@ function logout() {
  */
 function userCenter() {
     openTab('', '个人中心', '/admin/user/userCenter', "-2");
+}
+
+/**
+ * 检查更新
+ */
+function checkUpdate() {
+    $.get("/checkUpdate",function(data){
+        if (data.code === 200) {
+            layer.confirm('检测到系统有更新,请前往网站设置 -> 系统更新进行查看', {title: '提示'}, function (index) {
+                layer.close(index);
+            });
+        } else if (data.code === 500) {
+            console.log("检查更新出错");
+        }
+    });
 }

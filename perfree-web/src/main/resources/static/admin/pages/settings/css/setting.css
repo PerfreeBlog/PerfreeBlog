@@ -6,13 +6,18 @@
     line-height: 30px;
     color: #484444;
 }
-
+.updateLabel{
+    font-weight: 600;
+}
 .layui-textarea {
     min-height: 100px;
     height: auto;
     line-height: 20px;
     padding: 6px 10px;
     resize: none;
+}
+.update-content{
+    display: none;
 }
 .p-upload-box {
     display: inline-block;

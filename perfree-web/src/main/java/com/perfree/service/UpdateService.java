@@ -22,6 +22,11 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @description 更新服务
+ * @author Perfree
+ * @date 2021/11/1 9:45
+ */
 @Service
 public class UpdateService {
     private final static Logger LOGGER = LoggerFactory.getLogger(UpdateService.class);
@@ -62,7 +67,6 @@ public class UpdateService {
         FileUtil.copy(new File("resources/update.sql"), new File(backupPath + "/resources/update.sql"), true);
         FileUtil.copy(new File("resources/update-sqlite.sql"), new File(backupPath + "/resources/update-sqlite.sql"), true);
         FileUtil.copy(new File("config"), new File(backupPath), true);
-
         FileUtil.copy(new File("start.bat"), new File(backupPath + "/start.bat"), true);
         FileUtil.copy(new File("start.sh"), new File(backupPath + "/start.sh"), true);
     }
@@ -100,25 +104,26 @@ public class UpdateService {
 
         // 执行更新脚本
         String osName = System.getProperty("os.name").toLowerCase();
+        System.out.println(osName);
         File perfreeWebDir = new File("update/unzip/perfree-web");
         if (osName.contains("win")) {
             File execBat = new File("exec.bat");
-            Runtime rt = Runtime.getRuntime();
-            Process ps=null;
             try {
-                ps = rt.exec("cmd.exe /c start " + execBat.getAbsolutePath() + " " + perfreeWebDir.getAbsolutePath() + " " + port);
+                ProcessBuilder bat = new ProcessBuilder("cmd.exe", "/c", "start", execBat.getAbsolutePath(),
+                        perfreeWebDir.getAbsolutePath(), String.valueOf(port));
+                asynExeLocalComand(null, bat);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else if (osName.contains("linux")) {
             File execBat = new File("exec.sh");
-            Runtime rt = Runtime.getRuntime();
-            Process ps=null;
             try {
-                rt.exec("sed -i 's/\\r//' " + execBat.getAbsolutePath());
-                ps = rt.exec("bash -c" + execBat.getAbsolutePath() + " " + perfreeWebDir.getAbsolutePath() + " " + port);
-            } catch (IOException e) {
+                RuntimeUtil.exec("sed -i 's/\\r//' " + execBat.getAbsolutePath());
+                ProcessBuilder sh = new ProcessBuilder("sh", execBat.getAbsolutePath(), perfreeWebDir.getAbsolutePath());
+                asynExeLocalComand(null, sh);
+            } catch (Exception e) {
                 e.printStackTrace();
+                LOGGER.error("系统更新 -> 更新失败,请进行手动更新");
             }
         } else {
             LOGGER.error("系统更新 -> 不支持的系统类型,请进行手动更新");
@@ -133,7 +138,7 @@ public class UpdateService {
      * @date 2021/10/29 15:01
      */
     public Update checkUpdate(){
-        String result = HttpUtil.get("https://gitee.com/api/v5/repos/perfree/PerfreeBlog/releases/latest");
+        String result = HttpUtil.get("https://api.github.com/repos/perfree/PerfreeBlog/releases/latest");
         JSONObject jsonObject = JSONUtil.parseObj(result);
         String tag_name = jsonObject.getStr("tag_name");
 
@@ -151,6 +156,8 @@ public class UpdateService {
             if (StringUtils.isNotBlank(assetJson.getStr("name")) && assetJson.getStr("name").contains(".zip")) {
                 update.setFileName(assetJson.getStr("name"));
                 update.setBrowserDownloadUrl(assetJson.getStr("browser_download_url"));
+                update.setSize(assetJson.getLong("size"));
+                update.setSizeString(FileUtil.readableFileSize(update.getSize()));
             }
         }
         update.setBody(body);
@@ -198,7 +205,29 @@ public class UpdateService {
 
     }
 
-    public static void main(String[] args) {
-      ZipUtil.unzip("C:\\Users\\Administrator\\Desktop\\perfree-web\\update\\perfree-web-1.2.5.zip");
+    /**
+     * @description 执行脚本
+     * @author Perfree
+     * @date 2021/11/1 9:28
+     */
+    public static void asynExeLocalComand(File file, ProcessBuilder pb) throws IOException {
+        // 不使用Runtime.getRuntime().exec(command)的方式,因为无法设置以下特性
+        // Java执行本地命令是启用一个子进程处理,默认情况下子进程与父进程I/O通过管道相连(默认ProcessBuilder.Redirect.PIPE)
+        // 当服务执行自身重启的命令时,父进程关闭导致管道连接中断,将导致子进程也崩溃,从而无法完成后续的启动
+        // 解决方式,(1)设置子进程IO输出重定向到指定文件;(2)设置属性子进程的I/O源或目标将与当前进程的相同,两者相互独立
+        if (file == null || !file.exists()) {
+            // 设置属性子进程的I/O源或目标将与当前进程的相同,两者相互独立
+            pb.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+            pb.redirectError(ProcessBuilder.Redirect.INHERIT);
+            pb.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        } else {
+            // 设置子进程IO输出重定向到指定文件
+            // 错误输出与标准输出,输出到一块
+            pb.redirectErrorStream(true);
+            // 设置输出日志
+            pb.redirectOutput(ProcessBuilder.Redirect.appendTo(file));
+        }
+        // 执行命令进程
+        pb.start();
     }
 }

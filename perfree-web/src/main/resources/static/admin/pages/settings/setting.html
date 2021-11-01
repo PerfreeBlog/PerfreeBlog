@@ -16,10 +16,11 @@
 <div class="p-container">
     <div class="layui-card">
         <div class="layui-card-body">
-            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <div class="layui-tab layui-tab-brief" lay-filter="settingTab">
                 <ul class="layui-tab-title">
-                    <li class="layui-this">基础设置</li>
-                    <li>邮箱服务</li>
+                    <li class="layui-this" lay-id="1">基础设置</li>
+                    <li lay-id="2">邮箱服务</li>
+                    <li lay-id="3">系统更新</li>
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
@@ -146,6 +147,30 @@
                             </div>
                         </form>
                     </div>
+                    <div class="layui-tab-item">
+                        <div class="update-content">
+                            <div style="font-size: 15px;color: #4a9fff;">
+                                检测到新版本
+                            </div>
+                            <div>
+                                <span class="updateLabel">版本:</span>
+                                <span id="updateVersion"></span>
+                            </div>
+                            <div>
+                                <span class="updateLabel">文件大小:</span>
+                                <span id="updateSize"></span>
+                            </div>
+                            <div>
+                                <span class="updateLabel">更新内容:</span><br>
+                                <span id="updateContent"></span>
+                            </div>
+                            <button class="layui-btn addBtn" id="update">开始更新</button>
+                            <p style="color: red">注意事项: 更新时系统会自动备份当前版本程序到配置的备份目录下(默认在项目目录的backup文件夹),更新时会短暂的停止服务,请不要关闭此页面,如出现更新失败问题,请手动恢复备份程序</p>
+                        </div>
+                        <div class="update-console">
+
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,10 +181,11 @@
 <script src="/static/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
 <script src="/static/public/js/main.js"></script>
 <script>
-    let layer,form;
-    layui.use(['layer','form'], function() {
+    let layer,form,element;
+    layui.use(['layer','form','element'], function() {
         layer = layui.layer;
         form = layui.form;
+        element = layui.element;
         form.on('submit(optionForm2)', function(data){
             save(data);
             return false;
@@ -167,6 +193,35 @@
         form.on('submit(optionForm)', function(data){
             save(data);
             return false;
+        });
+
+        element.on('tab(settingTab)', function(){
+            if (this.getAttribute('lay-id') === "3") {
+                let loadIndex = layer.load("正在检查更新...");
+                $.get("/checkUpdate",function(data){
+                    layer.close(loadIndex);
+                    if (data.code === 200) {
+                        $("#updateTitle").text(data.data.name);
+                        $("#updateVersion").text(data.data.tagName);
+                        $("#updateContent").html(data.data.body.replaceAll("\r\n","<br>"));
+                        $("#updateSize").text(data.data.sizeString);
+                    } else if (data.code === 500) {
+                        console.log("检查更新出错");
+                        $(".update-content").html("检查更新出错,请重试");
+                    } else {
+                        $(".update-content").html("暂无更新");
+                    }
+                    $(".update-content").show();
+                });
+            }
+        });
+
+
+
+        $(".update-content").on('click', '#update', function () {
+            layer.confirm('是否确认更新?', {title: '提示'}, function (index) {
+                layer.close(index);
+            });
         });
     });
 

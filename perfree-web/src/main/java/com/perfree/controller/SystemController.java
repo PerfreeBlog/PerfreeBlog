@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Date;
@@ -303,6 +304,27 @@ public class SystemController extends BaseController{
         writer.append(seoService.createSiteMapXmlContent());
     }
 
+    /**
+     * @description 检查更新
+     * @author Perfree
+     * @date 2021/11/1 10:10
+     */
+    @GetMapping("/checkUpdate")
+    @ResponseBody
+    public ResponseBean checkUpdate() {
+        try{
+            Update update = updateService.checkUpdate();
+            if (update != null) {
+                return ResponseBean.success("检测到更新", update);
+            }
+            return ResponseBean.error(-1,"暂无更新", null);
+        }catch (Exception e) {
+            e.printStackTrace();
+            logger.error("检查更新出错:{}", e.getMessage());
+            return ResponseBean.fail("检查更新出错", null);
+        }
+    }
+
     @GetMapping("/qwer")
     @ResponseBody
     public Update qwer() {
@@ -314,7 +336,7 @@ public class SystemController extends BaseController{
                 updateService.update(filePath);
             }
         }
-        //updateService.update("update/perfree-web-1.2.5.zip");
+        updateService.update("update/perfree-web-1.2.5.zip");
         return update;
     }
 }
