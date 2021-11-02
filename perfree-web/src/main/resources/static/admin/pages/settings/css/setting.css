@@ -46,3 +46,6 @@
 .layui-form-radio {
     color: rgb(72, 68, 68);
 }
+#update{
+    display: none;
+}

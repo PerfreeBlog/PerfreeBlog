@@ -183,6 +183,7 @@
 <script src="/static/public/js/reconnecting-websocket.min.js"></script>
 <script>
     let layer,form,element;
+    var ws = null;
     layui.use(['layer','form','element'], function() {
         layer = layui.layer;
         form = layui.form;
@@ -234,13 +235,22 @@
         }
 
         function startWebsocket() {
+            if (ws != null) {
+                ws.close();
+            }
+            var flag = false;
+            var tipFlag = false;
             var url = 'ws://'+window.location.host+'/websocket';
             if ('https:' === document.location.protocol) {
                 url = 'wss://'+window.location.host+'/websocket';
             }
 
-            var ws = new ReconnectingWebSocket(url);
+            ws = new ReconnectingWebSocket(url);
             ws.onopen = function (e) {
+                if (!flag) {
+                    $("#update").show();
+                }
+                flag = true;
                 console.log("Connection open ...");
                 const msg = {type: 1};
                 ws.send(JSON.stringify(msg));
@@ -260,6 +270,12 @@
             ws.onclose = function (e) {
             };
             ws.onerror =function (e) {
+                if (!flag && !tipFlag) {
+                    tipFlag = true;
+                    layer.confirm('检测到您的Nginx或其他容器配置未开启websocket支持,请参考官方文档->文档->常见问题6进行开启', {title: '提示'}, function (index) {
+                        layer.close(index);
+                    });
+                }
             };
         }
     });

@@ -311,6 +311,7 @@ public class SystemController extends BaseController{
      */
     @GetMapping("/checkUpdate")
     @ResponseBody
+    @RequiresRoles(value={"admin"}, logical= Logical.OR)
     public ResponseBean checkUpdate() {
         try{
             Update update = updateService.checkUpdate();
@@ -327,6 +328,7 @@ public class SystemController extends BaseController{
 
     @GetMapping("/update")
     @ResponseBody
+    @RequiresRoles(value={"admin"}, logical= Logical.OR)
     public ResponseBean update() {
         updateService.asyncUpdate();
         return ResponseBean.success("调用异步更新", null);

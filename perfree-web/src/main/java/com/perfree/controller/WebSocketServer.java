@@ -66,6 +66,7 @@ public class WebSocketServer {
         System.out.println(message);
         WebSocketMsg webSocketMsg = JSONUtil.toBean(message, WebSocketMsg.class);
         if (webSocketMsg.getType() == Constants.WEBSOCKET_TYPE_UPDATE && WebSocketServer.updateState == Constants.WEBSOCKET_TYPE_UPDATE) {
+            WebSocketServer.updateState = 0;
             WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新成功,请刷新页面重新登录!"));
         }
     }
