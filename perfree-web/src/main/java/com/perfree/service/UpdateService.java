@@ -86,17 +86,23 @@ public class UpdateService {
         }
 
         FileUtil.clean(file.getAbsoluteFile());
-        FileUtil.copy(new File("perfree-web.jar"), new File(backupPath + "/perfree-web.jar"), true);
-        FileUtil.copy(new File("resources/db"), new File(backupPath + "/resources"), true);
-        FileUtil.copy(new File("resources/static"), new File(backupPath + "/resources"), true);
-        FileUtil.copy(new File("resources/db.properties"), new File(backupPath + "/resources/db.properties"), true);
-        FileUtil.copy(new File("resources/Perfree.sql"), new File(backupPath + "/resources/Perfree.sql"), true);
-        FileUtil.copy(new File("resources/Perfree-sqlite.sql"), new File(backupPath + "/resources/Perfree-sqlite.sql"), true);
-        FileUtil.copy(new File("resources/update.sql"), new File(backupPath + "/resources/update.sql"), true);
-        FileUtil.copy(new File("resources/update-sqlite.sql"), new File(backupPath + "/resources/update-sqlite.sql"), true);
-        FileUtil.copy(new File("config"), new File(backupPath), true);
-        FileUtil.copy(new File("start.bat"), new File(backupPath + "/start.bat"), true);
-        FileUtil.copy(new File("start.sh"), new File(backupPath + "/start.sh"), true);
+        copyFile(new File("perfree-web.jar"), new File(backupPath + "/perfree-web.jar"));
+        copyFile(new File("resources/db"), new File(backupPath + "/resources"));
+        copyFile(new File("resources/static"), new File(backupPath + "/resources"));
+        copyFile(new File("resources/db.properties"), new File(backupPath + "/resources/db.properties"));
+        copyFile(new File("resources/Perfree.sql"), new File(backupPath + "/resources/Perfree.sql"));
+        copyFile(new File("resources/Perfree-sqlite.sql"), new File(backupPath + "/resources/Perfree-sqlite.sql"));
+        copyFile(new File("resources/update.sql"), new File(backupPath + "/resources/update.sql"));
+        copyFile(new File("resources/update-sqlite.sql"), new File(backupPath + "/resources/update-sqlite.sql"));
+        copyFile(new File("config"), new File(backupPath));
+        copyFile(new File("start.bat"), new File(backupPath + "/start.bat"));
+        copyFile(new File("start.sh"), new File(backupPath + "/start.sh"));
+    }
+
+    public void copyFile(File src, File dest){
+        if (src.exists()) {
+            FileUtil.copy(src, dest, true);
+        }
     }
 
     /**

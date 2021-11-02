@@ -235,6 +235,10 @@
 
         function startWebsocket() {
             var url = 'ws://'+window.location.host+'/websocket';
+            if ('https:' === document.location.protocol) {
+                url = 'wss://'+window.location.host+'/websocket';
+            }
+
             var ws = new ReconnectingWebSocket(url);
             ws.onopen = function (e) {
                 console.log("Connection open ...");
