@@ -1,7 +1,10 @@
 FROM openjdk:8-jre-alpine
 VOLUME /tmp
 ENV LANG en_US.UTF-8
-RUN apk add --update ttf-dejavu fontconfig && rm -rf /var/cache/apk/*
+RUN echo -e "https://mirror.tuna.tsinghua.edu.cn/alpine/v3.4/main\n\
+https://mirror.tuna.tsinghua.edu.cn/alpine/v3.4/community" > /etc/apk/repositories
+RUN apk --update add curl bash ttf-dejavu && \
+      rm -rf /var/cache/apk/*
 ARG PACKAGE_FILE
 COPY ${PACKAGE_FILE} app.tar.gz
 RUN tar -zxvf app.tar.gz
