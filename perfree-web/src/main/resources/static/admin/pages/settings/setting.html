@@ -238,7 +238,8 @@
             var ws = new ReconnectingWebSocket(url);
             ws.onopen = function (e) {
                 console.log("Connection open ...");
-
+                const msg = {type: 1};
+                ws.send(JSON.stringify(msg));
             };
             ws.onmessage = function (e) {
                 let dataJson = JSON.parse(e.data);

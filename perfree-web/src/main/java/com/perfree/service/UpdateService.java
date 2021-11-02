@@ -199,7 +199,8 @@ public class UpdateService {
         JSONObject jsonObject = JSONUtil.parseObj(result);
         String tag_name = jsonObject.getStr("tag_name");
 
-        if (tag_name.contains(version)) {
+        String versionStr = tag_name.replaceAll("\\.","").replace("v","");
+        if ( Long.parseLong(versionStr) <= Long.parseLong(version.replaceAll("\\.","").replace("v",""))) {
             return null;
         }
         String name = jsonObject.getStr("name");

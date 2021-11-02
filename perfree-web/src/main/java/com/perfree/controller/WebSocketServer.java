@@ -1,6 +1,8 @@
 package com.perfree.controller;
 
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.perfree.common.Constants;
 import com.perfree.commons.WebSocketMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +22,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 public class WebSocketServer {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketServer.class);
+
+    public static int updateState = 0;
 
     @PostConstruct
     public void init() {
@@ -60,6 +64,10 @@ public class WebSocketServer {
     @OnMessage
     public void onMessage(String message, Session session) {
         System.out.println(message);
+        WebSocketMsg webSocketMsg = JSONUtil.toBean(message, WebSocketMsg.class);
+        if (webSocketMsg.getType() == Constants.WEBSOCKET_TYPE_UPDATE && WebSocketServer.updateState == Constants.WEBSOCKET_TYPE_UPDATE) {
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新成功,请刷新页面重新登录!"));
+        }
     }
 
     /**
