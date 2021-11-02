@@ -20,6 +20,7 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 * 主题开发简单快速
 * 支持邮件服务
 * 安装部署简单
+* 支持在线一键更新
 * 支持[mysql](https://www.mysql.com)/[sqlite](https://www.sqlite.org)数据库
 
 ## 主题支持
