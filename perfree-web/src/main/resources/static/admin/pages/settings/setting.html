@@ -244,7 +244,11 @@
             };
             ws.onmessage = function (e) {
                 let dataJson = JSON.parse(e.data);
-                $(".update-console").append("<p>"+dataJson.message +"</p>");
+                let classStr = "";
+                if(dataJson.data === 2) {
+                    classStr = "updateError";
+                }
+                $(".update-console").append("<p class='"+classStr+"'>"+dataJson.message +"</p>");
                 if ($(".update-console").children().length > 100) {
                     $(".update-console").children().first().remove();
                 }

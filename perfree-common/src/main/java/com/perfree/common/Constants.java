@@ -57,4 +57,7 @@ public class Constants {
 
     public  static final int WEBSOCKET_TYPE_UPDATE = 1;
 
+    public  static final int WEBSOCKET_UPDATE_TYPE_NORMAL = 1;
+    public  static final int WEBSOCKET_UPDATE_TYPE_ERROR = 2;
+
 }

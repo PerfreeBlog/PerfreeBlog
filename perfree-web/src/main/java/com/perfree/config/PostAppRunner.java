@@ -8,6 +8,8 @@ import cn.hutool.setting.dialect.Props;
 import com.jfinal.template.Directive;
 import com.perfree.common.Constants;
 import com.perfree.commons.SpringBeanUtils;
+import com.perfree.commons.WebSocketMsg;
+import com.perfree.controller.WebSocketServer;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.model.Plugin;
@@ -74,6 +76,7 @@ public class PostAppRunner implements ApplicationRunner {
             DynamicDataSource.setDataSource(dataSource,dbSetting.getStr("type"));
         }
         dbSetting.autoLoad(true);
+        updateDetect();
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
             if (dbSetting.getStr("dataVersion") == null || !dbSetting.getStr("dataVersion").equals(version)) {
@@ -82,6 +85,19 @@ public class PostAppRunner implements ApplicationRunner {
             optionService.initOptionCache();
             menuService.registerMenuPage();
             initPlugins();
+        }
+    }
+
+    /**
+     * @description 如果是系统更新升级的,通知更新成功
+     * @author Perfree
+     * @date 2021/11/2 8:35
+     */
+    private void updateDetect() {
+        File updateTemp = new File("update.txt");
+        if (updateTemp.exists()) {
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新成功!"));
+            FileUtil.del(updateTemp.getAbsoluteFile());
         }
     }
 

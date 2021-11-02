@@ -40,7 +40,9 @@
     border: 1px dashed rgb(230, 230, 230);
     text-align: center;
 }
-
+.updateError{
+    color: red;
+}
 .layui-form-radio {
     color: rgb(72, 68, 68);
 }

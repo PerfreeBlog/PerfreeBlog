@@ -50,26 +50,27 @@ public class UpdateService {
     @Async
     public void asyncUpdate(){
         try{
-            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始检查更新..."));
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始检查更新...", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
             Update update = checkUpdate();
             if (update != null) {
-                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "检测到更新包:"+update.getFileName()));
-                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始备份当前程序包..."));
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "检测到更新包:"+update.getFileName(), Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始备份当前程序包...", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
                 backup();
-                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "当前程序包备份完成"));
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "当前程序包备份完成", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
                 String filePath = downloadUpdate(update);
                 if (StringUtils.isNotBlank(filePath)) {
-                    WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始执行更新..."));
+                    WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始执行更新...", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
                     update(filePath);
                 } else {
-                    WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新包下载失败,请重试!"));
+                    WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新包下载失败,请重试!", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
                 }
             } else {
-                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "未检查到更新,请重试!"));
+                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "未检查到更新,请重试!", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
             }
         }catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("系统更新 -> 更新失败:{}", e.getMessage());
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新失败!", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
         }
     }
 
@@ -112,13 +113,13 @@ public class UpdateService {
             FileUtil.del(unZipDir.getAbsoluteFile());
         }
         // 解压
-        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "正在解压更新包"));
+        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "正在解压更新包", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
         ZipUtil.unzip(file.getAbsoluteFile(), unZipDir.getAbsoluteFile());
         // 修改配置文件
-        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "修改更新包配置文件"));
+        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "修改更新包配置文件", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
         File ymlFile = new File("update/unzip/perfree-web/config/application.yml");
         if (!ymlFile.exists()) {
-            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新包的配置文件不存在,请重试"));
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新包的配置文件不存在,请重试", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
             LOGGER.error("系统更新 -> 更新包的yml文件不存在");
             return false;
         }
@@ -129,45 +130,65 @@ public class UpdateService {
             YamlUtils.saveOrUpdateByKey("web.upload-path", uploadPath);
             YamlUtils.close();
         }catch (Exception e) {
-            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "修改更新包的配置文件失败,请重试"));
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "修改更新包的配置文件失败,请重试", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
             LOGGER.error("系统更新 -> 修改更新包的yml文件失败");
             e.printStackTrace();
             return false;
         }
 
         // 执行更新脚本
-        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始执行更新脚本"));
+        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始执行更新脚本", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
         String osName = System.getProperty("os.name").toLowerCase();
-        System.out.println(osName);
-        File perfreeWebDir = new File("update/unzip/perfree-web");
+        File webDir = new File("update/unzip/perfree-web");
+        File updateTemp = new File("update.txt");
+        FileUtil.touch(updateTemp.getAbsoluteFile());
+        WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "系统将进行重启升级操作,如长时间未响应请手动进行备份恢复升级", Constants.WEBSOCKET_UPDATE_TYPE_NORMAL));
         if (osName.contains("win")) {
-            File execBat = new File("exec.bat");
-            try {
-                ProcessBuilder bat = new ProcessBuilder("cmd.exe", "/c", "start", execBat.getAbsolutePath(),
-                        perfreeWebDir.getAbsolutePath(), String.valueOf(port));
-                asynExeLocalComand(null, bat);
-            } catch (IOException e) {
-                e.printStackTrace();
-                LOGGER.error("系统更新 -> 更新失败,请进行手动更新");
-                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新失败,请进行手动更新"));
-            }
+            winUpdate(webDir);
         } else if (osName.contains("linux")) {
-            File execBat = new File("exec.sh");
-            try {
-                RuntimeUtil.exec("sed -i 's/\\r//' " + execBat.getAbsolutePath());
-                ProcessBuilder sh = new ProcessBuilder("sh", execBat.getAbsolutePath(), perfreeWebDir.getAbsolutePath());
-                asynExeLocalComand(null, sh);
-            } catch (Exception e) {
-                e.printStackTrace();
-                LOGGER.error("系统更新 -> 更新失败,请进行手动更新");
-                WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新失败,请进行手动更新"));
-            }
+            linuxUpdate(webDir);
         } else {
             LOGGER.error("系统更新 -> 不支持的系统类型,请进行手动更新");
-            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "不支持的系统类型,请进行手动更新"));
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "不支持的系统类型,请进行手动更新", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
             return false;
         }
         return true;
+    }
+
+    /**
+     * @description win更新
+     * @author Perfree
+     * @date 2021/11/2 8:27
+     */
+    public void winUpdate(File webDir) {
+        File execBat = new File("exec.bat");
+        try {
+            ProcessBuilder bat = new ProcessBuilder("cmd.exe", "/c", "start", execBat.getAbsolutePath(),
+                    webDir.getAbsolutePath(), String.valueOf(port));
+            asynExeLocalComand(null, bat);
+        } catch (IOException e) {
+            e.printStackTrace();
+            LOGGER.error("系统更新 -> 更新失败,请进行手动更新");
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新失败,请进行手动更新", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
+        }
+    }
+
+    /**
+     * @description linux更新
+     * @author Perfree
+     * @date 2021/11/2 8:27
+     */
+    public void linuxUpdate(File webDir) {
+        File execBat = new File("exec.sh");
+        try {
+            RuntimeUtil.exec("sed -i 's/\\r//' " + execBat.getAbsolutePath());
+            ProcessBuilder sh = new ProcessBuilder("sh", execBat.getAbsolutePath(), webDir.getAbsolutePath());
+            asynExeLocalComand(null, sh);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("系统更新 -> 更新失败,请进行手动更新");
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新失败,请进行手动更新", Constants.WEBSOCKET_UPDATE_TYPE_ERROR));
+        }
     }
 
     /**
