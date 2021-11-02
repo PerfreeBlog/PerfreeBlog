@@ -96,8 +96,12 @@ public class PostAppRunner implements ApplicationRunner {
     private void updateDetect() {
         File updateTemp = new File("update.txt");
         if (updateTemp.exists()) {
-            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新成功!"));
+            WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "更新成功,请刷新页面重新登录!"));
             FileUtil.del(updateTemp.getAbsoluteFile());
+        }
+        File update = new File("update");
+        if (update.exists()) {
+            FileUtil.del(update.getAbsoluteFile());
         }
     }
 

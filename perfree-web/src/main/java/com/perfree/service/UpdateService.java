@@ -84,11 +84,9 @@ public class UpdateService {
         if (!file.exists()) {
             boolean mkdir = file.mkdir();
         }
-        File jarFile = new File("perfree-web.jar");
-        if (!jarFile.exists()) {
-            return;
-        }
-        FileUtil.copy(jarFile, new File(backupPath + "/perfree-web.jar"), true);
+
+        FileUtil.clean(file.getAbsoluteFile());
+        FileUtil.copy(new File("perfree-web.jar"), new File(backupPath + "/perfree-web.jar"), true);
         FileUtil.copy(new File("resources/db"), new File(backupPath + "/resources"), true);
         FileUtil.copy(new File("resources/static"), new File(backupPath + "/resources"), true);
         FileUtil.copy(new File("resources/db.properties"), new File(backupPath + "/resources/db.properties"), true);
@@ -233,7 +231,8 @@ public class UpdateService {
     public String downloadUpdate(Update update) {
         try {
             WebSocketServer.BroadCastInfo(new WebSocketMsg(Constants.WEBSOCKET_TYPE_UPDATE, "开始下载更新包..."));
-            update.setBrowserDownloadUrl(update.getBrowserDownloadUrl().replace("https://github.com", "https://github.com.cnpmjs.org"));
+            // update.setBrowserDownloadUrl(update.getBrowserDownloadUrl().replace("https://github.com", "https://github.com.cnpmjs.org"));
+            update.setBrowserDownloadUrl("http://www.update.yinpengfei.com/" + update.getFileName());
             HttpResponse response = HttpRequest.get(update.getBrowserDownloadUrl()).timeout(-1).setFollowRedirects(true).executeAsync();
             if (response.isOk()) {
                 File file = new File("update");

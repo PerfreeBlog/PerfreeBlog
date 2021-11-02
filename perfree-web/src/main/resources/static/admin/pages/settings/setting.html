@@ -223,6 +223,7 @@
         $(".update-content").on('click', '#update', function () {
             layer.confirm('是否确认更新?', {title: '提示'}, function (index) {
                 layer.close(index);
+                $("#update").hide();
                 startUpdate();
             });
         });
