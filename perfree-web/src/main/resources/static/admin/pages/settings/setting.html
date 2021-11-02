@@ -213,6 +213,7 @@
                         $(".update-content").html("暂无更新");
                     }
                     $(".update-content").show();
+                    startWebsocket();
                 });
             }
         });
@@ -226,13 +227,9 @@
             });
         });
 
-        var ws = null;
         function startUpdate() {
             $(".update-console").show();
-            if (ws != null) {
-                ws.close();
-            }
-            startWebsocket();
+            $.get("/update",function(data){});
         }
 
         function startWebsocket() {
@@ -240,7 +237,7 @@
             var ws = new ReconnectingWebSocket(url);
             ws.onopen = function (e) {
                 console.log("Connection open ...");
-                $.get("/update",function(data){});
+
             };
             ws.onmessage = function (e) {
                 let dataJson = JSON.parse(e.data);
