@@ -29,9 +29,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Execute after startup
@@ -80,7 +78,7 @@ public class PostAppRunner implements ApplicationRunner {
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
             if (dbSetting.getStr("dataVersion") == null || !dbSetting.getStr("dataVersion").equals(version)) {
-                updateSql();
+                updateSql(dbSetting);
             }
             optionService.initOptionCache();
             menuService.registerMenuPage();
@@ -109,7 +107,7 @@ public class PostAppRunner implements ApplicationRunner {
      * @description 如果存在update.sql则执行update,此处更新方式待修改
      * @author Perfree
      */
-    private void updateSql() {
+    private void updateSql(Props dbSetting) {
         try{
             File sqlFile;
             if (DynamicDataSource.dataSourceType.equals("mysql")) {
@@ -120,28 +118,34 @@ public class PostAppRunner implements ApplicationRunner {
             if (sqlFile.exists()) {
                 DataSource dataSource = SpringBeanUtils.getBean(DataSource.class);
                 FileReader fileReader = new FileReader(sqlFile);
-                String createSql = fileReader.readString();
-                if (createSql.contains("--version-" + version)) {
-                    createSql = createSql.substring(createSql.indexOf("--version-" + version));
-                    createSql = createSql.replace("--version-" + version,"");
-                } else {
-                    return;
-                }
-                String[] split = createSql.split(";");
+                String updateFileStr = fileReader.readString();
+                String[] updateStrSplit = updateFileStr.split("--PerfreeBlog");
+                String dbVersion = StringUtils.isBlank(dbSetting.getStr("dataVersion")) ? "v1.0.0" : dbSetting.getStr("dataVersion");
                 Connection connection = dataSource.getConnection();
-                for (int i = 0; i < split.length - 1; i++){
-                   try{
-                       SqlExecutor.execute(connection, split[i]);
-                       LOGGER.info("update: {}", split[i]);
-                   }catch (Exception e) {
-                       e.printStackTrace();
-                       LOGGER.info("执行update sql出错，SQL语句: {}，错误信息：{}", split[i],e.getMessage());
-                   }
+                for (int i = 1; i < updateStrSplit.length; i++) {
+                    String[] split = updateStrSplit[i].split(";");
+                    long currUpdateVersion = versionToLong(split[0]);
+                    // 1. 更新sql版本等于最新项目版本
+                    // 2. 更新sql版本 大于 dbVersion
+                    // 3. 更新sql版本 小于等于最新项目版本
+                    if ((currUpdateVersion == versionToLong(version) || currUpdateVersion > versionToLong(dbVersion)) &&
+                            currUpdateVersion <= versionToLong(version)) {
+                        for (int j = 1; j < split.length; j++){
+                            try{
+                                SqlExecutor.execute(connection, split[j]);
+                                LOGGER.info("update: {}", split[j]);
+                            }catch (Exception e) {
+                                e.printStackTrace();
+                                LOGGER.info("执行update sql出错，SQL语句: {}，错误信息：{}", split[j],e.getMessage());
+                            }
+                        }
+                    }
                 }
+
                 File file = new File(Constants.DB_PROPERTIES_PATH);
-                Props dbSetting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
-                dbSetting.setProperty("dataVersion", version);
-                dbSetting.store(file.getAbsolutePath());
+                Props newDbSetting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
+                newDbSetting.setProperty("dataVersion", version);
+                newDbSetting.store(file.getAbsolutePath());
             }
         }catch (Exception e) {
             e.printStackTrace();
@@ -178,5 +182,14 @@ public class PostAppRunner implements ApplicationRunner {
                 EnjoyConfig.jfr.addDirective(injectBean.value(), directive.getClass());
             }
         }
+    }
+
+    public static void main(String[] args) {
+
+    }
+
+    public long versionToLong(String versionStr) {
+       return Long.parseLong(versionStr.replaceAll("\r\n","").replaceAll("--","")
+               .replaceAll("\\.","").replace("v",""));
     }
 }
