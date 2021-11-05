@@ -1,5 +1,6 @@
 package com.perfree.config;
 
+import com.perfree.commons.DynamicDataSource;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
