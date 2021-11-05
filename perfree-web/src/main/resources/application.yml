@@ -80,4 +80,4 @@ plugin:
   runMode: prod
   # 插件存放的目录, 可配置多个
   pluginPath:
-    - D:\plugins
+    - resources/plugins
