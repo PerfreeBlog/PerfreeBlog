@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @description 扩展插件: Mapper示例,tips: 暂时只支持注解方式写sql
+ * @description 扩展插件: Mapper示例
  * @author Perfree
  * @date 2021/8/17 15:08
  */

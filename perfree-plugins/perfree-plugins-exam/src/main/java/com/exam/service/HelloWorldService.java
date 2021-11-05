@@ -9,8 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @description 扩展插件: Service示例,tips: 因个人能力有限,此处注入mapper的方式为手动
- * 获取bean,使用@Autowired会造成报错, 欢迎能帮忙解决的大佬提交pr
+ * @description 扩展插件: Service示例
  * @author Perfree
  * @date 2021/8/17 15:08
  */
