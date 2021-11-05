@@ -10,12 +10,12 @@ import com.gitee.starblues.integration.operator.PluginOperator;
 import com.gitee.starblues.integration.user.PluginUser;
 import com.jfinal.template.Directive;
 import com.perfree.common.Constants;
+import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.controller.WebSocketServer;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.plugins.Plugin;
-import com.perfree.plugins.PluginsUtils;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
 import com.perfree.service.PluginService;
@@ -30,7 +30,6 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.io.File;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.*;
 

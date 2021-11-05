@@ -8,7 +8,7 @@ import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
-import com.perfree.config.DynamicDataSource;
+import com.perfree.commons.DynamicDataSource;
 import com.perfree.model.Database;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

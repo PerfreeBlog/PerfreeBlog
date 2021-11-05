@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.perfree.mapper.AccessLogsMapper" >
+    <update id="createTableForMysql">
+         CREATE TABLE `p_access_logs`  (
+              `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+              `system_info` varchar(128) NULL COMMENT '系统信息',
+              `brower_version` varchar(128) NULL COMMENT '浏览器版本',
+              `brower_name` varchar(64) NULL COMMENT '浏览器名称',
+              `ip` varchar(64) NULL COMMENT 'ip',
+              `date` datetime NULL COMMENT '时间',
+              PRIMARY KEY (`id`)
+            )
+    </update>
+
+    <update id="createTableForSqlite">
+         CREATE TABLE `p_access_logs`  (
+               "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                "system_info" text(128),
+                "brower_version" text(64),
+                "brower_name" text(64),
+                "ip" text(64),
+                "date" DATETIME
+            )
+    </update>
+</mapper>

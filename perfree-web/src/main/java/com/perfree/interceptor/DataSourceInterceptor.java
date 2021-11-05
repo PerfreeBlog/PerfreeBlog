@@ -1,6 +1,6 @@
 package com.perfree.interceptor;
 
-import com.perfree.config.DynamicDataSource;
+import com.perfree.commons.DynamicDataSource;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
