@@ -12,7 +12,6 @@ import com.perfree.commons.Update;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
 import com.perfree.model.User;
-import com.perfree.plugins.PluginBeanRegister;
 import com.perfree.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,7 +35,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Date;
@@ -58,8 +56,6 @@ public class SystemController extends BaseController{
     private SEOService seoService;
     @Autowired
     private MailService mailService;
-    @Autowired
-    private PluginBeanRegister pluginBeanRegister;
 
     @Autowired
     private UpdateService updateService;
