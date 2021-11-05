@@ -7,7 +7,6 @@ import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
 import com.jfinal.template.Directive;
 import com.perfree.common.Constants;
-import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.controller.WebSocketServer;
 import com.perfree.directive.DirectiveUtil;

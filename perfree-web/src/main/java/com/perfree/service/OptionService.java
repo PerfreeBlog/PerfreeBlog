@@ -1,6 +1,6 @@
 package com.perfree.service;
 
-import com.perfree.commons.DynamicDataSource;
+import com.perfree.config.DynamicDataSource;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
 import net.sf.ehcache.CacheManager;

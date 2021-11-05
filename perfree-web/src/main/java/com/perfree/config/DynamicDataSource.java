@@ -1,4 +1,4 @@
-package com.perfree.commons;
+package com.perfree.config;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
