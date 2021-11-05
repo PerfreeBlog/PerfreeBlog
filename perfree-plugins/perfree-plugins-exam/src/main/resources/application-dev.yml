@@ -1,0 +1,6 @@
+plugin:
+  # 静态资源配置
+  static:
+    # 静态资源位置
+    locations:
+      - classpath:static-exam

@@ -1,8 +1,0 @@
-# -------------------------------------------------------------
-# ----- Setting File with UTF8-----
-# ----- 插件的配置信息,必填 -----
-# -------------------------------------------------------------
-plugin.name=PluginExam
-plugin.version=1.0.0
-plugin.author=perfree
-plugin.desc=演示插件,安装后访问地址:/plugin/test1,/plugin/test2,/plugin/test3

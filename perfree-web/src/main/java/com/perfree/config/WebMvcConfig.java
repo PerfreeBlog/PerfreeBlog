@@ -56,7 +56,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/500",
                         "/install/step2",
                         "/install/addDatabase",
-                        "/static/**"
+                        "/static/**",
+                        "/static-plugin/**"
                 );
 
         registry.addInterceptor(new EnjoyInterceptor()).addPathPatterns("/**")

@@ -5,6 +5,8 @@ import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
+import com.gitee.starblues.integration.application.PluginApplication;
+import com.gitee.starblues.integration.operator.PluginOperator;
 import com.jfinal.template.Directive;
 import com.perfree.common.Constants;
 import com.perfree.commons.SpringBeanUtils;
@@ -27,6 +29,7 @@ import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.util.*;
 
@@ -44,12 +47,13 @@ public class PostAppRunner implements ApplicationRunner {
     private final OptionService optionService;
     private final MenuService menuService;
     private final PluginService pluginService;
+    private final PluginOperator pluginOperator;
 
-
-    public PostAppRunner(OptionService optionService,MenuService menuService, PluginService pluginService) {
+    public PostAppRunner(PluginApplication pluginApplication, OptionService optionService, MenuService menuService, PluginService pluginService) {
         this.optionService = optionService;
         this.menuService = menuService;
         this.pluginService = pluginService;
+        this.pluginOperator = pluginApplication.getPluginOperator();
     }
 
     @Override
@@ -81,7 +85,7 @@ public class PostAppRunner implements ApplicationRunner {
             }
             optionService.initOptionCache();
             menuService.registerMenuPage();
-            initPlugins();
+            // initPlugins();
         }
     }
 

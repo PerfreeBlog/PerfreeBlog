@@ -63,7 +63,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: error
+    com.perfree: debug
     com.perfree.config.PostAppRunner: info
     com.perfree.Application: info
     com.perfree.plugins: info
@@ -74,3 +74,10 @@ logging:
 cache:
   ehcache:
     config: ehcache.xml
+# 插件的配置
+plugin:
+  # 插件运行模式. dev: 开发环境, prod: 生产环境
+  runMode: prod
+  # 插件存放的目录, 可配置多个
+  pluginPath:
+    - D:\plugins

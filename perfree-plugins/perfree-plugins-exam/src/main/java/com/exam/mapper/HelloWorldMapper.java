@@ -1,8 +1,11 @@
 package com.exam.mapper;
 
+import com.exam.model.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @description 扩展插件: Mapper示例,tips: 暂时只支持注解方式写sql
@@ -10,8 +13,6 @@ import org.springframework.stereotype.Component;
  * @date 2021/8/17 15:08
  */
 @Mapper
-@Component
 public interface HelloWorldMapper{
-    @Select("select count(1) from `p_article`")
-    String test2();
+    List<Article> test2();
 }

@@ -46,6 +46,9 @@ public class PluginBeanRegister {
      * @author Perfree
      */
     public static void unregisterController( Class<?> loadClass) {
+        if (loadClass == null) {
+            return;
+        }
         RequestMappingHandlerMapping requestMappingHandlerMapping = (RequestMappingHandlerMapping) SpringBeanUtils.getApplicationContext()
                 .getBean("requestMappingHandlerMapping");
         ReflectionUtils.doWithMethods(loadClass, method -> {

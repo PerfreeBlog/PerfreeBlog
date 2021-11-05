@@ -1,8 +1,12 @@
 package com.exam.service;
 
 import com.exam.mapper.HelloWorldMapper;
+import com.exam.model.Article;
 import com.perfree.commons.SpringBeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @description 扩展插件: Service示例,tips: 因个人能力有限,此处注入mapper的方式为手动
@@ -13,18 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class HelloWorldService{
 
-    private final HelloWorldMapper helloWorldMapper;
+    @Autowired
+    private HelloWorldMapper helloWorldMapper;
 
-    /**
-     * @description 注入mapper
-     * @author Perfree
-     */
-    HelloWorldService() {
-        helloWorldMapper = SpringBeanUtils.getMapper(HelloWorldMapper.class);
-    }
-
-    public String test2() {
-        return "插件测试-查询数据库文章数量结果: " + helloWorldMapper.test2();
+    public List<Article> test2() {
+        return helloWorldMapper.test2();
     }
 
 }
