@@ -29,7 +29,7 @@ public class PluginBeanConfig {
         // 插件静态资源Http访问前缀. 默认为: static-plugin
         staticResourceExtension.setPathPrefix("static-plugin");
         // 设置静态资源缓存策略
-        staticResourceExtension.setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS).cachePublic());
+        staticResourceExtension.setCacheControl(CacheControl.noCache());
         // 添加扩展
         pluginApplication.addExtension(staticResourceExtension);
         return pluginApplication;

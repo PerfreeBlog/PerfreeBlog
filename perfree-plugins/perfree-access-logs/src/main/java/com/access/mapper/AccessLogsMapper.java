@@ -5,11 +5,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AccessLogsMapper {
-    public void createTableForMysql();
+    void createTableForMysql();
 
-    public void createTableForSqlite();
+    void createTableForSqlite();
 
-    public void dropTable();
+    void dropTable();
 
     void addAccess(AccessLogs accessLogs);
 

@@ -19,7 +19,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAsync
 @EnableAspectJAutoProxy
 @EnableSwagger2
-@MapperScan(basePackages="com.perfree.mapper", nameGenerator = UniqueNameGenerator.class)
 public class Application implements CommandLineRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(Application.class);
     @Value("${server.port}")
