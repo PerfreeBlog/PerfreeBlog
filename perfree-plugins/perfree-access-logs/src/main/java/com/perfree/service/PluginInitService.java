@@ -25,11 +25,10 @@ public class PluginInitService implements Plugin {
     @Override
     public void onInstall() {
         accessService.createTable();
-        System.out.println("onInstall");
     }
 
     @Override
     public void onUnInstall() {
-        System.out.println("onUnInstall");
+        accessService.dropTable();
     }
 }
