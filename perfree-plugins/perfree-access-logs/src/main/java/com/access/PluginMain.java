@@ -1,4 +1,4 @@
-package com.perfree;
+package com.access;
 
 import com.gitee.starblues.annotation.ConfigDefinition;
 import com.gitee.starblues.realize.BasePlugin;

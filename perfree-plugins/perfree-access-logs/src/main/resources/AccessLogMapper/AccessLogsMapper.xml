@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.perfree.mapper.AccessLogsMapper" >
+<mapper namespace="com.access.mapper.AccessLogsMapper" >
     <insert id="addAccess">
         insert into p_access_logs
           ( system_info, system_group, system_type,browser_version,browser_name,browser_group,ip,`date`) VALUES

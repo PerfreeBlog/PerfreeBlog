@@ -1,4 +1,4 @@
-package com.perfree.interceptor;
+package com.access.interceptor;
 
 import com.gitee.starblues.factory.process.pipe.interceptor.PluginInterceptorRegister;
 import com.gitee.starblues.factory.process.pipe.interceptor.PluginInterceptorRegistry;

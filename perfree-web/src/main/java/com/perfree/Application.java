@@ -2,6 +2,7 @@ package com.perfree;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.perfree.config.UniqueNameGenerator;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAsync
 @EnableAspectJAutoProxy
 @EnableSwagger2
+@MapperScan(basePackages="com.perfree.mapper", nameGenerator = UniqueNameGenerator.class)
 public class Application implements CommandLineRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(Application.class);
     @Value("${server.port}")

@@ -1,8 +1,8 @@
-package com.perfree.service;
+package com.access.service;
 
 import com.perfree.commons.DynamicDataSource;
-import com.perfree.mapper.AccessLogsMapper;
-import com.perfree.model.AccessLogs;
+import com.access.mapper.AccessLogsMapper;
+import com.access.model.AccessLogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

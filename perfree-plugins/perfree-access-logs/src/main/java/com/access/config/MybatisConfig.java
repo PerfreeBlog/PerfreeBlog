@@ -1,4 +1,4 @@
-package com.perfree.config;
+package com.access.config;
 
 import com.gitee.starblues.annotation.ConfigDefinition;
 import com.gitee.starblues.extension.mybatis.SpringBootMybatisConfig;

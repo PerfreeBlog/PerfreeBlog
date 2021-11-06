@@ -1,4 +1,4 @@
-package com.perfree.model;
+package com.access.model;
 
 import java.util.Date;
 

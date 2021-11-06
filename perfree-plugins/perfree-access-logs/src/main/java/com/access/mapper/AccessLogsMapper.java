@@ -1,6 +1,6 @@
-package com.perfree.mapper;
+package com.access.mapper;
 
-import com.perfree.model.AccessLogs;
+import com.access.model.AccessLogs;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

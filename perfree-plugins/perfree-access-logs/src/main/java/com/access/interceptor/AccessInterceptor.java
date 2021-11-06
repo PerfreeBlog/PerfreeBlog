@@ -1,9 +1,8 @@
-package com.perfree.interceptor;
+package com.access.interceptor;
 
 import com.perfree.commons.IpUtil;
-import com.perfree.commons.SpringBeanUtils;
-import com.perfree.model.AccessLogs;
-import com.perfree.service.AccessService;
+import com.access.model.AccessLogs;
+import com.access.service.AccessService;
 import eu.bitwalker.useragentutils.UserAgent;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
