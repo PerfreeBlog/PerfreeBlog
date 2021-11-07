@@ -1,8 +1,13 @@
 package com.access.service;
 
+import com.gitee.starblues.realize.PluginUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.perfree.common.Pager;
 import com.perfree.commons.DynamicDataSource;
 import com.access.mapper.AccessLogsMapper;
 import com.access.model.AccessLogs;
+import com.perfree.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +20,9 @@ public class AccessLogsService {
 
     @Autowired
     private AccessLogsMapper accessLogsMapper;
+
+    @Autowired
+    private PluginUtils pluginUtils;
 
     /**
      * 创建表
@@ -63,5 +71,17 @@ public class AccessLogsService {
         result.put("x", x);
         result.put("y", y);
         return result;
+    }
+
+    public List<HashMap<String, Object>> getAccessCountBySysGroup() {
+        return accessLogsMapper.getAccessCountBySysGroup();
+    }
+
+    public Pager<AccessLogs> list(Pager<AccessLogs> pager) {
+        List<AccessLogs> accessLogs = accessLogsMapper.getList((pager.getPageIndex() - 1) * pager.getPageSize(),pager.getPageSize());
+        pager.setTotal(accessLogsMapper.getTotal());
+        pager.setData(accessLogs);
+        pager.setCode(Pager.SUCCESS_CODE);
+        return pager;
     }
 }

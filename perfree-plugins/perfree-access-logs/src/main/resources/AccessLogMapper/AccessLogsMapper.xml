@@ -42,14 +42,73 @@
     </update>
     <select id="getAccessCountByWeek" resultType="map">
         SELECT
-        count( 1 ) `count`,
-        strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) `date`
+            *
         FROM
-        "p_access_logs" p
-        WHERE
-        datetime( p.date / 1000, 'unixepoch', 'localtime' ) <![CDATA[ >=  ]]> datetime( 'now', 'start of day', '-7 day', 'weekday 1' )
-        AND datetime( p.date / 1000, 'unixepoch', 'localtime' ) <![CDATA[ <  ]]> datetime( 'now', 'start of day', '+0 day', 'weekday 1' )
-        GROUP BY
-        strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) )
+            (
+            SELECT
+                count( 1 ) `count`,
+                strftime( '%m月%d日', datetime( 'now' ) ) `date`
+            FROM
+                "p_access_logs" p
+            WHERE
+                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now' ) ) UNION ALL
+            SELECT
+                count( 1 ) `count`,
+                strftime( '%m月%d日', datetime( 'now', '-1 day' ) ) `date`
+            FROM
+                "p_access_logs" p
+            WHERE
+                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-1 day' ) ) UNION ALL
+            SELECT
+                count( 1 ) `count`,
+                strftime( '%m月%d日', datetime( 'now', '-2 day' ) ) `date`
+            FROM
+                "p_access_logs" p
+            WHERE
+                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-2 day' ) ) UNION ALL
+            SELECT
+                count( 1 ) `count`,
+                strftime( '%m月%d日', datetime( 'now', '-3 day' ) ) `date`
+            FROM
+                "p_access_logs" p
+            WHERE
+                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-3 day' ) ) UNION ALL
+            SELECT
+                count( 1 ) `count`,
+                strftime( '%m月%d日', datetime( 'now', '-4 day' ) ) `date`
+            FROM
+                "p_access_logs" p
+            WHERE
+                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-4 day' ) ) UNION ALL
+            SELECT
+                count( 1 ) `count`,
+                strftime( '%m月%d日', datetime( 'now', '-5 day' ) ) `date`
+            FROM
+                "p_access_logs" p
+            WHERE
+                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-5 day' ) ) UNION ALL
+            SELECT
+                count( 1 ) `count`,
+                strftime( '%m月%d日', datetime( 'now', '-6 day' ) ) `date`
+            FROM
+                "p_access_logs" p
+            WHERE
+                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-6 day' ) )
+            )
+        ORDER BY
+            `date` asc
+    </select>
+
+    <select id="getAccessCountBySysGroup" resultType="map">
+        SELECT p.system_group `name`, count(1) `value` FROM p_access_logs p GROUP BY p.system_group
+    </select>
+
+    <select id="getList" resultType="com.access.model.AccessLogs">
+        select id,system_info systemInfo,system_group systemGroup,system_type systemType,browser_version browserVersion,
+        browser_name browserName,browser_group browserGroup,ip,date from p_access_logs limit #{page},#{size}
+    </select>
+
+    <select id="getTotal" resultType="long">
+        select count(1) from p_access_logs
     </select>
 </mapper>

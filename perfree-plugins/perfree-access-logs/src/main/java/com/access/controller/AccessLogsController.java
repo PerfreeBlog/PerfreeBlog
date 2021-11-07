@@ -1,9 +1,14 @@
 package com.access.controller;
 
+import com.access.model.AccessLogs;
 import com.access.service.AccessLogsService;
+import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
+import com.perfree.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -26,5 +31,21 @@ public class AccessLogsController {
     public ResponseBean getAccessCountByWeek() {
         HashMap<String, List<Object>> result = accessLogsService.getAccessCountByWeek();
         return ResponseBean.success("", result);
+    }
+
+    @RequestMapping("/plugin/access/getAccessCountBySysGroup")
+    @ResponseBody
+    public ResponseBean getAccessCountBySysGroup() {
+        return ResponseBean.success("", accessLogsService.getAccessCountBySysGroup());
+    }
+
+    /**
+     * 友链管理列表数据
+     * @return String
+     */
+    @PostMapping("/plugin/access/list")
+    @ResponseBody
+    public Pager<AccessLogs> list(@RequestBody Pager<AccessLogs> pager) {
+        return accessLogsService.list(pager);
     }
 }
