@@ -11,6 +11,7 @@ import com.github.pagehelper.PageInfo;
 import com.perfree.common.Constants;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
+import com.perfree.config.EnjoyConfig;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugin;
 import com.perfree.plugins.PluginsUtils;
@@ -76,6 +77,7 @@ public class PluginService {
                }
             }
             PluginInfo install = pluginOperator.install(file.toPath().toAbsolutePath());
+            EnjoyConfig.jfr.getEngine().removeAllTemplateCache();
             // 存库
             saveOrUpdatePlugin(install.getPluginDescriptor(), file, isUpdate);
             List<com.perfree.plugins.Plugin> pluginBeans = pluginUser.getPluginBeans(install.getPluginDescriptor().getPluginId(), com.perfree.plugins.Plugin.class);
