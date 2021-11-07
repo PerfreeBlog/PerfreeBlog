@@ -15,7 +15,7 @@ import java.util.Date;
 @Service
 public class PluginInitService implements Plugin {
     @Autowired
-    private AccessService accessService;
+    private AccessLogsService accessLogsService;
     @Autowired
     private MenuService menuService;
 
@@ -32,7 +32,7 @@ public class PluginInitService implements Plugin {
     @Override
     public void onInstall() {
         // 建表
-        accessService.createTable();
+        accessLogsService.createTable();
         // 创建菜单
         Menu menu = new Menu();
         menu.setIcon("fa-line-chart");
@@ -56,7 +56,7 @@ public class PluginInitService implements Plugin {
     @Override
     public void onUnInstall() {
         // 删表
-        accessService.dropTable();
+        accessLogsService.dropTable();
         // 删菜单
         Menu menu = new Menu();
         menu.setUrl("/plugin/access");

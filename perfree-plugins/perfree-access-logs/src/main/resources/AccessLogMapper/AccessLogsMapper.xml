@@ -40,4 +40,16 @@
     <update id="dropTable">
         drop table if exists `p_access_logs`
     </update>
+    <select id="getAccessCountByWeek" resultType="map">
+        SELECT
+        count( 1 ) `count`,
+        strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) `date`
+        FROM
+        "p_access_logs" p
+        WHERE
+        datetime( p.date / 1000, 'unixepoch', 'localtime' ) <![CDATA[ >=  ]]> datetime( 'now', 'start of day', '-7 day', 'weekday 1' )
+        AND datetime( p.date / 1000, 'unixepoch', 'localtime' ) <![CDATA[ <  ]]> datetime( 'now', 'start of day', '+0 day', 'weekday 1' )
+        GROUP BY
+        strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) )
+    </select>
 </mapper>

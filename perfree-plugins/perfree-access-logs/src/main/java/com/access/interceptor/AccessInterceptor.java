@@ -2,7 +2,7 @@ package com.access.interceptor;
 
 import com.perfree.commons.IpUtil;
 import com.access.model.AccessLogs;
-import com.access.service.AccessService;
+import com.access.service.AccessLogsService;
 import eu.bitwalker.useragentutils.UserAgent;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -19,7 +19,7 @@ import java.util.Date;
 @Component
 public class AccessInterceptor implements HandlerInterceptor {
     @Autowired
-    private AccessService accessService;
+    private AccessLogsService accessLogsService;
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
@@ -47,7 +47,7 @@ public class AccessInterceptor implements HandlerInterceptor {
             accessLogs.setSystemInfo(userAgent.getOperatingSystem().getName());
             accessLogs.setSystemType(userAgent.getOperatingSystem().getDeviceType().toString());
             accessLogs.setDate(new Date());
-            accessService.addAccess(accessLogs);
+            accessLogsService.addAccess(accessLogs);
             cache.put(new Element(request.getRemoteAddr(), ""));
         }
     }
