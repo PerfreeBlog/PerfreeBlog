@@ -56,8 +56,9 @@ public class AccessLogsService {
      */
     public HashMap<String, List<Object>> getAccessCountByWeek() {
         List<HashMap<String, Object>> countList;
+        System.out.println(DynamicDataSource.dataSourceType);
         if (DynamicDataSource.dataSourceType.equals("mysql")) {
-            countList = accessLogsMapper.getAccessCountByWeek();
+            countList = accessLogsMapper.getAccessCountByWeekFromMysql();
         } else {
             countList = accessLogsMapper.getAccessCountByWeek();
         }

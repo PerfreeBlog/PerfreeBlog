@@ -25,4 +25,6 @@ public interface AccessLogsMapper {
 
     Long getTotal();
 
+    List<HashMap<String, Object>> getAccessCountByWeekFromMysql();
+
 }

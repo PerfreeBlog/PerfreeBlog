@@ -40,63 +40,52 @@
     <update id="dropTable">
         drop table if exists `p_access_logs`
     </update>
+
+    <select id="getAccessCountByWeekFromMysql" resultType="map">
+        select  DATE_FORMAT(STR_TO_DATE(a.click_date, '%Y-%m-%d'),'%m月%d日') `date`,IFNULL(b.count,0) `count`
+        from (
+            SELECT curdate() as click_date
+            union all
+            SELECT date_sub(curdate(), interval 1 day) as click_date
+            union all
+            SELECT date_sub(curdate(), interval 2 day) as click_date
+            union all
+            SELECT date_sub(curdate(), interval 3 day) as click_date
+            union all
+            SELECT date_sub(curdate(), interval 4 day) as click_date
+            union all
+            SELECT date_sub(curdate(), interval 5 day) as click_date
+            union all
+            SELECT date_sub(curdate(), interval 6 day) as click_date
+        ) a left join (
+          select date(p.date) as datetime, count(1) as count
+          from p_access_logs p
+          group by date(p.date)
+        ) b on a.click_date = b.datetime order by a.click_date asc
+    </select>
     <select id="getAccessCountByWeek" resultType="map">
-        SELECT
-            *
-        FROM
-            (
-            SELECT
-                count( 1 ) `count`,
-                strftime( '%m月%d日', datetime( 'now' ) ) `date`
-            FROM
-                "p_access_logs" p
-            WHERE
-                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now' ) ) UNION ALL
-            SELECT
-                count( 1 ) `count`,
-                strftime( '%m月%d日', datetime( 'now', '-1 day' ) ) `date`
-            FROM
-                "p_access_logs" p
-            WHERE
-                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-1 day' ) ) UNION ALL
-            SELECT
-                count( 1 ) `count`,
-                strftime( '%m月%d日', datetime( 'now', '-2 day' ) ) `date`
-            FROM
-                "p_access_logs" p
-            WHERE
-                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-2 day' ) ) UNION ALL
-            SELECT
-                count( 1 ) `count`,
-                strftime( '%m月%d日', datetime( 'now', '-3 day' ) ) `date`
-            FROM
-                "p_access_logs" p
-            WHERE
-                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-3 day' ) ) UNION ALL
-            SELECT
-                count( 1 ) `count`,
-                strftime( '%m月%d日', datetime( 'now', '-4 day' ) ) `date`
-            FROM
-                "p_access_logs" p
-            WHERE
-                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-4 day' ) ) UNION ALL
-            SELECT
-                count( 1 ) `count`,
-                strftime( '%m月%d日', datetime( 'now', '-5 day' ) ) `date`
-            FROM
-                "p_access_logs" p
-            WHERE
-                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-5 day' ) ) UNION ALL
-            SELECT
-                count( 1 ) `count`,
-                strftime( '%m月%d日', datetime( 'now', '-6 day' ) ) `date`
-            FROM
-                "p_access_logs" p
-            WHERE
-                strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-6 day' ) )
-            )
-        ORDER BY
-            `date` asc
+        SELECT * FROM (
+            SELECT count( 1 ) `count`, strftime( '%m月%d日', datetime( 'now' ) ) `date` FROM "p_access_logs" p WHERE
+            strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now' ) )
+            UNION ALL
+            SELECT count( 1 ) `count`, strftime( '%m月%d日', datetime( 'now', '-1 day' ) ) `date` FROM "p_access_logs" p WHERE
+            strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-1 day' ) )
+            UNION ALL
+            SELECT count( 1 ) `count`, strftime( '%m月%d日', datetime( 'now', '-2 day' ) ) `date` FROM "p_access_logs" p WHERE
+            strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-2 day' ) )
+            UNION ALL
+            SELECT count( 1 ) `count`, strftime( '%m月%d日', datetime( 'now', '-3 day' ) ) `date` FROM "p_access_logs" p WHERE
+            strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-3 day' ) )
+            UNION ALL
+            SELECT count( 1 ) `count`, strftime( '%m月%d日', datetime( 'now', '-4 day' ) ) `date` FROM "p_access_logs" p WHERE
+            strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-4 day' ) )
+            UNION ALL
+            SELECT count( 1 ) `count`, strftime( '%m月%d日', datetime( 'now', '-5 day' ) ) `date` FROM "p_access_logs" p WHERE
+            strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-5 day' ) )
+            UNION ALL
+            SELECT count( 1 ) `count`, strftime( '%m月%d日', datetime( 'now', '-6 day' ) ) `date` FROM "p_access_logs" p WHERE
+            strftime( '%Y年%m月%d日', datetime( p.date / 1000, 'unixepoch', 'localtime' ) ) = strftime( '%Y年%m月%d日', datetime( 'now', '-6 day' ) )
+        ) ORDER BY `date` asc
     </select>
 
     <select id="getAccessCountBySysGroup" resultType="map">

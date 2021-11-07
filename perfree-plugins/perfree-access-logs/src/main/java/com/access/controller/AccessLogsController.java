@@ -39,10 +39,6 @@ public class AccessLogsController {
         return ResponseBean.success("", accessLogsService.getAccessCountBySysGroup());
     }
 
-    /**
-     * 友链管理列表数据
-     * @return String
-     */
     @PostMapping("/plugin/access/list")
     @ResponseBody
     public Pager<AccessLogs> list(@RequestBody Pager<AccessLogs> pager) {
