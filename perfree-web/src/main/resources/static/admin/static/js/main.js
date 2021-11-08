@@ -11,6 +11,7 @@ $(function () {
 
     const plugin = localStorage.getItem("plugin");
     if (plugin !== null && plugin !== undefined && plugin !== ""){
+        localStorage.removeItem("plugin");
         toPage("/admin/plugin");
     }
 });
