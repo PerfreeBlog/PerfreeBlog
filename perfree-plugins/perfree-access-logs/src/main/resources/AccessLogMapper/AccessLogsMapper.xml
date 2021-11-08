@@ -93,8 +93,8 @@
     </select>
 
     <select id="getList" resultType="com.access.model.AccessLogs">
-        select id,system_info systemInfo,system_group systemGroup,system_type systemType,browser_version browserVersion,
-        browser_name browserName,browser_group browserGroup,ip,date from p_access_logs limit #{page},#{size}
+      select id,system_info systemInfo,system_group systemGroup,system_type systemType,browser_version browserVersion,
+      browser_name browserName,browser_group browserGroup,ip,`date` from p_access_logs order by id desc limit ${page},${size}
     </select>
 
     <select id="getTotal" resultType="long">

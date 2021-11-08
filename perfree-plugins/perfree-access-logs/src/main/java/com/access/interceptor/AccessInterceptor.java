@@ -7,6 +7,7 @@ import eu.bitwalker.useragentutils.UserAgent;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -34,7 +35,7 @@ public class AccessInterceptor implements HandlerInterceptor {
     }
 
     public void addCache(Ehcache cache, HttpServletRequest request){
-        Element element = cache.get(request.getRemoteAddr());
+        Element element = cache.get(getIpAddress(request));
         if(element==null){
             UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
             AccessLogs accessLogs = new AccessLogs();
@@ -42,13 +43,54 @@ public class AccessInterceptor implements HandlerInterceptor {
             accessLogs.setBrowserName(userAgent.getBrowser().getName());
             accessLogs.setBrowserVersion(userAgent.getBrowserVersion().getVersion());
 
-            accessLogs.setIp(IpUtil.getIpAddr(request));
+            accessLogs.setIp(getIpAddress(request));
             accessLogs.setSystemGroup(userAgent.getOperatingSystem().getGroup().toString());
             accessLogs.setSystemInfo(userAgent.getOperatingSystem().getName());
             accessLogs.setSystemType(userAgent.getOperatingSystem().getDeviceType().toString());
             accessLogs.setDate(new Date());
             accessLogsService.addAccess(accessLogs);
-            cache.put(new Element(request.getRemoteAddr(), ""));
+            cache.put(new Element(getIpAddress(request), accessLogs));
         }
+    }
+
+    public String getIpAddress(HttpServletRequest request) {
+        String ip = request.getHeader("X-requested-For");
+        if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("X-Forwarded-For");
+        }
+
+        if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+
+        if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+
+        if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+
+        if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
+
+        if (StringUtils.isBlank(ip) || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+
+        if (ip != null && ip.contains(",")) {
+            String[] ips = ip.split(",");
+
+            for(int index = 0; index < ips.length; ++index) {
+                String strIp = ips[index];
+                if (!"unknown".equalsIgnoreCase(strIp)) {
+                    ip = strIp;
+                    break;
+                }
+            }
+        }
+
+        return ip;
     }
 }
