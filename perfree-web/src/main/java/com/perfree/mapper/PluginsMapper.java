@@ -11,7 +11,7 @@ import java.util.List;
 public interface PluginsMapper {
     void save(Plugin plugin);
 
-    Plugin getByPath(String path);
+    Plugin getByName(String name);
 
     List<Plugin> getList(Plugin form);
 

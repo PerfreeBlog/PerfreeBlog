@@ -1,5 +1,6 @@
 package com.perfree.plugins;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
@@ -46,6 +47,7 @@ public class PluginsUtils{
                         throw new IOException("加载插件:临时目录创建失败");
                     }
                 }
+                FileUtil.clean(file.getAbsolutePath());
                 File tempFile = new File(file.getAbsolutePath() + "/plugin.properties");
                 FileWriter writer = new FileWriter(tempFile);
                 writer.write(read);

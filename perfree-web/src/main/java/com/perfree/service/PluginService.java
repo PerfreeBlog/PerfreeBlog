@@ -68,14 +68,19 @@ public class PluginService {
             // 遍历当前已安装的插件,如果插件id已存在,则先卸载再安装并判定为更新操作
             PluginOperator pluginOperator = pluginApplication.getPluginOperator();
             PluginUser pluginUser = pluginApplication.getPluginUser();
-            List<PluginInfo> pluginInfo = pluginOperator.getPluginInfo();
+            List<Plugin> pluginList = pluginsMapper.getAll();
             boolean isUpdate = false;
-            for (PluginInfo info : pluginInfo) {
-               if (info.getPluginDescriptor().getPluginId().equals(setting.getStr("plugin.id"))) {
-                   pluginOperator.uninstall(info.getPluginDescriptor().getPluginId(), false);
+            for (Plugin plugin : pluginList) {
+               if (plugin.getName().equals(setting.getStr("plugin.id"))) {
                    isUpdate = true;
                }
             }
+
+            File pluginFile = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + file.getName());
+            if (pluginFile.exists()) {
+                pluginOperator.uninstall(setting.getStr("plugin.id"), false);
+            }
+
             PluginInfo install = pluginOperator.install(file.toPath().toAbsolutePath());
             EnjoyConfig.jfr.getEngine().removeAllTemplateCache();
             // 存库
@@ -109,7 +114,7 @@ public class PluginService {
      * @author Perfree
      */
     private void updatePlugin(PluginDescriptor setting, File file) {
-        Plugin plugin = pluginsMapper.getByPath(file.getName());
+        Plugin plugin = pluginsMapper.getByName(setting.getPluginId());
         plugin.setAuthor(setting.getProvider());
         plugin.setDesc(setting.getPluginDescription());
         plugin.setPath(file.getName());
@@ -165,6 +170,11 @@ public class PluginService {
             List<com.perfree.plugins.Plugin> pluginBeans = pluginUser.getPluginBeans(plugin.getName(), com.perfree.plugins.Plugin.class);
             if (pluginBeans != null && pluginBeans.size() > 0) {
                 pluginBeans.get(0).onUnInstall();
+            }
+            File file = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + plugin.getPath());
+            if (!file.exists()) {
+                pluginsMapper.delById(plugin.getId());
+                return true;
             }
             boolean uninstall = pluginOperator.uninstall(plugin.getName(), false);
             if (uninstall) {
