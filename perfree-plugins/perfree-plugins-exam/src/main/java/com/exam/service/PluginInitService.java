@@ -3,7 +3,6 @@ package com.exam.service;
 import com.exam.directive.SubDirective;
 import com.gitee.starblues.realize.PluginUtils;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
-import com.perfree.commons.SpringBeanUtils;
 import com.perfree.plugins.Plugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
