@@ -27,8 +27,11 @@ function initPage() {
         exts: "jar",
         done: function (res) {
             if (res.code === 200) {
-                parent.layer.msg("插件安装成功,如插件定义了管理页面,请刷新页面查看效果", {icon: 1});
-                location.reload();
+                parent.layer.msg("插件安装成功", {icon: 1});
+                setTimeout(function (){
+                    localStorage.setItem("plugin", "success");
+                    parent.location.reload();
+                }, 500)
             } else {
                 layer.msg(res.msg, {icon: 2});
             }
@@ -118,7 +121,11 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    layer.msg("插件卸载成功,如插件定义了管理页面,请刷新页面查看效果", {icon: 1});
+                    layer.msg("插件卸载成功", {icon: 1});
+                    setTimeout(function (){
+                        localStorage.setItem("plugin", "success");
+                        parent.location.reload();
+                    }, 500)
                 } else {
                     layer.msg(data.msg, {icon: 2});
                 }

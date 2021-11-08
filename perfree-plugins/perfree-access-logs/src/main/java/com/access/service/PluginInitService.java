@@ -32,6 +32,7 @@ public class PluginInitService implements Plugin {
     @Override
     public void onInstall() {
         // 建表
+        accessLogsService.dropTable();
         accessLogsService.createTable();
         // 创建菜单
         Menu menu = new Menu();

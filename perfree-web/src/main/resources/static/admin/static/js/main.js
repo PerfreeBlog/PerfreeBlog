@@ -8,6 +8,11 @@ $(function () {
     initEvent();
     initTheme();
     setIframeHeight();
+
+    const plugin = localStorage.getItem("plugin");
+    if (plugin !== null && plugin !== undefined && plugin !== ""){
+        toPage("/admin/plugin");
+    }
 });
 
 /**

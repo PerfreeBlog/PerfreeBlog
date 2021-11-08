@@ -1,13 +1,9 @@
 package com.access.service;
 
-import com.gitee.starblues.realize.PluginUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.perfree.common.Pager;
-import com.perfree.commons.DynamicDataSource;
 import com.access.mapper.AccessLogsMapper;
 import com.access.model.AccessLogs;
-import com.perfree.model.Link;
+import com.perfree.common.Pager;
+import com.perfree.commons.DynamicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +16,6 @@ public class AccessLogsService {
 
     @Autowired
     private AccessLogsMapper accessLogsMapper;
-
-    @Autowired
-    private PluginUtils pluginUtils;
 
     /**
      * 创建表
@@ -56,7 +49,6 @@ public class AccessLogsService {
      */
     public HashMap<String, List<Object>> getAccessCountByWeek() {
         List<HashMap<String, Object>> countList;
-        System.out.println(DynamicDataSource.dataSourceType);
         if (DynamicDataSource.dataSourceType.equals("mysql")) {
             countList = accessLogsMapper.getAccessCountByWeekFromMysql();
         } else {
