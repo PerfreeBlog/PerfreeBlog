@@ -81,3 +81,6 @@ plugin:
   # 插件存放的目录, 可配置多个
   pluginPath:
     - resources/plugins
+  enablePluginIdRestPathPrefix: false
+  uploadTempPath: temp
+  enableWebSocket: true

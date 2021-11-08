@@ -1,8 +1,10 @@
 package com.access.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AccessLogs {
+public class AccessLogs implements Serializable {
+    private static final long serialVersionUID = 4900274588193382127L;
     private Long id;
     private String systemInfo;
     private String systemGroup;

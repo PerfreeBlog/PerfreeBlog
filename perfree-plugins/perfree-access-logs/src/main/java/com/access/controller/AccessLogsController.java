@@ -39,7 +39,7 @@ public class AccessLogsController {
         return ResponseBean.success("", accessLogsService.getAccessCountBySysGroup());
     }
 
-    @PostMapping("/plugin/access/list")
+    @RequestMapping("/plugin/access/list")
     @ResponseBody
     public Pager<AccessLogs> list(@RequestBody Pager<AccessLogs> pager) {
         return accessLogsService.list(pager);
