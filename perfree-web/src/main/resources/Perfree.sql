@@ -116,6 +116,7 @@ CREATE TABLE `p_menu`  (
                            `status` int(0) NOT NULL DEFAULT 0 COMMENT '菜单状态0:启用,1禁用',
                            `createTime` datetime(0) NOT NULL COMMENT '创建时间',
                            `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                           `pluginId` varchar(128) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '插件id',
                            PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
 

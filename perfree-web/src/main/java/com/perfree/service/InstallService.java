@@ -10,6 +10,9 @@ import cn.hutool.setting.dialect.Props;
 import com.perfree.common.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.model.Database;
+import com.perfree.permission.AdminMenuGroup;
+import com.perfree.permission.MenuManager;
+import com.perfree.plugin.PluginManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -30,6 +33,9 @@ public class InstallService {
     private MenuService menuService;
     @Value("${version}")
     private String version;
+
+    @Autowired
+    private PluginManagerService pluginManagerService;
 
     public boolean addDatabase(Database database) throws Exception{
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
@@ -93,7 +99,14 @@ public class InstallService {
         setting.store(file.getAbsolutePath());
 
         optionService.initOptionCache();
+        List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
+        menuService.initSystemMenu(adminMenuGroups);
         menuService.registerMenuPage();
+        try{
+            pluginManagerService.initPlugins();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
         return true;
     }
 

@@ -86,7 +86,8 @@ CREATE TABLE "p_menu" (
                           "articleId" integer,
                           "status" integer NOT NULL,
                           "createTime" DATETIME NOT NULL,
-                          "updateTime" DATETIME
+                          "updateTime" DATETIME,
+                          "pluginId" text(128)
 );
 
 CREATE TABLE "p_option" (
