@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @description 扩展插件: Service示例
+ * @description 插件示例: Service
  * @author Perfree
  * @date 2021/8/17 15:08
  */
@@ -19,8 +19,12 @@ public class HelloWorldService{
     @Autowired
     private HelloWorldMapper helloWorldMapper;
 
-    public List<Article> test2() {
-        return helloWorldMapper.test2();
+    /**
+     * @description 查询所有文章
+     * @return java.util.List<com.exam.model.Article>
+     * @author Perfree
+     */
+    public List<Article> testQueryArticle() {
+        return helloWorldMapper.testQueryArticle();
     }
-
 }

@@ -2,10 +2,6 @@ package com.perfree.service;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.setting.dialect.Props;
-import com.gitee.starblues.integration.application.PluginApplication;
-import com.gitee.starblues.integration.operator.PluginOperator;
-import com.gitee.starblues.integration.operator.module.PluginInfo;
-import com.gitee.starblues.integration.user.PluginUser;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.common.Constants;
@@ -14,8 +10,10 @@ import com.perfree.common.ResponseBean;
 import com.perfree.config.EnjoyConfig;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugin;
-import com.perfree.plugins.PluginsUtils;
-import org.pf4j.PluginDescriptor;
+import com.perfree.plugin.PluginEvent;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.PluginManager;
+import com.perfree.plugin.PluginsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 
@@ -32,9 +31,9 @@ public class PluginService {
     @Autowired
     private PluginsMapper pluginsMapper;
 
-
     @Autowired
-    private PluginApplication pluginApplication;
+    private PluginManager pluginManager;
+
 
     /**
      * @description  添加插件
@@ -55,47 +54,39 @@ public class PluginService {
             }
             file = new File(Constants.UPLOAD_TEMP_PATH + Constants.SEPARATOR + multiFileName);
             if (file.exists()) {
-                FileUtil.del(file);
+                FileUtil.del(file.getAbsoluteFile());
             }
             // 将插件存储至临时目录
             multiFile.transferTo(file.getAbsoluteFile());
-
             // 读取插件配置文件
             Props setting = PluginsUtils.getSetting(file);
             if (setting.isEmpty()) {
                 return ResponseBean.fail("插件安装失败:插件内无配置文件", null);
             }
-            // 遍历当前已安装的插件,如果插件id已存在,则先卸载再安装并判定为更新操作
-            PluginOperator pluginOperator = pluginApplication.getPluginOperator();
-            PluginUser pluginUser = pluginApplication.getPluginUser();
-            List<Plugin> pluginList = pluginsMapper.getAll();
+
+            File pluginFile = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + multiFileName);
             boolean isUpdate = false;
-            for (Plugin plugin : pluginList) {
-               if (plugin.getName().equals(setting.getStr("plugin.id"))) {
-                   isUpdate = true;
-               }
-            }
-
-            File pluginFile = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + file.getName());
             if (pluginFile.exists()) {
-                pluginOperator.uninstall(setting.getStr("plugin.id"), false);
+                isUpdate = true;
+                pluginManager.unInstall(setting.getStr("plugin.id"));
             }
+            FileUtil.copy(file.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
 
-            PluginInfo install = pluginOperator.install(file.toPath().toAbsolutePath());
+            PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
             EnjoyConfig.jfr.getEngine().removeAllTemplateCache();
             // 存库
-            saveOrUpdatePlugin(install.getPluginDescriptor(), file, isUpdate);
-            List<com.perfree.plugins.Plugin> pluginBeans = pluginUser.getPluginBeans(install.getPluginDescriptor().getPluginId(), com.perfree.plugins.Plugin.class);
-            if (pluginBeans == null || pluginBeans.isEmpty()) {
+            saveOrUpdatePlugin(pluginInfo, pluginFile);
+            PluginEvent pluginBean = pluginInfo.getPluginBean(PluginEvent.class);
+            if (pluginBean == null) {
                 return ResponseBean.success("插件安装成功",null);
             }
             // 如果是更新,则需要调用插件的更新方法,反之调用安装方法
             if (isUpdate) {
-                pluginBeans.get(0).onUpdate();
+                pluginBean.onUpdate();
             } else {
-                pluginBeans.get(0).onInstall();
+                pluginBean.onInstall();
             }
-            pluginBeans.get(0).onStart();
+            pluginBean.onStart();
             return ResponseBean.success("插件安装成功",null);
         }catch (Exception e) {
             e.printStackTrace();
@@ -113,13 +104,13 @@ public class PluginService {
      * @description 更新
      * @author Perfree
      */
-    private void updatePlugin(PluginDescriptor setting, File file) {
-        Plugin plugin = pluginsMapper.getByName(setting.getPluginId());
-        plugin.setAuthor(setting.getProvider());
-        plugin.setDesc(setting.getPluginDescription());
+    private void updatePlugin(PluginInfo pluginInfo, File file) {
+        Plugin plugin = pluginsMapper.getByName(pluginInfo.getPluginWrapper().getDescriptor().getPluginId());
+        plugin.setAuthor(pluginInfo.getPluginWrapper().getDescriptor().getProvider());
+        plugin.setDesc(pluginInfo.getPluginWrapper().getDescriptor().getPluginDescription());
         plugin.setPath(file.getName());
-        plugin.setName(setting.getPluginId());
-        plugin.setVersion(setting.getVersion());
+        plugin.setName(pluginInfo.getPluginId());
+        plugin.setVersion(pluginInfo.getPluginWrapper().getDescriptor().getVersion());
         plugin.setUpdateTime(new Date());
         pluginsMapper.update(plugin);
     }
@@ -128,17 +119,18 @@ public class PluginService {
      * @description 保存插件信息
      * @author Perfree
      */ 
-    private void saveOrUpdatePlugin(PluginDescriptor setting , File file, boolean isUpdate) {
-        if (isUpdate) {
-            updatePlugin(setting, file);
+    private void saveOrUpdatePlugin(PluginInfo pluginInfo , File file) {
+        Plugin byName = pluginsMapper.getByName(pluginInfo.getPluginId());
+        if (byName != null) {
+            updatePlugin(pluginInfo, file);
             return;
         }
         Plugin plugin = new Plugin();
-        plugin.setAuthor(setting.getProvider());
-        plugin.setDesc(setting.getPluginDescription());
+        plugin.setAuthor(pluginInfo.getPluginWrapper().getDescriptor().getProvider());
+        plugin.setDesc(pluginInfo.getPluginWrapper().getDescriptor().getPluginDescription());
         plugin.setPath(file.getName());
-        plugin.setName(setting.getPluginId());
-        plugin.setVersion(setting.getVersion());
+        plugin.setName(pluginInfo.getPluginId());
+        plugin.setVersion(pluginInfo.getPluginWrapper().getDescriptor().getVersion());
         plugin.setCreateTime(new Date());
         pluginsMapper.save(plugin);
     }
@@ -165,21 +157,20 @@ public class PluginService {
     public boolean del(String id) {
         try {
             Plugin plugin = pluginsMapper.getById(id);
-            PluginOperator pluginOperator = pluginApplication.getPluginOperator();
-            PluginUser pluginUser = pluginApplication.getPluginUser();
-            List<com.perfree.plugins.Plugin> pluginBeans = pluginUser.getPluginBeans(plugin.getName(), com.perfree.plugins.Plugin.class);
-            if (pluginBeans != null && pluginBeans.size() > 0) {
-                pluginBeans.get(0).onUnInstall();
-            }
             File file = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + plugin.getPath());
             if (!file.exists()) {
                 pluginsMapper.delById(plugin.getId());
                 return true;
             }
-            boolean uninstall = pluginOperator.uninstall(plugin.getName(), false);
-            if (uninstall) {
-                pluginsMapper.delById(plugin.getId());
+
+            PluginInfo pluginInfo = pluginManager.getPluginInfoById(plugin.getName());
+            PluginEvent pluginBean = pluginInfo.getPluginBean(PluginEvent.class);
+            if (pluginBean != null) {
+                pluginBean.onUnInstall();
             }
+
+            pluginManager.unInstall(plugin.getName());
+            pluginsMapper.delById(plugin.getId());
             return true;
         } catch (Exception e) {
             e.printStackTrace();

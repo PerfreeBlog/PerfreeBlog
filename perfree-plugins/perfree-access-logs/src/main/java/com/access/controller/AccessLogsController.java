@@ -4,10 +4,8 @@ import com.access.model.AccessLogs;
 import com.access.service.AccessLogsService;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
-import com.perfree.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,7 +21,7 @@ public class AccessLogsController {
 
     @RequestMapping("/plugin/access")
     public String index(){
-        return "/static-access/index.html";
+        return "/access-static/index.html";
     }
 
     @RequestMapping("/plugin/access/getAccessCountByWeek")

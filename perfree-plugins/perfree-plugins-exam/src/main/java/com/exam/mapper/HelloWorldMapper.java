@@ -8,11 +8,17 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @description 扩展插件: Mapper示例
+ * @description 插件示例: Mapper
  * @author Perfree
  * @date 2021/8/17 15:08
  */
 @Mapper
 public interface HelloWorldMapper{
-    List<Article> test2();
+
+    /**
+     * @description 查询所有文章
+     * @return java.util.List<com.exam.model.Article>
+     * @author Perfree
+     */
+    List<Article> testQueryArticle();
 }

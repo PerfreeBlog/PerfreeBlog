@@ -5,9 +5,6 @@ import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
-import com.gitee.starblues.integration.application.PluginApplication;
-import com.gitee.starblues.integration.operator.PluginOperator;
-import com.gitee.starblues.integration.user.PluginUser;
 import com.jfinal.template.Directive;
 import com.perfree.common.Constants;
 import com.perfree.commons.DynamicDataSource;
@@ -15,7 +12,7 @@ import com.perfree.commons.SpringBeanUtils;
 import com.perfree.controller.WebSocketServer;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
-import com.perfree.plugins.Plugin;
+import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
 import com.perfree.service.PluginService;
@@ -31,7 +28,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
-import java.util.*;
+import java.util.Map;
 
 /**
  * Execute after startup
@@ -47,15 +44,13 @@ public class PostAppRunner implements ApplicationRunner {
     private final OptionService optionService;
     private final MenuService menuService;
     private final PluginService pluginService;
-    private final PluginOperator pluginOperator;
-    private final PluginUser pluginUser;
+    private final PluginManagerService pluginManagerService;
 
-    public PostAppRunner(PluginApplication pluginApplication, OptionService optionService, MenuService menuService, PluginService pluginService) {
+    public PostAppRunner(PluginManagerService pluginManagerService,OptionService optionService, MenuService menuService, PluginService pluginService) {
         this.optionService = optionService;
         this.menuService = menuService;
         this.pluginService = pluginService;
-        this.pluginOperator = pluginApplication.getPluginOperator();
-        this.pluginUser = pluginApplication.getPluginUser();
+        this.pluginManagerService = pluginManagerService;
     }
 
     @Override
@@ -163,9 +158,10 @@ public class PostAppRunner implements ApplicationRunner {
      * @author Perfree
      */
     private void initPlugins() {
-        List<Plugin> pluginBeans = pluginUser.getPluginBeans(Plugin.class);
-        for (Plugin pluginBean : pluginBeans) {
-            pluginBean.onStart();
+        try {
+            pluginManagerService.initPlugins();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

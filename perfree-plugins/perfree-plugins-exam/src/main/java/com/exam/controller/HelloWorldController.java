@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 /**
- * @description 扩展插件: controller示例
+ * @description 示例插件: controller
  * @author Perfree
  * @date 2021/8/17 15:08
  */
@@ -21,21 +21,36 @@ public class HelloWorldController{
     @Autowired
     private HelloWorldService helloWorldService;
 
-    @RequestMapping("/plugin/test1")
+    /** 
+     * @description 返回字符串
+     * @return java.lang.String
+     * @author Perfree
+     */ 
+    @RequestMapping("/plugin/testStr")
     @ResponseBody
-    public String test1 () {
+    public String testStr () {
         return "插件测试:返回字符串";
     }
 
-    @RequestMapping("/plugin/test2")
+    /**
+     * @description 查询数据库所有文章
+     * @return java.util.List<com.exam.model.Article>
+     * @author Perfree
+     */
+    @RequestMapping("/plugin/testQueryArticle")
     @ResponseBody
-    public List<Article> test2 () {
-        return helloWorldService.test2();
+    public List<Article> testQueryArticle() {
+        return helloWorldService.testQueryArticle();
     }
 
-    @RequestMapping("/plugin/test3")
-    public String index3 (Model model) {
+    /**
+     * @description 返回Html
+     * @return java.lang.String
+     * @author Perfree
+     */
+    @RequestMapping("/plugin/testHtml")
+    public String testHtml (Model model) {
         model.addAttribute("article", "插件测试: 返回html");
-        return "/static-exam/index.html";
+        return "/exam-static/index.html";
     }
 }

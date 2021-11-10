@@ -1,6 +1,11 @@
-package com.perfree.plugins;
+package com.perfree.plugin;
 
-public interface Plugin {
+/**
+ * @description 插件事件
+ * @author Perfree
+ * @date 2021/11/9 14:25
+ */
+public interface PluginEvent {
     /**
      * @description 插件启动时加载
      * @author Perfree

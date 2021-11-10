@@ -78,9 +78,5 @@ cache:
 plugin:
   # 插件运行模式. dev: 开发环境, prod: 生产环境
   runMode: prod
-  # 插件存放的目录, 可配置多个
-  pluginPath:
-    - resources/plugins
-  enablePluginIdRestPathPrefix: false
-  uploadTempPath: temp
-  enableWebSocket: true
+  # 插件存放的目录
+  path: resources/plugins

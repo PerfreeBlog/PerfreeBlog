@@ -107,22 +107,8 @@
         </dependency>
 
         <dependency>
-            <groupId>com.gitee.starblues</groupId>
-            <artifactId>springboot-plugin-framework-extension-mybatis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.gitee.starblues</groupId>
-            <artifactId>springboot-plugin-framework</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.gitee.starblues</groupId>
-            <artifactId>springboot-plugin-framework-extension-resources</artifactId>
         </dependency>
 
         <!-- 分页插件 -->
@@ -133,6 +119,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.pf4j</groupId>
+            <artifactId>pf4j</artifactId>
         </dependency>
 
         <dependency>

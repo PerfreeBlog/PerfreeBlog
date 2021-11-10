@@ -2,7 +2,8 @@ package com.access.service;
 
 import com.access.model.RoleMenu;
 import com.perfree.model.Menu;
-import com.perfree.plugins.Plugin;
+import com.perfree.plugin.PluginEvent;
+import net.sf.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.Date;
  * 启动,更新,卸载,安装示例
  */
 @Service
-public class PluginInitService implements Plugin {
+public class PluginInitService implements PluginEvent {
     @Autowired
     private AccessLogsService accessLogsService;
     @Autowired
@@ -52,6 +53,9 @@ public class PluginInitService implements Plugin {
         roleMenu.setMenuId(menu.getId());
         roleMenu.setRoleId(1L);
         menuService.addRoleMenu(roleMenu);
+
+        CacheManager.getInstance().removeCache("access_logs");
+
     }
 
     @Override
@@ -63,5 +67,6 @@ public class PluginInitService implements Plugin {
         menu.setUrl("/plugin/access");
         menu = menuService.queryByUrl(menu);
         menuService.removeAdminMenu(menu);
+        CacheManager.getInstance().removeCache("access_logs");
     }
 }

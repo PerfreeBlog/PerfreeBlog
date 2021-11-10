@@ -1,15 +1,16 @@
 package com.access.interceptor;
 
-import com.perfree.commons.IpUtil;
 import com.access.model.AccessLogs;
 import com.access.service.AccessLogsService;
+import com.perfree.plugin.annotation.InterceptPath;
 import eu.bitwalker.useragentutils.UserAgent;
+import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
+import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,20 +18,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
-@Component
+@InterceptPath("/**")
 public class AccessInterceptor implements HandlerInterceptor {
     @Autowired
     private AccessLogsService accessLogsService;
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        CacheManager cacheManager = CacheManager.getInstance();
-        Ehcache cache = cacheManager.getEhcache("access_log");
-        if (cache == null) {
-            cacheManager.addCache("access_log");
-            addCache(cacheManager.getEhcache("access_log"), request);
-        } else {
-            addCache(cache, request);
+        try{
+            CacheManager cacheManager = CacheManager.getInstance();
+            Ehcache cache = cacheManager.getEhcache("access_logs");
+            if (cache == null) {
+                CacheConfiguration cacheConfiguration = new CacheConfiguration();
+                cacheConfiguration.timeToIdleSeconds(60 * 10);
+                cacheConfiguration.setName("access_logs");
+                cacheConfiguration.eternal(false);
+                cacheConfiguration.timeToLiveSeconds(60 * 10);
+                cacheConfiguration.setMaxBytesLocalHeap("50M");
+                Cache accessLogsCache = new Cache(cacheConfiguration);
+                cacheManager.addCache(accessLogsCache);
+                addCache(cacheManager.getEhcache("access_logs"), request);
+            } else {
+                addCache(cache, request);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -9,10 +9,11 @@ import com.perfree.directive.TemplateDirective;
 import org.springframework.stereotype.Component;
 
 /**
- * @description 扩展插件,自定义模板指令示例
+ * @description 插件示例: 自定义模板指令subs,截取字符串
  * @author Perfree
  * @date 2021/8/17 15:08
  */
+@TemplateDirective("subs")
 public class SubDirective extends BaseDirective {
     public void setExprList(ExprList exprList) {
         super.setExprList(exprList);
@@ -22,7 +23,6 @@ public class SubDirective extends BaseDirective {
     public void exec(Env env, Scope scope, Writer writer) {
         String str = getParam(0, scope).toString();
         int maxLength = getParamToInt(1, scope, 0);
-        System.out.println(maxLength);
         String result;
         if (str.length() > maxLength) {
             result = str.substring(0, maxLength);
