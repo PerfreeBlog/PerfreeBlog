@@ -146,6 +146,13 @@ public class PostAppRunner implements ApplicationRunner {
                         }
                     }
                 }
+                // 临时: 小于128版本,清除插件目录
+                if (versionToLong(dbVersion) < 128) {
+                    File pluginFile = new File(Constants.PLUGIN_PATH);
+                    if (pluginFile.exists()){
+                        FileUtil.clean(pluginFile.getAbsolutePath());
+                    }
+                }
 
                 File file = new File(Constants.DB_PROPERTIES_PATH);
                 Props newDbSetting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
