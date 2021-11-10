@@ -91,4 +91,10 @@ public interface MenuMapper {
 
     void deleteAllRoleMenu();
 
+    List<Menu> getByPluginId(String pluginId);
+
+    void delById(Long id);
+
+    void delRoleMenuByMenuId(Long id);
+
 }

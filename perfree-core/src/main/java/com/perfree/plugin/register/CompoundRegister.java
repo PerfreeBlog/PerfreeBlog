@@ -30,6 +30,7 @@ public class CompoundRegister implements PluginRegister, ApplicationContextAware
         pluginRegisterList.add(new ControllerRegister(this.applicationContext));
         pluginRegisterList.add(new InterceptorRegister(this.applicationContext));
         pluginRegisterList.add(new TemplateDirectiveRegister(this.applicationContext));
+        pluginRegisterList.add(new AdminMenuRegister(this.applicationContext));
         for (PluginRegister pluginRegister : pluginRegisterList) {
             pluginRegister.initialize();
         }

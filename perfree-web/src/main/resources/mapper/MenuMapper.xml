@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.MenuMapper" >
     <insert id="add" useGeneratedKeys="true" keyProperty="id" >
-        insert into p_menu (pid, name, url, icon,seq,type,target,status,articleId,createTime)
-        VALUES (#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status},#{articleId}, #{createTime})
+        insert into p_menu (pid, name, url, icon,seq,type,target,status,articleId,createTime,pluginId)
+        VALUES (#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status},#{articleId}, #{createTime},#{pluginId})
     </insert>
 
     <update id="update">
@@ -163,6 +163,9 @@
     <select id="getRegisterMenu" resultType="com.perfree.model.Menu">
         select * from p_menu where status= 0 and type = 0
     </select>
+    <select id="getByPluginId" resultType="com.perfree.model.Menu">
+         select * from p_menu where pluginId = #{pluginId}
+    </select>
 
     <delete id="deleteAllAdminMenu">
         DELETE FROM p_menu  WHERE `type` = 1
@@ -170,6 +173,13 @@
 
     <delete id="deleteAllRoleMenu">
         DELETE FROM p_role_menu
+    </delete>
+
+    <delete id="delById">
+         DELETE FROM p_menu  WHERE id = #{id}
+    </delete>
+    <delete id="delRoleMenuByMenuId">
+         DELETE FROM p_role_menu where menuId = #{id}
     </delete>
 
     <insert id="addRoleMenuByRoleCode">

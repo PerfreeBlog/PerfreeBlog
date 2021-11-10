@@ -18,5 +18,7 @@ INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (4, 2);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (4, 5);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (4, 6);
 INSERT INTO `p_role_menu`(`roleId`, `menuId`) VALUES (4, 3);
-
+--PerfreeBlog
+--v1.2.8;
+ALTER TABLE `p_menu` ADD COLUMN `pluginId` varchar(128) NULL COMMENT '插件id';
 

@@ -9,8 +9,7 @@ import org.pf4j.PluginWrapper;
  * 插件主类
  */
 @AdminGroups(groups = {
-        @AdminGroup(name = "123", groupId = "测试1"),
-        @AdminGroup(name = "456", groupId = "测试2")
+        @AdminGroup(name = "访问统计", groupId = "plugin-access", icon = "fa-line-chart", url = "/plugin/access")
 })
 public class PluginMain extends BasePlugin {
     public PluginMain(PluginWrapper wrapper) {

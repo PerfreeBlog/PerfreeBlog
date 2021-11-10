@@ -36,6 +36,9 @@ public class Menu implements Serializable {
     private Long articleId;
     private Article article;
 
+    private String pluginId;
+
+
     public List<Menu> getChildMenu() {
         return childMenu;
     }
@@ -54,6 +57,14 @@ public class Menu implements Serializable {
 
     public Long getId() {
         return id;
+    }
+
+    public String getPluginId() {
+        return pluginId;
+    }
+
+    public void setPluginId(String pluginId) {
+        this.pluginId = pluginId;
     }
 
     public void setId(Long id) {

@@ -21,14 +21,13 @@ import java.util.*;
 public class MenuManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(MenuManager.class);
 
-    public static List<AdminMenuGroup> systemAdminMenuGroups = Collections.synchronizedList(new ArrayList<>());
-    public static List<Class<?>> controllerClassList = Collections.synchronizedList(new ArrayList<>());
 
     /** 
      * @description 初始化系统菜单分组
      * @author Perfree
      */ 
-    public static void initSystemMenuGroup() {
+    public static List<AdminMenuGroup> initSystemMenuGroup() {
+        List<AdminMenuGroup> systemAdminMenuGroups = Collections.synchronizedList(new ArrayList<>());
         AdminMenuGroup home = new AdminMenuGroup();
         home.setGroupId(Constants.ADMIN_MENU_GROUP_HOME);
         home.setIcon("fa-home");
@@ -81,6 +80,7 @@ public class MenuManager {
         systemAdminMenuGroups.add(theme);
         systemAdminMenuGroups.add(plugin);
         systemAdminMenuGroups.add(setting);
+        return systemAdminMenuGroups;
     }
 
     /** 
@@ -88,10 +88,9 @@ public class MenuManager {
      * @author Perfree
      */
     public static List<AdminMenuGroup> initSystemMenu() {
-        initSystemMenuGroup();
-        initSystemControllerClasses();
-        initSystemAdminMenu();
-        return systemAdminMenuGroups;
+        List<AdminMenuGroup> adminMenuGroups = initSystemMenuGroup();
+        List<Class<?>> controllerClassList = initSystemControllerClasses();
+        return initAdminMenu(controllerClassList, adminMenuGroups);
     }
 
 
@@ -99,7 +98,8 @@ public class MenuManager {
      * @description 初始化系统controller 类
      * @author Perfree
      */
-    private static void initSystemControllerClasses() {
+    private static List<Class<?>> initSystemControllerClasses() {
+        List<Class<?>> controllerClassList = Collections.synchronizedList(new ArrayList<>());
         try{
             ResourcePatternResolver resourcePatternResolver = new PathMatchingResourcePatternResolver();
             String pattern = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + ClassUtils.convertClassNameToResourcePath("com.perfree.controller") + "/**/*.class";
@@ -115,6 +115,7 @@ public class MenuManager {
             e.printStackTrace();
             LOGGER.error("Register Menu-> Scanner system controller error:{}", e.getMessage());
         }
+        return controllerClassList;
     }
 
     /**
@@ -123,8 +124,8 @@ public class MenuManager {
      * @date 2021/11/10 14:35
      * @return
      */
-    private static void initSystemAdminMenu() {
-        for (Class<?> clazz : controllerClassList) {
+    public static List<AdminMenuGroup> initAdminMenu(List<Class<?>> classList,List<AdminMenuGroup> adminMenuGroups) {
+        for (Class<?> clazz : classList) {
             if(clazz.getAnnotation(Controller.class) != null || clazz.getAnnotation(RestController.class) != null) {
                 for (Method method : clazz.getMethods()) {
                     AdminMenu annotation = AnnotationUtils.getAnnotation(method, AdminMenu.class);
@@ -135,7 +136,7 @@ public class MenuManager {
                         menuItem.setSeq(annotation.seq());
                         menuItem.setUrl(getMenuUrl(clazz, method));
                         menuItem.setRole(Arrays.asList(annotation.role()));
-                        AdminMenuGroup adminMenuGroup = matchAdminGroupMenu(menuItem.getGroupId());
+                        AdminMenuGroup adminMenuGroup = matchAdminGroupMenu(menuItem.getGroupId(), adminMenuGroups);
                         if (adminMenuGroup != null) {
                             adminMenuGroup.getMenuItems().add(menuItem);
                         }
@@ -143,6 +144,7 @@ public class MenuManager {
                 }
             }
         }
+        return adminMenuGroups;
     }
 
     /** 
@@ -150,7 +152,7 @@ public class MenuManager {
      * @return com.perfree.permission.AdminMenuGroup
      * @author Perfree
      */ 
-    public static AdminMenuGroup matchAdminGroupMenu(String groupId){
+    public static AdminMenuGroup matchAdminGroupMenu(String groupId,List<AdminMenuGroup> systemAdminMenuGroups){
         for (AdminMenuGroup adminMenuGroup : systemAdminMenuGroups) {
             if (adminMenuGroup.getGroupId().equals(groupId)) {
                 return adminMenuGroup;

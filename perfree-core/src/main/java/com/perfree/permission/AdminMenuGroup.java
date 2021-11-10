@@ -77,8 +77,9 @@ public class AdminMenuGroup {
                 ", groupId='" + groupId + '\'' +
                 ", icon='" + icon + '\'' +
                 ", url='" + url + '\'' +
-                ", role='" + role + '\'' +
+                ", role=" + role +
                 ", seq=" + seq +
+                ", menuItems=" + menuItems +
                 '}';
     }
 }

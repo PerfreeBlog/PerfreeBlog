@@ -1,8 +1,10 @@
 package com.perfree.plugin.register;
 
 import com.perfree.directive.BaseDirective;
+import com.perfree.permission.AdminGroups;
 import com.perfree.plugin.BasePlugin;
 import com.perfree.plugin.PluginInfo;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.core.io.Resource;
 import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
 import org.springframework.core.type.classreading.MetadataReader;
@@ -25,17 +27,22 @@ public class ClassRegister implements PluginRegister{
     @Override
     public void registry(PluginInfo plugin) throws Exception {
         List<Class<?>> classList = new ArrayList<>();
+        List<Class<?>> adminGroupsClassList = new ArrayList<>();
         for (Resource resource : plugin.getClassResourceList()) {
             if(resource.isReadable()) {
                 MetadataReader metadataReader = new CachingMetadataReaderFactory().getMetadataReader(resource);
-                Class clazz = plugin.getPluginWrapper().getPluginClassLoader().loadClass(metadataReader.getAnnotationMetadata().getClassName());
+                Class<?> clazz = plugin.getPluginWrapper().getPluginClassLoader().loadClass(metadataReader.getAnnotationMetadata().getClassName());
                 if (!BasePlugin.class.isAssignableFrom(clazz)) {
                     classList.add(clazz);
+                }
+                AdminGroups annotation = clazz.getAnnotation(AdminGroups.class);
+                if (annotation != null) {
+                    adminGroupsClassList.add(clazz);
                 }
             }
         }
         plugin.setClassList(classList);
-
+        plugin.setAdminGroupsClassList(adminGroupsClassList);
 
         List<Class<?>> pluginClassList = plugin.getClassList().stream().filter(item -> !item.isInterface()).collect(Collectors.toList());
         if(!pluginClassList.isEmpty()) {

@@ -7,6 +7,7 @@ import com.perfree.common.OptionCacheUtil;
 import com.perfree.common.Pager;
 import com.perfree.commons.RegisterRequestMapping;
 import com.perfree.controller.front.PageController;
+import com.perfree.interceptor.BaseMenuService;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.model.RoleMenu;
@@ -24,12 +25,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @Transactional
-public class MenuService {
+public class MenuService implements BaseMenuService {
     @Autowired
     private MenuMapper menuMapper;
 
@@ -195,19 +197,43 @@ public class MenuService {
         menuMapper.deleteAllRoleMenu();
         // 初始化
         for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
-            Menu menu = adminMenuGroupToMenu(adminMenuGroup, -1L);
+            Menu menu = adminMenuGroupToMenu(adminMenuGroup, -1L,null);
             for (MenuItem menuItem : adminMenuGroup.getMenuItems()) {
-                menuItemToMenu(menuItem, menu.getId());
+                menuItemToMenu(menuItem, menu.getId(), null);
             }
         }
     }
 
-    public Menu adminMenuGroupToMenu(AdminMenuGroup adminMenuGroup, Long pid){
+    /**
+     * 添加插件menu
+     */
+    public void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups, String pluginId) {
+        for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
+            Menu menu = adminMenuGroupToMenu(adminMenuGroup, -1L,pluginId);
+            for (MenuItem menuItem : adminMenuGroup.getMenuItems()) {
+                menuItemToMenu(menuItem, menu.getId(), pluginId);
+            }
+        }
+    }
+
+    /**
+     * 移除插件菜单
+     */
+    public void removePluginSystemMenu(String pluginId) {
+        List<Menu> menus = menuMapper.getByPluginId(pluginId);
+        for (Menu menu : menus) {
+            menuMapper.delById(menu.getId());
+            menuMapper.delRoleMenuByMenuId(menu.getId());
+        }
+    }
+
+    public Menu adminMenuGroupToMenu(AdminMenuGroup adminMenuGroup, Long pid, String pluginId){
         Menu menu = new Menu();
         menu.setIcon(adminMenuGroup.getIcon());
         menu.setName(adminMenuGroup.getName());
         menu.setPid(pid);
         menu.setStatus(0);
+        menu.setPluginId(pluginId);
         menu.setSeq(adminMenuGroup.getSeq());
         menu.setType(1);
         menu.setTarget(0);
@@ -218,7 +244,7 @@ public class MenuService {
         return menu;
     }
 
-    public void menuItemToMenu(MenuItem menuItem, Long pid){
+    public void menuItemToMenu(MenuItem menuItem, Long pid, String pluginId){
         Menu menu = new Menu();
         menu.setIcon(menuItem.getIcon());
         menu.setName(menuItem.getName());
@@ -226,6 +252,7 @@ public class MenuService {
         menu.setStatus(0);
         menu.setSeq(menuItem.getSeq());
         menu.setType(1);
+        menu.setPluginId(pluginId);
         menu.setTarget(menuItem.getTarget());
         menu.setUrl(menuItem.getUrl());
         menu.setCreateTime(new Date());

@@ -28,6 +28,8 @@ public class PluginInfo {
 
     private PluginWrapper pluginWrapper;
 
+    private List<Class<?>> adminGroupsClassList;
+
     private String pluginId;
 
     private String mapperXmlDir;
@@ -74,6 +76,14 @@ public class PluginInfo {
                 this.staticFileLocations.add(staticLocation);
             }
         }
+    }
+
+    public List<Class<?>> getAdminGroupsClassList() {
+        return adminGroupsClassList;
+    }
+
+    public void setAdminGroupsClassList(List<Class<?>> adminGroupsClassList) {
+        this.adminGroupsClassList = adminGroupsClassList;
     }
 
     public PluginWrapper getPluginWrapper() {
