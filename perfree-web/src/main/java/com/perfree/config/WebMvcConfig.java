@@ -3,9 +3,11 @@ package com.perfree.config;
 import com.perfree.interceptor.DataSourceInterceptor;
 import com.perfree.interceptor.EnjoyInterceptor;
 import com.perfree.interceptor.HtmlInterceptor;
+import com.perfree.plugin.resources.PluginResourceResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -33,6 +35,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        String pathPattern = "/static-plugin/**";
+        ResourceHandlerRegistration resourceHandlerRegistration = registry.addResourceHandler(pathPattern);
+        resourceHandlerRegistration.resourceChain(false).addResolver(new PluginResourceResolver());
         WebMvcConfig.registry = registry;
     }
 
@@ -56,8 +61,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/500",
                         "/install/step2",
                         "/install/addDatabase",
-                        "/static/**",
-                        "/static-plugin/**"
+                        "/static/**"
                 );
 
         registry.addInterceptor(new EnjoyInterceptor()).addPathPatterns("/**")

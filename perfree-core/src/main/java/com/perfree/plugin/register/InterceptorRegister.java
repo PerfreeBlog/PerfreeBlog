@@ -38,20 +38,23 @@ public class InterceptorRegister implements PluginRegister{
     public void registry(PluginInfo plugin) throws Exception {
         List<Class<?>> interceptorClassList = getClassList(plugin);
         if(interceptorClassList.isEmpty()) return;
-        if(!interceptorClassList.isEmpty()) {
-            for (Class<?> aClass : interceptorClassList) {
-                InterceptPath interceptPaths = aClass.getAnnotation(InterceptPath.class);
-                if(interceptPaths != null && interceptPaths.value() != null) {
-                    MappedInterceptor mappedInterceptor = new MappedInterceptor(interceptPaths.value(), (HandlerInterceptor) plugin.getPluginApplicationContext().getBean(aClass));
-                    handlerInterceptorList.add(mappedInterceptor);
-                }
+        for (Class<?> aClass : interceptorClassList) {
+            InterceptPath interceptPaths = aClass.getAnnotation(InterceptPath.class);
+            if(interceptPaths != null) {
+                MappedInterceptor mappedInterceptor = new MappedInterceptor(interceptPaths.value(), (HandlerInterceptor) plugin.getPluginApplicationContext().getBean(aClass));
+                handlerInterceptorList.add(mappedInterceptor);
+                plugin.getHandlerInterceptorList().add(mappedInterceptor);
             }
         }
     }
 
     @Override
     public void unRegistry(PluginInfo plugin) throws Exception {
-        handlerInterceptorList.clear();
+        List<HandlerInterceptor> handlerInterceptorList = plugin.getHandlerInterceptorList();
+        for (HandlerInterceptor handlerInterceptor : handlerInterceptorList) {
+            this.handlerInterceptorList.remove(handlerInterceptor);
+        }
+
     }
 
     List<Class<?>> getClassList(PluginInfo plugin) {

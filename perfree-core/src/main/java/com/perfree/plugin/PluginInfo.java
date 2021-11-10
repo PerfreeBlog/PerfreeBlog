@@ -6,6 +6,7 @@ import org.pf4j.PluginWrapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.io.Resource;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.*;
 
@@ -33,6 +34,8 @@ public class PluginInfo {
     private String pluginId;
 
     private String mapperXmlDir;
+
+    private  List<HandlerInterceptor> handlerInterceptorList = new ArrayList<>();
 
     private Set<String> staticClassPathLocations = new HashSet<>();
     private Set<String> staticFileLocations = new HashSet<>();
@@ -65,6 +68,14 @@ public class PluginInfo {
      */
     public <T> T getPluginBean(Class<T> c) {
         return pluginApplicationContext.getBean(c);
+    }
+
+    public List<HandlerInterceptor> getHandlerInterceptorList() {
+        return handlerInterceptorList;
+    }
+
+    public void setHandlerInterceptorList(List<HandlerInterceptor> handlerInterceptorList) {
+        this.handlerInterceptorList = handlerInterceptorList;
     }
 
     private void loadResources(String locations){
