@@ -9,6 +9,9 @@ import com.perfree.commons.RegisterRequestMapping;
 import com.perfree.controller.front.PageController;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
+import com.perfree.model.RoleMenu;
+import com.perfree.permission.AdminMenuGroup;
+import com.perfree.permission.MenuItem;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -141,12 +144,6 @@ public class MenuService {
         menus.forEach(r -> {
             if (RegisterRequestMapping.isUrlPattern(r.getUrl()) && StringUtils.isNotBlank(r.getUrl())
                     && r.getUrl().startsWith("/") && !r.getUrl().equals("/")){
-                /*  File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + r.getUrl() + ".html");
-                File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + r.getUrl() + ".html");
-                if (file.exists() || devFile.exists()) {
-                    patterns.add(r.getUrl());
-                    patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
-                }*/
                 patterns.add(r.getUrl());
                 patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
             }
@@ -185,5 +182,66 @@ public class MenuService {
         Method methodName = ReflectionUtils.findMethod(PageController.class, "pages", int.class,HttpServletRequest.class,
                 HttpServletResponse.class, Model.class);
         RegisterRequestMapping.registerRequestMapping(PageController.class,methodName, patternPageIndexArr);
+    }
+
+    /**
+     * @description 初始化系统菜单
+     * @author Perfree
+     */
+    public void initSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
+        // 清除菜单
+        menuMapper.deleteAllAdminMenu();
+        // 清除后台权限
+        menuMapper.deleteAllRoleMenu();
+        // 初始化
+        for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
+            Menu menu = adminMenuGroupToMenu(adminMenuGroup, -1L);
+            for (MenuItem menuItem : adminMenuGroup.getMenuItems()) {
+                menuItemToMenu(menuItem, menu.getId());
+            }
+        }
+    }
+
+    public Menu adminMenuGroupToMenu(AdminMenuGroup adminMenuGroup, Long pid){
+        Menu menu = new Menu();
+        menu.setIcon(adminMenuGroup.getIcon());
+        menu.setName(adminMenuGroup.getName());
+        menu.setPid(pid);
+        menu.setStatus(0);
+        menu.setSeq(adminMenuGroup.getSeq());
+        menu.setType(1);
+        menu.setTarget(0);
+        menu.setUrl(adminMenuGroup.getUrl());
+        menu.setCreateTime(new Date());
+        menuMapper.add(menu);
+        initMenuRole(menu, adminMenuGroup.getRole());
+        return menu;
+    }
+
+    public void menuItemToMenu(MenuItem menuItem, Long pid){
+        Menu menu = new Menu();
+        menu.setIcon(menuItem.getIcon());
+        menu.setName(menuItem.getName());
+        menu.setPid(pid);
+        menu.setStatus(0);
+        menu.setSeq(menuItem.getSeq());
+        menu.setType(1);
+        menu.setTarget(menuItem.getTarget());
+        menu.setUrl(menuItem.getUrl());
+        menu.setCreateTime(new Date());
+        menuMapper.add(menu);
+        initMenuRole(menu, menuItem.getRole());
+    }
+
+    /**
+     * @description 初始化权限
+     */
+    public void initMenuRole(Menu menu, List<String> roleCodes) {
+        for (String roleCode : roleCodes) {
+            RoleMenu roleMenu = new RoleMenu();
+            roleMenu.setMenuId(menu.getId());
+            roleMenu.setRoleCode(roleCode);
+            menuMapper.addRoleMenuByRoleCode(roleMenu);
+        }
     }
 }

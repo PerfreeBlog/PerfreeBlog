@@ -1,9 +1,11 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Constants;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Category;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.CategoryService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -29,6 +31,8 @@ public class CategoryController extends BaseController  {
      */
     @RequestMapping("/category")
     @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @AdminMenu(name = "分类管理", seq = 4, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/category/category_list.html");
     }

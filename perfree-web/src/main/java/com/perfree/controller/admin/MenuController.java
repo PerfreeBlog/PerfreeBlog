@@ -1,10 +1,12 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Constants;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.commons.RegisterRequestMapping;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Menu;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.MenuService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -29,6 +31,7 @@ public class MenuController extends BaseController {
      * @return String
      */
     @RequestMapping("/menu")
+    @AdminMenu(name = "菜单管理", seq = 9, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/menu/menu_list.html");
     }

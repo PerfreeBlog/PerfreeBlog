@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.perfree.model.Article;
 import com.perfree.model.Menu;
+import com.perfree.model.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
@@ -83,5 +84,11 @@ public interface MenuMapper {
     Menu getMenuByUrl(String url);
 
     List<Menu> getRegisterMenu();
+
+    void deleteAllAdminMenu();
+
+    void addRoleMenuByRoleCode(RoleMenu roleMenu);
+
+    void deleteAllRoleMenu();
 
 }

@@ -1,11 +1,13 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Constants;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Comment;
 import com.perfree.model.Menu;
 import com.perfree.model.User;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.CommentService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -32,6 +34,8 @@ public class CommentController extends BaseController {
      */
     @RequestMapping("/comment")
     @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @AdminMenu(name = "评论管理", seq = 3, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
     public String index() {
         return view("static/admin/pages/comment/comment_list.html");
     }

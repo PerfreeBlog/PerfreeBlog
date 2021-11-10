@@ -1,9 +1,11 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Constants;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Tag;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.TagService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -31,6 +33,8 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag")
     @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @AdminMenu(name = "标签管理", seq = 5, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/tag/tag_list.html");
     }

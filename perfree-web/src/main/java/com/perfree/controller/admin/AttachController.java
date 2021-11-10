@@ -1,11 +1,13 @@
 package com.perfree.controller.admin;
 
 import cn.hutool.core.io.FileTypeUtil;
+import com.perfree.common.Constants;
 import com.perfree.commons.FileUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Attach;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -129,6 +131,8 @@ public class AttachController extends BaseController {
      */
     @RequestMapping("/attach")
     @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @AdminMenu(name = "附件管理", seq = 6, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/attach/attach_list.html");
     }

@@ -12,6 +12,8 @@ import com.perfree.commons.SpringBeanUtils;
 import com.perfree.controller.WebSocketServer;
 import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
+import com.perfree.permission.AdminMenuGroup;
+import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Component;
 import javax.sql.DataSource;
 import java.io.File;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -81,6 +84,8 @@ public class PostAppRunner implements ApplicationRunner {
                 updateSql(dbSetting);
             }
             optionService.initOptionCache();
+            List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
+            menuService.initSystemMenu(adminMenuGroups);
             menuService.registerMenuPage();
             initPlugins();
         }
@@ -180,10 +185,6 @@ public class PostAppRunner implements ApplicationRunner {
                 EnjoyConfig.jfr.addDirective(injectBean.value(), directive.getClass());
             }
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 
     public long versionToLong(String versionStr) {

@@ -1,11 +1,13 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Constants;
 import com.perfree.common.GravatarUtil;
 import com.perfree.commons.FileUtil;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.User;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -47,6 +49,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/user")
     @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @AdminMenu(name = "用户管理", seq = 7, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/user/user_list.html");
     }

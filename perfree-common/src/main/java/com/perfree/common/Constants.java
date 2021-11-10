@@ -60,4 +60,19 @@ public class Constants {
     public  static final int WEBSOCKET_UPDATE_TYPE_NORMAL = 1;
     public  static final int WEBSOCKET_UPDATE_TYPE_ERROR = 2;
 
+    public  static final int MENU_TARGET_BLANK = 1;
+    public  static final int MENU_TARGET_SELF = 0;
+
+    public  static final String ROLE_ADMIN = "admin";
+    public  static final String ROLE_USER = "user";
+    public  static final String ROLE_EDITOR = "editor";
+    public  static final String ROLE_CONTRIBUTE = "contribute";
+
+    public static final String ADMIN_MENU_GROUP_HOME = "home";
+    public static final String ADMIN_MENU_GROUP_WRITE_ARTICLE = "writeArticle";
+    public static final String ADMIN_MENU_GROUP_CONTENT = "content";
+    public static final String ADMIN_MENU_GROUP_THEME = "theme";
+    public static final String ADMIN_MENU_GROUP_SETTING = "setting";
+    public static final String ADMIN_MENU_GROUP_PLUGIN = "plugin";
+
 }

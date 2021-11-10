@@ -7,6 +7,7 @@ import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Theme;
 import com.perfree.model.TreeNode;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.ThemeService;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -36,6 +37,7 @@ public class ThemeController extends BaseController {
     private ThemeService themeService;
 
     @GetMapping("/theme")
+    @AdminMenu(name = "所有主题", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_THEME)
     public String themePage(Model model){
         List<Theme> themeList = themeService.getAllTheme();
         model.addAttribute("themeList",themeList);
@@ -68,6 +70,7 @@ public class ThemeController extends BaseController {
     }
 
     @GetMapping("/theme/setting")
+    @AdminMenu(name = "主题设置", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_THEME)
     public String settingPage(){
         return view("/setting.html", "/setting.html", "static/admin/pages/theme/setting.html");
 

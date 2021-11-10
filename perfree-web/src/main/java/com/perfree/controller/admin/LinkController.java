@@ -1,10 +1,12 @@
 package com.perfree.controller.admin;
 
+import com.perfree.common.Constants;
 import com.perfree.common.Pager;
 import com.perfree.common.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Link;
 import com.perfree.model.Tag;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.LinkService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -29,6 +31,7 @@ public class LinkController extends BaseController {
      * @return String
      */
     @RequestMapping("/link")
+    @AdminMenu(name = "友链管理", seq = 8, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/link/link_list.html");
     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.MenuMapper" >
-    <insert id="add">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id" >
         insert into p_menu (pid, name, url, icon,seq,type,target,status,articleId,createTime)
         VALUES (#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status},#{articleId}, #{createTime})
     </insert>
@@ -163,4 +163,17 @@
     <select id="getRegisterMenu" resultType="com.perfree.model.Menu">
         select * from p_menu where status= 0 and type = 0
     </select>
+
+    <delete id="deleteAllAdminMenu">
+        DELETE FROM p_menu  WHERE `type` = 1
+    </delete>
+
+    <delete id="deleteAllRoleMenu">
+        DELETE FROM p_role_menu
+    </delete>
+
+    <insert id="addRoleMenuByRoleCode">
+        insert into p_role_menu (roleId, menuId)
+        VALUES ((select id from p_role where code = #{roleCode}),#{menuId})
+    </insert>
 </mapper>
