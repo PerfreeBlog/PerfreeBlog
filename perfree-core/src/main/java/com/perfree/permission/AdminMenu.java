@@ -13,9 +13,14 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD})
 @Documented
 public @interface AdminMenu {
+    /** 所属菜单 */
     String groupId();
+    /** 菜单名称 */
     String name();
+    /** 拥有此菜单的角色 */
     String[] role() default {Constants.ROLE_ADMIN};
+    /** 菜单序号 */
     int seq() default 99;
+    /** 菜单打开方式 */
     int target() default Constants.MENU_TARGET_SELF;
 }

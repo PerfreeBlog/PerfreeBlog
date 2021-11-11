@@ -3,6 +3,11 @@ package com.perfree.permission;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @description 菜单组
+ * @author Perfree
+ * @date 2021/11/11 8:38
+ */
 public class AdminMenuGroup {
     private String name;
     private String groupId;

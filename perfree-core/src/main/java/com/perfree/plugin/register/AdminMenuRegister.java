@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @description 插件菜单注册
+ * @author Perfree
+ * @date 2021/11/11 8:33
+ */
 public class AdminMenuRegister implements PluginRegister{
 
     ApplicationContext applicationContext;

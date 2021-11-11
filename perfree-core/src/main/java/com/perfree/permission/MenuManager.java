@@ -18,6 +18,11 @@ import org.springframework.web.bind.annotation.*;
 import java.lang.reflect.Method;
 import java.util.*;
 
+/**
+ * @description 菜单管理
+ * @author Perfree
+ * @date 2021/11/11 8:38
+ */
 public class MenuManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(MenuManager.class);
 

@@ -2,6 +2,11 @@ package com.perfree.permission;
 
 import java.util.List;
 
+/**
+ * @description 菜单
+ * @author Perfree
+ * @date 2021/11/11 8:38
+ */
 public class MenuItem {
     private String name;
     private String groupId;
