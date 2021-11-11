@@ -51,6 +51,10 @@ public class CompoundRegister implements PluginRegister, ApplicationContextAware
             }
         } finally {
             plugin.getClassList().clear();
+            plugin.getAdminGroupsClassList().clear();
+            plugin.getClassResourceList().clear();
+            plugin.getHandlerInterceptorList().clear();
+            plugin.getMapperXmlResourceList().clear();
         }
     }
 

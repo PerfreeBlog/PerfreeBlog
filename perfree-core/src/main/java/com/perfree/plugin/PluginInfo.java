@@ -67,7 +67,11 @@ public class PluginInfo {
      * @author Perfree
      */
     public <T> T getPluginBean(Class<T> c) {
-        return pluginApplicationContext.getBean(c);
+        try{
+            return pluginApplicationContext.getBean(c);
+        }catch (Exception e) {
+            return null;
+        }
     }
 
     public List<HandlerInterceptor> getHandlerInterceptorList() {
