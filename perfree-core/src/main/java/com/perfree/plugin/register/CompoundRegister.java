@@ -23,7 +23,7 @@ public class CompoundRegister implements PluginRegister, ApplicationContextAware
 
     @Override
     public void initialize() throws Exception {
-        pluginRegisterList.add(new ResourceLoaderRegister());
+        pluginRegisterList.clear();
         pluginRegisterList.add(new ClassRegister());
         pluginRegisterList.add(new MapperRegister());
         pluginRegisterList.add(new ApplicationContextPluginRegister());
@@ -51,10 +51,6 @@ public class CompoundRegister implements PluginRegister, ApplicationContextAware
             }
         } finally {
             plugin.getClassList().clear();
-            plugin.getAdminGroupsClassList().clear();
-            plugin.getClassResourceList().clear();
-            plugin.getHandlerInterceptorList().clear();
-            plugin.getMapperXmlResourceList().clear();
         }
     }
 

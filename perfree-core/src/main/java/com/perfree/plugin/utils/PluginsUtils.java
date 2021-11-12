@@ -1,12 +1,13 @@
-package com.perfree.plugin;
+package com.perfree.plugin.utils;
 
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import org.springframework.stereotype.Component;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
@@ -43,8 +44,6 @@ public class PluginsUtils {
                 File tempFile = new File(file.getAbsolutePath() + "/plugin.properties");
                 FileWriter writer = new FileWriter(tempFile);
                 writer.write(read);
-                writer.flush();
-                writer.close();
                 return new Props(tempFile, CharsetUtil.CHARSET_UTF_8);
             }
         }

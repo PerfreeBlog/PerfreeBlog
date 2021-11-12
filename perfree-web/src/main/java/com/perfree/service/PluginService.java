@@ -13,7 +13,7 @@ import com.perfree.model.Plugin;
 import com.perfree.plugin.PluginEvent;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginManager;
-import com.perfree.plugin.PluginsUtils;
+import com.perfree.plugin.utils.PluginsUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.List;
 

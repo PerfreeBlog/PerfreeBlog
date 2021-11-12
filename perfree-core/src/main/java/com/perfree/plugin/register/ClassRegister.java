@@ -1,16 +1,14 @@
 package com.perfree.plugin.register;
 
-import com.perfree.directive.BaseDirective;
 import com.perfree.permission.AdminGroups;
 import com.perfree.plugin.BasePlugin;
 import com.perfree.plugin.PluginInfo;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.core.io.Resource;
-import org.springframework.core.type.classreading.CachingMetadataReaderFactory;
-import org.springframework.core.type.classreading.MetadataReader;
+import org.pf4j.PluginWrapper;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 
 /**
@@ -28,19 +26,19 @@ public class ClassRegister implements PluginRegister{
     public void registry(PluginInfo plugin) throws Exception {
         List<Class<?>> classList = new ArrayList<>();
         List<Class<?>> adminGroupsClassList = new ArrayList<>();
-        for (Resource resource : plugin.getClassResourceList()) {
-            if(resource.isReadable()) {
-                MetadataReader metadataReader = new CachingMetadataReaderFactory().getMetadataReader(resource);
-                Class<?> clazz = plugin.getPluginWrapper().getPluginClassLoader().loadClass(metadataReader.getAnnotationMetadata().getClassName());
-                if (!BasePlugin.class.isAssignableFrom(clazz)) {
-                    classList.add(clazz);
-                }
-                AdminGroups annotation = clazz.getAnnotation(AdminGroups.class);
-                if (annotation != null) {
-                    adminGroupsClassList.add(clazz);
-                }
+        Set<String> classPackageName = scanClassPackageName(plugin.getBasePlugin().scanPackage(), plugin.getBasePlugin().getWrapper());
+        for (String packageName : classPackageName) {
+            ClassLoader pluginClassLoader = plugin.getPluginWrapper().getPluginClassLoader();
+            Class<?> clazz = pluginClassLoader.loadClass(packageName);
+            if (!BasePlugin.class.isAssignableFrom(clazz)) {
+                classList.add(clazz);
+            }
+            AdminGroups annotation = clazz.getAnnotation(AdminGroups.class);
+            if (annotation != null) {
+                adminGroupsClassList.add(clazz);
             }
         }
+
         plugin.setClassList(classList);
         plugin.setAdminGroupsClassList(adminGroupsClassList);
 
@@ -58,6 +56,31 @@ public class ClassRegister implements PluginRegister{
 
     @Override
     public void unRegistry(PluginInfo plugin) throws Exception {
+    }
 
+
+    /**
+     * 扫描jar包中的类。
+     *
+     * @param basePackage 包名
+     * @param pluginWrapper jar的PluginWrapper
+     * @return 类全路径
+     * @throws IOException 扫描异常
+     */
+    public static Set<String> scanClassPackageName(String basePackage, PluginWrapper pluginWrapper) throws IOException {
+        String pluginPath = pluginWrapper.getPluginPath().toString();
+        Set<String> classPackageNames = new HashSet<>();
+        try (JarFile jarFile = new JarFile(pluginPath)) {
+            Enumeration<JarEntry> jarEntries = jarFile.entries();
+            while (jarEntries.hasMoreElements()) {
+                JarEntry entry = jarEntries.nextElement();
+                String jarEntryName = entry.getName();
+                if (jarEntryName.contains(".class") && jarEntryName.replaceAll("/", ".").startsWith(basePackage)) {
+                    String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replace("/", ".");
+                    classPackageNames.add(className);
+                }
+            }
+        }
+        return classPackageNames;
     }
 }

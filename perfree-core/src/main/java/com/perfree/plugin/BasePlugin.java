@@ -12,4 +12,8 @@ public abstract class BasePlugin extends Plugin{
     public BasePlugin(PluginWrapper wrapper) {
         super(wrapper);
     }
+
+    public String scanPackage(){
+        return this.getClass().getPackage().getName();
+    }
 }

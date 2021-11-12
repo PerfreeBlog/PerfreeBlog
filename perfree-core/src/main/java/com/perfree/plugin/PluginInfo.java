@@ -1,6 +1,7 @@
 package com.perfree.plugin;
 
 import cn.hutool.setting.dialect.Props;
+import com.perfree.plugin.utils.PluginsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pf4j.PluginWrapper;
 import org.springframework.context.ApplicationContext;
@@ -17,23 +18,24 @@ import java.util.*;
  */
 public class PluginInfo {
     // jar classList
-    private List<Class<?>> classList;
+    private List<Class<?>> classList = new ArrayList<>();
 
     private ApplicationContext mainApplicationContext;
 
     private AnnotationConfigApplicationContext pluginApplicationContext;
 
-    private List<Resource> classResourceList;
+    private List<Resource> classResourceList = new ArrayList<>();;
 
-    private List<Resource> mapperXmlResourceList;
+    private List<Resource> mapperXmlResourceList= new ArrayList<>();;
 
     private PluginWrapper pluginWrapper;
 
-    private List<Class<?>> adminGroupsClassList;
+    private List<Class<?>> adminGroupsClassList = new ArrayList<>();;
 
     private String pluginId;
 
     private String mapperXmlDir;
+    private final BasePlugin basePlugin;
 
     private  List<HandlerInterceptor> handlerInterceptorList = new ArrayList<>();
 
@@ -47,6 +49,7 @@ public class PluginInfo {
         this.classResourceList = new ArrayList<>();
         this.mainApplicationContext = applicationContext;
         this.pluginApplicationContext = getContext();
+        this.basePlugin = (BasePlugin) pluginWrapper.getPlugin();
         this.pluginApplicationContext.setParent(mainApplicationContext);
         this.mapperXmlResourceList = new ArrayList<>();
         Props setting = PluginsUtils.getSetting(pluginWrapper.getPluginPath().toFile());
@@ -93,6 +96,10 @@ public class PluginInfo {
         }
     }
 
+    public BasePlugin getBasePlugin() {
+        return basePlugin;
+    }
+
     public List<Class<?>> getAdminGroupsClassList() {
         return adminGroupsClassList;
     }
@@ -134,6 +141,12 @@ public class PluginInfo {
     }
 
     public String getMapperXmlDir() {
+        if (StringUtils.isNotBlank(mapperXmlDir) && mapperXmlDir.startsWith("classpath:")){
+            mapperXmlDir = mapperXmlDir.replace("classpath:","");
+        }
+        if (StringUtils.isNotBlank(mapperXmlDir) && mapperXmlDir.startsWith("/")){
+            mapperXmlDir = mapperXmlDir.substring(1);
+        }
         return mapperXmlDir;
     }
 

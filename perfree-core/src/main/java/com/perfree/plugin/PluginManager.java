@@ -1,6 +1,7 @@
 package com.perfree.plugin;
 
 import com.perfree.plugin.register.PluginRegister;
+import com.perfree.plugin.utils.PluginsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pf4j.DefaultPluginManager;
 import org.pf4j.PluginWrapper;

@@ -1,5 +1,10 @@
 package com.perfree.plugin.register;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.file.FileReader;
+import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.util.CharsetUtil;
 import com.perfree.plugin.PluginInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
@@ -12,14 +17,18 @@ import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.core.NestedIOException;
-import org.springframework.core.io.Resource;
 import org.springframework.util.ClassUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.regex.Pattern;
 
 /**
  * @description 自定义Mybatis Mapper注册
@@ -52,21 +61,28 @@ public class MapperRegister implements PluginRegister{
         Configuration configuration = sqlSessionFactory.getConfiguration();
         try {
             Resources.setDefaultClassLoader(plugin.getPluginWrapper().getPluginClassLoader());
-            for (Resource mapperXmlResource : plugin.getMapperXmlResourceList()) {
-                if(mapperXmlResource == null) continue;
+            List<File> files = scanMapperXml(plugin);
 
-                if(!mapperXmlResource.getFilename().endsWith(".xml")) continue;
-
+            for (File file : files) {
+                if(file == null) continue;
+                InputStream inputStream = null;
                 try {
-                    XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(mapperXmlResource.getInputStream(),
-                            configuration, mapperXmlResource.toString(), configuration.getSqlFragments());
+                    FileReader fileReader = new FileReader(file.getAbsolutePath());
+                    inputStream = fileReader.getInputStream();
+                    XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(inputStream,
+                            configuration, file.getAbsolutePath(), configuration.getSqlFragments());
                     xmlMapperBuilder.parse();
                 } catch (Exception e) {
-                    throw new NestedIOException("Failed to parse mapping resource: '" + mapperXmlResource + "'", e);
+                    throw new NestedIOException("Failed to parse mapping resource: '" + file.getAbsolutePath() + "'", e);
                 } finally {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
                     ErrorContext.instance().reset();
                 }
             }
+            Resources.setDefaultClassLoader(null);
+            files.clear();
         } finally {
             Resources.setDefaultClassLoader(ClassUtils.getDefaultClassLoader());
         }
@@ -91,6 +107,8 @@ public class MapperRegister implements PluginRegister{
         Field loadedResourcesField = configuration.getClass().getDeclaredField("loadedResources");
         loadedResourcesField.setAccessible(true);
         ((Set<?>) loadedResourcesField.get(configuration)).clear();
+        File file = new File("resources/pluginResources/"+plugin.getPluginId());
+        FileUtil.del(file.getAbsolutePath());
     }
 
     private List<Class<?>> getMapperList(PluginInfo plugin){
@@ -119,5 +137,45 @@ public class MapperRegister implements PluginRegister{
             }
         }
         field.set(configuration, newMap);
+    }
+
+    /**
+     * 扫描jar包中的mapper.xml
+     */
+    public static List<File> scanMapperXml(PluginInfo plugin) throws IOException {
+        String pluginPath = plugin.getPluginWrapper().getPluginPath().toString();
+        List<File> files = new ArrayList<>();
+        String xmlLocationPattern = plugin.getMapperXmlDir();
+        xmlLocationPattern = xmlLocationPattern.replaceAll("\\*\\*", "<>");
+        xmlLocationPattern = xmlLocationPattern.replaceAll("\\*", "<>");
+        xmlLocationPattern = xmlLocationPattern.replaceAll("\\.", "\\.");
+        xmlLocationPattern = xmlLocationPattern.replaceAll("<>", ".*");
+
+        File jarFile = new File(pluginPath);
+        Enumeration<JarEntry> jarEntries = new JarFile(jarFile).entries();
+        while (jarEntries.hasMoreElements()) {
+            JarEntry entry = jarEntries.nextElement();
+            String jarEntryName = entry.getName();
+            if (Pattern.matches(xmlLocationPattern, jarEntryName) && jarEntryName.endsWith(".xml")) {
+                URL url = new URL("jar:file:" + jarFile.getAbsolutePath() + "!/" + jarEntryName);
+                JarURLConnection jarConnection = (JarURLConnection) url.openConnection();
+                InputStream in = jarConnection.getInputStream();
+                File file = new File("resources/pluginResources/"+plugin.getPluginId());
+                if (!file.exists()){
+                    FileUtil.mkdir(file);
+                }
+                FileUtil.clean(file.getAbsolutePath());
+                File xmlFile = new File(file.getAbsolutePath() + "/" + jarEntryName);
+                FileWriter writer = new FileWriter(xmlFile);
+                String read = IoUtil.read(in, CharsetUtil.UTF_8);
+                files.add(xmlFile);
+
+                in.close();
+                JarFile currJarFile = jarConnection.getJarFile();
+                currJarFile.close();
+                writer.write(read);
+            }
+        }
+        return files;
     }
 }
