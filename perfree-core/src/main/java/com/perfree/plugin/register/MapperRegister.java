@@ -81,7 +81,6 @@ public class MapperRegister implements PluginRegister{
                     ErrorContext.instance().reset();
                 }
             }
-            Resources.setDefaultClassLoader(null);
             files.clear();
         } finally {
             Resources.setDefaultClassLoader(ClassUtils.getDefaultClassLoader());
@@ -111,6 +110,11 @@ public class MapperRegister implements PluginRegister{
         FileUtil.del(file.getAbsolutePath());
     }
 
+    /**
+     * @description 获取所有Mapper接口
+     * @author Perfree
+     * @date 2021/11/13 8:31
+     */
     private List<Class<?>> getMapperList(PluginInfo plugin){
         List<Class<?>> mapperClassList = new ArrayList<>();
 
@@ -146,10 +150,8 @@ public class MapperRegister implements PluginRegister{
         String pluginPath = plugin.getPluginWrapper().getPluginPath().toString();
         List<File> files = new ArrayList<>();
         String xmlLocationPattern = plugin.getMapperXmlDir();
-        xmlLocationPattern = xmlLocationPattern.replaceAll("\\*\\*", "<>");
-        xmlLocationPattern = xmlLocationPattern.replaceAll("\\*", "<>");
-        xmlLocationPattern = xmlLocationPattern.replaceAll("\\.", "\\.");
-        xmlLocationPattern = xmlLocationPattern.replaceAll("<>", ".*");
+        xmlLocationPattern = xmlLocationPattern.replaceAll("\\*\\*", "<>").replaceAll("\\*", "<>")
+                .replaceAll("\\.", "\\.").replaceAll("<>", ".*");
 
         File jarFile = new File(pluginPath);
         Enumeration<JarEntry> jarEntries = new JarFile(jarFile).entries();

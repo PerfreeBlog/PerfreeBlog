@@ -18,15 +18,11 @@ import java.util.*;
  */
 public class PluginInfo {
     // jar classList
-    private List<Class<?>> classList = new ArrayList<>();
+    private List<Class<?>> classList;
 
     private ApplicationContext mainApplicationContext;
 
     private AnnotationConfigApplicationContext pluginApplicationContext;
-
-    private List<Resource> classResourceList = new ArrayList<>();;
-
-    private List<Resource> mapperXmlResourceList= new ArrayList<>();;
 
     private PluginWrapper pluginWrapper;
 
@@ -46,12 +42,10 @@ public class PluginInfo {
         this.pluginId = pluginWrapper.getPluginId();
         this.pluginWrapper = pluginWrapper;
         this.classList = new ArrayList<>();
-        this.classResourceList = new ArrayList<>();
         this.mainApplicationContext = applicationContext;
         this.pluginApplicationContext = getContext();
         this.basePlugin = (BasePlugin) pluginWrapper.getPlugin();
         this.pluginApplicationContext.setParent(mainApplicationContext);
-        this.mapperXmlResourceList = new ArrayList<>();
         Props setting = PluginsUtils.getSetting(pluginWrapper.getPluginPath().toFile());
         if (!setting.isEmpty()){
             this.mapperXmlDir = setting.getStr("mybatis.mapper.location", null);
@@ -86,7 +80,7 @@ public class PluginInfo {
     }
 
     private void loadResources(String locations){
-        List<String> staticLocations = Arrays.asList(locations.split(","));
+        String[] staticLocations = locations.split(",");
         for (String staticLocation : staticLocations) {
             if (staticLocation.contains("classpath:")){
                 this.staticClassPathLocations.add(staticLocation.replace("classpath:",""));
@@ -162,21 +156,6 @@ public class PluginInfo {
         this.classList = classList;
     }
 
-    public List<Resource> getClassResourceList() {
-        return classResourceList;
-    }
-
-    public void setClassResourceList(List<Resource> classResourceList) {
-        this.classResourceList = classResourceList;
-    }
-
-    public List<Resource> getMapperXmlResourceList() {
-        return mapperXmlResourceList;
-    }
-
-    public void setMapperXmlResourceList(List<Resource> mapperXmlResourceList) {
-        this.mapperXmlResourceList = mapperXmlResourceList;
-    }
 
     public void setPluginApplicationContext(AnnotationConfigApplicationContext pluginApplicationContext) {
         this.pluginApplicationContext = pluginApplicationContext;
@@ -203,21 +182,5 @@ public class PluginInfo {
 
     public void setMainApplicationContext(ApplicationContext mainApplicationContext) {
         this.mainApplicationContext = mainApplicationContext;
-    }
-
-    @Override
-    public String toString() {
-        return "Plugin{" +
-                "classList=" + classList +
-                ", mainApplicationContext=" + mainApplicationContext +
-                ", pluginApplicationContext=" + pluginApplicationContext +
-                ", classResourceList=" + classResourceList +
-                ", mapperXmlResourceList=" + mapperXmlResourceList +
-                ", pluginWrapper=" + pluginWrapper +
-                ", pluginId='" + pluginId + '\'' +
-                ", mapperXmlDir='" + mapperXmlDir + '\'' +
-                ", staticClassPathLocations=" + staticClassPathLocations +
-                ", staticFileLocations=" + staticFileLocations +
-                '}';
     }
 }
