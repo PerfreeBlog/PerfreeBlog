@@ -1,5 +1,9 @@
 package com.perfree.commons;
 
+/**
+ * 定义常量
+ * @author Perfrees
+ */
 public class Constants {
 
     /** option key - WEB_THEME(网站主题) */

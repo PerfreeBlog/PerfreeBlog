@@ -4,9 +4,18 @@ import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+/**
+ * Ip工具类
+ * @author Perfree
+ */
 public class IpUtil {
-    public static String getIpAddr(HttpServletRequest request){
 
+    /**
+     * 获取Ip
+     * @param request request
+     * @return String
+     */
+    public static String getIpAddr(HttpServletRequest request){
         String ipAddress = null;
         try {
             ipAddress = request.getHeader("x-forwarded-for");
@@ -18,7 +27,7 @@ public class IpUtil {
             }
             if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
                 ipAddress = request.getRemoteAddr();
-                if (ipAddress.equals("127.0.0.1")) {
+                if ("127.0.0.1".equals(ipAddress)) {
                     // 根据网卡取本机配置的IP
                     InetAddress inet = null;
                     try {
@@ -29,8 +38,7 @@ public class IpUtil {
                     ipAddress = inet.getHostAddress();
                 }
             }
-            // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-            if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
+            if (ipAddress != null && ipAddress.length() > 15) {
                 // = 15
                 if (ipAddress.indexOf(",") > 0) {
                     ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
@@ -39,8 +47,6 @@ public class IpUtil {
         } catch (Exception e) {
             ipAddress="";
         }
-        // ipAddress = this.getRequest().getRemoteAddr();
-
         return ipAddress;
     }
 }

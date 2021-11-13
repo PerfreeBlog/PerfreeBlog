@@ -10,12 +10,13 @@ import java.util.Date;
 
 /**
  * 文件相关工具类
+ * @author Perfree
  */
 public class FileUtil {
     private final static String[] IMG_FILE_TYPE = {"jpg","png","gif","jpeg","tif","raw","svg","ico"};
     private final static String[] VIDEO_FILE_TYPE = {"avi","mov","rmvb","rm","mp4","flv","3gp","mpg","mlv","mpe","mpeg","vob"};
     private final static String[] AUDIO_FILE_TYPE = {"mp3","ogg","asf","wma","wav","mp3pro","midi","cd","aac"};
-    private final static String SEPARATOR = "/";
+
     /**
      * 上传文件
      * @param multiFile 文件
@@ -41,7 +42,7 @@ public class FileUtil {
             // 获取当天日期
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
             // 文件存储的子目录
-            String uploadPath = SEPARATOR + categoryPath + SEPARATOR + formatter.format(new Date()) + SEPARATOR;
+            String uploadPath = Constants.SEPARATOR + categoryPath + Constants.SEPARATOR + formatter.format(new Date()) + Constants.SEPARATOR;
             // 组装保存的目录
             dirPath += uploadPath;
             File dir = new File(dirPath);
@@ -91,14 +92,14 @@ public class FileUtil {
      */
     public static void deleteDirectory(File file){
         if(file.isFile()){
-            file.delete();//清理文件
+            file.delete();
         }else{
-            File list[] = file.listFiles();
+            File[] list = file.listFiles();
             if(list!=null){
                 for(File f: list){
                     deleteDirectory(f);
                 }
-                file.delete();//清理目录
+                file.delete();
             }
         }
     }

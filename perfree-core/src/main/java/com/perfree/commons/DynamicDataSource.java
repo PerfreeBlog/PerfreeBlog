@@ -9,7 +9,11 @@ import javax.sql.DataSource;
  * @author Perfree
  */
 public class DynamicDataSource extends AbstractRoutingDataSource {
+
+    /** 当前数据源 */
     public static DataSource dataSource = null;
+
+    /** 当前数据源类型sqlite/mysql */
     public static String dataSourceType;
 
     /**
@@ -33,6 +37,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     protected Object determineCurrentLookupKey() {
         return null;
     }
+
     @Override
     protected DataSource determineTargetDataSource() {
         return getDataSource();
