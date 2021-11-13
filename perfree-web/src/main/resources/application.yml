@@ -1,6 +1,9 @@
 server:
   # 端口
   port: 8080
+  servlet:
+    encoding:
+      force: true
   compression:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/javascript,text/css
@@ -74,9 +77,3 @@ logging:
 cache:
   ehcache:
     config: ehcache.xml
-# 插件的配置
-plugin:
-  # 插件运行模式. dev: 开发环境, prod: 生产环境
-  runMode: prod
-  # 插件存放的目录
-  path: resources/plugins

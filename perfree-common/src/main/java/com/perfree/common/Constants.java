@@ -39,6 +39,8 @@ public class Constants {
     public static final String RESOURCES_DIR = "resources"; // resources路径
     public static final String PLUGINS_DIR = "resources/plugins"; // 插件
 
+    public static final String PLUGINS_RESOURCES_DIR = "resources/pluginResources"; // 插件静态资源目录
+
     public static final String DB_PROPERTIES_PATH = "resources/db.properties"; // 数据库配置文件地址
 
     public static final String ARTICLE_TYPE_ARTICLE = "article"; // 文章类型:文章

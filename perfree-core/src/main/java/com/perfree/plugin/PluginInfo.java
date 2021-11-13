@@ -6,10 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.pf4j.PluginWrapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @description Plugin信息
@@ -83,7 +85,11 @@ public class PluginInfo {
         String[] staticLocations = locations.split(",");
         for (String staticLocation : staticLocations) {
             if (staticLocation.contains("classpath:")){
-                this.staticClassPathLocations.add(staticLocation.replace("classpath:",""));
+                staticLocation = staticLocation.replace("classpath:", "");
+                if (StringUtils.isNotBlank(staticLocation) && staticLocation.startsWith("/")){
+                    staticLocation = staticLocation.substring(1);
+                }
+                this.staticClassPathLocations.add(staticLocation);
             } else {
                 this.staticFileLocations.add(staticLocation);
             }
