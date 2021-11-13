@@ -1,6 +1,6 @@
 package com.perfree.controller.api;
 
-import com.perfree.common.Pager;
+import com.perfree.commons.Pager;
 import com.perfree.controller.BaseApiController;
 import com.perfree.model.Link;
 import com.perfree.service.LinkService;

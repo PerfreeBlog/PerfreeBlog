@@ -1,4 +1,4 @@
-package com.perfree.common;
+package com.perfree.commons;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;

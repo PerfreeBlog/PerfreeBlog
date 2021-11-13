@@ -1,6 +1,6 @@
 package com.perfree.plugin.resources;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.plugin.PluginHolder;
 import com.perfree.plugin.PluginInfo;
 import org.slf4j.Logger;

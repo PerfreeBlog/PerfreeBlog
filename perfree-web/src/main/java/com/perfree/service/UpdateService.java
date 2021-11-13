@@ -2,7 +2,6 @@ package com.perfree.service;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.StreamProgress;
-import cn.hutool.core.lang.Console;
 import cn.hutool.core.util.RuntimeUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.http.HttpRequest;
@@ -11,7 +10,7 @@ import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.commons.Update;
 import com.perfree.commons.WebSocketMsg;
 import com.perfree.commons.YamlUtils;

@@ -1,9 +1,8 @@
 package com.perfree.controller.admin;
 
-import com.perfree.common.Pager;
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.Pager;
+import com.perfree.commons.ResponseBean;
 import com.perfree.controller.BaseController;
-import com.perfree.model.Link;
 import com.perfree.model.Plugin;
 import com.perfree.service.PluginService;
 import org.apache.shiro.authz.annotation.Logical;

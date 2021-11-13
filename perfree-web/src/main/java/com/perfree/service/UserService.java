@@ -2,8 +2,8 @@ package com.perfree.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.common.Pager;
-import com.perfree.common.StringUtil;
+import com.perfree.commons.Pager;
+import com.perfree.commons.StringUtil;
 import com.perfree.mapper.UserMapper;
 import com.perfree.model.User;
 import org.apache.shiro.crypto.hash.Md5Hash;

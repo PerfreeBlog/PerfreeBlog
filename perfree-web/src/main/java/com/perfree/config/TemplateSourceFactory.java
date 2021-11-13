@@ -4,7 +4,7 @@ import com.jfinal.template.source.ClassPathSourceFactory;
 import com.jfinal.template.source.FileSourceFactory;
 import com.jfinal.template.source.ISource;
 import com.jfinal.template.source.ISourceFactory;
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.plugin.PluginHolder;
 import com.perfree.plugin.PluginInfo;

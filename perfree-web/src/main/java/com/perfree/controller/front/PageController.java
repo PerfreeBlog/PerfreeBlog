@@ -1,6 +1,6 @@
 package com.perfree.controller.front;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.controller.BaseController;
@@ -11,7 +11,6 @@ import com.perfree.service.MenuService;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

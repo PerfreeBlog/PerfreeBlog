@@ -1,7 +1,7 @@
 package com.perfree.controller.admin;
 
-import com.perfree.common.Constants;
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.Constants;
+import com.perfree.commons.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Article;
 import com.perfree.permission.AdminMenu;

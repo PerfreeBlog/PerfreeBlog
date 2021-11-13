@@ -1,6 +1,6 @@
 package com.perfree.controller.front;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.controller.BaseController;
 import com.perfree.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;

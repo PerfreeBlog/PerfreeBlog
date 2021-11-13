@@ -1,6 +1,6 @@
 package com.perfree.controller.api;
 
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.ResponseBean;
 import com.perfree.controller.BaseApiController;
 import com.perfree.model.Category;
 import com.perfree.service.CategoryService;

@@ -7,7 +7,7 @@ import cn.hutool.db.Entity;
 import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.model.Database;
 import com.perfree.permission.AdminMenuGroup;

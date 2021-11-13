@@ -1,7 +1,7 @@
 package com.perfree.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.ResponseBean;
 import com.perfree.commons.JwtToken;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;

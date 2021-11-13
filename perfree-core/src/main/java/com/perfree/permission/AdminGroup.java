@@ -1,6 +1,6 @@
 package com.perfree.permission;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 
 import java.lang.annotation.*;
 

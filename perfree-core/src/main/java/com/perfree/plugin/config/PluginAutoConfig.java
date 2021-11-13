@@ -1,6 +1,6 @@
 package com.perfree.plugin.config;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.plugin.PluginManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

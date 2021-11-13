@@ -1,4 +1,4 @@
-package com.perfree.common;
+package com.perfree.commons;
 
 import cn.hutool.http.HtmlUtil;
 import com.vladsch.flexmark.ext.tables.TablesExtension;

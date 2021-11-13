@@ -1,6 +1,6 @@
 package com.perfree.controller.front;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Article;

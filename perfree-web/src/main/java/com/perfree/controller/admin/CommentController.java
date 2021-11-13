@@ -1,11 +1,10 @@
 package com.perfree.controller.admin;
 
-import com.perfree.common.Constants;
-import com.perfree.common.Pager;
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.Constants;
+import com.perfree.commons.Pager;
+import com.perfree.commons.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.Comment;
-import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.CommentService;

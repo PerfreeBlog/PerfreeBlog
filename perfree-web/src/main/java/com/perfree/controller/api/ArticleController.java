@@ -1,7 +1,7 @@
 package com.perfree.controller.api;
 
-import com.perfree.common.Pager;
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.Pager;
+import com.perfree.commons.ResponseBean;
 import com.perfree.controller.BaseApiController;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
@@ -9,7 +9,6 @@ import com.perfree.service.ArticleService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Article API Controller

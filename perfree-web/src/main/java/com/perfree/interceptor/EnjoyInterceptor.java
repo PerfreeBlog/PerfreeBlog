@@ -1,7 +1,7 @@
 package com.perfree.interceptor;
 
-import com.perfree.common.Constants;
-import com.perfree.common.OptionCacheUtil;
+import com.perfree.commons.Constants;
+import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.model.User;
 import com.perfree.service.UserService;

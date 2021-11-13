@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.util.CharsetUtil;
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.plugin.PluginInfo;
 
 import java.io.File;

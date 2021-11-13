@@ -2,8 +2,8 @@ package com.access.controller;
 
 import com.access.model.AccessLogs;
 import com.access.service.AccessLogsService;
-import com.perfree.common.Pager;
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.Pager;
+import com.perfree.commons.ResponseBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

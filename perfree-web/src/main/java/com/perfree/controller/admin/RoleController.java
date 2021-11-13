@@ -1,10 +1,8 @@
 package com.perfree.controller.admin;
 
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.ResponseBean;
 import com.perfree.controller.BaseController;
-import com.perfree.model.Tag;
 import com.perfree.service.RoleService;
-import com.perfree.service.UserService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;

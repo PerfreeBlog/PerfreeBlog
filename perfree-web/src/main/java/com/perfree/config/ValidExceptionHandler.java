@@ -1,6 +1,6 @@
 package com.perfree.config;
 
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.ResponseBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConversionException;

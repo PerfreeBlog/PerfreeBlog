@@ -3,7 +3,7 @@ package com.perfree.directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import com.perfree.model.Article;
 import com.perfree.service.CommentService;
 import org.apache.commons.lang3.StringUtils;

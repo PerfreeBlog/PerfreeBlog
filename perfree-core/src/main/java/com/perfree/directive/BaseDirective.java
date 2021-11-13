@@ -4,7 +4,7 @@ import com.jfinal.template.Directive;
 import com.jfinal.template.expr.ast.Assign;
 import com.jfinal.template.expr.ast.Expr;
 import com.jfinal.template.stat.Scope;
-import com.perfree.common.CastUtil;
+import com.perfree.commons.CastUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;

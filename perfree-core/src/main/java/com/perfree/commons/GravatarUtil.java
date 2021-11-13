@@ -1,4 +1,4 @@
-package com.perfree.common;
+package com.perfree.commons;
 
 public class GravatarUtil {
 

@@ -1,7 +1,7 @@
 package com.perfree.permission;
 
 import cn.hutool.core.collection.ListUtil;
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

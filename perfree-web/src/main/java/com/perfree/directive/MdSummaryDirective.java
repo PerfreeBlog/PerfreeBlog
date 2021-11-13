@@ -4,7 +4,7 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.common.MarkdownUtil;
+import com.perfree.commons.MarkdownUtil;
 import org.springframework.stereotype.Component;
 
 @TemplateDirective("mdSummary")

@@ -1,6 +1,6 @@
 package com.perfree.model;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 
 import java.io.Serializable;
 import java.util.Date;

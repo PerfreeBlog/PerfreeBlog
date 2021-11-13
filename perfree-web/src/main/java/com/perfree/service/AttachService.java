@@ -2,10 +2,9 @@ package com.perfree.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.common.Pager;
+import com.perfree.commons.Pager;
 import com.perfree.mapper.AttachMapper;
 import com.perfree.model.Attach;
-import com.perfree.model.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

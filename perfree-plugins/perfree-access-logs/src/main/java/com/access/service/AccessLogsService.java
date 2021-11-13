@@ -2,7 +2,7 @@ package com.access.service;
 
 import com.access.mapper.AccessLogsMapper;
 import com.access.model.AccessLogs;
-import com.perfree.common.Pager;
+import com.perfree.commons.Pager;
 import com.perfree.commons.DynamicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

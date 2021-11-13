@@ -4,11 +4,9 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.common.MarkdownUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.List;
 
 @TemplateDirective("pageRender")

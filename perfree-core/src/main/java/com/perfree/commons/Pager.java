@@ -1,4 +1,4 @@
-package com.perfree.common;
+package com.perfree.commons;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

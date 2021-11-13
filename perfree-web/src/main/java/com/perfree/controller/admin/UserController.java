@@ -1,10 +1,10 @@
 package com.perfree.controller.admin;
 
-import com.perfree.common.Constants;
-import com.perfree.common.GravatarUtil;
+import com.perfree.commons.Constants;
+import com.perfree.commons.GravatarUtil;
 import com.perfree.commons.FileUtil;
-import com.perfree.common.Pager;
-import com.perfree.common.ResponseBean;
+import com.perfree.commons.Pager;
+import com.perfree.commons.ResponseBean;
 import com.perfree.controller.BaseController;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;

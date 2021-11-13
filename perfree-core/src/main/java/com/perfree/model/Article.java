@@ -1,6 +1,6 @@
 package com.perfree.model;
 
-import com.perfree.common.Constants;
+import com.perfree.commons.Constants;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;

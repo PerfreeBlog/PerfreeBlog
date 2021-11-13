@@ -2,10 +2,9 @@ package com.perfree.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.common.Pager;
+import com.perfree.commons.Pager;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.LinkMapper;
-import com.perfree.model.Article;
 import com.perfree.model.Link;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
