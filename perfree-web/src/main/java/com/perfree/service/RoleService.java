@@ -23,4 +23,14 @@ public class RoleService {
     public List<Role> getRoleList() {
         return roleMapper.list(null);
     }
+
+    /**
+     * 根据角色代码获取角色
+     * @param roleCode 角色代码
+     * @return Role
+     */
+    @Transactional(readOnly = true)
+    public Role getRoleByCode(String roleCode) {
+        return roleMapper.getRoleByCode(roleCode);
+    }
 }

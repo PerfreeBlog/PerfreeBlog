@@ -4,4 +4,7 @@
     <select id="list" resultType="com.perfree.model.Role">
         select * from p_role
     </select>
+    <select id="getRoleByCode" resultType="com.perfree.model.Role">
+        select * from p_role where code = #{roleCode}
+    </select>
 </mapper>

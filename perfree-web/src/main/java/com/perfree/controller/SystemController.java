@@ -3,14 +3,10 @@ package com.perfree.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.RandomUtil;
-import com.perfree.commons.Constants;
-import com.perfree.commons.GravatarUtil;
-import com.perfree.commons.ResponseBean;
-import com.perfree.commons.StringUtil;
-import com.perfree.commons.JwtUtils;
-import com.perfree.commons.Update;
+import com.perfree.commons.*;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
+import com.perfree.model.Role;
 import com.perfree.model.User;
 import com.perfree.service.*;
 import io.swagger.annotations.Api;
@@ -59,6 +55,9 @@ public class SystemController extends BaseController{
 
     @Autowired
     private UpdateService updateService;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 后台首页
@@ -252,8 +251,15 @@ public class SystemController extends BaseController{
             logger.error("账户已存在: {}", user.toString());
             return ResponseBean.fail("账户已存在", null);
         }
-        user.setStatus(0);
-        user.setRoleId(2L);
+        user.setStatus(Constants.USER_STATUS_DEFAULT);
+
+        // 设置默认角色
+        String roleCode = OptionCacheUtil.getValue(Constants.EHCACHE_KEY_WEB_REGISTER_DEFAULT_ROLE);
+        if (StringUtils.isBlank(roleCode)) {
+            roleCode = Constants.ROLE_USER;
+        }
+        Role role = roleService.getRoleByCode(roleCode);
+        user.setRoleId(role.getId());
         user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
         if (userService.add(user) > 0) {
             return ResponseBean.success("注册成功", null);

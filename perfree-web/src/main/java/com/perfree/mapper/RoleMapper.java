@@ -15,4 +15,7 @@ public interface RoleMapper {
      * @return List<Role>
      */
     List<Role> list(Role role);
+
+    Role getRoleByCode(String roleCode);
+
 }

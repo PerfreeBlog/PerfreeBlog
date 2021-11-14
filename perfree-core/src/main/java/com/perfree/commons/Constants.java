@@ -136,4 +136,10 @@ public class Constants {
     /** 缓存：数据字典配置 */
     public static final String EHCACHE_KEY_OPTION_DATA = "optionData";
 
+    /** 新用户默认角色 */
+    public static final String EHCACHE_KEY_WEB_REGISTER_DEFAULT_ROLE = "WEB_REGISTER_DEFAULT_ROLE";
+
+    /** 用户默认状态 */
+    public static final int USER_STATUS_DEFAULT = 0;
+
 }

@@ -73,6 +73,19 @@
                             </div>
 
                             <div class="layui-form-item">
+                                <label class="layui-form-label">新用户默认角色</label>
+                                <div class="layui-input-block" style="margin-left: 130px;width: 200px">
+                                    <select name="WEB_REGISTER_DEFAULT_ROLE">
+                                        <option value="user" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'user') ? 'selected': '')>普通用户</option>
+                                        <option value="contribute" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'contribute') ? 'selected': '')>文章贡献</option>
+                                        <option value="editor" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'editor') ? 'selected': '')>文章编辑</option>
+                                        <option value="admin" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'amin') ? 'selected': '')>管理员</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="layui-form-item">
                                 <label class="layui-form-label">META关键字</label>
                                 <div class="layui-input-block">
                                     <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键字,英文逗号分割" class="layui-textarea">#option('WEB_META_KEYWORD')</textarea>
