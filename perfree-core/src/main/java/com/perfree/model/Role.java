@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * role table
+ * @author Perfree
  */
 public class Role implements Serializable {
     private static final long serialVersionUID = -7909060114936447269L;

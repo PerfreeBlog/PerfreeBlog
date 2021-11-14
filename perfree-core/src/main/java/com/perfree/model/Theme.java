@@ -2,6 +2,10 @@ package com.perfree.model;
 
 import java.io.Serializable;
 
+/**
+ * 定义主题实体
+ * @author Perfree
+ */
 public class Theme implements Serializable {
     private static final long serialVersionUID = -7478937928185904570L;
     private String name;

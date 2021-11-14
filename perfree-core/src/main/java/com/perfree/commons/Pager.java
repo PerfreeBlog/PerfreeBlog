@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * 分页工具类
+ * @author Perfree
  */
 @ApiModel(value="分页信息",description="全局分页信息")
 public class Pager<T> implements Serializable {

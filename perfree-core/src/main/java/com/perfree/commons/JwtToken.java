@@ -4,6 +4,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 
 /**
  * JwtToken
+ * @author Perfree
  */
 public class JwtToken implements AuthenticationToken {
     /**

@@ -10,7 +10,6 @@ import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.controller.WebSocketServer;
-import com.perfree.directive.DirectiveUtil;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
@@ -181,7 +180,7 @@ public class PostAppRunner implements ApplicationRunner {
      * Load Template Directive
      */
     public static void loadDirective() {
-        Map<String, Object> beans = DirectiveUtil.getBean();
+        Map<String, Object> beans = SpringBeanUtils.getApplicationContext().getBeansWithAnnotation(TemplateDirective.class);
         for (Map.Entry<String, Object> entry : beans.entrySet()) {
             Object bean = entry.getValue();
             TemplateDirective injectBean = bean.getClass().getAnnotation(TemplateDirective.class);

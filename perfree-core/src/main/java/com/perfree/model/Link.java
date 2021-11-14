@@ -3,6 +3,10 @@ package com.perfree.model;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 友链实体
+ * @author Perfree
+ */
 public class Link implements Serializable {
     private static final long serialVersionUID = 7817276417501762472L;
     private Long id;

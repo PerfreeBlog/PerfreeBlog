@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * menu table
+ * @author Perfree
  */
 public class Menu implements Serializable {
     private static final long serialVersionUID = 7817277417501762477L;

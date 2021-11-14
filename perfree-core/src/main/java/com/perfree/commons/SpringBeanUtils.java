@@ -1,15 +1,23 @@
 package com.perfree.commons;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+/**
+ * 自定义Spring Bean工具类，用于获取applicationContext及获取已注入的bean
+ * @author Perfree
+ */
 @Component
 public class SpringBeanUtils implements ApplicationContextAware {
     private static ApplicationContext applicationContext = null;
 
+    /**
+     * 设置applicationContext
+     * @param context applicationContext
+     * @throws BeansException exception
+     */
     @Override
     public void setApplicationContext(ApplicationContext context) throws BeansException {
         if(applicationContext == null){
@@ -17,27 +25,29 @@ public class SpringBeanUtils implements ApplicationContextAware {
         }
     }
 
+    /**
+     * 获取applicationContext
+     * @return applicationContext
+     */
     public static ApplicationContext getApplicationContext(){
         return applicationContext;
     }
 
     /**
-     * 注入对象
+     * 通过class获取注入的Bean
+     * @param clazz Class
+     * @param <T> Class
+     * @return T
      */
     public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
     }
 
-    /**
-     * 获取mapper
-     */
-    public static <T> T getMapper(Class<T> clazz) {
-        SqlSessionFactory sqlSessionFactory = getBean(SqlSessionFactory.class);
-        return sqlSessionFactory.openSession().getMapper(clazz);
-    }
 
     /**
-     * 通过名称注入
+     * 通过Bean名称获取Bean
+     * @param beanName Bean名称
+     * @return Object
      */
     public static Object getBean(String beanName) {
         return getApplicationContext().getBean(beanName);

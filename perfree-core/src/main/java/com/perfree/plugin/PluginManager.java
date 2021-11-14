@@ -16,6 +16,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * 插件管理
+ * @author Perfree
+ */
 public class PluginManager extends DefaultPluginManager implements PluginManagerService, ApplicationContextAware {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
@@ -30,6 +34,12 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
     }
 
 
+    /**
+     * 安装插件
+     * @param path 插件路径
+     * @return PluginInfo
+     * @throws Exception exception
+     */
     @Override
     public PluginInfo install(Path path) throws Exception {
         String pluginId = null;
@@ -50,6 +60,11 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         }
     }
 
+    /**
+     * 卸载插件
+     * @param pluginId 插件Id
+     * @throws Exception Exception
+     */
     @Override
     public void unInstall(String pluginId) throws Exception {
         LOGGER.info("unInstallPlugin:" + pluginId);
@@ -69,6 +84,10 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         }
     }
 
+    /**
+     * 初始化所有插件
+     * @throws Exception Exception
+     */
     @Override
     public void initPlugins() throws Exception {
         loadPlugins();
@@ -87,11 +106,20 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         }
     }
 
+    /**
+     * 获取所有已安装的插件
+     * @return List<PluginWrapper>
+     */
     @Override
     public List<PluginWrapper> getInstallPlugins() {
         return getPlugins();
     }
 
+    /**
+     * 加载插件
+     * @param pluginPath 插件路径
+     * @return String
+     */
     @Override
     public String loadPlugin(Path pluginPath) {
         if ((pluginPath == null) || Files.notExists(pluginPath)) {

@@ -1,5 +1,9 @@
 package com.perfree.model;
 
+/**
+ * 定义主题文件实体
+ * @author Perfree
+ */
 public class ThemeFile {
     private String fileName;
     private String fileType;

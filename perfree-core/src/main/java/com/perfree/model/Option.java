@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * option table
+ * @author Perfree
  */
 public class Option implements Serializable {
     private static final long serialVersionUID = 7817277417501762377L;

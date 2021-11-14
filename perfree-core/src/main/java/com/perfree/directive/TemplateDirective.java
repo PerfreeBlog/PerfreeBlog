@@ -4,7 +4,6 @@ import java.lang.annotation.*;
 
 /**
  * Custom TemplateDirective,Used to identify TemplateDirective
- *
  * @author Perfree
  */
 @Target({ElementType.FIELD, ElementType.TYPE})

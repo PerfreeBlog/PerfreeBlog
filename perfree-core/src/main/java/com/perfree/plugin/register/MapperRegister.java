@@ -1,6 +1,5 @@
 package com.perfree.plugin.register;
 
-import cn.hutool.core.io.FileUtil;
 import com.perfree.plugin.PluginInfo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
@@ -111,8 +110,6 @@ public class MapperRegister implements PluginRegister{
         Field loadedResourcesField = configuration.getClass().getDeclaredField("loadedResources");
         loadedResourcesField.setAccessible(true);
         ((Set<?>) loadedResourcesField.get(configuration)).clear();
-        File file = new File("resources/pluginResources/"+plugin.getPluginId());
-        FileUtil.del(file.getAbsolutePath());
     }
 
     /**

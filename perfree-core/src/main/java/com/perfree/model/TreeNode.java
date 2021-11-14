@@ -2,6 +2,10 @@ package com.perfree.model;
 
 import java.util.List;
 
+/**
+ * 定义树结构
+ * @author Perfree
+ */
 public class TreeNode {
     private String title;
     private String id;

@@ -9,6 +9,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * yml工具类
+ * @author Perfree
+ */
 public class YamlUtils {
     private final static DumperOptions OPTIONS = new DumperOptions();
 
@@ -21,13 +25,11 @@ public class YamlUtils {
     private static Yaml yaml;
 
     static {
-        //将默认读取的方式设置为块状读取
         OPTIONS.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
     }
 
     /**
      * 使用其他方法之前必须调用一次 设置yml的输出文件,当没有设置输入流时可以不设置输入流,默认以此文件读入
-     *
      * @param file 输出的文件
      */
     public static void setYmlFile(File file) throws FileNotFoundException {
@@ -40,7 +42,6 @@ public class YamlUtils {
 
     /**
      * 使用其他方法之前必须调用一次 设置yml的输入流
-     *
      * @param inputSteam 输入流
      */
     public static void setYmlInputSteam(InputStream inputSteam) {
@@ -59,7 +60,6 @@ public class YamlUtils {
 
     /**
      * 根据键获取值
-     *
      * @param key 键
      * @return 查询到的值
      */
@@ -80,15 +80,25 @@ public class YamlUtils {
         return configMap == null ? "" : configMap;
     }
 
+    /**
+     * 保存或更新
+     * @param key key
+     * @param value value
+     * @throws IOException
+     */
     public static void saveOrUpdateByKey(String key, Object value) throws IOException {
         KeyAndMap keyAndMap = new KeyAndMap(key).invoke();
         key = keyAndMap.getKey();
         Map<String, Object> map = keyAndMap.getMap();
         map.put(key, value);
-        //将数据重新写回文件
         yaml.dump(CONFIG_MAP, new FileWriter(file));
     }
 
+    /**
+     * 移除key
+     * @param key key
+     * @throws Exception
+     */
     public static void removeByKey(String key) throws Exception {
         KeyAndMap keyAndMap = new KeyAndMap(key).invoke();
         key = keyAndMap.getKey();
@@ -106,6 +116,10 @@ public class YamlUtils {
         yaml.dump(CONFIG_MAP, new FileWriter(file));
     }
 
+    /**
+     * 自定义keyMap
+     * @author Perfree
+     */
     private static class KeyAndMap {
         private String key;
         private Map<String, Object> map;

@@ -10,6 +10,7 @@ import java.util.Date;
 
 /**
  * User Table
+ * @author Perfree
  */
 public class User implements Serializable {
     private static final long serialVersionUID = -4338379690203608321L;

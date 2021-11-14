@@ -9,15 +9,15 @@ import net.sf.ehcache.Ehcache;
  * @date 2021/8/10 10:27
  */
 public class OptionCacheUtil {
-    private static final CacheManager cacheManager = CacheManager.newInstance();
+    private static final CacheManager CACHE_MANAGER = CacheManager.newInstance();
 
     /**
-     * 根据key获取值
+     * 根据key获取缓存的Option值
      * @param key key
      * @return String
      */
     public static String getValue(String key) {
-        Ehcache dictData = cacheManager.getEhcache("optionData");
+        Ehcache dictData = CACHE_MANAGER.getEhcache(Constants.EHCACHE_KEY_OPTION_DATA);
         if (dictData.get(key) == null){
             return "";
         }

@@ -4,11 +4,18 @@ import java.io.Serializable;
 
 /**
  * websocket信息类
+ * @author Perfree
  */
 public class WebSocketMsg implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	/** websocket 类型 */
 	private int type;
+
+    /** websocket 信息 */
     private String message;
+
+    /** websocket 数据 */
     private Object data;
 
     public WebSocketMsg() {

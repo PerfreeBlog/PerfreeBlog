@@ -2,6 +2,10 @@ package com.perfree.model;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * 定义数据库信息实体
+ * @author Perfree
+ */
 public class Database {
     private String address;
     private String port;

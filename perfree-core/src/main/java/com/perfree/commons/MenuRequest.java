@@ -4,6 +4,10 @@ import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 
 import java.lang.reflect.Method;
 
+/**
+ * 菜单注册实体
+ * @author Perfree
+ */
 public class MenuRequest {
     private RequestMappingInfo requestMappingInfo;
     private String[] patternArr;

@@ -11,10 +11,11 @@ import java.util.*;
 
 /**
  * 动态注册RequestMapping
+ * @author Perfree
  */
 public class RegisterRequestMapping extends RequestMappingHandlerMapping {
     private final static Logger LOGGER = LoggerFactory.getLogger(RegisterRequestMapping.class);
-    private static final List<MenuRequest> menuRequests = Collections.synchronizedList(new ArrayList<>());
+    private static final List<MenuRequest> MENU_REQUESTS = Collections.synchronizedList(new ArrayList<>());
 
     /**
      * 注册RequestMapping
@@ -39,7 +40,7 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
             menuRequest.setRequestMappingInfo(mapping_info);
             menuRequest.setEntry(entry);
             menuRequest.setMethod_name(method_name);
-            menuRequests.add(menuRequest);
+            MENU_REQUESTS.add(menuRequest);
             LOGGER.info("url:{} 注册成功",Arrays.toString(patternArr));
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,7 +54,7 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
      */
     public static void unregisterRequestMapping(String pattern){
         final RequestMappingHandlerMapping requestMappingHandlerMapping = SpringBeanUtils.getApplicationContext().getBean(RequestMappingHandlerMapping.class);
-        Iterator<MenuRequest> iterator=menuRequests.iterator();
+        Iterator<MenuRequest> iterator = MENU_REQUESTS.iterator();
         while(iterator.hasNext()){
             MenuRequest menuRequest = iterator.next();
             String[] patternArr = menuRequest.getPatternArr();
@@ -69,7 +70,7 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
                     String[] newPatterns = new String[arrList.size()];
                     menuRequest.setPatternArr(arrList.toArray(newPatterns));
                     registerRequestMapping(menuRequest.getEntry(),menuRequest.getMethod_name(), menuRequest.getPatternArr());
-                    iterator = menuRequests.iterator();
+                    iterator = MENU_REQUESTS.iterator();
                 }
             }
         }

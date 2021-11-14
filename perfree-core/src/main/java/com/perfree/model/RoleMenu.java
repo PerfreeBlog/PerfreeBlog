@@ -1,5 +1,9 @@
 package com.perfree.model;
 
+/**
+ * 菜单角色关联
+ * @author Perfree
+ */
 public class RoleMenu {
     private Long menuId;
     private Long roleId;

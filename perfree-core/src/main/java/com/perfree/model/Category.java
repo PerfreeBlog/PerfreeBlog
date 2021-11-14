@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * category table
+ * @author Perfree
  */
 public class Category implements Serializable {
     private static final long serialVersionUID = -3275180034882679507L;

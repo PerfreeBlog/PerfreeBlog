@@ -5,16 +5,24 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 自定义模板指令，分页实体
+ * @param <T> 类型
+ */
 public class DirectivePage<T> {
-    //  页码
+    /** 页码 */
     private Integer pageIndex;
-    // 每页数据量
+
+    /** 每页数据量 */
     private Integer pageSize;
-    // 总条数
+
+    /** 总条数 */
     private Long total;
-    // 数据集
+
+    /** 数据集 */
     private Object data;
 
+    /** url前缀 */
     private String urlPrefix;
 
     private String queryParam;

@@ -13,6 +13,10 @@ public abstract class BasePlugin extends Plugin{
         super(wrapper);
     }
 
+    /**
+     * 基于插件主类获取插件包
+     * @return String
+     */
     public String scanPackage(){
         return this.getClass().getPackage().getName();
     }

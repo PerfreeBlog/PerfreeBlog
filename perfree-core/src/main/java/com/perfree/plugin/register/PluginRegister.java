@@ -2,6 +2,10 @@ package com.perfree.plugin.register;
 
 import com.perfree.plugin.PluginInfo;
 
+/**
+ * 定义插件注册接口
+ * @author Perfree
+ */
 public interface PluginRegister {
     /**
      * 插件组件初始化

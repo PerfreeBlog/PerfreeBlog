@@ -1,5 +1,9 @@
 package com.perfree.directive;
 
+/**
+ * 自定义模板指令，分页实体
+ * @author Perfree
+ */
 public class Pager {
     private String text;
     private String url;

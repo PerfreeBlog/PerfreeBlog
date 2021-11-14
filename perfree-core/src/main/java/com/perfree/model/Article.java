@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * article table
+ * @author Perfree
  */
 public class Article implements Serializable {
     private static final long serialVersionUID = 4900274588193382137L;

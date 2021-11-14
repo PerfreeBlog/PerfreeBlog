@@ -5,6 +5,7 @@ import java.util.Date;
 
 /**
  * attach table
+ * @author Perfree
  */
 public class Attach implements Serializable {
     private static final long serialVersionUID = 4900174588193382137L;

@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * comment table
+ * @author Perfree
  */
 public class Comment implements Serializable {
     private static final long serialVersionUID = 7817277417501762472L;

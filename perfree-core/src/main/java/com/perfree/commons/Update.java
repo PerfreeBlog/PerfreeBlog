@@ -1,14 +1,29 @@
 package com.perfree.commons;
 
+/**
+ * 系统更新参数实体类，对应github请求结果
+ * @author Perfree
+ */
 public class Update {
+    /** 标签名 */
     private String tagName;
+
+    /** 更新版本名称 */
     private String name;
+
+    /** 下载url */
     private String browserDownloadUrl;
+
+    /** 更新内容 */
     private String body;
+
+    /** 文件大小 */
     private Long size;
 
+    /** 文件大小字符串 */
     private String sizeString;
 
+    /** 文件名 */
     private String fileName;
 
     public String getSizeString() {

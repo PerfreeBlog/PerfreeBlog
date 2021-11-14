@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Configuration;
 
 import java.nio.file.Paths;
 
+/**
+ * 自动配置插件
+ * @author Perfree
+ */
 @Configuration
 public class PluginAutoConfig {
 

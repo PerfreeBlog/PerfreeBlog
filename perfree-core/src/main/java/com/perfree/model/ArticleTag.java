@@ -2,6 +2,7 @@ package com.perfree.model;
 
 /**
  * p_article_tag table
+ * @author Perfree
  */
 public class ArticleTag {
     private Long articleId;

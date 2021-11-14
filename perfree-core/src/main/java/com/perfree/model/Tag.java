@@ -7,6 +7,7 @@ import java.util.Date;
 
 /**
  * tag Table
+ * @author Perfree
  */
 public class Tag implements Serializable {
     private static final long serialVersionUID = 7349480507456460022L;

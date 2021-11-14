@@ -5,7 +5,8 @@ import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 /**
- * String工具类
+ * String字符串工具类
+ * @author Perfree
  */
 public class StringUtil {
     /**
@@ -32,6 +33,7 @@ public class StringUtil {
     public static boolean hasLength(CharSequence str) {
         return (str != null && str.length() > 0);
     }
+
     /**
      * 判断一个字符串是否有内容
      * @param str
@@ -40,6 +42,7 @@ public class StringUtil {
     public static boolean hasText(String str) {
         return (hasLength((CharSequence) str) && containsText((CharSequence) str));
     }
+
     /**
      * 判断字符串的内容是否为空白字符
      * isWhitespace()方法用于判断指定字符是否为空白字符
@@ -55,6 +58,7 @@ public class StringUtil {
         }
         return false;
     }
+
     /**
      * 校验给定的字符串str是否以prefix开头，忽略大小写
      * @param str 需校验字符串
@@ -65,6 +69,7 @@ public class StringUtil {
         return (str != null && prefix != null && str.length() >= prefix.length() &&
                 str.regionMatches(true, 0, prefix, 0, prefix.length()));
     }
+
     /**
      * 校验给定的字符串str是否以suffix结尾，忽略大小写
      * @param str 需校验字符串
@@ -75,6 +80,7 @@ public class StringUtil {
         return (str != null && suffix != null && str.length() >= suffix.length() &&
                 str.regionMatches(true, str.length() - suffix.length(), suffix, 0, suffix.length()));
     }
+
     /**
      * 判断sub在str中出现的次数
      * @param str 全字符串
@@ -94,6 +100,7 @@ public class StringUtil {
         }
         return count;
     }
+
     /**
      * 删除给定字符串中包含有的任意字符
      * @param inString 给定字符串
@@ -123,6 +130,11 @@ public class StringUtil {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
+    /**
+     * 字符串转md5
+     * @param str 字符串
+     * @return md5Str
+     */
     public static String strToMd5(String str) {
         String md5Str = null;
         if (str != null && str.length() != 0) {

@@ -133,4 +133,7 @@ public class Constants {
     public static final String ADMIN_MENU_GROUP_SETTING = "setting";
     public static final String ADMIN_MENU_GROUP_PLUGIN = "plugin";
 
+    /** 缓存：数据字典配置 */
+    public static final String EHCACHE_KEY_OPTION_DATA = "optionData";
+
 }

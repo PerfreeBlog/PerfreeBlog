@@ -1,8 +1,10 @@
 package com.perfree.commons;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 日期计算工具（几分钟前/几秒前...）
+ * @author Perfree
+ */
 public class RelativeDateFormat {
     private static final long ONE_MINUTE = 60000L;
     private static final long ONE_HOUR = 3600000L;
@@ -16,6 +18,11 @@ public class RelativeDateFormat {
     private static final String ONE_MONTH_AGO = "月前";
     private static final String ONE_YEAR_AGO = "年前";
 
+    /**
+     * 根据date获取格式化后的日期字符串，如几秒前
+     * @param date Date
+     * @return String
+     */
     public static String format(Date date) {
         long delta = new Date().getTime() - date.getTime();
         if (delta < ONE_MINUTE) {
@@ -46,26 +53,56 @@ public class RelativeDateFormat {
         }
     }
 
+    /**
+     * Long date to seconds
+     * @param date date
+     * @return long
+     */
     private static long toSeconds(long date) {
         return date / 1000L;
     }
 
+    /**
+     * Long date to Minutes
+     * @param date Date
+     * @return long
+     */
     private static long toMinutes(long date) {
         return toSeconds(date) / 60L;
     }
 
+    /**
+     * Long date to Hours
+     * @param date Date
+     * @return long
+     */
     private static long toHours(long date) {
         return toMinutes(date) / 60L;
     }
 
+    /**
+     * Long date to Days
+     * @param date Date
+     * @return long
+     */
     private static long toDays(long date) {
         return toHours(date) / 24L;
     }
 
+    /**
+     * Long date to Months
+     * @param date Date
+     * @return long
+     */
     private static long toMonths(long date) {
         return toDays(date) / 30L;
     }
 
+    /**
+     * Long date to Years
+     * @param date Date
+     * @return long
+     */
     private static long toYears(long date) {
         return toMonths(date) / 365L;
     }
