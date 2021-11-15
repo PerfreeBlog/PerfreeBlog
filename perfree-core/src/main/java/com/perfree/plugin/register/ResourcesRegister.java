@@ -44,7 +44,7 @@ public class ResourcesRegister implements PluginRegister{
             String jarEntryName = entry.getName();
             for (String staticClassPathLocation : staticClassPathLocations) {
                if (!staticClassPathLocation.equals(jarEntryName) && jarEntryName.startsWith(staticClassPathLocation)
-                       && !jarEntryName.endsWith(".class")) {
+                       && !jarEntryName.endsWith(".class") && !entry.isDirectory()) {
                    URL url = new URL("jar:file:" + jarFile.getAbsolutePath() + "!/" + jarEntryName);
                    JarURLConnection jarConnection = (JarURLConnection) url.openConnection();
                    InputStream in = jarConnection.getInputStream();
