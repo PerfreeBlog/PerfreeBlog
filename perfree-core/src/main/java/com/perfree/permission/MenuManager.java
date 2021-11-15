@@ -172,7 +172,6 @@ public class MenuManager {
      */
     public static String getMenuUrl(Class<?> clazz, Method method) {
         RequestMapping requestMapping = AnnotationUtils.findAnnotation(clazz, RequestMapping.class);
-        if(requestMapping == null || requestMapping.value().length <= 0) return null;
 
         String methodUrl = "";
         RequestMapping methodRequestMapping = AnnotationUtils.findAnnotation(method, RequestMapping.class);
@@ -207,6 +206,9 @@ public class MenuManager {
 
         if(StringUtils.isBlank(methodUrl)) return null;
 
+        if(requestMapping == null || requestMapping.value().length <= 0) {
+            return methodUrl;
+        }
         return requestMapping.value()[0] + methodUrl;
     }
 }
