@@ -1,4 +1,4 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -7,12 +7,12 @@ import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.Pager;
 import com.perfree.commons.RegisterRequestMapping;
 import com.perfree.controller.front.PageController;
-import com.perfree.interceptor.BaseMenuService;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.model.RoleMenu;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuItem;
+import com.perfree.service.MenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class MenuService implements BaseMenuService {
+public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
 
@@ -226,7 +226,7 @@ public class MenuService implements BaseMenuService {
         }
     }
 
-    public Menu adminMenuGroupToMenu(AdminMenuGroup adminMenuGroup, Long pid, String pluginId){
+    private Menu adminMenuGroupToMenu(AdminMenuGroup adminMenuGroup, Long pid, String pluginId){
         Menu menu = new Menu();
         menu.setIcon(adminMenuGroup.getIcon());
         menu.setName(adminMenuGroup.getName());
@@ -243,7 +243,7 @@ public class MenuService implements BaseMenuService {
         return menu;
     }
 
-    public void menuItemToMenu(MenuItem menuItem, Long pid, String pluginId){
+    private void menuItemToMenu(MenuItem menuItem, Long pid, String pluginId){
         Menu menu = new Menu();
         menu.setIcon(menuItem.getIcon());
         menu.setName(menuItem.getName());
@@ -262,7 +262,7 @@ public class MenuService implements BaseMenuService {
     /**
      * @description 初始化权限
      */
-    public void initMenuRole(Menu menu, List<String> roleCodes) {
+    private void initMenuRole(Menu menu, List<String> roleCodes) {
         for (String roleCode : roleCodes) {
             RoleMenu roleMenu = new RoleMenu();
             roleMenu.setMenuId(menu.getId());

@@ -1,4 +1,4 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.StreamProgress;
@@ -15,6 +15,7 @@ import com.perfree.commons.Update;
 import com.perfree.commons.WebSocketMsg;
 import com.perfree.commons.YamlUtils;
 import com.perfree.controller.WebSocketServer;
+import com.perfree.service.UpdateService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,8 +32,8 @@ import java.io.IOException;
  * @date 2021/11/1 9:45
  */
 @Service
-public class UpdateService {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateService.class);
+public class UpdateServiceImpl implements UpdateService {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UpdateServiceImpl.class);
     @Value("${web.backup-path}")
     private String backupPath;
     @Value("${version}")
@@ -163,7 +164,7 @@ public class UpdateService {
      * @author Perfree
      * @date 2021/11/2 8:27
      */
-    public void winUpdate(File webDir) {
+    private void winUpdate(File webDir) {
         File execBat = new File("exec.bat");
         try {
             ProcessBuilder bat = new ProcessBuilder("cmd.exe", "/c", "start", execBat.getAbsolutePath(),
@@ -181,7 +182,7 @@ public class UpdateService {
      * @author Perfree
      * @date 2021/11/2 8:27
      */
-    public void linuxUpdate(File webDir) {
+    private void linuxUpdate(File webDir) {
         File execBat = new File("exec.sh");
         try {
             RuntimeUtil.exec("sed -i 's/\\r//' " + execBat.getAbsolutePath());
@@ -275,7 +276,7 @@ public class UpdateService {
      * @author Perfree
      * @date 2021/11/1 9:28
      */
-    public static void asynExeLocalComand(File file, ProcessBuilder pb) throws IOException {
+    private static void asynExeLocalComand(File file, ProcessBuilder pb) throws IOException {
         // 不使用Runtime.getRuntime().exec(command)的方式,因为无法设置以下特性
         // Java执行本地命令是启用一个子进程处理,默认情况下子进程与父进程I/O通过管道相连(默认ProcessBuilder.Redirect.PIPE)
         // 当服务执行自身重启的命令时,父进程关闭导致管道连接中断,将导致子进程也崩溃,从而无法完成后续的启动

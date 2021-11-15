@@ -1,4 +1,4 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -6,6 +6,7 @@ import com.perfree.commons.Pager;
 import com.perfree.commons.StringUtil;
 import com.perfree.mapper.UserMapper;
 import com.perfree.model.User;
+import com.perfree.service.UserService;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;

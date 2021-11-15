@@ -2,7 +2,7 @@ package com.perfree.controller.api;
 
 import cn.hutool.http.HtmlUtil;
 import com.perfree.commons.*;
-import com.perfree.controller.BaseApiController;
+import com.perfree.base.BaseApiController;
 import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.Option;

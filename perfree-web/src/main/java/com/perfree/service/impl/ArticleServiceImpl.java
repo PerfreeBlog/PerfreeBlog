@@ -1,22 +1,27 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.commons.Pager;
 import com.perfree.commons.DynamicDataSource;
+import com.perfree.commons.Pager;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
+import com.perfree.service.ArticleService;
+import com.perfree.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 @Transactional
-public class ArticleService{
+public class ArticleServiceImpl implements ArticleService {
     @Autowired
     private ArticleMapper articleMapper;
 

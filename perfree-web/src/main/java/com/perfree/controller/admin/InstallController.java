@@ -6,7 +6,7 @@ import cn.hutool.setting.dialect.Props;
 import com.perfree.commons.Constants;
 import com.perfree.commons.GravatarUtil;
 import com.perfree.commons.ResponseBean;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.model.Database;
 import com.perfree.model.User;
 import com.perfree.service.InstallService;

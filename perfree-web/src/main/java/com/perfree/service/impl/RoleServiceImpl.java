@@ -1,8 +1,9 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import com.perfree.mapper.RoleMapper;
 import com.perfree.mapper.TagMapper;
 import com.perfree.model.Role;
+import com.perfree.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class RoleService {
+public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleMapper roleMapper;
 

@@ -6,7 +6,7 @@ import com.perfree.commons.GravatarUtil;
 import com.perfree.commons.ResponseBean;
 import com.perfree.commons.ValidUtil;
 import com.perfree.commons.IpUtil;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.Option;

@@ -1,7 +1,7 @@
 package com.perfree.controller.front;
 
 import com.perfree.commons.Constants;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

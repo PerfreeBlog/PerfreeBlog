@@ -1,4 +1,4 @@
-package com.perfree.controller;
+package com.perfree.base;
 
 import com.perfree.commons.JwtUtils;
 import com.perfree.model.User;

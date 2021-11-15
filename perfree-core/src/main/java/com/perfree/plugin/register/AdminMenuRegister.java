@@ -1,6 +1,6 @@
 package com.perfree.plugin.register;
 
-import com.perfree.interceptor.BaseMenuService;
+import com.perfree.service.MenuService;
 import com.perfree.permission.AdminGroup;
 import com.perfree.permission.AdminGroups;
 import com.perfree.permission.AdminMenuGroup;
@@ -32,13 +32,13 @@ public class AdminMenuRegister implements PluginRegister{
 
     @Override
     public void registry(PluginInfo plugin) throws Exception {
-        BaseMenuService baseMenuService = applicationContext.getBean(BaseMenuService.class);
+        MenuService baseMenuService = applicationContext.getBean(MenuService.class);
         baseMenuService.addPluginSystemMenu(getAdminMenuGroups(plugin),plugin.getPluginId());
     }
 
     @Override
     public void unRegistry(PluginInfo plugin) throws Exception {
-        BaseMenuService baseMenuService = applicationContext.getBean(BaseMenuService.class);
+        MenuService baseMenuService = applicationContext.getBean(MenuService.class);
         baseMenuService.removePluginSystemMenu(plugin.getPluginId());
     }
 

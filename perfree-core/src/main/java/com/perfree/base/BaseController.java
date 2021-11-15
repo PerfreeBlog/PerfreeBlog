@@ -1,4 +1,4 @@
-package com.perfree.controller;
+package com.perfree.base;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;

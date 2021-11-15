@@ -1,7 +1,7 @@
 package com.perfree.controller.api;
 
 import com.perfree.commons.Pager;
-import com.perfree.controller.BaseApiController;
+import com.perfree.base.BaseApiController;
 import com.perfree.model.Link;
 import com.perfree.service.LinkService;
 import io.swagger.annotations.Api;

@@ -1,7 +1,7 @@
 package com.perfree.controller.api;
 
 import com.perfree.commons.ResponseBean;
-import com.perfree.controller.BaseApiController;
+import com.perfree.base.BaseApiController;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import io.swagger.annotations.Api;

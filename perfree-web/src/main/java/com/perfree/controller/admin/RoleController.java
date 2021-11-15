@@ -1,7 +1,7 @@
 package com.perfree.controller.admin;
 
 import com.perfree.commons.ResponseBean;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.service.RoleService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;

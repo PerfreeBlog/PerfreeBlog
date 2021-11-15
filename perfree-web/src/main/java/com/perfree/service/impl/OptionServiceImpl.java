@@ -1,8 +1,9 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
+import com.perfree.service.OptionService;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -15,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @Transactional
-public class OptionService {
+public class OptionServiceImpl implements OptionService {
     private static final CacheManager cacheManager = CacheManager.newInstance();
     @Autowired
     private OptionMapper optionMapper;

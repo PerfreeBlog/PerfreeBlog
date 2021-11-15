@@ -1,4 +1,4 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
@@ -13,6 +13,9 @@ import com.perfree.model.Database;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
+import com.perfree.service.InstallService;
+import com.perfree.service.MenuService;
+import com.perfree.service.OptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -25,7 +28,7 @@ import java.sql.Connection;
 import java.util.List;
 
 @Service
-public class InstallService {
+public class InstallServiceImpl implements InstallService {
 
     @Autowired
     private OptionService optionService;

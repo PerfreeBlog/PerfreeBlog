@@ -3,6 +3,7 @@ package com.perfree.controller;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.RandomUtil;
+import com.perfree.base.BaseController;
 import com.perfree.commons.*;
 import com.perfree.model.Menu;
 import com.perfree.model.Option;
@@ -42,7 +43,7 @@ import java.util.List;
  */
 @Controller
 @Api(tags = "用户操作模块API")
-public class SystemController extends BaseController{
+public class SystemController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
     @Autowired
     private UserService userService;

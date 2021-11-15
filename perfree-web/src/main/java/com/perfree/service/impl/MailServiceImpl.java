@@ -1,4 +1,4 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrFormatter;
@@ -6,6 +6,9 @@ import com.perfree.commons.OptionCacheUtil;
 import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.User;
+import com.perfree.service.ArticleService;
+import com.perfree.service.CommentService;
+import com.perfree.service.MailService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +28,9 @@ import java.util.Properties;
  * @date 2021/8/10 9:27
  */
 @Service
-public class MailService {
+public class MailServiceImpl implements MailService {
     private static JavaMailSenderImpl javaMailSender;
-    private final static Logger LOGGER = LoggerFactory.getLogger(MailService.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(MailServiceImpl.class);
     @Autowired
     private ArticleService articleService;
     @Autowired
@@ -73,7 +76,7 @@ public class MailService {
      * @param helper helper
      * @author Perfree
      */
-    public void commentMailContent(Comment comment, MimeMessageHelper helper) throws MessagingException {
+    private void commentMailContent(Comment comment, MimeMessageHelper helper) throws MessagingException {
         Article article = articleService.getById(comment.getArticleId().toString());
         helper.setSubject("来自["+OptionCacheUtil.getValue("WEB_NAME")+"]站点的新消息");
         String articleAddress = OptionCacheUtil.getValue("WEB_SITE") + "/article/"+ article.getId() + "#comment-" + comment.getId();
@@ -117,7 +120,7 @@ public class MailService {
      * @description 设置邮件服务
      * @author Perfree
      */
-    public void setJavaMailSender() {
+    private void setJavaMailSender() {
         javaMailSender = new JavaMailSenderImpl();
         javaMailSender.setHost(OptionCacheUtil.getValue("SMTP_SERVER"));
         javaMailSender.setUsername(OptionCacheUtil.getValue("SMTP_EMAIL"));

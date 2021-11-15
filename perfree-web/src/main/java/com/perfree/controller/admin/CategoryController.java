@@ -3,7 +3,7 @@ package com.perfree.controller.admin;
 import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.model.Category;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.CategoryService;

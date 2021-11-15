@@ -1,4 +1,4 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import com.perfree.mapper.ArticleMapper;
@@ -9,6 +9,7 @@ import com.perfree.model.Article;
 import com.perfree.model.Category;
 import com.perfree.model.Option;
 import com.perfree.model.Tag;
+import com.perfree.service.SEOService;
 import com.redfin.sitemapgenerator.ChangeFreq;
 import com.redfin.sitemapgenerator.WebSitemapGenerator;
 import com.redfin.sitemapgenerator.WebSitemapUrl;
@@ -23,8 +24,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
-public class SEOService {
-    private final Logger logger = LoggerFactory.getLogger(SEOService.class);
+public class SEOServiceImpl implements SEOService {
+    private final Logger logger = LoggerFactory.getLogger(SEOServiceImpl.class);
     @Autowired
     private ArticleMapper articleMapper;
     @Autowired

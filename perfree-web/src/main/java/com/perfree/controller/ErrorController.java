@@ -1,12 +1,13 @@
 package com.perfree.controller;
 
+import com.perfree.base.BaseController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class ErrorController extends BaseController{
+public class ErrorController extends BaseController {
     @RequestMapping(value = "/404",produces = {"text/html"})
     public String errorPage404(){
         return view("/404.html", "/404.html",

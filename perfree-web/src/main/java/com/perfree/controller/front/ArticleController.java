@@ -2,7 +2,7 @@ package com.perfree.controller.front;
 
 import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
 import net.sf.ehcache.CacheManager;

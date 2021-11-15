@@ -1,4 +1,4 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.setting.dialect.Props;
@@ -14,6 +14,7 @@ import com.perfree.plugin.PluginEvent;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.utils.PluginsUtils;
+import com.perfree.service.PluginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class PluginService {
-    private final Logger logger = LoggerFactory.getLogger(PluginService.class);
+public class PluginServiceImpl implements PluginService {
+    private final Logger logger = LoggerFactory.getLogger(PluginServiceImpl.class);
     @Autowired
     private PluginsMapper pluginsMapper;
 

@@ -4,7 +4,7 @@ import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
 import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.model.Theme;
 import com.perfree.model.TreeNode;
 import com.perfree.permission.AdminMenu;

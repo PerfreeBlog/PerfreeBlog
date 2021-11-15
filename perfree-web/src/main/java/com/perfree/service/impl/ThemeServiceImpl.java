@@ -1,15 +1,17 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.commons.Constants;
-import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.FileUtil;
+import com.perfree.commons.OptionCacheUtil;
 import com.perfree.model.Option;
 import com.perfree.model.Theme;
 import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
+import com.perfree.service.OptionService;
+import com.perfree.service.ThemeService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ThemeService {
+public class ThemeServiceImpl implements ThemeService {
 
     @Autowired
     private OptionService optionService;
@@ -126,7 +128,7 @@ public class ThemeService {
     }
 
 
-    public File getThemeDir(String path) {
+    private File getThemeDir(String path) {
         File prodThemeFile = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + path);
         File devThemeFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + path);
         File themeFile = null;
@@ -172,7 +174,7 @@ public class ThemeService {
         return getFileListByFile(themeDir);
     }
 
-    public List<TreeNode> getFileListByFile(File dir) {
+    private List<TreeNode> getFileListByFile(File dir) {
         List<TreeNode> result = new ArrayList<>();
         for (File file : dir.listFiles()) {
             ThemeFile themeFile = new ThemeFile();

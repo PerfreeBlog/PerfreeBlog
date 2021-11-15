@@ -5,7 +5,7 @@ import com.perfree.commons.GravatarUtil;
 import com.perfree.commons.FileUtil;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.UserService;

@@ -1,7 +1,7 @@
 package com.perfree.controller.front;
 
 import com.perfree.commons.Constants;
-import com.perfree.controller.BaseController;
+import com.perfree.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

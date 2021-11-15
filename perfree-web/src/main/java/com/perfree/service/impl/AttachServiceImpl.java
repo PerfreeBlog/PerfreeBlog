@@ -1,10 +1,11 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
 import com.perfree.mapper.AttachMapper;
 import com.perfree.model.Attach;
+import com.perfree.service.AttachService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,10 @@ import java.util.List;
 
 @Service
 @Transactional
-public class AttachService {
+public class AttachServiceImpl implements AttachService {
     @Value("${web.upload-path}")
     private String uploadPath;
-    private final Logger logger = LoggerFactory.getLogger(AttachService.class);
+    private final Logger logger = LoggerFactory.getLogger(AttachServiceImpl.class);
     @Autowired
     private AttachMapper attachMapper;
 

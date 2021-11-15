@@ -1,11 +1,13 @@
-package com.perfree.service;
+package com.perfree.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.CommentMapper;
-import com.perfree.model.*;
+import com.perfree.model.Comment;
+import com.perfree.service.ArticleService;
+import com.perfree.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +18,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CommentService {
+public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
 

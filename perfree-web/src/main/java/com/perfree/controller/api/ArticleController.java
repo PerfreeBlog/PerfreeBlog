@@ -2,7 +2,7 @@ package com.perfree.controller.api;
 
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.controller.BaseApiController;
+import com.perfree.base.BaseApiController;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
