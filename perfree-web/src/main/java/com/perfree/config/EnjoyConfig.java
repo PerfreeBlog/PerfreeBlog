@@ -26,6 +26,7 @@ public class EnjoyConfig {
         engine.setDevMode(true);
         engine.setSourceFactory(new TemplateSourceFactory());
         engine.addSharedMethod(new StrUtil());
+        Engine.setFastMode(true);
         engine.addSharedMethod(new OptionShared());
         return jfr;
     }
