@@ -73,7 +73,6 @@ public class PluginServiceImpl implements PluginService {
             FileUtil.copy(file.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
 
             PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
-            EnjoyConfig.jfr.getEngine().removeAllTemplateCache();
             // 存库
             saveOrUpdatePlugin(pluginInfo, pluginFile);
             PluginEvent pluginBean = pluginInfo.getPluginBean(PluginEvent.class);
