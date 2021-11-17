@@ -1,13 +1,11 @@
 package com.perfree.plugin.register;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.IoUtil;
-import cn.hutool.core.io.file.FileWriter;
-import cn.hutool.core.util.CharsetUtil;
 import com.perfree.commons.Constants;
 import com.perfree.plugin.PluginInfo;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
@@ -48,15 +46,20 @@ public class ResourcesRegister implements PluginRegister{
                    URL url = new URL("jar:file:" + jarFile.getAbsolutePath() + "!/" + jarEntryName);
                    JarURLConnection jarConnection = (JarURLConnection) url.openConnection();
                    InputStream in = jarConnection.getInputStream();
-                   String read = IoUtil.read(in, CharsetUtil.UTF_8);
+
+                   File file1 = new File(file.getAbsolutePath() + File.separator + jarEntryName);
+                   FileUtil.touch(file1.getAbsolutePath());
+                   int index;
+                   byte[] bytes = new byte[1024];
+                   FileOutputStream downloadFile = new FileOutputStream(file.getAbsolutePath() + File.separator + jarEntryName);
+                   while ((index = in.read(bytes)) != -1) {
+                       downloadFile.write(bytes, 0, index);
+                       downloadFile.flush();
+                   }
+                   downloadFile.close();
                    in.close();
                    JarFile currJarFile = jarConnection.getJarFile();
                    currJarFile.close();
-
-
-                   File staticFile = new File(file.getAbsolutePath() + File.separator + jarEntryName);
-                   FileWriter writer = new FileWriter(staticFile);
-                   writer.write(read);
                }
             }
         }
