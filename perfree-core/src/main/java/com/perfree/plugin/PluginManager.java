@@ -101,6 +101,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
             } catch (Exception e) {
                 PluginHolder.remove(startedPlugin.getPluginId());
                 unloadPlugin(plugin.getPluginWrapper().getPluginId());
+                e.printStackTrace();
                 throw new Exception(e.getMessage());
             }
         }

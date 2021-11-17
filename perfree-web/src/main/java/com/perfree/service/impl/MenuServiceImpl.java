@@ -1,5 +1,6 @@
 package com.perfree.service.impl;
 
+import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Constants;
@@ -12,6 +13,7 @@ import com.perfree.model.Menu;
 import com.perfree.model.RoleMenu;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuItem;
+import com.perfree.permission.MenuManager;
 import com.perfree.service.MenuService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,6 +68,7 @@ public class MenuServiceImpl implements MenuService {
      * @return int
      */
     public int add(Menu menu) {
+        menu.setId(IdUtil.simpleUUID());
         menu.setCreateTime(new Date());
         return menuMapper.add(menu);
     }
@@ -141,7 +144,6 @@ public class MenuServiceImpl implements MenuService {
         }
         List<String> patterns = new ArrayList<>();
         List<String> patternsPageIndex = new ArrayList<>();
-        String themePath = "static/themes/" + OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
         menus.forEach(r -> {
             if (RegisterRequestMapping.isUrlPattern(r.getUrl()) && StringUtils.isNotBlank(r.getUrl())
                     && r.getUrl().startsWith("/") && !r.getUrl().equals("/")){
@@ -190,15 +192,31 @@ public class MenuServiceImpl implements MenuService {
      * @author Perfree
      */
     public void initSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
-        // 清除菜单
-        menuMapper.deleteAllAdminMenu();
-        // 清除后台权限
-        menuMapper.deleteAllRoleMenu();
-        // 初始化
+        // 清除后台菜单及权限,重新生成
+        List<Menu> menus  = menuMapper.getAllAdminMenu();
+        for (Menu menu : menus) {
+            menuMapper.delById(menu.getId());
+            menuMapper.delRoleMenuByMenuId(menu.getId());
+        }
+        saveAdminGroups(adminMenuGroups);
+    }
+
+    /**
+     * 存储生成的菜单
+     * @param adminMenuGroups adminMenuGroups
+     */
+    private void saveAdminGroups(List<AdminMenuGroup> adminMenuGroups) {
         for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
-            Menu menu = adminMenuGroupToMenu(adminMenuGroup, -1L,null);
+            Menu parentMenu = menuMapper.getById(adminMenuGroup.getId());
+            // 如果菜单组不存在与数据库,则新增
+            if (parentMenu == null ) {
+                parentMenu = generateMenu(adminMenuGroup, Constants.MENU_PARENT_DEFAULT_PID);
+                initMenuRole(parentMenu, adminMenuGroup.getRole());
+            }
+            // 保存子菜单
             for (MenuItem menuItem : adminMenuGroup.getMenuItems()) {
-                menuItemToMenu(menuItem, menu.getId(), null);
+                Menu childMenu = generateMenu(menuItem, parentMenu.getId());
+                initMenuRole(childMenu, menuItem.getRole());
             }
         }
     }
@@ -206,11 +224,15 @@ public class MenuServiceImpl implements MenuService {
     /**
      * 添加插件menu
      */
-    public void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups, String pluginId) {
+    public void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
+        saveAdminGroups(adminMenuGroups);
         for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
-            Menu menu = adminMenuGroupToMenu(adminMenuGroup, -1L,pluginId);
-            for (MenuItem menuItem : adminMenuGroup.getMenuItems()) {
-                menuItemToMenu(menuItem, menu.getId(), pluginId);
+            AdminMenuGroup adminMenuGroupByGroupId = MenuManager.getAdminMenuGroupByGroupId(adminMenuGroup.getGroupId());
+            // 如果菜单组已存在,则将子菜单插入进已存在的组中
+            if (adminMenuGroupByGroupId != null) {
+                adminMenuGroupByGroupId.getMenuItems().addAll(adminMenuGroup.getMenuItems());
+            } else {
+                MenuManager.SYSTEM_MENU_LIST.add(adminMenuGroup);
             }
         }
     }
@@ -218,45 +240,46 @@ public class MenuServiceImpl implements MenuService {
     /**
      * 移除插件菜单
      */
-    public void removePluginSystemMenu(String pluginId) {
-        List<Menu> menus = menuMapper.getByPluginId(pluginId);
-        for (Menu menu : menus) {
-            menuMapper.delById(menu.getId());
-            menuMapper.delRoleMenuByMenuId(menu.getId());
+    public void removePluginSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
+        for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
+            AdminMenuGroup adminMenuGroupByGroupId = MenuManager.getAdminMenuGroupByGroupId(adminMenuGroup.getGroupId());
+            if (adminMenuGroupByGroupId == null) {
+                continue;
+            }
+            // 清理子菜单
+            for (MenuItem menuItem : adminMenuGroup.getMenuItems()) {
+                for(int i = adminMenuGroupByGroupId.getMenuItems().size() - 1; i >= 0; i--) {
+                    if (menuItem.getId().equals(adminMenuGroupByGroupId.getMenuItems().get(i).getId())) {
+                        menuMapper.delById(menuItem.getId());
+                        menuMapper.delRoleMenuByMenuId(menuItem.getId());
+                        adminMenuGroupByGroupId.getMenuItems().remove(adminMenuGroupByGroupId.getMenuItems().get(i));
+                    }
+                }
+            }
+            // 如果菜单组内无其他菜单并且不属于系统菜单组,清除组
+            if (adminMenuGroupByGroupId.getMenuItems().size() <= 0 &&
+                    !MenuManager.isSystemDefaultAdminMenuGroup(adminMenuGroupByGroupId.getGroupId())) {
+                menuMapper.delById(adminMenuGroupByGroupId.getId());
+                menuMapper.delRoleMenuByMenuId(adminMenuGroupByGroupId.getId());
+                MenuManager.SYSTEM_MENU_LIST.remove(adminMenuGroupByGroupId);
+            }
         }
     }
 
-    private Menu adminMenuGroupToMenu(AdminMenuGroup adminMenuGroup, Long pid, String pluginId){
-        Menu menu = new Menu();
-        menu.setIcon(adminMenuGroup.getIcon());
-        menu.setName(adminMenuGroup.getName());
+    /**
+     * 生成Menu实体
+     * @param menu menu
+     * @param pid pid
+     * @return Menu
+     */
+    private Menu generateMenu(Menu menu, String pid){
         menu.setPid(pid);
         menu.setStatus(0);
-        menu.setPluginId(pluginId);
-        menu.setSeq(adminMenuGroup.getSeq());
         menu.setType(1);
         menu.setTarget(0);
-        menu.setUrl(adminMenuGroup.getUrl());
         menu.setCreateTime(new Date());
         menuMapper.add(menu);
-        initMenuRole(menu, adminMenuGroup.getRole());
         return menu;
-    }
-
-    private void menuItemToMenu(MenuItem menuItem, Long pid, String pluginId){
-        Menu menu = new Menu();
-        menu.setIcon(menuItem.getIcon());
-        menu.setName(menuItem.getName());
-        menu.setPid(pid);
-        menu.setStatus(0);
-        menu.setSeq(menuItem.getSeq());
-        menu.setType(1);
-        menu.setPluginId(pluginId);
-        menu.setTarget(menuItem.getTarget());
-        menu.setUrl(menuItem.getUrl());
-        menu.setCreateTime(new Date());
-        menuMapper.add(menu);
-        initMenuRole(menu, menuItem.getRole());
     }
 
     /**

@@ -100,13 +100,12 @@ public interface MenuService {
     /**
      * 添加插件菜单
      * @param adminMenuGroups adminMenuGroups
-     * @param pluginId pluginId
      */
-    void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups, String pluginId);
+    void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups);
 
     /**
      * 移除插件菜单
-     * @param pluginId pluginId
+     * @param adminMenuGroups adminMenuGroups
      */
-    void removePluginSystemMenu(String pluginId);
+    void removePluginSystemMenu(List<AdminMenuGroup> adminMenuGroups);
 }

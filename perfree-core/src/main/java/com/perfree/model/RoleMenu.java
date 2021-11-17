@@ -5,7 +5,7 @@ package com.perfree.model;
  * @author Perfree
  */
 public class RoleMenu {
-    private Long menuId;
+    private String menuId;
     private Long roleId;
 
     private String roleCode;
@@ -18,19 +18,19 @@ public class RoleMenu {
         this.roleCode = roleCode;
     }
 
-    public Long getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
-    }
-
     public Long getRoleId() {
         return roleId;
     }
 
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
+    }
+
+    public String getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
     }
 }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.MenuMapper" >
-    <insert id="add" useGeneratedKeys="true" keyProperty="id" >
-        insert into p_menu (pid, name, url, icon,seq,type,target,status,articleId,createTime,pluginId)
-        VALUES (#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status},#{articleId}, #{createTime},#{pluginId})
+    <insert id="add">
+        insert into p_menu (id, pid, name, url, icon,seq,type,target,status,articleId,createTime)
+        VALUES (#{id},#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status},#{articleId}, #{createTime})
     </insert>
 
     <update id="update">
@@ -39,7 +39,7 @@
     <!-- 定义菜单树形结构 -->
     <resultMap id="MENU_TREE"
                type="com.perfree.model.Menu">
-        <result column="id" property="id"></result>
+        <result column="menuId" property="id"></result>
         <result column="pid" property="pid"></result>
         <result column="name" property="name"></result>
         <result column="url" property="url"></result>
@@ -56,7 +56,7 @@
             <id property="id" column="articleId" />
         </association>
         <collection property="childMenu"
-                    select="getChildMenuByUserIdAndType" column="id=id,type=type,userId=userId"></collection>
+                    select="getChildMenuByUserIdAndType" column="id=menuId,type=type,userId=userId"></collection>
     </resultMap>
 
     <select id="getArticleById" resultType="com.perfree.model.Article">
@@ -66,16 +66,16 @@
 
     <!-- 获取当前账户所拥有的菜单 -->
     <select id="getParentMenuByUserIdAndType" resultMap="MENU_TREE">
-        SELECT distinct t.*,t3.id userId from p_menu t
+        SELECT distinct t.*,t.id menuId,t3.id userId from p_menu t
         LEFT JOIN p_role_menu t2 on t.id = t2.menuId
         LEFT JOIN p_user t3 on t3.roleId = t2.roleId
-        where t3.id = #{id} and t.pid = -1 and t.status = 0 and t.type = #{type}
+        where t3.id = #{id} and t.pid = '-1' and t.status = 0 and t.type = #{type}
         order by t.seq asc
     </select>
 
     <!-- 获取当前账户所拥有的子菜单 -->
     <select id="getChildMenuByUserIdAndType" resultMap="MENU_TREE">
-        SELECT distinct t.*,t3.id userId from p_menu t
+        SELECT distinct t.*,t.id menuId,t3.id userId from p_menu t
         LEFT JOIN p_role_menu t2 on t.id = t2.menuId
         LEFT JOIN p_user t3 on t3.roleId = t2.roleId
         where t.pid = #{id} and t.status = 0 and t.type = #{type} and t3.id = #{userId}
@@ -105,7 +105,7 @@
                     select="getChildMenuList" column="id"></collection>
     </resultMap>
     <select id="getList" resultMap="MENU_LIST_TREE">
-        select * from p_menu where pid = -1 and type = 0
+        select * from p_menu where pid = '-1' and type = 0
         <if test="name != null and name != ''">
             <bind name="name" value="'%' + _parameter.name + '%'" />
             and name like #{name,jdbcType=VARCHAR}
@@ -146,7 +146,7 @@
 
     <select id="getProtalMenus" resultMap="PROTAL_MENU_TREE">
         SELECT distinct t.* from p_menu t
-        where t.pid = -1 and t.status = 0 and t.type = 0
+        where t.pid = '-1' and t.status = 0 and t.type = 0
         order by t.seq asc
     </select>
 
@@ -163,17 +163,9 @@
     <select id="getRegisterMenu" resultType="com.perfree.model.Menu">
         select * from p_menu where status= 0 and type = 0
     </select>
-    <select id="getByPluginId" resultType="com.perfree.model.Menu">
-         select * from p_menu where pluginId = #{pluginId}
+    <select id="getAllAdminMenu" resultType="com.perfree.model.Menu">
+      select * FROM p_menu  WHERE `type` = 1
     </select>
-
-    <delete id="deleteAllAdminMenu">
-        DELETE FROM p_menu  WHERE `type` = 1
-    </delete>
-
-    <delete id="deleteAllRoleMenu">
-        DELETE FROM p_role_menu
-    </delete>
 
     <delete id="delById">
          DELETE FROM p_menu  WHERE id = #{id}

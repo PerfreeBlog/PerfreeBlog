@@ -36,6 +36,12 @@ public class Constants {
     /** url - articleList(文章列表) */
     public static final String URL_ARTICLE_LIST = "/articleList/";
 
+    /** url - archive(文章归档) */
+    public static final String URL_ARCHIVE = "/archive/";
+
+    /** url - link(友链) */
+    public static final String URL_LINK = "/link/";
+
     /** url - tag(标签) */
     public static final String URL_ARTICLE_TAG = "/tag/";
 
@@ -141,5 +147,8 @@ public class Constants {
 
     /** 用户默认状态 */
     public static final int USER_STATUS_DEFAULT = 0;
+
+    /** 父级菜单默认pid */
+    public static final String MENU_PARENT_DEFAULT_PID = "-1";
 
 }

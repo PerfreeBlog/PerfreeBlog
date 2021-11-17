@@ -1,5 +1,6 @@
 package com.perfree.plugin.register;
 
+import cn.hutool.core.util.IdUtil;
 import com.perfree.service.MenuService;
 import com.perfree.permission.AdminGroup;
 import com.perfree.permission.AdminGroups;
@@ -33,13 +34,19 @@ public class AdminMenuRegister implements PluginRegister{
     @Override
     public void registry(PluginInfo plugin) throws Exception {
         MenuService baseMenuService = applicationContext.getBean(MenuService.class);
-        baseMenuService.addPluginSystemMenu(getAdminMenuGroups(plugin),plugin.getPluginId());
+        List<AdminMenuGroup> adminMenuGroups = getAdminMenuGroups(plugin);
+        baseMenuService.addPluginSystemMenu(adminMenuGroups);
+        MenuManager.PLUGIN_MENU_MAPS.put(plugin.getPluginId(), adminMenuGroups);
     }
 
     @Override
     public void unRegistry(PluginInfo plugin) throws Exception {
         MenuService baseMenuService = applicationContext.getBean(MenuService.class);
-        baseMenuService.removePluginSystemMenu(plugin.getPluginId());
+        List<AdminMenuGroup> adminMenuGroups = MenuManager.PLUGIN_MENU_MAPS.get(plugin.getPluginId());
+        if (adminMenuGroups != null && adminMenuGroups.size() > 0) {
+            baseMenuService.removePluginSystemMenu(adminMenuGroups);
+            MenuManager.PLUGIN_MENU_MAPS.remove(plugin.getPluginId());
+        }
     }
 
     private List<AdminMenuGroup> getAdminMenuGroups(PluginInfo plugin){
@@ -48,13 +55,20 @@ public class AdminMenuRegister implements PluginRegister{
             AdminGroups annotation = aClass.getAnnotation(AdminGroups.class);
             AdminGroup[] groups = annotation.groups();
             for (AdminGroup adminGroup : groups) {
+                AdminMenuGroup adminMenuGroupByGroupId = MenuManager.getAdminMenuGroupByGroupId(adminGroup.groupId());
                 AdminMenuGroup adminMenuGroup = new AdminMenuGroup();
-                adminMenuGroup.setGroupId(adminGroup.groupId());
-                adminMenuGroup.setIcon(adminGroup.icon());
-                adminMenuGroup.setName(adminGroup.name());
-                adminMenuGroup.setRole(Arrays.asList(adminGroup.role()));
-                adminMenuGroup.setSeq(adminGroup.seq());
-                adminMenuGroup.setUrl(adminGroup.url());
+                if (adminMenuGroupByGroupId != null) {
+                    adminMenuGroup.setId(adminMenuGroupByGroupId.getId());
+                    adminMenuGroup.setGroupId(adminMenuGroupByGroupId.getGroupId());
+                } else {
+                    adminMenuGroup.setGroupId(adminGroup.groupId());
+                    adminMenuGroup.setIcon(adminGroup.icon());
+                    adminMenuGroup.setName(adminGroup.name());
+                    adminMenuGroup.setRole(Arrays.asList(adminGroup.role()));
+                    adminMenuGroup.setSeq(adminGroup.seq());
+                    adminMenuGroup.setId(IdUtil.simpleUUID());
+                    adminMenuGroup.setUrl(adminGroup.url());
+                }
                 adminMenuGroups.add(adminMenuGroup);
             }
         }

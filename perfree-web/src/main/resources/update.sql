@@ -6,4 +6,9 @@ UPDATE `p_role` SET `name` = '普通用户', `description` = '网站用户', `co
 --PerfreeBlog
 --v1.2.8;
 ALTER TABLE `p_menu` ADD COLUMN `pluginId` varchar(128) NULL COMMENT '插件id';
-
+--PerfreeBlog
+--v1.3.1;
+ALTER TABLE `p_menu` MODIFY COLUMN `id` varchar(64) NOT NULL COMMENT '主键';
+ALTER TABLE `p_menu` MODIFY COLUMN `pid` varchar(64) NULL COMMENT '父级id';
+ALTER TABLE `p_menu` DROP COLUMN `pluginId`;
+ALTER TABLE `p_role_menu` MODIFY COLUMN `menuId` varchar(64) NOT NULL COMMENT '菜单id';

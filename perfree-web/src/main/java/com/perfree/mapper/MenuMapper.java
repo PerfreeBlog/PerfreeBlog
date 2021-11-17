@@ -85,16 +85,12 @@ public interface MenuMapper {
 
     List<Menu> getRegisterMenu();
 
-    void deleteAllAdminMenu();
-
     void addRoleMenuByRoleCode(RoleMenu roleMenu);
 
-    void deleteAllRoleMenu();
+    void delById(String id);
 
-    List<Menu> getByPluginId(String pluginId);
+    void delRoleMenuByMenuId(String id);
 
-    void delById(Long id);
-
-    void delRoleMenuByMenuId(Long id);
+    List<Menu> getAllAdminMenu();
 
 }

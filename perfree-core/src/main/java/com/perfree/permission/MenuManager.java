@@ -1,7 +1,9 @@
 package com.perfree.permission;
 
 import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.IdUtil;
 import com.perfree.commons.Constants;
+import com.perfree.plugin.PluginInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,20 +27,24 @@ import java.util.*;
  */
 public class MenuManager {
     private final static Logger LOGGER = LoggerFactory.getLogger(MenuManager.class);
-
-
+    // 存储了系统所有的菜单组
+    public final static List<AdminMenuGroup> SYSTEM_MENU_LIST = Collections.synchronizedList(new ArrayList<>());
+    // 存储了每个插件的菜单组
+    public final static Map<String, List<AdminMenuGroup>> PLUGIN_MENU_MAPS = Collections.synchronizedMap(new HashMap<>());
+    // 存储了系统默认自带的菜单组
+    public final static List<AdminMenuGroup> SYSTEM_DEFAULT_MENU_LIST = Collections.synchronizedList(new ArrayList<>());
     /** 
      * @description 初始化系统菜单分组
      * @author Perfree
      */ 
-    public static List<AdminMenuGroup> initSystemMenuGroup() {
-        List<AdminMenuGroup> systemAdminMenuGroups = Collections.synchronizedList(new ArrayList<>());
+    public static void initSystemMenuGroup() {
         AdminMenuGroup home = new AdminMenuGroup();
         home.setGroupId(Constants.ADMIN_MENU_GROUP_HOME);
         home.setIcon("fa-home");
         home.setName("主页");
         home.setUrl("/admin/dashboard");
         home.setSeq(1);
+        home.setId(IdUtil.simpleUUID());
         home.setRole(ListUtil.toList(Constants.ROLE_ADMIN, Constants.ROLE_CONTRIBUTE, Constants.ROLE_EDITOR,Constants.ROLE_USER));
 
         AdminMenuGroup writeArticle = new AdminMenuGroup();
@@ -47,6 +53,7 @@ public class MenuManager {
         writeArticle.setUrl("/admin/article/addPage");
         writeArticle.setName("写文章");
         writeArticle.setSeq(2);
+        writeArticle.setId(IdUtil.simpleUUID());
         writeArticle.setRole(ListUtil.toList(Constants.ROLE_ADMIN, Constants.ROLE_CONTRIBUTE, Constants.ROLE_EDITOR));
 
         AdminMenuGroup content = new AdminMenuGroup();
@@ -54,6 +61,7 @@ public class MenuManager {
         content.setIcon("fa-inbox");
         content.setName("内容管理");
         content.setSeq(3);
+        content.setId(IdUtil.simpleUUID());
         content.setRole(ListUtil.toList(Constants.ROLE_ADMIN, Constants.ROLE_CONTRIBUTE, Constants.ROLE_EDITOR));
 
         AdminMenuGroup theme = new AdminMenuGroup();
@@ -61,6 +69,7 @@ public class MenuManager {
         theme.setIcon("fa-tachometer");
         theme.setName("主题管理");
         theme.setSeq(4);
+        theme.setId(IdUtil.simpleUUID());
         theme.setRole(ListUtil.toList(Constants.ROLE_ADMIN));
 
         AdminMenuGroup plugin = new AdminMenuGroup();
@@ -69,6 +78,7 @@ public class MenuManager {
         plugin.setUrl("/admin/plugin");
         plugin.setName("插件管理");
         plugin.setSeq(5);
+        plugin.setId(IdUtil.simpleUUID());
         plugin.setRole(ListUtil.toList(Constants.ROLE_ADMIN));
 
         AdminMenuGroup setting = new AdminMenuGroup();
@@ -77,15 +87,16 @@ public class MenuManager {
         setting.setName("网站设置");
         setting.setUrl("/admin/setting");
         setting.setSeq(6);
+        setting.setId(IdUtil.simpleUUID());
         setting.setRole(ListUtil.toList(Constants.ROLE_ADMIN));
 
-        systemAdminMenuGroups.add(home);
-        systemAdminMenuGroups.add(writeArticle);
-        systemAdminMenuGroups.add(content);
-        systemAdminMenuGroups.add(theme);
-        systemAdminMenuGroups.add(plugin);
-        systemAdminMenuGroups.add(setting);
-        return systemAdminMenuGroups;
+        SYSTEM_DEFAULT_MENU_LIST.add(home);
+        SYSTEM_DEFAULT_MENU_LIST.add(writeArticle);
+        SYSTEM_DEFAULT_MENU_LIST.add(content);
+        SYSTEM_DEFAULT_MENU_LIST.add(theme);
+        SYSTEM_DEFAULT_MENU_LIST.add(plugin);
+        SYSTEM_DEFAULT_MENU_LIST.add(setting);
+        SYSTEM_MENU_LIST.addAll(SYSTEM_DEFAULT_MENU_LIST);
     }
 
     /** 
@@ -93,9 +104,9 @@ public class MenuManager {
      * @author Perfree
      */
     public static List<AdminMenuGroup> initSystemMenu() {
-        List<AdminMenuGroup> adminMenuGroups = initSystemMenuGroup();
+        initSystemMenuGroup();
         List<Class<?>> controllerClassList = initSystemControllerClasses();
-        return initAdminMenu(controllerClassList, adminMenuGroups);
+        return initAdminMenu(controllerClassList, SYSTEM_MENU_LIST);
     }
 
 
@@ -141,6 +152,7 @@ public class MenuManager {
                         menuItem.setSeq(annotation.seq());
                         menuItem.setUrl(getMenuUrl(clazz, method));
                         menuItem.setRole(Arrays.asList(annotation.role()));
+                        menuItem.setId(IdUtil.simpleUUID());
                         AdminMenuGroup adminMenuGroup = matchAdminGroupMenu(menuItem.getGroupId(), adminMenuGroups);
                         if (adminMenuGroup != null) {
                             adminMenuGroup.getMenuItems().add(menuItem);
@@ -210,5 +222,32 @@ public class MenuManager {
             return methodUrl;
         }
         return requestMapping.value()[0] + methodUrl;
+    }
+
+    /**
+     * 根据 groupId 获取AdminMenuGroup
+     * @param groupId  groupId
+     * @return AdminMenuGroup
+     */
+    public static AdminMenuGroup getAdminMenuGroupByGroupId(String groupId) {
+        for (AdminMenuGroup adminMenuGroup : SYSTEM_MENU_LIST) {
+            if (adminMenuGroup.getGroupId().equals(groupId)) {
+                return adminMenuGroup;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 是否为系统默认菜单组
+     * @return boolean
+     */
+    public static boolean isSystemDefaultAdminMenuGroup(String groupId){
+        for (AdminMenuGroup adminMenuGroup : SYSTEM_DEFAULT_MENU_LIST) {
+            if (adminMenuGroup.getGroupId().equals(groupId)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

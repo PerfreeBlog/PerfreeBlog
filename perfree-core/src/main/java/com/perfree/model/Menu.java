@@ -16,8 +16,8 @@ public class Menu implements Serializable {
     private static final long serialVersionUID = 7817277417501762477L;
     public static int TYPE_FRONT = 0;
     public static int TYPE_AFTER = 1;
-    private Long id;
-    private Long pid;
+    private String id;
+    private String pid;
     @NotBlank(message = "菜单名不允许为空")
     @Length(max = 30,message = "菜单名最多30个字符")
     private String name;
@@ -37,8 +37,6 @@ public class Menu implements Serializable {
     private Long articleId;
     private Article article;
 
-    private String pluginId;
-
 
     public List<Menu> getChildMenu() {
         return childMenu;
@@ -54,30 +52,6 @@ public class Menu implements Serializable {
 
     public void setTarget(Integer target) {
         this.target = target;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getPluginId() {
-        return pluginId;
-    }
-
-    public void setPluginId(String pluginId) {
-        this.pluginId = pluginId;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getPid() {
-        return pid;
-    }
-
-    public void setPid(Long pid) {
-        this.pid = pid;
     }
 
     public String getName() {
@@ -158,5 +132,21 @@ public class Menu implements Serializable {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
     }
 }
