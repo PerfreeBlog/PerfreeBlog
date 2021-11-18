@@ -1,3 +1,4 @@
+drop table if exists `p_article`;
 CREATE TABLE "p_article" (
                              "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                              "title" text(256) NOT NULL,
@@ -17,12 +18,12 @@ CREATE TABLE "p_article" (
                              "createTime" DATETIME NOT NULL,
                              "updateTime" DATETIME
 );
-
+drop table if exists `p_article_tag`;
 CREATE TABLE "p_article_tag" (
                                  "articleId" integer NOT NULL,
                                  "tagId" integer NOT NULL
 );
-
+drop table if exists `p_attach`;
 CREATE TABLE "p_attach" (
                             "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                             "name" text(256) NOT NULL,
@@ -34,7 +35,7 @@ CREATE TABLE "p_attach" (
                             "createTime" DATETIME NOT NULL,
                             "updateTime" DATETIME
 );
-
+drop table if exists `p_category`;
 CREATE TABLE "p_category" (
                               "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                               "name" text(256) NOT NULL,
@@ -47,7 +48,7 @@ CREATE TABLE "p_category" (
                               "createTime" DATETIME NOT NULL,
                               "updateTime" DATETIME
 );
-
+drop table if exists `p_comment`;
 CREATE TABLE "p_comment" (
                              "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                              "articleId" integer NOT NULL,
@@ -63,7 +64,7 @@ CREATE TABLE "p_comment" (
                              "createTime" DATETIME NOT NULL,
                              "updateTime" DATETIME
 );
-
+drop table if exists `p_link`;
 CREATE TABLE "p_link" (
                           "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                           "name" text(256) NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE "p_link" (
                           "createTime" DATETIME NOT NULL,
                           "updateTime" DATETIME
 );
-
+drop table if exists `p_menu`;
 CREATE TABLE "p_menu" (
               "id" text(64) NOT NULL,
               "pid" text(64),
@@ -89,13 +90,13 @@ CREATE TABLE "p_menu" (
               "updateTime" DATETIME,
                PRIMARY KEY ("id")
 );
-
+drop table if exists `p_option`;
 CREATE TABLE "p_option" (
                             "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                             "key" text(256) NOT NULL,
                             "value" text(512)
 );
-
+drop table if exists `p_role`;
 CREATE TABLE "p_role" (
                           "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                           "name" text(32) NOT NULL,
@@ -104,12 +105,12 @@ CREATE TABLE "p_role" (
                           "createTime" DATETIME NOT NULL,
                           "updateTime" DATETIME
 );
-
+drop table if exists `p_role_menu`;
 CREATE TABLE "p_role_menu" (
                   "roleId" integer NOT NULL,
                     "menuId" text(64) NOT NULL
 );
-
+drop table if exists `p_tag`;
 CREATE TABLE "p_tag" (
                          "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                          "name" text(256) NOT NULL,
@@ -117,7 +118,7 @@ CREATE TABLE "p_tag" (
                          "createTime" DATETIME NOT NULL,
                          "updateTime" DATETIME
 );
-
+drop table if exists `p_user`;
 CREATE TABLE "p_user" (
                           "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                           "account" text(32) NOT NULL,
@@ -132,6 +133,7 @@ CREATE TABLE "p_user" (
                           "createTime" DATETIME NOT NULL,
                           "updateTime" DATETIME
 );
+drop table if exists `p_plugin`;
 CREATE TABLE `p_plugin`  (
                              `id` integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                              `name` text(256) NOT NULL,

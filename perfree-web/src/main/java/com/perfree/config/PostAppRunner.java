@@ -85,8 +85,8 @@ public class PostAppRunner implements ApplicationRunner {
             optionService.initOptionCache();
             List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
             menuService.initSystemMenu(adminMenuGroups);
-            menuService.registerMenuPage();
             initPlugins();
+            menuService.registerMenuPage();
         }
     }
 
