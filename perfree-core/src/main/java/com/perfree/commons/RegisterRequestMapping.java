@@ -1,7 +1,9 @@
 package com.perfree.commons;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
@@ -31,6 +33,7 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
         if (patternArr.length == 0) {
             return;
         }
+
         PatternsRequestCondition patterns = new PatternsRequestCondition(patternArr);
         RequestMappingInfo mapping_info = new RequestMappingInfo("name", patterns, null, null, null, null, null, null);
         try {
@@ -82,7 +85,7 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
      * @return boolean
      */
     public static boolean isUrlPattern(String url){
-        return url.startsWith("/");
+        return  StringUtils.isNotBlank(url) && url.startsWith("/") && !url.equals("/");
     }
 
     /**
@@ -97,6 +100,32 @@ public class RegisterRequestMapping extends RequestMappingHandlerMapping {
             url += "/{pageIndex}";
         }
         return url;
+    }
+
+    /**
+     * @description 获取已经注册的url规则列表
+     * @return java.util.List<java.lang.String>
+     * @author Perfree
+     */
+    public static List<String> getRegisterUrlList() {
+        RequestMappingHandlerMapping requestMappingHandlerMapping = SpringBeanUtils.getApplicationContext().getBean(RequestMappingHandlerMapping.class);
+        Map<RequestMappingInfo, HandlerMethod> map = requestMappingHandlerMapping.getHandlerMethods();
+        List<String> urlList = new ArrayList<>();
+        for (RequestMappingInfo info : map.keySet()) {
+            Set<String> patterns = info.getPatternsCondition().getPatterns();
+            urlList.addAll(patterns);
+        }
+        return urlList;
+    }
+
+    /** 
+     * @description url规则是否已经注册过
+     * @param url  url
+     * @return boolean
+     * @author Perfree
+     */ 
+    public static boolean urlIsRegister(String url){
+        return getRegisterUrlList().contains(url);
     }
 
 }

@@ -145,8 +145,8 @@ public class MenuServiceImpl implements MenuService {
         List<String> patterns = new ArrayList<>();
         List<String> patternsPageIndex = new ArrayList<>();
         menus.forEach(r -> {
-            if (RegisterRequestMapping.isUrlPattern(r.getUrl()) && StringUtils.isNotBlank(r.getUrl())
-                    && r.getUrl().startsWith("/") && !r.getUrl().equals("/")){
+            // 如果url不存在于系统已注册的路由规则内,则添加
+            if (RegisterRequestMapping.isUrlPattern(r.getUrl()) && !RegisterRequestMapping.urlIsRegister(r.getUrl())){
                 patterns.add(r.getUrl());
                 patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
             }
@@ -167,6 +167,9 @@ public class MenuServiceImpl implements MenuService {
      * @param url url
      */
     public void registerMenuPageByUrl(String url) {
+        if (!RegisterRequestMapping.isUrlPattern(url) || RegisterRequestMapping.urlIsRegister(url)){
+            return;
+        }
         String themePath = "static/themes/" + OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
         File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
         File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
