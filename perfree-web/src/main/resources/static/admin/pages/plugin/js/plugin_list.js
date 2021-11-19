@@ -20,12 +20,17 @@ function initPage() {
         queryTable();
     });
 
+    let loadIndex;
     upload.render({
         elem: '#addBtn',
         url: '/admin/plugin/addPlugin',
         accept: "file",
         exts: "jar",
+        before: function (obj) {
+            loadIndex = layer.load("正在上传");
+        },
         done: function (res) {
+            layer.close(loadIndex);
             if (res.code === 200) {
                 parent.layer.msg("插件安装成功", {icon: 1});
                 setTimeout(function (){
@@ -37,6 +42,7 @@ function initPage() {
             }
         },
         error: function () {
+            layer.close(loadIndex);
             layer.msg("插件安装失败", {icon: 2});
         }
     });

@@ -156,7 +156,7 @@ public class PluginServiceImpl implements PluginService {
     public boolean del(String id) {
         try {
             Plugin plugin = pluginsMapper.getById(id);
-            File file = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + plugin.getPath());
+            File file = new File(Constants.PLUGIN_PATH + File.separator + plugin.getPath());
             if (!file.exists()) {
                 pluginsMapper.delById(plugin.getId());
                 return true;

@@ -1,12 +1,12 @@
 package com.perfree.plugin.register;
 
 import cn.hutool.core.util.IdUtil;
-import com.perfree.service.MenuService;
 import com.perfree.permission.AdminGroup;
 import com.perfree.permission.AdminGroups;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginInfo;
+import com.perfree.service.MenuService;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;

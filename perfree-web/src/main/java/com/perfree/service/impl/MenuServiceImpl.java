@@ -250,11 +250,11 @@ public class MenuServiceImpl implements MenuService {
                 continue;
             }
             // 清理子菜单
-            for (MenuItem menuItem : adminMenuGroup.getMenuItems()) {
+            for(int j = adminMenuGroup.getMenuItems().size() - 1; j >= 0; j--) {
                 for(int i = adminMenuGroupByGroupId.getMenuItems().size() - 1; i >= 0; i--) {
-                    if (menuItem.getId().equals(adminMenuGroupByGroupId.getMenuItems().get(i).getId())) {
-                        menuMapper.delById(menuItem.getId());
-                        menuMapper.delRoleMenuByMenuId(menuItem.getId());
+                    if (adminMenuGroup.getMenuItems().get(j).getId().equals(adminMenuGroupByGroupId.getMenuItems().get(i).getId())) {
+                        menuMapper.delById(adminMenuGroup.getMenuItems().get(j).getId());
+                        menuMapper.delRoleMenuByMenuId(adminMenuGroup.getMenuItems().get(j).getId());
                         adminMenuGroupByGroupId.getMenuItems().remove(adminMenuGroupByGroupId.getMenuItems().get(i));
                     }
                 }
