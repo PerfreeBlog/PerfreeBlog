@@ -85,11 +85,11 @@ public class InstallServiceImpl implements InstallService {
         try{
             List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option", new EntityListHandler());
             if (entityList != null && entityList.size() > 0 && database.getInstallType() == 1){
-                setting.store(file.getAbsolutePath());
+                setting.setProperty("installStatus","dbSuccess");
+                installInitOperate(setting, file);
                 return false;
             }
-        }catch (Exception e) {
-        }
+        }catch (Exception e) {}
 
         FileReader fileReader = new FileReader(sqlFile);
         String createSql = fileReader.readString();
@@ -99,8 +99,16 @@ public class InstallServiceImpl implements InstallService {
         }
         setting.setProperty("installStatus","dbSuccess");
         setting.setProperty("dataVersion", version);
-        setting.store(file.getAbsolutePath());
+        installInitOperate(setting, file);
+        return true;
+    }
 
+    /**
+     * @description 初始化
+     * @author Perfree
+     */
+    private void installInitOperate(Props setting, File file) throws Exception {
+        setting.store(file.getAbsolutePath());
         optionService.initOptionCache();
         List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
         menuService.initSystemMenu(adminMenuGroups);
@@ -110,7 +118,6 @@ public class InstallServiceImpl implements InstallService {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return true;
     }
 
     public static void initSqliteFile(String filePath) throws Exception {
