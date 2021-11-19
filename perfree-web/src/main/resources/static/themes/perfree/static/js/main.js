@@ -45,8 +45,26 @@ function initLayui() {
     layui.config({
         version: true,
         base: '/static/public/libs/layuiComponents/'
-    }).use('element', function(){
-        const element = layui.element;
+    }).use(['element','layer'], function(){
+        let element = layui.element;
+        let layer = layui.layer;
+
+        $('.mobile-side-switch-btn').on('click',function() {
+            layer.open({
+                type: 1,
+                content: $('.mobile-side'),
+                area: ['260px', '100%'],
+                offset: 'lt',
+                title: false,
+                closeBtn: 0,
+                shadeClose: true,
+                anim: 6,
+                isOutAnim: false,
+                resize: false,
+                scrollbar: false,
+                move: false
+            });
+        });
     });
 }
 
@@ -71,7 +89,7 @@ function onWindowScroll(){
     } else {
         $(".backUp").addClass('hide-back-up');
     }
-    if (scroll > rightSideHeight) {
+    if (scroll > rightSideHeight && $("body").width() >= 900) {
         $('.m-right-article-box').addClass('hide');
         $('.m-right-search-box').addClass('hide');
         $('.right-side-container').addClass('right-side-container-scroll');
@@ -97,7 +115,7 @@ function initHitokoto() {
  */
 function getHitokoto() {
     $.get("https://v1.hitokoto.cn?max_length=20", function(result){
-        $("#hitokoto").text(result.hitokoto + " -- " + result.from);
+        $(".m-hitokoto").text(result.hitokoto + " -- " + result.from);
     });
 }
 

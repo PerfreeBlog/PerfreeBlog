@@ -2,6 +2,7 @@
     padding: 15px 15px 15px;
     background: var(--default-background-color);
     color: var(--default-text-color);
+    border-radius: 5px;
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
 .a-article-title{
@@ -447,12 +448,12 @@ pre{
 .a-pre-article,.a-next-article{
     display: inline-block;
     padding: 6px 15px;
-    background: var(--default-background-color);
-    border: 1px solid var(--default-border-color);
+    background: var(--default-primary-color);
     cursor: pointer;
     font-size: 13px;
     transition: all 1s ease;
-    color: var(--default-text-color);
+    border-radius: 5px;
+    color: white;
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
 .a-pre-article:hover,.a-next-article:hover{
@@ -464,6 +465,7 @@ pre{
 }
 
 .m-comment-box{
+    border-radius: 5px;
     background: var(--default-background-color);
     margin-top: 8px;
     padding: 15px;
@@ -544,6 +546,7 @@ pre{
     width: 100%;
 }
 .roundDiv{
+    border-radius: 5px;
     position: -webkit-sticky;
     position: sticky;
     transition: top 0.5s;
@@ -565,5 +568,8 @@ pre{
     background: var(--default-background-color-b);
     color: var(--default-text-color);
 }
-@media screen and (max-width:700px) {
+@media screen and (max-width:900px) {
+    .a-container{
+        padding: 15px 10px 15px;
+    }
 }

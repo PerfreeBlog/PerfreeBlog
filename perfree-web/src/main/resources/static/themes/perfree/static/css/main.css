@@ -237,6 +237,7 @@ a:hover {
     background: var(--default-background-color);
     margin-top: 10px;
     padding: 15px;
+    border-radius: 5px;
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
 .m-user-info{
@@ -287,6 +288,7 @@ a:hover {
 
 .m-right-article-box{
     background: #ffffff;
+    border-radius: 5px;
     margin-top: 10px;
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
     padding-left: 10px;
@@ -365,6 +367,7 @@ a:hover {
     background: var(--default-background-color);
     margin-top: 10px;
     padding: 15px;
+    border-radius: 5px;
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
 .m-right-tags-title, .m-right-article-title{
@@ -377,6 +380,7 @@ a:hover {
     background: antiquewhite;
     padding: 3px 10px;
     font-size: 12px;
+    border-radius: 5px;
     line-height: 20px;
     color: white;
     margin-top: 5px;
@@ -419,12 +423,14 @@ a:hover {
 .m-right-user-info{
     background: var(--default-background-color);
     margin-top: 10px;
+    border-radius: 5px;
     padding: 15px;
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
 .m-container{
     background: var(--default-background-color);
     padding: 15px;
+    border-radius: 5px;
     box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
 
@@ -492,6 +498,58 @@ a:hover {
 .page-btn-box .hide-back-up{
     display: none;
 }
+.mobile-side-switch-btn{
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    width: 50px;
+    cursor: pointer;
+    color: var(--default-text-color);
+    position: fixed;
+    left: 0;
+    z-index: 1;
+    top: 0;
+    display: none;
+}
+.mobile-side{
+    display: none;
+}
+.mobile-side-switch-btn .fa{
+    padding-top: 14px;
+    font-size: 18px;
+}
+.layui-layer-page .layui-layer-content{
+    background-color: var(--default-background-color);
+    padding: 15px;
+}
+.mobile-side .layui-nav{
+    height: auto;
+}
+.mobile-side .layui-nav-tree .layui-nav-bar{
+    display: none;
+}
+.mobile-side .layui-nav-tree{
+    width: 100%;
+}
+.mobile-side .layui-nav-tree .layui-nav-item a:hover{
+    background-color: var(--default-hover-background-color);
+}
+.mobile-side .layui-nav-itemed>a,.mobile-side .layui-nav-tree .layui-nav-title a,.mobile-side .layui-nav-tree .layui-nav-title a:hover{
+    color: var(--default-primary-color)!important;
+}
+.mobile-side .layui-nav-itemed>.layui-nav-child{
+    background-color: var(--default-background-color-b);
+}
+.mobile-side .layui-nav .layui-nav-item .layui-nav-child a{
+    background: var(--default-background-color-b);
+}
+.mobile-side .layui-nav-more{
+    display: block;
+    border-top-color: var(--default-text-color);
+}
+.mobile-side .layui-nav .layui-nav-mored, .layui-nav-itemed>a .layui-nav-more{
+    border-color: transparent transparent var(--default-text-color);
+}
 @media screen and (max-width:1700px) {
     .m-header,.m-content,.m-footer {
        width: 80%;
@@ -523,11 +581,25 @@ a:hover {
     .m-header,.m-content,.m-footer {
         width: 95%;
     }
-    .m-content-left {
+    .m-content-left,.m-content-right {
         width: 100%;
     }
-    .m-header-user-box,.m-content-right {
+    .m-header-menu {
         display: none;
+    }
+    .m-header-logo{
+        display: block;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        text-align: center;
+    }
+    .m-article-box{
+        padding: 10px;
+    }
+    .mobile-side-switch-btn{
+        display: inline-block;
     }
 }
 
