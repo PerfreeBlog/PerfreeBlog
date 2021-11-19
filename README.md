@@ -24,46 +24,35 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 
 ## 主题支持
 ### fly
-![fly](./screenshot/fly.jpg)
+![fly](./screenshot/fly.png)
 
 ### indigo
-![indigo](./screenshot/indigo.jpg)
+![indigo](./screenshot/indigo.png)
 
 ### admas
-![admas](./screenshot/admas.jpg)
+![admas](./screenshot/admas.png)
 
 ### perfree
-![perfree](./screenshot/perfree.jpg)
+![perfree](./screenshot/perfree.png)
 
 ### simple
-![simple](./screenshot/simple.jpg)
+![simple](./screenshot/simple.png)
 
 ## 后台界面
 ### 写文章
-![写文章](./screenshot/0.jpg)
+![写文章](./screenshot/写文章.png)
 
 ### 文章管理
-![文章管理](./screenshot/1.jpg)
-
-### 页面管理
-![页面管理](./screenshot/2.jpg)
-
-### 分类管理
-![分类管理](./screenshot/3.jpg)
-
-### 附件管理
-![附件管理](./screenshot/4.jpg)
+![文章管理](./screenshot/文章管理.png)
 
 ### 主题
-![主题](./screenshot/5.jpg)
+![主题](./screenshot/主题管理.png)
 
 ### 主题编辑
-![主题编辑](./screenshot/6.jpg)
+![主题编辑](./screenshot/主题编辑.png)
 
-## 使用案例
-1. [Perfree](https://www.yinpengfei.com)
-2. [张三疯](https://www.zsfyyds.com)
-3. [Z先生](http://houhou.zsir.asia)
+### 插件管理
+![插件管理](./screenshot/插件管理.png)
 
 ## 技术栈
 以下包含了所使用到的技术栈及开发环境版本
@@ -82,6 +71,7 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 ## 源码运行
 如需使用源码运行或二次开发,可参考以下步骤:
 ```
+注意: jdk版本为1.8
 1. 下载源码并在idea打开
 2. 执行maven clean
 3. 执行maven install
