@@ -1,9 +1,9 @@
 .m-article-box{
-    background: #fff;
-    border-radius: 5px;
+    background: var(--default-background-color);
+    padding: 15px;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 1px 5px rgba(0,0,0,.05);
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
     margin-bottom: 10px;
 }
 .m-article-img{
@@ -16,6 +16,7 @@
 .m-article-img-box{
     width: 100%;
     height: 220px;
+    margin-bottom: 10px;
 }
 .m-article-container{
     padding: 15px;
@@ -23,27 +24,34 @@
 .m-article-title-box{
     width: 100%;
     overflow: hidden;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed var(--default-border-color);
 }
 .m-article-title{
-    color: inherit;
+    color: var(--default-text-color);
     display: inline-block;
 }
 .m-article-title:hover{
+    color: var(--default-primary-color);
 }
 .m-article-title h2{
     font-weight: 600;
-    color: rgba(0,0,0,0.55);
     font-size: 1.2rem;
     margin-bottom: 0.1em;
 }
 .m-article-content{
-    color: #757575;
+    color: var(--default-text-color);
+    border-bottom: 1px dashed var(--default-border-color);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
 }
 .m-article-info-box{
     width: 100%;
     margin-top: 3px;
     position: relative;
-    color: #616161;
+    color: var(--default-text-color);
     font-size: 12px;
 }
 .m-article-info-left{
@@ -59,45 +67,44 @@
 }
 .m-read-more{
     font-size: 13px;
-    color: rgba(0, 0, 0, 0.65);
+    color: var(--default-text-color);
     text-decoration: underline;
 }
 .m-read-more:hover{
-    color: rgba(0, 0, 0, 0.75);
+    color: var(--default-primary-color);
     text-decoration: underline;
 }
 .m-pager-box{
-    background-color: #ffffff;
+    background-color: var(--default-background-color);
     margin-top: 10px;
-    padding: 8px;
-    border-radius: 5px;
     text-align: center;
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
+    padding: 15px 8px;
 }
 .m-pager{
-    color: inherit;
-    padding: 0 6px;
-    font-weight: 600;
+    color: var(--default-text-color);
+    padding: 0 8px;
     font-size: 13px;
 }
 .m-pager:hover{
-    color: #79a7f1;
+    color: var(--default-primary-color);
 }
 .disabled,.disabled:hover{
-    color: rgba(0, 0, 0, 0.25);
+    color: var(--default-text-color);
     border-color: #d9d9d9;
     cursor: not-allowed;
 }
 .active{
-    color: #79a7f1;
+    color: var(--default-primary-color);
 }
 .m-no-article{
     background: white;
-    border-radius: 5px;
     text-align: center;
     width: 100%;
     overflow: hidden;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
 }
 .m-no-article-text{
     width: 100%;

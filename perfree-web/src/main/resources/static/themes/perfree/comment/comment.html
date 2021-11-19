@@ -1,8 +1,6 @@
 #commentPage(pageSize=6)
-    ### 评论列表
     <div class="p-comment-list-box" id="commentListBox">
         <div id="commentList">
-            <h3 class="commentList-title">评论列表</h3>
             #for(comment : commentPage.data)
                 <div class="p-comment-item p-comment-parent" id="comment-#(comment.id)">
                     <img src="#(isBlank(comment.avatar) ? '/static/public/images/user.png' : comment.avatar.replace('http://www.gravatar.com/','https://gravatar.loli.net/'))" class="p-comment-avatar">
@@ -50,36 +48,25 @@
                     <div class="clear"></div>
                 </div>
             #else
-            暂无评论
+                <div class="no-comment">说点什么吧?</div>
             #end
         </div>
     </div>
 
-    ### 发表评论
     <div class="p-comment-box" id="p-comment-box">
-        <h3>发表评论</h3>
+        <h3 class="p-comment-box-title">发表评论</h3>
         <a class="p-cancel-reply">取消回复</a>
         <form id="commentForm" onsubmit="return false">
             #if(!loginUser)
-                <div class="p-form-item">
-                    <label class="p-comment-label"><span class="p-required">*</span>名称</label>
-                    <input name="userName" type="text" class="p-comment-input">
-                </div>
-
-                <div class="p-form-item">
-                    <label class="p-comment-label"><span class="p-required">*</span>邮箱</label>
-                    <input name="email" type="text" class="p-comment-input">
-                </div>
-
-                <div class="p-form-item">
-                    <label class="p-comment-label">网址</label>
-                    <input name="website" type="text" class="p-comment-input">
+                <div class="f-reply-box-input">
+                    <input name="userName" type="text" class="p-comment-input" placeholder="昵称: 请输入昵称(必填)">
+                    <input name="email" type="text" class="p-comment-input" placeholder="邮箱: 请输入邮箱(必填)">
+                    <input name="website" type="text" class="p-comment-input" placeholder="网址: 请输入网址">
                 </div>
             #end
 
             <div class="p-form-item">
-                <label class="p-comment-label"><span class="p-required">*</span>内容</label>
-                <textarea class="p-comment" id="content" name="content"></textarea>
+                <textarea class="p-comment" id="content" name="content" placeholder="说点什么吧?"></textarea>
             </div>
             <input type="hidden" name="pid" id="pid">
             <input type="hidden" name="topPid" id="topPid">

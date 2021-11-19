@@ -4,7 +4,10 @@ import com.perfree.commons.Pager;
 import com.perfree.directive.DirectivePage;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
+import com.perfree.model.Menu;
+import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 
@@ -146,4 +149,8 @@ public interface ArticleService {
      * @return Pager<Archive>
      */
     Pager<Archive> getApiArchive(Pager<Archive> pager);
+
+    void cacheCount(String articleId,String Ip);
+
+    Menu setMenuArticle (String pageName, Model model, HttpServletRequest request);
 }

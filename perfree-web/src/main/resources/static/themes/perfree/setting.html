@@ -20,7 +20,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">网站右侧名称</label>
                     <div class="layui-input-block">
-                        <input type="text" value="#option('PERFREE_WEB_NAME')" name="PERFREE_WEB_NAME" required  lay-verify="required" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
+                        <input type="text" value="#option('PERFREE_WEB_NAME')" name="PERFREE_WEB_NAME" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
                     </div>
                 </div>
                 <div class="layui-form-item">
@@ -31,6 +31,15 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">网站主题色</label>
+                    <div class="layui-input-block">
+                        <input type="text" value="#option('PERFREE_PRIMARY_COLOR')" name="PERFREE_PRIMARY_COLOR" placeholder="请输入网站主题色代码,如#409eff" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+
                 <div class="layui-form-item">
                     <div class="layui-input-block">
                         <button class="layui-btn" lay-submit lay-filter="optionForm">保存设置</button>

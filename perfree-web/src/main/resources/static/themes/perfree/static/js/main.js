@@ -3,13 +3,6 @@ $(document).ready(function () {
     initEvent();
     initTagsColor();
     initHitokoto();
-
-    $(".m-user-info").mouseover(function(){
-        $(".m-right-user-info").css("background-image","url('/themes/perfree/static/images/feather.gif')");
-    });
-    $(".m-user-info").mouseleave(function(){
-        $(".m-right-user-info").css("background-image", 'none');
-    })
 });
 
 /**
@@ -23,8 +16,25 @@ function initEvent() {
         onWindowScroll()
     })
     // 监听返回顶部点击事件
-    $('#backtop-box').on('click',function() {
+    $('.backUp').on('click',function() {
         $('body,html').animate({scrollTop: 0 },300);
+    });
+
+    if (localStorage.getItem("dark")) {
+        $('body').addClass("dark");
+    }
+
+    $('.night').on('click',function() {
+        let attr = $('body').attr('class');
+        if (attr.indexOf('dark') >= 0) {
+            $('body').removeClass('dark');
+            $('body').addClass('light');
+            localStorage.removeItem("dark");
+        } else {
+            $('body').removeClass('light');
+            $('body').addClass('dark');
+            localStorage.setItem("dark", "true");
+        }
     });
 }
 
@@ -57,18 +67,16 @@ function onWindowScroll(){
     let scroll = $("body").scrollTop();
     const rightSideHeight = document.getElementById('m-content-right').offsetHeight + 50;
     if (scroll > 10) {
-        $("#backtop-box").addClass("backtop-box-open");
-        $("#backtop-box > img").addClass("img-animation");
+        $(".backUp").removeClass("hide-back-up");
     } else {
-        $("#backtop-box").removeClass("backtop-box-open");
-        $("#backtop-box > img").removeClass("img-animation");
+        $(".backUp").addClass('hide-back-up');
     }
     if (scroll > rightSideHeight) {
-        $('.m-right-tags-box').addClass('hide');
+        $('.m-right-article-box').addClass('hide');
         $('.m-right-search-box').addClass('hide');
         $('.right-side-container').addClass('right-side-container-scroll');
     } else {
-        $('.m-right-tags-box').removeClass('hide');
+        $('.m-right-article-box').removeClass('hide');
         $('.m-right-search-box').removeClass('hide');
         $('.right-side-container').removeClass('right-side-container-scroll');
     }

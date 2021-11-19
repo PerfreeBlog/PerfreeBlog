@@ -2,18 +2,25 @@ package com.perfree.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.commons.DynamicDataSource;
-import com.perfree.commons.Pager;
+import com.perfree.commons.*;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
+import com.perfree.model.Menu;
+import com.perfree.permission.MenuManager;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CategoryService;
+import com.perfree.service.MenuService;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -27,6 +34,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private MenuService menuService;
+
+    private static final CacheManager cacheManager = CacheManager.newInstance();
 
     /**
      * 添加文章
@@ -297,4 +309,41 @@ public class ArticleServiceImpl implements ArticleService {
         pager.setCode(Pager.SUCCESS_CODE);
         return pager;
     }
+
+    /**
+     * 缓存访问量
+     * @param articleId articleId
+     * @param Ip Ip
+     */
+    public void cacheCount(String articleId,String Ip){
+        Article article = getById(articleId);
+        //查询缓存
+        Ehcache cache = cacheManager.getEhcache("articleHits");
+        Element element = cache.get(Ip+articleId+"_count");
+        if(element==null && article != null){
+            long count = article.getViewCount() == null?0:article.getViewCount();
+            count++;
+            cache.put(new Element(Ip+articleId+"_count",count));
+            articleViewCountAdd(article.getId());
+        }
+    }
+
+    /**
+     * @description  给自定菜单设置页面文章
+     * @return com.perfree.model.Menu
+     * @author Perfree
+     */
+    public Menu setMenuArticle (String pageName, Model model, HttpServletRequest request){
+        Menu menu = menuService.getMenuByUrl(pageName );
+        if (menu != null && menu.getArticleId() != null) {
+            Article article = getById(menu.getArticleId().toString());
+            cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
+            model.addAttribute("article", article);
+            model.addAttribute(Constants.SEO_TITLE, article.getTitle());
+            model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
+            model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
+        }
+        return menu;
+    }
+
 }

@@ -2,7 +2,7 @@
 
     <div class="m-right-user-info">
         <div class="m-user-info">
-            <a>
+            <a class="m-user-photo-box">
                 <img class="m-user-photo" src="#option('PERFREE_WEB_LOGO','/static/themes/perfree/static/images/6.gif')">
             </a>
             <h2 class="m-user-name">#option('PERFREE_WEB_NAME','未设置')</h2>
@@ -12,18 +12,26 @@
             <div class="m-user-info-other">
                 #statistics()
                     <div class="m-info-other">
-                        <span>文章</span>
-                        <span>#(statistics.articleCount)篇</span>
+                        <span class="num">#(statistics.articleCount)</span>
+                        <span style="font-size: 12px;">文章数</span>
                     </div>
                     <div class="m-info-other">
-                        <span>评论</span>
-                        <span>#(statistics.commentCount)条</span>
-                    </div>
-                    <div class="m-info-other">
-                        <span>标签</span>
-                        <span>#(statistics.tagCount)个</span>
+                        <span class="num">#(statistics.commentCount)</span>
+                        <span style="font-size: 12px;">评论数</span>
                     </div>
                 #end
+            </div>
+
+            <div>
+                <ul class="m-right-article-list">
+                    #hotArticle(count=5,type=0)
+                        #for(article : articles)
+                            <li class="m-right-article">
+                                <a href="#(article.url)"><span class="hot-item-icon">•</span>#(article.title)</a>
+                            </li>
+                        #end
+                    #end
+                </ul>
             </div>
         </div>
     </div>
@@ -37,54 +45,33 @@
         </form>
     </div>
 
-
     <!-- 热门最新文章 -->
     <div class="m-right-article-box">
-        <div class="layui-tab layui-tab-brief">
-            <ul class="layui-tab-title">
-                <li class="layui-this"><i class="fa fa-fire" style="margin-right: 5px;font-size: 16px;"></i> 热门</li>
-                <li><i class="fa fa-clock-o" style="margin-right: 5px;font-size: 16px;"></i> 最新</li>
-            </ul>
-            <div class="layui-tab-content">
-                <div class="layui-tab-item layui-show">
-                    <ul class="m-right-article-list">
-                        #hotArticle(count=10,type=0)
-                            #for(article : articles)
-                                <li class="m-right-article">
-                                    <a href="#(article.url)">#(article.title)</a>
-                                </li>
-                            #else
-                                暂无文章
-                            #end
-                        #end
-                    </ul>
-                </div>
-                <div class="layui-tab-item">
-                    <ul class="m-right-article-list">
-                        #latestArticle(count=10)
-                            #for(article : articles)
-                                <li class="m-right-article">
-                                    <a href="#(article.url)">#(article.title)</a>
-                                </li>
-                            #else
-                                暂无文章
-                            #end
-                        #end
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <div class="m-right-article-title"><i class="fa fa-newspaper-o"></i>&nbsp;&nbsp;最新文章</div>
+        <ul class="m-right-article-list">
+            #latestArticle(count=10)
+                #for(article : articles)
+                    <li class="m-right-article">
+                        <a href="#(article.url)">#(article.title)</a>
+                    </li>
+                #else
+                    还未产生文章~
+                #end
+            #end
+        </ul>
     </div>
 
     <!-- 热门标签 -->
-        <div class="m-right-tags-box">
-            <div class="m-right-tags-title">热门标签</div>
-            <div class="m-right-tag-box">
-                #hotTag(count=10)
-                    #for(tag : tags)
-                        <a href="#(tag.url)" class="m-right-tag" title="共#(tag.articleCount ??)篇文章">#(tag.name)</a>
-                    #end
+    <div class="m-right-tags-box">
+        <div class="m-right-tags-title"><i class="fa fa-tags"></i>&nbsp;&nbsp;热门标签</div>
+        <div class="m-right-tag-box">
+            #hotTag(count=10)
+                #for(tag : tags)
+                    <a href="#(tag.url)" class="m-right-tag" title="共#(tag.articleCount ??)篇文章">#(tag.name)</a>
+                #else
+                    还未产生标签~
                 #end
-            </div>
+            #end
         </div>
+    </div>
 </div>
