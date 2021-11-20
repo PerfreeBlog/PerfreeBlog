@@ -26,7 +26,7 @@ public class ArchiveController extends BaseController {
      */
     @RequestMapping("/archive")
     public String index(HttpServletRequest request, Model model) {
-        articleService.setMenuArticle("/link", model, request);
+        articleService.setMenuArticle("/archive", model, request);
         model.addAttribute("url", Constants.URL_ARCHIVE);
         return view(currentThemePage() + "/archive.html");
     }
@@ -39,7 +39,7 @@ public class ArchiveController extends BaseController {
      */
     @RequestMapping("/archive/{pageIndex}")
     public String archivePage(@PathVariable("pageIndex") int pageIndex,HttpServletRequest request, Model model) {
-        articleService.setMenuArticle("/link", model, request);
+        articleService.setMenuArticle("/archive", model, request);
         model.addAttribute("url", Constants.URL_ARCHIVE);
         model.addAttribute("pageIndex", pageIndex);
         return view(currentThemePage() + "/archive.html");
