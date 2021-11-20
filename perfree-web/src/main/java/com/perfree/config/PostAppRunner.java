@@ -134,10 +134,12 @@ public class PostAppRunner implements ApplicationRunner {
                     // 3. 更新sql版本 小于等于最新项目版本
                     if ((currUpdateVersion == versionToLong(version) || currUpdateVersion > versionToLong(dbVersion)) &&
                             currUpdateVersion <= versionToLong(version)) {
-                        for (int j = 1; j < split.length - 1; j++){
+                        for (int j = 1; j < split.length; j++){
                             try{
-                                SqlExecutor.execute(connection, split[j]);
-                                LOGGER.info("update: {}", split[j]);
+                                if(StringUtils.isNotBlank(split[j])){
+                                    SqlExecutor.execute(connection, split[j]);
+                                    LOGGER.info("update: {}", split[j]);
+                                }
                             }catch (Exception e) {
                                 e.printStackTrace();
                                 LOGGER.info("执行update sql出错，SQL语句: {}，错误信息：{}", split[j],e.getMessage());

@@ -185,7 +185,6 @@ public class UpdateServiceImpl implements UpdateService {
     private void linuxUpdate(File webDir) {
         File execBat = new File("exec.sh");
         try {
-            RuntimeUtil.exec("sed -i 's/\\r//' " + execBat.getAbsolutePath());
             ProcessBuilder sh = new ProcessBuilder("sh", execBat.getAbsolutePath(), webDir.getAbsolutePath());
             asynExeLocalComand(null, sh);
         } catch (Exception e) {
