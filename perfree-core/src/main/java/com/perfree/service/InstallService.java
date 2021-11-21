@@ -8,5 +8,5 @@ import com.perfree.model.Database;
  * @date 2021/11/15 10:18
  */
 public interface InstallService {
-    boolean addDatabase(Database database) throws Exception;
+    int addDatabase(Database database) throws Exception;
 }

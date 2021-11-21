@@ -150,5 +150,4 @@ public class Constants {
 
     /** 父级菜单默认pid */
     public static final String MENU_PARENT_DEFAULT_PID = "-1";
-
 }

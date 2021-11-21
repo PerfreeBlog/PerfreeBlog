@@ -103,8 +103,8 @@
                 contentType: "application/json",
                 data: JSON.stringify(formData.field),
                 success: function (data) {
+                    layer.close(loadIndex);
                     if (data.code === 200) {
-                        layer.close(loadIndex);
                         window.location.href = "/install/step3";
                     } else if (data.code === -1) {
                         layer.confirm('检测到数据库已存在,是否跳过数据库初始化?重新初始化数据库将造成已存在的数据丢失', {
@@ -114,12 +114,13 @@
                             closeBtn: 0
                         }, function(index){
                             layer.close(index);
-                            window.location.href = "/login";
-                        }, function(){
                             install(2, formData);
+                        }, function(){
+                            install(3, formData);
                         });
-                    }else {
-                        layer.close(loadIndex);
+                    } else if(data.code === -2){
+                        window.location.href = "/login";
+                    } else {
                         layer.msg(data.msg, {icon: 2});
                     }
                 },

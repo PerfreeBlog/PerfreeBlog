@@ -40,7 +40,15 @@ public class InstallServiceImpl implements InstallService {
     @Autowired
     private PluginManagerService pluginManagerService;
 
-    public boolean addDatabase(Database database) throws Exception{
+    private static final int INSTALL_DATABASE_RESULT_SUCCESS = 200;
+    private static final int INSTALL_DATABASE_RESULT_EXIST = -1;
+    private static final int INSTALL_DATABASE_RESULT_SKIP = -2;
+    /** 初始化数据库类型:正常 */
+    private static final int INIT_INSTALL_DATABASE_TYPE_NORMAL = 1;
+    /** 初始化数据库类型:跳过 */
+    private static final int INIT_INSTALL_DATABASE_TYPE_SKIP = 2;
+
+    public int addDatabase(Database database) throws Exception{
         DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
         File file = new File(Constants.DB_PROPERTIES_PATH);
         Props setting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
@@ -83,11 +91,15 @@ public class InstallServiceImpl implements InstallService {
         Connection connection = dataSource.getConnection();
 
         try{
-            List<Entity> entityList = SqlExecutor.query(connection, "select * from p_option", new EntityListHandler());
-            if (entityList != null && entityList.size() > 0 && database.getInstallType() == 1){
+            // 检测数据库是否存在
+            List<Entity> entityList = SqlExecutor.query(connection, "select * from p_user", new EntityListHandler());
+            if (entityList != null && entityList.size() > 0 && database.getInstallType() == INIT_INSTALL_DATABASE_TYPE_NORMAL){
+                return INSTALL_DATABASE_RESULT_EXIST;
+            }
+            if(database.getInstallType() == INIT_INSTALL_DATABASE_TYPE_SKIP) {
                 setting.setProperty("installStatus","dbSuccess");
                 installInitOperate(setting, file);
-                return false;
+                return INSTALL_DATABASE_RESULT_SKIP;
             }
         }catch (Exception e) {}
 
@@ -100,7 +112,7 @@ public class InstallServiceImpl implements InstallService {
         setting.setProperty("installStatus","dbSuccess");
         setting.setProperty("dataVersion", version);
         installInitOperate(setting, file);
-        return true;
+        return INSTALL_DATABASE_RESULT_SUCCESS;
     }
 
     /**

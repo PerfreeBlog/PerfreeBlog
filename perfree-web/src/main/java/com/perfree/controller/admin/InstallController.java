@@ -73,10 +73,7 @@ public class InstallController extends BaseController {
             if (StringUtils.isNotBlank(installStatus)) {
                 return ResponseBean.fail("数据库信息已配置,请勿重复配置", null);
             }
-            if (installService.addDatabase(database)) {
-                return ResponseBean.success("配置成功", null);
-            }
-            return ResponseBean.error(-1, "数据库已存在", null);
+            return ResponseBean.success(installService.addDatabase(database), null, null);
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error(e.getMessage());
