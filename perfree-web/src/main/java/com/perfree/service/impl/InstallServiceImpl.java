@@ -58,7 +58,7 @@ public class InstallServiceImpl implements InstallService {
         }
         // mysql
         if (database.getType().equals("mysql")) {
-            String format = "jdbc:mysql://%s:%s/perfree?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
+            String format = "jdbc:mysql://%s:%s/perfree?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
             String url = String.format(format, database.getAddress(), database.getPort());
             dataSourceBuilder.url("jdbc:sqlite:filename");
             dataSourceBuilder.url(url);
