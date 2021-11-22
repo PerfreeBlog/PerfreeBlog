@@ -123,7 +123,7 @@ drop table if exists `p_option`;
 CREATE TABLE `p_option`  (
                              `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
                              `key` varchar(256) CHARACTER SET utf8mb4 NOT NULL COMMENT 'key',
-                             `value` varchar(512) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'value',
+                             `value` text CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'value',
                              PRIMARY KEY (`id`, `key`) USING BTREE,
                              UNIQUE INDEX `key`(`key`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;

@@ -12,3 +12,6 @@ ALTER TABLE `p_menu` MODIFY COLUMN `id` varchar(64) NOT NULL COMMENT '主键';
 ALTER TABLE `p_menu` MODIFY COLUMN `pid` varchar(64) NULL COMMENT '父级id';
 ALTER TABLE `p_menu` DROP COLUMN `pluginId`;
 ALTER TABLE `p_role_menu` MODIFY COLUMN `menuId` varchar(64) NOT NULL COMMENT '菜单id';
+--PerfreeBlog
+--v1.3.2;
+ALTER TABLE `p_option` MODIFY COLUMN `value` text NULL COMMENT 'value';

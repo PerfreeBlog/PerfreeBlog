@@ -26,10 +26,20 @@ CREATE TABLE "p_menu" (
 );
 INSERT INTO "p_menu" ("id", "pid", "name", "url", "icon", "seq", "type", "target", "articleId", "status", "createTime", "updateTime") SELECT "id", "pid", "name", "url", "icon", "seq", "type", "target", "articleId", "status", "createTime", "updateTime" FROM "_p_menu_old_1.3.1";
 drop table if exists "_p_menu_old_1.3.1";
-ALTER TABLE "main"."p_role_menu" RENAME TO "_p_role_menu_old_1.3.1";
-CREATE TABLE "main"."p_role_menu" (
+ALTER TABLE "p_role_menu" RENAME TO "_p_role_menu_old_1.3.1";
+CREATE TABLE "p_role_menu" (
   "roleId" integer NOT NULL,
   "menuId" text(64) NOT NULL
 );
-INSERT INTO "main"."p_role_menu" ("roleId", "menuId") SELECT "roleId", "menuId" FROM "main"."_p_role_menu_old_1.3.1";
+INSERT INTO "p_role_menu" ("roleId", "menuId") SELECT "roleId", "menuId" FROM "main"."_p_role_menu_old_1.3.1";
 drop table if exists "_p_role_menu_old_1.3.1";
+--PerfreeBlog
+--v1.3.2;
+ALTER TABLE "p_option" RENAME TO "_p_option_old_1.3.2";
+CREATE TABLE "p_option" (
+           "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+           "key" text(256) NOT NULL,
+           "value" text
+);
+INSERT INTO "p_option" ("id", "key", "value") SELECT "id", "key", "value" FROM "_p_option_old_1.3.2";
+drop table if exists "_p_option_old_1.3.2";

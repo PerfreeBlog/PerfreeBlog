@@ -94,7 +94,7 @@ drop table if exists `p_option`;
 CREATE TABLE "p_option" (
                             "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                             "key" text(256) NOT NULL,
-                            "value" text(512)
+                            "value" text
 );
 drop table if exists `p_role`;
 CREATE TABLE "p_role" (
