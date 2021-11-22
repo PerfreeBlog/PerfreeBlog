@@ -1,9 +1,9 @@
 #include("/static/themes/perfree/layout/layout.html")
 #@layout()
 #define css()
-    <link href="/static/themes/perfree/static/lib/viewerjs/viewer.min.css" rel="stylesheet">
-    <link href="/static/themes/perfree/static/lib/highlight/styles/atom-one-dark.css" rel="stylesheet">
-    <link href="/static/public/components/comment/comment.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/viewerjs/1.6.1/viewer.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/atom-one-light.min.css" rel="stylesheet">
+    <link href="/static/themes/perfree/comment/comment.css" rel="stylesheet">
     <link href="/static/themes/perfree/static/css/article.css" rel="stylesheet">
 #end
 #define content()
@@ -13,10 +13,10 @@
             <h2 class="a-article-title">#(article.title ??)</h2>
         </div>
         <div class="a-article-info">
+            <span class="a-article-info-btn"><i class="fa fa-user-o"></i> #(article.user.userName ??)</span>
+            <span class="a-article-info-btn time"><i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")</span>
             <span class="a-article-info-btn"><i class="fa fa-eye"></i> #(article.viewCount ??)</span>
             <span class="a-article-info-btn"><i class="fa fa-comment-o"></i> #(article.commentCount ??)</span>
-            <span class="a-article-info-btn"><i class="fa fa-user-o"></i> #(article.user.userName ??)</span>
-            <span class="a-article-info-btn time"><i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy-MM-dd")</span>
         </div>
         <article class="a-article-content" id="article-content">
             #if(article.thumbnail != null && article.thumbnail != "")
@@ -31,14 +31,14 @@
         <div class="m-comment-box-title">
             评论
         </div>
-        #include("/static/public/components/comment/comment.html")
+        #include("/static/themes/perfree/comment/comment.html")
     </div>
 #end
 <div class="f-floor"></div>
 #end
 #define script()
-    <script src="/static/themes/perfree/static/lib/viewerjs/viewer.min.js"></script>
-    <script src="/static/themes/perfree/static/lib/highlight/highlight.pack.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/viewerjs/1.6.1/viewer.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
     <script src="/static/themes/perfree/static/js/article.js"></script>
     <script src="/static/themes/perfree/static/js/comment.js"></script>
 #end
