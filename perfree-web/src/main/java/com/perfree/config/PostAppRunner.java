@@ -3,7 +3,6 @@ package com.perfree.config;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.CharsetUtil;
-import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
 import com.jfinal.template.Directive;
 import com.perfree.commons.Constants;
@@ -137,7 +136,7 @@ public class PostAppRunner implements ApplicationRunner {
                         for (int j = 1; j < split.length; j++){
                             try{
                                 if(StringUtils.isNotBlank(split[j])){
-                                    SqlExecutor.execute(connection, split[j]);
+                                    connection.prepareStatement(split[j]).execute();
                                     LOGGER.info("update: {}", split[j]);
                                 }
                             }catch (Exception e) {

@@ -4,6 +4,6 @@ ENV LANG en_US.UTF-8
 ARG PACKAGE_FILE
 COPY ${PACKAGE_FILE} app.tar.gz
 RUN tar -zxvf app.tar.gz
-RUN mv perfree-web/* /
-RUN rm -rf perfree-web
-ENTRYPOINT ["java","-jar","/perfree-web.jar"]
+RUN cp -r perfree-web/* /
+RUN mv perfree-web app
+ENTRYPOINT ["java","-jar","/perfree-web.jar", "isDocker"]

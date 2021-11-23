@@ -150,4 +150,6 @@ public class Constants {
 
     /** 父级菜单默认pid */
     public static final String MENU_PARENT_DEFAULT_PID = "-1";
+
+    public static final String IS_DOCKER = "isDocker";
 }

@@ -107,7 +107,7 @@ public class InstallServiceImpl implements InstallService {
         String createSql = fileReader.readString();
         String[] split = createSql.split(";");
         for (int i = 0; i < split.length - 1; i++){
-            SqlExecutor.execute(connection, split[i]);
+            connection.prepareStatement(split[i]).execute();
         }
         setting.setProperty("installStatus","dbSuccess");
         setting.setProperty("dataVersion", version);
