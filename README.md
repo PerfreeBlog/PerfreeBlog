@@ -5,6 +5,7 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 * 官网地址: [http://perfree.org.cn](http://perfree.org.cn)
 * 文档地址: [http://perfree.org.cn/doc](http://perfree.org.cn/doc)
 * 演示站点: [https://www.yinpengfei.com](https://www.yinpengfei.com)
+* 开发计划: [板栗看板](https://web.banlikanban.com/kanban/6193a5656f6f640fbe2d08e4)
 
 > QQ交流群: 938402724
 
