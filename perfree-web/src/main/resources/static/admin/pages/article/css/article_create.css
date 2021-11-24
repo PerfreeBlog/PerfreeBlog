@@ -11,6 +11,9 @@
 .layui-form-item {
     margin-bottom: 8px;
 }
+.editormd-fullscreen{
+    z-index: 99;
+}
 .article-switch .layui-form-switch{
     margin: 0 15px 0 0;
 }

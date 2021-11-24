@@ -100,7 +100,7 @@ function initMarkdownEditor() {
                 "h1", "h2", "h3", "h4", "h5", "h6", "|",
                 "list-ul", "list-ol", "hr", "|","customImg","customVideo", "customAttach","|",
                 "link", "reference-link",  "code", "preformatted-text", "code-block", "table", "datetime", "|",
-                "goto-line", "watch", "preview", "clear", "search"
+                "goto-line", "watch", "preview", "clear", "search","fullscreen"
             ]
         },
         toolbarIconsClass: {
