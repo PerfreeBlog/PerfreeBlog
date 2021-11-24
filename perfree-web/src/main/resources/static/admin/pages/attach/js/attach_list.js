@@ -75,7 +75,7 @@ function queryTable() {
             {field: 'id', title: 'ID', width: 80, sort: true},
             {field: 'name',  minWidth: 180,title: '文件名'},
             {field: 'desc',  minWidth: 160,title: '描述'},
-            {field: 'path',  minWidth: 310,title: '路径'},
+            {field: 'path',  minWidth: 200,title: '路径'},
             {field: 'flag',  minWidth: 80,title: '标识'},
             {
                 field: 'type',  minWidth: 80,title: '类型', templet: function (d) {
