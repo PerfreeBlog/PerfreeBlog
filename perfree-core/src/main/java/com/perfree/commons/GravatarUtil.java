@@ -27,7 +27,7 @@ public class GravatarUtil {
         }
         String gravatarUrl = OptionCacheUtil.getValue(Constants.OPTION_GRAVATAR_SOURCE);
         if (StringUtils.isBlank(gravatarUrl)) {
-            gravatarUrl = "//cn.gravatar.com/avatar/";
+            gravatarUrl = "//gravatar.loli.net/avatar/";
         }
         if (StringUtils.isNotBlank(avatar) && avatar.contains("http://www.gravatar.com/avatar/")) {
             avatar = avatar.replace("http://www.gravatar.com/avatar/", "").replace("?s=32", "");
