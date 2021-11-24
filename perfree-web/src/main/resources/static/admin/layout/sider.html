@@ -5,7 +5,7 @@
     </div>
     <div class="f-side-user-box">
         <a>
-            <img src="#(user.avatar.replace('http://www.gravatar.com/','https://gravatar.loli.net/') ?? '/static/public/images/user.png')">
+            <img src="#(user.avatar ?? '/static/public/images/user.png')?s=80">
         </a>
         <p >#(user.userName ?? ''),欢迎登录~</p>
     </div>

@@ -1,8 +1,10 @@
 package com.perfree.controller.admin;
 
+import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.model.Option;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.OptionService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -24,6 +26,7 @@ public class SettingController extends BaseController {
     private OptionService optionService;
 
     @GetMapping("/setting")
+    @AdminMenu(name = "网站设置", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_SETTING)
     public String index() {
         return view("static/admin/pages/settings/setting.html");
     }

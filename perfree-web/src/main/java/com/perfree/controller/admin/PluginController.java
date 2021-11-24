@@ -1,9 +1,11 @@
 package com.perfree.controller.admin;
 
+import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.model.Plugin;
+import com.perfree.permission.AdminMenu;
 import com.perfree.service.PluginService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -39,6 +41,7 @@ public class PluginController extends BaseController {
      * @author Perfree
      */
     @RequestMapping("/plugin")
+    @AdminMenu(name = "插件列表", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_PLUGIN)
     public String index() {
         return view("static/admin/pages/plugin/plugin_list.html");
     }

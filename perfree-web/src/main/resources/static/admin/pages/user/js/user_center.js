@@ -2,16 +2,16 @@ let form, element, layer, upload;
 initPage();
 
 function initPage() {
-    layui.use(['layer', 'form', 'element'], function () {
+    layui.use(['layer', 'form', 'element','upload'], function () {
         form = layui.form;
         element = layui.element;
         layer = layui.layer;
         upload = layui.upload;
+        formEvent();
+        initEvent();
+        initUpload();
     });
 
-    formEvent();
-    initEvent();
-    initUpload();
 }
 
 /**

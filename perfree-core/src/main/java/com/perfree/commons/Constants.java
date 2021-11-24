@@ -152,4 +152,7 @@ public class Constants {
     public static final String MENU_PARENT_DEFAULT_PID = "-1";
 
     public static final String IS_DOCKER = "isDocker";
+
+    /** option key - GRAVATAR_SOURCE(镜像源) */
+    public static final String OPTION_GRAVATAR_SOURCE = "GRAVATAR_SOURCE";
 }

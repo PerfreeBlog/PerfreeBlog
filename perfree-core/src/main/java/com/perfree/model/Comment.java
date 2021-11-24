@@ -1,5 +1,7 @@
 package com.perfree.model;
 
+import com.perfree.commons.GravatarUtil;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -119,7 +121,7 @@ public class Comment implements Serializable {
 
 
     public String getAvatar() {
-        return avatar;
+       return GravatarUtil.replaceGravatar(avatar);
     }
 
     public void setAvatar(String avatar) {

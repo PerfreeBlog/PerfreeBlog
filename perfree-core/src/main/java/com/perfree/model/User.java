@@ -1,5 +1,6 @@
 package com.perfree.model;
 
+import com.perfree.commons.GravatarUtil;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
@@ -94,7 +95,7 @@ public class User implements Serializable {
     }
 
     public String getAvatar() {
-        return avatar;
+        return GravatarUtil.replaceGravatar(avatar);
     }
 
     public void setAvatar(String avatar) {

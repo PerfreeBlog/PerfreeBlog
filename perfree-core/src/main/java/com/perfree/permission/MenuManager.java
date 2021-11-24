@@ -75,17 +75,15 @@ public class MenuManager {
         AdminMenuGroup plugin = new AdminMenuGroup();
         plugin.setGroupId(Constants.ADMIN_MENU_GROUP_PLUGIN);
         plugin.setIcon("fa-leaf");
-        plugin.setUrl("/admin/plugin");
         plugin.setName("插件管理");
         plugin.setSeq(5);
         plugin.setId(IdUtil.simpleUUID());
         plugin.setRole(ListUtil.toList(Constants.ROLE_ADMIN));
 
         AdminMenuGroup setting = new AdminMenuGroup();
-        setting.setGroupId(Constants.ADMIN_MENU_GROUP_PLUGIN);
+        setting.setGroupId(Constants.ADMIN_MENU_GROUP_SETTING);
         setting.setIcon("fa-sliders");
-        setting.setName("网站设置");
-        setting.setUrl("/admin/setting");
+        setting.setName("系统设置");
         setting.setSeq(6);
         setting.setId(IdUtil.simpleUUID());
         setting.setRole(ListUtil.toList(Constants.ROLE_ADMIN));

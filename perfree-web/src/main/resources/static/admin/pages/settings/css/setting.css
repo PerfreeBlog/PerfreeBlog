@@ -49,3 +49,6 @@
 #update{
     display: none;
 }
+.layui-input-block{
+    margin-left: 130px;
+}

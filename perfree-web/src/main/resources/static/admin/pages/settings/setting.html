@@ -19,10 +19,12 @@
             <div class="layui-tab layui-tab-brief" lay-filter="settingTab">
                 <ul class="layui-tab-title">
                     <li class="layui-this" lay-id="1">基础设置</li>
-                    <li lay-id="2">邮箱服务</li>
-                    <li lay-id="3">系统更新</li>
+                    <li lay-id="2">SEO设置</li>
+                    <li lay-id="3">邮箱服务</li>
+                    <li lay-id="4">系统更新</li>
                 </ul>
                 <div class="layui-tab-content">
+
                     <div class="layui-tab-item layui-show">
                         <form class="layui-form" action="">
                             <div class="layui-input-inline"  style="display: none;">
@@ -86,24 +88,16 @@
                             </div>
 
                             <div class="layui-form-item">
-                                <label class="layui-form-label">META关键字</label>
-                                <div class="layui-input-block">
-                                    <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键字,英文逗号分割" class="layui-textarea">#option('WEB_META_KEYWORD')</textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">META描述</label>
-                                <div class="layui-input-block">
-                                    <textarea name="WEB_META_DESC" placeholder="请输入META描述" class="layui-textarea">#option('WEB_META_DESC')</textarea>
-                                </div>
-                            </div>
-
-                            <div class="layui-form-item">
                                 <label class="layui-form-label">版权信息</label>
                                 <div class="layui-input-block">
                                     <textarea name="WEB_COPYRIGHT" placeholder="请输入版权信息" class="layui-textarea">#option('WEB_COPYRIGHT')</textarea>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">Gravatar镜像源</label>
+                                <div class="layui-input-block">
+                                    <input type="text" value="#option('GRAVATAR_SOURCE', '//cn.gravatar.com/avatar/')" name="GRAVATAR_SOURCE" placeholder="请输入Gravatar镜像源" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -113,6 +107,38 @@
                             </div>
                         </form>
                     </div>
+
+
+                    <div class="layui-tab-item">
+                        <form class="layui-form" action="">
+                            <div class="layui-input-inline"  style="display: none;">
+                                <select lay-verify="" type="hidden"></select>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">网站关键词</label>
+                                <div class="layui-input-block">
+                                    <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键词,英文逗号分割" class="layui-textarea">#option('WEB_META_KEYWORD')</textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">网站描述</label>
+                                <div class="layui-input-block">
+                                    <textarea name="WEB_META_DESC" placeholder="请输入META网站描述" class="layui-textarea">#option('WEB_META_DESC')</textarea>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn addBtn" lay-submit lay-filter="optionForm">保存设置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
                     <div class="layui-tab-item">
                         <form class="layui-form" action="">
                             <div class="layui-input-inline"  style="display: none;">
@@ -160,6 +186,8 @@
                             </div>
                         </form>
                     </div>
+
+
                     <div class="layui-tab-item">
                         <div class="update-content">
                             <div style="font-size: 15px;color: #4a9fff;">
@@ -184,6 +212,8 @@
 
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -194,123 +224,6 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/layui.min.js"></script>
 <script src="/static/public/js/main.js"></script>
 <script src="/static/public/js/reconnecting-websocket.min.js"></script>
-<script>
-    let layer,form,element;
-    var ws = null;
-    layui.use(['layer','form','element'], function() {
-        layer = layui.layer;
-        form = layui.form;
-        element = layui.element;
-        form.on('submit(optionForm2)', function(data){
-            save(data);
-            return false;
-        });
-        form.on('submit(optionForm)', function(data){
-            save(data);
-            return false;
-        });
-
-        element.on('tab(settingTab)', function(){
-            if (this.getAttribute('lay-id') === "3") {
-                let loadIndex = layer.load("正在检查更新...");
-                $.get("/checkUpdate",function(data){
-                    layer.close(loadIndex);
-                    if (data.code === 200) {
-                        $("#updateTitle").text(data.data.name);
-                        $("#updateVersion").text(data.data.tagName);
-                        $("#updateContent").html(data.data.body.replaceAll("\r\n","<br>"));
-                        $("#updateSize").text(data.data.sizeString);
-                    } else if (data.code === 500) {
-                        console.log("检查更新出错");
-                        $(".update-content").html("检查更新出错,请重试");
-                    } else {
-                        $(".update-content").html("暂无更新");
-                    }
-                    $(".update-content").show();
-                    startWebsocket();
-                });
-            }
-        });
-
-
-
-        $(".update-content").on('click', '#update', function () {
-            layer.confirm('是否确认更新?', {title: '提示'}, function (index) {
-                layer.close(index);
-                $("#update").hide();
-                startUpdate();
-            });
-        });
-
-        function startUpdate() {
-            $(".update-console").show();
-            $.get("/update",function(data){});
-        }
-
-        function startWebsocket() {
-            if (ws != null) {
-                ws.close();
-            }
-            var flag = false;
-            var tipFlag = false;
-            var url = 'ws://'+window.location.host+'/websocket';
-            if ('https:' === document.location.protocol) {
-                url = 'wss://'+window.location.host+'/websocket';
-            }
-
-            ws = new ReconnectingWebSocket(url);
-            ws.onopen = function (e) {
-                if (!flag) {
-                    $("#update").show();
-                }
-                flag = true;
-                console.log("Connection open ...");
-                const msg = {type: 1};
-                ws.send(JSON.stringify(msg));
-            };
-            ws.onmessage = function (e) {
-                let dataJson = JSON.parse(e.data);
-                let classStr = "";
-                if(dataJson.data === 2) {
-                    classStr = "updateError";
-                }
-                $(".update-console").append("<p class='"+classStr+"'>"+dataJson.message +"</p>");
-                if ($(".update-console").children().length > 100) {
-                    $(".update-console").children().first().remove();
-                }
-                $(".update-console").scrollTop($(".update-console")[0].scrollHeight);
-            };
-            ws.onclose = function (e) {
-            };
-            ws.onerror =function (e) {
-                if (!flag && !tipFlag) {
-                    tipFlag = true;
-                    layer.confirm('检测到您的Nginx或其他容器配置未开启websocket支持,请参考官方文档->文档->常见问题6进行开启', {title: '提示'}, function (index) {
-                        layer.close(index);
-                    });
-                }
-            };
-        }
-    });
-
-    function save(data) {
-        $.ajax({
-            type: "POST",
-            url: "/admin/setting/save",
-            contentType:"application/json",
-            data: JSON.stringify(data.field),
-            success:function(d){
-                if (d.code === 200){
-                    parent.layer.msg("保存成功", {icon: 1})
-                } else {
-                    layer.msg(d.msg, {icon: 2});
-                }
-            },
-            error: function (data) {
-                layer.msg("保存失败", {icon: 2});
-            }
-        });
-    }
-</script>
+<script src="/static/admin/pages/settings/js/setting.js"></script>
 </body>
 </html>

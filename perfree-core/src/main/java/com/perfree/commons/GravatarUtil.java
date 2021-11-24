@@ -1,5 +1,7 @@
 package com.perfree.commons;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Gravatar头像生成工具
  * @author Perfree
@@ -12,8 +14,24 @@ public class GravatarUtil {
      * @return String linkAddr
      */
     public static String getGravatar(String email) {
-        String emailMd5 = StringUtil.strToMd5(email);
-        return "http://www.gravatar.com/avatar/"+emailMd5+"?s=32";
+        return StringUtil.strToMd5(email);
     }
 
+    /**
+     * 替换Gravatar头像地址
+     * @param avatar linkAddr
+     */
+    public static String replaceGravatar(String avatar) {
+        if (avatar.startsWith("/static/avatar")) {
+            return avatar;
+        }
+        String gravatarUrl = OptionCacheUtil.getValue(Constants.OPTION_GRAVATAR_SOURCE);
+        if (StringUtils.isBlank(gravatarUrl)) {
+            gravatarUrl = "//cn.gravatar.com/avatar/";
+        }
+        if (StringUtils.isNotBlank(avatar) && avatar.contains("http://www.gravatar.com/avatar/")) {
+            avatar = avatar.replace("http://www.gravatar.com/avatar/", "").replace("?s=32", "");
+        }
+        return gravatarUrl + avatar;
+    }
 }
