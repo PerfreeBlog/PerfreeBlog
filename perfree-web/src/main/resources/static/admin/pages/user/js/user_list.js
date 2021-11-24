@@ -76,9 +76,9 @@ function queryTable() {
             {type: 'checkbox'},
             {field: 'id', title: 'ID', width: 80,  sort: true},
             {field: 'userName', minWidth: 80,title: '用户名'},
-            {field: 'account', minWidth: 160,title: '账户'},
-            {field: 'email', minWidth: 190,title: '邮箱'},
-            {field: 'website', minWidth: 190,title: '网站'},
+            {field: 'account', minWidth: 150,title: '账户'},
+            {field: 'email', minWidth: 180,title: '邮箱'},
+            {field: 'website', minWidth: 180,title: '网站'},
             {
                 field: 'status', minWidth: 100,title: '状态',
                 templet: function (d) {
@@ -100,7 +100,7 @@ function queryTable() {
                     return html;
                 }
             },
-            {field: 'role', minWidth: 120,title: '角色', templet: "<span>{{d.role.name}}</span>"},
+            {field: 'role', minWidth: 110,title: '角色', templet: "<span>{{d.role.name}}</span>"},
             {
                 field: 'createTime',
                 title: '创建时间',

@@ -7,12 +7,12 @@ function initPage() {
         element = layui.element;
         layer = layui.layer;
         upload = layui.upload;
+        formEvent();
+        initEvent();
+        loadRoleList();
+        initUpload();
     });
 
-    formEvent();
-    initEvent();
-    loadRoleList();
-    initUpload();
 }
 
 /**
