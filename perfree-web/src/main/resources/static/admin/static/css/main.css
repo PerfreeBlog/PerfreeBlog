@@ -203,3 +203,9 @@ html{
     padding: 0 4px;
     line-height: 20px;
 }
+.layui-form .editormd-dialog-container select{
+    color: #999;
+    padding: 3px 8px;
+    border: 1px solid #ddd;
+    display: inline-block;
+}

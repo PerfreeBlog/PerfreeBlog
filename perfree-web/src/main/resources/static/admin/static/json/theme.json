@@ -1,7 +1,7 @@
 [
     {"id": "theme-1","leftLogo": "#1d1f26", "leftSide": "#1d1f26", "header": "#ffffff","sideColor": "rgba(255,255,255,.7)","headerColor":"#0c0c0cde","logoColor":"rgba(255,255,255,.7)","logoBoderColor": "#23262e"},
     {"id": "theme-2","leftLogo": "#50314F", "leftSide": "#50314F", "header": "#ffffff","sideColor": "rgba(255,255,255,.8)","headerColor":"#444444","logoColor":"rgba(255,255,255,.8)","logoBoderColor": "#482c47"},
-    {"id": "theme-3","leftLogo": "#1E9FFF", "leftSide": "#333f58", "header": "#ffffff","sideColor": "rgba(255,255,255,.8)","headerColor":"#444","logoColor":"rgba(255,255,255,.8)","logoBoderColor": "#343742"},
+    {"id": "theme-3","leftLogo": "#333f58", "leftSide": "#333f58", "header": "#ffffff","sideColor": "rgba(255,255,255,.8)","headerColor":"#444","logoColor":"rgba(255,255,255,.8)","logoBoderColor": "#343742"},
     {"id": "theme-4","leftLogo": "#2e9688", "leftSide": "#2e9688", "header": "#ffffff","sideColor": "rgba(255,255,255,.8)","headerColor":"#444","logoColor":"rgba(255,255,255,.8)","logoBoderColor": "#2a877b"},
     {"id": "theme-5","leftLogo": "#f78400", "leftSide": "#20222a", "header": "#ffffff","sideColor": "rgba(255,255,255,.8)","headerColor":"#444","logoColor":"rgba(255,255,255,.8)","logoBoderColor": "#343742"},
     {"id": "theme-6","leftLogo": "#AA3130", "leftSide": "#242d38", "header": "#ffffff","sideColor": "rgba(255,255,255,.8)","headerColor":"#444","logoColor":"rgba(255,255,255,.8)","logoBoderColor": "#343742"},

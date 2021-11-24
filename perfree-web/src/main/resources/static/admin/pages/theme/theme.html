@@ -7,8 +7,8 @@
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
-    <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/css/layui.min.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/admin/static/css/main.css" rel="stylesheet"/>
     <link href="/static/admin/pages/theme/css/theme.css" rel="stylesheet"/>
 </head>
@@ -45,13 +45,32 @@
         #end
     </div>
 </div>
-<script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
-<script src="/static/public/libs/layui-v2.5.6/layui/layui.all.js"></script>
+<script src="//code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/layui/2.6.8/layui.min.js"></script>
 <script>
     let layer, upload;
     layui.use(['upload', 'layer'], function () {
         layer = layui.layer;
         upload = layui.upload;
+
+        upload.render({
+            elem: '#addTheme',
+            url: '/admin/theme/addTheme',
+            accept: "file",
+            acceptMime: "application/zip",
+            exts: "zip",
+            done: function (res) {
+                if (res.code === 200) {
+                    parent.layer.msg("主题安装成功", {icon: 1});
+                    location.reload();
+                } else {
+                    layer.msg(res.msg, {icon: 2});
+                }
+            },
+            error: function () {
+                layer.msg("主题安装失败", {icon: 2});
+            }
+        });
     });
     $(".p-theme-container").on("click", ".switchThemeBtn", function () {
         const path = $(this).attr("data-path");
@@ -102,25 +121,6 @@
     $(".p-theme-container").on("click", ".editThemeBtn", function () {
         const path = $(this).attr("data-path");
         parent.openTab('', '编辑主题', '/admin/theme/edit?path=' + path, "-5");
-    });
-
-    upload.render({
-        elem: '#addTheme',
-        url: '/admin/theme/addTheme',
-        accept: "file",
-        acceptMime: "application/zip",
-        exts: "zip",
-        done: function (res) {
-            if (res.code === 200) {
-                parent.layer.msg("主题安装成功", {icon: 1});
-                location.reload();
-            } else {
-                layer.msg(res.msg, {icon: 2});
-            }
-        },
-        error: function () {
-            layer.msg("主题安装失败", {icon: 2});
-        }
     });
 </script>
 </body>
