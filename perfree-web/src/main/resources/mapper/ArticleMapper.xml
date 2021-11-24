@@ -139,9 +139,6 @@
     <select id="getArticleCount" resultType="java.lang.Long">
         SELECT count(1) FROM p_article where `type`= 'article' and `status` = 0
     </select>
-    <select id="getArticleListByDashboard" resultType="com.perfree.model.Article">
-        SELECT * FROM p_article where `type`= 'article' ORDER BY createTime DESC limit 0,24
-    </select>
 
     <select id="getHotArticle" resultMap="LIST_RESULT">
         select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1

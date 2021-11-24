@@ -15,6 +15,7 @@ import com.perfree.service.MenuService;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setViewCount(0L);
         article.setCommentCount(0L);
         article.setCreateTime(new Date());
+        genSummary(article);
         int result = articleMapper.add(article);
         if (article.getArticleTags().size() > 0) {
             article.getArticleTags().forEach(r -> {
@@ -160,6 +162,7 @@ public class ArticleServiceImpl implements ArticleService {
         if (article.getCategoryId() != null){
             categoryService.addCount(article.getCategoryId());
         }
+        genSummary(article);
         return articleMapper.update(article);
     }
 
@@ -176,7 +179,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return List<Article
      */
     public List<Article> getArticleListByDashboard() {
-        return articleMapper.getArticleListByDashboard();
+        return articleMapper.getLatestArticle(22);
     }
 
     /**
@@ -346,4 +349,20 @@ public class ArticleServiceImpl implements ArticleService {
         return menu;
     }
 
+
+    /**
+     * @description 生成摘要
+     * @param article  article
+     * @author Perfree
+     */
+    private void genSummary(Article article){
+        String isGenSummary = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_AUTO_GEN_SUMMARY, Constants.WEB_AUTO_GEN_SUMMARY_FALSE);
+        if (!isGenSummary.equals(Constants.WEB_AUTO_GEN_SUMMARY_FALSE) && StringUtils.isBlank(article.getSummary())){
+            if (article.getContent().length() > 200){
+                article.setSummary(article.getContent().substring(0, 200));
+            } else {
+                article.setSummary(article.getContent());
+            }
+        }
+    }
 }

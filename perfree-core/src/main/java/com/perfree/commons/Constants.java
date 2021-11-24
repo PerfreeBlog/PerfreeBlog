@@ -155,4 +155,17 @@ public class Constants {
 
     /** option key - GRAVATAR_SOURCE(镜像源) */
     public static final String OPTION_GRAVATAR_SOURCE = "GRAVATAR_SOURCE";
+    //WEB_SITE
+    public static final String OPTION_WEB_SITE = "WEB_SITE";
+
+    //WEB_RSS_GEN_MODE
+    public static final String OPTION_WEB_RSS_GEN_MODE = "WEB_RSS_GEN_MODE";
+
+    //WEB_RSS_GEN_NUM
+    public static final String OPTION_WEB_RSS_GEN_NUM = "WEB_RSS_GEN_NUM";
+    //WEB_AUTO_GEN_SUMMARY
+    public static final String OPTION_WEB_AUTO_GEN_SUMMARY = "WEB_AUTO_GEN_SUMMARY";
+
+    public static final String WEB_AUTO_GEN_SUMMARY_FALSE = "0";
+
 }

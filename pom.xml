@@ -48,6 +48,11 @@
                <version>3.28.0-GA</version>
            </dependency>
 
+           <dependency>
+               <groupId>com.rometools</groupId>
+               <artifactId>rome</artifactId>
+               <version>1.16.0</version>
+           </dependency>
 
            <!-- swagger -->
            <dependency>

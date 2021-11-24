@@ -60,6 +60,9 @@ public class SystemController extends BaseController {
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private RssServices rssServices;
+
     /**
      * 后台首页
      * @return String
@@ -305,6 +308,13 @@ public class SystemController extends BaseController {
         response.setContentType(MediaType.APPLICATION_XML_VALUE);
         Writer writer = response.getWriter();
         writer.append(seoService.createSiteMapXmlContent());
+    }
+
+    @GetMapping("/rss")
+    public void rss(HttpServletResponse response) throws IOException {
+        response.setContentType(MediaType.APPLICATION_XML_VALUE);
+        Writer writer = response.getWriter();
+        writer.append(rssServices.genRss());
     }
 
     /**
