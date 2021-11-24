@@ -1,9 +1,9 @@
 #include("/static/themes/perfree/layout/layout.html")
 #@layout()
 #define css()
-    <link href="/static/themes/perfree/comment/comment.css" rel="stylesheet">
-    <link href="/static/themes/perfree/static/css/article.css" rel="stylesheet">
-    <link href="/static/themes/perfree/static/css/link.css" rel="stylesheet">
+    <link href="/static/themes/perfree/comment/comment.css?v=#(version)" rel="stylesheet">
+    <link href="/static/themes/perfree/static/css/article.css?v=#(version)" rel="stylesheet">
+    <link href="/static/themes/perfree/static/css/link.css?v=#(version)" rel="stylesheet">
 #end
 #define content()
     #linkPage(pageSize=99)
@@ -39,5 +39,5 @@
     #end
 #end
 #define script()
-    <script src="/static/themes/perfree/static/js/comment.js"></script>
+    <script src="/static/themes/perfree/static/js/comment.js?v=#(version)"></script>
 #end

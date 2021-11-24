@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.jfinal.template.Engine;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.perfree.shared.OptionShared;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class EnjoyConfig {
+    @Value("${version}")
+    private String version;
 
     public static JFinalViewResolver jfr = null;
 
@@ -26,8 +29,11 @@ public class EnjoyConfig {
         engine.setDevMode(true);
         engine.setSourceFactory(new TemplateSourceFactory());
         engine.addSharedMethod(new StrUtil());
+        engine.setCompressorOn('\n');
         Engine.setFastMode(true);
+        Engine.setChineseExpression(true);
         engine.addSharedMethod(new OptionShared());
+        engine.addSharedObject("version", version);
         return jfr;
     }
 }

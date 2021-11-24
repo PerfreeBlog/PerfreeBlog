@@ -3,8 +3,8 @@
 #define css()
     <link href="//cdn.jsdelivr.net/npm/viewerjs@1.10.2/dist/viewer.min.css" rel="stylesheet">
     <link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/atom-one-light.min.css" rel="stylesheet">
-    <link href="/static/themes/perfree/comment/comment.css" rel="stylesheet">
-    <link href="/static/themes/perfree/static/css/article.css" rel="stylesheet">
+    <link href="/static/themes/perfree/comment/comment.css?v=#(version)" rel="stylesheet">
+    <link href="/static/themes/perfree/static/css/article.css?v=#(version)" rel="stylesheet">
 #end
 #define content()
 #if(article)
@@ -39,6 +39,6 @@
 #define script()
     <script src="//cdn.jsdelivr.net/npm/viewerjs@1.10.2/dist/viewer.min.js"></script>
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/highlight.min.js"></script>
-    <script src="/static/themes/perfree/static/js/article.js"></script>
-    <script src="/static/themes/perfree/static/js/comment.js"></script>
+    <script src="/static/themes/perfree/static/js/article.js?v=#(version)"></script>
+    <script src="/static/themes/perfree/static/js/comment.js?v=#(version)"></script>
 #end

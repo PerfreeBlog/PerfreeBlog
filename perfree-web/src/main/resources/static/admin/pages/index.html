@@ -10,7 +10,7 @@
     <link rel="Shortcut Icon" href="#option('WEB_LOGO','/static/public/images/favicon.ico')" type="image/x-icon"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/css/layui.css">
     <link href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="/static/admin/static/css/style.css" rel="stylesheet"/>
+    <link href="/static/admin/static/css/style.css?v=#(version)" rel="stylesheet"/>
     <script>
         window.onload = function f() {
             document.getElementById("loading").style.display="none";
@@ -68,6 +68,6 @@
 </script>
 <script src="//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
-<script src="/static/admin/static/js/main.js"></script>
+<script src="/static/admin/static/js/main.js?v=#(version)"></script>
 </body>
 </html>
