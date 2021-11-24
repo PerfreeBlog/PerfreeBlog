@@ -26,7 +26,7 @@ public class Comment implements Serializable {
     private String website;
     private String email;
     private String userName;
-
+    private Boolean readAvatar = true;
     private Integer status;
     private Date createTime;
     private Date updateTime;
@@ -77,6 +77,13 @@ public class Comment implements Serializable {
         this.articleId = articleId;
     }
 
+    public Boolean getReadAvatar() {
+        return readAvatar;
+    }
+
+    public void setReadAvatar(Boolean readAvatar) {
+        this.readAvatar = readAvatar;
+    }
 
     public Long getUserId() {
         return userId;
@@ -121,7 +128,10 @@ public class Comment implements Serializable {
 
 
     public String getAvatar() {
-       return GravatarUtil.replaceGravatar(avatar);
+        if (readAvatar) {
+            return GravatarUtil.replaceGravatar(avatar);
+        }
+       return avatar;
     }
 
     public void setAvatar(String avatar) {

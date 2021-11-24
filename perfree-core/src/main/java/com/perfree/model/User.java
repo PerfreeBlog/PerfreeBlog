@@ -32,6 +32,7 @@ public class User implements Serializable {
     private Date updateTime;
     private String captcha;
     private String website;
+    private Boolean readAvatar = true;
 
     private Role role;
     @NotBlank(message = "邮箱不允许为空")
@@ -58,6 +59,14 @@ public class User implements Serializable {
         return account;
     }
 
+    public Boolean getReadAvatar() {
+        return readAvatar;
+    }
+
+    public void setReadAvatar(Boolean readAvatar) {
+        this.readAvatar = readAvatar;
+    }
+
     public void setAccount(String account) {
         this.account = account;
     }
@@ -78,6 +87,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
+
     public String getSalt() {
         return salt;
     }
@@ -95,7 +105,10 @@ public class User implements Serializable {
     }
 
     public String getAvatar() {
-        return GravatarUtil.replaceGravatar(avatar);
+        if (readAvatar) {
+            return GravatarUtil.replaceGravatar(avatar);
+        }
+        return avatar;
     }
 
     public void setAvatar(String avatar) {

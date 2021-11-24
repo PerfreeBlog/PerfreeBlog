@@ -47,6 +47,7 @@ public class CommentController extends BaseApiController {
             return ResponseBean.error(-1,"该文章已关闭评论功能" , null);
         }
         User user = getLoginUser(request);
+        comment.setReadAvatar(false);
         if (user == null) {
             if (StringUtils.isBlank(comment.getUserName())) {
                 return ResponseBean.error(-2,"请填写名称" , null);
@@ -62,6 +63,7 @@ public class CommentController extends BaseApiController {
             }
             comment.setAvatar(GravatarUtil.getGravatar(comment.getEmail()));
         } else {
+            user.setReadAvatar(false);
             comment.setUserId(user.getId());
             comment.setAvatar(user.getAvatar());
             comment.setEmail(user.getEmail());

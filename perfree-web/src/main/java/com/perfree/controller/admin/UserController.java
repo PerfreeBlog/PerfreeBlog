@@ -123,6 +123,7 @@ public class UserController extends BaseController {
             logger.error("账户已存在: {}", user.toString());
             return ResponseBean.fail("账户已存在", null);
         }
+        user.setReadAvatar(false);
         if (StringUtils.isBlank(user.getAvatar())){
             user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
         }
@@ -152,7 +153,8 @@ public class UserController extends BaseController {
     @ResponseBody
     @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid User user) {
-        if (StringUtils.isBlank(user.getAvatar())){
+        user.setReadAvatar(false);
+        if (StringUtils.isBlank(user.getAvatar()) || !user.getAvatar().startsWith("/static/avatar")){
             user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
         }
         if (userService.update(user) > 0) {
