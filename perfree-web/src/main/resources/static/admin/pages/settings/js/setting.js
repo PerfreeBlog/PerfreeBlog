@@ -14,7 +14,7 @@ layui.use(['layer','form','element'], function() {
     });
 
     element.on('tab(settingTab)', function(){
-        if (this.getAttribute('lay-id') === "3") {
+        if (this.getAttribute('lay-id') === "4") {
             let loadIndex = layer.load("正在检查更新...");
             $.get("/checkUpdate",function(data){
                 layer.close(loadIndex);
