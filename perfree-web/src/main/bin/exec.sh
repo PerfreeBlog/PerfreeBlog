@@ -2,15 +2,11 @@
 echo $1
 if [ "$1" = "" ];
 then
-        exit
+   exit
 fi
-
-./start.sh stop
-
-sleep 10
-
+sh start.sh stop
+sleep 5
 \cp -rf $1/* ./
-sed -i 's/\r//' ./start.sh
-./start.sh start
+chmod +x start.sh
+sh start.sh start
 rm -rf $1
-
