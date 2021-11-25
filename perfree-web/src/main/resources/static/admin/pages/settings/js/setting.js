@@ -30,20 +30,19 @@ layui.use(['layer','form','element'], function() {
                     $(".update-content").html("暂无更新");
                 }
                 $(".update-content").show();
-                startWebsocket();
             });
         }
     });
 
 
 
-    $(".update-content").on('click', '#update', function () {
+   /* $(".update-content").on('click', '#update', function () {
         layer.confirm('是否确认更新?', {title: '提示'}, function (index) {
             layer.close(index);
             $("#update").hide();
             startUpdate();
         });
-    });
+    });*/
 
     function startUpdate() {
         $(".update-console").show();

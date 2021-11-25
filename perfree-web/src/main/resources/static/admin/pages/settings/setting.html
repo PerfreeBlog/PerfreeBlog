@@ -234,7 +234,7 @@
 
                     <div class="layui-tab-item">
                         <div class="update-content">
-                            <div style="font-size: 15px;color: #4a9fff;">
+                            <div style="font-size: 15px;">
                                 检测到新版本
                             </div>
                             <div>
@@ -246,11 +246,23 @@
                                 <span id="updateSize"></span>
                             </div>
                             <div>
+                                <span class="updateLabel">更新教程:</span>
+                                <span>
+                                     <a href="http://perfree.org.cn/doc/install-update.html" target="_blank">http://perfree.org.cn/doc/install-update.html</a>
+                                </span>
+                            </div>
+                            <div>
                                 <span class="updateLabel">更新内容:</span><br>
                                 <span id="updateContent"></span>
                             </div>
-                            <button class="layui-btn addBtn" id="update">开始更新</button>
-                            <p style="color: red">注意事项: 更新时系统会自动备份当前版本程序到配置的备份目录下(默认在项目目录的backup文件夹),更新时会短暂的停止服务,请不要关闭此页面,如出现更新失败问题,请手动恢复备份程序</p>
+                            <div>
+                                <span class="updateLabel">下载地址:</span><br>
+                                <span>
+                                    <a class="download-btn" href="https://github.com/perfree/PerfreeBlog/releases" target="_blank">github</a>
+                                    <a class="download-btn" href="https://gitee.com/perfree/PerfreeBlog/releases" target="_blank">gitee</a>
+                                </span>
+                            </div>
+
                         </div>
                         <div class="update-console">
 

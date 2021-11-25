@@ -46,8 +46,11 @@
 .layui-form-radio {
     color: rgb(72, 68, 68);
 }
-#update{
-    display: none;
+.download-btn{
+    color: #4a9fff;
+    padding: 5px 15px;
+    display: block;
+    border-radius: 5px;
 }
 .layui-input-block{
     margin-left: 130px;
