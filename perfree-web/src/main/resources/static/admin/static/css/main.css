@@ -69,6 +69,9 @@ html{
 #batchDeleteBtn{
     background-color: #FF5722;
 }
+.layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed>i{
+    color: #4a9fff;
+}
 .layui-form-onswitch {
     border-color: #4a9fff;
     background-color: #4a9fff;

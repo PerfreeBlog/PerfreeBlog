@@ -40,7 +40,7 @@ public class ShiroConfig {
      */
     public SimpleCookie rememberMeCookie() {
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
-        simpleCookie.setMaxAge(2592000);
+        simpleCookie.setMaxAge(21600000);
         return simpleCookie;
     }
 
@@ -65,7 +65,7 @@ public class ShiroConfig {
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setSessionIdUrlRewritingEnabled(false);
-        sessionManager.setGlobalSessionTimeout(2160000);
+        sessionManager.setGlobalSessionTimeout(21600000);
         return sessionManager;
     }
 
