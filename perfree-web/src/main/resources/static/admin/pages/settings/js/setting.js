@@ -33,66 +33,6 @@ layui.use(['layer','form','element'], function() {
             });
         }
     });
-
-
-
-   /* $(".update-content").on('click', '#update', function () {
-        layer.confirm('是否确认更新?', {title: '提示'}, function (index) {
-            layer.close(index);
-            $("#update").hide();
-            startUpdate();
-        });
-    });*/
-
-    function startUpdate() {
-        $(".update-console").show();
-        $.get("/update",function(data){});
-    }
-
-    function startWebsocket() {
-        if (ws != null) {
-            ws.close();
-        }
-        var flag = false;
-        var tipFlag = false;
-        var url = 'ws://'+window.location.host+'/websocket';
-        if ('https:' === document.location.protocol) {
-            url = 'wss://'+window.location.host+'/websocket';
-        }
-
-        ws = new ReconnectingWebSocket(url);
-        ws.onopen = function (e) {
-            if (!flag) {
-                $("#update").show();
-            }
-            flag = true;
-            console.log("Connection open ...");
-            const msg = {type: 1};
-            ws.send(JSON.stringify(msg));
-        };
-        ws.onmessage = function (e) {
-            let dataJson = JSON.parse(e.data);
-            let classStr = "";
-            if(dataJson.data === 2) {
-                classStr = "updateError";
-            }
-            $(".update-console").append("<p class='"+classStr+"'>"+dataJson.message +"</p>");
-            if ($(".update-console").children().length > 100) {
-                $(".update-console").children().first().remove();
-            }
-            $(".update-console").scrollTop($(".update-console")[0].scrollHeight);
-        };
-        ws.onclose = function (e) {
-        };
-        ws.onerror =function (e) {
-            if (!flag && !tipFlag) {
-                tipFlag = true;
-                layer.confirm('检测到您的Nginx或其他容器配置未开启websocket支持,请参考官方文档->文档->常见问题6进行开启', {title: '提示'}, function (index) {
-                    layer.close(index);
-                });
-            }
-        };
-    }
 });
 
 function save(data) {

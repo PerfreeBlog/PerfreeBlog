@@ -338,12 +338,4 @@ public class SystemController extends BaseController {
             return ResponseBean.fail("检查更新出错", null);
         }
     }
-
-    @GetMapping("/update")
-    @ResponseBody
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
-    public ResponseBean update() {
-        updateService.asyncUpdate();
-        return ResponseBean.success("调用异步更新", null);
-    }
 }
