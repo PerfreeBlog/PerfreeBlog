@@ -1,5 +1,8 @@
 package com.perfree.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,17 +10,38 @@ import java.util.Date;
  * attach table
  * @author Perfree
  */
+@ApiModel(value="Attach-附件数据",description="附件数据")
 public class Attach implements Serializable {
     private static final long serialVersionUID = 4900174588193382137L;
+    @ApiModelProperty(value="附件ID",name="id")
     private Long id;
+
+    @ApiModelProperty(value="附件名称",name="name")
     private String name;
+
+    @ApiModelProperty(value="附件描述",name="desc")
     private String desc;
+
+    @ApiModelProperty(value="附件路径",name="path")
     private String path;
+
+    @ApiModelProperty(value="附件后缀",name="suffix")
     private String suffix;
+
+    @ApiModelProperty(value="附件标识",name="flag")
     private String flag;
+
+    @ApiModelProperty(value="附件类型",name="type")
     private String type;
+
+    @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
+
+    @ApiModelProperty(value="修改时间",name="updateTime")
     private Date updateTime;
+
+    @ApiModelProperty(value="附件链接",name="url")
+    private String url;
 
     public String getUrl() {
         return "/static" + path;

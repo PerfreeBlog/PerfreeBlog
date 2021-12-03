@@ -1,4 +1,4 @@
-package com.perfree.controller.api;
+package com.perfree.controller.api.pub;
 
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
@@ -9,13 +9,14 @@ import com.perfree.service.ArticleService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * Article API Controller
  */
 @RestController
 @CrossOrigin
-@Api(value = "文章相关",tags = "文章模块")
+@Api(value = "文章相关",tags = "文章相关")
 @RequestMapping("/api/article")
 public class ArticleController extends BaseApiController {
     @Autowired
@@ -29,22 +30,43 @@ public class ArticleController extends BaseApiController {
     }
 
 
-    @PostMapping("/list")
+    @GetMapping("/list")
     @ApiOperation(value = "文章分页数据", notes = "获取文章分页数据(根据发布时间排序,置顶文章优先级会提高),可根据文章标题title模糊查询")
-    public Pager<Article> list(@RequestBody Pager<Article> pager){
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", required = true),
+        @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", required = true),
+        @ApiImplicitParam(name = "title", value = "文章标题", dataType = "string", paramType = "query"),
+    })
+    public Pager<Article> list(@ApiIgnore Pager<Article> pager, @ApiIgnore String title){
+        pager.setForm(new Article());
+        pager.getForm().setTitle(title);
         return articleService.apiList(pager);
     }
 
 
-    @PostMapping("/getHotListByView")
+    @GetMapping("/getHotListByView")
     @ApiOperation(value = "最热文章分页数据(阅读量排序)", notes = "获取最热文章分页数据(根据阅读量排序)")
-    public Pager<Article> getHotListByView(@RequestBody Pager<Article> pager){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", example = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", example = "30", required = true),
+            @ApiImplicitParam(name = "title", value = "文章标题", dataType = "string", paramType = "query", example = "测试"),
+    })
+    public Pager<Article> getHotListByView(@ApiIgnore Pager<Article> pager, @ApiIgnore String title){
+        pager.setForm(new Article());
+        pager.getForm().setTitle(title);
         return articleService.getApiHotArticleList(pager, 1);
     }
 
-    @PostMapping("/getHotListByComment")
+    @GetMapping("/getHotListByComment")
     @ApiOperation(value = "最热文章分页数据(评论排序)", notes = "获取最热文章分页数据(根据评论量排序)")
-    public Pager<Article> getHotListByComment(@RequestBody Pager<Article> pager){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", example = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", example = "30", required = true),
+            @ApiImplicitParam(name = "title", value = "文章标题", dataType = "string", paramType = "query", example = "测试"),
+    })
+    public Pager<Article> getHotListByComment(@ApiIgnore Pager<Article> pager, @ApiIgnore String title){
+        pager.setForm(new Article());
+        pager.getForm().setTitle(title);
         return articleService.getApiHotArticleList(pager, 0);
     }
 
@@ -62,9 +84,13 @@ public class ArticleController extends BaseApiController {
         return ResponseBean.success("success", article);
     }
 
-    @PostMapping("/getArchive")
+    @GetMapping("/getArchive")
     @ApiOperation(value = "获取文章归档分页数据", notes = "获取文章归档分页数据")
-    public Pager<Archive> getArchive(@RequestBody Pager<Archive> pager){
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", example = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", example = "30", required = true),
+    })
+    public Pager<Archive> getArchive(@ApiIgnore Pager<Archive> pager){
         return articleService.getApiArchive(pager);
     }
 }

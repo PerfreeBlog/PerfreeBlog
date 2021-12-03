@@ -1,0 +1,54 @@
+package com.perfree.controller.api.pub;
+
+import com.perfree.base.BaseApiController;
+import com.perfree.commons.Pager;
+import com.perfree.commons.ResponseBean;
+import com.perfree.model.Tag;
+import com.perfree.model.User;
+import com.perfree.service.UserService;
+import io.swagger.annotations.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
+
+@RestController
+@CrossOrigin
+@Api(value = "用户相关",tags = "用户模块")
+@RequestMapping("/api/user")
+@SuppressWarnings("all")
+public class UserController extends BaseApiController {
+
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/getById")
+    @ApiOperation(value = "根据用户ID获取用户信息", notes = "根据用户ID获取用户信息")
+    public ResponseBean getById(@ApiParam(name="userId",value="用户ID",required=true) @RequestParam String userId) {
+        User user = userService.getById(userId);
+        user.setPassword(null);
+        user.setSalt(null);
+        return ResponseBean.success("success", user);
+    }
+
+    @GetMapping("/getAllList")
+    @ApiOperation(value = "获取所有用户", notes = "获取所有用户")
+    public ResponseBean getAllList() {
+        List<User> users = userService.allList();
+        return ResponseBean.success("success", users);
+    }
+
+    @GetMapping("/getList")
+    @ApiOperation(value = "用户分页数据", notes = "用户分页数据,可根据用户名模糊查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", required = true),
+            @ApiImplicitParam(name = "name", value = "用户名", dataType = "string", paramType = "query"),
+    })
+    public Pager<User> getList(@ApiIgnore Pager<User> pager, @ApiIgnore String name) {
+        pager.setForm(new User());
+        pager.getForm().setUserName(name);
+        return userService.list(pager);
+    }
+}

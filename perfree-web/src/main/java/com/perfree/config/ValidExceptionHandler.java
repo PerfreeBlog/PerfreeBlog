@@ -4,12 +4,15 @@ import com.perfree.commons.ResponseBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConversionException;
+import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -47,5 +50,16 @@ public class ValidExceptionHandler {
         LOGGER.error(exception.getMessage());
         return ResponseBean.fail("ClassCastException", exception.getMessage());
 
+    }
+
+    @ExceptionHandler(BindException.class)
+    @ResponseBody
+    public ResponseBean handleBindException(Exception e) {
+        List<ObjectError> list = ((BindException) e).getAllErrors();
+        if (list.size() > 0) {
+            LOGGER.error(list.get(0).getDefaultMessage());
+            return ResponseBean.error(ResponseBean.ERROR_CODE, list.get(0).getDefaultMessage(), null);
+        }
+        return ResponseBean.error(ResponseBean.ERROR_CODE, "参数错误", null);
     }
 }

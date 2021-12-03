@@ -25,7 +25,7 @@ public class Pager<T> implements Serializable {
     @ApiModelProperty(value="总条数",name="total",example="100")
     private Long total;
     // 携带参数实体类
-    @ApiModelProperty(value="查询参数",name="form",example="{}")
+    @ApiModelProperty(value="查询参数",name="form",example="{}", hidden = true)
     private T form;
     // 数据集
     @ApiModelProperty(value="分页数据",name="data",example="[{},{}]")

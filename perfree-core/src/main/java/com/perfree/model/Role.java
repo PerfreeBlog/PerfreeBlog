@@ -1,5 +1,8 @@
 package com.perfree.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,13 +10,26 @@ import java.util.Date;
  * role table
  * @author Perfree
  */
+@ApiModel(value="Role-角色数据",description="角色数据")
 public class Role implements Serializable {
     private static final long serialVersionUID = -7909060114936447269L;
+
+    @ApiModelProperty(value="角色ID",name="id")
     private Long id;
+
+    @ApiModelProperty(value="角色名",name="name")
     private String name;
+
+    @ApiModelProperty(value="角色描述",name="description")
     private String description;
+
+    @ApiModelProperty(value="角色代码",name="code")
     private String code;
+
+    @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
+
+    @ApiModelProperty(value="更新时间",name="updateTime")
     private Date updateTime;
 
     public Long getId() {

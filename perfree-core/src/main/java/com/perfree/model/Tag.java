@@ -1,6 +1,8 @@
 package com.perfree.model;
 
 import com.perfree.commons.Constants;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,15 +11,32 @@ import java.util.Date;
  * tag Table
  * @author Perfree
  */
+@ApiModel(value="Tag-标签数据",description="标签数据")
 public class Tag implements Serializable {
     private static final long serialVersionUID = 7349480507456460022L;
+
+    @ApiModelProperty(value="标签ID",name="id")
     private Long id;
+
+    @ApiModelProperty(value="标签名",name="name")
     private String name;
+
+    @ApiModelProperty(value="用户id",name="userId")
     private Long userId;
+
+    @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
+
+    @ApiModelProperty(value="更新时间",name="updateTime")
     private Date updateTime;
+
+    @ApiModelProperty(value="创建人用户信息",name="user")
     private User user;
+
+    @ApiModelProperty(value="文章数",name="articleCount")
     private Long articleCount;
+
+    @ApiModelProperty(value="标签链接",name="url")
     private String url;
 
     public Long getArticleCount() {

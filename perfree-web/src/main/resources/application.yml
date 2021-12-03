@@ -62,7 +62,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: error
+    com.perfree: debug
     com.perfree.config.PostAppRunner: info
     com.perfree.Application: info
     com.perfree.plugins: info
@@ -73,3 +73,10 @@ logging:
 cache:
   ehcache:
     config: ehcache.xml
+
+swagger:
+  enable: true
+  application-name: PerfreeBlog
+  application-version: ${version}
+  application-description: PerfreeBlog接口文档
+  try-host: http://localhost:${server.port}

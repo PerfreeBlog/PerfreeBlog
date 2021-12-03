@@ -32,6 +32,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "file:./resources/plugin/",
                         "file:" + uploadPath
                 );
+        registry.addResourceHandler("/swagger**/**").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
@@ -49,6 +50,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 "/swagger-resources/**",
                 "/webjars/**",
                 "/v2/**",
+                "/v3/**",
+                "/swagger**/**",
                 "/swagger-ui.html/**",
                 "/doc.html/**"
         );

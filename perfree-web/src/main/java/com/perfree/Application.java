@@ -13,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.scheduling.annotation.EnableAsync;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.io.File;
 import java.util.Arrays;
@@ -22,7 +21,6 @@ import java.util.Arrays;
 @ComponentScan(nameGenerator = UniqueNameGenerator.class)
 @EnableAsync
 @EnableAspectJAutoProxy
-@EnableSwagger2
 public class Application implements CommandLineRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(Application.class);
     @Value("${server.port}")

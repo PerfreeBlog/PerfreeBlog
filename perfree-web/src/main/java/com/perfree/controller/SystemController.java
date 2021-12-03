@@ -10,8 +10,6 @@ import com.perfree.model.Option;
 import com.perfree.model.Role;
 import com.perfree.model.User;
 import com.perfree.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -42,7 +40,6 @@ import java.util.List;
  * 控制首页地址
  */
 @Controller
-@Api(tags = "用户操作模块API")
 public class SystemController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
     @Autowired
@@ -128,7 +125,7 @@ public class SystemController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doLogin")
     @ResponseBody
-    @ApiOperation(value = "登录")
+    @SuppressWarnings("all")
     public ResponseBean doLogin(@RequestBody User user,Boolean rememberMe, HttpSession session, HttpServletResponse response) {
         if(rememberMe == null) {
             rememberMe = false;

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @CrossOrigin
 @RequestMapping("/api")
-public class BaseApiController {
+public class BaseApiController extends BaseController{
 
     @Autowired
     private UserService userService;
@@ -41,17 +41,6 @@ public class BaseApiController {
                 return userByAccount;
             }
         }
-
-        Subject subject = SecurityUtils.getSubject();
-        User user=new User();
-        PrincipalCollection principals = subject.getPrincipals();
-        if (principals == null) {
-            return null;
-        }
-        BeanUtils.copyProperties(principals.getPrimaryPrincipal(), user);
-        user = userService.getById(user.getId().toString());
-        user.setPassword(null);
-        user.setSalt(null);
-        return user;
+        return getUser();
     }
 }

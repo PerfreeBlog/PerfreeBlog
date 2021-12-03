@@ -138,4 +138,9 @@ public class UserServiceImpl implements UserService {
     public User getUserByAccountAndEmail(String account, String email) {
         return userMapper.getUserByAccountAndEmail(account, email);
     }
+
+    @Override
+    public List<User> allList() {
+        return userMapper.getList(null);
+    }
 }

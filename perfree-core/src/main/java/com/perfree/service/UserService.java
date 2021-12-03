@@ -3,6 +3,8 @@ package com.perfree.service;
 import com.perfree.commons.Pager;
 import com.perfree.model.User;
 
+import java.util.List;
+
 /**
  * @description UserService
  * @author Perfree
@@ -85,4 +87,11 @@ public interface UserService {
      * @author Perfree
      */
     User getUserByAccountAndEmail(String account, String email);
+
+    /**
+     * @description  获取所有用户
+     * @return java.util.List<com.perfree.model.User>
+     * @author Perfree
+     */
+    List<User> allList();
 }

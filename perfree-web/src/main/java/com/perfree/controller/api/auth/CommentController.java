@@ -1,8 +1,8 @@
-package com.perfree.controller.api;
+package com.perfree.controller.api.auth;
 
 import cn.hutool.http.HtmlUtil;
-import com.perfree.commons.*;
 import com.perfree.base.BaseApiController;
+import com.perfree.commons.*;
 import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.Option;
@@ -12,21 +12,28 @@ import com.perfree.service.CommentService;
 import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
 @CrossOrigin
-@Api(value = "评论相关",tags = "评论模块")
+@Api(value = "评论相关",tags = "评论相关")
 @RequestMapping("/api/comment")
+@SuppressWarnings("all")
 public class CommentController extends BaseApiController {
     //缓存
     private static final CacheManager cacheManager = CacheManager.newInstance();
@@ -40,8 +47,17 @@ public class CommentController extends BaseApiController {
     private MailService mailService;
 
     @PostMapping("/submitComment")
-    @ApiOperation(value = "提交评论内容", notes = "提交评论内容")
-    public ResponseBean submitComment(@RequestBody @Valid Comment comment, HttpServletRequest request){
+    @ApiOperation(value = "提交评论内容", notes = "提交评论内容(如未登录或没有token,则用户名/邮箱为必填)")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "content", value = "评论内容", dataType = "String", required = true),
+            @ApiImplicitParam(name = "articleId", value = "文章id", dataType = "Integer"),
+            @ApiImplicitParam(name = "pid", value = "父级评论id", dataType = "Integer"),
+            @ApiImplicitParam(name = "topPid", value = "顶级评论ID", dataType = "Integer"),
+            @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String"),
+            @ApiImplicitParam(name = "website", value = "网址", dataType = "String"),
+            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String")
+    })
+    public ResponseBean submitComment(@ApiIgnore @Valid Comment comment, @ApiIgnore HttpServletRequest request){
         Article article = articleService.getById(comment.getArticleId().toString());
         if(article.getIsComment() == 0) {
             return ResponseBean.error(-1,"该文章已关闭评论功能" , null);
@@ -89,14 +105,6 @@ public class CommentController extends BaseApiController {
         }
         return ResponseBean.fail("评论失败", null);
     }
-
-
-    @PostMapping("/getCommentByArticleId")
-    @ApiOperation(value = "根据文章ID获取评论分页列表", notes = "根据文章ID获取评论分页列表")
-    public Pager<Comment> getCommentByArticleId(@RequestBody Pager<Comment> pager) {
-        return commentService.getApiCommentByArticleId(pager);
-    }
-
 
     /**
      * 利用缓存设置短时间内不能二次评论

@@ -1,5 +1,8 @@
 package com.perfree.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,15 +11,31 @@ import java.util.Date;
  * @author Perfree
  * @date 2021/8/13 13:42
  */
+@ApiModel(value="Plugin-插件数据",description="插件数据")
 public class Plugin implements Serializable {
     private static final long serialVersionUID = 7817277417501722377L;
+    @ApiModelProperty(value="插件ID",name="id")
     private Long id;
+
+    @ApiModelProperty(value="插件名",name="name")
     private String name;
+
+    @ApiModelProperty(value="插件路径",name="path")
     private String path;
+
+    @ApiModelProperty(value="插件描述",name="desc")
     private String desc;
+
+    @ApiModelProperty(value="插件版本",name="version")
     private String version;
+
+    @ApiModelProperty(value="插件作者",name="author")
     private String author;
+
+    @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
+
+    @ApiModelProperty(value="更新时间",name="updateTime")
     private Date updateTime;
 
     public Long getId() {

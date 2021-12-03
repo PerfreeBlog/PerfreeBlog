@@ -1,6 +1,8 @@
 package com.perfree.model;
 
 import com.perfree.commons.GravatarUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,29 +14,64 @@ import java.util.List;
  * comment table
  * @author Perfree
  */
+@ApiModel(value="Comment-评论数据",description="评论数据")
 public class Comment implements Serializable {
     private static final long serialVersionUID = 7817277417501762472L;
+
+    @ApiModelProperty(value="评论ID",name="id")
     private Long id;
+
+    @ApiModelProperty(value="父级评论ID",name="pid")
     private Long pid;
+
+    @ApiModelProperty(value="顶级评论ID",name="topPid")
     private Long topPid;
+
+    @ApiModelProperty(value="文章id",name="articleId")
     @NotNull(message = "文章id不允许为空")
     private Long articleId;
+
+    @ApiModelProperty(value="评论人id",name="userId")
     private Long userId;
+
+    @ApiModelProperty(value="评论内容",name="content")
     @NotBlank(message = "评论内容不允许为空")
     private String content;
+
+    @ApiModelProperty(value="头像",name="avatar")
     private String avatar;
+
+    @ApiModelProperty(value="网址",name="website")
     private String website;
+
+    @ApiModelProperty(value="邮箱",name="email")
     private String email;
+
+    @ApiModelProperty(value="用户名",name="userName")
     private String userName;
+
+    @ApiModelProperty(hidden = true)
     private Boolean readAvatar = true;
+
+    @ApiModelProperty(value="状态",name="status", example = "0正常,1:待审核")
     private Integer status;
+
+    @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
+
+    @ApiModelProperty(value="更新时间",name="updateTime")
     private Date updateTime;
 
+    @ApiModelProperty(value="用户信息",name="user")
     private User user;
+
+    @ApiModelProperty(value="文章信息",name="article")
     private Article article;
 
+    @ApiModelProperty(value="子评论",name="child")
     private List<Comment> child;
+
+    @ApiModelProperty(value="父级评论",name="parent")
     private Comment parent;
 
     public Article getArticle() {
