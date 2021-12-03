@@ -1,21 +1,30 @@
 package com.perfree.controller.api.pub;
 
-import com.perfree.commons.JwtUtils;
-import com.perfree.commons.ResponseBean;
+import com.perfree.commons.*;
+import com.perfree.model.Option;
+import com.perfree.model.Role;
 import com.perfree.model.User;
+import com.perfree.service.OptionService;
+import com.perfree.service.RoleService;
 import com.perfree.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.HashMap;
 
 @RestController
@@ -24,9 +33,13 @@ import java.util.HashMap;
 @RequestMapping("/api")
 @SuppressWarnings("all")
 public class SystemController {
-
+    private final Logger logger = LoggerFactory.getLogger(com.perfree.controller.SystemController.class);
     @Autowired
     private UserService userService;
+    @Autowired
+    private OptionService optionService;
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 登录
@@ -74,4 +87,49 @@ public class SystemController {
         subject.logout();
         return ResponseBean.success("success", null);
     }
+
+    /**
+     * 注册
+     * @return ResponseBean
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/doRegister")
+    @ResponseBody
+    @ApiOperation(value = "注册", notes = "注册")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "account", value = "账户",dataType = "string",  required = true),
+            @ApiImplicitParam(name = "password", value = "密码",dataType = "string",  required = true),
+            @ApiImplicitParam(name = "userName", value = "昵称/用户名",dataType = "string",  required = true),
+            @ApiImplicitParam(name = "email", value = "邮箱",dataType = "string",  required = true)
+    })
+    public ResponseBean doRegister(@ApiIgnore @Valid User user,@ApiIgnore  HttpSession session) {
+        Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);
+        if (optionByKey != null && optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
+            return ResponseBean.fail("网站已关闭注册功能", null);
+        }
+        if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 ||
+                user.getPassword().length() > 18){
+            logger.error("密码不能为空且在6-18字符之间: {}", user.toString());
+            return ResponseBean.fail("密码不能为空且在6-18字符之间", null);
+        }
+        if (userService.getUserByAccount(user.getAccount()) != null){
+            logger.error("账户已存在: {}", user.toString());
+            return ResponseBean.fail("账户已存在", null);
+        }
+        user.setStatus(Constants.USER_STATUS_DEFAULT);
+
+        // 设置默认角色
+        String roleCode = OptionCacheUtil.getValue(Constants.EHCACHE_KEY_WEB_REGISTER_DEFAULT_ROLE);
+        if (StringUtils.isBlank(roleCode)) {
+            roleCode = Constants.ROLE_USER;
+        }
+        Role role = roleService.getRoleByCode(roleCode);
+        user.setRoleId(role.getId());
+        user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
+        if (userService.add(user) > 0) {
+            return ResponseBean.success("注册成功", user);
+        }
+        logger.error("注册失败: {}", user.toString());
+        return ResponseBean.fail("注册失败", null);
+    }
+
 }
