@@ -8,6 +8,7 @@ import com.perfree.model.Article;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
@@ -64,6 +65,10 @@ public class ArticleController extends BaseController {
         if(user.getRole().getCode().equals("contribute")) {
             article.setStatus(Constants.ARTICLE_STATUS_AUDIT);
         }
+        Article articleBySlug = articleService.getBySlug(article.getSlug(), Constants.ARTICLE_TYPE_ARTICLE);
+        if (articleBySlug != null){
+            return ResponseBean.fail("访问地址别名重复!", null);
+        }
         if (articleService.add(article) > 0) {
             return ResponseBean.success("添加成功", article);
         }
@@ -79,6 +84,13 @@ public class ArticleController extends BaseController {
     @ResponseBody
     @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid Article article) {
+        if (StringUtils.isBlank(article.getSlug())) {
+            return ResponseBean.fail("访问地址别名不能为空", null);
+        }
+        Article articleBySlug = articleService.getBySlug(article.getSlug(), Constants.ARTICLE_TYPE_ARTICLE);
+        if (articleBySlug != null && !articleBySlug.getId().equals(article.getId())){
+            return ResponseBean.fail("访问地址别名重复", null);
+        }
         if (articleService.update(article) > 0) {
             return ResponseBean.success("更新成功", article);
         }

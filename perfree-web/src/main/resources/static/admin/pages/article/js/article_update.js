@@ -224,3 +224,15 @@ function initCategory() {
         }
     });
 }
+
+/**
+ * 动态修改PageUrl
+ */
+function updatePageUrl(){
+    let slug = $("#slug").val();
+    if (slug !== null && slug !== undefined &&　slug　!== '') {
+        $("#pageUrl").html(slug);
+    } else {
+        $("#pageUrl").html('[ID]');
+    }
+}

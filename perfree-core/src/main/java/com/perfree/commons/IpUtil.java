@@ -49,4 +49,18 @@ public class IpUtil {
         }
         return ipAddress;
     }
+
+
+    /**
+     * 获取当前服务的ip和端口
+     */
+    public static String getUrl(int serverPort) {
+        InetAddress address = null;
+        try {
+            address = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return "http://" + address.getHostAddress() + ":" + serverPort;
+    }
 }

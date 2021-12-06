@@ -43,3 +43,46 @@ CREATE TABLE "main"."p_option" (
 );
 INSERT INTO "main"."p_option" ("id", "key", "value") SELECT "id", "key", "value" FROM "main"."_p_option_old_1.3.2";
 drop table if exists "main"."_p_option_old_1.3.2";
+--PerfreeBlog
+--v2.0.0;
+ALTER TABLE "main"."p_article" RENAME TO "_p_article_old_1.3.3";
+CREATE TABLE "main"."p_article" (
+                                    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                    "title" text(256) NOT NULL,
+                                    "content" text,
+                                    "type" text(32),
+                                    "summary" text(1024),
+                                    "categoryId" integer,
+                                    "metaKeywords" text(512),
+                                    "metaDescription" text(512),
+                                    "thumbnail" text(256),
+                                    "isTop" integer,
+                                    "status" integer,
+                                    "commentCount" integer,
+                                    "viewCount" integer,
+                                    "userId" integer NOT NULL,
+                                    "isComment" integer,
+                                    "slug" text(128),
+                                    "createTime" DATETIME NOT NULL,
+                                    "updateTime" DATETIME
+);
+INSERT INTO "main"."p_article" ("id", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime") SELECT "id", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime" FROM "main"."_p_article_old_1.3.3";
+drop table if exists "main"."_p_article_old_1.3.3";
+ALTER TABLE "main"."p_menu" RENAME TO "_p_menu_old_1.3.3";
+CREATE TABLE "main"."p_menu" (
+                                 "id" text(64) NOT NULL,
+                                 "pid" text(64),
+                                 "name" text(128) NOT NULL,
+                                 "url" text(128),
+                                 "icon" text(64),
+                                 "seq" integer,
+                                 "type" integer NOT NULL,
+                                 "target" integer,
+                                 "status" integer NOT NULL,
+                                 "createTime" DATETIME NOT NULL,
+                                 "updateTime" DATETIME,
+                                 PRIMARY KEY ("id")
+);
+INSERT INTO "main"."p_menu" ("id", "pid", "name", "url", "icon", "seq", "type", "target", "status", "createTime", "updateTime") SELECT "id", "pid", "name", "url", "icon", "seq", "type", "target", "status", "createTime", "updateTime" FROM "main"."_p_menu_old_1.3.3";
+drop table if exists "main"."_p_menu_old_1.3.3";
+UPDATE "main"."p_article" set slug = id where slug is null;

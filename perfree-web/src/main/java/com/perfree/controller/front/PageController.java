@@ -2,38 +2,75 @@ package com.perfree.controller.front;
 
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
-import com.perfree.commons.SpringBeanUtils;
-import com.perfree.model.Menu;
+import com.perfree.commons.IpUtil;
+import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-@Component
+/**
+ * @description 通用page
+ * @author Perfree
+ * @date 2021/12/6 11:10
+ */
+@Controller
 public class PageController extends BaseController {
 
-    public String pages(HttpServletRequest request, HttpServletResponse response,Model model) {
-        String url = request.getServletPath();
-        ArticleService articleService = SpringBeanUtils.getBean(ArticleService.class);
-        Menu menu = articleService.setMenuArticle(url, model, request);
-        if (url.endsWith(Constants.SEPARATOR)){
-           url = url.substring(0, url.length() - 1);
+    @Autowired
+    private ArticleService articleService;
+
+    /**
+     * @description  通用page页
+     * @return java.lang.String
+     * @author Perfree
+     */
+    @RequestMapping("/page/{slug}")
+    public String page(@PathVariable("slug") String slug, HttpServletRequest request, Model model) {
+        if (slug.contains("-")) {
+            String[] split = slug.split("-");
+            slug = split[0];
+            model.addAttribute("commentIndex", split[1]);
         }
-        model.addAttribute("url", url + Constants.SEPARATOR);
-        return pageView(currentThemePage() + Constants.SEPARATOR + url + ".html", menu);
+        Article article = articleService.getBySlug(slug, Constants.ARTICLE_TYPE_PAGE);
+        if (article != null) {
+            articleService.cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
+            model.addAttribute("article", article);
+            model.addAttribute(Constants.SEO_TITLE, article.getTitle());
+            model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
+            model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
+        }
+        model.addAttribute("url", Constants.URL_PAGE + slug);
+        return pageView(Constants.ARTICLE_TYPE_PAGE + Constants.SEPARATOR +  slug + ".html");
     }
 
-    public String pages(@PathVariable("pageIndex") int pageIndex,HttpServletRequest request, HttpServletResponse response,Model model) {
-        String url = request.getServletPath();
-        ArticleService articleService = SpringBeanUtils.getBean(ArticleService.class);
-        Menu menu = articleService.setMenuArticle(url, model, request);
-        url = url.substring(0, url.lastIndexOf("/"));
-        model.addAttribute("url", url + Constants.SEPARATOR);
+    /**
+     * 分页处理
+     * @param pageIndex 页码
+     * @param model model
+     * @return String
+     */
+    @RequestMapping("/page/{slug}/{pageIndex}")
+    public String pages(@PathVariable("slug") String slug,@PathVariable("pageIndex") int pageIndex, HttpServletRequest request, Model model) {
+        if (slug.contains("-")) {
+            String[] split = slug.split("-");
+            slug = split[0];
+            model.addAttribute("commentIndex", split[1]);
+        }
+        Article article = articleService.getBySlug(slug, Constants.ARTICLE_TYPE_PAGE);
+        if (article != null) {
+            articleService.cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
+            model.addAttribute("article", article);
+            model.addAttribute(Constants.SEO_TITLE, article.getTitle());
+            model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
+            model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
+        }
+        model.addAttribute("url", Constants.URL_PAGE + slug);
         model.addAttribute("pageIndex", pageIndex);
-        return pageView(currentThemePage() + Constants.SEPARATOR + url + ".html", menu);
+        return pageView(Constants.ARTICLE_TYPE_PAGE + Constants.SEPARATOR +  slug + ".html");
     }
-
 }

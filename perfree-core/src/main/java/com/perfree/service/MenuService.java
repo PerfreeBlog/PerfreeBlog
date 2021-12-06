@@ -68,28 +68,11 @@ public interface MenuService {
     List<Menu> getProtalMenus();
 
     /**
-     * @description 根据文章id删除菜单
-     * @param idArr  idArr
-     */
-    void delMenuArticleId(String[] idArr);
-
-    /**
      * @description 根据url获取菜单
      * @param url  url
      * @return com.perfree.model.Menu
      */
     Menu getMenuByUrl(String url);
-
-    /**
-     * 注册所有的菜单url规则
-     */
-    void registerMenuPage();
-
-    /**
-     * 根据url注册RequestMapping
-     * @param url url
-     */
-    void registerMenuPageByUrl(String url);
 
     /**
      * @description 初始化系统菜单

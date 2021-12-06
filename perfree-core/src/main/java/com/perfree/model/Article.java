@@ -3,6 +3,7 @@ package com.perfree.model;
 import com.perfree.commons.Constants;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
@@ -89,6 +90,17 @@ public class Article implements Serializable {
 
     @ApiModelProperty(value="文章链接",name="url")
     private String url;
+
+    @ApiModelProperty(value="别名",name="slug")
+    private String slug;
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
     public List<ArticleTag> getArticleTags() {
         return articleTags;
@@ -252,7 +264,14 @@ public class Article implements Serializable {
     }
 
     public String getUrl() {
-        return Constants.URL_ARTICLE + id;
+        String pre = Constants.URL_ARTICLE;
+        if (Constants.ARTICLE_TYPE_PAGE.equals(type)) {
+            pre = Constants.URL_PAGE;
+        }
+        if (StringUtils.isBlank(slug)) {
+            return pre + id;
+        }
+        return pre + slug;
     }
 
     public void setUrl(String url) {

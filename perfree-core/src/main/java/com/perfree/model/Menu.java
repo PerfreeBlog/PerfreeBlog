@@ -62,12 +62,6 @@ public class Menu implements Serializable {
     @ApiModelProperty(value="子菜单",name="childMenu")
     private List<Menu> childMenu;
 
-    @ApiModelProperty(value="关联的文章id",name="articleId")
-    private Long articleId;
-
-    @ApiModelProperty(value="关联的文章信息",name="article")
-    private Article article;
-
 
     public List<Menu> getChildMenu() {
         return childMenu;
@@ -147,22 +141,6 @@ public class Menu implements Serializable {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
     }
 
     public String getId() {

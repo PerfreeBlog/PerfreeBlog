@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.MenuMapper" >
     <insert id="add">
-        insert into p_menu (id, pid, name, url, icon,seq,type,target,status,articleId,createTime)
-        VALUES (#{id},#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status},#{articleId}, #{createTime})
+        insert into p_menu (id, pid, name, url, icon,seq,type,target,status,createTime)
+        VALUES (#{id},#{pid},#{name},#{url}, #{icon}, #{seq}, #{type}, #{target}, #{status}, #{createTime})
     </insert>
 
     <update id="update">
         update p_menu set
-        name = #{name},updateTime=#{updateTime},url=#{url},icon=#{icon},seq=#{seq},target=#{target},status=#{status},articleId=#{articleId}
+        name = #{name},updateTime=#{updateTime},url=#{url},icon=#{icon},seq=#{seq},target=#{target},status=#{status}
         where id = #{id}
     </update>
 
@@ -30,12 +30,6 @@
         </foreach>
     </delete>
 
-    <update id="delMenuArticleId">
-       update p_menu set
-        articleId=null
-        where articleId = #{articleId}
-    </update>
-
     <!-- 定义菜单树形结构 -->
     <resultMap id="MENU_TREE"
                type="com.perfree.model.Menu">
@@ -50,11 +44,6 @@
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
         <result column="target" property="target"></result>
-        <result column="articleId" property="articleId"></result>
-        <association property="article" select="getArticleById" javaType="com.perfree.model.Article" column="articleId">
-            <id property="title" column="title" />
-            <id property="id" column="articleId" />
-        </association>
         <collection property="childMenu"
                     select="getChildMenuByUserIdAndType" column="id=menuId,type=type,userId=userId"></collection>
     </resultMap>
@@ -96,11 +85,6 @@
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
         <result column="target" property="target"></result>
-        <result column="articleId" property="articleId"></result>
-        <association property="article" select="getArticleById" javaType="com.perfree.model.Article" column="articleId">
-            <id property="title" column="title" />
-            <id property="id" column="articleId" />
-        </association>
         <collection property="childMenu"
                     select="getChildMenuList" column="id"></collection>
     </resultMap>
@@ -135,11 +119,6 @@
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
         <result column="target" property="target"></result>
-        <result column="articleId" property="articleId"></result>
-        <association property="article" select="getArticleById" javaType="com.perfree.model.Article" column="articleId">
-            <id property="title" column="title" />
-            <id property="id" column="articleId" />
-        </association>
         <collection property="childMenu"
                     select="getProtalChildMenus" column="id"></collection>
     </resultMap>
@@ -160,9 +139,6 @@
         select * from p_menu where url= #{url}
     </select>
 
-    <select id="getRegisterMenu" resultType="com.perfree.model.Menu">
-        select * from p_menu where status= 0 and type = 0
-    </select>
     <select id="getAllAdminMenu" resultType="com.perfree.model.Menu">
       select * FROM p_menu  WHERE `type` = 1
     </select>

@@ -152,5 +152,6 @@ public interface ArticleService {
 
     void cacheCount(String articleId,String Ip);
 
-    Menu setMenuArticle (String pageName, Model model, HttpServletRequest request);
+    Article getBySlug(String slug, String articleType);
+
 }

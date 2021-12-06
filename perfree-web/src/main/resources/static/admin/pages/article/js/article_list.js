@@ -68,7 +68,7 @@ function queryTable() {
             {
                 field: 'title',
                 title: '文章标题',
-                minWidth: 260,
+                minWidth: 250,
                 templet: '<div><a class="articleHref" href="{{d.url}}" target="_blank">{{d.title}}</a></div>'
             },
             {field: 'category', title: '分类',  minWidth: 160,templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
@@ -142,7 +142,7 @@ function queryTable() {
                 templet: "<span>{{d.updateTime==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 140,
+                field: 'id', title: '操作', width: 150,
                 templet: function (d) {
                     let html = "<div>";
                     if (roleCode !== "contribute") {

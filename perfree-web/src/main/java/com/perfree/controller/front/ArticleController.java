@@ -1,13 +1,10 @@
 package com.perfree.controller.front;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
-import com.perfree.base.BaseController;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;
-    //缓存
-    private static final CacheManager cacheManager = CacheManager.newInstance();
 
     @RequestMapping("/articleList/{pageIndex}")
     public String articleListPage(@PathVariable("pageIndex") int pageIndex,Model model) {
@@ -30,38 +25,23 @@ public class ArticleController extends BaseController {
         return view(currentThemePage() + "/articleList.html");
     }
 
-    @RequestMapping("/article/{articleId}")
-    public String articlePage(@PathVariable("articleId") String articleId,Model model, HttpServletRequest request) {
-        if (articleId.contains("-")) {
-            String[] split = articleId.split("-");
-            articleId = split[0];
+    @RequestMapping("/article/{slug}")
+    public String articlePage(@PathVariable("slug") String slug,Model model, HttpServletRequest request) {
+        if (slug.contains("-")) {
+            String[] split = slug.split("-");
+            slug = split[0];
             model.addAttribute("commentIndex", split[1]);
         }
-        cacheCount(articleId, IpUtil.getIpAddr(request));
-        Article article = articleService.getById(articleId);
-        model.addAttribute("articleId", articleId);
-        model.addAttribute("article", article);
-        model.addAttribute(Constants.SEO_TITLE, article.getTitle());
-        model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
-        model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
-        return view(currentThemePage() + "/article.html");
-    }
-
-    /**
-     * 缓存访问量
-     * @param articleId articleId
-     * @param Ip Ip
-     */
-    public void cacheCount(String articleId,String Ip){
-        Article article = articleService.getById(articleId);
-        //查询缓存
-        Ehcache cache = cacheManager.getEhcache("articleHits");
-        Element element = cache.get(Ip+articleId+"_count");
-        if(element==null && article != null){
-            long count = article.getViewCount() == null?0:article.getViewCount();
-            count++;
-            cache.put(new Element(Ip+articleId+"_count",count));
-            articleService.articleViewCountAdd(article.getId());
+        Article article = articleService.getBySlug(slug, Constants.ARTICLE_TYPE_ARTICLE);
+        if (article != null) {
+            articleService.cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
+            model.addAttribute("articleId", article.getId());
+            model.addAttribute("article", article);
+            model.addAttribute(Constants.SEO_TITLE, article.getTitle());
+            model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
+            model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
         }
+        model.addAttribute("url", Constants.URL_ARTICLE + slug);
+        return view(currentThemePage() + "/article.html");
     }
 }

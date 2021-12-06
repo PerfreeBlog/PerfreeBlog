@@ -4,10 +4,7 @@ import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Constants;
-import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.Pager;
-import com.perfree.commons.RegisterRequestMapping;
-import com.perfree.controller.front.PageController;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.model.RoleMenu;
@@ -15,18 +12,10 @@ import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuItem;
 import com.perfree.permission.MenuManager;
 import com.perfree.service.MenuService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.util.ReflectionUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -99,10 +88,6 @@ public class MenuServiceImpl implements MenuService {
      * @return int
      */
     public int del(String[] idArr) {
-        for (String id : idArr) {
-            Menu byId = menuMapper.getById(id);
-            RegisterRequestMapping.unregisterRequestMapping(byId.getUrl());
-        }
         return menuMapper.del(idArr);
     }
 
@@ -124,70 +109,8 @@ public class MenuServiceImpl implements MenuService {
         return menuMapper.getProtalMenus();
     }
 
-    public void delMenuArticleId(String[] idArr) {
-        for (String id : idArr) {
-            menuMapper.delMenuArticleId(id);
-        }
-    }
-
     public Menu getMenuByUrl(String url) {
         return menuMapper.getMenuByUrl(url);
-    }
-
-    /**
-     * 注册所有的菜单url规则
-     */
-    public void registerMenuPage() {
-        List<Menu> menus = menuMapper.getRegisterMenu();
-        if (menus == null || menus.size() <= 0 ){
-            return;
-        }
-        List<String> patterns = new ArrayList<>();
-        List<String> patternsPageIndex = new ArrayList<>();
-        menus.forEach(r -> {
-            // 如果url不存在于系统已注册的路由规则内,则添加
-            if (RegisterRequestMapping.isUrlPattern(r.getUrl()) && !RegisterRequestMapping.urlIsRegister(r.getUrl())){
-                patterns.add(r.getUrl());
-                patternsPageIndex.add(RegisterRequestMapping.urlPageIndex(r.getUrl()));
-            }
-        });
-        String[] patternArr = new String[patterns.size()];
-        String[] patternPageIndexArr = new String[patternsPageIndex.size()];
-        Method method_name = ReflectionUtils.findMethod(PageController.class, "pages", HttpServletRequest.class,
-                HttpServletResponse.class, Model.class);
-        RegisterRequestMapping.registerRequestMapping(PageController.class,method_name, patterns.toArray(patternArr));
-
-        Method methodName = ReflectionUtils.findMethod(PageController.class, "pages", int.class,HttpServletRequest.class,
-                HttpServletResponse.class, Model.class);
-        RegisterRequestMapping.registerRequestMapping(PageController.class,methodName, patternsPageIndex.toArray(patternPageIndexArr));
-    }
-
-    /**
-     * 根据url注册RequestMapping
-     * @param url url
-     */
-    public void registerMenuPageByUrl(String url) {
-        if (!RegisterRequestMapping.isUrlPattern(url) || RegisterRequestMapping.urlIsRegister(url)){
-            return;
-        }
-        String themePath = "static/themes/" + OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
-        File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
-        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + url + ".html");
-
-        File pageFile = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  themePath + "/page.html");
-        File devPageFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + themePath + "/page.html");
-        if (!file.exists() && !devFile.exists() && !pageFile.exists() && !devPageFile.exists()) {
-            return;
-        }
-        String[] patternArr = {url};
-        String[] patternPageIndexArr = {RegisterRequestMapping.urlPageIndex(url)};
-        Method method_name = ReflectionUtils.findMethod(PageController.class, "pages", HttpServletRequest.class,
-                HttpServletResponse.class, Model.class);
-        RegisterRequestMapping.registerRequestMapping(PageController.class,method_name, patternArr);
-
-        Method methodName = ReflectionUtils.findMethod(PageController.class, "pages", int.class,HttpServletRequest.class,
-                HttpServletResponse.class, Model.class);
-        RegisterRequestMapping.registerRequestMapping(PageController.class,methodName, patternPageIndexArr);
     }
 
     /**

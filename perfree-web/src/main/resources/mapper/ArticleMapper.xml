@@ -47,6 +47,7 @@
         isComment = #{isComment},
         status = #{status},
         updateTime=#{updateTime},
+        slug=#{slug},
         `type`=#{type}
         where id = #{id}
     </update>
@@ -64,6 +65,12 @@
         update p_article set
             viewCount = viewCount+1
             where id = #{articleId}
+    </update>
+
+    <update id="updateSlug">
+        update p_article set
+            slug = #{slug}
+        where id = #{id}
     </update>
 
     <delete id="del">
@@ -94,6 +101,7 @@
         <result property="type" column="type"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
+        <result property="slug" column="slug"></result>
 
         <association property="user" javaType="com.perfree.model.User">
             <id property="id" column="userId" />
@@ -277,5 +285,9 @@
             t1.viewCount
         </if>
         desc
+    </select>
+    <select id="getBySlug" resultType="com.perfree.model.Article">
+        select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        where t1.slug = #{slug} and t1.type= #{type}
     </select>
 </mapper>

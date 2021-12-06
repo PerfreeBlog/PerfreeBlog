@@ -1,6 +1,7 @@
 package com.perfree.service.impl;
 
 import com.perfree.commons.Constants;
+import com.perfree.commons.IpUtil;
 import com.perfree.commons.MarkdownUtil;
 import com.perfree.commons.OptionCacheUtil;
 import com.perfree.mapper.ArticleMapper;
@@ -44,7 +45,7 @@ public class RssServicesImpl implements RssServices {
     public String genRss(){
         Date date = new Date();
         String rssGenMode = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_RSS_GEN_MODE, RSS_MODE_FULL);
-        String webSite = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, getUrl());
+        String webSite = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort));
         String rssNum = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_RSS_GEN_NUM, RSS_DEFAULT_NUM);
 
         Channel channel = new Channel("rss_2.0");
@@ -89,18 +90,5 @@ public class RssServicesImpl implements RssServices {
             logger.error("rss gen err : {}",ex.getMessage());
         }
         return "";
-    }
-
-    /**
-     * 获取当前服务的ip和端口
-     */
-    public String getUrl() {
-        InetAddress address = null;
-        try {
-            address = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return "http://" + address.getHostAddress() + ":" + serverPort;
     }
 }

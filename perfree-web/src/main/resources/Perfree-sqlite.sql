@@ -5,6 +5,7 @@ CREATE TABLE "p_article" (
                              "content" text,
                              "type" text(32),
                              "summary" text(1024),
+                             "slug" text(128),
                              "categoryId" integer,
                              "metaKeywords" text(512),
                              "metaDescription" text(512),
@@ -84,7 +85,6 @@ CREATE TABLE "p_menu" (
               "seq" integer,
               "type" integer NOT NULL,
               "target" integer,
-              "articleId" integer,
               "status" integer NOT NULL,
               "createTime" DATETIME NOT NULL,
               "updateTime" DATETIME,
@@ -154,12 +154,12 @@ INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (3, 'WEB_COMMENT_IS_REVIEW',
 INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (1, '管理员', '网站管理员', 'admin', '1608819123890', NULL);
 INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (2, '用户', '网站用户', 'user', '1608819123890', NULL);
 
-INSERT INTO `p_menu`(`id`,`pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES ('47d098465f85488898428369b90dd0d3','-1',  '归档', '/archive', 'fa-calendar', 1, 0, 0, NULL, 0, '1608819123890', '1608819123890');
-INSERT INTO `p_menu`(`id`,`pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `articleId`, `status`, `createTime`, `updateTime`) VALUES ('7484645890c546d0bba46b67a553452e','-1', '友链', '/link', 'fa-user-o', 2, 0, 0, 2, 0, '1608819123890', '1608819123890');
+INSERT INTO `p_menu`(`id`,`pid`, `name`, `url`, `icon`, `seq`, `type`, `target`,`status`, `createTime`, `updateTime`) VALUES ('47d098465f85488898428369b90dd0d3','-1',  '归档', '/archive', 'fa-calendar', 1, 0, 0, 0, '1608819123890', '1608819123890');
+INSERT INTO `p_menu`(`id`,`pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES ('7484645890c546d0bba46b67a553452e','-1', '友链', '/page/link', 'fa-user-o', 2, 0, 0, 0, '1608819123890', '1608819123890');
 
 
-INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, datetime('now'), datetime('now'));
-INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `createTime`, `updateTime`) VALUES (2, '友链', '友链', 'page', '', NULL, '', '', '', 0, 0, 1, 1, 1, 1, datetime('now'), datetime('now'));
+INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `slug`,`createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, '1',datetime('now'), datetime('now'));
+INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `slug`,`createTime`, `updateTime`) VALUES (2, '友链', '友链', 'page', '', NULL, '', '', '', 0, 0, 1, 1, 1, 1, 'link',datetime('now'), datetime('now'));
 INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (3, '文章编辑', '文章编辑', 'editor', '2021-09-15 13:59:43', NULL);
 INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (4, '文章贡献', '文章贡献', 'contribute', '2021-09-15 14:00:21', NULL);
 UPDATE `p_role` SET `name` = '普通用户', `description` = '网站用户', `code` = 'user', `createTime` = '2020-12-17 13:11:50', `updateTime` = NULL WHERE `id` = 2;

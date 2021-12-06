@@ -62,6 +62,10 @@ public class ArticleServiceImpl implements ArticleService {
         if (article.getCategoryId() != null) {
             categoryService.addCount(article.getCategoryId());
         }
+        if(StringUtils.isBlank(article.getSlug())) {
+            article.setSlug(article.getId().toString());
+        }
+        articleMapper.updateSlug(article);
         return result;
     }
 
@@ -331,22 +335,9 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-    /**
-     * @description  给自定菜单设置页面文章
-     * @return com.perfree.model.Menu
-     * @author Perfree
-     */
-    public Menu setMenuArticle (String pageName, Model model, HttpServletRequest request){
-        Menu menu = menuService.getMenuByUrl(pageName );
-        if (menu != null && menu.getArticleId() != null) {
-            Article article = getById(menu.getArticleId().toString());
-            cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
-            model.addAttribute("article", article);
-            model.addAttribute(Constants.SEO_TITLE, article.getTitle());
-            model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
-            model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
-        }
-        return menu;
+    @Override
+    public Article getBySlug(String slug, String articleType) {
+        return articleMapper.getBySlug(slug, articleType);
     }
 
 

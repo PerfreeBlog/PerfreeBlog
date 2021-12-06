@@ -50,6 +50,7 @@
             #else
                 <div class="no-comment">说点什么吧?</div>
             #end
+
         </div>
     </div>
 
@@ -71,11 +72,11 @@
             <input type="hidden" name="pid" id="pid">
             <input type="hidden" name="topPid" id="topPid">
             <input type="hidden" name="articleId" value="#(article.id??)" id="articleId">
+            <input type="hidden" name="url" value="#(article.url??)" id="url">
             <div class="p-form-item">
                 <button class="p-submit-comment" type="submit" id="submitComment">提交评论</button>
             </div>
         </form>
     </div>
-
     #pageRender(commentPage, anchor="#commentList",preText="上一页",nextText="下一页")
 #end

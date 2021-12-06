@@ -85,7 +85,6 @@ public class PostAppRunner implements ApplicationRunner {
             List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
             menuService.initSystemMenu(adminMenuGroups);
             initPlugins();
-            menuService.registerMenuPage();
         }
     }
 

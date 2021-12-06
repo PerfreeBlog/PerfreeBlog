@@ -67,10 +67,10 @@ function queryTable() {
             {
                 field: 'title',
                 title: '标题',
-                minWidth: 260,
+                minWidth: 220,
                 templet: '<div><a class="articleHref" href="{{d.url}}" target="_blank">{{d.title}}</a></div>'
             },
-            {field: 'category', title: '分类',  minWidth: 160,templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
+            {field: 'category', title: '分类',  minWidth: 130,templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
             {
                 field: 'status',  minWidth: 100, title: '状态', templet: function (d) {
                     let html = '<span>';
@@ -85,7 +85,7 @@ function queryTable() {
                 }
             },
             {
-                field: 'isComment',  minWidth: 100, title: '允许评论', templet: function (d) {
+                field: 'isComment',  minWidth: 80, title: '允许评论', templet: function (d) {
                     let html;
                     if (d.isComment === 1) {
                         html = "<input type='checkbox' name='isComment' lay-filter='isComment' lay-skin='switch' value='" + d.id + "' lay-text='允许|不允许' checked>";
@@ -95,6 +95,7 @@ function queryTable() {
                     return html;
                 }
             },
+            {field: 'url',  minWidth: 100, title: '访问地址', templet: "<div><a href='{{d.url}}' class='articleHref' target='_blank'>{{d.url}}</a></div>"},
             {field: 'user',  minWidth: 80, title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
             {
                 field: 'createTime',
@@ -111,7 +112,7 @@ function queryTable() {
                 templet: "<span>{{d.updateTime ==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 140,
+                field: 'id', title: '操作', width: 150,
                 templet: function (d) {
                     let html = "<div>";
                     if (d.status === 1) {

@@ -57,6 +57,13 @@
                         </div>
                     </div>
                     <div class="layui-card-body">
+
+                        <div class="layui-form-item">
+                            <span class="p-form-tip">访问地址别名:</span>
+                            <input type="text" name="slug" id="slug" value="#(article.slug??)" onchange="updatePageUrl()" placeholder="请输入别名,为空则采用ID作为别名" autocomplete="off" class="layui-input">
+                            <div style="color: #5e6062;">#(website)/page/<span id="pageUrl">#(article.slug??)</span></div>
+                        </div>
+
                         <div class="layui-form-item">
                             <span class="p-form-tip">分类:</span>
                             <div id="category"></div>

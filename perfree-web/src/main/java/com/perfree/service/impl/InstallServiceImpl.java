@@ -124,7 +124,6 @@ public class InstallServiceImpl implements InstallService {
         optionService.initOptionCache();
         List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
         menuService.initSystemMenu(adminMenuGroups);
-        menuService.registerMenuPage();
         try{
             pluginManagerService.initPlugins();
         }catch (Exception e) {

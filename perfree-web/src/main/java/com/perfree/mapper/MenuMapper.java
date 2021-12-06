@@ -79,11 +79,7 @@ public interface MenuMapper {
      */
     int changeStatus(Menu menu);
 
-    void delMenuArticleId(String articleId);
-
     Menu getMenuByUrl(String url);
-
-    List<Menu> getRegisterMenu();
 
     void addRoleMenuByRoleCode(RoleMenu roleMenu);
 

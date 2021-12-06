@@ -74,6 +74,11 @@ public class BaseController {
      * @return String
      */
     public String view(String viewPath) {
+        File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
+        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
+        if (!file.exists() && !devFile.exists()) {
+            return "static/admin/pages/exception/page.html";
+        }
         return viewPath;
     }
 
@@ -81,16 +86,15 @@ public class BaseController {
      * 渲染page
      * @return String
      */
-    public String pageView(String viewPath, Menu menu ) {
-        File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  viewPath);
-        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
+    public String pageView(String viewPath) {
+        File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + currentTheme()
+                + Constants.SEPARATOR +  viewPath);
+        File devFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme()
+                + Constants.SEPARATOR + viewPath);
         if (!file.exists() && !devFile.exists()) {
-            if (menu != null){
-                return universalPage();
-            }
-            return "redirect:/404";
+            return universalPage();
         }
-        return viewPath;
+        return view(currentThemePage() + Constants.SEPARATOR + viewPath);
     }
 
     /**
@@ -98,8 +102,8 @@ public class BaseController {
      * @return String
      */
     public String universalPage(){
-        File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR +  currentThemePage() + "/page.html");
-        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + currentThemePage() + "/page.html");
+        File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR +  currentTheme() + "/page.html");
+        File devFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme() + "/page.html");
         if (!file.exists() && !devFile.exists()) {
             return view("static/admin/pages/exception/page.html");
         }

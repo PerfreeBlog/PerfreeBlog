@@ -15,3 +15,8 @@ ALTER TABLE `p_role_menu` MODIFY COLUMN `menuId` varchar(64) NOT NULL COMMENT 'è
 --PerfreeBlog
 --v1.3.2;
 ALTER TABLE `p_option` MODIFY COLUMN `value` text NULL COMMENT 'value';
+--PerfreeBlog
+--v2.0.0;
+ALTER TABLE `p_article` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug';
+ALTER TABLE `p_menu` DROP COLUMN `articleId`;
+UPDATE p_article set slug = id where slug is null;
