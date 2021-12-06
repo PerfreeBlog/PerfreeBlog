@@ -7,8 +7,8 @@
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <META HTTP-EQUIV="expires" CONTENT="0">
     <title>#(SEO_TITLE ?? WEB_TITLE ?? '未设置')</title>
-    <meta name="keywords" content="#(SEO_KEYWORD ??)">
-    <meta name="description" content="#(SEO_DESC ??)">
+    <meta name="keywords" content="#(SEO_KEYWORD ?? WEB_META_KEYWORD)">
+    <meta name="description" content="#(SEO_DESC ?? WEB_META_DESC)">
     <link rel="Shortcut Icon" href="#option('WEB_LOGO','/static/public/images/favicon.ico')" type="image/x-icon"/>
     <link href="/static/themes/simple/static/css/style.css?v=#(version)" rel="stylesheet">
     <link href="//cdn.jsdelivr.net/npm/highlight.js@11.3.1/styles/github.css" rel="stylesheet">

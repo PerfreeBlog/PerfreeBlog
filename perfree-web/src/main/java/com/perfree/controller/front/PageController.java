@@ -5,6 +5,7 @@ import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,9 +41,9 @@ public class PageController extends BaseController {
         if (article != null) {
             articleService.cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
             model.addAttribute("article", article);
-            model.addAttribute(Constants.SEO_TITLE, article.getTitle());
-            model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
-            model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
+            model.addAttribute(Constants.SEO_TITLE, StringUtils.isBlank(article.getTitle()) ? null : article.getTitle().trim());
+            model.addAttribute(Constants.SEO_KEYWORD, StringUtils.isBlank(article.getMetaKeywords()) ? null : article.getMetaKeywords().trim());
+            model.addAttribute(Constants.SEO_DESC, StringUtils.isBlank(article.getMetaDescription()) ? null : article.getMetaDescription().trim());
         }
         model.addAttribute("url", Constants.URL_PAGE + slug);
         return pageView(Constants.ARTICLE_TYPE_PAGE + Constants.SEPARATOR +  slug + ".html");
@@ -65,9 +66,9 @@ public class PageController extends BaseController {
         if (article != null) {
             articleService.cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
             model.addAttribute("article", article);
-            model.addAttribute(Constants.SEO_TITLE, article.getTitle());
-            model.addAttribute(Constants.SEO_KEYWORD, article.getMetaKeywords());
-            model.addAttribute(Constants.SEO_DESC, article.getMetaDescription());
+            model.addAttribute(Constants.SEO_TITLE, StringUtils.isBlank(article.getTitle()) ? null : article.getTitle().trim());
+            model.addAttribute(Constants.SEO_KEYWORD, StringUtils.isBlank(article.getMetaKeywords()) ? null : article.getMetaKeywords().trim());
+            model.addAttribute(Constants.SEO_DESC, StringUtils.isBlank(article.getMetaDescription()) ? null : article.getMetaDescription().trim());
         }
         model.addAttribute("url", Constants.URL_PAGE + slug);
         model.addAttribute("pageIndex", pageIndex);

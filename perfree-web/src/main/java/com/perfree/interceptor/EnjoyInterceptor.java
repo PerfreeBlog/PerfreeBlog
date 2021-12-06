@@ -5,6 +5,7 @@ import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
@@ -29,9 +30,12 @@ public class EnjoyInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (modelAndView != null) {
             Map<String, Object> model = modelAndView.getModel();
-            model.putIfAbsent(Constants.OPTION_WEB_TITLE, OptionCacheUtil.getValue(Constants.OPTION_WEB_TITLE));
-            model.putIfAbsent(Constants.OPTION_WEB_META_KEYWORD, OptionCacheUtil.getValue(Constants.OPTION_WEB_META_KEYWORD));
-            model.putIfAbsent(Constants.OPTION_WEB_META_DESC, OptionCacheUtil.getValue(Constants.OPTION_WEB_META_DESC));
+            String webTitle = OptionCacheUtil.getValue(Constants.OPTION_WEB_TITLE);
+            String webKeyWord = OptionCacheUtil.getValue(Constants.OPTION_WEB_META_KEYWORD);
+            String webDesc = OptionCacheUtil.getValue(Constants.OPTION_WEB_META_DESC);
+            model.putIfAbsent(Constants.OPTION_WEB_TITLE, StringUtils.isBlank(webTitle) ? null : webTitle.trim());
+            model.putIfAbsent(Constants.OPTION_WEB_META_KEYWORD, StringUtils.isBlank(webKeyWord) ? null : webKeyWord.trim());
+            model.putIfAbsent(Constants.OPTION_WEB_META_DESC, StringUtils.isBlank(webDesc) ? null : webDesc.trim());
             setUser(model);
         }
     }
