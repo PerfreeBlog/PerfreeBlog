@@ -19,9 +19,9 @@
         </div>
         <article class="a-article-content" id="article-content">
             #if(article.thumbnail != null && article.thumbnail != "")
-            <div class="a-article-img-box">
-                <div class="a-article-img" style="background-image: url('#(article.thumbnail)');"></div>
-            </div>
+                <div class="a-article-img-box">
+                    <div class="a-article-img" style="background-image: url('#(article.thumbnail)');"></div>
+                </div>
             #end
             <div class="a-article-content-detail" id="a-article-content-detail"> #mdToHtml(article.content ??)</div>
         </article>
