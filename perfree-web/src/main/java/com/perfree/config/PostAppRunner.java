@@ -8,7 +8,6 @@ import com.jfinal.template.Directive;
 import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.SpringBeanUtils;
-import com.perfree.controller.WebSocketServer;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
@@ -75,7 +74,6 @@ public class PostAppRunner implements ApplicationRunner {
             DynamicDataSource.setDataSource(dataSource,dbSetting.getStr("type"));
         }
         dbSetting.autoLoad(true);
-        updateDetect();
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null) {
             if (dbSetting.getStr("dataVersion") == null || !dbSetting.getStr("dataVersion").equals(version)) {
@@ -85,23 +83,6 @@ public class PostAppRunner implements ApplicationRunner {
             List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
             menuService.initSystemMenu(adminMenuGroups);
             initPlugins();
-        }
-    }
-
-    /**
-     * @description 如果是系统更新升级的,通知更新成功
-     * @author Perfree
-     * @date 2021/11/2 8:35
-     */
-    private void updateDetect() {
-        File updateTemp = new File("update.txt");
-        if (updateTemp.exists()) {
-            WebSocketServer.updateState = Constants.WEBSOCKET_TYPE_UPDATE;
-            FileUtil.del(updateTemp.getAbsoluteFile());
-        }
-        File update = new File("update");
-        if (update.exists()) {
-            FileUtil.del(update.getAbsoluteFile());
         }
     }
 

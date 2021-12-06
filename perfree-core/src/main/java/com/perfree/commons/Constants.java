@@ -2,7 +2,7 @@ package com.perfree.commons;
 
 /**
  * 定义常量
- * @author Perfrees
+ * @author Perfree
  */
 public class Constants {
 
@@ -109,12 +109,6 @@ public class Constants {
     public  static final String LOGIN_USER = "loginUser";
 
     public  static final int ARTICLE_STATUS_AUDIT = 2;
-
-    public  static final int WEBSOCKET_TYPE_UPDATE = 1;
-
-    public  static final int WEBSOCKET_UPDATE_TYPE_NORMAL = 1;
-
-    public  static final int WEBSOCKET_UPDATE_TYPE_ERROR = 2;
 
     public  static final int MENU_TARGET_BLANK = 1;
 
