@@ -286,7 +286,7 @@
         </if>
         desc
     </select>
-    <select id="getBySlug" resultType="com.perfree.model.Article">
+    <select id="getBySlug" resultMap="LIST_RESULT">
         select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         where t1.slug = #{slug} and t1.type= #{type}
     </select>
