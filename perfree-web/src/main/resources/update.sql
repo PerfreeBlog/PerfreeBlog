@@ -20,3 +20,4 @@ ALTER TABLE `p_option` MODIFY COLUMN `value` text NULL COMMENT 'value';
 ALTER TABLE `p_article` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug';
 ALTER TABLE `p_menu` DROP COLUMN `articleId`;
 UPDATE p_article set slug = id where slug is null;
+ALTER TABLE `p_article` ADD INDEX `slug`(`slug`), ADD INDEX `type`(`type`), ADD INDEX `categoryId`(`categoryId`), ADD INDEX `commentCount`(`commentCount`), ADD INDEX `viewCount`(`viewCount`);
