@@ -6,7 +6,7 @@ import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
 import com.perfree.commons.OptionCacheUtil;
-import com.perfree.shared.OptionShared;
+import com.perfree.shared.TplMethodShared;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +19,6 @@ import org.springframework.context.annotation.Configuration;
 public class EnjoyConfig {
     @Value("${version}")
     private String version;
-
-    @Value("${server.port}")
-    private int serverPort;
 
     public static JFinalViewResolver jfr = null;
 
@@ -38,9 +35,8 @@ public class EnjoyConfig {
         engine.setCompressorOn('\n');
         Engine.setFastMode(true);
         Engine.setChineseExpression(true);
-        engine.addSharedMethod(new OptionShared());
-        engine.addSharedObject("version", version);
-        engine.addSharedObject("website", OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort)));
+        engine.addSharedMethod(new TplMethodShared());
+        engine.addSharedObject(Constants.VERSION, version);
         return jfr;
     }
 }

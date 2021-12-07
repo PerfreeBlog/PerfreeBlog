@@ -1,6 +1,7 @@
 package com.perfree.interceptor;
 
 import com.perfree.commons.Constants;
+import com.perfree.commons.IpUtil;
 import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.model.User;
@@ -12,6 +13,8 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,7 +22,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
+@Component
 public class EnjoyInterceptor implements HandlerInterceptor {
+
+    @Value("${server.port}")
+    private int serverPort;
+
     private final Logger logger = LoggerFactory.getLogger(EnjoyInterceptor.class);
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -36,6 +44,7 @@ public class EnjoyInterceptor implements HandlerInterceptor {
             model.putIfAbsent(Constants.OPTION_WEB_TITLE, StringUtils.isBlank(webTitle) ? null : webTitle.trim());
             model.putIfAbsent(Constants.OPTION_WEB_META_KEYWORD, StringUtils.isBlank(webKeyWord) ? null : webKeyWord.trim());
             model.putIfAbsent(Constants.OPTION_WEB_META_DESC, StringUtils.isBlank(webDesc) ? null : webDesc.trim());
+            model.putIfAbsent(Constants.WEB_SITE, OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort)));
             setUser(model);
         }
     }

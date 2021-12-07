@@ -163,4 +163,8 @@ public class Constants {
     public static final String WEB_AUTO_GEN_SUMMARY_FALSE = "0";
 
     public static final String URL_PAGE = "/page/";
+
+    public static final String WEB_SITE = "WEB_SITE";
+
+    public static final String VERSION = "version";
 }

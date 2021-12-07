@@ -5,6 +5,7 @@ import com.perfree.interceptor.EnjoyInterceptor;
 import com.perfree.interceptor.HtmlInterceptor;
 import com.perfree.plugin.resources.PluginResourceResolver;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
@@ -67,7 +68,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/static/**"
                 );
 
-        registry.addInterceptor(new EnjoyInterceptor()).addPathPatterns("/**")
+        registry.addInterceptor(createEnjoyInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns(
                         "/install",
                         "/install/step2",
@@ -75,5 +76,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 );
     }
 
+
+    @Bean
+    public EnjoyInterceptor createEnjoyInterceptor(){
+        return new EnjoyInterceptor();
+    }
 
 }

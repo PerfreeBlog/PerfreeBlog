@@ -14,7 +14,6 @@ import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
-import com.perfree.service.PluginService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,13 +42,11 @@ public class PostAppRunner implements ApplicationRunner {
 
     private final OptionService optionService;
     private final MenuService menuService;
-    private final PluginService pluginService;
     private final PluginManagerService pluginManagerService;
 
-    public PostAppRunner(PluginManagerService pluginManagerService,OptionService optionService, MenuService menuService, PluginService pluginService) {
+    public PostAppRunner(PluginManagerService pluginManagerService,OptionService optionService, MenuService menuService) {
         this.optionService = optionService;
         this.menuService = menuService;
-        this.pluginService = pluginService;
         this.pluginManagerService = pluginManagerService;
     }
 
