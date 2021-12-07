@@ -19,6 +19,8 @@
         <association property="article" javaType="com.perfree.model.Article">
             <id property="id" column="articleId" />
             <result property="title" column="title"/>
+            <result property="slug" column="slug"/>
+            <result property="type" column="type"/>
         </association>
     </resultMap>
 
@@ -46,7 +48,7 @@
     </delete>
 
     <select id="getList" resultMap="LIST_RESULT">
-        select t1.*,t3.title from p_comment t1
+        select t1.*,t3.title,t3.slug,t3.type from p_comment t1
         left join p_article t3 on t1.articleId = t3.id
         where 1 = 1
         <if test="content != null and content != ''">
@@ -80,6 +82,12 @@
         <result property="website" column="website"></result>
         <result property="email" column="email"></result>
         <result property="userName" column="userName"></result>
+        <association property="article" javaType="com.perfree.model.Article">
+            <id property="id" column="articleId" />
+            <result property="title" column="title"/>
+            <result property="slug" column="slug"/>
+            <result property="type" column="type"/>
+        </association>
         <association select="getParentCommentByPid" property="parent" column="pid"></association>
         <collection select="getChildComment" property="child" column="id"></collection>
     </resultMap>
@@ -101,13 +109,15 @@
     </resultMap>
 
     <select id="getCommentByArticleId" resultMap="COMMENT_RESULT">
-        select t1.* from p_comment t1
+        select t1.*,t3.title,t3.slug,t3.type from p_comment t1
+            left join p_article t3 on t1.articleId = t3.id
         where t1.articleId = #{articleId} and t1.status = 0 and topPid = -1
         order by t1.createTime desc
     </select>
 
     <select id="getChildComment" resultMap="COMMENT_RESULT">
-        select t1.* from p_comment t1
+        select t1.*,t3.title,t3.slug,t3.type from p_comment t1
+        left join p_article t3 on t1.articleId = t3.id
         where t1.topPid = #{id} and t1.status = 0
         order by t1.createTime asc
     </select>
@@ -119,14 +129,17 @@
     </select>
 
     <select id="getRecentComment" resultMap="COMMENT_RESULT">
-        SELECT t1.* FROM p_comment t1 ORDER BY createTime DESC limit 0,#{count}
+        SELECT t1.*,t3.title,t3.slug,t3.type FROM p_comment t1
+        left join p_article t3 on t1.articleId = t3.id
+        ORDER BY t1.createTime DESC limit 0,#{count}
     </select>
     <select id="getById" resultType="com.perfree.model.Comment">
         select t1.* from p_comment t1 where t1.id = #{id}
     </select>
 
     <select id="getApiCommentByArticleId" resultMap="COMMENT_RESULT">
-        select t1.* from p_comment t1
+        select t1.*,t3.title,t3.slug,t3.type from p_comment t1
+        left join p_article t3 on t1.articleId = t3.id
         where t1.articleId = #{articleId} and t1.status = 0 and topPid = -1
         order by t1.createTime desc
     </select>
