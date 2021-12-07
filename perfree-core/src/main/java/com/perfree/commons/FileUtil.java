@@ -1,5 +1,6 @@
 package com.perfree.commons;
 
+import cn.hutool.core.io.resource.ClassPathResource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -101,6 +102,20 @@ public class FileUtil {
                 }
                 file.delete();
             }
+        }
+    }
+
+    /**
+     * @description  根据路径获取classpath文件
+     * @param path path
+     * @return java.io.File
+     * @author Perfree
+     */
+    public static File getClassPathFile(String path) {
+        try{
+            return new ClassPathResource(path).getFile();
+        }catch (Exception e) {
+            return null;
         }
     }
 }

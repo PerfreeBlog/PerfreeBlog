@@ -1,6 +1,7 @@
 package com.perfree.base;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.commons.Constants;
@@ -75,8 +76,8 @@ public class BaseController {
      */
     public String view(String viewPath) {
         File file = new File(Constants.PROD_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
-        File devFile = new File(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
-        if (!file.exists() && !devFile.exists()) {
+        File devFile = com.perfree.commons.FileUtil.getClassPathFile(Constants.DEV_RESOURCES_PATH + Constants.SEPARATOR + viewPath);
+        if (!file.exists() && (devFile == null || !devFile.exists())) {
             return "static/admin/pages/exception/page.html";
         }
         return viewPath;
@@ -89,9 +90,9 @@ public class BaseController {
     public String pageView(String viewPath) {
         File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + currentTheme()
                 + Constants.SEPARATOR +  viewPath);
-        File devFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme()
+        File devFile = com.perfree.commons.FileUtil.getClassPathFile(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme()
                 + Constants.SEPARATOR + viewPath);
-        if (!file.exists() && !devFile.exists()) {
+        if (!file.exists() && (devFile == null || !devFile.exists())) {
             return universalPage();
         }
         return view(currentThemePage() + Constants.SEPARATOR + viewPath);
@@ -103,8 +104,9 @@ public class BaseController {
      */
     public String universalPage(){
         File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR +  currentTheme() + "/page.html");
-        File devFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme() + "/page.html");
-        if (!file.exists() && !devFile.exists()) {
+        File devFile = com.perfree.commons.FileUtil.getClassPathFile(Constants.DEV_THEMES_PATH +
+                Constants.SEPARATOR + currentTheme() + "/page.html");
+        if (!file.exists() && (devFile == null || !devFile.exists())) {
             return view("static/admin/pages/exception/page.html");
         }
         return currentThemePage() + "/page.html";
@@ -119,8 +121,9 @@ public class BaseController {
      */
     public String view(String validPath, String themeViewPath, String adminViewPath) {
         File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + currentTheme() + validPath);
-        File devFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme() + validPath);
-        if (file.exists() || devFile.exists()) {
+        File devFile = com.perfree.commons.FileUtil.getClassPathFile(Constants.DEV_THEMES_PATH +
+                Constants.SEPARATOR + currentTheme() + validPath);
+        if (file.exists() || (devFile != null && devFile.exists())) {
             return view("static/themes/" + currentTheme() + themeViewPath);
         } else {
             return view(adminViewPath);

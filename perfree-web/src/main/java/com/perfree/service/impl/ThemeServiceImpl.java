@@ -1,5 +1,6 @@
 package com.perfree.service.impl;
 
+import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.setting.dialect.Props;
@@ -33,7 +34,7 @@ public class ThemeServiceImpl implements ThemeService {
      */
     public List<Theme> getAllTheme(){
         List<Theme> list = new ArrayList<>();
-        File[] files = ArrayUtils.addAll(getThemeList(Constants.PROD_THEMES_PATH), getThemeList(Constants.DEV_THEMES_PATH));
+        File[] files = ArrayUtils.addAll(getThemeList(Constants.PROD_THEMES_PATH), getClassPathThemeList(Constants.DEV_THEMES_PATH));
         if (files == null) {
             return null;
         }
@@ -70,6 +71,19 @@ public class ThemeServiceImpl implements ThemeService {
             return null;
         }
         return file.listFiles();
+    }
+
+    /**
+     * 根据目录读取ClassPath文件列表
+     * @param path 路径
+     * @return  File[]
+     */
+    private File[] getClassPathThemeList(String path) {
+        try{
+            return new ClassPathResource(path).getFile().listFiles();
+        }catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -130,12 +144,12 @@ public class ThemeServiceImpl implements ThemeService {
 
     private File getThemeDir(String path) {
         File prodThemeFile = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + path);
-        File devThemeFile = new File(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + path);
+        File devThemeFile = FileUtil.getClassPathFile(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + path);
         File themeFile = null;
         if (prodThemeFile.exists()) {
             themeFile = prodThemeFile;
         } else {
-            if (devThemeFile.exists()) {
+            if (devThemeFile != null && devThemeFile.exists()) {
                 themeFile = devThemeFile;
             }
         }

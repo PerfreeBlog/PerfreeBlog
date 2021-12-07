@@ -70,13 +70,13 @@ public class Constants {
     public static final String PROD_RESOURCES_PATH = "resources";
 
     /** 开发资源路径 */
-    public static final String DEV_RESOURCES_PATH = "perfree-web/src/main/resources";
+    public static final String DEV_RESOURCES_PATH = "classpath:";
 
     /** 生产主题路径 */
     public static final String PROD_THEMES_PATH = "resources/static/themes";
 
     /** 开发主题路径 */
-    public static final String DEV_THEMES_PATH = "perfree-web/src/main/resources/static/themes";
+    public static final String DEV_THEMES_PATH = "classpath:static/themes";
 
     /** 插件目录 */
     public static final String PLUGIN_PATH = "resources/plugins";
