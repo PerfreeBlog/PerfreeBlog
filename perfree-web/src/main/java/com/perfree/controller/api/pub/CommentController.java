@@ -23,9 +23,9 @@ public class CommentController extends BaseApiController {
     @PostMapping("/getCommentByArticleId")
     @ApiOperation(value = "根据文章ID获取评论分页列表", notes = "根据文章ID获取评论分页列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "articleId", value = "文章id", dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
+            @ApiImplicitParam(name = "articleId", value = "文章id", dataTypeClass = Integer.class, paramType = "query"),
     })
     public Pager<Comment> getCommentByArticleId(@ApiIgnore Pager<Comment> pager, @ApiIgnore Long articleId) {
         pager.setForm(new Comment());

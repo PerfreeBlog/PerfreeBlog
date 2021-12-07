@@ -33,9 +33,9 @@ public class ArticleController extends BaseApiController {
     @GetMapping("/list")
     @ApiOperation(value = "文章分页数据", notes = "获取文章分页数据(根据发布时间排序,置顶文章优先级会提高),可根据文章标题title模糊查询")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", required = true),
-        @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", required = true),
-        @ApiImplicitParam(name = "title", value = "文章标题", dataType = "string", paramType = "query"),
+        @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", required = true),
+        @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
+        @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query"),
     })
     public Pager<Article> list(@ApiIgnore Pager<Article> pager, @ApiIgnore String title){
         pager.setForm(new Article());
@@ -47,9 +47,9 @@ public class ArticleController extends BaseApiController {
     @GetMapping("/getHotListByView")
     @ApiOperation(value = "最热文章分页数据(阅读量排序)", notes = "获取最热文章分页数据(根据阅读量排序)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", example = "1", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", example = "30", required = true),
-            @ApiImplicitParam(name = "title", value = "文章标题", dataType = "string", paramType = "query", example = "测试"),
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", example = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", example = "30", required = true),
+            @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query", example = "测试"),
     })
     public Pager<Article> getHotListByView(@ApiIgnore Pager<Article> pager, @ApiIgnore String title){
         pager.setForm(new Article());
@@ -60,9 +60,9 @@ public class ArticleController extends BaseApiController {
     @GetMapping("/getHotListByComment")
     @ApiOperation(value = "最热文章分页数据(评论排序)", notes = "获取最热文章分页数据(根据评论量排序)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", example = "1", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", example = "30", required = true),
-            @ApiImplicitParam(name = "title", value = "文章标题", dataType = "string", paramType = "query", example = "测试"),
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", example = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", example = "30", required = true),
+            @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query", example = "测试"),
     })
     public Pager<Article> getHotListByComment(@ApiIgnore Pager<Article> pager, @ApiIgnore String title){
         pager.setForm(new Article());
@@ -87,8 +87,8 @@ public class ArticleController extends BaseApiController {
     @GetMapping("/getArchive")
     @ApiOperation(value = "获取文章归档分页数据", notes = "获取文章归档分页数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", example = "1", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", example = "30", required = true),
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", example = "1", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", example = "30", required = true),
     })
     public Pager<Archive> getArchive(@ApiIgnore Pager<Archive> pager){
         return articleService.getApiArchive(pager);

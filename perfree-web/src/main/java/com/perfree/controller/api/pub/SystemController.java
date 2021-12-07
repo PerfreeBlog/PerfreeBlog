@@ -50,8 +50,8 @@ public class SystemController {
     @PostMapping("/doLogin")
     @ResponseBody
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "account", value = "账户",dataType = "string",  required = true),
-            @ApiImplicitParam(name = "password", value = "密码",dataType = "string",  required = true)
+            @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
+            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class,  required = true)
     })
     public ResponseBean doLogin(String account, String password) {
         try {
@@ -96,10 +96,10 @@ public class SystemController {
     @ResponseBody
     @ApiOperation(value = "注册", notes = "注册")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "account", value = "账户",dataType = "string",  required = true),
-            @ApiImplicitParam(name = "password", value = "密码",dataType = "string",  required = true),
-            @ApiImplicitParam(name = "userName", value = "昵称/用户名",dataType = "string",  required = true),
-            @ApiImplicitParam(name = "email", value = "邮箱",dataType = "string",  required = true)
+            @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
+            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class,  required = true),
+            @ApiImplicitParam(name = "userName", value = "昵称/用户名", dataTypeClass = String.class,  required = true),
+            @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class,  required = true)
     })
     public ResponseBean doRegister(@ApiIgnore @Valid User user,@ApiIgnore  HttpSession session) {
         Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);

@@ -42,9 +42,9 @@ public class UserController extends BaseApiController {
     @GetMapping("/getList")
     @ApiOperation(value = "用户分页数据", notes = "用户分页数据,可根据用户名模糊查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "name", value = "用户名", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
+            @ApiImplicitParam(name = "name", value = "用户名", dataTypeClass = String.class, paramType = "query"),
     })
     public Pager<User> getList(@ApiIgnore Pager<User> pager, @ApiIgnore String name) {
         pager.setForm(new User());

@@ -49,13 +49,13 @@ public class CommentController extends BaseApiController {
     @PostMapping("/submitComment")
     @ApiOperation(value = "提交评论内容", notes = "提交评论内容(如未登录或没有token,则用户名/邮箱为必填)")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "content", value = "评论内容", dataType = "String", required = true),
-            @ApiImplicitParam(name = "articleId", value = "文章id", dataType = "Integer"),
-            @ApiImplicitParam(name = "pid", value = "父级评论id", dataType = "Integer"),
-            @ApiImplicitParam(name = "topPid", value = "顶级评论ID", dataType = "Integer"),
-            @ApiImplicitParam(name = "userName", value = "用户名", dataType = "String"),
-            @ApiImplicitParam(name = "website", value = "网址", dataType = "String"),
-            @ApiImplicitParam(name = "email", value = "邮箱", dataType = "String")
+            @ApiImplicitParam(name = "content", value = "评论内容", dataTypeClass = String.class, required = true),
+            @ApiImplicitParam(name = "articleId", value = "文章id", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "pid", value = "父级评论id", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "topPid", value = "顶级评论ID", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "userName", value = "用户名", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "website", value = "网址", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class)
     })
     public ResponseBean submitComment(@ApiIgnore @Valid Comment comment, @ApiIgnore HttpServletRequest request){
         Article article = articleService.getById(comment.getArticleId().toString());

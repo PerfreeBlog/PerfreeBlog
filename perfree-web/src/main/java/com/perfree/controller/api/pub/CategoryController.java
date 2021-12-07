@@ -39,9 +39,9 @@ public class CategoryController extends BaseApiController {
     @GetMapping("/getList")
     @ApiOperation(value = "分类分页数据", notes = "分类分页,可根据分类名模糊查询")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataType = "Integer", paramType = "query", required = true),
-            @ApiImplicitParam(name = "name", value = "分类名", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
+            @ApiImplicitParam(name = "name", value = "分类名", dataTypeClass = String.class, paramType = "query"),
     })
     public Pager<Category> getList(@ApiIgnore Pager<Category> pager, @ApiIgnore String name) {
         pager.setForm(new Category());
