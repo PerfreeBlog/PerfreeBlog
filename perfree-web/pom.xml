@@ -23,7 +23,7 @@
     </dependencies>
     <build>
         <resources>
-           <!-- <resource>
+          <!--  <resource>
                 <directory>src/main/resources</directory>
                 <excludes>
                     <exclude>static/**</exclude>
@@ -34,6 +34,9 @@
                 </excludes>
                 <filtering>true</filtering>
             </resource>-->
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
         </resources>
         <finalName>perfree-web</finalName>
         <plugins>
