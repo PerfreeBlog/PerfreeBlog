@@ -152,10 +152,10 @@
         select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1
         left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         where t1.status = 0 and t1.type= 'article' order by
-        <if test="type != null and type = 0">
+        <if test="type != null and type == 0">
             t1.commentCount
         </if>
-        <if test="type != null and type = 1">
+        <if test="type != null and type == 1">
             t1.viewCount
         </if>
         desc
