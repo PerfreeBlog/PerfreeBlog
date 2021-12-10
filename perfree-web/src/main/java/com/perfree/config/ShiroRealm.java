@@ -1,15 +1,16 @@
 package com.perfree.config;
 
+import com.perfree.Application;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +23,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class ShiroRealm extends AuthorizingRealm {
-    private static final Logger LOGGER = LogManager.getLogger(ShiroRealm.class);
+    private final static Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
     private UserService userService;
 
