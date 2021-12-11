@@ -47,6 +47,14 @@ PerfreeBlog是一款基于java开发的博客建站平台,后端采用[SpringBoo
 * 安装部署简单
 * 支持[mysql](https://www.mysql.com)/[sqlite](https://www.sqlite.org)数据库
 
+## 快速开始
+下载最新的 PerfreeBlog 运行包解压后执行:
+```
+windows: 双击start.bat
+linux: ./start.sh start
+docker: docker run --name perfree -d -p 8080:8080 perfree/perfree
+```
+
 ## 交流群
 > QQ交流群: 938402724
  
