@@ -33,7 +33,7 @@ div#rMenu ul li:hover{
     background-color: #ddd;
 }
 .ztree{
-    height: calc(100vh - 150px);
+    height: calc(100vh - 170px);
     overflow: auto;
 }
 .ztree li span.button.dir_ico_open{
