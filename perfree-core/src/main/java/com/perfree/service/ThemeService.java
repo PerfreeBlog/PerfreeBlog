@@ -57,4 +57,7 @@ public interface ThemeService {
     ThemeFile createFileOrDir(String fileName, String theme, String filePath, String type, String path);
 
     HashMap<String, Object> reNameFile(String filePath, String newName, String theme, String id, String path);
+
+    boolean createTheme(Theme theme);
+
 }

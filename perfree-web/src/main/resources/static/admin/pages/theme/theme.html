@@ -15,24 +15,27 @@
 <body class="layui-layout-body">
 <div class="p-container">
     <div class="p-theme-addPanel">
-        <a id="addTheme">安装新主题</a> - <a href="http://perfree.org.cn/theme-download" target="_blank">主题下载</a> - <a href="http://perfree.org.cn/theme-develop" target="_blank">主题开发指南</a>
+        <a id="addTheme" title="安装新主题">安装新主题</a> -
+        <a id="createTheme" title="新建一个主题">新建主题</a> -
+        <a href="http://perfree.org.cn/theme-download" target="_blank">主题下载</a> -
+        <a href="http://perfree.org.cn/theme-develop" target="_blank">主题开发指南</a>
     </div>
     <div class="p-theme-container layui-row">
         #for(theme : themeList)
         <div class="layui-col-xs12 layui-col-sm6 layui-col-md3 p-theme-Abox">
             <div class="p-theme-box">
-                <img src="#(theme.screenshots)">
+                <img src="#(theme.screenshots??)">
                 <div class="p-theme-info">
-                    <span class="theme-name">#(theme.name)</span>
+                    <span class="theme-name">#(theme.name??)</span>
                     <button type="button"
-                            class="layui-btn layui-btn-danger editThemeBtn" data-path="#(theme.path)" data-name="#(theme.name)">编辑
+                            class="layui-btn layui-btn-danger editThemeBtn" data-path="#(theme.path??)" data-name="#(theme.name??)">编辑
                     </button>
                     #if(theme.isActive != 1)
                     <button type="button"
-                            class="layui-btn layui-btn-danger removeThemeBtn" data-path="#(theme.path)">卸载
+                            class="layui-btn layui-btn-danger removeThemeBtn" data-path="#(theme.path??)">卸载
                     </button>
                     <button type="button"
-                            class="layui-btn layui-btn-normal switchThemeBtn" data-path="#(theme.path)">启用
+                            class="layui-btn layui-btn-normal switchThemeBtn" data-path="#(theme.path??)">启用
                     </button>
                     #end
                     #if(theme.isActive == 1)
@@ -47,6 +50,7 @@
 </div>
 <script src="//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
+<script src="/static/public/js/common.js?v=#(version)"></script>
 <script>
     let layer, upload;
     layui.use(['upload', 'layer'], function () {
@@ -71,6 +75,22 @@
                 layer.msg("主题安装失败", {icon: 2});
             }
         });
+
+        // 新建主题
+        $("#createTheme").click(function () {
+            layer.open({
+                title: "新建主题",
+                type: 2,
+                offset: '20%',
+                area: common.layerArea($("html")[0].clientWidth, 450, 400),
+                shadeClose: true,
+                anim: 1,
+                resize: true,
+                maxmin: true,
+                content: '/admin/theme/createThemePage'
+            });
+        });
+
     });
     $(".p-theme-container").on("click", ".switchThemeBtn", function () {
         const path = $(this).attr("data-path");

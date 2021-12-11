@@ -8,6 +8,7 @@ import cn.hutool.core.util.StrUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
+import com.perfree.model.Tag;
 import com.perfree.model.Theme;
 import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
@@ -48,6 +49,11 @@ public class ThemeController extends BaseController {
         List<Theme> themeList = themeService.getAllTheme();
         model.addAttribute("themeList",themeList);
         return view("static/admin/pages/theme/theme.html");
+    }
+
+    @GetMapping("/theme/createThemePage")
+    public String createThemePage(Model model){
+        return view("static/admin/pages/theme/createTheme.html");
     }
 
     @GetMapping("/theme/edit")
@@ -261,5 +267,23 @@ public class ThemeController extends BaseController {
             logger.error("上传失败: {}", e.getMessage());
             return ResponseBean.fail("上传失败", e.getMessage());
         }
+    }
+
+    /**
+     * 添加标签
+     * @return String
+     */
+    @PostMapping("/theme/createTheme")
+    @ResponseBody
+    public ResponseBean createTheme(@RequestBody Theme theme) {
+        File themeFile = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + theme.getPath());
+        if (themeFile.exists()) {
+            return ResponseBean.fail("主题已存在!", null);
+        }
+        boolean result = themeService.createTheme(theme);
+        if (result) {
+            return ResponseBean.success("主题创建成功", null);
+        }
+        return ResponseBean.fail("主题创建失败", null);
     }
 }

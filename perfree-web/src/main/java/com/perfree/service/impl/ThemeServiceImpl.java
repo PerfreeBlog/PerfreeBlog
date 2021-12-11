@@ -1,5 +1,6 @@
 package com.perfree.service.impl;
 
+import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
@@ -17,6 +18,8 @@ import com.perfree.service.OptionService;
 import com.perfree.service.ThemeService;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +31,7 @@ import java.util.List;
 
 @Service
 public class ThemeServiceImpl implements ThemeService {
-
+    private final Logger logger = LoggerFactory.getLogger(ThemeService.class);
     @Autowired
     private OptionService optionService;
 
@@ -53,6 +56,9 @@ public class ThemeServiceImpl implements ThemeService {
                 theme.setName(props.get("name").toString());
                 theme.setScreenshots("/static/themes/" + settingFile.getParentFile().getName() +
                         Constants.SEPARATOR + props.get("screenshots").toString());
+                if (StringUtils.isBlank(props.get("screenshots").toString())) {
+                    theme.setScreenshots("/static/public/images/error.png");
+                }
                 theme.setPath(settingFile.getParentFile().getName());
                 if (settingFile.getParentFile().getName().equals(OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME))){
                     theme.setIsActive(1);
@@ -295,5 +301,49 @@ public class ThemeServiceImpl implements ThemeService {
             return result;
         }
         return result;
+    }
+
+    @Override
+    public boolean createTheme(Theme theme) {
+        try{
+            File themeFile = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + theme.getPath());
+            File themeDir = cn.hutool.core.io.FileUtil.mkdir(themeFile.getAbsoluteFile());
+            createHtml(themeDir.getAbsolutePath() + File.separator + "index.html", "首页");
+            createHtml(themeDir.getAbsolutePath() + File.separator + "archive.html", "文章归档页");
+            createHtml(themeDir.getAbsolutePath() + File.separator + "article.html", "文章页");
+            createHtml(themeDir.getAbsolutePath() + File.separator + "articleList.html", "文章列表页");
+            createHtml(themeDir.getAbsolutePath() + File.separator + "search.html", "文章搜索页");
+            createHtml(themeDir.getAbsolutePath() + File.separator + "page.html", "通用页面");
+
+            File pageDir = cn.hutool.core.io.FileUtil.mkdir(themeDir.getAbsolutePath() + File.separator + "page");
+            createHtml(pageDir.getAbsolutePath() + File.separator + "link.html", "友链页");
+
+            File themeProperties = cn.hutool.core.io.FileUtil.touch(themeDir.getAbsoluteFile(), "theme.properties");
+            Props props = new Props(themeProperties.getAbsolutePath(), CharsetUtil.UTF_8);
+            props.setProperty("name", theme.getName());
+            props.setProperty("version", theme.getVersion());
+            props.setProperty("author", theme.getAuthor());
+            props.setProperty("author.web.site", theme.getAuthorWebSite());
+            props.setProperty("description", theme.getDescription());
+            props.setProperty("screenshots", "");
+            props.setProperty("update.url", "");
+            props.store(themeProperties.getAbsolutePath());
+            return true;
+        }catch (Exception e) {
+            logger.error("创建主题:{}", e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * @description 创建html
+     * @author Perfree
+     * @date 2021/12/11 16:31
+     */
+    private void createHtml(String path, String content){
+        File html = cn.hutool.core.io.FileUtil.touch(path);
+        FileWriter writer = new FileWriter(html.getAbsoluteFile());
+        writer.write(content);
     }
 }

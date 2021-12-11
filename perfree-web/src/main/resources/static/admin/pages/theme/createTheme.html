@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>标签</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+    <meta name="renderer" content="webkit"/>
+    <meta name="force-rendering" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/css/layui.css">
+    <link href="//cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <link href="/static/admin/static/css/main.css?v=#(version)" rel="stylesheet"/>
+</head>
+<body>
+<div class="p-container p-add-panel">
+    <form class="layui-form" lay-filter="addForm">
+        <div class="layui-input-inline"  style="display: none;">
+            <select lay-verify="" type="hidden"></select>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>主题路径:
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="path" required lay-verify="required" placeholder="请输入主题路径, 如Perfree" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>主题名称:
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="name" required lay-verify="required" placeholder="请输入主题名称" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>主题版本:
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="version" required lay-verify="required" placeholder="请输入主题版本, 如1.0.0" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                <span class="p-form-required">*</span>主题作者:
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="author" required lay-verify="required" placeholder="请输入主题作者" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                作者网址:
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="authorWebSite" placeholder="请输入主题作者网址" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">
+                主题描述:
+            </label>
+            <div class="layui-input-block">
+                <input type="text" name="description" placeholder="请输入主题描述" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="add-btn-box">
+            <button type="button" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-submit-btn">确定
+            </button>
+            <button type="button" class="layui-btn layui-btn-primary p-cancel-btn">取消</button>
+        </div>
+    </form>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
+<script>
+    let form, element, layer;
+    layui.use(['layer', 'form', 'element'], function () {
+        form = layui.form;
+        element = layui.element;
+        layer = layui.layer;
+        // 表单验证
+        form.verify({});
+        // 表单提交
+        form.on('submit(addForm)', function (data) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/theme/createTheme",
+                contentType: "application/json",
+                data: JSON.stringify(data.field),
+                success: function (data) {
+                    if (data.code === 200) {
+                        parent.layer.msg("主题创建成功", {icon: 1});
+                        parent.location.reload();;
+                    } else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                },
+                error: function (data) {
+                    layer.msg("创建失败", {icon: 2});
+                }
+            });
+            return false;
+        });
+    });
+
+    // 取消
+    $(".p-cancel-btn").click(function () {
+        const index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    });
+</script>
+</body>
+</html>
