@@ -1,6 +1,31 @@
+<p align="center">
+    <a href="http://perfree.org.cn" target="_blank" rel="noopener noreferrer">
+        <img width="100" src="https://gitee.com/perfree/PerfreeBlog/raw/master/screenshot/logo.png" alt="PerfreeBlog logo" />
+    </a>
+</p>
+
+> PerfreeBlog是一款基于java开发的博客建站平台
+
+<p align="center">
+    <a href="https://github.com/perfree/PerfreeBlog/releases">
+        <img alt="GitHub release" src="https://badgen.net/github/release/perfree/PerfreeBlog" />
+    </a>
+    <a href="https://github.com/perfree/PerfreeBlog/commits/master">
+        <img alt="GitHub commits" src="https://badgen.net/github/last-commit/perfree/PerfreeBlog" />
+    </a>
+    <a href="https://github.com/perfree/PerfreeBlog/commits/master">
+        <img alt="GitHub commits" src="https://badgen.net/github/commits/perfree/PerfreeBlog" />
+    </a>
+    <a href="https://github.com/perfree/PerfreeBlog/releases">
+        <img alt="GitHub issues" src="https://badgen.net/github/assets-dl/perfree/PerfreeBlog" />
+    </a>
+</p>
+
+------------------------------
+
 ## 简介
-Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](https://spring.io/projects/spring-boot)、[Shiro](https://shiro.apache.org)、[Mybatis](https://mybatis.org/)、[Enjoy](https://jfinal.com/doc/6-1)模板引擎等技术进行开发,支持多主题及扩展插件功能,给您带来全新的创作体验
-> 目前Perfree的所有功能均为个人开发,因能力有限,其中很多技术都是边学习边使用的,所以有些地方可能有不足之处,欢迎各位共同交流,同时如若本项目对您有所帮助,请为它[点赞](https://github.com/perfree/PerfreeBlog)支持 
+PerfreeBlog是一款基于java开发的博客建站平台,后端采用[SpringBoot](https://spring.io/projects/spring-boot)、[Shiro](https://shiro.apache.org)、[Mybatis](https://mybatis.org/)、[Enjoy](https://jfinal.com/doc/6-1)模板引擎等技术进行开发,支持多主题及扩展插件功能,给您带来全新的创作体验
+> 目前PerfreeBlog的所有功能均为个人开发,因能力有限,其中很多技术都是边学习边使用的,所以有些地方可能有不足之处,欢迎各位共同交流,同时如若本项目对您有所帮助,请为它[点赞](https://github.com/perfree/PerfreeBlog)支持 
 
 * 官网地址: [http://perfree.org.cn](http://perfree.org.cn)
 * 文档地址: [http://perfree.org.cn/doc](http://perfree.org.cn/doc)
