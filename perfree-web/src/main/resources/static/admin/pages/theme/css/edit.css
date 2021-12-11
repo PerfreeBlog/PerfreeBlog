@@ -33,7 +33,7 @@ div#rMenu ul li:hover{
     background-color: #ddd;
 }
 .ztree{
-    height: calc(100vh - 100px);
+    height: calc(100vh - 150px);
     overflow: auto;
 }
 .ztree li span.button.dir_ico_open{
@@ -47,4 +47,16 @@ div#rMenu ul li:hover{
     background-position: -110px 0;
     vertical-align: top;
     *vertical-align: middle;
+}
+.tipBox{
+    background: #eff2f5;
+    text-align: center;
+    font-size: 14px;
+}
+.tipBox .label{
+    font-weight: 700;
+}
+.tipBox a{
+    color: #1e9fff;
+    cursor: pointer;
 }
