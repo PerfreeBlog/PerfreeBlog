@@ -7,22 +7,28 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 * 演示站点: [https://www.yinpengfei.com](https://www.yinpengfei.com)
 * 开发计划: [板栗看板](https://web.banlikanban.com/kanban/6193a5656f6f640fbe2d08e4)
 
-> QQ交流群: 938402724
 
-## 特性
+## 功能简介
 * 设计简洁，界面美观
-* 采用[Markdown](https://www.markdownguide.org/)编辑器,支持一键插入视频、图片
+* 采用[Markdown](https://www.markdownguide.org/)编辑器,支持一键插入视频、图片、附件等
 * 支持多主题自由切换
-* 主题在线编辑,及时生效
-* 友情链接管理
-* 支持附件管理
-* 支持扩展插件
-* 主题开发简单快速
-* 支持邮件服务
+* 强大的主题在线编辑功能,支持多种文件操作,实时生效,支持在网页直接创建新主题,快速开发页面
+* 支持自定义页面
+* 支持友情链接
+* 支持附件管理,附件在线预览
+* 支持扩展插件,编写java代码打包为jar,直接后台安装生效,丰富程序多样性
+* 主题开发简单快速,多种自定义指令及api接口支持
+* 支持邮件服务,评论信息邮件提醒
 * 安装部署简单
-* 支持在线一键更新
 * 支持[mysql](https://www.mysql.com)/[sqlite](https://www.sqlite.org)数据库
 
+## 交流群
+> QQ交流群: 938402724
+ 
+ 微信交流群:
+ 
+ ![wechat.jpg](./screenshot/wechat.jpg)
+ 
 ## 主题支持
 ### fly
 ![fly](./screenshot/fly.png)
@@ -77,4 +83,18 @@ Perfree是一款基于java开发的博客建站平台,后端采用[SpringBoot](h
 2. 执行maven clean
 3. 执行maven install
 4. 运行perfree-web下的Application.java即可
+```
+打包注意事项:
+```
+打包前需将perfree-web模块pom.xml中注释的部分放开
+<excludes>
+    <exclude>static/**</exclude>
+    <exclude>Perfree.sql</exclude>
+    <exclude>Perfree-sqlite.sql</exclude>
+    <exclude>update.sql</exclude>
+    <exclude>update-sqlite.sql</exclude>
+</excludes>
+<filtering>true</filtering>
+
+之后执行maven clean, maven packge即可,打包后会生成zip,tar.gz压缩包请选择任意一个使用,不要单独使用jar包
 ```
