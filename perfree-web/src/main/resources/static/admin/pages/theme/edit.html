@@ -30,13 +30,15 @@
     <script src="/static/public/libs/codemirror/addon/selection/active-line.js?v=#(version)"></script>
     <script src="/static/public/libs/codemirror/addon/fold/xml-fold.js?v=#(version)"></script>
     <script src="/static/public/libs/codemirror/addon/edit/matchtags.js?v=#(version)"></script>
+    <script src="//cdn.jsdelivr.net/npm/@ztree/ztree_v3@3.5.48/js/jquery.ztree.all.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@ztree/ztree_v3@3.5.48/css/zTreeStyle/zTreeStyle.css">
 </head>
 <body class="layui-layout-body">
 <div class="p-container layui-row">
     <div class="layui-col-md9">
         <div class="layui-card">
             <div class="layui-card-header">
-                当前编辑文件: <b id="currEditFile">#(currEditFile??)</b>
+                当前编辑文件: <b id="currEditFile">#(theme.path??)/#( currEditFile??)</b>
                 <button type="button"
                         class="layui-btn layui-btn-normal saveFileBtn">保存文件
                 </button>
@@ -55,113 +57,23 @@
             </div>
             <div class="layui-card-body">
                 <div id="fileList"></div>
+
+                <ul id="treeDemo" class="ztree"></ul>
             </div>
+
         </div>
     </div>
 </div>
-<script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        mode: 'text/html',
-        theme: 'dracula',
-        lineNumbers: true,
-        styleActiveLine: true,
-        matchTags: {bothTags: true},
-        extraKeys: {"Alt-/": "autocomplete"},	// 高亮当前行
-    });
-    
-    layui.use(['tree', 'util','form'], function(){
-        var tree = layui.tree,layer = layui.layer,util = layui.util,form = layui.form;
 
-        $.ajax({
-            type: "POST",
-            url: "/admin/theme/getFileListByTheme",
-            data:  {path: $("#path").val()},
-            success: function (d) {
-                if (d.code === 200) {
-                    tree.render({
-                        elem: '#fileList',
-                        data: d.data,
-                        accordion: true,
-                        text: {
-                            none: '无数据'
-                        },
-                        click: function(obj){
-                            if (obj.data.obj.fileType !== 'dir') {
-                                loadFileContent(obj.data.obj.filePath, obj.data.obj.fileType,obj.data.obj.fileName);
-                            }
-                        }
-                    });
-                } else {
-                    layer.msg("加载文件列表失败", {icon: 2});
-                }
-            },
-            error: function () {
-                layer.msg("加载文件列表失败", {icon: 2});
-            }
-        });
-    });
-
-    /**
-     * 加载文件内容至编辑器
-     * @param path
-     * @param fileType
-     * @param fileName
-     */
-    function loadFileContent(path,fileType,fileName) {
-        let loadIndex = layer.load();
-        $.ajax({
-            type: "POST",
-            url: "/admin/theme/getFileContent",
-            data: {path: path},
-            success: function (d) {
-                layer.close(loadIndex);
-                if (d.code === 200) {
-                    editor.setValue(d.data);
-                    $("#currEditFile").text(fileName);
-                    $("#currEditFilePath").val(path);
-                    switch (fileType) {
-                        case 'html':
-                            editor.setOption("mode","text/html");
-                            break;
-                        case 'css':
-                            editor.setOption("mode","css");
-                            break;
-                        case 'js':
-                            editor.setOption("mode","javascript");
-                            break;
-                    }
-                } else {
-                    layer.msg("加载文件失败", {icon: 2});
-                }
-            },
-            error: function () {
-                layer.close(loadIndex);
-                layer.msg("加载文件失败", {icon: 2});
-            }
-        });
-    }
-
-    $(".p-container").on("click",".saveFileBtn",function () {
-        let loadIndex = layer.load();
-        $.ajax({
-            type: "POST",
-            url: "/admin/theme/saveFileContent",
-            data: {path: $("#currEditFilePath").val(), content: editor.getValue()},
-            success: function (d) {
-                layer.close(loadIndex);
-                if (d.code === 200) {
-                    layer.msg("文件保存成功", {icon: 1});
-                } else {
-                    layer.msg("文件保存失败", {icon: 2});
-                }
-            },
-            error: function () {
-                layer.close(loadIndex);
-                layer.msg("文件保存失败", {icon: 2});
-            }
-        });
-    });
-
-</script>
+<div id="rMenu" class="treeRightMenu">
+    <ul>
+        <li id="m_add">新建文件</li>
+        <li id="m_addDir">新建文件夹</li>
+        <li id="m_uploadFile">上传文件</li>
+        <li id="m_rename">重命名</li>
+        <li id="m_del">删除</li>
+    </ul>
+</div>
+<script src="/static/admin/pages/theme/js/edit.js?v=#(version)"></script>
 </body>
 </html>

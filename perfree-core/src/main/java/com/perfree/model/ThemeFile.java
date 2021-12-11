@@ -8,7 +8,16 @@ public class ThemeFile {
     private String fileName;
     private String fileType;
     private String filePath;
+    private String path;
 
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
 
     public String getFileName() {
         return fileName;

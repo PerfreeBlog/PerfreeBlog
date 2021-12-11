@@ -1,17 +1,22 @@
 package com.perfree.controller.admin;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
+import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
-import com.perfree.base.BaseController;
 import com.perfree.model.Theme;
+import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.ThemeService;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
@@ -25,6 +30,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -148,6 +154,112 @@ public class ThemeController extends BaseController {
             return ResponseBean.success("文件保存成功", null);
         } else {
             return ResponseBean.fail("文件不存在", null);
+        }
+    }
+
+    @PostMapping("/theme/createFileOrDir")
+    @ResponseBody
+    public ResponseBean createFileOrDir(@RequestParam("fileName") String fileName, @RequestParam("theme") String theme,
+                                        @RequestParam("filePath") String filePath, @RequestParam("type") String type,
+                                        @RequestParam("path") String path){
+        try{
+            ThemeFile themeFile = themeService.createFileOrDir(fileName,theme,filePath,type, path);
+            if (themeFile != null) {
+                return ResponseBean.success("创建成功", themeFile);
+            }
+        }catch (Exception e) {
+            logger.error("主题编辑-创建: {}", e.getMessage());
+            e.printStackTrace();
+        }
+        return ResponseBean.fail("创建失败", null);
+    }
+
+    @PostMapping("/theme/reNameFile")
+    @ResponseBody
+    public ResponseBean reNameFile(@RequestParam("filePath") String filePath, @RequestParam("newName") String newName,
+                                   @RequestParam("theme") String theme, @RequestParam("id") String id,
+                                   @RequestParam("path") String path){
+        try{
+            HashMap<String, Object> result = themeService.reNameFile(filePath, newName, theme, id, path);
+            return ResponseBean.success("重命名成功", result);
+        }catch (Exception e) {
+            logger.error("主题编辑-重命: {}", e.getMessage());
+            e.printStackTrace();
+        }
+        return ResponseBean.fail("重命名失败", null);
+    }
+
+    @PostMapping("/theme/deleteFile")
+    @ResponseBody
+    public ResponseBean deleteFile(@RequestParam("path") String path){
+        try{
+            File file = new File(path);
+            boolean del = FileUtil.del(file.getAbsolutePath());
+            if (del) {
+                return ResponseBean.success("删除成功", null);
+            }
+        }catch (Exception e) {
+            logger.error("主题编辑-删除: {}", e.getMessage());
+            e.printStackTrace();
+        }
+        return ResponseBean.fail("删除失败", null);
+    }
+
+    /**
+     * 文件上传
+     * @return String
+     */
+    @PostMapping("/theme/uploadFile")
+    @ResponseBody
+    public ResponseBean uploadFile(HttpServletRequest request,@RequestParam(value = "filePath") String filePath,
+                                   @RequestParam(value = "path") String path,  @RequestParam(value = "id") String id) {
+        try{
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            MultipartFile multiFile = multipartRequest.getFile("file");
+            if (multiFile == null){
+                logger.error("文件不能为空!");
+                return ResponseBean.fail("文件不能为空!", null);
+            }
+            String multiFileName = multiFile.getOriginalFilename();
+            if (StringUtils.isBlank(multiFileName)){
+                logger.error("文件名不能为空!");
+                return ResponseBean.fail("文件名不能为空!", null);
+            }
+            File file;
+            if (StringUtils.isBlank(filePath)) {
+                file = new File(themeService.getThemeDir(path) + File.separator + multiFileName);
+            } else {
+                file = new File(filePath + File.separator + multiFileName);
+            }
+
+            if (file.exists()) {
+                logger.error("文件已存在!");
+                return ResponseBean.fail("文件已存在!", null);
+            }
+            multiFile.transferTo(file.getAbsoluteFile());
+
+            ThemeFile themeFile = new ThemeFile();
+            themeFile.setFilePath(file.getAbsolutePath());
+            themeFile.setFileName(file.getName());
+            themeFile.setPath(path + Constants.SEPARATOR + file.getName());
+            TreeNode treeNode = new TreeNode();
+            treeNode.setTitle(file.getName());
+            treeNode.setId(IdUtil.simpleUUID());
+            treeNode.setPid(id);
+            if (file.isDirectory()) {
+                themeFile.setFileType("dir");
+            } else {
+                if (file.getName().contains(".")) {
+                    themeFile.setFileType(file.getName().substring(file.getName().lastIndexOf(".")).replace(".",""));
+                } else {
+                    themeFile.setFileType("other");
+                }
+            }
+            treeNode.setObj(themeFile);
+            return ResponseBean.success("上传失败", treeNode);
+        }catch (Exception e){
+            logger.error("上传失败: {}", e.getMessage());
+            return ResponseBean.fail("上传失败", e.getMessage());
         }
     }
 }

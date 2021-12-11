@@ -1,9 +1,12 @@
 package com.perfree.service;
 
 import com.perfree.model.Theme;
+import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -40,6 +43,8 @@ public interface ThemeService {
      */
     boolean delTheme(Theme theme);
 
+    File getThemeDir(String path);
+
     Theme getThemeByPath(String path);
 
     /**
@@ -48,4 +53,8 @@ public interface ThemeService {
      * @return List<ThemeFile>
      */
     List<TreeNode> getFileListByTheme(String path);
+
+    ThemeFile createFileOrDir(String fileName, String theme, String filePath, String type, String path);
+
+    HashMap<String, Object> reNameFile(String filePath, String newName, String theme, String id, String path);
 }

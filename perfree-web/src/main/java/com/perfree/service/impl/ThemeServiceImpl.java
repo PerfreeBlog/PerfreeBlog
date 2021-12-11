@@ -2,6 +2,8 @@ package com.perfree.service.impl;
 
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.CharsetUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.commons.Constants;
@@ -14,12 +16,14 @@ import com.perfree.model.TreeNode;
 import com.perfree.service.OptionService;
 import com.perfree.service.ThemeService;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -142,7 +146,7 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
 
-    private File getThemeDir(String path) {
+    public File getThemeDir(String path) {
         File prodThemeFile = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + path);
         File devThemeFile = FileUtil.getClassPathFile(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + path);
         File themeFile = null;
@@ -185,37 +189,110 @@ public class ThemeServiceImpl implements ThemeService {
         if (themeDir == null) {
             return null;
         }
-        return getFileListByFile(themeDir);
+        List<TreeNode> result = new ArrayList<>();
+        return getFileListByFile(themeDir, path, result, "-1");
     }
 
-    private List<TreeNode> getFileListByFile(File dir) {
-        List<TreeNode> result = new ArrayList<>();
-        for (File file : dir.listFiles()) {
+    private List<TreeNode> getFileListByFile(File dir,String path, List<TreeNode> result, String pid) {
+        File[] files = dir.listFiles();
+        if (files == null || files.length <= 0) {
+            return result;
+        }
+        for (File file : files) {
             ThemeFile themeFile = new ThemeFile();
-            TreeNode treeNode = new TreeNode();
-            treeNode.setTitle(file.getName());
             themeFile.setFilePath(file.getAbsolutePath());
             themeFile.setFileName(file.getName());
-            List<TreeNode> childThemeFile = new ArrayList<>();
+            themeFile.setPath(path + Constants.SEPARATOR + file.getName());
+
+            TreeNode treeNode = new TreeNode();
+            treeNode.setTitle(file.getName());
+            treeNode.setId(IdUtil.simpleUUID());
+            treeNode.setPid(pid);
+
             if (file.isDirectory()) {
-                childThemeFile = getFileListByFile(file);
                 themeFile.setFileType("dir");
+                getFileListByFile(file, themeFile.getPath(),result , treeNode.getId());
             } else {
-                themeFile.setFileType(file.getName().substring(file.getName().lastIndexOf(".")).replace(".",""));
+                if (file.getName().contains(".")) {
+                    themeFile.setFileType(file.getName().substring(file.getName().lastIndexOf(".")).replace(".",""));
+                } else {
+                    themeFile.setFileType("other");
+                }
             }
             treeNode.setObj(themeFile);
-            treeNode.setChildren(childThemeFile);
-            if (!themeFile.getFileType().equals("dir")){
-                if (themeFile.getFileType().equals("html") || themeFile.getFileType().equals("css") ||
-                        themeFile.getFileType().equals("js")){
-                    result.add(treeNode);
-                }
+            result.add(treeNode);
+        }
+        return result;
+    }
+
+
+    @Override
+    public ThemeFile createFileOrDir(String fileName, String theme, String filePath, String type, String path) {
+        String createPath;
+        if (StringUtils.isBlank(filePath)) {
+            File themeDir = getThemeDir(theme);
+            createPath = themeDir.getAbsolutePath() + File.separator + fileName;
+        } else {
+            createPath =filePath + File.separator + fileName;
+        }
+
+        File file = new File(createPath);
+        if (file.exists()) {
+            return null;
+        }
+        File createFile;
+        ThemeFile themeFile = new ThemeFile();
+        if ("dir".equals(type)) {
+            createFile = cn.hutool.core.io.FileUtil.mkdir(file.getAbsolutePath());
+            themeFile.setFileType("dir");
+        } else {
+            createFile = cn.hutool.core.io.FileUtil.touch(file.getAbsolutePath());
+            if (createFile.getName().contains(".")) {
+                themeFile.setFileType(createFile.getName().substring(createFile.getName().lastIndexOf(".")).replace(".",""));
             } else {
-                // 如果是目录,空的不要
-                if (treeNode.getChildren().size() > 0) {
-                    result.add(treeNode);
-                }
+                themeFile.setFileType("other");
             }
+
+        }
+        themeFile.setFilePath(createFile.getAbsolutePath());
+        themeFile.setFileName(createFile.getName());
+        themeFile.setPath(path + Constants.SEPARATOR + createFile.getName());
+        return themeFile;
+    }
+
+    @Override
+    public HashMap<String, Object> reNameFile(String filePath, String newName, String theme,String id, String path) {
+        HashMap<String, Object> result = new HashMap<>();
+        File file = new File(filePath);
+        File rename = cn.hutool.core.io.FileUtil.rename(file.getAbsoluteFile(), newName, false);
+
+        ThemeFile themeFile = new ThemeFile();
+        themeFile.setFilePath(rename.getAbsolutePath());
+        themeFile.setFileName(rename.getName());
+        path = StrUtil.removeSuffix(path, file.getName()) + rename.getName();
+        themeFile.setPath(path);
+        TreeNode treeNode = new TreeNode();
+        treeNode.setTitle(rename.getName());
+        treeNode.setId(id);
+
+        if (rename.isDirectory()) {
+            themeFile.setFileType("dir");
+        } else {
+            if (rename.getName().contains(".")) {
+                themeFile.setFileType(rename.getName().substring(rename.getName().lastIndexOf(".")).replace(".",""));
+            } else {
+                themeFile.setFileType("other");
+            }
+        }
+        treeNode.setObj(themeFile);
+
+        result.put("rename", treeNode);
+
+        if (rename.isDirectory()) {
+            List<TreeNode> children = new ArrayList<>();
+            getFileListByFile(rename, path, children, id);
+            result.put("children", children);
+            return result;
         }
         return result;
     }

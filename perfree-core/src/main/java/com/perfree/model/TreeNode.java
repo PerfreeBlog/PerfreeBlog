@@ -1,7 +1,5 @@
 package com.perfree.model;
 
-import java.util.List;
-
 /**
  * 定义树结构
  * @author Perfree
@@ -9,12 +7,16 @@ import java.util.List;
 public class TreeNode {
     private String title;
     private String id;
-    private List<TreeNode> children;
-    private String href;
-    private boolean spread;
-    private boolean checked;
-    private boolean disabled;
+    private String pid;
     private Object obj;
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
 
     public String getTitle() {
         return title;
@@ -30,46 +32,6 @@ public class TreeNode {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public List<TreeNode> getChildren() {
-        return children;
-    }
-
-    public void setChildren(List<TreeNode> children) {
-        this.children = children;
-    }
-
-    public String getHref() {
-        return href;
-    }
-
-    public void setHref(String href) {
-        this.href = href;
-    }
-
-    public boolean isSpread() {
-        return spread;
-    }
-
-    public void setSpread(boolean spread) {
-        this.spread = spread;
-    }
-
-    public boolean isChecked() {
-        return checked;
-    }
-
-    public void setChecked(boolean checked) {
-        this.checked = checked;
-    }
-
-    public boolean isDisabled() {
-        return disabled;
-    }
-
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
     }
 
     public Object getObj() {
