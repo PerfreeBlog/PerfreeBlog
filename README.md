@@ -63,7 +63,7 @@ docker run --name perfree -d -p 8080:8080 perfree/perfree
  
  微信交流群:
  
-<img width="200" style="box-shadow: 3px 2px 8px 0 rgb(158 158 158 / 78%);" src="/screenshot/wechat.jpg" alt="微信交流群" />
+<img width="200" src="/screenshot/wechat.jpg" alt="微信交流群" />
  
 ## 主题支持
 ### fly
