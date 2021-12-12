@@ -1,6 +1,6 @@
 <p align="center">
     <a href="http://perfree.org.cn" target="_blank" rel="noopener noreferrer">
-        <img width="100" src="/perfree/PerfreeBlog/raw/master/screenshot/logo.png" alt="PerfreeBlog logo" />
+        <img width="100" src="/screenshot/logo.png" alt="PerfreeBlog logo" />
     </a>
 </p>
 
@@ -63,7 +63,7 @@ docker run --name perfree -d -p 8080:8080 perfree/perfree
  
  微信交流群:
  
-<img width="200" style="box-shadow: 3px 2px 8px 0 rgb(158 158 158 / 78%);" src="/perfree/PerfreeBlog/raw/master/screenshot/wechat.jpg" alt="微信交流群" />
+<img width="200" style="box-shadow: 3px 2px 8px 0 rgb(158 158 158 / 78%);" src="/screenshot/wechat.jpg" alt="微信交流群" />
  
 ## 主题支持
 ### fly
