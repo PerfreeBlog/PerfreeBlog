@@ -1,6 +1,6 @@
 <p align="center">
     <a href="http://perfree.org.cn" target="_blank" rel="noopener noreferrer">
-        <img width="100" src="https://gitee.com/perfree/PerfreeBlog/raw/master/screenshot/logo.png" alt="PerfreeBlog logo" />
+        <img width="100" src="http://perfree.org.cn/assets/logo.png" alt="PerfreeBlog logo" />
     </a>
 </p>
 
@@ -10,14 +10,14 @@
     <a href="https://github.com/perfree/PerfreeBlog/releases">
         <img alt="GitHub release" src="https://badgen.net/github/release/perfree/PerfreeBlog" />
     </a>
-    <a href="https://github.com/perfree/PerfreeBlog/commits/master">
-        <img alt="GitHub commits" src="https://badgen.net/github/last-commit/perfree/PerfreeBlog" />
+    <a href="https://github.com/perfree/PerfreeBlog/blob/master/LICENSE">
+        <img alt="GitHub LICENSE" src="https://badgen.net/github/license/perfree/PerfreeBlog" />
     </a>
     <a href="https://github.com/perfree/PerfreeBlog/commits/master">
         <img alt="GitHub commits" src="https://badgen.net/github/commits/perfree/PerfreeBlog" />
     </a>
-    <a href="https://github.com/perfree/PerfreeBlog/releases">
-        <img alt="GitHub issues" src="https://badgen.net/github/assets-dl/perfree/PerfreeBlog" />
+    <a href="https://registry.hub.docker.com/repository/docker/perfree/perfree">
+        <img alt="docker" src="https://badgen.net/docker/pulls/perfree/perfree" />
     </a>
 </p>
 
@@ -48,13 +48,16 @@ PerfreeBlog是一款基于java开发的博客建站平台,后端采用[SpringBoo
 * 支持[mysql](https://www.mysql.com)/[sqlite](https://www.sqlite.org)数据库
 
 ## 快速开始
-下载最新的 PerfreeBlog 运行包解压后执行:
+windows/linux:
 ```
+下载最新的 PerfreeBlog 运行包解压后执行:
 windows: 双击start.bat
 linux: ./start.sh start
-docker: docker run --name perfree -d -p 8080:8080 perfree/perfree
 ```
-
+docker:
+```
+docker run --name perfree -d -p 8080:8080 perfree/perfree
+```
 ## 交流群
 > QQ交流群: 938402724
  
