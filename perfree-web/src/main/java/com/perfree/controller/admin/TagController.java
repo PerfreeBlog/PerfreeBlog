@@ -32,7 +32,7 @@ public class TagController extends BaseController {
      * @return String
      */
     @RequestMapping("/tag")
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @AdminMenu(name = "标签管理", seq = 5, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
@@ -44,7 +44,7 @@ public class TagController extends BaseController {
      * @return String
      */
     @RequestMapping("/tag/addPage")
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String addPage() {
         return view("static/admin/pages/tag/tag_add.html");
     }
@@ -54,7 +54,7 @@ public class TagController extends BaseController {
      * @return String
      */
     @GetMapping("/tag/editPage/{id}")
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String editPage(@PathVariable("id") String id, Model model) {
         Tag tag = tagService.getById(id);
         model.addAttribute("tag", tag);
@@ -68,7 +68,7 @@ public class TagController extends BaseController {
      */
     @PostMapping("/tag/add")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean add(@RequestBody Tag tag) {
         tag.setUserId(getUser().getId());
         if (tagService.add(tag) > 0) {
@@ -84,7 +84,7 @@ public class TagController extends BaseController {
      */
     @PostMapping("/tag/list")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public Pager<Tag> list(@RequestBody Pager<Tag> pager) {
         return tagService.list(pager);
     }
@@ -95,7 +95,7 @@ public class TagController extends BaseController {
      */
     @GetMapping("/tag/allList")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean allList() {
         return ResponseBean.success("获取成功", tagService.allList());
     }
@@ -106,7 +106,7 @@ public class TagController extends BaseController {
      */
     @PostMapping("/tag/update")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean update(@RequestBody Tag tag) {
         if (tagService.update(tag) > 0) {
             return ResponseBean.success("更新成功", null);
@@ -121,7 +121,7 @@ public class TagController extends BaseController {
      */
     @PostMapping("/tag/del")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
         if (tagService.del(idArr) > 0) {

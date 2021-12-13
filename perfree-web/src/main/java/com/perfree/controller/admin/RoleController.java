@@ -1,5 +1,6 @@
 package com.perfree.controller.admin;
 
+import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.service.RoleService;
@@ -15,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin"}, logical= Logical.OR)
+@RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class RoleController extends BaseController {
 
     @Autowired

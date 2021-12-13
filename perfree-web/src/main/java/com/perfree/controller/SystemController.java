@@ -65,7 +65,8 @@ public class SystemController extends BaseController {
      * @return String
      */
     @RequestMapping("/admin")
-    @RequiresRoles(value={"admin","editor","contribute", "user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public String adminIndex(Model model) {
         List<Menu> menus = getMenuByUserIdAndType();
         model.addAttribute("menus", menus);
@@ -321,7 +322,7 @@ public class SystemController extends BaseController {
      */
     @GetMapping("/checkUpdate")
     @ResponseBody
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean checkUpdate() {
         try{
             Update update = updateService.checkUpdate();

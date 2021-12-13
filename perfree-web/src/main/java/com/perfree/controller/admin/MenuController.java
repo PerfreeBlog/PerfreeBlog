@@ -20,7 +20,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin"}, logical= Logical.OR)
+@RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class MenuController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(MenuController.class);
     @Autowired

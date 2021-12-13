@@ -30,7 +30,7 @@ public class CategoryController extends BaseController  {
      * @return String
      */
     @RequestMapping("/category")
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @AdminMenu(name = "分类管理", seq = 4, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
@@ -42,7 +42,7 @@ public class CategoryController extends BaseController  {
      * @return String
      */
     @RequestMapping("/category/addPage/{pid}")
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String addPage(@PathVariable("pid") String pid, Model model) {
         model.addAttribute("pid", pid);
         return view("static/admin/pages/category/category_add.html");
@@ -54,7 +54,7 @@ public class CategoryController extends BaseController  {
      */
     @PostMapping("/category/add")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean add(@RequestBody @Valid Category category) {
         if (categoryService.add(category) > 0) {
             return ResponseBean.success("添加成功", null);
@@ -70,7 +70,7 @@ public class CategoryController extends BaseController  {
      */
     @PostMapping("/category/list")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public Pager<Category> list(@RequestBody Pager<Category> pager) {
         return categoryService.list(pager);
     }
@@ -81,7 +81,7 @@ public class CategoryController extends BaseController  {
      */
     @GetMapping("/category/allList")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean allList() {
         return ResponseBean.success("获取成功", categoryService.allList());
     }
@@ -91,7 +91,7 @@ public class CategoryController extends BaseController  {
      * @return String
      */
     @RequestMapping("/category/editPage/{id}")
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String editPage(@PathVariable("id") String id, Model model) {
         model.addAttribute("category", categoryService.getById(id));
         return view("static/admin/pages/category/category_edit.html");
@@ -103,7 +103,7 @@ public class CategoryController extends BaseController  {
      */
     @PostMapping("/category/del")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
         if (categoryService.del(idArr) > 0) {
@@ -119,7 +119,7 @@ public class CategoryController extends BaseController  {
      */
     @PostMapping("/category/update")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid Category category) {
         if (categoryService.update(category) > 0) {
             return ResponseBean.success("更新成功", null);
@@ -134,7 +134,7 @@ public class CategoryController extends BaseController  {
      */
     @PostMapping("/category/changeStatus")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean changeStatus(@RequestBody Category category) {
         if (categoryService.changeStatus(category) > 0) {
             return ResponseBean.success("修改成功", null);

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin"}, logical= Logical.OR)
+@RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class LinkController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(LinkController.class);
 

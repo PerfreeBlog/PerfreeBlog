@@ -48,7 +48,7 @@ public class UserController extends BaseController {
      * @return String
      */
     @RequestMapping("/user")
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     @AdminMenu(name = "用户管理", seq = 7, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/user/user_list.html");
@@ -59,7 +59,7 @@ public class UserController extends BaseController {
      * @return String
      */
     @RequestMapping("/user/addPage")
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public String addPage() {
         return view("static/admin/pages/user/user_add.html");
     }
@@ -69,7 +69,8 @@ public class UserController extends BaseController {
      * @return String
      */
     @RequestMapping("/user/userCenter")
-    @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public String userCenter(Model model) {
         model.addAttribute("userForm", userService.getById(getUser().getId().toString()));
         return view("static/admin/pages/user/user_center.html");
@@ -81,7 +82,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/uploadImg")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean uploadImg(HttpServletRequest request) {
         try{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -99,7 +101,7 @@ public class UserController extends BaseController {
      * @return String
      */
     @GetMapping("/user/editPage/{id}")
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public String editPage(@PathVariable("id") String id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("userForm", user);
@@ -113,7 +115,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/add")
     @ResponseBody
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean add(@RequestBody @Valid User user) {
         if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 18){
             logger.error("密码不能为空且在6-18字符之间: {}", user.toString());
@@ -140,7 +142,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/list")
     @ResponseBody
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public Pager<User> list(@RequestBody Pager<User> pager) {
         return userService.list(pager);
     }
@@ -151,7 +153,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/update")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid User user) {
         user.setReadAvatar(false);
         if (StringUtils.isBlank(user.getAvatar()) || !user.getAvatar().startsWith("/static/avatar")){
@@ -170,7 +173,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/del")
     @ResponseBody
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
         if (Arrays.asList(idArr).contains(getUser().getId().toString())){
@@ -190,7 +193,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/resetPassword")
     @ResponseBody
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean resetPassword(@RequestBody User user) {
         if (userService.resetPassword(user) > 0) {
             return ResponseBean.success("重置密码为123456成功", null);
@@ -205,7 +208,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/changeStatus")
     @ResponseBody
-    @RequiresRoles(value={"admin"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean changeStatus(@RequestBody User user) {
         if (userService.changeStatus(user) > 0) {
             return ResponseBean.success("修改成功", null);
@@ -220,7 +223,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/updatePassword")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean updatePassword(@RequestBody HashMap<String, String> param) {
         String oldPassword = param.get("oldPassword");
         String newPassword = param.get("newPassword");

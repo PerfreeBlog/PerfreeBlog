@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RequestMapping("/admin")
 @Controller
-@RequiresRoles(value={"admin"}, logical= Logical.OR)
+@RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class PluginController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(PluginController.class);
 

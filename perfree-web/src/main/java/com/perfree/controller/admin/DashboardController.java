@@ -1,5 +1,6 @@
 package com.perfree.controller.admin;
 
+import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.service.ArticleService;
@@ -35,7 +36,8 @@ public class DashboardController extends BaseController {
     private UserService userService;
 
     @RequestMapping("/dashboard")
-    @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public String index(Model model) {
         model.addAttribute("articleCount", articleService.getArticleCount());
         model.addAttribute("commentCount", commentService.getCommentCount());
@@ -51,7 +53,8 @@ public class DashboardController extends BaseController {
      */
     @GetMapping("/dashboard/getArticleList")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean getArticleList(){
         return ResponseBean.success("获取成功", articleService.getArticleListByDashboard());
     }
@@ -63,7 +66,8 @@ public class DashboardController extends BaseController {
      */
     @GetMapping("/dashboard/getCommentList")
     @ResponseBody
-    @RequiresRoles(value={"admin","editor", "contribute","user"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean getCommentList(){
         return ResponseBean.success("获取成功", commentService.getCommentListByDashboard());
     }

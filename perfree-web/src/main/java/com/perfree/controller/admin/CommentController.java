@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={"admin","superAdmin"}, logical= Logical.OR)
+@RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
 public class CommentController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(TagController.class);
     @Autowired
@@ -32,7 +32,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @RequestMapping("/comment")
-    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @AdminMenu(name = "评论管理", seq = 3, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
     public String index() {
@@ -44,7 +44,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/list")
-    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @ResponseBody
     public Pager<Comment> list(@RequestBody Pager<Comment> pager) {
         User user = getUser();
@@ -59,7 +59,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/del")
-    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @ResponseBody
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
@@ -75,7 +75,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/changeStatus")
-    @RequiresRoles(value={"admin","editor", "contribute"}, logical= Logical.OR)
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @ResponseBody
     public ResponseBean changeStatus(@RequestBody Comment comment) {
         if (commentService.changeStatus(comment) > 0) {
