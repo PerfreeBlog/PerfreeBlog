@@ -21,41 +21,50 @@
         <a href="http://perfree.org.cn/theme-develop" target="_blank">主题开发指南</a>
     </div>
     <div class="p-theme-container layui-row">
-        #for(theme : themeList)
+    </div>
+</div>
+
+<script id="themeTpl" type="text/html">
+    #[[
+        {{#  layui.each(d, function(index, item){ }}
         <div class="layui-col-xs12 layui-col-sm6 layui-col-md3 p-theme-Abox">
             <div class="p-theme-box">
-                <img src="#(theme.screenshots??)">
+                <img src="/static/public/images/error.png" lay-src="{{ item.screenshots}}">
                 <div class="p-theme-info">
-                    <span class="theme-name">#(theme.name??)</span>
+                    <span class="theme-name">{{ item.name}}</span>
                     <button type="button"
-                            class="layui-btn layui-btn-danger editThemeBtn" data-path="#(theme.path??)" data-name="#(theme.name??)">编辑
+                            class="layui-btn layui-btn-danger editThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">编辑
                     </button>
-                    #if(theme.isActive != 1)
+                    {{#  if(item.isActive != 1){ }}
                     <button type="button"
-                            class="layui-btn layui-btn-danger removeThemeBtn" data-path="#(theme.path??)">卸载
+                            class="layui-btn layui-btn-danger removeThemeBtn" data-path="{{ item.path}}">卸载
                     </button>
                     <button type="button"
-                            class="layui-btn layui-btn-normal switchThemeBtn" data-path="#(theme.path??)">启用
+                            class="layui-btn layui-btn-normal switchThemeBtn" data-path="{{ item.path}}">启用
                     </button>
-                    #end
-                    #if(theme.isActive == 1)
+                    {{#  } }}
+                    {{#  if(item.isActive == 1){ }}
                     <button type="button" class="layui-btn layui-btn-primary">已启用
-                        #end
                     </button>
+                    {{#  } }}
                 </div>
             </div>
         </div>
-        #end
-    </div>
-</div>
+        {{#  }); }}
+    ]]#
+</script>
+
 <script src="//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
 <script src="/static/public/js/common.js?v=#(version)"></script>
 <script>
-    let layer, upload;
-    layui.use(['upload', 'layer'], function () {
+    let layer, upload, laytpl, flow;
+    layui.use(['upload', 'layer', 'laytpl', 'flow'], function () {
         layer = layui.layer;
         upload = layui.upload;
+        laytpl = layui.laytpl;
+        flow = layui.flow;
+        initThemeList();
 
         upload.render({
             elem: '#addTheme',
@@ -66,7 +75,7 @@
             done: function (res) {
                 if (res.code === 200) {
                     parent.layer.msg("主题安装成功", {icon: 1});
-                    location.reload();
+                    initThemeList();
                 } else {
                     layer.msg(res.msg, {icon: 2});
                 }
@@ -92,6 +101,36 @@
         });
 
     });
+
+
+    /**
+     * 加载主题列表
+     */
+    function initThemeList() {
+        let loadIndex = layer.load();
+        $.ajax({
+            type: "GET",
+            url: "/admin/theme/themeList",
+            success: function (d) {
+                layer.close(loadIndex);
+                if (d.code === 200) {
+                    laytpl($("#themeTpl").html()).render(d.data, function (html) {
+                        $(".p-theme-container").html(html);
+                    });
+                    flow.lazyimg({
+                        elem: '.p-theme-container img'
+                    });
+                } else {
+                    layer.msg("加载主题列表失败", {icon: 2});
+                }
+            },
+            error: function (data) {
+                layer.close(loadIndex);
+                layer.msg("加载主题列表失败", {icon: 2});
+            }
+        });
+    }
+
     $(".p-theme-container").on("click", ".switchThemeBtn", function () {
         const path = $(this).attr("data-path");
         $.ajax({
@@ -102,7 +141,7 @@
             success: function (d) {
                 if (d.code === 200) {
                     parent.layer.msg("切换主题成功", {icon: 1});
-                    location.reload();
+                    initThemeList();
                 } else {
                     layer.msg("切换主题失败", {icon: 2});
                 }
@@ -124,7 +163,7 @@
                 success: function (d) {
                     if (d.code === 200) {
                         parent.layer.msg("卸载主题成功", {icon: 1});
-                        location.reload();
+                        initThemeList();
                     } else {
                         layer.msg("卸载主题失败", {icon: 2});
                     }

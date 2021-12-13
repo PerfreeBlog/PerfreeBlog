@@ -4,11 +4,9 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
-import com.perfree.model.Tag;
 import com.perfree.model.Theme;
 import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
@@ -45,11 +43,17 @@ public class ThemeController extends BaseController {
 
     @GetMapping("/theme")
     @AdminMenu(name = "所有主题", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_THEME)
-    public String themePage(Model model){
-        List<Theme> themeList = themeService.getAllTheme();
-        model.addAttribute("themeList",themeList);
+    public String themePage(){
         return view("static/admin/pages/theme/theme.html");
     }
+
+    @GetMapping("/theme/themeList")
+    @ResponseBody
+    public ResponseBean themeList(){
+        List<Theme> themeList = themeService.getAllTheme();
+        return ResponseBean.success("success", themeList);
+    }
+
 
     @GetMapping("/theme/createThemePage")
     public String createThemePage(Model model){

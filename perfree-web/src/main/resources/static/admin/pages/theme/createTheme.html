@@ -101,7 +101,9 @@
                 success: function (data) {
                     if (data.code === 200) {
                         parent.layer.msg("主题创建成功", {icon: 1});
-                        parent.location.reload();;
+                        parent.initThemeList();
+                        const index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
                     } else {
                         layer.msg(data.msg, {icon: 2});
                     }
