@@ -21,6 +21,8 @@
     </a>
 </p>
 
+![Alt](https://repobeats.axiom.co/api/embed/3243c4d92a73b5f8e9ff923a32f313b7de477c78.svg "Repobeats analytics image")
+
 ------------------------------
 
 ## 简介
@@ -63,7 +65,7 @@ docker run --name perfree -d -p 8080:8080 perfree/perfree
  
  微信交流群:
  
-<img width="200" src="/screenshot/wechat.jpg" alt="微信交流群" />
+<img width="240" src="/screenshot/wechat.jpg" alt="微信交流群" />
  
 ## 主题支持
 ### fly
