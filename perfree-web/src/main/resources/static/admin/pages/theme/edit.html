@@ -35,22 +35,7 @@
 </head>
 <body class="layui-layout-body">
 <div class="p-container layui-row">
-    <div class="layui-col-md9">
-        <div class="layui-card">
-            <div class="layui-card-header">
-                当前编辑文件: <b id="currEditFile">#(theme.path??)/#( currEditFile??)</b>
-                <button type="button"
-                        class="layui-btn layui-btn-normal saveFileBtn">保存文件
-                </button>
-            </div>
-            <div class="layui-card-body">
-                <textarea class="form-control" id="code" name="code">#(content??)</textarea>
-                <input type="hidden" value="#(theme.path??)" name="path" id="path">
-                <input type="hidden" value="#(currEditFilePath??)" name="currEditFilePath" id="currEditFilePath">
-            </div>
-        </div>
-    </div>
-    <div class="layui-col-md3">
+    <div class="layui-col-md2">
         <div class="layui-card">
             <div class="layui-card-header">
                 当前编辑主题: <b>#(theme.name??)</b>
@@ -68,6 +53,23 @@
 
         </div>
     </div>
+
+    <div class="layui-col-md10">
+        <div class="layui-card">
+            <div class="layui-card-header">
+                当前编辑文件: <b id="currEditFile">#(theme.path??)/#( currEditFile??)</b>
+                <button type="button"
+                        class="layui-btn layui-btn-normal saveFileBtn">保存文件
+                </button>
+            </div>
+            <div class="layui-card-body">
+                <textarea class="form-control" id="code" name="code">#(content??)</textarea>
+                <input type="hidden" value="#(theme.path??)" name="path" id="path">
+                <input type="hidden" value="#(currEditFilePath??)" name="currEditFilePath" id="currEditFilePath">
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div id="rMenu" class="treeRightMenu">
