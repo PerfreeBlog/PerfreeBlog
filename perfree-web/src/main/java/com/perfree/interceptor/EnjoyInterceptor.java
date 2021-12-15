@@ -51,7 +51,6 @@ public class EnjoyInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-
     }
 
     private void setUser(Map<String, Object> model){
@@ -71,4 +70,6 @@ public class EnjoyInterceptor implements HandlerInterceptor {
            logger.error(e.getMessage());
        }
     }
+
+
 }

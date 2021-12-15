@@ -10,13 +10,17 @@ import com.perfree.model.Menu;
 import com.perfree.model.User;
 import com.perfree.service.MenuService;
 import com.perfree.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 
@@ -58,6 +62,11 @@ public class BaseController {
      * @return String
      */
     public String currentTheme() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String previewTheme = request.getParameter("previewTheme");
+        if (StringUtils.isNotBlank(previewTheme)) {
+            return previewTheme;
+        }
         return OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
     }
 
@@ -66,6 +75,11 @@ public class BaseController {
      * @return String
      */
     public String currentThemePage() {
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        String previewTheme = request.getParameter("previewTheme");
+        if (StringUtils.isNotBlank(previewTheme)) {
+            return "static/themes/" + previewTheme;
+        }
         return "static/themes/" + OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
     }
 

@@ -81,5 +81,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public EnjoyInterceptor createEnjoyInterceptor(){
         return new EnjoyInterceptor();
     }
-
 }
