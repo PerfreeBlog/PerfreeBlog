@@ -91,9 +91,15 @@ public class PostAppRunner implements ApplicationRunner {
         try{
             File sqlFile;
             if (DynamicDataSource.dataSourceType.equals("mysql")) {
-               sqlFile = new File("resources/update.sql");
+                sqlFile = new File("resources/update.sql");
+                if(!sqlFile.exists()){
+                    sqlFile = com.perfree.commons.FileUtil.getClassPathFile("classpath:update.sql");
+                }
             } else {
                 sqlFile = new File("resources/update-sqlite.sql");
+                if(!sqlFile.exists()){
+                    sqlFile = com.perfree.commons.FileUtil.getClassPathFile("classpath:update-sqlite.sql");
+                }
             }
             if (sqlFile.exists()) {
                 DataSource dataSource = SpringBeanUtils.getBean(DataSource.class);
