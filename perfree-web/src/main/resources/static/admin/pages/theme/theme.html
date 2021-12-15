@@ -29,23 +29,27 @@
         {{#  layui.each(d, function(index, item){ }}
         <div class="layui-col-xs12 layui-col-sm6 layui-col-md3 p-theme-Abox">
             <div class="p-theme-box">
-                <img src="/static/public/images/error.png" lay-src="{{ item.screenshots}}">
+                <div class="themeTitle">{{ item.name}}</div>
+                <div class="themeImgBox">
+                    <img src="/static/public/images/loading.gif" lay-src="{{ item.screenshots}}">
+                </div>
                 <div class="p-theme-info">
-                    <span class="theme-name">{{ item.name}}</span>
-                    <button type="button"
-                            class="layui-btn layui-btn-danger editThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">编辑
-                    </button>
+                    <a class="layui-btn layui-btn-danger editThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">
+                        <i class="fa fa-edit" aria-hidden="true"></i> 编辑
+                    </a>
                     {{#  if(item.isActive != 1){ }}
-                    <button type="button"
-                            class="layui-btn layui-btn-danger removeThemeBtn" data-path="{{ item.path}}">卸载
-                    </button>
-                    <button type="button"
-                            class="layui-btn layui-btn-normal switchThemeBtn" data-path="{{ item.path}}">启用
-                    </button>
+                        <a class="layui-btn layui-btn-danger removeThemeBtn" data-path="{{ item.path}}">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i> 卸载
+                        </a>
+                        <a class="layui-btn layui-btn-danger previewThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">
+                            <i class="fa fa-external-link" aria-hidden="true"></i> 预览
+                        </a>
+                        <a class="layui-btn layui-btn-normal switchThemeBtn" data-path="{{ item.path}}">
+                            <i class="fa fa-lock" aria-hidden="true"></i> 启用
+                        </a>
                     {{#  } }}
                     {{#  if(item.isActive == 1){ }}
-                    <button type="button" class="layui-btn layui-btn-primary">已启用
-                    </button>
+                    <a class="layui-btn layui-btn-normal"><i class="fa fa-unlock-alt" aria-hidden="true"></i> 已启用</a>
                     {{#  } }}
                 </div>
             </div>
@@ -180,6 +184,11 @@
     $(".p-theme-container").on("click", ".editThemeBtn", function () {
         const path = $(this).attr("data-path");
         parent.openTab('', '编辑主题', '/admin/theme/edit?path=' + path, "-5");
+    });
+
+    $(".p-theme-container").on("click", ".previewThemeBtn", function () {
+        const path = $(this).attr("data-path");
+        window.open("/?previewTheme="+ path,"_blank");
     });
 </script>
 </body>

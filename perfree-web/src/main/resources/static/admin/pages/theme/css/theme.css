@@ -2,38 +2,62 @@
     padding: 5px;
 }
 .p-theme-box{
-    height: 260px;
+    height: 360px;
     background: white;
     overflow: hidden;
-    border-radius: 2px;
-    border: 1px solid #ddd;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
 }
-.p-theme-box img{
+.themeImgBox{
     width: 100%;
-    height: calc(100% - 50px);
+    text-align: center;
+    position: relative;
+    height: calc(100% - 102px);
+}
+.themeImgBox img{
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+    box-shadow: rgb(0 21 41 / .11) 0px 0px 6px 3px;
+    position: absolute;
+    left: 10px;
+    right: 10px;
+    top: 10px;
+    bottom: 10px;
+    border-radius: 5px;
 }
 .p-theme-info{
     height: 50px;
     line-height: 50px;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #e8e8e8;
     padding-left: 15px;
     padding-right: 15px;
+    background: #fafafa;
     text-align: right;
-}
-.theme-name{
-    float: left;
-    font-weight: 600;
-    font-size: 15px;
-    color: #3b3b3c;
 }
 .p-theme-addPanel{
     text-align: center;
     line-height: 30px;
 }
-.p-theme-addPanel a{
+.p-theme-addPanel a,.themeBtn,.themeBtn:hover{
     color: #1e9fff;
     cursor: pointer;
 }
+.removeThemeBtn{
+    background: #FF5722;
+}
 .editThemeBtn{
-    background: #1d1f26;
+    background: #003366;
+}
+.previewThemeBtn{
+    background: #666699;
+}
+.themeTitle{
+    height: 50px;
+    border-bottom: 1px solid #e8e8e8;
+    line-height: 50px;
+    text-align: center;
+    font-size: 17px;
+    background: #fafafa;
+    font-weight: 700;
 }
