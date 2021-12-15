@@ -1,5 +1,6 @@
 package com.perfree.service.impl;
 
+import cn.hutool.http.HtmlUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.*;
@@ -350,7 +351,7 @@ public class ArticleServiceImpl implements ArticleService {
         String isGenSummary = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_AUTO_GEN_SUMMARY, Constants.WEB_AUTO_GEN_SUMMARY_FALSE);
         if (!isGenSummary.equals(Constants.WEB_AUTO_GEN_SUMMARY_FALSE) && StringUtils.isBlank(article.getSummary())){
             if (article.getContent().length() > 200){
-                article.setSummary(article.getContent().substring(0, 200));
+                article.setSummary(HtmlUtil.cleanHtmlTag(article.getContent()).substring(0, 200));
             } else {
                 article.setSummary(article.getContent());
             }

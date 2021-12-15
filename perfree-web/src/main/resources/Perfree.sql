@@ -3,6 +3,7 @@ CREATE TABLE `p_article`  (
                               `id` int(0) NOT NULL AUTO_INCREMENT,
                               `title` varchar(256) NOT NULL COMMENT '文章标题',
                               `content` longtext NULL COMMENT '文章内容',
+                              `contentModel` varchar(32) NULL COMMENT '文章内容类型:html/markdown',
                               `type` varchar(32) NULL DEFAULT NULL COMMENT '文章类型:article文章,page页面',
                               `summary` varchar(1024) NULL DEFAULT NULL COMMENT '文章摘要',
                               `categoryId` int(0) NULL DEFAULT NULL COMMENT '所属分类',
@@ -177,8 +178,8 @@ INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateT
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES ('47d098465f85488898428369b90dd0d3','-1', '归档', '/archive', 'fa-calendar', 1, 0, 0,0, '2020-11-27 08:06:10', '2020-12-14 03:26:37');
 INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES ('7484645890c546d0bba46b67a553452e','-1', '友链', '/page/link', 'fa-user-o', 2, 0, 0, 0, '2020-12-11 03:12:49', '2020-12-14 03:26:59');
 
-INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`,`slug`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, '1',now(), now());
-INSERT INTO `p_article`(`id`, `title`, `content`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `slug`, `createTime`, `updateTime`) VALUES (2, '友链', '友链', 'page', '', NULL, '', '', '', 0, 0, 1, 1, 1, 1, 'link',now(), now());
+INSERT INTO `p_article`(`id`, `title`, `content`,`contentModel`, `type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`,`slug`, `createTime`, `updateTime`) VALUES (1, 'HelloWorld', '欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.', 'markdown','article', '', NULL, '', '', '', 0, 0, 0, 0, 1, 1, '1',now(), now());
+INSERT INTO `p_article`(`id`, `title`, `content`, `contentModel`,`type`, `summary`, `categoryId`, `metaKeywords`, `metaDescription`, `thumbnail`, `isTop`, `status`, `commentCount`, `viewCount`, `userId`, `isComment`, `slug`, `createTime`, `updateTime`) VALUES (2, '友链', '友链', 'markdown','page', '', NULL, '', '', '', 0, 0, 1, 1, 1, 1, 'link',now(), now());
 INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (3, '文章编辑', '文章编辑', 'editor', '2021-09-15 13:59:43', NULL);
 INSERT INTO `p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (4, '文章贡献', '文章贡献', 'contribute', '2021-09-15 14:00:21', NULL);
 UPDATE `p_role` SET `name` = '普通用户', `description` = '网站用户', `code` = 'user', `createTime` = '2020-12-17 13:11:50', `updateTime` = NULL WHERE `id` = 2;

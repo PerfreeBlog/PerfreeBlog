@@ -4,6 +4,7 @@
     <link href="//cdn.jsdelivr.net/npm/viewerjs@1.10.2/dist/viewer.min.css" rel="stylesheet">
     <link href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.3.1/build/styles/atom-one-light.min.css" rel="stylesheet">
     <link href="/static/themes/perfree/comment/comment.css?v=#(version)" rel="stylesheet">
+    <link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
     <link href="/static/themes/perfree/static/css/article.css?v=#(version)" rel="stylesheet">
 #end
 #define content()
@@ -23,7 +24,7 @@
                     <div class="a-article-img" style="background-image: url('#(article.thumbnail)');"></div>
                 </div>
             #end
-            <div class="a-article-content-detail" id="a-article-content-detail"> #mdToHtml(article.content ??)</div>
+            <div class="a-article-content-detail ck-content" id="a-article-content-detail"> #mdToHtml(article.content ??)</div>
         </article>
     </div>
 

@@ -1,21 +1,21 @@
-let layer, form, xmSelect;
-// markdown编辑器
-let markdownEditor;
-let categorySelect;
-let tagSelect;
+let form, xmSelect,categorySelect,tagSelect;
 layui.config({
     base: '/static/public/libs/layuiComponents/'
 }).extend({
     xmSelect: 'xm-select/xm-select'
 })
 layui.use(['layer', 'form', 'xmSelect'], function () {
-    layer = layui.layer;
     form = layui.form;
     xmSelect = layui.xmSelect;
     layer.config({
         offset: '20%'
     });
-    initMarkdownEditor();
+    loadIndex = layer.load();
+    window.onload = function(){
+        layer.close(loadIndex);
+    }
+
+    initEditor(localStorage.getItem("editor"), "");
     initEvent();
     initTag();
     initCategory();
@@ -45,7 +45,12 @@ function initEvent() {
  * @param data
  */
 function submitArticle(data) {
-    data.content = markdownEditor.getMarkdown();
+    if ($("#editorMode").val() === "markdown") {
+        data.content = markdownEditor.getMarkdown();
+    } else {
+        data.content = richEditor.getData();
+    }
+    data.contentModel = $("#editorMode").val();
     if (categorySelect.getValue().length > 0) {
         data.categoryId = categorySelect.getValue()[0].value;
     }
@@ -74,58 +79,6 @@ function submitArticle(data) {
         error: function (data) {
             layer.msg("页面添加失败", {icon: 2});
         }
-    });
-}
-
-/**
- * 初始化markdown编辑器
- */
-function initMarkdownEditor() {
-    markdownEditor = editormd("editor", {
-        placeholder: '请输入内容',
-        width: "100%",
-        height: '700',
-        name: "mdContent",
-        syncScrolling: "single",
-        path: "/static/public/libs/editormd/lib/", //注意2：你的路径
-        saveHTMLToTextarea: false,
-        tex: true, // 开启科学公式TeX语言支持，默认关闭
-        watch: false,
-        imageUpload: false,
-        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
-        toolbarIcons: function () {
-            return [
-                "undo", "|",
-                "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
-                "h1", "h2", "h3", "h4", "h5", "h6", "|",
-                "list-ul", "list-ol", "hr", "|","customImg","customVideo", "customAttach","|",
-                "link", "reference-link",  "code", "preformatted-text", "code-block", "table", "datetime", "|",
-                "goto-line", "watch", "preview", "clear", "search","fullscreen"
-            ]
-        },
-        toolbarIconsClass: {
-            customImg: "fa-picture-o",
-            customVideo: "fa-video-camera",
-            customAttach: "fa-file-archive-o"
-        },
-        toolbarHandlers: {
-            customImg: function (cm, icon, cursor, selection) {
-                openSelectImPanel(2, null, markdownEditor, cm, icon, cursor, selection);
-            },
-            customVideo: function (cm, icon, cursor, selection) {
-                openSelectVideoPanel(markdownEditor, cm, icon, cursor, selection);
-            },
-            customAttach: function (cm, icon, cursor, selection) {
-                openSelectAttachPanel(markdownEditor, cm, icon, cursor, selection);
-            }
-        },
-        lang: {
-            toolbar: {
-                customImg: "插入图片",
-                customVideo: "插入视频",
-                customAttach: "插入附件"
-           }
-       }
     });
 }
 

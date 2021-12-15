@@ -50,7 +50,7 @@
 <script id="tableTpl" type="text/html">
     #[[{{#  layui.each(d, function(index, item){ }}
     <div class="img-box">
-        <img lay-src="{{ item.url }}">
+        <img src="/static/public/images/loading.gif" lay-src="{{ item.url }}" alt="{{ item.name }}">
         <span>{{ item.name }}</span>
     </div>
     {{#  }); }}

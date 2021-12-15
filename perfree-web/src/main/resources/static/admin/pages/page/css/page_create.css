@@ -26,3 +26,53 @@
     line-height: 20px;
     min-height: 80px;
 }
+.switchEditor{
+    float: right;
+    font-size: 12px;
+    color: #464a4c;
+    text-decoration: underline;
+}
+#editorBox {
+    z-index: 120;
+}
+#editorBox .ck.ck-editor{
+    height:700px;
+}
+.ck-editor__main{
+    height: 620px;
+}
+.ck-editor__editable_inline{
+    height: 100%;
+}
+#editorBox #ck-editor__full{
+    height: calc(100% - 40px);
+}
+#editorBox.fullscreen{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.ck.ck-reset_all .fa{
+    font: normal normal normal 14px/1 FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0,0);
+    font-size: 18px;
+}
+.ck-content ol,.ck-content ul{
+    padding-left: 40px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+.ck-content ol li{
+    list-style: list-item;
+}
+.ck-content ul li{
+    list-style: disc;
+}
+.ck-content .ck-widget.html-object-embed .html-object-embed__content{
+    pointer-events: all;
+}

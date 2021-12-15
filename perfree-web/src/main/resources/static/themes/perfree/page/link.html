@@ -2,6 +2,7 @@
 #@layout()
 #define css()
     <link href="/static/themes/perfree/comment/comment.css?v=#(version)" rel="stylesheet">
+    <link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
     <link href="/static/themes/perfree/static/css/article.css?v=#(version)" rel="stylesheet">
     <link href="/static/themes/perfree/static/css/link.css?v=#(version)" rel="stylesheet">
 #end
@@ -10,7 +11,7 @@
         <div class="m-container">
             <h2 class="m-container-title">友链</h2>
             #if(article)
-                <div class="a-article-content-detail"> #mdToHtml(article.content ??)</div>
+                <div class="a-article-content-detail ck-content"> #mdToHtml(article.content ??)</div>
             #end
             <ul class="m-link-container">
                 #for(link: linkPage.data)

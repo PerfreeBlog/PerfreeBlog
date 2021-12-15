@@ -48,13 +48,19 @@ function initSelectImg() {
 /**
  * 选择图片
  * @param path
+ * @param name
  */
-function selectImg(path) {
+function selectImg(path, name) {
     if (type === 1){
         $("#" + selectImgId).children("input").val(path);
         $("#" + selectImgId).children(".p-upload-show").children(".p-show-img").attr("src", path);
         $("#" + selectImgId).children(".p-upload").hide();
         $("#" + selectImgId).children(".p-upload-show").show();
+    } else if(type === 3) {
+        const viewFragment = editor.data.processor.toView('<img src="'+path+'" alt="'+name+'"><br>');
+        const modelFragment = editor.data.toModel(viewFragment);
+        editor.model.insertContent(modelFragment, editor.model.document.selection);
+        editor.focus();
     } else {
         EditorCm.replaceSelection("![]("+path+")");
         if(EditorSelection === "") {
@@ -66,24 +72,26 @@ function selectImg(path) {
 
 /**
  * 打开选择图片面板
- * @param activeType 1:正常图片选择,2编辑器图片选择
+ * @param activeType 1:正常图片选择,2编辑器图片选择,3富文本
  * @param id
- * @param markdownEditor
+ * @param currEditor
  * @param cm
  * @param icon
  * @param cursor
  * @param selection
  */
-function openSelectImPanel(activeType,id,markdownEditor,cm, icon, cursor, selection) {
+function openSelectImPanel(activeType,id,currEditor,cm, icon, cursor, selection) {
     type = activeType;
     if (type === 1) {
         selectImgId = id;
-    } else {
+    } else if(type === 3) {
+        editor = currEditor;
+    }else {
         EditorCm = cm;
         EditorCursor = cursor;
         EditorIcon = icon;
         EditorSelection = selection;
-        editor = markdownEditor;
+        editor = currEditor;
     }
     layer.open({
         title: "选择图片",
@@ -99,18 +107,15 @@ function openSelectImPanel(activeType,id,markdownEditor,cm, icon, cursor, select
 
 /**
  * 打开选择附件面板
- * @param markdownEditor
+ * @param activeType 1:正常图片选择,2编辑器图片选择,3富文本
+ * @param currEditor
  * @param cm
  * @param icon
  * @param cursor
  * @param selection
  */
-function openSelectAttachPanel(markdownEditor,cm, icon, cursor, selection) {
-    EditorCm = cm;
-    EditorCursor = cursor;
-    EditorIcon = icon;
-    EditorSelection = selection;
-    editor = markdownEditor;
+function openSelectAttachPanel(activeType,currEditor,cm, icon, cursor, selection) {
+    changeMode(activeType, currEditor,cm, icon, cursor, selection);
     layer.open({
         title: "选择附件",
         type: 2,
@@ -125,18 +130,15 @@ function openSelectAttachPanel(markdownEditor,cm, icon, cursor, selection) {
 
 /**
  * 打开选择视频面板
- * @param markdownEditor
+ * @param activeType 1:正常图片选择,2编辑器图片选择,3富文本
+ * @param currEditor
  * @param cm
  * @param icon
  * @param cursor
  * @param selection
  */
-function openSelectVideoPanel(markdownEditor,cm, icon, cursor, selection) {
-    EditorCm = cm;
-    EditorCursor = cursor;
-    EditorIcon = icon;
-    EditorSelection = selection;
-    editor = markdownEditor;
+function openSelectVideoPanel(activeType, currEditor,cm, icon, cursor, selection) {
+    changeMode(activeType, currEditor,cm, icon, cursor, selection);
     layer.open({
         title: "选择视频",
         type: 2,
@@ -154,23 +156,52 @@ function openSelectVideoPanel(markdownEditor,cm, icon, cursor, selection) {
  * @param path
  */
 function selectVideo(path) {
-    const str = '<video src="'+path+'" controls="controls" width="100%"></video>\n';
-    EditorCm.replaceSelection(str);
-    if(EditorSelection === "") {
-        EditorCm.setCursor(EditorCursor.line + 1, EditorCursor.ch + str.length);
+    if (type === 1) {
+        const str = '<video src="'+path+'" controls="controls" width="100%"></video>\n';
+        EditorCm.replaceSelection(str);
+        if(EditorSelection === "") {
+            EditorCm.setCursor(EditorCursor.line + 1, EditorCursor.ch + str.length);
+        }
+        editor.focus();
+    } else if (type === 3) {
+        const viewFragment = editor.data.processor.toView('<video src="'+path+'" controls="controls" width="100%"></video>');
+        const modelFragment = editor.data.toModel(viewFragment);
+        editor.model.insertContent(modelFragment, editor.model.document.selection);
+        editor.focus();
     }
-    editor.focus();
 }
 
 /**
  * 选择附件
+ * @param name
  * @param path
  */
 function selectAttach(name,path) {
-    const str = '['+name+']('+path+' "'+name+'")\n';
-    EditorCm.replaceSelection(str);
-    if(EditorSelection === "") {
-        EditorCm.setCursor(EditorCursor.line + 1, EditorCursor.ch + str.length);
+    if (type === 1) {
+        const str = '['+name+']('+path+' "'+name+'")\n';
+        EditorCm.replaceSelection(str);
+        if(EditorSelection === "") {
+            EditorCm.setCursor(EditorCursor.line + 1, EditorCursor.ch + str.length);
+        }
+        editor.focus();
+    } else if (type === 3) {
+        const viewFragment = editor.data.processor.toView('<a href="'+path+name+'">'+name+'</a>');
+        const modelFragment = editor.data.toModel(viewFragment);
+        editor.model.insertContent(modelFragment, editor.model.document.selection);
+        editor.focus();
     }
-    editor.focus();
+}
+
+
+function changeMode(activeType, currEditor,cm, icon, cursor, selection) {
+    type = activeType;
+    if (activeType === 1) {
+        EditorCm = cm;
+        EditorCursor = cursor;
+        EditorIcon = icon;
+        EditorSelection = selection;
+        editor = currEditor;
+    } else if(type === 3){
+        editor = currEditor;
+    }
 }

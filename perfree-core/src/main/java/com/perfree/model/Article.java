@@ -76,6 +76,9 @@ public class Article implements Serializable {
     @ApiModelProperty(value="文章类型",name="type", example = "article文章,page页面")
     private String type;
 
+    @ApiModelProperty(value="文本类型",name="contentModel", example = "markdown,html")
+    private String contentModel;
+
     @ApiModelProperty(value="文章所使用到的标签",name="tags")
     private List<Tag> tags;
 
@@ -93,6 +96,14 @@ public class Article implements Serializable {
 
     @ApiModelProperty(value="别名",name="slug")
     private String slug;
+
+    public String getContentModel() {
+        return contentModel;
+    }
+
+    public void setContentModel(String contentModel) {
+        this.contentModel = contentModel;
+    }
 
     public String getSlug() {
         return slug;

@@ -17,7 +17,7 @@ layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl'], fun
     });
 
     $("#tableBox").on("click", ".img-box", function () {
-        parent.selectImg($(this).children("img").attr("src"));
+        parent.selectImg($(this).children("img").attr("src"),$(this).children("img").attr("alt"));
         parent.layer.close(parent.layer.getFrameIndex(window.name));
     });
 });

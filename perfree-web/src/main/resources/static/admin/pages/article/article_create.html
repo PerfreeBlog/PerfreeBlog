@@ -11,6 +11,7 @@
     <link href="//cdn.jsdelivr.net/npm/editor.md@1.5.0/css/editormd.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/css/layui.css">
     <link href="/static/admin/static/css/main.css?v=#(version)" rel="stylesheet"/>
+    <link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet"/>
     <link href="/static/admin/pages/article/css/article_create.css?v=#(version)" rel="stylesheet"/>
 </head>
 <body class="layui-layout-body">
@@ -19,7 +20,7 @@
         <form class="layui-form" action="">
             <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
                 <div class="layui-card">
-                    <div class="layui-card-body">
+                    <div class="layui-card-body" style="min-height: 788px;">
                         <div class="layui-input-inline"  style="display: none;">
                             <select lay-verify="" type="hidden"></select>
                         </div>
@@ -29,8 +30,11 @@
                                    autocomplete="off" class="layui-input">
                         </div>
 
+                        <input type="hidden" id="editorMode" name="editorMode" required lay-verify="required" autocomplete="off" class="layui-input" value="markdown">
+
                         <div class="layui-form-item" style="margin: 0">
                             <span class="p-form-tip">文章内容:</span>
+                            <a href="javascript:;" class="switchEditor" onclick="switchEditor()"></a>
                         </div>
                         <div id="editorBox">
                             <div id="editor"></div>
@@ -123,8 +127,10 @@
 </div>
 <script src="//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.min.js"></script>
+<script src="//cdn.jsdelivr.net/gh/perfree/ckEditor5@v0.0.3/build/ckeditor.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
 <script src="/static/public/js/main.js?v=#(version)"></script>
+<script src="/static/admin/static/js/editor.js?v=#(version)"></script>
 <script src="/static/admin/pages/article/js/article_create.js?v=#(version)"></script>
 </body>
 </html>

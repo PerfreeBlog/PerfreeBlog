@@ -21,3 +21,7 @@ ALTER TABLE `p_article` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug';
 ALTER TABLE `p_menu` DROP COLUMN `articleId`;
 UPDATE p_article set slug = id where slug is null;
 ALTER TABLE `p_article` ADD INDEX `slug`(`slug`), ADD INDEX `type`(`type`), ADD INDEX `categoryId`(`categoryId`), ADD INDEX `commentCount`(`commentCount`), ADD INDEX `viewCount`(`viewCount`);
+--PerfreeBlog
+--v2.1.0;
+ALTER TABLE `p_article` ADD COLUMN `contentModel` varchar(32) NULL COMMENT '内容类型:html/markdown' AFTER `updateTime`;
+UPDATE p_article set contentModel = 'markdown' where contentModel is null;
