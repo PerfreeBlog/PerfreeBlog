@@ -34,22 +34,28 @@
                     <img src="/static/public/images/loading.gif" lay-src="{{ item.screenshots}}">
                 </div>
                 <div class="p-theme-info">
-                    <a class="layui-btn layui-btn-danger editThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">
+                    <a class="layui-btn themeBtn editThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">
                         <i class="fa fa-edit" aria-hidden="true"></i> 编辑
                     </a>
                     {{#  if(item.isActive != 1){ }}
-                        <a class="layui-btn layui-btn-danger removeThemeBtn" data-path="{{ item.path}}">
+                        <a class="layui-btn themeBtn removeThemeBtn" data-path="{{ item.path}}">
                             <i class="fa fa-trash-o" aria-hidden="true"></i> 卸载
                         </a>
-                        <a class="layui-btn layui-btn-danger previewThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">
-                            <i class="fa fa-external-link" aria-hidden="true"></i> 预览
+                        <a class="layui-btn themeBtn previewThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">
+                            <i class="fa fa-search" aria-hidden="true"></i> 预览
                         </a>
-                        <a class="layui-btn layui-btn-normal switchThemeBtn" data-path="{{ item.path}}">
+                        <a class="layui-btn themeBtn switchThemeBtn rBtn" data-path="{{ item.path}}">
                             <i class="fa fa-lock" aria-hidden="true"></i> 启用
                         </a>
                     {{#  } }}
                     {{#  if(item.isActive == 1){ }}
-                    <a class="layui-btn layui-btn-normal"><i class="fa fa-unlock-alt" aria-hidden="true"></i> 已启用</a>
+                    <a class="layui-btn themeBtn settingBtn" data-path="{{ item.path}}">
+                        <i class="fa fa-cog" aria-hidden="true"></i> 设置
+                    </a>
+                    <a class="layui-btn themeBtn toThemeBtn" data-path="{{ item.path}}" data-name="{{ item.name}}">
+                        <i class="fa fa-external-link" aria-hidden="true"></i> 访问
+                    </a>
+                    <a class="layui-btn themeBtn rBtn"><i class="fa fa-unlock-alt" aria-hidden="true"></i> 已启用</a>
                     {{#  } }}
                 </div>
             </div>
@@ -189,6 +195,10 @@
     $(".p-theme-container").on("click", ".previewThemeBtn", function () {
         const path = $(this).attr("data-path");
         window.open("/?previewTheme="+ path,"_blank");
+    });
+
+    $(".p-theme-container").on("click", ".toThemeBtn", function () {
+        window.open("/","_blank");
     });
 </script>
 </body>

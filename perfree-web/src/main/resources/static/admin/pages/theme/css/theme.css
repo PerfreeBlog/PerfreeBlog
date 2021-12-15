@@ -33,24 +33,27 @@
     padding-left: 15px;
     padding-right: 15px;
     background: #fafafa;
-    text-align: right;
 }
 .p-theme-addPanel{
     text-align: center;
     line-height: 30px;
 }
-.p-theme-addPanel a,.themeBtn,.themeBtn:hover{
+.themeBtn{
+    background: rgb(250 250 250);
+    color: #313131;
+    border-right: 1px solid #e8e8e8;
+    width: calc(25% - 6px);
+}
+.themeBtn:hover{
+     background: rgb(250 250 250);
+     color: #1e9fff;
+ }
+.rBtn{
+    border-right: none;
+}
+.p-theme-addPanel a{
     color: #1e9fff;
     cursor: pointer;
-}
-.removeThemeBtn{
-    background: #FF5722;
-}
-.editThemeBtn{
-    background: #003366;
-}
-.previewThemeBtn{
-    background: #666699;
 }
 .themeTitle{
     height: 50px;
