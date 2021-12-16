@@ -155,12 +155,9 @@ function editData(id) {
     layer.open({
         title: "编辑菜单",
         type: 2,
-        offset: '20%',
-        area: common.layerArea($("html")[0].clientWidth, 400, 460),
+        area: common.layerArea($("html")[0].clientWidth, 500, 400),
         shadeClose: true,
         anim: 1,
-        resize: true,
-        maxmin: true,
         content: '/admin/menu/editPage/' + id
     });
 }
@@ -203,12 +200,9 @@ function add(pid = -1) {
     layer.open({
         title: title,
         type: 2,
-        offset: '20%',
-        area: common.layerArea($("html")[0].clientWidth, 400, 460),
+        area: common.layerArea($("html")[0].clientWidth, 500, 400),
         shadeClose: true,
         anim: 1,
-        resize: true,
-        maxmin: true,
         content: '/admin/menu/addPage/' + pid
     });
 }

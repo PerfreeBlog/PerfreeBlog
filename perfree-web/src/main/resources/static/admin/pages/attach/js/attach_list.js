@@ -24,12 +24,9 @@ function initPage() {
         layer.open({
             title: "上传附件",
             type: 2,
-            offset: '20%',
-            area: common.layerArea($("html")[0].clientWidth, 400, 340),
+            area: common.layerArea($("html")[0].clientWidth, 500, 400),
             shadeClose: true,
             anim: 1,
-            resize: true,
-            maxmin: true,
             content: '/admin/attach/uploadPage'
         });
     });
@@ -146,12 +143,9 @@ function editData(id) {
     layer.open({
         title: "编辑附件信息",
         type: 2,
-        offset: '20%',
-        area: common.layerArea($("html")[0].clientWidth, 400, 250),
+        area: common.layerArea($("html")[0].clientWidth, 500, 400),
         shadeClose: true,
         anim: 1,
-        resize: true,
-        maxmin: true,
         content: '/admin/attach/editPage/' + id
     });
 }

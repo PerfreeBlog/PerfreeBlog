@@ -11,10 +11,6 @@ layui.use(['layer', 'form', 'xmSelect', 'element'], function () {
     layer.config({
         offset: '20%'
     });
-    loadIndex = layer.load();
-    window.onload = function(){
-        layer.close(loadIndex);
-    }
     initEditor($("#editorMode").val(), $("#articleContent").val());
     initEvent();
     initTag();

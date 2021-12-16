@@ -24,12 +24,9 @@ function initPage() {
         layer.open({
             title: "添加友链",
             type: 2,
-            offset: '20%',
-            area: common.layerArea($("html")[0].clientWidth, 400, 360),
+            area: common.layerArea($("html")[0].clientWidth, 500, 400),
             shadeClose: true,
             anim: 1,
-            resize: true,
-            maxmin: true,
             content: '/admin/link/addPage'
         });
     });
@@ -126,12 +123,9 @@ function editData(id) {
     layer.open({
         title: "编辑友链",
         type: 2,
-        offset: '20%',
-        area: common.layerArea($("html")[0].clientWidth, 400, 300),
+        area: common.layerArea($("html")[0].clientWidth, 500, 400),
         shadeClose: true,
         anim: 1,
-        resize: true,
-        maxmin: true,
         content: '/admin/link/editPage/' + id
     });
 }

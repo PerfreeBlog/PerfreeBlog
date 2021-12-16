@@ -1,11 +1,16 @@
-.layui-input, .layui-select, .layui-textarea{
-    height: 30px;
-    line-height: 30px;
-}
 .layui-btn{
     height: 30px;
     line-height: 30px;
     padding: 0 10px;
+    background-color: #4b9fff;
+    color: white;
+}
+.layui-btn-primary{
+    background-color: inherit;
+    color: #666;
+}
+.layui-btn-danger{
+    background-color: #FF5722;
 }
 .layui-form-label {
     padding: 5px 15px;
@@ -33,10 +38,17 @@ html{
 .p-add-panel{
     padding: 10px;
 }
-.add-btn-box{
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
+.p-add-panel .add-btn-box{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    height: 50px;
+    background: #F8F8F8;
+    width: 100%;
+    text-align: right;
+    line-height: 50px;
+    padding-right: 15px;
+    border-top: 1px solid #F0F0F0;
 }
 .layui-btn-xs{
     height: 22px;
@@ -48,7 +60,7 @@ html{
 }
 .p-container{
     padding: 6px;
-    background: #eff2f5;
+    background: whitesmoke;
     min-height: calc(100% - 12px);
 }
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
@@ -99,17 +111,56 @@ html{
     color: #4a9fff;
 }
 .p-add-panel form{
-    padding-right: 10px;
-    padding-top: 6px;
+    position: fixed;
+    bottom: 50px;
+    top: 0;
+    left: 0;
+    display: block;
+    right: 0;
+    overflow: auto;
+    padding: 15px 30px;
+}
+.p-add-panel form::-webkit-scrollbar{
+    width: 6px;
+    height: 6px;
+}
+.p-add-panel form::-webkit-scrollbar-corner {
+    background: #f6f6f6;
+}
+
+.p-add-panel form::-webkit-scrollbar-thumb {
+    background: #E6E6E6;
+    border-radius: 2px;
+}
+
+.p-add-panel form::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 2px;
+}
+.p-add-panel form .layui-form-label{
+    width: 80px;
+}
+.p-add-panel form .p-form-required{
+    position: initial;
+    margin-right: 5px;
+}
+.layui-input, .layui-select, .layui-textarea{
+    border-radius: 4px;
+    border-color: #eee;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    height: 35px;
+    line-height: 35px;
+    color:#4a4a4a;
+}
+.layui-input:focus, .layui-textarea:focus{
+    border-color: #2d8cf0!important;
+    box-shadow: 0 0 0 3px #ecf5ff !important;
 }
 .layui-table-cell img{
     width: 25px;
 }
 .layui-form-select dl dd, .layui-form-select dl dt {
-    line-height: 30px;
-}
-.layui-form-select dl {
-    top: 32px;
+    line-height: 35px;
 }
 .hideMargin{
     margin: 0;
@@ -188,7 +239,7 @@ html{
     color: white;
 }
 .articleHref{
-    color: #388fd0;
+    color: #4b9fff;
     font-weight: 600;
 }
 .p-form-required{
@@ -197,9 +248,6 @@ html{
     left: 8px;
 }
 .layui-form-label{
-    color: #4a4a4a;
-}
-.layui-input, .layui-select, .layui-textarea{
     color: #4a4a4a;
 }
 .layui-textarea{

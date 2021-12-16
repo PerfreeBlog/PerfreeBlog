@@ -19,15 +19,17 @@
     </script>
 </head>
 <body class="layui-layout-body">
+
+
+<!-- 首页加载动画 -->
 <div id="loading">
     <div class="loading">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span><span></span><span></span>
     </div>
 </div>
+<!-- 首页加载动画end -->
+
+
 <div class="layui-layout layui-layout-admin f-layout f-show-side" id="f-layout" style="display: none">
     #include("/static/admin/layout/header.html")
     #include("/static/admin/layout/sider.html")
@@ -35,37 +37,29 @@
     <div class="layui-body">
         <div class="layui-tab" lay-allowClose="true" lay-filter="tabNav">
             <ul class="layui-tab-title content-tab-title">
-                <li class="layui-this" lay-id="1"><i class='fa fa-home' style='font-size: 16px;'></i></li>
+                <li class="layui-this" lay-id="1"><span class='tab-icon-circle'></span> 首页</li>
             </ul>
             <div class="layui-tab-content f-tab-content">
                 <div class="layui-tab-item layui-show" >
                     <!-- 内容主体区域 -->
                     <iframe src="/admin/dashboard" scrolling='auto' width='100%' height='100%' frameborder='0'
                             allowfullscreen='true' webkitallowfullscreen='true' mozallowfullscreen='true'
-                            class='f-ifram'></iframe>
+                            class='f-ifram' onload="frameOnload()"></iframe>
                 </div>
             </div>
+
+            <!-- iframe加载动画 -->
+            <div id="frame-loading">
+                <div class="loading">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+            <!-- iframe加载动画end -->
         </div>
     </div>
     <!-- 内容ned -->
 </div>
 
-<div id="theme-list">
-    <ul class="theme-list">
-    </ul>
-</div>
-<script id="themeTpl" type="text/html">
-    {{#  layui.each(d, function(index, item){ }}
-    <li class="theme" id="{{ item.id }}">
-        <div class="theme-leftLogo" style="background: {{ item.leftLogo }}" bg="{{ item.leftLogo }}"
-             color="{{ item.logoColor }}" borderColor="{{ item.logoBoderColor }}"></div>
-        <div class="theme-leftSide" style="background: {{ item.leftSide }}" bg="{{ item.leftSide }}"
-             color="{{ item.sideColor }}"></div>
-        <div class="theme-header" style="background: {{ item.header }}" bg="{{ item.header }}"
-             color="{{ item.headerColor }}"></div>
-    </li>
-    {{#  }); }}
-</script>
 <script src="//cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/layui@2.6.8/dist/layui.js"></script>
 <script src="/static/admin/static/js/main.js?v=#(version)"></script>

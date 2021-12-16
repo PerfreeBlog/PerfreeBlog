@@ -10,10 +10,6 @@ layui.use(['layer', 'form', 'xmSelect'], function () {
     layer.config({
         offset: '20%'
     });
-    loadIndex = layer.load();
-    window.onload = function(){
-        layer.close(loadIndex);
-    }
 
     initEditor(localStorage.getItem("editor"), "");
     initEvent();

@@ -6,7 +6,6 @@ $(function () {
         laytpl = layui.laytpl;
     });
     initEvent();
-    initTheme();
     setIframeHeight();
 
     const plugin = localStorage.getItem("plugin");
@@ -37,37 +36,11 @@ function initEvent() {
     });
 
 
-    // 点击菜单事件
-    $(".p-menu-item").click(function () {
-        if (!$(".p-side-shadow").is(':hidden')) {
-            switchSide();
-        }
-    });
-
     // 刷新iframe
     $(".f-refresh-btn").click(function () {
         const iframe = $('.f-tab-content>.layui-show>iframe');
         $(iframe).attr('src', $(iframe).attr('src'));
         setIframeHeight();
-    });
-
-    /**
-     * 更换主题
-     */
-    $("#theme-list").on('click', '.theme', function () {
-        changeTheme(this);
-    });
-
-    // 侧边栏hover
-    $(".f-nav-item").hover(function (e) {
-        if (!isOpen) {
-            index = layer.tips($(this).find(".f-nav-content").text(), this, {
-                tips: [2, '#1d1f26'],
-                time: 0
-            });
-        }
-    }, function (e) {
-        layer.close(index);
     });
 
     // 控制全屏/退出全屏
@@ -78,61 +51,6 @@ function initEvent() {
             exitScreen();
         }
     });
-
-    // 更换主题
-    $(".f-theme-btn").click(function () {
-        layer.open({
-            type: 1,
-            content: $("#theme-list"),
-            closeBtn: 0,
-            skin: 'f-theme-panel',
-            title: "更换主题",
-            offset: 'rt',
-            anim: -1,
-            move: false,
-            isOutAnim: false,
-            area: ['240px', '100%'],
-            btn: [],
-            shadeClose: true
-        });
-    });
-
-}
-
-/**
- * 初始化主题列表
- */
-function initTheme() {
-    $.getJSON("/static/admin/static/json/theme.json", function (data) {
-        laytpl($("#themeTpl").html()).render(data, function (html) {
-            $(".theme-list").html(html);
-        });
-        const themeId = localStorage.getItem("themeId");
-        data.forEach(res => {
-            if (res.id === themeId) {
-                const letLogoBg = res.leftLogo;
-                const letLogoColor = res.logoColor;
-                const letLogoBoderColor = res.logoBoderColor;
-                const leftSideBg = res.leftSide;
-                const leftSideColor = res.sideColor;
-                const headerBg = res.header;
-                const headerColor = res.headerColor;
-                $(".f-side").css("background", leftSideBg);
-                $(".f-side-nav").css("background", leftSideBg);
-                $(".layui-nav-tree .layui-nav-child .f-child-side a").css("color", leftSideColor);
-                $(".layui-nav .f-nav-item a").css("color", leftSideColor);
-                $(".f-logo-text,.f-logo-img").css({
-                    background: letLogoBg,
-                    color: letLogoColor,
-                    "border-color": letLogoBoderColor
-                });
-                $(".f-header").css("background", headerBg);
-                $(".f-nav .layui-nav-item a").css("color", headerColor);
-                $(".f-nav .layui-nav-item .layui-nav-child a").css("color", "#000000");
-            }
-
-        });
-    })
 }
 
 
@@ -204,34 +122,6 @@ function setIframeHeight() {
 }
 
 /**
- * 更换主题
- * @param {dom} e
- */
-function changeTheme(e) {
-    localStorage.setItem("themeId", $(e).attr("id"));
-    const letLogoBg = $(e).find(".theme-leftLogo").attr("bg");
-    const letLogoColor = $(e).find(".theme-leftLogo").attr("color");
-    const letLogoBoderColor = $(e).find(".theme-leftLogo").attr("borderColor");
-
-    const leftSideBg = $(e).find(".theme-leftSide").attr("bg");
-    const leftSideColor = $(e).find(".theme-leftSide").attr("color");
-
-    const headerBg = $(e).find(".theme-header").attr("bg");
-    const headerColor = $(e).find(".theme-header").attr("color");
-
-    $(".f-side").css("background", leftSideBg);
-    $(".f-side-nav").css("background", leftSideBg);
-    $(".layui-nav-tree .layui-nav-child .f-child-side a").css("color", leftSideColor);
-    $(".f-side-user-box p").css("color", leftSideColor);
-    $(".layui-nav .f-nav-item a").css("color", leftSideColor);
-    $(".f-logo-text,.f-logo-img").css({background: letLogoBg, color: letLogoColor, "border-color": letLogoBoderColor});
-    $(".f-side-user-box").css("border-color", letLogoBoderColor);
-    $(".f-header").css("background", headerBg);
-    $(".f-nav .layui-nav-item a").css("color", headerColor);
-    $(".f-nav .layui-nav-item .layui-nav-child a").css("color", "#000000");
-}
-
-/**
  * 打开tab
  * @param  icon
  * @param  menuName
@@ -244,10 +134,11 @@ function openTab(icon, menuName, url, tabId) {
     $(".content-tab-title").find('li').each(function () {
         eachcount++;
         var layId = $(this).attr("lay-id");
-        if (tabId == layId) {
+        if (tabId === layId) {
             flag = true;
         }
         if (eachcount >= $(".content-tab-title").find('li').length) {
+            $("#frame-loading").show();
             if (flag) {
                 element.tabChange('tabNav', tabId);
                 const iframe = $('.f-tab-content>.layui-show>iframe');
@@ -257,8 +148,8 @@ function openTab(icon, menuName, url, tabId) {
             } else {
                 //添加tab
                 element.tabAdd('tabNav', {
-                    title: "<i class='fa " + icon + "' style='font-size: 16px;'></i>&nbsp;" + menuName,
-                    content: "<iframe src='" + url + "' scrolling='auto' width='100%' height='100%' frameborder='0' allowfullscreen='true' webkitallowfullscreen='true' mozallowfullscreen='true' class='f-ifram'></iframe>", //支持传入html
+                    title: "<span class='tab-icon-circle'></span>&nbsp;" + menuName,
+                    content: "<iframe onload='frameOnload()' src='" + url + "' scrolling='auto' width='100%' height='100%' frameborder='0' allowfullscreen='true' webkitallowfullscreen='true' mozallowfullscreen='true' class='f-ifram'></iframe>", //支持传入html
                     id: tabId
                 });
                 //切换至新添加tab
@@ -267,6 +158,10 @@ function openTab(icon, menuName, url, tabId) {
             }
         }
     });
+}
+
+function frameOnload(){
+    $("#frame-loading").hide();
 }
 
 function clickMenu(e) {

@@ -19,6 +19,7 @@ function initPage() {
  * 初始化表单操作
  */
 function formEvent() {
+    form.render();
     // 表单验证
     form.verify({});
     // 表单提交
