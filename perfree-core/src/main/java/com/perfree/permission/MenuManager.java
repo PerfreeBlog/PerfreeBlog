@@ -41,7 +41,7 @@ public class MenuManager {
         AdminMenuGroup home = new AdminMenuGroup();
         home.setGroupId(Constants.ADMIN_MENU_GROUP_HOME);
         home.setIcon("fa-home");
-        home.setName("主页");
+        home.setName("控制台");
         home.setUrl("/admin/dashboard");
         home.setSeq(1);
         home.setId(IdUtil.simpleUUID());
