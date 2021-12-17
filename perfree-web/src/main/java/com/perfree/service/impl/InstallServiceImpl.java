@@ -16,6 +16,7 @@ import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.InstallService;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -58,9 +59,11 @@ public class InstallServiceImpl implements InstallService {
         }
         // mysql
         if (database.getType().equals("mysql")) {
-            String format = "jdbc:mysql://%s:%s/perfree?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
-            String url = String.format(format, database.getAddress(), database.getPort());
-            dataSourceBuilder.url("jdbc:sqlite:filename");
+            String format = "jdbc:mysql://%s:%s/%s?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&allowPublicKeyRetrieval=true";
+            if (StringUtils.isBlank(database.getDataBaseName())) {
+                database.setDataBaseName("perfree");
+            }
+            String url = String.format(format, database.getAddress(), database.getPort(), database.getDataBaseName());
             dataSourceBuilder.url(url);
             dataSourceBuilder.username(database.getUserName());
             dataSourceBuilder.password(database.getPassword());

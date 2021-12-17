@@ -13,7 +13,17 @@ public class Database {
     private String password;
     @NotBlank(message = "数据库类型不允许为空")
     private String type;
+
+    private String dataBaseName;
     private int installType;
+
+    public String getDataBaseName() {
+        return dataBaseName;
+    }
+
+    public void setDataBaseName(String dataBaseName) {
+        this.dataBaseName = dataBaseName;
+    }
 
     public int getInstallType() {
         return installType;
