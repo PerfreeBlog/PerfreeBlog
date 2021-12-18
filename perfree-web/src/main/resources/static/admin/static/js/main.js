@@ -4,15 +4,16 @@ $(function () {
         element = layui.element;
         layer = layui.layer;
         laytpl = layui.laytpl;
-    });
-    initEvent();
-    setIframeHeight();
+        initEvent();
+        setIframeHeight();
 
-    const plugin = localStorage.getItem("plugin");
-    if (plugin !== null && plugin !== undefined && plugin !== ""){
-        localStorage.removeItem("plugin");
-        toPage("/admin/plugin");
-    }
+        const plugin = localStorage.getItem("plugin");
+        if (plugin !== null && plugin !== undefined && plugin !== ""){
+            localStorage.removeItem("plugin");
+            toPage("/admin/plugin");
+        }
+    });
+
 });
 
 /**
