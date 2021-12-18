@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -172,16 +174,18 @@ public class MenuServiceImpl implements MenuService {
             if (adminMenuGroupByGroupId == null) {
                 continue;
             }
-            // 清理子菜单
-            for(int j = adminMenuGroup.getMenuItems().size() - 1; j >= 0; j--) {
-                for(int i = adminMenuGroupByGroupId.getMenuItems().size() - 1; i >= 0; i--) {
-                    if (adminMenuGroup.getMenuItems().get(j).getId().equals(adminMenuGroupByGroupId.getMenuItems().get(i).getId())) {
-                        menuMapper.delById(adminMenuGroup.getMenuItems().get(j).getId());
-                        menuMapper.delRoleMenuByMenuId(adminMenuGroup.getMenuItems().get(j).getId());
-                        adminMenuGroupByGroupId.getMenuItems().remove(adminMenuGroupByGroupId.getMenuItems().get(i));
-                    }
-                }
+
+            List<MenuItem> collect = adminMenuGroup.getMenuItems().stream()
+                    .map(t -> adminMenuGroupByGroupId.getMenuItems()
+                            .stream()
+                            .filter(s -> Objects.equals(t.getId(), s.getId()))
+                            .findAny()
+                            .orElse(null)).collect(Collectors.toList());
+            for (MenuItem menuItem : collect) {
+                menuMapper.delById(menuItem.getId());
+                menuMapper.delRoleMenuByMenuId(menuItem.getId());
             }
+            adminMenuGroupByGroupId.getMenuItems().removeAll(collect);
             // 如果菜单组内无其他菜单并且不属于系统菜单组,清除组
             if (adminMenuGroupByGroupId.getMenuItems().size() <= 0 &&
                     !MenuManager.isSystemDefaultAdminMenuGroup(adminMenuGroupByGroupId.getGroupId())) {
