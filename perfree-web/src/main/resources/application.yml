@@ -9,7 +9,7 @@ server:
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/javascript,text/css
     min-response-size: 2048
 
-version: 2.0.0
+version: 2.1.0
 # 默认文件上传地址
 web.upload-path: resources/upload/
 # 程序升级备份目录
