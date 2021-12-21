@@ -63,7 +63,7 @@ docker run --name perfree -d -p 8080:8080 perfree/perfree
 ## 交流群
 > QQ交流群: 938402724
  
- 微信交流群:
+ 微信交流群(添加微信入群,备注PerfreeBlog):
  
 <img width="240" src="/screenshot/wechat.jpg" alt="微信交流群" />
  
