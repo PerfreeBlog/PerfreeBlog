@@ -110,6 +110,6 @@ CREATE TABLE "main"."p_article" (
                                     "createTime" DATETIME NOT NULL,
                                     "updateTime" DATETIME
 );
-INSERT INTO "main"."p_article" ("id", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime") SELECT "id", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime" FROM "main"."_p_article_old_2.1.0";
+INSERT INTO "main"."p_article" ("id", "slug", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime") SELECT "id", "slug", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime" FROM "main"."_p_article_old_2.1.0";
 drop table if exists "main"."_p_article_old_2.1.0";
 UPDATE "main"."p_article" set contentModel = 'markdown' where contentModel is null;
