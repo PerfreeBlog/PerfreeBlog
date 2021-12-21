@@ -60,7 +60,10 @@ public class PreviewThemeFilter implements Filter {
         Elements linkElements = html.select("a");
         for (Element element : linkElements) {
             String url = element.attr("href");
-            if (StringUtils.isBlank(url) || url.toLowerCase().startsWith("http")
+            if (StringUtils.isBlank(url) ) {
+                continue;
+            }
+            if (url.toLowerCase().startsWith("http")
                     || url.toLowerCase().startsWith("javascript") || url.toLowerCase().startsWith("//")) {
                 element.attr("href", url);
                 continue;
