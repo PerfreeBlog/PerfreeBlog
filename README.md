@@ -37,7 +37,7 @@ PerfreeBlog是一款基于java开发的博客建站平台,后端采用[SpringBoo
 
 ## 功能简介
 * 设计简洁，界面美观
-* 采用[Markdown](https://www.markdownguide.org/)编辑器,支持一键插入视频、图片、附件等
+* 采用[Markdown](https://www.markdownguide.org/)/富文本双编辑器,支持一键插入视频、图片、附件等
 * 支持多主题自由切换
 * 强大的主题在线编辑功能,支持多种文件操作,实时生效,支持在网页直接创建新主题,快速开发页面
 * 支持自定义页面
