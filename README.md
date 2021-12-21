@@ -30,7 +30,7 @@ PerfreeBlog是一款基于java开发的博客建站平台,后端采用[SpringBoo
 > 目前PerfreeBlog的所有功能均为个人开发,因能力有限,其中很多技术都是边学习边使用的,所以有些地方可能有不足之处,欢迎各位共同交流,同时如若本项目对您有所帮助,请为它[点赞](https://github.com/perfree/PerfreeBlog)支持 
 
 * 官网地址: [http://perfree.org.cn](http://perfree.org.cn)
-* 文档地址: [http://perfree.org.cn/doc](http://perfree.org.cn/doc)
+* 文档地址: [http://perfree.gitee.io](http://perfree.gitee.io)
 * 演示站点: [https://www.yinpengfei.com](https://www.yinpengfei.com)
 * 开发计划: [板栗看板](https://web.banlikanban.com/kanban/6193a5656f6f640fbe2d08e4)
 
