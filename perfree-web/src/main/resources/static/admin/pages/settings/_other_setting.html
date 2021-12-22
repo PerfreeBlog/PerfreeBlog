@@ -1,0 +1,20 @@
+<div class="layui-tab-item">
+    <form class="layui-form" action="">
+        <div class="layui-input-inline"  style="display: none;">
+            <select lay-verify="" type="hidden"></select>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">自定义head</label>
+            <div class="layui-input-block">
+                <textarea name="WEB_CUSTOM_HEAD" placeholder="放置于前台每个页面的head标签中,通常可以用来添加第三方统计的代码,如百度统计,或者可以自定义css/js等" class="layui-textarea" style="min-height: 200px">#option('WEB_CUSTOM_HEAD')</textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn addBtn" lay-submit lay-filter="optionForm">保存设置</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -167,4 +167,5 @@ public class Constants {
     public static final String WEB_SITE = "WEB_SITE";
 
     public static final String VERSION = "version";
+    public static final String OPTION_WEB_CUSTOM_HEAD = "WEB_CUSTOM_HEAD";
 }

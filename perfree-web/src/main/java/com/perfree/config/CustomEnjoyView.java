@@ -3,7 +3,9 @@ package com.perfree.config;
 import com.jfinal.template.Template;
 import com.jfinal.template.ext.spring.JFinalView;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
+import com.perfree.commons.Constants;
 import com.perfree.commons.CustomByteArrayOutputStream;
+import com.perfree.commons.OptionCacheUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -109,8 +111,18 @@ public class CustomEnjoyView extends JFinalView {
         }
     }
 
+    /**
+     * 自定义head代码处理
+     * @param doc doc
+     * @param response response
+     * @param request request
+     */
     private void buildHeadHtml(Document doc, HttpServletResponse response, HttpServletRequest request) {
-        // doc.head().append("");
+        if (request.getRequestURI().startsWith("/admin")) {
+            return;
+        }
+        String customHead = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_CUSTOM_HEAD, "");
+        doc.head().append(customHead);
     }
 
 }
