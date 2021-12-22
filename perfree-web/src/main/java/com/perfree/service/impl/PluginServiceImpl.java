@@ -16,10 +16,12 @@ import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.PluginService;
+import org.apache.commons.lang3.StringUtils;
 import org.pf4j.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,6 +37,9 @@ public class PluginServiceImpl implements PluginService {
 
     @Autowired
     private PluginManager pluginManager;
+
+    @Value("${version}")
+    private String version;
 
 
     /**
@@ -64,6 +69,11 @@ public class PluginServiceImpl implements PluginService {
             Props setting = PluginsUtils.getSetting(file);
             if (setting.isEmpty()) {
                 return ResponseBean.fail("插件安装失败:插件内无配置文件", null);
+            }
+            //plugin.minimal.version
+            String minimalVersion = setting.getStr("plugin.minimal.version", "");
+            if (StringUtils.isNotBlank(minimalVersion) && StringUtil.versionToLong(minimalVersion) > StringUtil.versionToLong(version)){
+                return ResponseBean.fail("插件安装失败:该插件最低需要" + minimalVersion + "版本的PerfreeBlog", null);
             }
 
             File pluginFile = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + multiFileName);
