@@ -130,7 +130,7 @@
 
     <select id="getRecentComment" resultMap="COMMENT_RESULT">
         SELECT t1.*,t3.title,t3.slug,t3.type FROM p_comment t1
-        left join p_article t3 on t1.articleId = t3.id
+        left join p_article t3 on t1.articleId = t3.id where t3.type = 'article'
         ORDER BY t1.createTime DESC limit 0,#{count}
     </select>
     <select id="getById" resultType="com.perfree.model.Comment">
