@@ -210,11 +210,11 @@
     border-right: solid 5px hsl(0, 0%, 80%);
 }
 /* ckeditor5-basic-styles/theme/code.css */
-.ck-content code {
+/*.ck-content code {
     background-color: hsla(0, 0%, 78%, 0.3);
     padding: .15em;
     border-radius: 2px;
-}
+}*/
 /* ckeditor5-table/theme/tablecaption.css */
 .ck-content .table > figcaption {
     display: table-caption;
@@ -375,7 +375,7 @@
     font-style: italic;
 }
 /* ckeditor5-code-block/theme/codeblock.css */
-.ck-content pre {
+/*.ck-content pre {
     padding: 1em;
     color: hsl(0, 0%, 20.8%);
     background: hsla(0, 0%, 78%, 0.3);
@@ -387,13 +387,13 @@
     white-space: pre-wrap;
     font-style: normal;
     min-width: 200px;
-}
+}*/
 /* ckeditor5-code-block/theme/codeblock.css */
-.ck-content pre code {
+/*.ck-content pre code {
     background: unset;
     padding: 0;
     border-radius: 0;
-}
+}*/
 /* ckeditor5-mention/theme/mention.css */
 .ck-content .mention {
     background: var(--ck-color-mention-background);
