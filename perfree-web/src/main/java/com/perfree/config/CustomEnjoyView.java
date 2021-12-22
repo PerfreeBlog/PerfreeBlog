@@ -57,7 +57,10 @@ public class CustomEnjoyView extends JFinalView {
             return doc.body().html();
         }
         // 预览主题
-        doc = buildPreviewThemeHtml(doc, response, request);
+        buildPreviewThemeHtml(doc, response, request);
+        // 自定义Head代码
+        buildHeadHtml(doc, response, request);
+        // 插件hook自定义html代码
         return doc.toString();
     }
 
@@ -66,12 +69,11 @@ public class CustomEnjoyView extends JFinalView {
      * @param doc doc
      * @param response response
      * @param request request
-     * @return Document
      */
-    public Document buildPreviewThemeHtml( Document doc,HttpServletResponse response, HttpServletRequest request){
+    private void buildPreviewThemeHtml(Document doc, HttpServletResponse response, HttpServletRequest request){
         String previewTheme = request.getParameter("previewTheme");
         if (StringUtils.isBlank(previewTheme) || request.getRequestURI().startsWith("/admin")) {
-            return doc;
+            return;
         }
         Elements linkElements = doc.select("a");
         for (Element element : linkElements) {
@@ -105,6 +107,10 @@ public class CustomEnjoyView extends JFinalView {
 
             element.attr("href", urlBuilder.toString());
         }
-        return doc;
     }
+
+    private void buildHeadHtml(Document doc, HttpServletResponse response, HttpServletRequest request) {
+        // doc.head().append("");
+    }
+
 }
