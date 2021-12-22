@@ -28,6 +28,7 @@ public class EnjoyConfig {
         jfr.setContentType("text/html;charset=UTF-8");
         jfr.setOrder(0);
         jfr.setSessionInView(true);
+        jfr.setViewClass(CustomEnjoyView.class);
         Engine engine = JFinalViewResolver.engine;
         engine.setDevMode(true);
         engine.setSourceFactory(new TemplateSourceFactory());
