@@ -8,6 +8,7 @@ import com.jfinal.template.Directive;
 import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.SpringBeanUtils;
+import com.perfree.commons.StringUtil;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
@@ -110,12 +111,12 @@ public class PostAppRunner implements ApplicationRunner {
                 Connection connection = dataSource.getConnection();
                 for (int i = 1; i < updateStrSplit.length; i++) {
                     String[] split = updateStrSplit[i].split(";");
-                    long currUpdateVersion = versionToLong(split[0]);
+                    long currUpdateVersion = StringUtil.versionToLong(split[0]);
                     // 1. 更新sql版本等于最新项目版本
                     // 2. 更新sql版本 大于 dbVersion
                     // 3. 更新sql版本 小于等于最新项目版本
-                    if ((currUpdateVersion == versionToLong(version) || currUpdateVersion > versionToLong(dbVersion)) &&
-                            currUpdateVersion <= versionToLong(version)) {
+                    if ((currUpdateVersion == StringUtil.versionToLong(version) || currUpdateVersion > StringUtil.versionToLong(dbVersion)) &&
+                            currUpdateVersion <= StringUtil.versionToLong(version)) {
                         for (int j = 1; j < split.length; j++){
                             try{
                                 if(StringUtils.isNotBlank(split[j])){
@@ -130,7 +131,7 @@ public class PostAppRunner implements ApplicationRunner {
                     }
                 }
                 // 临时: 小于128版本,清除插件目录
-                if (versionToLong(dbVersion) < 128) {
+                if (StringUtil.versionToLong(dbVersion) < 128) {
                     File pluginFile = new File(Constants.PLUGIN_PATH);
                     if (pluginFile.exists()){
                         FileUtil.clean(pluginFile.getAbsolutePath());
@@ -175,10 +176,5 @@ public class PostAppRunner implements ApplicationRunner {
                 EnjoyConfig.jfr.addDirective(injectBean.value(), directive.getClass());
             }
         }
-    }
-
-    public long versionToLong(String versionStr) {
-       return Long.parseLong(versionStr.replaceAll("\r\n","").replaceAll("--","")
-               .replaceAll("\\.","").replace("v",""));
     }
 }

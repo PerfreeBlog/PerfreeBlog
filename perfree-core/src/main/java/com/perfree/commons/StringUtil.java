@@ -162,4 +162,9 @@ public class StringUtil {
         }
         return md5Str;
     }
+
+    public static long versionToLong(String versionStr) {
+        return Long.parseLong(versionStr.replaceAll("\r\n","").replaceAll("--","")
+                .replaceAll("\\.","").replace("v",""));
+    }
 }

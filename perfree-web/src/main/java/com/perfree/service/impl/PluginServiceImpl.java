@@ -7,6 +7,7 @@ import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
+import com.perfree.commons.StringUtil;
 import com.perfree.config.EnjoyConfig;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugin;
@@ -15,6 +16,7 @@ import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.PluginService;
+import org.pf4j.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +68,19 @@ public class PluginServiceImpl implements PluginService {
 
             File pluginFile = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + multiFileName);
             boolean isUpdate = false;
-            if (pluginFile.exists()) {
-                isUpdate = true;
-                pluginManager.unInstall(setting.getStr("plugin.id"));
+            PluginWrapper plugin = pluginManager.getPlugin(setting.getStr("plugin.id"));
+            if (plugin != null) {
+                long oldVersion = StringUtil.versionToLong(plugin.getDescriptor().getVersion());
+                long newVersion = StringUtil.versionToLong(setting.getStr("plugin.version"));
+
+                if (oldVersion == newVersion) {
+                    return ResponseBean.fail("插件安装失败:该版本插件已经安装,请勿再次安装", null);
+                } else if (oldVersion > newVersion) {
+                    return ResponseBean.fail("插件安装失败:更高版本的插件已存在,请勿再次安装低版本插件", null);
+                } else {
+                    isUpdate = true;
+                    pluginManager.unInstall(setting.getStr("plugin.id"));
+                }
             }
             FileUtil.copy(file.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
 
