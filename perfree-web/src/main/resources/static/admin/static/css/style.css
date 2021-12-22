@@ -105,7 +105,6 @@ html,body{
 .layui-layout-admin .layui-header {
     background-color: #ffffff;
     border-color: #e8e8e8;
-    position: absolute;
     box-shadow: 0 1px 4px rgba(0,21,41,.08);
 }
 .layui-nav {
@@ -311,7 +310,6 @@ html,body{
 }
 .f-show-side .f-header{
     margin-left: 230px;
-    position: absolute;
     box-shadow: none;
     border-color: #f6f6f6;
 }

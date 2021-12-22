@@ -150,7 +150,7 @@ function initMarkdownEditor(content) {
         height: '680',
         name: "mdContent",
         syncScrolling: "single",
-        path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/", //注意2：你的路径
+        path: "/static/public/libs/editormd/lib/", //注意2：你的路径
         saveHTMLToTextarea: false,
         tex: true, // 开启科学公式TeX语言支持，默认关闭
         watch: false,
