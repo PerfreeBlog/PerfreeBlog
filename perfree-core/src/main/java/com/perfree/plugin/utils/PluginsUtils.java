@@ -4,6 +4,9 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
+import com.perfree.plugin.PluginHolder;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.proxy.CommentProxy;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedOutputStream;
@@ -11,7 +14,10 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.JarURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -72,5 +78,18 @@ public class PluginsUtils {
             }
             result = file.delete();
         }
+    }
+
+    public static <T> List<T> getAllPluginProxyClass(Class<T> clazz) {
+        List<T> result = new ArrayList<>();
+        Map<String, PluginInfo> allPlugin = PluginHolder.getAllPlugin();
+        for (String key : allPlugin.keySet()) {
+            PluginInfo pluginInfo = allPlugin.get(key);
+            T pluginBean = pluginInfo.getPluginBean(clazz);
+            if (pluginBean != null) {
+                result.add(pluginBean);
+            }
+        }
+        return result;
     }
 }

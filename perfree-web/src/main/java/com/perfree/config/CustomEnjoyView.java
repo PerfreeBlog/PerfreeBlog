@@ -6,9 +6,8 @@ import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.perfree.commons.Constants;
 import com.perfree.commons.CustomByteArrayOutputStream;
 import com.perfree.commons.OptionCacheUtil;
-import com.perfree.plugin.PluginHolder;
-import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.proxy.HtmlRenderProxy;
+import com.perfree.plugin.utils.PluginsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 public class CustomEnjoyView extends JFinalView {
@@ -66,17 +66,13 @@ public class CustomEnjoyView extends JFinalView {
         // 自定义Head代码
         buildHeadHtml(doc, response, request);
         // 插件proxy自定义html代码
-        Map<String, PluginInfo> allPlugin = PluginHolder.getAllPlugin();
-        for (String key : allPlugin.keySet()) {
-            PluginInfo pluginInfo = allPlugin.get(key);
-            HtmlRenderProxy htmlRenderProxy = pluginInfo.getPluginBean(HtmlRenderProxy.class);
-            if (htmlRenderProxy != null) {
-                doc = htmlRenderProxy.editDocument(doc, response, request);
-                if (request.getRequestURI().startsWith("/admin")) {
-                    doc = htmlRenderProxy.editAdminDocument(doc, response, request);
-                } else {
-                    doc = htmlRenderProxy.editFrontDocument(doc, response, request);
-                }
+        List<HtmlRenderProxy> allPluginProxyClass = PluginsUtils.getAllPluginProxyClass(HtmlRenderProxy.class);
+        for (HtmlRenderProxy htmlRenderProxy : allPluginProxyClass) {
+            doc = htmlRenderProxy.editDocument(doc, response, request);
+            if (request.getRequestURI().startsWith("/admin")) {
+                doc = htmlRenderProxy.editAdminDocument(doc, response, request);
+            } else {
+                doc = htmlRenderProxy.editFrontDocument(doc, response, request);
             }
         }
         return doc.toString();

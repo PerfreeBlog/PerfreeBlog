@@ -11,6 +11,11 @@ import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.Option;
 import com.perfree.model.User;
+import com.perfree.plugin.PluginHolder;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.proxy.CommentProxy;
+import com.perfree.plugin.proxy.HtmlRenderProxy;
+import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
 import com.perfree.service.MailService;
@@ -27,8 +32,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 @Controller
+@SuppressWarnings("all")
 public class CommentController extends BaseController {
     //缓存
     private static final CacheManager cacheManager = CacheManager.newInstance();
@@ -81,7 +89,23 @@ public class CommentController extends BaseController {
             comment.setStatus(Constants.COMMENT_STATUS_NORMAL);
         }
         comment.setContent(HtmlUtil.filter(comment.getContent()));
+
+        // 插件评论代理前置处理
+        List<CommentProxy> allPluginProxyClass = PluginsUtils.getAllPluginProxyClass(CommentProxy.class);
+        for (CommentProxy commentProxy : allPluginProxyClass) {
+            ResponseBean responseBean = commentProxy.commentIsSave(comment);
+            if (responseBean != null) {
+                return  responseBean;
+            }
+            comment = commentProxy.commentSaveBefore(comment);
+        }
+
         if (commentService.add(comment) > 0) {
+            // 插件评论代理后置处理
+            for (CommentProxy commentProxy : allPluginProxyClass) {
+                comment = commentProxy.commentSaveAfter(comment);
+            }
+
             if (comment.getStatus() == Constants.COMMENT_STATUS_NORMAL) {
                 mailService.commentMailSend(comment);
                 return ResponseBean.success("评论成功", comment);
