@@ -1,15 +1,9 @@
 package com.perfree.plugin.register;
 
-import com.jfinal.template.Directive;
 import com.jfinal.template.expr.ast.FieldKit;
 import com.jfinal.template.ext.spring.JFinalViewResolver;
-import com.perfree.directive.BaseDirective;
-import com.perfree.directive.TemplateDirective;
 import com.perfree.plugin.PluginInfo;
 import org.springframework.context.ApplicationContext;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @description 定义模板指令注册

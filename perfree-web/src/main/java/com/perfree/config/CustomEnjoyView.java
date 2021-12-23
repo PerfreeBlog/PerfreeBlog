@@ -6,6 +6,9 @@ import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.perfree.commons.Constants;
 import com.perfree.commons.CustomByteArrayOutputStream;
 import com.perfree.commons.OptionCacheUtil;
+import com.perfree.plugin.PluginHolder;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.proxy.HtmlRenderProxy;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -62,7 +65,20 @@ public class CustomEnjoyView extends JFinalView {
         buildPreviewThemeHtml(doc, response, request);
         // 自定义Head代码
         buildHeadHtml(doc, response, request);
-        // 插件hook自定义html代码
+        // 插件proxy自定义html代码
+        Map<String, PluginInfo> allPlugin = PluginHolder.getAllPlugin();
+        for (String key : allPlugin.keySet()) {
+            PluginInfo pluginInfo = allPlugin.get(key);
+            HtmlRenderProxy htmlRenderProxy = pluginInfo.getPluginBean(HtmlRenderProxy.class);
+            if (htmlRenderProxy != null) {
+                doc = htmlRenderProxy.editDocument(doc, response, request);
+                if (request.getRequestURI().startsWith("/admin")) {
+                    doc = htmlRenderProxy.editAdminDocument(doc, response, request);
+                } else {
+                    doc = htmlRenderProxy.editFrontDocument(doc, response, request);
+                }
+            }
+        }
         return doc.toString();
     }
 
