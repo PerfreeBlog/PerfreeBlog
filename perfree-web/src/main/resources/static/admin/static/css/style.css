@@ -95,11 +95,11 @@ html,body{
 .layui-layout-admin .layui-logo{
     position: initial;
     height: 50px;
-    border-bottom: 1px solid #23262e;
-    color: #4c9fff;
+    border-bottom: 1px solid #26272a;
+    color: #c3c9cf;
     font-size: 22px;
     line-height: 50px;
-    font-weight: 600;
+    font-weight: 500;
     width: 230px;
 }
 .layui-layout-admin .layui-header {
@@ -111,7 +111,7 @@ html,body{
     background-color: #28333E;
 }
 .layui-side-scroll{
-    height: calc(100% - 192px);
+    height: calc(100% - 52px);
 }
 
 .layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after{
