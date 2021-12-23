@@ -8,6 +8,8 @@ import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.model.Attach;
 import com.perfree.permission.AdminMenu;
+import com.perfree.plugin.proxy.AttachProxy;
+import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * 附件
@@ -102,7 +105,15 @@ public class AttachController extends BaseController {
             attach.setType(type);
             attach.setFlag(flag);
             attach.setDesc(desc);
+
+            List<AttachProxy> allPluginProxyClass = PluginsUtils.getAllPluginProxyClass(AttachProxy.class);
+            for (AttachProxy attachProxy : allPluginProxyClass) {
+                attach = attachProxy.attachSaveBefore(attach);
+            }
             if (attachService.add(attach) > 0){
+                for (AttachProxy attachProxy : allPluginProxyClass) {
+                    attach = attachProxy.attachSaveAfter(attach);
+                }
                 return ResponseBean.success("上传成功", attach);
             } else {
                 logger.error("上传失败: {}",attach.toString());
