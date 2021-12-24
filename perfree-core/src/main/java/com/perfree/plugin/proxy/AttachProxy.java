@@ -9,7 +9,7 @@ public abstract class AttachProxy {
 
     /**
      * 附件存库之前的操作
-     * @param attach attach
+     * @param attach 附件信息对象
      * @return Comment
      */
     public Attach attachSaveBefore(Attach attach) {
@@ -18,7 +18,7 @@ public abstract class AttachProxy {
 
     /**
      * 附件存库之后的操作
-     * @param attach attach
+     * @param attach 附件信息对象
      * @return Comment
      */
     public Attach attachSaveAfter(Attach attach) {

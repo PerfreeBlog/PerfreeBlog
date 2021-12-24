@@ -10,7 +10,7 @@ public abstract class CommentProxy {
 
     /**
      * 评论保存之后操作
-     * @param comment comment
+     * @param comment 评论内容信息对象
      * @return Comment
      */
     public Comment commentSaveAfter(Comment comment) {
@@ -19,7 +19,7 @@ public abstract class CommentProxy {
 
     /**
      * 是否允许存库,如允许存库则返回null,反之返回对应的响应信息
-     * @param comment comment
+     * @param comment 评论内容信息对象
      * @return Comment
      */
     public ResponseBean commentIsSave(Comment comment) {
@@ -28,7 +28,7 @@ public abstract class CommentProxy {
 
     /**
      * 评论保存之前操作
-     * @param comment comment
+     * @param comment 评论内容信息对象
      * @return Comment
      */
     public Comment commentSaveBefore(Comment comment) {
