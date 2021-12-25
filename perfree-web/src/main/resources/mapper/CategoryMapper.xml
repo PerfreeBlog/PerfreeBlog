@@ -72,4 +72,12 @@
     <select id="getById" resultType="com.perfree.model.Category">
         select * from p_category where id=#{id}
     </select>
+    <select id="frontArticlesList" resultMap="CATEGORY_LIST_TREE">
+        select * from p_category where pid = -1
+        <if test="name != null and name != ''">
+            <bind name="name" value="'%' + _parameter.name + '%'" />
+            and name like #{name,jdbcType=VARCHAR}
+        </if>
+        order by createTime desc
+    </select>
 </mapper>

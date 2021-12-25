@@ -1,9 +1,11 @@
 package com.perfree.mapper;
 
+import com.perfree.model.Article;
 import com.perfree.model.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -62,4 +64,7 @@ public interface CategoryMapper {
     void addCount(Long id);
 
     void subCount(Long id);
+
+    List<Category> frontArticlesList(HashMap<String, String> form);
+
 }

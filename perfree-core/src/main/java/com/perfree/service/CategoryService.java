@@ -1,8 +1,10 @@
 package com.perfree.service;
 
 import com.perfree.commons.Pager;
+import com.perfree.directive.DirectivePage;
 import com.perfree.model.Category;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -69,4 +71,6 @@ public interface CategoryService {
      * @return List<Category>
      */
     List<Category> getApiList();
+
+    DirectivePage<HashMap<String, String>> frontArchivePage(DirectivePage<HashMap<String, String>> categoriesPage);
 }

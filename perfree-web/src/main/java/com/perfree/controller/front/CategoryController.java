@@ -30,4 +30,17 @@ public class CategoryController extends BaseController {
         model.addAttribute("url", Constants.URL_ARTICLE_CATEGORY + categoryId  + "/");
         return view(currentThemePage() + "/articleList.html");
     }
+
+    @RequestMapping("/categories")
+    public String categories(Model model) {
+        model.addAttribute("url", Constants.URL_CATEGORIES);
+        return view(currentThemePage() + "/categories.html");
+    }
+
+    @RequestMapping("/categories/{pageIndex}")
+    public String categoriesPage(@PathVariable("pageIndex") int pageIndex,Model model) {
+        model.addAttribute("url", Constants.URL_CATEGORIES);
+        model.addAttribute("pageIndex", pageIndex);
+        return view(currentThemePage() + "/categories.html");
+    }
 }

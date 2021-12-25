@@ -3,7 +3,9 @@ package com.perfree.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
+import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.CategoryMapper;
+import com.perfree.model.Article;
 import com.perfree.model.Category;
 import com.perfree.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -108,5 +111,15 @@ public class CategoryServiceImpl implements CategoryService {
      */
     public List<Category> getApiList() {
         return categoryMapper.getList(null);
+    }
+
+    @Override
+    public DirectivePage<HashMap<String, String>> frontArchivePage(DirectivePage<HashMap<String, String>> categoriesPage) {
+        PageHelper.startPage(categoriesPage.getPageIndex(), categoriesPage.getPageSize());
+        List<Category> articles = categoryMapper.frontArticlesList(categoriesPage.getForm());
+        PageInfo<Category> pageInfo = new PageInfo<>(articles);
+        categoriesPage.setTotal(pageInfo.getTotal());
+        categoriesPage.setData(pageInfo.getList());
+        return categoriesPage;
     }
 }
