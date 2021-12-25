@@ -4,6 +4,7 @@ import com.perfree.model.Tag;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -57,4 +58,7 @@ public interface TagMapper {
      * @return List<Tag>
      */
     List<Tag> getHotTag(int count);
+
+    List<Tag> frontTagsList(HashMap<String, String> form);
+
 }

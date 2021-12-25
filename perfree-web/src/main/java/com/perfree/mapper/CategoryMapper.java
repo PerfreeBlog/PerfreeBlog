@@ -65,6 +65,6 @@ public interface CategoryMapper {
 
     void subCount(Long id);
 
-    List<Category> frontArticlesList(HashMap<String, String> form);
+    List<Category> frontCategoryList(HashMap<String, String> form);
 
 }

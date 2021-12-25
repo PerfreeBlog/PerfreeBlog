@@ -31,7 +31,7 @@ public class CategoriesPageDirective extends BaseDirective{
         DirectivePage<HashMap<String, String>> categoriesPage = new DirectivePage<>();
         categoriesPage.setPageIndex(getModelDataToInt("pageIndex", scope, 1));
         categoriesPage.setPageSize(getExprParamToInt("pageSize", 10));
-        categoriesPage = categoryService.frontArchivePage(categoriesPage);
+        categoriesPage = categoryService.frontCategoryPage(categoriesPage);
         categoriesPage.setUrlPrefix(url);
         categoriesPage.initPagers();
 

@@ -3,7 +3,9 @@ package com.perfree.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
+import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.TagMapper;
+import com.perfree.model.Category;
 import com.perfree.model.Tag;
 import com.perfree.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -98,5 +101,15 @@ public class TagServiceImpl implements TagService {
      */
     public List<Tag> getHotTag(int count) {
         return tagMapper.getHotTag(count);
+    }
+
+    @Override
+    public DirectivePage<HashMap<String, String>> frontTagsPage(DirectivePage<HashMap<String, String>> tagsPage) {
+        PageHelper.startPage(tagsPage.getPageIndex(), tagsPage.getPageSize());
+        List<Tag> tags = tagMapper.frontTagsList(tagsPage.getForm());
+        PageInfo<Tag> pageInfo = new PageInfo<>(tags);
+        tagsPage.setTotal(pageInfo.getTotal());
+        tagsPage.setData(pageInfo.getList());
+        return tagsPage;
     }
 }

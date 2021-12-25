@@ -40,6 +40,8 @@ public class Constants {
     public static final String URL_ARCHIVE = "/archive/";
     /** url - archive(分类) */
     public static final String URL_CATEGORIES = "/categories/";
+    /** url - archive(标签) */
+    public static final String URL_TAGS = "/tags/";
 
     /** url - link(友链) */
     public static final String URL_LINK = "/link/";

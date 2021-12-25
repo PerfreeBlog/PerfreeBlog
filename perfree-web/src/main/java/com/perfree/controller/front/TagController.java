@@ -25,4 +25,17 @@ public class TagController extends BaseController {
         model.addAttribute("url", Constants.URL_ARTICLE_TAG + tagId + "/");
         return view(currentThemePage() + "/articleList.html");
     }
+
+    @RequestMapping("/tags")
+    public String tags(Model model) {
+        model.addAttribute("url", Constants.URL_TAGS);
+        return view(currentThemePage() + "/tags.html");
+    }
+
+    @RequestMapping("/tags/{pageIndex}")
+    public String tagsPage(@PathVariable("pageIndex") int pageIndex,Model model) {
+        model.addAttribute("url", Constants.URL_TAGS);
+        model.addAttribute("pageIndex", pageIndex);
+        return view(currentThemePage() + "/tags.html");
+    }
 }

@@ -72,5 +72,5 @@ public interface CategoryService {
      */
     List<Category> getApiList();
 
-    DirectivePage<HashMap<String, String>> frontArchivePage(DirectivePage<HashMap<String, String>> categoriesPage);
+    DirectivePage<HashMap<String, String>> frontCategoryPage(DirectivePage<HashMap<String, String>> categoriesPage);
 }

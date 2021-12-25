@@ -1,8 +1,10 @@
 package com.perfree.service;
 
 import com.perfree.commons.Pager;
+import com.perfree.directive.DirectivePage;
 import com.perfree.model.Tag;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -65,4 +67,7 @@ public interface TagService {
      * @return List<Tag>
      */
     List<Tag> getHotTag(int count);
+
+    DirectivePage<HashMap<String, String>> frontTagsPage(DirectivePage<HashMap<String, String>> tagsPage);
+
 }

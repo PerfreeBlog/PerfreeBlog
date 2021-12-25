@@ -114,9 +114,9 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public DirectivePage<HashMap<String, String>> frontArchivePage(DirectivePage<HashMap<String, String>> categoriesPage) {
+    public DirectivePage<HashMap<String, String>> frontCategoryPage(DirectivePage<HashMap<String, String>> categoriesPage) {
         PageHelper.startPage(categoriesPage.getPageIndex(), categoriesPage.getPageSize());
-        List<Category> articles = categoryMapper.frontArticlesList(categoriesPage.getForm());
+        List<Category> articles = categoryMapper.frontCategoryList(categoriesPage.getForm());
         PageInfo<Category> pageInfo = new PageInfo<>(articles);
         categoriesPage.setTotal(pageInfo.getTotal());
         categoriesPage.setData(pageInfo.getList());
