@@ -1,10 +1,12 @@
 package com.perfree.controller.admin;
 
 import com.perfree.commons.Constants;
+import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.model.Option;
 import com.perfree.permission.AdminMenu;
+import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -24,6 +26,9 @@ public class SettingController extends BaseController {
 
     @Autowired
     private OptionService optionService;
+
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("/setting")
     @AdminMenu(name = "网站设置", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_SETTING)
@@ -51,5 +56,23 @@ public class SettingController extends BaseController {
             return ResponseBean.success("保存成功", null);
         }
         return ResponseBean.fail("保存失败", null);
+    }
+
+    /**
+     * 发送测试邮件
+     * @param mail mail
+     * @return ResponseBean
+     */
+    @PostMapping("/setting/testMail")
+    @ResponseBody
+    public ResponseBean testMail(String mail) {
+        try{
+            if (mailService.sendMail(mail, "这是一封测试邮件~", "来自["+ OptionCacheUtil.getValue("WEB_NAME")+"]站点的新消息")) {
+                return ResponseBean.success("发送成功", null);
+            }
+            return ResponseBean.fail("发送失败", null);
+        }catch (Exception e) {
+            return ResponseBean.fail("邮箱服务出错,发送失败:"+ e.getMessage(), null);
+        }
     }
 }

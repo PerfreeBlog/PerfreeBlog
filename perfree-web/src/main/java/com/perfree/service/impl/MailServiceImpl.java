@@ -97,23 +97,32 @@ public class MailServiceImpl implements MailService {
      * @author Perfree
      */
     public void passwordMail(User user, String random) throws Exception {
-            if (StringUtils.isBlank(OptionCacheUtil.getValue("SMTP_SERVER"))) {
-                return;
-            }
-            setJavaMailSender();
-            MimeMessage message = javaMailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message,true);
-            helper.setFrom(OptionCacheUtil.getValue("SMTP_EMAIL"));
-            helper.setTo(user.getEmail());
-            helper.setSubject("来自["+OptionCacheUtil.getValue("WEB_NAME")+"]站点的新消息");
             String html = StrFormatter.format("<div style='margin: 100px auto;background-color: #fff;width: 866px;border: 1px solid #F1F0F0;box-shadow: 0 0 5px #f1f0f0;'>\n" +
                 "\t<h2 style='width: 866px;height: 78px;padding-top: 10px;padding-left: 28px;background-color: #F7F7F7;margin: 0; padding: 0;line-height: 78px;display: block;text-align: center;'>{}</h2>\n" +
                 "\t<div style='padding-left: 20px;padding-right20px;'>\n" +
                 "\t\t<p> 您正在执行找回密码操作,验证码:{},验证码将在2分钟后失效 </p>\n" +
                 "\t</div>\n" +
                 "</div>", OptionCacheUtil.getValue("WEB_NAME"), random);
-            helper.setText(html,true);
-            javaMailSender.send(message);
+            sendMail(user.getEmail(), html, "来自["+OptionCacheUtil.getValue("WEB_NAME")+"]站点的新消息");
+    }
+
+    /**
+     * 发送邮件
+     */
+    public boolean sendMail(String mail,String content, String title) throws Exception{
+        if (StringUtils.isBlank(OptionCacheUtil.getValue("SMTP_SERVER"))) {
+            return false;
+        }
+        setJavaMailSender();
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message,true);
+        helper.setFrom(OptionCacheUtil.getValue("SMTP_EMAIL"));
+        helper.setTo(mail);
+        helper.setSubject(title);
+        String html = StrFormatter.format(content);
+        helper.setText(html,true);
+        javaMailSender.send(message);
+        return true;
     }
 
     /**
