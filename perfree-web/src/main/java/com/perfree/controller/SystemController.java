@@ -175,14 +175,14 @@ public class SystemController extends BaseController {
         }
         Object sessionRestPassword = session.getAttribute("REST-CAPTCHA");
         if (sessionRestPassword != null) {
-            return ResponseBean.fail("邮件重复发送,请两分钟后再试", null);
+            return ResponseBean.fail("邮件重复发送,请稍后再试", null);
         }
         try {
-            String random = RandomUtil.randomString(6);
+            String random = RandomUtil.randomString(4);
             mailService.passwordMail(user, random);
             session.setAttribute("REST-CAPTCHA", random);
             session.setAttribute("REST-ID", queryUser.getId());
-            session.setMaxInactiveInterval(120);
+            session.setMaxInactiveInterval(300);
             return ResponseBean.success("验证码发送成功", null);
         } catch (Exception e) {
             e.printStackTrace();
