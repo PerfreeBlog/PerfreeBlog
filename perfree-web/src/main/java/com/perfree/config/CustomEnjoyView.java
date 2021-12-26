@@ -135,6 +135,10 @@ public class CustomEnjoyView extends JFinalView {
         }
         String customHead = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_CUSTOM_HEAD, "");
         doc.head().append(customHead);
+        String isAutoPushBaidu = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_IS_AUTO_PUSH_BAIDU, "");
+        if (StringUtils.isNotBlank(isAutoPushBaidu) && isAutoPushBaidu.equals("1")) {
+            doc.head().append("<script>(function(){var bp=document.createElement('script');var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js'}else{bp.src='http://push.zhanzhang.baidu.com/push.js'}var s=document.getElementsByTagName(\"script\")[0];s.parentNode.insertBefore(bp,s)})();</script>");
+        }
     }
 
 }

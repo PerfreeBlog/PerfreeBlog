@@ -19,6 +19,17 @@
             </div>
         </div>
 
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">自动推送百度</label>
+            <div class="layui-input-block" style="margin-left: 130px;width: 200px">
+                <select name="WEB_IS_AUTO_PUSH_BAIDU">
+                    <option value="0" #(optionCompare('WEB_IS_AUTO_PUSH_BAIDU', '0') ? 'selected': '')>关闭</option>
+                    <option value="1" #(optionCompare('WEB_IS_AUTO_PUSH_BAIDU', '1') ? 'selected': '')>开启</option>
+                </select>
+            </div>
+        </div>
+
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn addBtn" lay-submit lay-filter="optionForm"><i class="fa fa-check" aria-hidden="true"></i> 保存设置</button>
