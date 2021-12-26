@@ -1,9 +1,11 @@
 package com.perfree.controller.api.pub;
 
+import cn.hutool.core.util.RandomUtil;
 import com.perfree.commons.*;
 import com.perfree.model.Option;
 import com.perfree.model.Role;
 import com.perfree.model.User;
+import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
 import com.perfree.service.RoleService;
 import com.perfree.service.UserService;
@@ -40,6 +42,8 @@ public class SystemController {
     private OptionService optionService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private MailService mailService;
 
     /**
      * 登录
@@ -130,6 +134,35 @@ public class SystemController {
         }
         logger.error("注册失败: {}", user.toString());
         return ResponseBean.fail("注册失败", null);
+    }
+
+    /**
+     * @return com.perfree.common.ResponseBean
+     * @description 找回/重置密码时发送邮件
+     * @author wuwenbin
+     */
+    @RequestMapping(method = RequestMethod.POST, path = "/doSendRestPassMail")
+    @ResponseBody
+    public ResponseBean doSendRestPassMail(@RequestBody User user, HttpSession session) {
+        User queryUser = userService.getUserByAccountAndEmail(user.getAccount(), user.getEmail());
+        if (queryUser == null) {
+            return ResponseBean.fail("账户不存在", null);
+        }
+        Object sessionRestPassword = session.getAttribute("REST-CAPTCHA");
+        if (sessionRestPassword != null) {
+            return ResponseBean.fail("邮件重复发送,请两分钟后再试", null);
+        }
+        try {
+            String random = RandomUtil.randomString(6);
+            mailService.passwordMail(user, random);
+            session.setAttribute("REST-CAPTCHA", random);
+            session.setAttribute("REST-ID", queryUser.getId());
+            session.setMaxInactiveInterval(120);
+            return ResponseBean.success("验证码发送成功", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseBean.fail("发送邮件出错", e.getMessage());
+        }
     }
 
 }
