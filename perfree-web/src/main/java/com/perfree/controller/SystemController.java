@@ -208,6 +208,7 @@ public class SystemController extends BaseController {
             return ResponseBean.fail("验证码错误", null);
         }
         User byId = userService.getById(sessionRestID.toString());
+        byId.setReadAvatar(false);
         byId.setSalt(StringUtil.getUUID());
         byId.setPassword(new Md5Hash(user.getPassword(), byId.getSalt()).toString());
         byId.setUpdateTime(new Date());
