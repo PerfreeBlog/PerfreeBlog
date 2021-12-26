@@ -209,7 +209,7 @@ public class SystemController extends BaseController {
         }
         User byId = userService.getById(sessionRestID.toString());
         byId.setSalt(StringUtil.getUUID());
-        byId.setPassword(new Md5Hash(user.getPassword(), user.getSalt()).toString());
+        byId.setPassword(new Md5Hash(user.getPassword(), byId.getSalt()).toString());
         byId.setUpdateTime(new Date());
         int update = userService.update(byId);
         if (update > 0) {

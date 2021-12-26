@@ -14,6 +14,12 @@
         <if test="roleId != null and roleId != ''">
             roleId=#{roleId},
         </if>
+        <if test="password != null and password != ''">
+            password=#{password},
+        </if>
+        <if test="salt != null and salt != ''">
+            salt=#{salt},
+        </if>
        avatar=#{avatar},email=#{email},website=#{website},updateTime=#{updateTime}
         where id = #{id}
     </update>
