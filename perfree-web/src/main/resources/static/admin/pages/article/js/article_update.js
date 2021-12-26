@@ -34,6 +34,13 @@ function initEvent() {
         submitArticle(data.field);
         return false;
     });
+
+    window.addEventListener("keydown", function(e) {
+        if((e.key==='s'||e.key==='S')&&(navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)){
+            e.preventDefault();
+            $("#publishBtn").click();
+        }
+    }, false);
 }
 
 /**
