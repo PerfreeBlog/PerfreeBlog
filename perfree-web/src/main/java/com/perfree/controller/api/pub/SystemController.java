@@ -143,7 +143,12 @@ public class SystemController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doSendRestPassMail")
     @ResponseBody
-    public ResponseBean doSendRestPassMail(@RequestBody User user, HttpSession session) {
+    @ApiOperation(value = "找回/重置密码发送邮件", notes = "找回/重置密码发送邮件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
+            @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class,  required = true)
+    })
+    public ResponseBean doSendRestPassMail(@ApiIgnore User user, @ApiIgnore  HttpSession session) {
         User queryUser = userService.getUserByAccountAndEmail(user.getAccount(), user.getEmail());
         if (queryUser == null) {
             return ResponseBean.fail("账户不存在", null);
