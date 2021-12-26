@@ -32,47 +32,12 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">评论需审核</label>
-            <div class="layui-input-block">
-                <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="1" title="开启" #(optionCompare('WEB_COMMENT_IS_REVIEW', '1') ? 'checked': '')>
-                <input type="radio" name="WEB_COMMENT_IS_REVIEW" value="0" title="关闭" #(optionCompare('WEB_COMMENT_IS_REVIEW', '0') ? 'checked': '')>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">允许注册新用户</label>
-            <div class="layui-input-block">
-                <input type="radio" name="WEB_IS_REGISTER" value="1" title="允许" #(optionCompare('WEB_IS_REGISTER', '1') ? 'checked': '')>
-                <input type="radio" name="WEB_IS_REGISTER" value="0" title="不允许" #(optionCompare('WEB_IS_REGISTER', '0') ? 'checked': '')>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">新用户默认角色</label>
-            <div class="layui-input-block" style="margin-left: 130px;width: 200px">
-                <select name="WEB_REGISTER_DEFAULT_ROLE">
-                    <option value="user" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'user') ? 'selected': '')>普通用户</option>
-                    <option value="contribute" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'contribute') ? 'selected': '')>文章贡献</option>
-                    <option value="editor" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'editor') ? 'selected': '')>文章编辑</option>
-                    <option value="admin" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'amin') ? 'selected': '')>管理员</option>
-                </select>
-            </div>
-
-        </div>
-
-        <div class="layui-form-item">
             <label class="layui-form-label">版权信息</label>
             <div class="layui-input-block">
                 <textarea name="WEB_COPYRIGHT" placeholder="请输入版权信息" class="layui-textarea">#option('WEB_COPYRIGHT')</textarea>
             </div>
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">Gravatar镜像源</label>
-            <div class="layui-input-block">
-                <input type="text" value="#option('GRAVATAR_SOURCE', '//gravatar.loli.net/avatar/')" name="GRAVATAR_SOURCE" placeholder="请输入Gravatar镜像源" autocomplete="off" class="layui-input">
-            </div>
-        </div>
         <div class="layui-form-item">
             <div class="layui-input-block">
                 <button class="layui-btn addBtn" lay-submit lay-filter="optionForm"><i class="fa fa-check" aria-hidden="true"></i> 保存设置</button>

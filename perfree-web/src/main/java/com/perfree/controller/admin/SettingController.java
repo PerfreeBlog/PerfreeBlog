@@ -1,9 +1,13 @@
 package com.perfree.controller.admin;
 
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.io.file.FileReader;
+import cn.hutool.core.util.CharsetUtil;
+import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
+import com.perfree.commons.FileUtil;
 import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.ResponseBean;
-import com.perfree.base.BaseController;
 import com.perfree.model.Option;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.MailService;
@@ -12,8 +16,11 @@ import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +39,9 @@ public class SettingController extends BaseController {
 
     @GetMapping("/setting")
     @AdminMenu(name = "网站设置", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_SETTING)
-    public String index() {
+    public String index(Model model) {
+        model.addAttribute("findPasswordEmailTemplate",getEmailTpl("/static/admin/tpl/find_password.html"));
+        model.addAttribute("commentEmailTemplate",getEmailTpl("/static/admin/tpl/comment_mail.html"));
         return view("static/admin/pages/settings/setting.html");
     }
 
@@ -47,6 +56,14 @@ public class SettingController extends BaseController {
     public ResponseBean saveSetting(@RequestBody HashMap<String, String> param) {
         List<Option> options = new ArrayList<>();
         for(Map.Entry<String, String> entry : param.entrySet()){
+            if (entry.getKey().equals("commentEmailTemplate")) {
+                updateEmailTpl("/static/admin/tpl/comment_mail.html", entry.getValue());
+                continue;
+            }
+            if (entry.getKey().equals("findPasswordEmailTemplate")) {
+                updateEmailTpl("/static/admin/tpl/find_password.html", entry.getValue());
+                continue;
+            }
             Option option = new Option();
             option.setKey(entry.getKey());
             option.setValue(entry.getValue());
@@ -73,6 +90,33 @@ public class SettingController extends BaseController {
             return ResponseBean.fail("发送失败", null);
         }catch (Exception e) {
             return ResponseBean.fail("邮箱服务出错,发送失败:"+ e.getMessage(), null);
+        }
+    }
+
+    private String getEmailTpl(String path){
+        File file = new File(Constants.PROD_RESOURCES_PATH + path);
+        if (!file.exists()) {
+            file = FileUtil.getClassPathFile(Constants.DEV_RESOURCES_PATH + path);
+        }
+        assert file != null;
+        FileReader fileReader = new FileReader(file.getAbsolutePath());
+        return fileReader.readString();
+    }
+
+    private void updateEmailTpl(String path, String content){
+        try{
+            File file = new File(Constants.PROD_RESOURCES_PATH + path);
+            if (!file.exists()) {
+                file = FileUtil.getClassPathFile(Constants.DEV_RESOURCES_PATH + path);
+            }
+            assert file != null;
+            OutputStreamWriter write = new OutputStreamWriter(new FileOutputStream(file.getAbsoluteFile()), StandardCharsets.UTF_8);
+            BufferedWriter writer = new BufferedWriter(write);
+            writer.write(content);
+            writer.flush();
+            writer.close();
+        }catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

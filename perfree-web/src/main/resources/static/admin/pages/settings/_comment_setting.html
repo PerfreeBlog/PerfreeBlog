@@ -1,0 +1,41 @@
+<div class="layui-tab-item">
+    <form class="layui-form" action="">
+        <div class="layui-input-inline"  style="display: none;">
+            <select lay-verify="" type="hidden"></select>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">评论需审核</label>
+            <div class="layui-input-block" style="margin-left: 130px;width: 200px">
+                <select name="WEB_COMMENT_IS_REVIEW">
+                    <option value="0" #(optionCompare('WEB_COMMENT_IS_REVIEW', '0') ? 'selected': '')>关闭</option>
+                    <option value="1" #(optionCompare('WEB_COMMENT_IS_REVIEW', '1') ? 'selected': '')>开启</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">评论邮件通知</label>
+            <div class="layui-input-block" style="margin-left: 130px;width: 200px">
+                <select name="COMMENT_IS_SEND_MAIL">
+                    <option value="0" #(optionCompare('COMMENT_IS_SEND_MAIL', '0') ? 'selected': '')>不通知</option>
+                    <option value="1" #(optionCompare('COMMENT_IS_SEND_MAIL', '1') ? 'selected': '')>通知</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">评论邮件模板</label>
+            <div class="layui-input-block">
+                <textarea name="commentEmailTemplate" placeholder="当已经配置邮箱服务且开启邮件通知时,会使用该模板" class="layui-textarea" style="min-height: 200px;resize: vertical;">#(commentEmailTemplate)</textarea>
+                <p class="tip">#[[当已经配置邮箱服务且开启邮件通知时,会使用该模板,可用指令#(comment): 评论内容对象,#(article):文章对象,#(web_site):网站地址]]#</p>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn addBtn" lay-submit lay-filter="optionForm"><i class="fa fa-check" aria-hidden="true"></i> 保存设置</button>
+            </div>
+        </div>
+    </form>
+</div>
