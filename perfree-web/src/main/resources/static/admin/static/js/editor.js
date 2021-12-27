@@ -154,7 +154,8 @@ function initMarkdownEditor(content) {
         saveHTMLToTextarea: false,
         tex: true, // 开启科学公式TeX语言支持，默认关闭
         watch: false,
-        imageUpload: false,
+        imageUpload: true,
+        imageUploadURL : "/admin/attach/upload",
         markdown: content,
         imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
         toolbarIcons: function () {
@@ -193,6 +194,9 @@ function initMarkdownEditor(content) {
                 customVideo: "插入视频",
                 customAttach: "插入附件"
             }
+        },
+        onload : function() {
+            initPasteDragImg(this);
         }
     });
 }
@@ -238,4 +242,75 @@ function isFullscreen() {
         document.msFullscreenElement ||
         document.mozFullScreenElement ||
         document.webkitFullscreenElement || false;
+}
+
+/**
+ * markdown编辑器复制粘贴图片
+ * @param Editor
+ */
+function initPasteDragImg(Editor){
+    let doc = document.getElementById(Editor.id)
+    doc.addEventListener('paste', function (event) {
+        let items = (event.clipboardData || window.clipboardData).items;
+        let file = null;
+        if (items && items.length) {
+            // 搜索剪切板items
+            for (let i = 0; i < items.length; i++) {
+                if (items[i].type.indexOf('image') !== -1) {
+                    file = items[i].getAsFile();
+                    break;
+                }
+            }
+        } else {
+            console.log("当前浏览器不支持");
+            return;
+        }
+        if (!file) {
+            console.log("粘贴内容非图片");
+            return;
+        }
+        uploadImg(file,Editor);
+    });
+    let dashboard = document.getElementById(Editor.id)
+    dashboard.addEventListener("dragover", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+    })
+    dashboard.addEventListener("dragenter", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+    })
+    dashboard.addEventListener("drop", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+        let files = this.files || e.dataTransfer.files;
+        uploadImg(files[0],Editor);
+    })
+}
+
+/**
+ * markdown编辑器上传图片
+ * @param file
+ * @param Editor
+ */
+function uploadImg(file,Editor){
+    let formData = new FormData();
+    let fileName=new Date().getTime()+"."+file.name.split(".").pop();
+    formData.append('file', file, fileName);
+    $.ajax({
+        url: Editor.settings.imageUploadURL,
+        type: 'post',
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: 'json',
+        success: function (data) {
+            if(data.code === 200){
+                Editor.insertValue("![]("+data.data.url+")");
+            }else{
+                console.log(data);
+                alert("上传失败");
+            }
+        }
+    });
 }
