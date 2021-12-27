@@ -80,9 +80,6 @@ public class CommentController extends BaseApiController {
             if (!ValidUtil.isEmail(comment.getEmail())) {
                 return ResponseBean.error(-5,"请正确填写邮箱" , null);
             }
-            if (!canComment(IpUtil.getIpAddr(request), comment.getArticleId().toString())) {
-                return ResponseBean.error(-4 ,"评论过于频繁,请稍候再试", null);
-            }
             comment.setAvatar(GravatarUtil.getGravatar(comment.getEmail()));
         } else {
             user.setReadAvatar(false);
@@ -91,6 +88,13 @@ public class CommentController extends BaseApiController {
             comment.setEmail(user.getEmail());
             comment.setUserName(user.getUserName());
             comment.setWebsite(user.getWebsite());
+        }
+
+        String commentIsStint = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_COMMENT_IS_STINT, Constants.COMMENT_IS_STINT);
+        if (Constants.COMMENT_IS_STINT.equals(commentIsStint)) {
+            if (!canComment(IpUtil.getIpAddr(request), comment.getArticleId().toString())) {
+                return ResponseBean.error(-4 ,"评论过于频繁,请稍候再试", null);
+            }
         }
 
         Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_COMMENT_IS_REVIEW);

@@ -176,4 +176,6 @@ public class Constants {
     public static final String OPTION_WEB_OPEN_CAPTCHA = "WEB_OPEN_CAPTCHA";
 
     public static final String OPEN_CAPTCHA = "1";
+    public static final String COMMENT_IS_STINT = "1";
+    public static final String OPTION_WEB_COMMENT_IS_STINT = "WEB_COMMENT_IS_STINT";
 }

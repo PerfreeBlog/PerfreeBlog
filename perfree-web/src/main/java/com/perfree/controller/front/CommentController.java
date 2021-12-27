@@ -1,11 +1,7 @@
 package com.perfree.controller.front;
 
 import cn.hutool.http.HtmlUtil;
-import com.perfree.commons.Constants;
-import com.perfree.commons.GravatarUtil;
-import com.perfree.commons.ResponseBean;
-import com.perfree.commons.ValidUtil;
-import com.perfree.commons.IpUtil;
+import com.perfree.commons.*;
 import com.perfree.base.BaseController;
 import com.perfree.model.Article;
 import com.perfree.model.Comment;
@@ -68,9 +64,6 @@ public class CommentController extends BaseController {
             if (!ValidUtil.isEmail(comment.getEmail())) {
                 return ResponseBean.error(-5,"请正确填写邮箱" , null);
             }
-            if (!canComment(IpUtil.getIpAddr(request), comment.getArticleId().toString())) {
-                return ResponseBean.error(-4 ,"评论过于频繁,请稍候再试", null);
-            }
             comment.setAvatar(GravatarUtil.getGravatar(comment.getEmail()));
         } else {
             user.setReadAvatar(false);
@@ -79,6 +72,14 @@ public class CommentController extends BaseController {
             comment.setEmail(user.getEmail());
             comment.setUserName(user.getUserName());
             comment.setWebsite(user.getWebsite());
+        }
+
+        // 评论频率限制
+        String commentIsStint = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_COMMENT_IS_STINT, Constants.COMMENT_IS_STINT);
+        if (Constants.COMMENT_IS_STINT.equals(commentIsStint)) {
+            if (!canComment(IpUtil.getIpAddr(request), comment.getArticleId().toString())) {
+                return ResponseBean.error(-4 ,"评论过于频繁,请稍候再试", null);
+            }
         }
 
         Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_COMMENT_IS_REVIEW);
@@ -105,12 +106,12 @@ public class CommentController extends BaseController {
             for (CommentProxy commentProxy : allPluginProxyClass) {
                 comment = commentProxy.commentSaveAfter(comment);
             }
+            // 发送邮件
+            mailService.commentMailSend(comment);
 
             if (comment.getStatus() == Constants.COMMENT_STATUS_NORMAL) {
-                mailService.commentMailSend(comment);
                 return ResponseBean.success("评论成功", comment);
             }
-            mailService.commentMailSend(comment);
             return ResponseBean.error(201 ,"评论成功,正在等待管理员审核", null);
         }
         return ResponseBean.fail("评论失败", null);

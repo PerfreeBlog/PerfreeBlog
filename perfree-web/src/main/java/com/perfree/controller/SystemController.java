@@ -132,7 +132,7 @@ public class SystemController extends BaseController {
             rememberMe = false;
         }
         try {
-            String isOpenCaptcha = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_OPEN_CAPTCHA, "1");
+            String isOpenCaptcha = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_OPEN_CAPTCHA, Constants.OPEN_CAPTCHA);
             if (Constants.OPEN_CAPTCHA.equals(isOpenCaptcha) && (StringUtils.isBlank(user.getCaptcha()) ||
                     !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString()))){
                 return ResponseBean.fail("验证码错误", null);

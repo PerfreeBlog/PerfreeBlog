@@ -15,6 +15,17 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">评论限制</label>
+            <div class="layui-input-inline" style="margin-left: 45px;width: 200px">
+                <select name="WEB_COMMENT_IS_STINT">
+                    <option value="1" #(optionCompare('WEB_COMMENT_IS_STINT', '1') ? 'selected': '')>开启</option>
+                    <option value="0" #(optionCompare('WEB_COMMENT_IS_STINT', '0') ? 'selected': '')>关闭</option>
+                </select>
+            </div>
+            <div class="layui-form-mid layui-word-aux">开启后同一IP地址1分钟内将不允许再次评论,限制评论频率</div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">评论邮件通知</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="COMMENT_IS_SEND_MAIL">
