@@ -11,9 +11,20 @@
     <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/admin/pages/install/css/install.css?v=#(version)" rel="stylesheet"/>
+    <script>
+        window.onload = function f() {
+            document.getElementById("loading").style.display="none";
+            document.getElementById("p-container").style.display="block";
+        }
+    </script>
 </head>
 <body>
-<div class="p-container">
+<div id="loading">
+    <div class="loading">
+        <span></span><span></span><span></span><span></span><span></span>
+    </div>
+</div>
+<div class="p-container" id="p-container">
     <div class="layui-card">
         <div class="layui-card-header">
             <h2 class="install-title">PerfreeBlog</h2>

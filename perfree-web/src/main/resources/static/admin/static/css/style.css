@@ -40,7 +40,7 @@ html,body{
     display: none;
 }
 .loading{
-    width: 80px;
+    width: 100px;
     height: 40px;
     margin: 0 auto;
 }

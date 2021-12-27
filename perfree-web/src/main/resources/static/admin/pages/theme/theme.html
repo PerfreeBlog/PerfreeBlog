@@ -69,6 +69,7 @@
 <script src="/static/public/js/common.js?v=#(version)"></script>
 <script>
     let layer, upload, laytpl, flow;
+    let loadIndex;
     layui.use(['upload', 'layer', 'laytpl', 'flow'], function () {
         layer = layui.layer;
         upload = layui.upload;
@@ -82,7 +83,11 @@
             accept: "file",
             acceptMime: "application/zip",
             exts: "zip",
+            before: function(obj){
+                loadIndex = layer.load();
+            },
             done: function (res) {
+                layer.close(loadIndex);
                 if (res.code === 200) {
                     parent.layer.msg("主题安装成功", {icon: 1});
                     initThemeList();
@@ -91,6 +96,7 @@
                 }
             },
             error: function () {
+                layer.close(loadIndex);
                 layer.msg("主题安装失败", {icon: 2});
             }
         });
@@ -117,7 +123,7 @@
      * 加载主题列表
      */
     function initThemeList() {
-        let loadIndex = layer.load();
+        loadIndex = layer.load();
         $.ajax({
             type: "GET",
             url: "/admin/theme/themeList",
@@ -143,12 +149,14 @@
 
     $(".p-theme-container").on("click", ".switchThemeBtn", function () {
         const path = $(this).attr("data-path");
+        loadIndex = layer.load();
         $.ajax({
             type: "POST",
             url: "/admin/theme/switch",
             contentType: "application/json",
             data: JSON.stringify({path: path}),
             success: function (d) {
+                layer.close(loadIndex);
                 if (d.code === 200) {
                     parent.layer.msg("切换主题成功", {icon: 1});
                     initThemeList();
@@ -157,6 +165,7 @@
                 }
             },
             error: function (data) {
+                layer.close(loadIndex);
                 layer.msg("切换主题失败", {icon: 2});
             }
         });
@@ -164,6 +173,7 @@
 
     $(".p-theme-container").on("click", ".removeThemeBtn", function () {
         const path = $(this).attr("data-path");
+        loadIndex = layer.load();
         layer.confirm('卸载将直接删除主题,确定要卸载吗?', {icon: 3, title: '提示'}, function (index) {
             $.ajax({
                 type: "POST",
@@ -171,6 +181,7 @@
                 contentType: "application/json",
                 data: JSON.stringify({path: path}),
                 success: function (d) {
+                    layer.close(loadIndex);
                     if (d.code === 200) {
                         parent.layer.msg("卸载主题成功", {icon: 1});
                         initThemeList();
@@ -180,6 +191,7 @@
                     layer.close(index);
                 },
                 error: function (data) {
+                    layer.close(loadIndex);
                     layer.msg("卸载主题失败", {icon: 2});
                     layer.close(index);
                 }
