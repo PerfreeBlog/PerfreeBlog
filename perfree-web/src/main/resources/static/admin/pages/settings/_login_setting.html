@@ -27,6 +27,16 @@
         </div>
 
         <div class="layui-form-item">
+            <label class="layui-form-label">登录验证码</label>
+            <div class="layui-input-block" style="margin-left: 130px;width: 200px">
+                <select name="WEB_OPEN_CAPTCHA">
+                    <option value="1" #(optionCompare('WEB_OPEN_CAPTCHA', '1') ? 'selected': '')>开启</option>
+                    <option value="0" #(optionCompare('WEB_OPEN_CAPTCHA', '0') ? 'selected': '')>关闭</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label" style="padding: 0">找回密码邮件模板</label>
             <div class="layui-input-block">
                 <textarea name="findPasswordEmailTemplate" placeholder="当已经配置邮箱服务且开启邮件通知时,会使用该模板" class="layui-textarea" style="min-height: 200px;resize: vertical;">#(findPasswordEmailTemplate)</textarea>

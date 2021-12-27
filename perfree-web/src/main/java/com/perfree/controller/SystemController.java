@@ -132,8 +132,9 @@ public class SystemController extends BaseController {
             rememberMe = false;
         }
         try {
-            if (StringUtils.isBlank(user.getCaptcha()) ||
-                    !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString())){
+            String isOpenCaptcha = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_OPEN_CAPTCHA, "1");
+            if (Constants.OPEN_CAPTCHA.equals(isOpenCaptcha) && (StringUtils.isBlank(user.getCaptcha()) ||
+                    !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString()))){
                 return ResponseBean.fail("验证码错误", null);
             }
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(),rememberMe);
@@ -237,8 +238,8 @@ public class SystemController extends BaseController {
     @RequestMapping(method = RequestMethod.POST, path = "/doRegister")
     @ResponseBody
     public ResponseBean doRegister(@RequestBody @Valid User user, HttpSession session) {
-        Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);
-        if (optionByKey != null && optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
+        String isRegister = OptionCacheUtil.getValue(Constants.OPTION_WEB_IS_REGISTER);
+        if (StringUtils.isNotBlank(isRegister) && isRegister.equals(String.valueOf(Constants.REGISTER_NO))) {
             return ResponseBean.fail("网站已关闭注册功能", null);
         }
         if (StringUtils.isBlank(user.getCaptcha()) ||
