@@ -1,0 +1,40 @@
+<div data-pushbar-id="bottomNav" class="pushbar from_bottom">
+    <div class="layui-container" style="padding-top: 20px;padding-bottom: 15px;">
+        <fieldset class="layui-elem-field layui-field-title">
+            <legend style="text-align: center;font-size: 16px;" align="center">导航按钮</legend>
+        </fieldset>
+        <p class="layui-breadcrumb" lay-separator="|" style="text-align: center;margin-top: 10px;">
+            <a href="/index" th:text="${settings.def_theme_conf.nav_menus.menu_home}"></a>
+            <a th:href="${settings.def_theme_conf.zdy.url}" th:text="${settings.def_theme_conf.zdy.name}"></a>
+            <a href="/note" th:text="${settings.def_theme_conf.nav_menus.menu_note}"></a>
+            <a href="/message" th:text="${settings.def_theme_conf.nav_menus.menu_message}"></a>
+            <a href="/purchase" th:text="${settings.def_theme_conf.nav_menus.menu_purchase}"></a>
+            <a href="javascript:npfront.searchDialog();">搜索</a>
+        </p>
+        <ul class="layui-timeline"
+            style="margin-top: 10px;padding-top: 15px;margin-bottom: 30px;border-top: 1px dotted #EEEEEE;">
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title" style="font-size: 16px;">博客信息</h3>
+                    <p style="padding-bottom: 5px;" th:utext="${settings.website_info_label}"></p>
+                    <p style="border-top: 1px solid #f5f5f5;padding-top: 5px;padding-bottom: 5px;">
+                        交流讨论：<i class="fa fa-qq"></i>
+                        <a target="_blank"
+                           href="//shang.qq.com/wpa/qunwpa?idkey=7bd7c01acf4e6124bfaab5a6d10504b917d5292f029b66887d00006a16a00930">
+                            697053454
+                        </a>。
+                    </p>
+                </div>
+            </li>
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title" style="font-size: 16px;">官网 & 作者 </h3>
+                        <p>联系作者：<i class="fa fa-envelope"></i> <a href="#">765934806#qq.com</a></p>
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="header mini">
+    <div class="layui-container header-content">
+        <div class="layui-row nav-header">
+            <div class="layui-col-xs9 layui-col-sm4">
+                <a href="/"><img src="#option('WEB_LOGO','/static/themes/npx/static/images/sm_dark.png')" class="header-logo"></a>
+                <a class="logo" href="/" style="margin-left: 0;">#option('WEB_NAME','未设置')</a>
+                <small>#option('WEB_TITLE','未设置')</small>
+            </div>
+            <div class="layui-col-xs3 layui-col-sm-offset2 layui-col-sm4 layui-hide-md layui-hide-lg nav-btn">
+                <a href="javascript:NPX.hideOpen();" id="side-nav-open" data-pushbar-target="bottomNav">
+                    <i class="fa fa-navicon"></i>
+                </a>
+                <a href="javascript:NPX.hideClose();" id="side-nav-close" style="display: none;" data-pushbar-close>
+                    <i class="fa fa-times" style="font-size: 18px;"></i>
+                </a>
+            </div>
+            <!--此主题不支持二级菜单-->
+            <div class="layui-col-sm5 layui-hide layui-show-lg-inline-block layui-show-md-inline-block nav-btn right">
+                #menus()
+                #for(menu : menus)
+                <a href="#(menu.url??)" target="#(menu.target == 0 ? '_self' : '_blank')" data-title="#(menu.name ??)" class="${page eq 'index' ?'active':''}">
+                    <i class="fa #(menu.icon ??)"></i>
+                    <span>#(menu.name ??)</span>
+                </a>
+                #end
+                <a href="javascript:NPX.searchDialog();" data-title="搜索">
+                    <i class="layui-icon layui-icon-search"></i>
+                    <span>搜索</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="header-hr">
