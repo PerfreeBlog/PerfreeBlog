@@ -57,10 +57,13 @@ function initRichEditor(content){
         placeholder: '请输入文章内容',
         toolbar: {
             items: [ "sourceEditing", '|',
-                'heading', 'bold', 'italic','fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', 'strikethrough', "removeFormat",  '|',
-                'blockQuote', 'horizontalLine','link', 'code', 'codeBlock','subscript', 'superscript', '|',
-                'insertTable', 'numberedList', 'bulletedList', 'todoList','undo', 'redo', 'findAndReplace'],
+                'heading', 'bold', 'italic','fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', "removeFormat",  '|',
+                'blockQuote', 'horizontalLine','link', 'code', 'codeBlock', '|',
+                'insertTable', 'numberedList', 'bulletedList', 'undo', 'redo', 'findAndReplace'],
             shouldNotGroupWhenFull: true
+        },
+        simpleUpload: {
+            uploadUrl: '/admin/attach/ckEditorUpload',
         },
         image: {
             toolbar: [

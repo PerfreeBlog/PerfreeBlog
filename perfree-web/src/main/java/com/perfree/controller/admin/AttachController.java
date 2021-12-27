@@ -1,6 +1,7 @@
 package com.perfree.controller.admin;
 
 import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.map.MapUtil;
 import com.perfree.commons.Constants;
 import com.perfree.commons.FileUtil;
 import com.perfree.commons.Pager;
@@ -28,7 +29,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 附件
@@ -90,6 +93,7 @@ public class AttachController extends BaseController {
                 logger.error("文件不能为空!");
                 return ResponseBean.fail("文件不能为空!", null);
             }
+
             String multiFileName = multiFile.getOriginalFilename();
             if (StringUtils.isBlank(multiFileName)){
                 logger.error("文件名不能为空!");
@@ -122,6 +126,64 @@ public class AttachController extends BaseController {
         }catch (Exception e){
             logger.error("上传失败: {}", e.getMessage());
             return ResponseBean.fail("上传失败", e.getMessage());
+        }
+    }
+
+    /**
+     * 文件上传
+     * @return String
+     */
+    @PostMapping("/attach/ckEditorUpload")
+    @ResponseBody
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    public Map<String, Object> ckEditorUpload(HttpServletRequest request) {
+        try{
+            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            MultipartFile multiFile = multipartRequest.getFile("upload");
+            if (multiFile == null){
+                logger.error("文件不能为空!");
+                return MapUtil.builder(new HashMap<String, Object>())
+                        .put("error", MapUtil.builder(new HashMap<String, Object>()).put("message","文件不能为空!").build())
+                        .build();
+            }
+
+            String multiFileName = multiFile.getOriginalFilename();
+            if (StringUtils.isBlank(multiFileName)){
+                logger.error("文件名不能为空!");
+                return MapUtil.builder(new HashMap<String, Object>())
+                        .put("error", MapUtil.builder(new HashMap<String, Object>()).put("message","文件名不能为空!").build())
+                        .build();
+            }
+            String suffix = multiFileName.substring(multiFileName.lastIndexOf("."));
+            String type = FileUtil.getFileType(FileTypeUtil.getType(multiFile.getInputStream()),suffix);
+            String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "attach");
+            Attach attach = new Attach();
+            attach.setName(multiFileName);
+            attach.setSuffix(suffix);
+            attach.setPath(path);
+            attach.setType(type);
+
+            List<AttachProxy> allPluginProxyClass = PluginsUtils.getAllPluginProxyClass(AttachProxy.class);
+            for (AttachProxy attachProxy : allPluginProxyClass) {
+                attach = attachProxy.attachSaveBefore(attach);
+            }
+            if (attachService.add(attach) > 0){
+                for (AttachProxy attachProxy : allPluginProxyClass) {
+                    attach = attachProxy.attachSaveAfter(attach);
+                }
+                return MapUtil.builder(new HashMap<String, Object>())
+                        .put("url",attach.getUrl()).build();
+            } else {
+                logger.error("上传失败: {}",attach.toString());
+                return MapUtil.builder(new HashMap<String, Object>())
+                        .put("error", MapUtil.builder(new HashMap<String, Object>()).put("message","上传失败!").build())
+                        .build();
+            }
+        }catch (Exception e){
+            logger.error("上传失败: {}", e.getMessage());
+            return MapUtil.builder(new HashMap<String, Object>())
+                    .put("error", MapUtil.builder(new HashMap<String, Object>()).put("message","上传失败!").build())
+                    .build();
         }
     }
 
