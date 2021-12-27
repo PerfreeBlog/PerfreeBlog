@@ -53,3 +53,17 @@ function save(data) {
         }
     });
 }
+
+function sendTestMail(){
+    layer.prompt({title: '请输入收件人邮箱', formType: 3}, function(mail, index){
+        layer.close(index);
+        $.post("/admin/setting/testMail",{mail: mail},function(data,status){
+            if (data.code === 200) {
+                layer.msg("发送成功", {icon: 1})
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        });
+    });
+    return false;
+}

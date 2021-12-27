@@ -1,6 +1,9 @@
 package com.perfree.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.perfree.commons.Constants;
+import com.perfree.commons.IpUtil;
+import com.perfree.commons.OptionCacheUtil;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.mapper.CategoryMapper;
 import com.perfree.mapper.OptionMapper;
@@ -17,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -26,6 +30,8 @@ import java.util.List;
 @Service
 public class SEOServiceImpl implements SEOService {
     private final Logger logger = LoggerFactory.getLogger(SEOServiceImpl.class);
+    @Value("${server.port}")
+    private int serverPort;
     @Autowired
     private ArticleMapper articleMapper;
     @Autowired
@@ -36,11 +42,7 @@ public class SEOServiceImpl implements SEOService {
     private OptionMapper optionMapper;
 
     public String createSiteMapXmlContent() {
-        Option optionByKey = optionMapper.getOptionByKey("WEB_SITE");
-        if (optionByKey == null || StringUtils.isBlank(optionByKey.getValue())) {
-            return null;
-        }
-        String baseUrl = optionByKey.getValue();
+        String baseUrl = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort));
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         WebSitemapGenerator wsg = null;
         try {

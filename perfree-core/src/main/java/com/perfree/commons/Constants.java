@@ -172,4 +172,10 @@ public class Constants {
 
     public static final String VERSION = "version";
     public static final String OPTION_WEB_CUSTOM_HEAD = "WEB_CUSTOM_HEAD";
+    public static final String OPTION_WEB_IS_AUTO_PUSH_BAIDU = "WEB_IS_AUTO_PUSH_BAIDU";
+    public static final String OPTION_WEB_OPEN_CAPTCHA = "WEB_OPEN_CAPTCHA";
+
+    public static final String OPEN_CAPTCHA = "1";
+    public static final String COMMENT_IS_STINT = "1";
+    public static final String OPTION_WEB_COMMENT_IS_STINT = "WEB_COMMENT_IS_STINT";
 }

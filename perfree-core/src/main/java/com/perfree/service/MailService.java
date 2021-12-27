@@ -22,4 +22,9 @@ public interface MailService {
      * @author Perfree
      */
     void passwordMail(User user, String random) throws Exception;
+
+    /**
+     * 发送邮件
+     */
+    boolean sendMail(String mail,String content, String title) throws Exception;
 }

@@ -132,8 +132,9 @@ public class SystemController extends BaseController {
             rememberMe = false;
         }
         try {
-            if (StringUtils.isBlank(user.getCaptcha()) ||
-                    !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString())){
+            String isOpenCaptcha = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_OPEN_CAPTCHA, Constants.OPEN_CAPTCHA);
+            if (Constants.OPEN_CAPTCHA.equals(isOpenCaptcha) && (StringUtils.isBlank(user.getCaptcha()) ||
+                    !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString()))){
                 return ResponseBean.fail("验证码错误", null);
             }
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(),rememberMe);
@@ -175,14 +176,14 @@ public class SystemController extends BaseController {
         }
         Object sessionRestPassword = session.getAttribute("REST-CAPTCHA");
         if (sessionRestPassword != null) {
-            return ResponseBean.fail("邮件重复发送,请两分钟后再试", null);
+            return ResponseBean.fail("邮件重复发送,请稍后再试", null);
         }
         try {
-            String random = RandomUtil.randomString(6);
+            String random = RandomUtil.randomString(4);
             mailService.passwordMail(user, random);
             session.setAttribute("REST-CAPTCHA", random);
             session.setAttribute("REST-ID", queryUser.getId());
-            session.setMaxInactiveInterval(120);
+            session.setMaxInactiveInterval(300);
             return ResponseBean.success("验证码发送成功", null);
         } catch (Exception e) {
             e.printStackTrace();
@@ -208,8 +209,9 @@ public class SystemController extends BaseController {
             return ResponseBean.fail("验证码错误", null);
         }
         User byId = userService.getById(sessionRestID.toString());
+        byId.setReadAvatar(false);
         byId.setSalt(StringUtil.getUUID());
-        byId.setPassword(new Md5Hash(user.getPassword(), user.getSalt()).toString());
+        byId.setPassword(new Md5Hash(user.getPassword(), byId.getSalt()).toString());
         byId.setUpdateTime(new Date());
         int update = userService.update(byId);
         if (update > 0) {
@@ -236,8 +238,8 @@ public class SystemController extends BaseController {
     @RequestMapping(method = RequestMethod.POST, path = "/doRegister")
     @ResponseBody
     public ResponseBean doRegister(@RequestBody @Valid User user, HttpSession session) {
-        Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);
-        if (optionByKey != null && optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
+        String isRegister = OptionCacheUtil.getValue(Constants.OPTION_WEB_IS_REGISTER);
+        if (StringUtils.isNotBlank(isRegister) && isRegister.equals(String.valueOf(Constants.REGISTER_NO))) {
             return ResponseBean.fail("网站已关闭注册功能", null);
         }
         if (StringUtils.isBlank(user.getCaptcha()) ||

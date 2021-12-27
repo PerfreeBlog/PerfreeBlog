@@ -143,26 +143,30 @@ public class SystemController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doSendRestPassMail")
     @ResponseBody
-    public ResponseBean doSendRestPassMail(@RequestBody User user, HttpSession session) {
+    @ApiOperation(value = "找回/重置密码发送邮件", notes = "找回/重置密码发送邮件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
+            @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class,  required = true)
+    })
+    public ResponseBean doSendRestPassMail(@ApiIgnore User user, @ApiIgnore  HttpSession session) {
         User queryUser = userService.getUserByAccountAndEmail(user.getAccount(), user.getEmail());
         if (queryUser == null) {
             return ResponseBean.fail("账户不存在", null);
         }
         Object sessionRestPassword = session.getAttribute("REST-CAPTCHA");
         if (sessionRestPassword != null) {
-            return ResponseBean.fail("邮件重复发送,请两分钟后再试", null);
+            return ResponseBean.fail("邮件重复发送,请稍后再试", null);
         }
         try {
-            String random = RandomUtil.randomString(6);
+            String random = RandomUtil.randomString(4);
             mailService.passwordMail(user, random);
             session.setAttribute("REST-CAPTCHA", random);
             session.setAttribute("REST-ID", queryUser.getId());
-            session.setMaxInactiveInterval(120);
+            session.setMaxInactiveInterval(300);
             return ResponseBean.success("验证码发送成功", null);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseBean.fail("发送邮件出错", e.getMessage());
         }
     }
-
 }

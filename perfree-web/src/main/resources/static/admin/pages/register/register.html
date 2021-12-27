@@ -11,12 +11,22 @@
     <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/static/admin/pages/register/css/register.css?v=#(version)" rel="stylesheet"/>
     <script type="text/javascript">
-        if (window !== top)
+        if (window !== top){
             top.location.href = location.href;
+        }
+        window.onload = function f() {
+            document.getElementById("loading").style.display="none";
+            document.getElementById("p-login-box").style.display="block";
+        }
     </script>
 </head>
 <body class="mdui-theme-primary-indigo">
-    <div class="p-login-box mdui-shadow-3">
+    <div id="loading">
+        <div class="loading">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <div class="p-login-box mdui-shadow-3" id="p-login-box">
         <div class="p-login-box-title">#option('WEB_NAME', '注册')</div>
         <form class="layui-form" lay-filter="addForm">
             <div class="layui-input-inline"  style="display: none;">
