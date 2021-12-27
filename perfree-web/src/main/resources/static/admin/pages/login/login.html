@@ -42,7 +42,7 @@
                 <input class="p-input" type="password" name="password" required lay-verify="required" placeholder="请输入密码"/>
             </div>
 
-            #if(optionCompare('WEB_OPEN_CAPTCHA', '1'))
+            #if(!optionCompare('WEB_OPEN_CAPTCHA', '0'))
                 <div class="p-input-box captcha-group-box">
                     <span class="p-input-label">验证码:</span><br>
                     <div class="layui-inline captcha-group">
