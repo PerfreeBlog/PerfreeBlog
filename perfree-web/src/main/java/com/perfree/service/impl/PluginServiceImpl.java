@@ -12,6 +12,7 @@ import com.perfree.config.EnjoyConfig;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugin;
 import com.perfree.plugin.PluginEvent;
+import com.perfree.plugin.PluginHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.utils.PluginsUtils;
@@ -90,25 +91,21 @@ public class PluginServiceImpl implements PluginService {
                     return ResponseBean.fail("插件安装失败:更高版本的插件已存在,请勿再次安装低版本插件", null);
                 } else {
                     isUpdate = true;
-                    pluginManager.unInstall(setting.getStr("plugin.id"));
                 }
             }
             FileUtil.copy(file.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
-
-            PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
-            // 存库
-            saveOrUpdatePlugin(pluginInfo, pluginFile);
-            PluginEvent pluginBean = pluginInfo.getPluginBean(PluginEvent.class);
-            if (pluginBean == null) {
-                return ResponseBean.success("插件安装成功",null);
-            }
-            // 如果是更新,则需要调用插件的更新方法,反之调用安装方法
+            // 如果判定为更新插件逻辑,则进行更新逻辑处理
             if (isUpdate) {
-                pluginBean.onUpdate();
-            } else {
-                pluginBean.onInstall();
+                pluginUpdateHandle(setting, plugin, pluginFile);
+                return ResponseBean.success("插件更新成功",null);
             }
+            // 安装插件
+            PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
+            // 执行安装方法
+            pluginManager.handleEvent(Constants.PLUGIN_EVENT_INSTALL, pluginInfo, true);
+            // 安装后置操作
             pluginManager.installAfter(pluginInfo.getPluginId());
+            savePlugin(pluginInfo, pluginFile);
             return ResponseBean.success("插件安装成功",null);
         }catch (Exception e) {
             e.printStackTrace();
@@ -121,32 +118,37 @@ public class PluginServiceImpl implements PluginService {
         }
     }
 
-
     /**
-     * @description 更新
-     * @author Perfree
+     * 插件更新逻辑处理
      */
-    private void updatePlugin(PluginInfo pluginInfo, File file) {
+    private void pluginUpdateHandle(Props newPluginSetting, PluginWrapper oldPluginWrapper, File pluginFile) throws Exception {
+        boolean isStart = oldPluginWrapper.getPluginState().equals(PluginState.STARTED);
+        pluginManager.unInstall(newPluginSetting.getStr("plugin.id"));
+        PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
+        // 执行更新方法
+        pluginManager.handleEvent(Constants.PLUGIN_EVENT_UPDATE, pluginInfo, false);
+        // 执行后置操作
+        pluginManager.installAfter(pluginInfo.getPluginId());
+        // 如果之前已经启动,则需要同时启动
+        if (isStart) {
+            pluginManager.startPlugin(pluginInfo.getPluginId());
+        }
         Plugin plugin = pluginsMapper.getByName(pluginInfo.getPluginWrapper().getDescriptor().getPluginId());
         plugin.setAuthor(pluginInfo.getPluginWrapper().getDescriptor().getProvider());
         plugin.setDesc(pluginInfo.getPluginWrapper().getDescriptor().getPluginDescription());
-        plugin.setPath(file.getName());
+        plugin.setPath(pluginFile.getName());
         plugin.setName(pluginInfo.getPluginId());
         plugin.setVersion(pluginInfo.getPluginWrapper().getDescriptor().getVersion());
         plugin.setUpdateTime(new Date());
         pluginsMapper.update(plugin);
     }
 
-    /** 
+
+    /**
      * @description 保存插件信息
      * @author Perfree
      */ 
-    private void saveOrUpdatePlugin(PluginInfo pluginInfo , File file) {
-        Plugin byName = pluginsMapper.getByName(pluginInfo.getPluginId());
-        if (byName != null) {
-            updatePlugin(pluginInfo, file);
-            return;
-        }
+    private void savePlugin(PluginInfo pluginInfo , File file) {
         Plugin plugin = new Plugin();
         plugin.setAuthor(pluginInfo.getPluginWrapper().getDescriptor().getProvider());
         plugin.setDesc(pluginInfo.getPluginWrapper().getDescriptor().getPluginDescription());
@@ -154,7 +156,7 @@ public class PluginServiceImpl implements PluginService {
         plugin.setName(pluginInfo.getPluginId());
         plugin.setVersion(pluginInfo.getPluginWrapper().getDescriptor().getVersion());
         plugin.setCreateTime(new Date());
-        plugin.setStatus(0);
+        plugin.setStatus(Constants.PLUGIN_STATUS_DISABLE);
         pluginsMapper.save(plugin);
     }
 
@@ -181,17 +183,16 @@ public class PluginServiceImpl implements PluginService {
         try {
             Plugin plugin = pluginsMapper.getById(id);
             File file = new File(Constants.PLUGIN_PATH + File.separator + plugin.getPath());
+            // 如果插件文件不存在,则证明为冗余数据,直接清除数据库内容
             if (!file.exists()) {
                 pluginsMapper.delById(plugin.getId());
                 return true;
             }
 
             PluginInfo pluginInfo = pluginManager.getPluginInfoById(plugin.getName());
-            PluginEvent pluginBean = pluginInfo.getPluginBean(PluginEvent.class);
-            if (pluginBean != null) {
-                pluginBean.onUnInstall();
-            }
-
+            // 卸载事件
+            pluginManager.handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, pluginInfo, false);
+            // 卸载插件
             pluginManager.unInstall(plugin.getName());
             pluginsMapper.delById(plugin.getId());
             return true;
@@ -216,7 +217,7 @@ public class PluginServiceImpl implements PluginService {
         PluginState pluginState = pluginManager.startPlugin(plugin.getName());
         boolean result = pluginState != null && pluginState.equals(PluginState.STARTED);
         if (result) {
-            plugin.setStatus(1);
+            plugin.setStatus(Constants.PLUGIN_STATUS_ENABLE);
             pluginsMapper.update(plugin);
         }
         return result;
@@ -228,7 +229,7 @@ public class PluginServiceImpl implements PluginService {
         PluginState pluginState = pluginManager.stopPlugin(plugin.getName());
         boolean result = pluginState != null && pluginState.equals(PluginState.STOPPED);
         if (result) {
-            plugin.setStatus(0);
+            plugin.setStatus(Constants.PLUGIN_STATUS_DISABLE);
             pluginsMapper.update(plugin);
         }
         return result;

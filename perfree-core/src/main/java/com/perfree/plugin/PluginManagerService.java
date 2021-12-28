@@ -19,6 +19,10 @@ public interface PluginManagerService {
      */
     PluginInfo install(Path path) throws Exception;
 
+    /**
+     * 安装插件后置操作
+     * @param pluginId pluginId
+     */
     void installAfter(String pluginId);
 
     /**

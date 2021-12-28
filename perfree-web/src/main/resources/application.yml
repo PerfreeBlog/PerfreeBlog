@@ -75,7 +75,7 @@ cache:
     config: ehcache.xml
 
 swagger:
-  enable: false
+  enable: true
   application-name: PerfreeBlog
   application-version: ${version}
   application-description: PerfreeBlog接口文档

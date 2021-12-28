@@ -178,4 +178,23 @@ public class Constants {
     public static final String OPEN_CAPTCHA = "1";
     public static final String COMMENT_IS_STINT = "1";
     public static final String OPTION_WEB_COMMENT_IS_STINT = "WEB_COMMENT_IS_STINT";
+    // 插件状态:禁用
+    public static final int PLUGIN_STATUS_DISABLE = 0;
+    // 插件状态:启用
+    public static final int PLUGIN_STATUS_ENABLE = 1;
+
+    // 插件事件类型: 安装
+    public static final int PLUGIN_EVENT_INSTALL = 0;
+
+    // 插件事件类型: 启动
+    public static final int PLUGIN_EVENT_START = 1;
+
+    // 插件事件类型: 停止
+    public static final int PLUGIN_EVENT_STOP = 2;
+
+    // 插件事件类型: 更新
+    public static final int PLUGIN_EVENT_UPDATE = 3;
+
+    // 插件事件类型: 卸载
+    public static final int PLUGIN_EVENT_UNINSTALL = 4;
 }
