@@ -38,6 +38,17 @@ public class Plugin implements Serializable {
     @ApiModelProperty(value="更新时间",name="updateTime")
     private Date updateTime;
 
+    @ApiModelProperty(value="插件状态",name="status")
+    private Integer status = 0;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Long getId() {
         return id;
     }

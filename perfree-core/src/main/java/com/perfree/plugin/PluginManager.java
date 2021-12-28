@@ -1,9 +1,15 @@
 package com.perfree.plugin;
 
+import cn.hutool.core.io.FileUtil;
+import com.perfree.commons.Constants;
+import com.perfree.model.Plugin;
+import com.perfree.plugin.handle.compound.LoadPluginHandle;
+import com.perfree.plugin.handle.compound.StartPluginHandle;
 import com.perfree.plugin.register.PluginRegister;
 import com.perfree.plugin.utils.PluginsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pf4j.DefaultPluginManager;
+import org.pf4j.PluginState;
 import org.pf4j.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -24,7 +31,10 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
     @Autowired
-    PluginRegister pluginRegister;
+    private LoadPluginHandle loadPluginHandle;
+
+    @Autowired
+    private StartPluginHandle startPluginHandle;
 
     ApplicationContext applicationContext;
 
@@ -45,10 +55,9 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         String pluginId = null;
         try {
             pluginId = loadPlugin(path);
-            startPlugin(pluginId);
-            PluginInfo plugin = new PluginInfo(getPlugin(pluginId), applicationContext);
-            pluginRegister.registry(plugin);
-            PluginHolder.put(pluginId, plugin);
+            super.startPlugin(pluginId);
+            PluginInfo plugin = PluginHolder.getPlugin(pluginId);
+            loadPluginHandle.registry(plugin);
             LOGGER.info("install plugin [{}] success", plugin.getPluginId());
             return plugin;
         } catch (Exception e) {
@@ -58,6 +67,45 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
             }
             throw new Exception(e.getMessage());
         }
+    }
+
+    @Override
+    public void installAfter(String pluginId) {
+        try{
+            PluginInfo plugin = PluginHolder.getPlugin(pluginId);
+            loadPluginHandle.unRegistry(plugin);
+            super.stopPlugin(pluginId);
+        }catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("install plugin after error:{}", e.getMessage());
+        }
+    }
+
+    public PluginState startPlugin(String pluginId){
+        PluginState pluginState = null;
+        try{
+            PluginInfo plugin = PluginHolder.getPlugin(pluginId);
+            plugin.refreshApplicationContext(applicationContext);
+            startPluginHandle.registry(plugin);
+            pluginState = super.startPlugin(pluginId);
+        }catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("plugin start error : {}", e.getMessage());
+        }
+        return pluginState;
+    }
+
+    public PluginState stopPlugin(String pluginId) {
+        PluginState pluginState = null;
+        try{
+            PluginInfo plugin = PluginHolder.getPlugin(pluginId);
+            startPluginHandle.unRegistry(plugin);
+            pluginState = super.stopPlugin(pluginId, true);
+        }catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("plugin stop error : {}", e.getMessage());
+        }
+        return pluginState;
     }
 
     /**
@@ -72,9 +120,12 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
 
         if(plugin != null) {
             try {
-                pluginRegister.unRegistry(plugin);
+                PluginState pluginState = plugin.getPluginWrapper().getPluginState();
+                if (pluginState.equals(PluginState.STARTED)) {
+                    startPluginHandle.unRegistry(plugin);
+                }
                 PluginHolder.remove(pluginId);
-                if(!unloadPlugin(pluginId, false)) {
+                if(!unloadPlugin(pluginId, true)) {
                     throw new Exception("plugin [" + pluginId + "] 卸载失败");
                 }
                 PluginsUtils.forceDelete(plugin.getPluginWrapper().getPluginPath().toFile());
@@ -89,20 +140,17 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
      * @throws Exception Exception
      */
     @Override
-    public void initPlugins() throws Exception {
-        loadPlugins();
-        startPlugins();
-        pluginRegister.initialize();
-        for (PluginWrapper startedPlugin : getPlugins()) {
-            PluginInfo plugin = new PluginInfo(startedPlugin, applicationContext);
-            PluginHolder.put(startedPlugin.getPluginId(), plugin);
-            try {
-                pluginRegister.registry(plugin);
-            } catch (Exception e) {
-                PluginHolder.remove(startedPlugin.getPluginId());
-                unloadPlugin(plugin.getPluginWrapper().getPluginId());
-                e.printStackTrace();
-                throw new Exception(e.getMessage());
+    public void initPlugins(List<Plugin> plugins) throws Exception {
+        loadPluginHandle.initialize();
+        startPluginHandle.initialize();
+        for (Plugin plugin : plugins) {
+            File file = new File(Constants.PLUGINS_DIR + Constants.SEPARATOR + plugin.getPath());
+            if (!file.exists()) {
+                continue;
+            }
+            this.loadPlugin(file.toPath().toAbsolutePath());
+            if (plugin.getStatus() == 1) {
+                this.startPlugin(plugin.getName());
             }
         }
     }
@@ -130,10 +178,11 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         PluginWrapper pluginWrapper = loadPluginFromPath(pluginPath);
         try {
             resolvePlugins();
+            PluginInfo plugin = new PluginInfo(pluginWrapper, applicationContext);
+            PluginHolder.put(pluginWrapper.getPluginId(), plugin);
         } catch (Exception e) {
             unloadPlugin(pluginWrapper.getPluginId());
         }
-
         return pluginWrapper.getDescriptor().getPluginId();
     }
 

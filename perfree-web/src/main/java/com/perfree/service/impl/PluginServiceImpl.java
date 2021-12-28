@@ -17,6 +17,7 @@ import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.PluginService;
 import org.apache.commons.lang3.StringUtils;
+import org.pf4j.PluginState;
 import org.pf4j.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,7 +108,7 @@ public class PluginServiceImpl implements PluginService {
             } else {
                 pluginBean.onInstall();
             }
-            pluginBean.onStart();
+            pluginManager.installAfter(pluginInfo.getPluginId());
             return ResponseBean.success("插件安装成功",null);
         }catch (Exception e) {
             e.printStackTrace();
@@ -153,6 +154,7 @@ public class PluginServiceImpl implements PluginService {
         plugin.setName(pluginInfo.getPluginId());
         plugin.setVersion(pluginInfo.getPluginWrapper().getDescriptor().getVersion());
         plugin.setCreateTime(new Date());
+        plugin.setStatus(0);
         pluginsMapper.save(plugin);
     }
 
@@ -206,5 +208,29 @@ public class PluginServiceImpl implements PluginService {
      */
     public List<Plugin> getAll() {
         return pluginsMapper.getAll();
+    }
+
+    @Override
+    public boolean startPlugin(String id) {
+        Plugin plugin = pluginsMapper.getById(id);
+        PluginState pluginState = pluginManager.startPlugin(plugin.getName());
+        boolean result = pluginState != null && pluginState.equals(PluginState.STARTED);
+        if (result) {
+            plugin.setStatus(1);
+            pluginsMapper.update(plugin);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean stopPlugin(String id) {
+        Plugin plugin = pluginsMapper.getById(id);
+        PluginState pluginState = pluginManager.stopPlugin(plugin.getName());
+        boolean result = pluginState != null && pluginState.equals(PluginState.STOPPED);
+        if (result) {
+            plugin.setStatus(0);
+            pluginsMapper.update(plugin);
+        }
+        return result;
     }
 }

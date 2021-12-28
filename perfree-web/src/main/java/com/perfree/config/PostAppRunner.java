@@ -10,11 +10,13 @@ import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.SpringBeanUtils;
 import com.perfree.commons.StringUtil;
 import com.perfree.directive.TemplateDirective;
+import com.perfree.model.Plugin;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
+import com.perfree.service.PluginService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,11 +46,14 @@ public class PostAppRunner implements ApplicationRunner {
     private final OptionService optionService;
     private final MenuService menuService;
     private final PluginManagerService pluginManagerService;
+    private final PluginService pluginService;
 
-    public PostAppRunner(PluginManagerService pluginManagerService,OptionService optionService, MenuService menuService) {
+    public PostAppRunner(PluginManagerService pluginManagerService,OptionService optionService,
+                         MenuService menuService,PluginService pluginService) {
         this.optionService = optionService;
         this.menuService = menuService;
         this.pluginManagerService = pluginManagerService;
+        this.pluginService = pluginService;
     }
 
     @Override
@@ -155,7 +160,8 @@ public class PostAppRunner implements ApplicationRunner {
      */
     private void initPlugins() {
         try {
-            pluginManagerService.initPlugins();
+            List<Plugin> plugins = pluginService.getAll();
+            pluginManagerService.initPlugins(plugins);
         } catch (Exception e) {
             e.printStackTrace();
         }

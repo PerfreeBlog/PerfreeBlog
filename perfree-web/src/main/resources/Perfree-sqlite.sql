@@ -142,6 +142,7 @@ CREATE TABLE `p_plugin`  (
                              `desc` text(512),
                              `version` text(64),
                              `author` text(64),
+                             "status" integer NOT NULL,
                              "createTime" DATETIME NOT NULL,
                              "updateTime" DATETIME
 );

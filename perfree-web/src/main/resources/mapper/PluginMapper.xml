@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.PluginsMapper" >
     <insert id="save">
-        insert into p_plugin ( `name`, `path`, `desc`,`version`,`author`,`createTime`)
-        VALUES (#{name},#{path}, #{desc},#{version},#{author},#{createTime})
+        insert into p_plugin ( `name`, `path`, `desc`,`version`,`author`,`createTime`, `status`)
+        VALUES (#{name},#{path}, #{desc},#{version},#{author},#{createTime}, #{status})
     </insert>
     <update id="update">
-        update p_plugin set `name` = #{name},`desc` = #{desc},`version` = #{version},`author`=#{author},updateTime=#{updateTime} where id = #{id}
+        update p_plugin set `name` = #{name},`desc` = #{desc},`version` = #{version},`author`=#{author},updateTime=#{updateTime},`status` = #{status} where id = #{id}
     </update>
 
     <select id="getByName" resultType="com.perfree.model.Plugin">

@@ -60,6 +60,14 @@ public class PluginInfo {
     }
 
     /**
+     * 刷新ApplicationContext
+     */
+    public void refreshApplicationContext(ApplicationContext applicationContext){
+        this.mainApplicationContext = applicationContext;
+        this.pluginApplicationContext = getContext();
+        this.pluginApplicationContext.setParent(mainApplicationContext);
+    }
+    /**
      * @description  获取插件内实现指定类的bean
      * @param c class
      * @return java.util.List<java.lang.Class<?>>

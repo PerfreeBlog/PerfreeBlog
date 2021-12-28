@@ -33,10 +33,7 @@ function initPage() {
             layer.close(loadIndex);
             if (res.code === 200) {
                 parent.layer.msg("插件安装成功", {icon: 1});
-                setTimeout(function (){
-                    localStorage.setItem("plugin", "success");
-                    parent.location.reload();
-                }, 500)
+                queryTable();
             } else {
                 layer.msg(res.msg, {icon: 2});
             }
@@ -89,10 +86,17 @@ function queryTable() {
                 minWidth: 160
             },
             {
-                field: 'id', title: '操作', width: 80,
-                templet: "<div>" +
-                    "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"{{d.id}}\")'>卸载</a>" +
-                    "</div>"
+                field: 'id', title: '操作', width: 120,
+                templet: function (d) {
+                    let html = "<div>";
+                    if (d.status === 0) {
+                        html += "<a class='layui-btn layui-btn-xs' onclick='startPlugin(\""+d.id+"\")'>启用</a>";
+                    } else {
+                        html += "<a class='layui-btn layui-btn-xs' onclick='stopPlugin(\""+d.id+"\")'>禁用</a>";
+                    }
+                    html +=  "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\""+d.id+"\")'>卸载</a></div>";
+                    return html;
+                }
             },
         ]],
         page: true,
@@ -141,5 +145,53 @@ function deleteData(ids) {
             }
         });
         layer.close(index);
+    });
+}
+
+function startPlugin(id){
+    $.ajax({
+        type: "POST",
+        url: "/admin/plugin/startPlugin",
+        contentType: "application/json",
+        data: id,
+        success: function (data) {
+            if (data.code === 200) {
+                queryTable();
+                layer.msg("插件启用成功", {icon: 1});
+                setTimeout(function (){
+                    localStorage.setItem("plugin", "success");
+                    parent.location.reload();
+                }, 500)
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("插件启用失败", {icon: 2});
+        }
+    });
+}
+
+function stopPlugin(id){
+    $.ajax({
+        type: "POST",
+        url: "/admin/plugin/stopPlugin",
+        contentType: "application/json",
+        data: id,
+        success: function (data) {
+            if (data.code === 200) {
+                queryTable();
+                layer.msg("插件禁用成功", {icon: 1});
+                setTimeout(function (){
+                    localStorage.setItem("plugin", "success");
+                    parent.location.reload();
+                }, 500)
+            } else {
+                layer.msg(data.msg, {icon: 2});
+            }
+        },
+        error: function (data) {
+            layer.msg("插件禁用失败", {icon: 2});
+        }
     });
 }

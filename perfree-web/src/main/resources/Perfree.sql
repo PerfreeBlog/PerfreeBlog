@@ -163,6 +163,7 @@ CREATE TABLE `p_plugin`  (
                        `desc` varchar(512) CHARACTER SET utf8mb4 NULL COMMENT '插件描述',
                        `version` varchar(64) CHARACTER SET utf8mb4 NULL COMMENT '版本',
                        `author` varchar(64) CHARACTER SET utf8mb4 NULL COMMENT '作者',
+                       `status` int(0) NOT NULL DEFAULT 0 COMMENT '插件状态:0禁用,1启用',
                        `createTime` datetime(0) NOT NULL COMMENT '创建时间',
                        `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
                        PRIMARY KEY (`id`) USING BTREE

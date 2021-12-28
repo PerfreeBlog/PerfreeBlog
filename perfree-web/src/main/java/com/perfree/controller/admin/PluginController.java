@@ -89,4 +89,28 @@ public class PluginController extends BaseController {
         logger.error("卸载失败: {}", id);
         return ResponseBean.fail("卸载失败", null);
     }
+
+    /**
+     * 启用插件
+     * @return String
+     */
+    @PostMapping("/plugin/startPlugin")
+    @ResponseBody
+    public ResponseBean startPlugin(@RequestBody String id) {
+        if (pluginService.startPlugin(id)) {
+            return ResponseBean.success("启用成功", null);
+        }
+        logger.error("启用失败: {}", id);
+        return ResponseBean.fail("启用失败", null);
+    }
+
+    @PostMapping("/plugin/stopPlugin")
+    @ResponseBody
+    public ResponseBean stopPlugin(@RequestBody String id) {
+        if (pluginService.stopPlugin(id)) {
+            return ResponseBean.success("禁用成功", null);
+        }
+        logger.error("禁用失败: {}", id);
+        return ResponseBean.fail("禁用失败", null);
+    }
 }

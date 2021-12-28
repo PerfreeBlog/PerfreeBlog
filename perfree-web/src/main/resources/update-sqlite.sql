@@ -113,3 +113,20 @@ CREATE TABLE "main"."p_article" (
 INSERT INTO "main"."p_article" ("id", "slug", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime") SELECT "id", "slug", "title", "content", "type", "summary", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime" FROM "main"."_p_article_old_2.1.0";
 drop table if exists "main"."_p_article_old_2.1.0";
 UPDATE "main"."p_article" set contentModel = 'markdown' where contentModel is null;
+--PerfreeBlog
+--v2.2.0;
+ALTER TABLE "main"."p_plugin" RENAME TO "_p_plugin_old_2.2.0";
+CREATE TABLE "main"."p_plugin" (
+                                   "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                   "name" text(256) NOT NULL,
+                                   "path" text(256),
+                                   "desc" text(512),
+                                   "version" text(64),
+                                   "status" integer,
+                                   "author" text(64),
+                                   "createTime" DATETIME NOT NULL,
+                                   "updateTime" DATETIME
+);
+INSERT INTO "main"."p_plugin" ("id", "name", "path", "desc", "version", "author", "createTime", "updateTime") SELECT "id", "name", "path", "desc", "version", "author", "createTime", "updateTime" FROM "main"."_p_plugin_old_2.2.0";
+drop table if exists "main"."_p_plugin_old_2.2.0";
+UPDATE "main"."p_plugin" set "status" = 1 where "status" is null;

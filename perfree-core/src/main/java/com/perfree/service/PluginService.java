@@ -39,4 +39,9 @@ public interface PluginService {
      * @author Perfree
      */
     List<Plugin> getAll();
+
+    boolean startPlugin(String id);
+
+    boolean stopPlugin(String id);
+
 }

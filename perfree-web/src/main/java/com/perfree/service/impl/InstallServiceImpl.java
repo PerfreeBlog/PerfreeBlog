@@ -10,12 +10,14 @@ import cn.hutool.setting.dialect.Props;
 import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.model.Database;
+import com.perfree.model.Plugin;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.InstallService;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
+import com.perfree.service.PluginService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +37,9 @@ public class InstallServiceImpl implements InstallService {
     private OptionService optionService;
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private PluginService pluginService;
+
     @Value("${version}")
     private String version;
 
@@ -128,7 +133,8 @@ public class InstallServiceImpl implements InstallService {
         List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
         menuService.initSystemMenu(adminMenuGroups);
         try{
-            pluginManagerService.initPlugins();
+            List<Plugin> plugins = pluginService.getAll();
+            pluginManagerService.initPlugins(plugins);
         }catch (Exception e) {
             e.printStackTrace();
         }

@@ -25,3 +25,7 @@ ALTER TABLE `p_article` ADD INDEX `slug`(`slug`), ADD INDEX `type`(`type`), ADD 
 --v2.1.0;
 ALTER TABLE `p_article` ADD COLUMN `contentModel` varchar(32) NULL COMMENT '内容类型:html/markdown' AFTER `updateTime`;
 UPDATE p_article set contentModel = 'markdown' where contentModel is null;
+--PerfreeBlog
+--v2.2.0;
+ALTER TABLE `p_plugin` ADD COLUMN `status` int NULL COMMENT '插件状态:0禁用,1启用';
+UPDATE `p_plugin` set `status` = 1 where `status` is null;

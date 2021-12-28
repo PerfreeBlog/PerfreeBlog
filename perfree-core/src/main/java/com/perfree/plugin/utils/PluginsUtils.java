@@ -7,6 +7,7 @@ import cn.hutool.setting.dialect.Props;
 import com.perfree.plugin.PluginHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.proxy.CommentProxy;
+import org.pf4j.PluginState;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedOutputStream;
@@ -85,6 +86,9 @@ public class PluginsUtils {
         Map<String, PluginInfo> allPlugin = PluginHolder.getAllPlugin();
         for (String key : allPlugin.keySet()) {
             PluginInfo pluginInfo = allPlugin.get(key);
+            if (!pluginInfo.getPluginWrapper().getPluginState().equals(PluginState.STARTED)){
+                continue;
+            }
             T pluginBean = pluginInfo.getPluginBean(clazz);
             if (pluginBean != null) {
                 result.add(pluginBean);
