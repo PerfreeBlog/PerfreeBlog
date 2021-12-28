@@ -25,7 +25,7 @@ public class AboutController extends BaseController {
     private SwaggerProperties swaggerProperties;
 
     @GetMapping("/about")
-    @AdminMenu(name = "关于系统", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_SETTING,
+    @AdminMenu(name = "关于系统", seq = 3, groupId = Constants.ADMIN_MENU_GROUP_SETTING,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE, Constants.ROLE_USER})
     public String index(Model model) {
         model.addAttribute("version", version);

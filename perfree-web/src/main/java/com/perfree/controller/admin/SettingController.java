@@ -1,8 +1,6 @@
 package com.perfree.controller.admin;
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.file.FileReader;
-import cn.hutool.core.util.CharsetUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.FileUtil;
@@ -19,7 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,11 +41,49 @@ public class SettingController extends BaseController {
     @GetMapping("/setting")
     @AdminMenu(name = "网站设置", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_SETTING)
     public String index(Model model) {
-        model.addAttribute("findPasswordEmailTemplate",getEmailTpl("/static/admin/tpl/find_password.html"));
-        model.addAttribute("commentEmailTemplate",getEmailTpl("/static/admin/tpl/comment_mail.html"));
         return view("static/admin/pages/settings/setting.html");
     }
 
+    /**
+     * 邮件模板设置
+     */
+    @GetMapping("/emailSetting")
+    @AdminMenu(name = "邮件模板", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_SETTING)
+    public String emailSetting(Model model) {
+        List<HashMap<String, String>> param = new ArrayList<>();
+
+        HashMap<String, String> comment = new HashMap<>();
+        comment.put("path", "/static/admin/tpl/comment_mail.html");
+        comment.put("name", "评论邮件模板");
+        param.add(comment);
+
+        HashMap<String, String> findPassword = new HashMap<>();
+        findPassword.put("path", "/static/admin/tpl/find_password.html");
+        findPassword.put("name", "找回密码邮件模板");
+        param.add(findPassword);
+
+        model.addAttribute("templates", param);
+        return view("static/admin/pages/settings/email_setting.html");
+    }
+
+    /**
+     * 获取邮件模板文件内容
+     */
+    @PostMapping("/emailSetting/getFileContent")
+    @ResponseBody
+    public ResponseBean getFileContent(@RequestParam("path") String path){
+        return ResponseBean.success("数据加载成功", getEmailTpl(path));
+    }
+
+    /**
+     * 保存邮件模板
+     */
+    @PostMapping("/emailSetting/saveFileContent")
+    @ResponseBody
+    public ResponseBean saveFileContent(@RequestParam("path") String path, @RequestParam("content") String content){
+        updateEmailTpl(path, content);
+        return ResponseBean.success("文件保存成功", null);
+    }
 
     /**
      * 保存设置信息
@@ -56,14 +95,6 @@ public class SettingController extends BaseController {
     public ResponseBean saveSetting(@RequestBody HashMap<String, String> param) {
         List<Option> options = new ArrayList<>();
         for(Map.Entry<String, String> entry : param.entrySet()){
-            if (entry.getKey().equals("commentEmailTemplate")) {
-                updateEmailTpl("/static/admin/tpl/comment_mail.html", entry.getValue());
-                continue;
-            }
-            if (entry.getKey().equals("findPasswordEmailTemplate")) {
-                updateEmailTpl("/static/admin/tpl/find_password.html", entry.getValue());
-                continue;
-            }
             Option option = new Option();
             option.setKey(entry.getKey());
             option.setValue(entry.getValue());
