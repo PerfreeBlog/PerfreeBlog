@@ -93,12 +93,13 @@ public class PluginServiceImpl implements PluginService {
                     isUpdate = true;
                 }
             }
-            FileUtil.copy(file.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
+
             // 如果判定为更新插件逻辑,则进行更新逻辑处理
             if (isUpdate) {
-                pluginUpdateHandle(setting, plugin, pluginFile);
+                pluginUpdateHandle(setting, plugin, file, pluginFile);
                 return ResponseBean.success("插件更新成功",null);
             }
+            FileUtil.copy(file.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
             // 安装插件
             PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
             // 执行安装方法
@@ -121,9 +122,10 @@ public class PluginServiceImpl implements PluginService {
     /**
      * 插件更新逻辑处理
      */
-    private void pluginUpdateHandle(Props newPluginSetting, PluginWrapper oldPluginWrapper, File pluginFile) throws Exception {
+    private void pluginUpdateHandle(Props newPluginSetting, PluginWrapper oldPluginWrapper, File uploadFile, File pluginFile) throws Exception {
         boolean isStart = oldPluginWrapper.getPluginState().equals(PluginState.STARTED);
         pluginManager.unInstall(newPluginSetting.getStr("plugin.id"));
+        FileUtil.copy(uploadFile.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
         PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
         // 执行更新方法
         pluginManager.handleEvent(Constants.PLUGIN_EVENT_UPDATE, pluginInfo);
