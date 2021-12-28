@@ -102,7 +102,7 @@ public class PluginServiceImpl implements PluginService {
             // 安装插件
             PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
             // 执行安装方法
-            pluginManager.handleEvent(Constants.PLUGIN_EVENT_INSTALL, pluginInfo, true);
+            pluginManager.handleEvent(Constants.PLUGIN_EVENT_INSTALL, pluginInfo);
             // 安装后置操作
             pluginManager.installAfter(pluginInfo.getPluginId());
             savePlugin(pluginInfo, pluginFile);
@@ -126,7 +126,7 @@ public class PluginServiceImpl implements PluginService {
         pluginManager.unInstall(newPluginSetting.getStr("plugin.id"));
         PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
         // 执行更新方法
-        pluginManager.handleEvent(Constants.PLUGIN_EVENT_UPDATE, pluginInfo, false);
+        pluginManager.handleEvent(Constants.PLUGIN_EVENT_UPDATE, pluginInfo);
         // 执行后置操作
         pluginManager.installAfter(pluginInfo.getPluginId());
         // 如果之前已经启动,则需要同时启动
@@ -188,10 +188,6 @@ public class PluginServiceImpl implements PluginService {
                 pluginsMapper.delById(plugin.getId());
                 return true;
             }
-
-            PluginInfo pluginInfo = pluginManager.getPluginInfoById(plugin.getName());
-            // 卸载事件
-            pluginManager.handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, pluginInfo, false);
             // 卸载插件
             pluginManager.unInstall(plugin.getName());
             pluginsMapper.delById(plugin.getId());

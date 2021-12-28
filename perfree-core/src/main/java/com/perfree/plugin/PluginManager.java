@@ -54,10 +54,8 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         try {
             pluginId = this.loadPlugin(path);
             super.startPlugin(pluginId);
-            PluginInfo plugin = PluginHolder.getPlugin(pluginId);
-            loadPluginHandle.registry(plugin);
-            LOGGER.info("install plugin [{}] success", plugin.getPluginId());
-            return plugin;
+            LOGGER.info("install plugin [{}] success", pluginId);
+            return PluginHolder.getPlugin(pluginId);
         } catch (Exception e) {
             e.printStackTrace();
             if(StringUtils.isNotBlank(pluginId)) {
@@ -92,11 +90,10 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         PluginState pluginState = null;
         try{
             PluginInfo plugin = PluginHolder.getPlugin(pluginId);
-            plugin.refreshApplicationContext(applicationContext);
             startPluginHandle.registry(plugin);
             pluginState = super.startPlugin(pluginId);
             // 启动事件
-            handleEvent(Constants.PLUGIN_EVENT_START, plugin, false);
+            handleEvent(Constants.PLUGIN_EVENT_START, plugin);
         }catch (Exception e) {
             e.printStackTrace();
             LOGGER.error("plugin start error : {}", e.getMessage());
@@ -114,7 +111,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         try{
             PluginInfo plugin = PluginHolder.getPlugin(pluginId);
             // 停止事件
-            handleEvent(Constants.PLUGIN_EVENT_STOP, plugin, false);
+            handleEvent(Constants.PLUGIN_EVENT_STOP, plugin);
             startPluginHandle.unRegistry(plugin);
             pluginState = super.stopPlugin(pluginId, true);
         }catch (Exception e) {
@@ -138,7 +135,12 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
             try {
                 PluginState pluginState = plugin.getPluginWrapper().getPluginState();
                 if (pluginState.equals(PluginState.STARTED)) {
+                    handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
                     startPluginHandle.unRegistry(plugin);
+                } else {
+                    handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
+                    loadPluginHandle.unRegistry(plugin);
+                    plugin.clearApplicationContext();
                 }
                 PluginHolder.remove(pluginId);
                 if(!unloadPlugin(pluginId, true)) {
@@ -155,14 +157,13 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
      * 插件事件处理
      * @param type 事件类型
      * @param pluginInfo 插件信息
-     * @param isFirst 是否为首次(为兼容老版本加的参数)
      */
-    public void handleEvent(int type, PluginInfo pluginInfo, boolean isFirst){
+    public void handleEvent(int type, PluginInfo pluginInfo){
         LOGGER.info("plugin event type: {}, pluginIid :{}" ,type, pluginInfo.getPluginId());
         PluginEvent pluginBean = pluginInfo.getPluginBean(PluginEvent.class);
         // 如果存在该类的实现,证明为老版本(2.2.0以下)插件,走老版本插件处理逻辑
         if (pluginBean != null) {
-            handleOldEvent(type, pluginBean, isFirst);
+            handleOldEvent(type, pluginBean);
             return;
         }
         // 新版本(2.2.0以上)
@@ -193,17 +194,15 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
      * 老版本插件事件处理
      * @param type 事件类型
      * @param pluginBean 插件事件类
-     * @param isFirst 是否为首次(为兼容老版本加的参数)
      */
-    private void handleOldEvent(int type, PluginEvent pluginBean, boolean isFirst) {
+    private void handleOldEvent(int type, PluginEvent pluginBean) {
         switch (type) {
             case Constants.PLUGIN_EVENT_INSTALL:
+                pluginBean.onInstall();
+                break;
             case Constants.PLUGIN_EVENT_STOP:
                 break;
             case Constants.PLUGIN_EVENT_START:
-                if (isFirst) {
-                    pluginBean.onInstall();
-                }
                 pluginBean.onStart();
                 break;
             case Constants.PLUGIN_EVENT_UPDATE:
@@ -229,9 +228,11 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
             if (!file.exists()) {
                 continue;
             }
-            this.loadPlugin(file.toPath().toAbsolutePath());
+            String pluginId = this.loadPlugin(file.toPath().toAbsolutePath());
+            PluginInfo pluginInfo = PluginHolder.getPlugin(pluginId);
+            loadPluginHandle.unRegistry(pluginInfo);
             if (plugin.getStatus() == 1) {
-                this.startPlugin(plugin.getName());
+                this.startPlugin(pluginInfo.getPluginId());
             }
         }
     }
@@ -260,6 +261,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
         try {
             resolvePlugins();
             PluginInfo plugin = new PluginInfo(pluginWrapper, applicationContext);
+            loadPluginHandle.registry(plugin);
             PluginHolder.put(pluginWrapper.getPluginId(), plugin);
         } catch (Exception e) {
             unloadPlugin(pluginWrapper.getPluginId());

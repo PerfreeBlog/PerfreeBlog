@@ -17,11 +17,15 @@ public class ApplicationContextPluginHandle implements BasePluginHandle {
 
     @Override
     public void registry(PluginInfo plugin) throws Exception {
+        if (plugin.getApplicationContextIsRefresh()) {
+            return;
+        }
         plugin.getPluginApplicationContext().setClassLoader(plugin.getPluginWrapper().getPluginClassLoader());
         plugin.getPluginApplicationContext().getDefaultListableBeanFactory()
-                .registerSingleton(plugin.getPluginWrapper().getPluginId(),
+                .registerSingleton(plugin.getPluginWrapper().getPluginId().trim(),
                         plugin.getPluginWrapper().getPlugin());
         plugin.getPluginApplicationContext().refresh();
+        plugin.setApplicationContextIsRefresh(true);
     }
 
     @Override

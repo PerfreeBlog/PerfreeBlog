@@ -23,6 +23,7 @@ public class PluginInfo {
     private List<Class<?>> classList;
 
     private ApplicationContext mainApplicationContext;
+    private Boolean applicationContextIsRefresh = false;
 
     private AnnotationConfigApplicationContext pluginApplicationContext;
 
@@ -59,13 +60,14 @@ public class PluginInfo {
         }
     }
 
+
     /**
-     * 刷新ApplicationContext
+     * 清理ApplicationContext
      */
-    public void refreshApplicationContext(ApplicationContext applicationContext){
-        this.mainApplicationContext = applicationContext;
-        this.pluginApplicationContext = getContext();
-        this.pluginApplicationContext.setParent(mainApplicationContext);
+    public void clearApplicationContext(){
+        PluginApplicationContextHolder.removePluginApplicationContext(this.getPluginId().trim());
+        this.getPluginApplicationContext().getDefaultListableBeanFactory().destroySingletons();
+        this.getPluginApplicationContext().close();
     }
     /**
      * @description  获取插件内实现指定类的bean
@@ -102,6 +104,15 @@ public class PluginInfo {
                 this.staticFileLocations.add(staticLocation);
             }
         }
+    }
+
+
+    public Boolean getApplicationContextIsRefresh() {
+        return applicationContextIsRefresh;
+    }
+
+    public void setApplicationContextIsRefresh(Boolean applicationContextIsRefresh) {
+        this.applicationContextIsRefresh = applicationContextIsRefresh;
     }
 
     public BasePlugin getBasePlugin() {
