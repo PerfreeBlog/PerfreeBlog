@@ -1,5 +1,6 @@
 package com.exam.service;
 
+import com.perfree.plugin.BasePluginEvent;
 import com.perfree.plugin.PluginEvent;
 import org.springframework.stereotype.Service;
 
@@ -9,10 +10,15 @@ import org.springframework.stereotype.Service;
  * @date 2021/11/10 9:53
  */
 @Service
-public class PluginEventService implements PluginEvent {
+public class PluginEventService implements BasePluginEvent {
     @Override
     public void onStart() {
         System.out.println("onStart");
+    }
+
+    @Override
+    public void onStop() {
+        System.out.println("onStop");
     }
 
     @Override

@@ -7,7 +7,7 @@ layui.use(['util', 'layer','table'], function () {
     var myChart = echarts.init(document.getElementById('main1'));
     var myChart2 = echarts.init(document.getElementById('main2'));
 
-    $.get("/plugin/access/getAccessCountByWeek", function (res) {
+    $.get("/admin/plugin/access/getAccessCountByWeek", function (res) {
         var option = {
             title: {
                 text: '最近7天访问量'
@@ -34,7 +34,7 @@ layui.use(['util', 'layer','table'], function () {
         myChart.setOption(option);
     });
 
-    $.get("/plugin/access/getAccessCountBySysGroup", function (res) {
+    $.get("/admin/plugin/access/getAccessCountBySysGroup", function (res) {
         var option = {
             title: {
                 text: '访问设备类型统计',
@@ -75,7 +75,7 @@ layui.use(['util', 'layer','table'], function () {
 
     table.render({
         elem: '#tableBox',
-        url: '/plugin/access/list',
+        url: '/admin/plugin/access/list',
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         contentType: 'application/json',
