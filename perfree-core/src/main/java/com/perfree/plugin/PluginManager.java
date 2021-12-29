@@ -138,6 +138,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
                     handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
                     startPluginHandle.unRegistry(plugin);
                 } else {
+                    loadPluginHandle.registry(plugin);
                     handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
                     loadPluginHandle.unRegistry(plugin);
                 }
