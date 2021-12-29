@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>#(SEO_TITLE ?? WEB_TITLE ?? '未设置')</title>
+    <title>#(WEB_TITLE ?? '未设置')#(isBlank(SEO_TITLE) ? '': '-' + SEO_TITLE)</title>
     <meta name="keywords" content="#(SEO_KEYWORD ?? WEB_META_KEYWORD)">
     <meta name="description" content="#(SEO_DESC ?? WEB_META_DESC)">
     <link rel="Shortcut Icon" href="#option('WEB_LOGO','/static/public/images/favicon.ico')" type="image/x-icon"/>
