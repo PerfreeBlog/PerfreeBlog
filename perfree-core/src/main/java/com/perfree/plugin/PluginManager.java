@@ -140,8 +140,8 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
                 } else {
                     handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
                     loadPluginHandle.unRegistry(plugin);
-                    plugin.clearApplicationContext();
                 }
+                plugin.clearApplicationContext();
                 PluginHolder.remove(pluginId);
                 if(!unloadPlugin(pluginId, true)) {
                     throw new Exception("plugin [" + pluginId + "] 卸载失败");

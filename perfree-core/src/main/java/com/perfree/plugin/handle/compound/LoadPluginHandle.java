@@ -19,22 +19,12 @@ public class LoadPluginHandle implements BasePluginHandle, ApplicationContextAwa
     ApplicationContext applicationContext;
 
     List<BasePluginHandle> pluginRegisterList = Collections.synchronizedList(new ArrayList<>());
-    List<BasePluginHandle> pluginUnRegisterList = Collections.synchronizedList(new ArrayList<>());
-
     @Override
     public void initialize() throws Exception {
-        ClassHandle classHandle = new ClassHandle();
-        MapperHandle mapperHandle = new MapperHandle();
-        ApplicationContextPluginHandle applicationContextPluginHandle = new ApplicationContextPluginHandle();
-
         pluginRegisterList.clear();
-        pluginRegisterList.add(classHandle);
-        pluginRegisterList.add(mapperHandle);
-        pluginRegisterList.add(applicationContextPluginHandle);
-
-        pluginUnRegisterList.clear();
-        pluginUnRegisterList.add(classHandle);
-        pluginUnRegisterList.add(mapperHandle);
+        pluginRegisterList.add(new ClassHandle());
+        pluginRegisterList.add(new MapperHandle());
+        pluginRegisterList.add(new ApplicationContextPluginHandle());
         for (BasePluginHandle pluginHandle : pluginRegisterList) {
             pluginHandle.initialize();
         }
@@ -50,7 +40,7 @@ public class LoadPluginHandle implements BasePluginHandle, ApplicationContextAwa
     @Override
     public void unRegistry(PluginInfo plugin) throws Exception {
         try {
-            for (BasePluginHandle pluginHandle : pluginUnRegisterList) {
+            for (BasePluginHandle pluginHandle : pluginRegisterList) {
                 pluginHandle.unRegistry(plugin);
             }
         } finally {

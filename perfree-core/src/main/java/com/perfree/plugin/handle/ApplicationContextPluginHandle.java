@@ -1,6 +1,5 @@
 package com.perfree.plugin.handle;
 
-import com.perfree.plugin.PluginApplicationContextHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.handle.base.BasePluginHandle;
 
@@ -30,8 +29,5 @@ public class ApplicationContextPluginHandle implements BasePluginHandle {
 
     @Override
     public void unRegistry(PluginInfo plugin) throws Exception {
-        PluginApplicationContextHolder.removePluginApplicationContext(plugin.getPluginWrapper().getPluginId().trim());
-        plugin.getPluginApplicationContext().getDefaultListableBeanFactory().destroySingletons();
-        plugin.getPluginApplicationContext().close();
     }
 }
