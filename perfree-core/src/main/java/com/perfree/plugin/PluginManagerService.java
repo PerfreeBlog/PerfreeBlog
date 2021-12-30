@@ -27,9 +27,8 @@ public interface PluginManagerService {
 
     /**
      * @description 卸载插件
-     * @param pluginId 插件Id
      */
-    void unInstall(String pluginId) throws Exception;
+    void unInstall(String pluginId, boolean isUpdate) throws Exception;
 
     /**
      * 启动插件

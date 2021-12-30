@@ -10,6 +10,7 @@
             <directory>${basedir}/src/main/bin</directory>
             <outputDirectory></outputDirectory>
             <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
         </fileSet>
         <fileSet>
             <directory>${basedir}/src/main/resources</directory>

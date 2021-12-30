@@ -127,7 +127,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
      * @throws Exception Exception
      */
     @Override
-    public void unInstall(String pluginId) throws Exception {
+    public void unInstall(String pluginId, boolean isUpdate) throws Exception {
         LOGGER.info("unInstallPlugin:" + pluginId);
         PluginInfo plugin = PluginHolder.getPlugin(pluginId);
 
@@ -135,11 +135,15 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
             try {
                 PluginState pluginState = plugin.getPluginWrapper().getPluginState();
                 if (pluginState.equals(PluginState.STARTED)) {
-                    handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
+                    if (!isUpdate) {
+                        handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
+                    }
                     startPluginHandle.unRegistry(plugin);
                 } else {
-                    loadPluginHandle.registry(plugin);
-                    handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
+                    if (!isUpdate) {
+                        loadPluginHandle.registry(plugin);
+                        handleEvent(Constants.PLUGIN_EVENT_UNINSTALL, plugin);
+                    }
                     loadPluginHandle.unRegistry(plugin);
                 }
                 plugin.clearApplicationContext();
@@ -149,6 +153,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
                 }
                 PluginsUtils.forceDelete(plugin.getPluginWrapper().getPluginPath().toFile());
             } catch (Exception e) {
+                e.printStackTrace();
                 throw new Exception(e.getMessage());
             }
         }

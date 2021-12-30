@@ -124,7 +124,7 @@ public class PluginServiceImpl implements PluginService {
      */
     private void pluginUpdateHandle(Props newPluginSetting, PluginWrapper oldPluginWrapper, File uploadFile, File pluginFile) throws Exception {
         boolean isStart = oldPluginWrapper.getPluginState().equals(PluginState.STARTED);
-        pluginManager.unInstall(newPluginSetting.getStr("plugin.id"));
+        pluginManager.unInstall(oldPluginWrapper.getPluginId(), true);
         FileUtil.copy(uploadFile.getAbsoluteFile(), pluginFile.getAbsoluteFile(),true);
         PluginInfo pluginInfo = pluginManager.install(pluginFile.toPath().toAbsolutePath());
         // 执行更新方法
@@ -191,7 +191,7 @@ public class PluginServiceImpl implements PluginService {
                 return true;
             }
             // 卸载插件
-            pluginManager.unInstall(plugin.getName());
+            pluginManager.unInstall(plugin.getName(), false);
             pluginsMapper.delById(plugin.getId());
             return true;
         } catch (Exception e) {

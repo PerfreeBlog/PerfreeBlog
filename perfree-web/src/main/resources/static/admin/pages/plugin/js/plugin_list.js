@@ -32,8 +32,12 @@ function initPage() {
         done: function (res) {
             layer.close(loadIndex);
             if (res.code === 200) {
-                parent.layer.msg("插件安装成功", {icon: 1});
                 queryTable();
+                parent.layer.msg("插件安装成功", {icon: 1});
+                setTimeout(function (){
+                    localStorage.setItem("plugin", "success");
+                    parent.location.reload();
+                }, 500)
             } else {
                 layer.msg(res.msg, {icon: 2});
             }
