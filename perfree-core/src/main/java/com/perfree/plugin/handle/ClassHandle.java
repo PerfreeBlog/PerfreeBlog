@@ -4,9 +4,18 @@ import com.perfree.permission.AdminGroups;
 import com.perfree.plugin.BasePlugin;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.handle.base.BasePluginHandle;
+import org.apache.ibatis.annotations.Mapper;
 import org.pf4j.PluginWrapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -18,6 +27,9 @@ import java.util.stream.Collectors;
  * @date 2021/11/9 14:23
  */
 public class ClassHandle implements BasePluginHandle {
+    private final static Class<?>[] REGISTER_ANNO = {Bean.class, Configuration.class, Component.class,RestController.class,
+            Controller.class, Mapper.class, Service.class, Repository.class};
+
     @Override
     public void initialize() throws Exception {
 
@@ -47,10 +59,13 @@ public class ClassHandle implements BasePluginHandle {
         if(!pluginClassList.isEmpty()) {
             List<Class<?>> registryClassList = new ArrayList<>();
             for (Class<?> aClass : pluginClassList) {
-                registryClassList.add(aClass);
+                Annotation[] annotations = aClass.getAnnotations();
+                if (annotations.length > 0 && Collections.disjoint(Arrays.asList(annotations), Arrays.asList(REGISTER_ANNO))) {
+                    registryClassList.add(aClass);
+                }
             }
             if(!registryClassList.isEmpty()) {
-                plugin.getPluginApplicationContext().register(registryClassList.toArray(new Class[registryClassList.size()]));
+                plugin.getPluginApplicationContext().register(registryClassList.toArray(new Class[0]));
             }
         }
     }
