@@ -4,10 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.setting.dialect.Props;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.commons.Constants;
-import com.perfree.commons.Pager;
-import com.perfree.commons.ResponseBean;
-import com.perfree.commons.StringUtil;
+import com.perfree.commons.*;
 import com.perfree.config.EnjoyConfig;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugin;
@@ -76,6 +73,11 @@ public class PluginServiceImpl implements PluginService {
             String minimalVersion = setting.getStr("plugin.minimal.version", "");
             if (StringUtils.isNotBlank(minimalVersion) && StringUtil.versionToLong(minimalVersion) > StringUtil.versionToLong(version)){
                 return ResponseBean.fail("插件安装失败:该插件最低需要" + minimalVersion + "版本的PerfreeBlog", null);
+            }
+
+            String database = setting.getStr("plugin.database", "");
+            if (StringUtils.isNotBlank(database) && !database.contains(DynamicDataSource.dataSourceType)) {
+                return ResponseBean.fail("插件安装失败:该插件不支持" + DynamicDataSource.dataSourceType + "数据库", null);
             }
 
             File pluginFile = new File(Constants.PLUGIN_PATH + Constants.SEPARATOR + multiFileName);
