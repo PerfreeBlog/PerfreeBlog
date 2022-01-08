@@ -234,4 +234,9 @@ public class PluginServiceImpl implements PluginService {
         }
         return result;
     }
+
+    @Override
+    public Plugin getById(String id) {
+        return pluginsMapper.getById(id);
+    }
 }

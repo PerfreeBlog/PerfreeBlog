@@ -1,7 +1,10 @@
 package com.perfree.shared;
 
 import com.perfree.commons.OptionCacheUtil;
+import com.perfree.plugin.PluginHolder;
+import com.perfree.plugin.PluginInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.pf4j.PluginState;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -34,5 +37,18 @@ public class TplMethodShared {
             return false;
         }
         return value.equals(compareValue);
+    }
+
+    /**
+     * 插件是否启动
+     * @param pluginId pluginId
+     * @return boolean
+     */
+    public boolean pluginIsStart(String pluginId) {
+        PluginInfo plugin = PluginHolder.getPlugin(pluginId);
+        if (plugin == null) {
+            return false;
+        }
+        return plugin.getPluginWrapper().getPluginState().equals(PluginState.STARTED);
     }
 }
