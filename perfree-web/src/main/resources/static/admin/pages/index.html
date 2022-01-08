@@ -12,10 +12,10 @@
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/admin/static/css/style.css?v=#(version)" rel="stylesheet"/>
     <script>
-        window.onload = function f() {
+        document.onreadystatechange = function () {
             document.getElementById("loading").style.display="none";
             document.getElementById("f-layout").style.display="block";
-        }
+        };
     </script>
 </head>
 <body class="layui-layout-body">

@@ -14,10 +14,10 @@
         if (window !== top){
             top.location.href = location.href;
         }
-        window.onload = function f() {
+        document.onreadystatechange = function () {
             document.getElementById("loading").style.display="none";
             document.getElementById("p-login-box").style.display="block";
-        }
+        };
     </script>
 </head>
 <body class="mdui-theme-primary-indigo">
