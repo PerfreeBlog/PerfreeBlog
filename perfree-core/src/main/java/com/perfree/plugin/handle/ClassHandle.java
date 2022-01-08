@@ -3,6 +3,7 @@ package com.perfree.plugin.handle;
 import com.perfree.permission.AdminGroups;
 import com.perfree.plugin.BasePlugin;
 import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.annotation.InterceptPath;
 import com.perfree.plugin.handle.base.BasePluginHandle;
 import org.apache.ibatis.annotations.Mapper;
 import org.pf4j.PluginWrapper;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
  */
 public class ClassHandle implements BasePluginHandle {
     private final static Class<?>[] REGISTER_ANNO = {Bean.class, Configuration.class, Component.class,RestController.class,
-            Controller.class, Mapper.class, Service.class, Repository.class};
+            Controller.class, Mapper.class, Service.class, Repository.class, InterceptPath.class};
 
     @Override
     public void initialize() throws Exception {
