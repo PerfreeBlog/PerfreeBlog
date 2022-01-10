@@ -36,7 +36,7 @@ public class EnjoyInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        if (modelAndView != null) {
+        if (modelAndView != null && StringUtils.isNotBlank(modelAndView.getViewName())&& !modelAndView.getViewName().contains("redirect:")) {
             Map<String, Object> model = modelAndView.getModel();
             String webTitle = OptionCacheUtil.getValue(Constants.OPTION_WEB_TITLE);
             String webKeyWord = OptionCacheUtil.getValue(Constants.OPTION_WEB_META_KEYWORD);

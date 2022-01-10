@@ -225,9 +225,12 @@ public class SystemController extends BaseController {
      * @return ResponseBean
      */
     @RequestMapping(method = RequestMethod.GET, path = "/logout")
-    public String logout() {
+    public String logout(String path) {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
+        if (StringUtils.isNotBlank(path)){
+            return "redirect:"+path;
+        }
         return view(currentThemePage() + "/index.html");
     }
 
