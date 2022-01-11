@@ -19,10 +19,13 @@ public class ArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping("/articleList/{pageIndex}")
-    public String articleListPage(@PathVariable("pageIndex") int pageIndex,Model model) {
+    @RequestMapping(value = {"/articleList/{pageIndex}", "/articleList"})
+    public String articleListPage(@PathVariable(value = "pageIndex", required = false) String pageIndex,Model model) {
         model.addAttribute("url", Constants.URL_ARTICLE_LIST);
-        model.addAttribute("pageIndex", pageIndex);
+        if (StringUtils.isBlank(pageIndex)) {
+            pageIndex = "1";
+        }
+        model.addAttribute("pageIndex", Integer.parseInt(pageIndex));
         return view(currentThemePage() + "/articleList.html");
     }
 
