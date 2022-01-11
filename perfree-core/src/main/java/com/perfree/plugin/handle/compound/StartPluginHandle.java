@@ -30,6 +30,7 @@ public class StartPluginHandle implements BasePluginHandle, ApplicationContextAw
         pluginRegisterList.add(new AdminMenuHandle(this.applicationContext));
         pluginRegisterList.add(new ResourcesHandle());
         pluginRegisterList.add(new TemplateHandle(this.applicationContext));
+        pluginRegisterList.add(new WebSocketHandle(this.applicationContext));
         for (BasePluginHandle pluginHandle : pluginRegisterList) {
             pluginHandle.initialize();
         }

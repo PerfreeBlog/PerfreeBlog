@@ -29,7 +29,9 @@ public class PluginInfo {
 
     private PluginWrapper pluginWrapper;
 
-    private List<Class<?>> adminGroupsClassList = new ArrayList<>();;
+    private List<Class<?>> adminGroupsClassList = new ArrayList<>();
+
+    private List<String> websocketPaths = new ArrayList<>();
 
     private String pluginId;
 
@@ -207,5 +209,13 @@ public class PluginInfo {
 
     public void setMainApplicationContext(ApplicationContext mainApplicationContext) {
         this.mainApplicationContext = mainApplicationContext;
+    }
+
+    public List<String> getWebsocketPaths() {
+        return websocketPaths;
+    }
+
+    public void setWebsocketPaths(List<String> websocketPaths) {
+        this.websocketPaths = websocketPaths;
     }
 }
