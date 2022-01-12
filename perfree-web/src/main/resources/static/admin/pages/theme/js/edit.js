@@ -201,6 +201,7 @@ $("#rMenu").on("click","#m_del",function () {
             if (d.code === 200) {
                 zTreeObj.removeNode(currTreeNode);
                 zTreeObj.refresh();
+                layer.msg("删除成功", {icon: 1});
             } else {
                 layer.msg("删除失败", {icon: 2});
             }
