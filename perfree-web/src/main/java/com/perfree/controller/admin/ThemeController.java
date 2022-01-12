@@ -145,7 +145,7 @@ public class ThemeController extends BaseController {
     @PostMapping("/theme/getFileContent")
     @ResponseBody
     public ResponseBean getFileContent(@RequestParam("path") String path){
-        File file = new File(path);
+        File file = themeService.getThemeDir(path);
         if (file.exists()) {
             FileReader fileReader = new FileReader(file);
             return ResponseBean.success("数据加载成功", fileReader.readString());
@@ -157,7 +157,7 @@ public class ThemeController extends BaseController {
     @PostMapping("/theme/saveFileContent")
     @ResponseBody
     public ResponseBean saveFileContent(@RequestParam("path") String path, @RequestParam("content") String content){
-        File file = new File(path);
+        File file = themeService.getThemeDir(path);
         if (file.exists()) {
             FileWriter writer = new FileWriter(file);
             writer.write(content);
@@ -203,7 +203,7 @@ public class ThemeController extends BaseController {
     @ResponseBody
     public ResponseBean deleteFile(@RequestParam("path") String path){
         try{
-            File file = new File(path);
+            File file = themeService.getThemeDir(path);
             boolean del = FileUtil.del(file.getAbsolutePath());
             if (del) {
                 return ResponseBean.success("删除成功", null);
@@ -221,8 +221,7 @@ public class ThemeController extends BaseController {
      */
     @PostMapping("/theme/uploadFile")
     @ResponseBody
-    public ResponseBean uploadFile(HttpServletRequest request,@RequestParam(value = "filePath") String filePath,
-                                   @RequestParam(value = "path") String path,  @RequestParam(value = "id") String id) {
+    public ResponseBean uploadFile(HttpServletRequest request,@RequestParam(value = "path") String path,  @RequestParam(value = "id") String id) {
         try{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
@@ -235,12 +234,7 @@ public class ThemeController extends BaseController {
                 logger.error("文件名不能为空!");
                 return ResponseBean.fail("文件名不能为空!", null);
             }
-            File file;
-            if (StringUtils.isBlank(filePath)) {
-                file = new File(themeService.getThemeDir(path) + File.separator + multiFileName);
-            } else {
-                file = new File(filePath + File.separator + multiFileName);
-            }
+            File file = new File(themeService.getThemeDir(path) + File.separator + multiFileName);
 
             if (file.exists()) {
                 logger.error("文件已存在!");

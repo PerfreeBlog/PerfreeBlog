@@ -63,21 +63,15 @@ layui.use(['util','form', 'layer','upload'], function(){
         auto: true,
         accept: 'file',
         data: {
-            filePath: function () {
-                if (currTreeNode !== null) {
-                    return currTreeNode.obj.filePath;
-                }
-                return "";
-            },
             id: function () {
                 if (currTreeNode !== null) {
-                    return currTreeNode.id;
+                    return currTreeNode.obj.id;
                 }
                 return "-1";
             },
             path: function () {
                 if (currTreeNode !== null) {
-                    return currTreeNode.path;
+                    return currTreeNode.obj.path;
                 }
               return $("#path").val();
             }
@@ -202,7 +196,7 @@ $("#rMenu").on("click","#m_del",function () {
     $.ajax({
         type: "POST",
         url: "/admin/theme/deleteFile",
-        data:  {path:  currTreeNode.obj.filePath},
+        data:  {path:  currTreeNode.obj.path},
         success: function (d) {
             if (d.code === 200) {
                 zTreeObj.removeNode(currTreeNode);
@@ -311,13 +305,13 @@ function loadFileContent(treeNode) {
     $.ajax({
         type: "POST",
         url: "/admin/theme/getFileContent",
-        data: {path: treeNode.obj.filePath},
+        data: {path: treeNode.obj.path},
         success: function (d) {
             layer.close(loadIndex);
             if (d.code === 200) {
                 editor.setValue(d.data);
                 $("#currEditFile").text(treeNode.obj.path);
-                $("#currEditFilePath").val(treeNode.obj.filePath);
+                $("#currEditFilePath").val(treeNode.obj.path);
                 switch (treeNode.obj.fileType) {
                     case 'html':
                         editor.setOption("mode","text/html");
