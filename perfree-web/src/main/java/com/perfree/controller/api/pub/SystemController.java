@@ -13,6 +13,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -36,6 +39,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class SystemController {
     private final Logger logger = LoggerFactory.getLogger(com.perfree.controller.SystemController.class);
+    private static final CacheManager cacheManager = CacheManager.newInstance();
     @Autowired
     private UserService userService;
     @Autowired
@@ -58,7 +62,20 @@ public class SystemController {
             @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class,  required = true)
     })
     public ResponseBean doLogin(String account, String password) {
+        int count = 1;
         try {
+            // 登录限制
+            Ehcache cache = cacheManager.getEhcache("loginCache");
+            Element element = cache.get(account);
+            if(element == null){
+                cache.put(new Element(account, 1));
+            } else {
+                count = Integer.parseInt(element.getObjectValue().toString());
+                if (count >= 8) {
+                    return ResponseBean.fail("账户已被锁定,请10分钟后再试", null);
+                }
+                cache.put(new Element(account, ++count));
+            }
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account,password,true);
             Subject subject = SecurityUtils.getSubject();
             subject.login(usernamePasswordToken);
@@ -71,7 +88,13 @@ public class SystemController {
             result.put("token", token);
             return ResponseBean.success("登录成功", result);
         }catch (IncorrectCredentialsException e) {
-            return ResponseBean.fail("密码错误", e.getMessage());
+            if (count >= 5 && count < 8) {
+                return ResponseBean.fail("用户名或密码错误,还有" + (8 - count) + "次将锁定该账户10分钟", e.getMessage());
+            }
+            if (count >= 8) {
+                return ResponseBean.fail("账户已被锁定,请10分钟后再试", e.getMessage());
+            }
+            return ResponseBean.fail("用户名或密码错误", e.getMessage());
         }catch (UnknownAccountException e) {
             return ResponseBean.fail("账户不存在", e.getMessage());
         }catch (Exception e) {

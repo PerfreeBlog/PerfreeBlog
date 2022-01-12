@@ -10,6 +10,9 @@ import com.perfree.model.Option;
 import com.perfree.model.Role;
 import com.perfree.model.User;
 import com.perfree.service.*;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Ehcache;
+import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -42,6 +45,7 @@ import java.util.List;
 @Controller
 public class SystemController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
+    private static final CacheManager cacheManager = CacheManager.newInstance();
     @Autowired
     private UserService userService;
     @Autowired
@@ -131,11 +135,23 @@ public class SystemController extends BaseController {
         if(rememberMe == null) {
             rememberMe = false;
         }
+        int count = 1;
         try {
             String isOpenCaptcha = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_OPEN_CAPTCHA, Constants.OPEN_CAPTCHA);
             if (Constants.OPEN_CAPTCHA.equals(isOpenCaptcha) && (StringUtils.isBlank(user.getCaptcha()) ||
                     !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString()))){
                 return ResponseBean.fail("验证码错误", null);
+            }
+            Ehcache cache = cacheManager.getEhcache("loginCache");
+            Element element = cache.get(user.getAccount());
+            if(element == null){
+                cache.put(new Element(user.getAccount(), 1));
+            } else {
+                count = Integer.parseInt(element.getObjectValue().toString());
+                if (count >= 8) {
+                    return ResponseBean.fail("账户已被锁定,请10分钟后再试", null);
+                }
+                cache.put(new Element(user.getAccount(), ++count));
             }
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(),user.getPassword(),rememberMe);
             Subject subject = SecurityUtils.getSubject();
@@ -150,10 +166,19 @@ public class SystemController extends BaseController {
             result.put("token", token);
             return ResponseBean.success("登录成功", result);
         }catch (IncorrectCredentialsException e) {
-            return ResponseBean.fail("密码错误", e.getMessage());
+            session.removeAttribute("CAPTCHA_CODE");
+            if (count >= 5 && count < 8) {
+                return ResponseBean.fail("用户名或密码错误,还有" + (8 - count) + "次将锁定该账户10分钟", e.getMessage());
+            }
+            if (count >= 8) {
+                return ResponseBean.fail("账户已被锁定,请10分钟后再试", e.getMessage());
+            }
+            return ResponseBean.fail("用户名或密码错误", e.getMessage());
         }catch (UnknownAccountException e) {
+            session.removeAttribute("CAPTCHA_CODE");
             return ResponseBean.fail("账户不存在", e.getMessage());
         }catch (Exception e) {
+            session.removeAttribute("CAPTCHA_CODE");
             return ResponseBean.fail("系统异常", e.getMessage());
         }
     }

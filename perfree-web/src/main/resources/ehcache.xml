@@ -29,6 +29,16 @@
     </cache>
 
     <cache
+            name="loginCache"
+            maxElementsInMemory="500"
+            eternal="false"
+            timeToIdleSeconds="600"
+            timeToLiveSeconds="600"
+            overflowToDisk="true"
+    >
+    </cache>
+
+    <cache
             name="optionData"
             maxElementsInMemory="10000"
             eternal="false"

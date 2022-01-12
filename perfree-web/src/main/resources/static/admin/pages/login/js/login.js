@@ -20,6 +20,7 @@ layui.use(['layer', 'form', 'element'], function () {
                 if (data.code === 200) {
                     window.location.href="/";
                 } else {
+                    $("#captcha").click();
                     layer.msg(data.msg, {icon: 2});
                 }
             },
