@@ -63,18 +63,16 @@ public class SystemController {
     })
     public ResponseBean doLogin(String account, String password) {
         int count = 1;
+        Ehcache cache = cacheManager.getEhcache("loginCache");
         try {
-            // 登录限制
-            Ehcache cache = cacheManager.getEhcache("loginCache");
             Element element = cache.get(account);
             if(element == null){
                 cache.put(new Element(account, 1));
             } else {
                 count = Integer.parseInt(element.getObjectValue().toString());
-                if (count >= 8) {
-                    return ResponseBean.fail("账户已被锁定,请10分钟后再试", null);
-                }
-                cache.put(new Element(account, ++count));
+            }
+            if (count >= 8) {
+                return ResponseBean.fail("账户已被锁定,请10分钟后再试", null);
             }
             UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(account,password,true);
             Subject subject = SecurityUtils.getSubject();
@@ -88,11 +86,15 @@ public class SystemController {
             result.put("token", token);
             return ResponseBean.success("登录成功", result);
         }catch (IncorrectCredentialsException e) {
+            if (count < 8) {
+                cache.put(new Element(account, ++count));
+                count--;
+            }
             if (count >= 5 && count < 8) {
                 return ResponseBean.fail("用户名或密码错误,还有" + (8 - count) + "次将锁定该账户10分钟", e.getMessage());
             }
             if (count >= 8) {
-                return ResponseBean.fail("账户已被锁定,请10分钟后再试", e.getMessage());
+                return ResponseBean.fail("用户名或密码错误,账户已被锁定,请10分钟后再试", e.getMessage());
             }
             return ResponseBean.fail("用户名或密码错误", e.getMessage());
         }catch (UnknownAccountException e) {
