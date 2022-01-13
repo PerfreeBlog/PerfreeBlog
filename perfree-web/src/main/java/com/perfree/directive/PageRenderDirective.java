@@ -70,7 +70,17 @@ public class PageRenderDirective extends BaseDirective {
             preText = StringUtils.isBlank(preText) ? "<" : preText;
             nextText = StringUtils.isBlank(nextText) ? ">" : nextText;
             String html = String.format(pagerHtmlFormat, param.getPreUrlStyle(),
-                    preUrl,preText, pageHtml.toString(), param.getNextUrlStyle(), nextUrl,nextText);
+                    preUrl,preText, pageHtml, param.getNextUrlStyle(), nextUrl,nextText);
+
+            String pagerBoxClass = StringUtils.isBlank(getExprParamToStr("pagerBoxClass")) ? "m-pager-box" : getExprParamToStr("pagerBoxClass");
+            String pagerClass = StringUtils.isBlank(getExprParamToStr("pagerClass")) ? "m-pager" : getExprParamToStr("pagerClass");
+            String pagerDisabledClass = StringUtils.isBlank(getExprParamToStr("pagerDisabledClass")) ? "disabled" : getExprParamToStr("pagerDisabledClass");
+            String pagerActiveClass = StringUtils.isBlank(getExprParamToStr("pagerActiveClass")) ? "active" : getExprParamToStr("pagerActiveClass");
+
+            html = html.replaceAll("m-pager-box", pagerBoxClass);
+            html = html.replaceAll("m-pager", pagerClass);
+            html = html.replaceAll("disabled", pagerDisabledClass);
+            html = html.replaceAll("active", pagerActiveClass);
             write(writer, html);
         }
 
