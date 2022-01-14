@@ -74,8 +74,7 @@ function initRichEditor(content){
                 'imageStyle:inline',
                 'imageStyle:side',
                 'imageStyle:alignLeft',
-                'imageStyle:alignRight',
-                "toggleImageCaption"
+                'imageStyle:alignRight'
             ]
         },
         table: {
