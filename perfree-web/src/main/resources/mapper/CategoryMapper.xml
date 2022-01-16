@@ -15,7 +15,7 @@
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
         <collection property="children"
-                    select="getChildCategory" column="id"></collection>
+                    select="getChildCategory" column="id=id,status=status"></collection>
     </resultMap>
 
     <insert id="add">
@@ -65,15 +65,20 @@
         order by createTime desc
     </select>
 
+    <select id="getAllList" resultMap="CATEGORY_LIST_TREE">
+        select * from p_category where pid = -1 and status = 0
+        order by createTime desc
+    </select>
+
     <select id="getChildCategory" resultMap="CATEGORY_LIST_TREE">
-        select * from p_category where pid=#{id} order by createTime
+        select * from p_category where pid=#{id} and status = #{status} order by createTime
     </select>
 
     <select id="getById" resultType="com.perfree.model.Category">
         select * from p_category where id=#{id}
     </select>
     <select id="frontCategoryList" resultMap="CATEGORY_LIST_TREE">
-        select * from p_category where pid = -1
+        select * from p_category where pid = -1 and status = 0
         <if test="name != null and name != ''">
             <bind name="name" value="'%' + _parameter.name + '%'" />
             and name like #{name,jdbcType=VARCHAR}

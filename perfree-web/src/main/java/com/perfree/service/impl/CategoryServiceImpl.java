@@ -94,7 +94,7 @@ public class CategoryServiceImpl implements CategoryService {
      */
     @Transactional(readOnly = true)
     public List<Category> allList() {
-        return categoryMapper.getList(null);
+        return categoryMapper.getAllList();
     }
 
     public void addCount(Long id) {
