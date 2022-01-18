@@ -5,11 +5,11 @@
     <style>
         .d-banner{
             #if(option('HOME_BANNER') == "0")
-                background: url(#option("HOME_BANNER_IMG")) center/cover no-repeat;
+                background: url(#option("HOME_BANNER_IMG", "/static/themes/default/static/imgs/bg.jpg")) center/cover no-repeat;
             #else if(option('HOME_BANNER') == "1")
-                background: url(#option("HOME_BANNER_IMG_LINK")) center/cover no-repeat;
+                background: url(#option("HOME_BANNER_IMG_LINK", "/static/themes/default/static/imgs/bg.jpg")) center/cover no-repeat;
             #else if(option('HOME_BANNER') == "2")
-                background: #option("HOME_BANNER_COLOR");
+                background: #option("HOME_BANNER_COLOR", "#111111");
             #else
                 background: url(/static/themes/default/static/imgs/bg.jpg) center/cover no-repeat;
             #end
