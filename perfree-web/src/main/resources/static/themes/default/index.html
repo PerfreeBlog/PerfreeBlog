@@ -39,7 +39,7 @@
                     #for(article: articlePage.data)
                         #include("/static/themes/default/inc/postItem.html")
                     #else
-                        <span class="f-no-content">这个人很懒,当前页面下还没有文章发布</span>
+                        <span class="d-no-content">暂无文章</span>
                     #end
                 #end
                 #pageRender(articlePage, preText="<",nextText=">")

@@ -260,3 +260,10 @@ html,body,.d-theme-container{
     color: white;
     font-size: 13px;
 }
+.d-no-content{
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 15px;
+    opacity: .8;
+}
