@@ -1,0 +1,56 @@
+<section class="d-container-right">
+    <div class="d-web-info-box wow fadeInUp" data-wow-duration="0.4s">
+        <div class="d-web-user-info-box">
+            <img src="#option('PERFREE_WEB_RIGHT_LOGO','/static/themes/default/static/imgs/user.png')" width="80px">
+            <p>#option('PERFREE_WEB_NAME','未设置')</p>
+            <div class="d-web-count">
+                #statistics()
+                    <div class="d-count-box">
+                        <span>#(statistics.articleCount)</span>
+                        <span>文章</span>
+                    </div>
+
+                    <div class="d-count-box">
+                        <span>#(statistics.commentCount)</span>
+                        <span>评论</span>
+                    </div>
+                #end
+            </div>
+        </div>
+
+        <div class="d-category-list wow fadeInUp" data-wow-duration="0.4s">
+            <h4 class="d-right-box-title"><i class="fa fa-th-large"></i>分类</h4>
+            #categories()
+                #if(categories != null && categories.size() > 0)
+                    <ul>
+                        #for(category: categories)
+                            <li class="d-category-item">
+                                <a href="#(category.url)">#(category.name ??)</a> <span>#(category.count ??)</span>
+                            </li>
+                        #end
+                    </ul>
+                #else
+                    暂无分类
+                #end
+            #end
+        </div>
+
+        <div class="d-tag-list wow fadeInUp" data-wow-duration="0.4s">
+            <h4 class="d-right-box-title"><i class="fa fa-tags"></i>标签</h4>
+
+            #hotTag(count=25)
+                #if(tags != null && tags.size() > 0)
+                    <ul>
+                        #for(tag : tags)
+                            <li class="d-tag-item">
+                                <a href="#(tag.url)" title="共#(tag.articleCount ??)篇文章">#(tag.name??)</a>
+                            </li>
+                        #end
+                    </ul>
+                #else
+                    暂无标签
+                #end
+            #end
+        </div>
+    </div>
+</section>

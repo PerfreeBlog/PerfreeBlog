@@ -1,0 +1,22 @@
+<div class="d-post-box wow fadeInUp" data-wow-duration="#(for.count * 0.1)s">
+    <a class="d-post-title" href="#(article.url)">
+        #(article.title)
+    </a>
+    <div class="d-post-content">
+        #mdSummary(article.content,200)
+    </div>
+    <div class="p-post-info">
+        <span>
+            <i class="fa fa-user-o"></i> #(article.user.userName ??)
+        </span>
+        <span>
+            <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
+        </span>
+        <span>
+            <i class="fa fa-eye"></i> #(article.viewCount ??)
+        </span>
+        <span>
+            <i class="fa fa-comment-o"></i> #(article.commentCount ??)
+        </span>
+    </div>
+</div>

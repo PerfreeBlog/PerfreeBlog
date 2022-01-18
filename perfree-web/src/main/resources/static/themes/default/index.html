@@ -1,0 +1,50 @@
+#include("/static/themes/default/inc/layout.html")
+#@layout()
+#define css()
+    <link rel="stylesheet" href="/static/themes/default/static/css/index.css?v=#(version)">
+    <style>
+        .d-banner{
+            #if(option('HOME_BANNER') == "0")
+                background: url(#option("HOME_BANNER_IMG")) center/cover no-repeat;
+            #else if(option('HOME_BANNER') == "1")
+                background: url(#option("HOME_BANNER_IMG_LINK")) center/cover no-repeat;
+            #else if(option('HOME_BANNER') == "2")
+                background: #option("HOME_BANNER_COLOR");
+            #else
+                background: url(/static/themes/default/static/imgs/bg.jpg) center/cover no-repeat;
+            #end
+        }
+        .d-hero-box .d-hero-title{
+            color: #option('HOME_TITLE_COLOR', 'var(--hero-color)');
+        }
+        .d-hero-box .d-hero-desc{
+            color: #option('HOME_SUB_TITLE_COLOR', 'var(--hero-color)');
+        }
+    </style>
+#end
+#define content()
+    <div class="d-wrapper">
+        <div class="d-banner">
+            <div class="d-hero-box">
+                <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#option('DEFAULT_HERO_TITLE')</h1>
+                <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">#option('DEFAULT_HERO_SUB_TITLE')</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="d-container">
+        <section class="d-container-left">
+            <div class="d-post-list">
+                #articlePage(pageSize=10)
+                    #for(article: articlePage.data)
+                        #include("/static/themes/default/inc/postItem.html")
+                    #else
+                        <span class="f-no-content">这个人很懒,当前页面下还没有文章发布</span>
+                    #end
+                #end
+                #pageRender(articlePage, preText="<",nextText=">")
+            </div>
+        </section>
+        #include("/static/themes/default/inc/right.html")
+    </section>
+#end

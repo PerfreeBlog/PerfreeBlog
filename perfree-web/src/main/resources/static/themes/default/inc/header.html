@@ -1,0 +1,51 @@
+<header class="d-header">
+    <div class="d-logo-container">
+        <img src="#option('WEB_LOGO','/static/public/images/favicon.ico')" height="40px">
+        <span class="d-logo-text">#option('WEB_NAME','未设置')</span>
+    </div>
+    <div class="d-nav-container">
+        <nav class="d-header-nav">
+            <div class="d-search-box">
+                <form action="/article/search" method="get">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text" placeholder="搜索文章" name="title" class="d-search-input">
+                </form>
+            </div>
+            <ul class="layui-nav" lay-filter="">
+                <li class="layui-nav-item layui-this">
+                    <a href="" class="d-nav-item"><i class="fa fa-home"></i>首页</a>
+                </li>
+
+                #categories()
+                    #if(categories != null && categories.size() > 0)
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="d-nav-item"><i class="fa fa-th-large"></i>分类&nbsp;</a>
+                            <dl class="layui-nav-child">
+                                #for(category: categories)
+                                    <dd><a href="#(category.url)">#(category.name ??)</a></dd>
+                                #end
+                            </dl>
+                        </li>
+                    #end
+                #end
+
+                #menus()
+                    #for(menu : menus)
+                        <li class="layui-nav-item">
+                            <a href="#(menu.url ??)" target="#(menu.target == 0 ? '_self' : '_blank')" class="d-nav-item">
+                                <i class="fa #(menu.icon ??)"></i>#(menu.name ??)
+                            </a>
+                            #if(menu.childMenu !=null && menu.childMenu.size() > 0)
+                                <dl class="layui-nav-child">
+                                    #for(children: menu.childMenu)
+                                        <dd><a href="#(children.url)" target="#(children.target == 0 ? '_self' : '_blank')"> #(children.name ??)</a></dd>
+                                    #end
+                                </dl>
+                            #end
+                        </li>
+                    #end
+                #end
+            </ul>
+        </nav>
+    </div>
+</header>
