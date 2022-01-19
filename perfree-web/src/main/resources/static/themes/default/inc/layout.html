@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="/static/themes/default/static/css/style.css?v=#(version)">
     <style>
         html{
-            --primary-color:  #option('PERFREE_PRIMARY_COLOR', '#3eaf7c');
+            --primary-color:  #option('PERFREE_PRIMARY_COLOR', '#3489fd');
         }
     </style>
     #@css?()
@@ -26,7 +26,10 @@
 <div class="d-theme-container">
 
     #include("/static/themes/default/inc/header.html")
-    #@content()
+    <div class="d-box">
+        #@content()
+    </div>
+    #include("/static/themes/default/inc/footer.html")
 </div>
 <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/static/themes/default/static/libs/wow/wow.min.js"></script>

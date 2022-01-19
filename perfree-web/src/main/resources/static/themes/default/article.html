@@ -1,0 +1,50 @@
+#include("/static/themes/default/inc/layout.html")
+#@layout()
+#define css()
+<link href="/static/themes/default/static/libs/viewerjs/viewer.min.css" rel="stylesheet">
+<link href="/static/public/libs/highlight/styles/atom-one-dark.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/themes/default/static/css/article.css?v=#(version)">
+<link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
+#end
+#define content()
+<section class="d-container">
+    <section class="d-article-container">
+        <h1 class="d-article-title">#(article.title ??)</h1>
+        <div class="d-article-info">
+             <span>
+                <i class="fa fa-user-o"></i> #(article.user.userName ??)
+            </span>
+                <span>
+                <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
+            </span>
+                <span>
+                <i class="fa fa-eye"></i> #(article.viewCount ??)
+            </span>
+                <span>
+                <i class="fa fa-comment-o"></i> #(article.commentCount ??)
+            </span>
+        </div>
+
+        <article class='d-article-content #if(article.contentModel == "html") ck-content #end' id="d-article-content">
+            #mdToHtml(article.content ??)
+        </article>
+    </section>
+</section>
+#end
+
+#define script()
+<script src="/static/themes/default/static/libs/viewerjs/viewer.min.js"></script>
+<script src="/static/public/libs/highlight/highlight.pack.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+    initViewer();
+    function initViewer() {
+        const articleContentDetail = document.getElementById('d-article-content');
+        if (articleContentDetail){
+            new Viewer(articleContentDetail, {
+                url: 'src'
+            });
+        }
+    }
+</script>
+#end
