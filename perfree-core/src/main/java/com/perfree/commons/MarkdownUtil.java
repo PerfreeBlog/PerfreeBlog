@@ -1,15 +1,22 @@
 package com.perfree.commons;
 
 import cn.hutool.http.HtmlUtil;
-import com.vladsch.flexmark.ext.tables.TablesExtension;
-import com.vladsch.flexmark.html.HtmlRenderer;
-import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.parser.ParserEmulationProfile;
-import com.vladsch.flexmark.util.ast.Node;
-import com.vladsch.flexmark.util.data.MutableDataSet;
 import org.apache.commons.lang3.StringUtils;
+import org.commonmark.Extension;
+import org.commonmark.ext.autolink.AutolinkExtension;
+import org.commonmark.ext.front.matter.YamlFrontMatterExtension;
+import org.commonmark.ext.gfm.strikethrough.StrikethroughExtension;
+import org.commonmark.ext.gfm.tables.TablesExtension;
+import org.commonmark.ext.heading.anchor.HeadingAnchorExtension;
+import org.commonmark.ext.image.attributes.ImageAttributesExtension;
+import org.commonmark.ext.ins.InsExtension;
+import org.commonmark.ext.task.list.items.TaskListItemsExtension;
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 
-import java.util.Collections;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * MarkdownUtils
@@ -26,15 +33,18 @@ public class MarkdownUtil {
         if (StringUtils.isBlank(mdStr)){
             return "";
         }
-        MutableDataSet options = new MutableDataSet();
-        options.setFrom(ParserEmulationProfile.MARKDOWN);
-        options.set(Parser.EXTENSIONS, Collections.singletonList(TablesExtension.create()));
-        Parser parser = Parser.builder(options).build();
-        HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+        List<Extension> extensions = Arrays.asList(TablesExtension.create(),
+                ImageAttributesExtension.create(),
+                AutolinkExtension.create(),
+                StrikethroughExtension.create(),
+                HeadingAnchorExtension.create(),
+                InsExtension.create(),
+                YamlFrontMatterExtension.create(),
+                TaskListItemsExtension.create());
+        Parser parser = Parser.builder().extensions(extensions).build();
         Node document = parser.parse(mdStr);
-        String htmlStr = renderer.render(document);
-        htmlStr = HtmlUtil.unwrapHtmlTag(htmlStr, "script","style");
-        return htmlStr;
+        HtmlRenderer renderer = HtmlRenderer.builder().softbreak("<br/>").extensions(extensions).build();
+        return renderer.render(document);
     }
 
 
