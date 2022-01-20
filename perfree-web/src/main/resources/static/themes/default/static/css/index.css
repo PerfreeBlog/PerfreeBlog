@@ -31,6 +31,7 @@
 }
 .d-post-box:hover{
     box-shadow: var(--box-border-hover);
+    transform: scale(1.01);
 }
 .d-post-title{
     font-size: 1.28rem;
