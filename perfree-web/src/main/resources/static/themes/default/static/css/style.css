@@ -340,3 +340,25 @@ body{
 .d-footer-container a:hover{
     color: var(--primary-color);
 }
+.d-back-top-btn{
+    position: fixed;
+    right: -60px;
+    bottom: 80px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    box-shadow: var(--box-border);
+    text-align: center;
+    border-radius: 5px;
+    color: var(--primary-color);
+    font-size: 14px;
+    transition: all .5s;
+    overflow: hidden;
+}
+.d-back-top-btn:hover{
+    color: var(--primary-color);
+}
+.show-back-up{
+    right: 20px;
+}
