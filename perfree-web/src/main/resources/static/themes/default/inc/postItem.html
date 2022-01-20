@@ -13,7 +13,12 @@
             #(article.title)
         </a>
         <div class="d-post-content">
-            #mdSummary(article.content,150)
+            #if(isBlank(article.summary))
+                #mdSummary(article.content,150)
+            #else
+                #mdSummary(article.summary,150)
+            #end
+
         </div>
         <div class="p-post-info">
         <span>

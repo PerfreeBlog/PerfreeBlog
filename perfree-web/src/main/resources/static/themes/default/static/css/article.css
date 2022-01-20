@@ -38,9 +38,12 @@
     color: var(--primary-color);
     font-weight: 600;
 }
+.d-article-content a:hover{
+    text-decoration: underline;
+}
 .d-article-content blockquote{
     margin: 0.8em 0;
-    border-left: 6px solid var(--primary-color);
+    border-left: 5px solid var(--primary-color);
     padding: 15px 15px;
     color: var(--font-color);
     background-color: var(--border-color-b);
@@ -59,6 +62,18 @@
     margin-bottom: 15px;
     margin-top: 15px;
     opacity: .98;
+    position: relative;
+}
+.d-article-content h1:hover:before,
+.d-article-content h2:hover:before,
+.d-article-content h3:hover:before,
+.d-article-content h4:hover:before,
+.d-article-content h5:hover:before,
+.d-article-content h6:hover:before{
+    content: "#";
+    color: var(--primary-color);
+    position: absolute;
+    left: -20px;
 }
 .d-article-content h1{
     font-size: 1.7rem;
@@ -147,4 +162,80 @@
 .d-article-content hr{
     margin-bottom: 20px;
     margin-top: 20px;
+}
+.d-toc{
+    position: fixed;
+    top: 10rem;
+    bottom: 10rem;
+    right: 2rem;
+    overflow-y: scroll;
+}
+.roundDiv{
+    width: 200px;
+}
+.roundDiv li{
+    border-left: 1px solid var(--border-color-b);
+    padding-left: .9rem;
+    cursor: pointer;
+}
+.roundDiv li a{
+    font-size: 14px;
+    font-weight: 400;
+    display: block;
+    color: var(--font-color);
+    padding: 8px 4px;
+    line-height: 1.4;
+    box-sizing: border-box;
+}
+.roundDiv li:hover{
+    border-left: 1px solid var(--primary-color);
+}
+.roundDiv li:hover a{
+    color: var(--primary-color);
+}
+.roundDiv li.active-toc{
+    border-left: 1px solid var(--primary-color);
+}
+.roundDiv li.active-toc a{
+    color: var(--primary-color);
+}
+.d-toc::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+.d-article-bottom{
+    margin-top: 20px;
+    text-align: right;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-color-b);
+}
+.d-article-bottom span{
+    font-size: 14px;
+    color: var(--font-color-b);
+}
+.d-article-bottom span:first-child{
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-right: 8px;
+}
+.d-switch-article-box{
+    margin-top: 20px;
+}
+.d-pre-article,.d-next-article{
+    color: var(--primary-color);
+}
+.d-pre-article:hover,.d-next-article:hover{
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+.d-pre-article .fa,.d-next-article .fa{
+    color: var(--font-color-b);
+    font-weight: 100;
+    font-size: 12px;
+}
+.d-next-article{
+    float: right;
+}
+.d-comments{
+    margin-top: 40px;
 }

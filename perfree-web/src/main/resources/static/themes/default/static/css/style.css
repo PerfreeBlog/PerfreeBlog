@@ -4,6 +4,7 @@ html{
     --font-color-b: #909399;
     --header-box-shadow: 0 2px 5px rgba(0,0,0,.06);
     --header-background: white;
+    --background-b: rgba(27, 31, 35, 0.05);
     --border-color: #aaaaaa;
     --border-color-b: #ebeef5;
     --hero-color: white;

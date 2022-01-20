@@ -3,12 +3,14 @@
 #define css()
 <link href="/static/themes/default/static/libs/viewerjs/viewer.min.css" rel="stylesheet">
 <link href="/static/public/libs/highlight/styles/atom-one-dark.css" rel="stylesheet">
+<link href="/static/themes/default/static/libs/notyf/notyf.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/themes/default/static/css/article.css?v=#(version)">
 <link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
+<link href="/static/themes/default/inc/comment/comment.css" rel="stylesheet">
 #end
 #define content()
 <section class="d-container">
-    <section class="d-article-container">
+    <section class="d-article-container wow fadeInUp" data-wow-duration="0.3s">
         <h1 class="d-article-title">#(article.title ??)</h1>
         <div class="d-article-info">
              <span>
@@ -24,20 +26,62 @@
                 <i class="fa fa-comment-o"></i> #(article.commentCount ??)
             </span>
         </div>
-
         <article class='d-article-content #if(article.contentModel == "html") ck-content #end' id="d-article-content">
-            #mdToHtml(article.content ??)
+            #if(article.contentModel == "html")
+                #(article.content ??)
+            #else
+                #mdToHtml(article.content ??)
+            #end
         </article>
+
+        <div class="d-article-bottom">
+            <span>Last Updated: </span>
+            <span>
+                #if(article.updateTime != null)
+                    #date(article.updateTime, "yyyy/MM/dd HH:mm:ss")
+                #else
+                    #date(article.createTime, "yyyy/MM/dd HH:mm:ss")
+                #end
+            </span>
+        </div>
+
+        <div class="d-switch-article-box">
+            #preArticle()
+                #if(preArticle)
+                    <a class="d-pre-article" href="#(preArticle.url)" title="#(preArticle.title)">
+                        <i class="fa fa-long-arrow-left"></i> #(preArticle.title)
+                    </a>
+                #end
+            #end
+            #nextArticle()
+                #if(nextArticle)
+                    <a class="d-next-article" href="#(nextArticle.url)" title="#(nextArticle.title)">
+                        #(nextArticle.title) <i class="fa fa-long-arrow-right"></i>
+                    </a>
+                #end
+            #end
+            <div class="layui-clear"></div>
+        </div>
+
+        <div class="d-comments">
+            #include("/static/themes/default/inc/comment/comment.html")
+        </div>
     </section>
 </section>
+<div class="d-toc"></div>
+
 #end
 
 #define script()
 <script src="/static/themes/default/static/libs/viewerjs/viewer.min.js"></script>
 <script src="/static/public/libs/highlight/highlight.pack.js"></script>
+<script src="/static/themes/default/static/libs/notyf/notyf.min.js"></script>
+<script src="/static/themes/default/inc/comment/comment.js"></script>
 <script>
     hljs.initHighlightingOnLoad();
+    let tocLocation = [];
     initViewer();
+    buildCTable();
     function initViewer() {
         const articleContentDetail = document.getElementById('d-article-content');
         if (articleContentDetail){
@@ -45,6 +89,81 @@
                 url: 'src'
             });
         }
+    }
+
+    function buildCTable() {
+        let hs = $("#d-article-content").find("h1,h2,h3,h4,h5,h6");
+        if (hs.length < 2) return;
+        let s = "";
+        s += '<div class="roundDiv" >';
+        s += '<ol">';
+        let old_h = 0, ol_cnt = 0;
+        for (let i = 0; i < hs.length; i++) {
+            let h = parseInt(hs[i].tagName.substr(1), 10);
+            if (!old_h) old_h = h;
+            if (h > old_h) {
+                s += "<ol>";
+                ol_cnt++;
+            } else if (h < old_h && ol_cnt > 0) {
+                s += "</ol>";
+                ol_cnt--;
+            }
+            if (h === 1) {
+                while (ol_cnt > 0) {
+                    s += "</ol>";
+                    ol_cnt--;
+                }
+            }
+            old_h = h;
+            let tit = hs.eq(i).text().replace(/^[\d.、\s]+/g, "");
+            tit = tit.replace(/[^a-zA-Z0-9_\-\s\u4e00-\u9fa5]+/g, "");
+            if (tit.length < 100) {
+                //将每一个h标签拼接到s上，生成目录
+                s += '<li><a data-href="#t' + i + '">' + tit + "</a></li>";
+                //给文章中的h标签加上id
+                hs.eq(i).html('<a name="t' + i + '" id="t' + i + '" class="d-toc-a"></a>' + hs.eq(i).html());
+            }
+        }
+        while (ol_cnt > 0) {
+            s += "</ol>";
+            ol_cnt--;
+        }
+        s += "</ol></div>";
+        s += '<div style="clear:both"></div>';
+        $(".d-toc").append(s);
+        $(".d-toc-a").each(function (i){
+            tocLocation[i] = $(this).offset().top;
+        });
+        activeToc();
+    }
+
+    $(".d-toc").on('click','a',function(){
+        window.scroll({
+            top: $($(this).attr("data-href")).offset().top - 65,
+            behavior: "smooth"
+        })
+    });
+
+    let scrollTimer;
+    $(window).scroll(function() {
+        activeToc();
+    });
+
+    function activeToc(){
+        let scrollTop = $(window).scrollTop();
+        let currIndex = 0;
+        for(let i = 0; i <= tocLocation.length; i++){
+            if(scrollTop >= (tocLocation[i] - 70)){
+                currIndex = i;
+            }
+        }
+        $(".roundDiv li").each(function (i){
+            if (currIndex === i) {
+                $(this).addClass("active-toc");
+            } else {
+                $(this).removeClass("active-toc");
+            }
+        });
     }
 </script>
 #end
