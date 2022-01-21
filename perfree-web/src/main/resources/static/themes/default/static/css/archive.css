@@ -65,3 +65,18 @@
     background: var(--primary-color);
     border: 1px solid var(--primary-color);
 }
+@media screen and (max-width:1360px) {
+    .d-container{
+        width: 850px;
+    }
+}
+@media screen and (max-width: 1290px) {
+    .d-container{
+        width: 750px;
+    }
+}
+@media screen and (max-width: 840px) {
+    .d-container{
+        width: calc(100% - 40px);
+    }
+}

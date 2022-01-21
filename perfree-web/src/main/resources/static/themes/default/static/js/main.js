@@ -27,6 +27,24 @@ if (localStorage.getItem("dark")) {
     $('body').addClass("d-night");
 }
 
+let mobile = false;
+$('.mobile-side-switch-btn').on('click',function() {
+    if (mobile) {
+        $(".d-mobile-side").removeClass("show-mobile");
+        $(".d-mask").hide();
+    } else {
+        $(".d-mobile-side").addClass("show-mobile");
+        $(".d-mask").show();
+    }
+    mobile = !mobile;
+});
+
+$('.d-mask').on('click',function() {
+    $(".d-mobile-side").removeClass("show-mobile");
+    $(".d-mask").hide();
+    mobile = false;
+});
+
 $('.d-web-color-switch-btn').on('click',function() {
     let attr = $('body').attr('class');
     if (attr && attr.indexOf('d-night') >= 0) {
@@ -37,6 +55,18 @@ $('.d-web-color-switch-btn').on('click',function() {
         localStorage.setItem("dark", "true");
     }
 });
+
+let search = false;
+$('.d-search-icon').on('click',function() {
+    if (!search) {
+        $('.d-search-box form input').addClass("show-search");
+    } else {
+        $('.d-search-box form input').removeClass("show-search");
+    }
+    search = !search;
+});
+
+
 
 function onWindowScroll(){
     let scroll = $("html").scrollTop();

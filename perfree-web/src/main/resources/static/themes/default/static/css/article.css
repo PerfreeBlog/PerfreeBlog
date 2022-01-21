@@ -33,6 +33,7 @@
     font-size: 15px;
     color: var(--font-color);
     line-height: 1.7;
+    word-break: break-all;
 }
 .d-article-content a{
     color: var(--primary-color);
@@ -238,4 +239,27 @@
 }
 .d-comments{
     margin-top: 40px;
+}
+@media screen and (max-width:1360px) {
+    .d-container{
+        width: 850px;
+    }
+    .d-toc{
+        right: 0;
+    }
+}
+@media screen and (max-width: 1290px) {
+    .d-container{
+        width: 750px;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .d-toc{
+        display: none;
+    }
+}
+@media screen and (max-width: 840px) {
+    .d-container{
+        width: calc(100% - 40px);
+    }
 }

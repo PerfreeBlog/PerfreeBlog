@@ -51,7 +51,6 @@ $('.p-comment-emoji-panel').on('click','li', function (){
 });
 
 $("#p-comment-emoji-btn").click(function () {
-    console.log(111);
     if (emojiPanelStatus) {
         $(".p-comment-emoji-box").hide("normal");
         emojiPanelStatus = false;
