@@ -28,6 +28,10 @@
     padding: 20px;
     border-radius: 5px;
     transition: all .3s;
+    background: var(--background);
+}
+.d-post-panel{
+    width: 100%;
 }
 .d-post-box:hover{
     box-shadow: var(--box-border-hover);

@@ -42,7 +42,7 @@
 }
 .p-submit-comment{
     cursor: pointer;
-    background: white;
+    background: var(--background);
     border-radius: 5px;
     height: 32px;
     padding: 0 15px;

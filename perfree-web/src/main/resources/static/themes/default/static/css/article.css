@@ -127,7 +127,7 @@
 
 .d-article-content table tr:nth-child(2n),
 .d-article-content thead {
-    background-color: #fafafa;
+    background-color: var(--background-b);
 }
 .d-article-content table tr th {
     font-weight: bold;

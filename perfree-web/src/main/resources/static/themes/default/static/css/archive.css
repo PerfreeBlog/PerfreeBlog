@@ -38,7 +38,7 @@
     height: 8px;
     border: 1px solid var(--border-color);
     border-radius: 50%;
-    background: white;
+    background: var(--background);
     transition: all .3s;
 }
 .d-timeline-list .d-timeline-box:not(:first-child) .d-timeline-parent-time:before{

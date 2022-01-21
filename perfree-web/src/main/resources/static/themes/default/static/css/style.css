@@ -4,12 +4,23 @@ html{
     --font-color-b: #909399;
     --header-box-shadow: 0 2px 5px rgba(0,0,0,.06);
     --header-background: white;
+    --background: white;
     --background-b: rgba(27, 31, 35, 0.05);
     --border-color: #aaaaaa;
     --border-color-b: #ebeef5;
     --hero-color: white;
     --box-border: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
     --box-border-hover: 0 2px 16px 0 rgba(0, 0, 0, 0.2);
+}
+body.d-night{
+    --header-background: #222;
+    --font-color: rgba(255, 255, 255, 0.8);
+    --background:  #181818;
+    --box-border:0 1px 8px 0 rgb(0 0 0 / 60%);
+    --box-border-hover:0 2px 16px 0 rgba(0, 0, 0, 0.7);
+    --border-color:rgba(0, 0, 0, 0.3);
+    --border-color-b:rgba(0, 0, 0, 0.3);
+    --background-b: rgba(0, 0, 0, 0.3);
 }
 html{
     height: 100%;
@@ -19,6 +30,7 @@ body{
     height: calc(100% - 60px);
     color: var(--font-color);
     font-family: Ubuntu,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+    background: var(--background);
 }
 .d-theme-container{
   height: 100%;
@@ -62,6 +74,14 @@ body{
     background-color: var(--header-background);
     color: var(--font-color);
     padding-right: 0;
+}
+.d-header-nav .layui-nav-child{
+    background: var(--background);
+    box-shadow: var(--box-border);
+    border: none;
+}
+.d-header-nav .layui-nav-child dd a:hover{
+    background: var(--background);
 }
 .d-header-nav .layui-nav .layui-nav-item a{
     color: var(--font-color);
@@ -139,6 +159,8 @@ body{
     border-radius: 2rem;
     border: 1px solid var(--border-color);
     outline: none;
+    background: var(--background);
+    color: var(--font-color);
 }
 .d-search-box form input:focus{
     border: 1px solid var(--primary-color);
@@ -147,7 +169,7 @@ body{
     position: absolute;
     left: 10px;
     top: 23px;
-    color: var(--border-color);
+    color: var(--font-color);
 }
 .layui-nav-item .user-img{
     width: 32px;
@@ -183,6 +205,7 @@ body{
     position: sticky;
     top: 80px;
     margin-bottom: 15px;
+    background: var(--background);
 }
 .d-web-info-box:hover{
     box-shadow: var(--box-border-hover);
@@ -272,6 +295,7 @@ body{
     width: 100%;
     padding: 10px 15px;
     font-size: 15px;
+    color: var(--font-color);
 }
 .d-category-item:hover, .d-tag-item:hover{
     transform: scale(1.04);
@@ -310,6 +334,7 @@ body{
     font-weight: 700;
     opacity: .9;
     transition: background .3s;
+    color: var(--font-color);
 }
 .m-pager:hover{
     color: white;
@@ -364,4 +389,23 @@ body{
 }
 .show-back-up{
     right: 20px;
+}
+.d-web-color-switch-btn{
+    position: fixed;
+    right: 20px;
+    bottom: 128px;
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    box-shadow: var(--box-border);
+    text-align: center;
+    border-radius: 5px;
+    color: var(--primary-color);
+    font-size: 14px;
+    transition: all .5s;
+    overflow: hidden;
+}
+.d-web-color-switch-btn .fa{
+    font-weight: 600;
 }

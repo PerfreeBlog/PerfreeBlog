@@ -34,7 +34,7 @@
                     <li class="d-link-box layui-col-xs12 layui-col-sm6 layui-col-md4" href="#(link.address)" target="_blank">
                         <a class="d-link  wow fadeInUp" data-wow-duration="#(for.count * 0.3)s" href="#(link.address)" target="_blank">
                             <section class="d-link-title">
-                                <h2>#subStr(link.name, 20)</h2>
+                                <h2>#(link.name)</h2>
                             </section>
                             <section class="d-link-content">
                                 <section class="d-link-desc">#(isBlank(link.desc) ? '暂无描述': link.desc)</section>
