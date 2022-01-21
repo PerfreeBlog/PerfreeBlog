@@ -1,0 +1,35 @@
+.d-link-container{
+    margin-top: 20px;
+}
+.d-link{
+    display: block;
+    box-shadow: var(--box-border);
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    transition: all .3s;
+}
+.d-link:hover{
+    color: white;
+    transform: scale(1.01);
+    box-shadow: var(--box-border-hover);
+}
+.d-link-content{
+    display: flex;
+}
+.d-link-title h2{
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+.d-link-desc{
+    width: 100%;
+    font-size: 14px;
+    opacity: .9;
+    padding-right: 10px;
+}
+.d-link-content img {
+    border-radius: 50%;
+}

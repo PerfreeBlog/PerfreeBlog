@@ -9,6 +9,10 @@ $('.d-category-item > span').each(function(){
     $(this).css("background-color", colors[RandomNum(0,6)]);
 });
 
+$('.d-link').each(function(){
+    $(this).css("background-color", colors[RandomNum(0,6)]);
+});
+
 $('.d-tag-item').each(function(){
     $(this).css("background-color", colors[RandomNum(0,6)]);
 });
