@@ -149,7 +149,7 @@ CREATE TABLE `p_plugin`  (
 
 
 
-INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (1, 'WEB_THEME', 'perfree');
+INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (1, 'WEB_THEME', 'default');
 INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (2, 'WEB_IS_REGISTER', '1');
 INSERT INTO `p_option`(`id`, `key`, `value`) VALUES (3, 'WEB_COMMENT_IS_REVIEW', '0');
 
