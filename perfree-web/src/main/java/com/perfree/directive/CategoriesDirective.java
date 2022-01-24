@@ -31,7 +31,9 @@ public class CategoriesDirective extends BaseDirective {
 
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        List<Category> categories = categoryService.allList();
+        Category category = new Category();
+        category.setStatus(0);
+        List<Category> categories = categoryService.allList(category);
         scope.set("categories", categories);
         stat.exec(env, scope, writer);
     }

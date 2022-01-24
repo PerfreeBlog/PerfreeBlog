@@ -67,6 +67,6 @@ public interface CategoryMapper {
 
     List<Category> frontCategoryList(HashMap<String, String> form);
 
-    List<Category> getAllList();
+    List<Category> getAllList(Category category);
 
 }

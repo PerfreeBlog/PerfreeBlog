@@ -83,7 +83,7 @@ public class CategoryController extends BaseController  {
     @ResponseBody
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean allList() {
-        return ResponseBean.success("获取成功", categoryService.allList());
+        return ResponseBean.success("获取成功", categoryService.allList(new Category()));
     }
 
     /**

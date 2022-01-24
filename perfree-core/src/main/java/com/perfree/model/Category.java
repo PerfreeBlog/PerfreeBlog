@@ -46,7 +46,7 @@ public class Category implements Serializable {
 
     @ApiModelProperty(value="状态",name="status", example = "0:正常,1禁用")
     @NotNull(message = "状态不允许为空")
-    private int status;
+    private Integer status;
 
     @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
@@ -70,11 +70,11 @@ public class Category implements Serializable {
     public void setValue(Long value) {
         this.value = value;
     }
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

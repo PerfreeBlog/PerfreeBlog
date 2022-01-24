@@ -60,7 +60,7 @@ public interface CategoryService {
      * 获取所有分类
      * @return List<Category>
      */
-    List<Category> allList();
+    List<Category> allList(Category category);
 
     void addCount(Long id);
 

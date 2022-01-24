@@ -66,7 +66,10 @@
     </select>
 
     <select id="getAllList" resultMap="CATEGORY_LIST_TREE">
-        select * from p_category where pid = -1 and status = 0
+        select * from p_category where pid = -1
+        <if test="status != null">
+            and status = #{status}
+        </if>
         order by createTime desc
     </select>
 
