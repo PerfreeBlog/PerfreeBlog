@@ -131,6 +131,9 @@
         <if test="type == null and type == ''">
             and t1.type = 'article'
         </if>
+        <if test="categoryId != null and categoryId != ''">
+            and t1.categoryId = #{categoryId}
+        </if>
         <if test="userId != null and userId != ''">
             and t1.userId = #{userId}
         </if>

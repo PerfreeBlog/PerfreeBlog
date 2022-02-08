@@ -58,7 +58,8 @@ function queryTable() {
         where: {
             form: {
                 title: $("#title").val(),
-                type: "article"
+                type: "article",
+                categoryId: $("#category").val()
             }
         },
         limit: 30,

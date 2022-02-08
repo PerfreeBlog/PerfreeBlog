@@ -5,9 +5,11 @@ import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.model.Article;
+import com.perfree.model.Category;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
+import com.perfree.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 文章
@@ -30,12 +33,17 @@ public class ArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR,
             Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @RequestMapping("/article")
     @AdminMenu(name = "文章管理", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
-    public String index() {
+    public String index(Model model) {
+        List<Category> categories = categoryService.allList(new Category());
+        model.addAttribute("categories", categories);
         return view("static/admin/pages/article/article_list.html");
     }
 
