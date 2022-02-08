@@ -33,7 +33,7 @@ public class CategoriesDirective extends BaseDirective {
     public void exec(Env env, Scope scope, Writer writer) {
         Category category = new Category();
         category.setStatus(0);
-        List<Category> categories = categoryService.allList(category);
+        List<Category> categories = categoryService.getFrontAllList(category);
         scope.set("categories", categories);
         stat.exec(env, scope, writer);
     }

@@ -73,6 +73,14 @@
         order by createTime desc
     </select>
 
+    <select id="getFrontAllList" resultMap="CATEGORY_LIST_TREE">
+        select * from p_category where pid = -1
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        order by `count` desc
+    </select>
+
     <select id="getChildCategory" resultMap="CATEGORY_LIST_TREE">
         select * from p_category where pid=#{id} and status = #{status} order by createTime
     </select>
@@ -86,6 +94,6 @@
             <bind name="name" value="'%' + _parameter.name + '%'" />
             and name like #{name,jdbcType=VARCHAR}
         </if>
-        order by createTime desc
+        order by `count` desc
     </select>
 </mapper>

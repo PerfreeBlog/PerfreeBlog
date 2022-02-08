@@ -97,6 +97,11 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.getAllList(category);
     }
 
+    @Transactional(readOnly = true)
+    public List<Category> getFrontAllList(Category category) {
+        return categoryMapper.getFrontAllList(category);
+    }
+
     public void addCount(Long id) {
         categoryMapper.addCount(id);
     }

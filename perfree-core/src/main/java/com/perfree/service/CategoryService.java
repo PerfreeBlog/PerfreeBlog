@@ -62,6 +62,8 @@ public interface CategoryService {
      */
     List<Category> allList(Category category);
 
+    List<Category> getFrontAllList(Category category);
+
     void addCount(Long id);
 
     void subCount(Long categoryId);

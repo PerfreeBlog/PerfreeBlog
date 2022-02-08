@@ -69,4 +69,6 @@ public interface CategoryMapper {
 
     List<Category> getAllList(Category category);
 
+    List<Category> getFrontAllList(Category category);
+
 }
