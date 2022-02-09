@@ -130,3 +130,62 @@ CREATE TABLE "main"."p_plugin" (
 INSERT INTO "main"."p_plugin" ("id", "name", "path", "desc", "version", "author", "createTime", "updateTime") SELECT "id", "name", "path", "desc", "version", "author", "createTime", "updateTime" FROM "main"."_p_plugin_old_2.2.0";
 drop table if exists "main"."_p_plugin_old_2.2.0";
 UPDATE "main"."p_plugin" set "status" = 1 where "status" is null;
+--PerfreeBlog
+--v2.2.2;
+ALTER TABLE "main"."p_article" RENAME TO "_p_article_old_2.2.2";
+CREATE TABLE "main"."p_article" (
+                                    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                    "title" text(256) NOT NULL,
+                                    "content" text,
+                                    "contentModel" text(32),
+                                    "type" text(32),
+                                    "summary" text(1024),
+                                    "slug" text(128),
+                                    "categoryId" integer,
+                                    "metaKeywords" text(512),
+                                    "metaDescription" text(512),
+                                    "thumbnail" text(256),
+                                    "isTop" integer,
+                                    "status" integer,
+                                    "commentCount" integer,
+                                    "viewCount" integer,
+                                    "userId" integer NOT NULL,
+                                    "isComment" integer,
+                                    "flag" text(256),
+                                    "template" text(256),
+                                    "createTime" DATETIME NOT NULL,
+                                    "updateTime" DATETIME
+);
+INSERT INTO "main"."p_article" ("id", "title", "content", "contentModel", "type", "summary", "slug", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime") SELECT "id", "title", "content", "contentModel", "type", "summary", "slug", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime" FROM "main"."_p_article_old_2.2.2";
+drop table if exists "main"."_p_article_old_2.2.2";
+ALTER TABLE "main"."p_category" RENAME TO "_p_category_old_2.2.2";
+CREATE TABLE "main"."p_category" (
+                                     "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                     "name" text(256) NOT NULL,
+                                     "pid" integer NOT NULL,
+                                     "desc" text(512),
+                                     "count" integer NOT NULL,
+                                     "metaKeywords" text(256),
+                                     "metaDescription" text(256),
+                                     "status" integer NOT NULL,
+                                     "slug" text(128),
+                                     "flag" text(256),
+                                     "createTime" DATETIME NOT NULL,
+                                     "updateTime" DATETIME
+);
+INSERT INTO "main"."p_category" ("id", "name", "pid", "desc", "count", "metaKeywords", "metaDescription", "status", "createTime", "updateTime") SELECT "id", "name", "pid", "desc", "count", "metaKeywords", "metaDescription", "status", "createTime", "updateTime" FROM "main"."_p_category_old_2.2.2";
+UPDATE "main"."p_category" set slug = id where slug is null;
+drop table if exists "main"."_p_category_old_2.2.2";
+ALTER TABLE "main"."p_tag" RENAME TO "_p_tag_old_2.2.2";
+CREATE TABLE "main"."p_tag" (
+                                "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                "name" text(256) NOT NULL,
+                                "userId" integer NOT NULL,
+                                "slug" text(128),
+                                "flag" text(256),
+                                "createTime" DATETIME NOT NULL,
+                                "updateTime" DATETIME
+);
+INSERT INTO "main"."p_tag" ("id", "name", "userId", "createTime", "updateTime") SELECT "id", "name", "userId", "createTime", "updateTime" FROM "main"."_p_tag_old_2.2.2";
+UPDATE "main"."p_tag" set slug = id where slug is null;
+drop table if exists "main"."_p_tag_old_2.2.2";
