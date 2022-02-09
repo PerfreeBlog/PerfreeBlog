@@ -75,7 +75,4 @@ public interface CategoryService {
     List<Category> getApiList();
 
     DirectivePage<HashMap<String, String>> frontCategoryPage(DirectivePage<HashMap<String, String>> categoriesPage);
-
-    Category getBySlug(String slug);
-
 }
