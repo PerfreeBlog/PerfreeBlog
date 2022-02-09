@@ -64,6 +64,12 @@ docker run --name perfree -d -p 8080:8080 perfree/perfree
 <img width="240" src="/screenshot/wechat.jpg" alt="微信交流群" />
  
 ## 主题支持
+### 默认主题
+![default](./screenshot/default.png)
+
+### perfree
+![perfree](./screenshot/perfree.png)
+
 ### fly
 ![fly](./screenshot/fly.png)
 
@@ -72,12 +78,6 @@ docker run --name perfree -d -p 8080:8080 perfree/perfree
 
 ### admas
 ![admas](./screenshot/admas.png)
-
-### perfree
-![perfree](./screenshot/perfree.png)
-
-### simple
-![simple](./screenshot/simple.png)
 
 ## 后台界面
 ### 写文章
