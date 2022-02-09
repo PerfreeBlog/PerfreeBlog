@@ -49,8 +49,6 @@ CREATE TABLE "p_category" (
                               "metaKeywords" text(256),
                               "metaDescription" text(256),
                               "status" integer NOT NULL,
-                              "slug" text(128),
-                              "flag" text(256),
                               "createTime" DATETIME NOT NULL,
                               "updateTime" DATETIME
 );
@@ -120,8 +118,6 @@ CREATE TABLE "p_tag" (
                          "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                          "name" text(256) NOT NULL,
                          "userId" integer NOT NULL,
-                         "slug" text(128),
-                         "flag" text(256),
                          "createTime" DATETIME NOT NULL,
                          "updateTime" DATETIME
 );

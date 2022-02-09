@@ -63,12 +63,6 @@ public class Category implements Serializable {
     @ApiModelProperty(value="分类链接",name="url")
     private String url;
 
-    @ApiModelProperty(value="slug",name="slug")
-    private String slug;
-
-    @ApiModelProperty(value="标识",name="flag")
-    private String flag;
-
     public Long getValue() {
         return this.id;
     }
@@ -78,22 +72,6 @@ public class Category implements Serializable {
     }
     public Integer getStatus() {
         return status;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public String getFlag() {
-        return flag;
-    }
-
-    public void setFlag(String flag) {
-        this.flag = flag;
     }
 
     public void setStatus(Integer status) {

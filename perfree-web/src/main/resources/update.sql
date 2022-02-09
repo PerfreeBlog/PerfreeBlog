@@ -32,7 +32,3 @@ UPDATE `p_plugin` set `status` = 1 where `status` is null;
 --PerfreeBlog
 --v2.2.2;
 ALTER TABLE `p_article` ADD COLUMN `flag` varchar(256) NULL COMMENT '标识' , ADD COLUMN `template` varchar(256) NULL COMMENT '模板';
-ALTER TABLE `p_tag` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug', ADD COLUMN `flag` varchar(256) NULL COMMENT '标识', ADD INDEX `slug`(`slug`) USING BTREE;
-UPDATE `p_tag` set slug = id where slug is null;
-ALTER TABLE `p_category` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug', ADD COLUMN `flag` varchar(256) NULL COMMENT '标识', ADD INDEX `slug`(`slug`) USING BTREE;
-UPDATE `p_category` set slug = id where slug is null;

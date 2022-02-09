@@ -54,8 +54,6 @@ CREATE TABLE `p_category`  (
                                `metaKeywords` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'SEO关键字',
                                `metaDescription` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'SEO描述内容',
                                `status` int(0) NOT NULL DEFAULT 0 COMMENT '状态0:正常,1禁用',
-                               `slug` varchar(128) NULL COMMENT 'slug',
-                               `flag` varchar(256) NULL COMMENT '标识',
                                `createTime` datetime(0) NOT NULL COMMENT '创建时间',
                                `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
                                PRIMARY KEY (`id`) USING BTREE
@@ -155,8 +153,6 @@ CREATE TABLE `p_tag`  (
                           `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
                           `name` varchar(256) CHARACTER SET utf8mb4 NOT NULL COMMENT '标签名',
                           `userId` int(0) NOT NULL COMMENT '添加人',
-                          `slug` varchar(128) NULL COMMENT 'slug',
-                          `flag` varchar(256) NULL COMMENT '标识',
                           `createTime` datetime(0) NOT NULL COMMENT '创建时间',
                           `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
                           PRIMARY KEY (`id`) USING BTREE
