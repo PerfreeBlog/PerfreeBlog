@@ -97,6 +97,28 @@ public class Article implements Serializable {
     @ApiModelProperty(value="别名",name="slug")
     private String slug;
 
+    @ApiModelProperty(value="标识",name="flag")
+    private String flag;
+
+    @ApiModelProperty(value="模板",name="template")
+    private String template;
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
+    }
+
     public String getContentModel() {
         return contentModel;
     }

@@ -92,6 +92,10 @@
                             <textarea name="metaDescription" placeholder="请输入SEO描述"
                                       class="layui-textarea article-textarea" style="resize: none"></textarea>
                         </div>
+                        <div class="layui-form-item">
+                            <span class="p-form-tip">文章标识:</span>
+                            <input type="text" name="flag" placeholder="请输入文章标识" autocomplete="off" class="layui-input">
+                        </div>
 
                         #if(loginUser.role.code == "contribute")
                         <div class="layui-form-item article-switch" style="display: none">
@@ -113,7 +117,7 @@
 
 
                         <div class="layui-form-item">
-                            <span class="p-form-tip">缩略图:</span>
+                            <span class="p-form-tip">封面图:</span>
                             <div class="p-upload-box" id="thumbnail">
                                 <input type="hidden" name="thumbnail">
                             </div>

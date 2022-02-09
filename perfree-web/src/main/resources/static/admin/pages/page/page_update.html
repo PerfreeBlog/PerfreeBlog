@@ -96,6 +96,11 @@
                                       style="resize: none">#(article.metaDescription??)</textarea>
                         </div>
 
+                        <div class="layui-form-item">
+                            <span class="p-form-tip">文章标识:</span>
+                            <input type="text" name="flag" placeholder="请输入文章标识" autocomplete="off" class="layui-input" value="#(article.flag)">
+                        </div>
+
                         <div class="layui-form-item article-switch">
                             <span class="p-form-tip">允许评论:</span>
                             <input type="checkbox" name="isComment" lay-text="允许|不允许" lay-skin="switch"
@@ -105,7 +110,7 @@
                         </div>
 
                         <div class="layui-form-item">
-                            <span class="p-form-tip">缩略图:</span>
+                            <span class="p-form-tip">封面图:</span>
                             <div class="p-upload-box" id="thumbnail">
                                 <input type="hidden" name="thumbnail" value="#(article.thumbnail??)">
                             </div>

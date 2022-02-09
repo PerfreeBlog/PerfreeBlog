@@ -4,9 +4,9 @@
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
           insert into p_article
           ( title, content, summary,categoryId,metaKeywords,metaDescription,
-          thumbnail,isTop,status,userId,isComment,createTime,`type`,viewCount,commentCount,contentModel) VALUES
+          thumbnail,isTop,status,userId,isComment,createTime,`type`,viewCount,commentCount,contentModel, flag,template) VALUES
           (#{title},#{content}, #{summary},#{categoryId},#{metaKeywords},#{metaDescription},
-          #{thumbnail},#{isTop},#{status},#{userId},#{isComment},#{createTime},#{type},#{viewCount},#{commentCount}, #{contentModel})
+          #{thumbnail},#{isTop},#{status},#{userId},#{isComment},#{createTime},#{type},#{viewCount},#{commentCount}, #{contentModel}, #{flag},#{template})
     </insert>
     <insert id="addArticleTag">
          insert into p_article_tag (articleId,tagId)VALUES
@@ -104,6 +104,8 @@
         <result property="updateTime" column="updateTime"></result>
         <result property="slug" column="slug"></result>
         <result property="contentModel" column="contentModel"></result>
+        <result property="flag" column="flag"></result>
+        <result property="template" column="template"></result>
         <association property="user" javaType="com.perfree.model.User">
             <id property="id" column="userId" />
             <result property="userName" column="userName"/>
