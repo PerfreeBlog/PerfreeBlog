@@ -48,12 +48,10 @@ public class Comment implements Serializable {
     private String website;
 
     @ApiModelProperty(value="邮箱",name="email")
-    @NotBlank(message = "邮箱不允许为空")
     @Length(max = 100,message = "邮箱长度过长")
     private String email;
 
     @ApiModelProperty(value="用户名",name="userName")
-    @NotBlank(message = "用户名不允许为空")
     @Length(min = 1,max = 16,message = "用户名长度要在1-16字之间")
     private String userName;
 
