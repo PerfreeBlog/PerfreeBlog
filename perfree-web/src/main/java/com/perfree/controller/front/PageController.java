@@ -38,14 +38,17 @@ public class PageController extends BaseController {
             model.addAttribute("commentIndex", split[1]);
         }
         Article article = articleService.getBySlug(slug, Constants.ARTICLE_TYPE_PAGE);
+        model.addAttribute("url", Constants.URL_PAGE + slug);
         if (article != null) {
             articleService.cacheCount(article.getId().toString(), IpUtil.getIpAddr(request));
             model.addAttribute("article", article);
             model.addAttribute(Constants.SEO_TITLE, StringUtils.isBlank(article.getTitle()) ? null : article.getTitle().trim());
             model.addAttribute(Constants.SEO_KEYWORD, StringUtils.isBlank(article.getMetaKeywords()) ? null : article.getMetaKeywords().trim());
             model.addAttribute(Constants.SEO_DESC, StringUtils.isBlank(article.getMetaDescription()) ? null : article.getMetaDescription().trim());
+            if (StringUtils.isNotBlank(article.getTemplate())) {
+                return pageView(article.getTemplate());
+            }
         }
-        model.addAttribute("url", Constants.URL_PAGE + slug);
         return pageView(Constants.ARTICLE_TYPE_PAGE + Constants.SEPARATOR +  slug + ".html");
     }
 

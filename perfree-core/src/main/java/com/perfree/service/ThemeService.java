@@ -60,4 +60,5 @@ public interface ThemeService {
 
     boolean createTheme(Theme theme);
 
+    List<String> getPageTplByTheme(String currentTheme);
 }

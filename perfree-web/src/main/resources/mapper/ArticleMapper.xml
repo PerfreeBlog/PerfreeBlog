@@ -49,6 +49,7 @@
         updateTime=#{updateTime},
         slug=#{slug},
         `type`=#{type},
+        template = #{template},
         contentModel = #{contentModel}
         where id = #{id}
     </update>

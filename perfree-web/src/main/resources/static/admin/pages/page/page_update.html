@@ -68,6 +68,16 @@
                         </div>
 
                         <div class="layui-form-item">
+                            <span class="p-form-tip">主题模板:</span>
+                            <select name="template">
+                                <option value="">默认匹配</option>
+                                #for(template : pageTemplates)
+                                    <option value="#(template)" #if(article.template == template) selected #end>#(template)</option>
+                                #end
+                            </select>
+                        </div>
+
+                        <div class="layui-form-item">
                             <span class="p-form-tip">分类:</span>
                             <div id="category"></div>
                         </div>
@@ -94,11 +104,6 @@
                             <textarea name="metaDescription" placeholder="请输入SEO描述"
                                       class="layui-textarea article-textarea"
                                       style="resize: none">#(article.metaDescription??)</textarea>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <span class="p-form-tip">文章标识:</span>
-                            <input type="text" name="flag" placeholder="请输入文章标识" autocomplete="off" class="layui-input" value="#(article.flag)">
                         </div>
 
                         <div class="layui-form-item article-switch">

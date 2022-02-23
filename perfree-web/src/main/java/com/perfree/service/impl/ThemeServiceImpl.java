@@ -28,6 +28,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ThemeServiceImpl implements ThemeService {
@@ -334,6 +335,23 @@ public class ThemeServiceImpl implements ThemeService {
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public List<String> getPageTplByTheme(String currentTheme) {
+        List<String> pageTemplates = new ArrayList<>();
+        File pageHtml = getThemeDir(currentTheme + "/page.html");
+        if (pageHtml.exists()){
+            pageTemplates.add("page.html");
+        }
+
+        File pageDir = getThemeDir(currentTheme + "/page");
+        if (pageDir.exists() && pageDir.listFiles() != null) {
+            for (File file : Objects.requireNonNull(pageDir.listFiles())) {
+                pageTemplates.add("page/" + file.getName());
+            }
+        }
+        return pageTemplates;
     }
 
     /**

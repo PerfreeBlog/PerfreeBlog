@@ -6,7 +6,7 @@ import com.perfree.commons.ResponseBean;
 import com.perfree.model.Article;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
-import com.perfree.service.MenuService;
+import com.perfree.service.ThemeService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -29,7 +29,7 @@ public class PageController extends BaseController {
     private ArticleService articleService;
 
     @Autowired
-    private MenuService menuService;
+    private ThemeService themeService;
 
     @RequestMapping("/page")
     @AdminMenu(name = "页面管理", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
@@ -40,12 +40,16 @@ public class PageController extends BaseController {
 
 
     @RequestMapping("/page/addPage")
-    public String addPage() {
+    public String addPage(Model model) {
+        List<String> pageTemplates =  themeService.getPageTplByTheme(currentTheme());
+        model.addAttribute("pageTemplates", pageTemplates);
         return view("static/admin/pages/page/page_create.html");
     }
 
     @RequestMapping("/page/updatePage/{id}")
     public String updatePage(@PathVariable("id") String id, Model model) {
+        List<String> pageTemplates =  themeService.getPageTplByTheme(currentTheme());
+        model.addAttribute("pageTemplates", pageTemplates);
         Article article = articleService.getById(id);
         model.addAttribute("article", article);
         return view("/static/admin/pages/page/page_update.html");
