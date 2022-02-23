@@ -296,6 +296,7 @@ function initPasteDragImg(Editor){
  * @param Editor
  */
 function uploadImg(file,Editor){
+    let i = layer.load();
     let formData = new FormData();
     let fileName=new Date().getTime()+"."+file.name.split(".").pop();
     formData.append('file', file, fileName);
@@ -307,6 +308,7 @@ function uploadImg(file,Editor){
         contentType: false,
         dataType: 'json',
         success: function (data) {
+            layer.close(i);
             if(data.code === 200){
                 Editor.insertValue("![]("+data.data.url+")");
             }else{
