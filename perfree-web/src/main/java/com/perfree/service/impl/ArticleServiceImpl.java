@@ -51,6 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setViewCount(0L);
         article.setCommentCount(0L);
         article.setCreateTime(new Date());
+        article.setUpdateTime(new Date());
         genSummary(article);
         int result = articleMapper.add(article);
         if (article.getArticleTags().size() > 0) {
