@@ -1,5 +1,6 @@
 package com.perfree.directive;
 
+import cn.hutool.http.HtmlUtil;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
@@ -49,6 +50,11 @@ public class ArticlePageDirective extends BaseDirective {
             articlePage.setQueryParam(title);
         }
 
+        String orderBy = getExprParamToStr("orderBy");
+        if (StringUtils.isNotBlank(orderBy)){
+            orderBy = HtmlUtil.filter(orderBy);
+            query.put("orderBy", orderBy);
+        }
         articlePage.setForm(query);
         articlePage.setPageSize(getExprParamToInt("pageSize", 10));
         articlePage = articleService.frontArticlesPage(articlePage);

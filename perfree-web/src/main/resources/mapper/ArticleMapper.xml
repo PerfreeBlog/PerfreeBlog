@@ -193,7 +193,15 @@
             and t1.title like #{title,jdbcType=VARCHAR}
         </if>
         order by t1.createTime desc
-        ) t order by t.isTop desc,t.createTime desc
+        ) t order by
+        <choose>
+            <when test="orderBy !=null and orderBy != ''">
+                ${orderBy}
+            </when>
+            <otherwise>
+                t.isTop desc,t.createTime desc
+            </otherwise>
+        </choose>
     </select>
 
     <select id="getNextArticle" resultMap="LIST_RESULT">
