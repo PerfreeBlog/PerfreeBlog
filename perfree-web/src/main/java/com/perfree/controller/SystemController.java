@@ -97,6 +97,11 @@ public class SystemController extends BaseController {
         return view("/login.html", "/login.html", "static/admin/pages/login/login.html");
     }
 
+    @RequestMapping("/html/{name}")
+    public String renderHtml(@PathVariable String name) {
+        return view(currentThemePage() + "/html/" + name + ".html");
+    }
+
     /**
      * 注册页
      * @return String
