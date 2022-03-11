@@ -1,5 +1,6 @@
 package com.perfree.config;
 
+import com.perfree.interceptor.ApiInterceptor;
 import com.perfree.interceptor.DataSourceInterceptor;
 import com.perfree.interceptor.EnjoyInterceptor;
 import com.perfree.interceptor.HtmlInterceptor;
@@ -67,6 +68,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/install/addDatabase",
                         "/static/**"
                 );
+
+        registry.addInterceptor(new ApiInterceptor())
+                .addPathPatterns("/api/**");
 
         registry.addInterceptor(createEnjoyInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns(

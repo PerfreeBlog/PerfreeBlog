@@ -197,4 +197,9 @@ public class Constants {
 
     // 插件事件类型: 卸载
     public static final int PLUGIN_EVENT_UNINSTALL = 4;
+
+
+    public static final String WEB_API_OPEN = "0";
+
+    public static final String WEB_API_CLOSE = "1";
 }

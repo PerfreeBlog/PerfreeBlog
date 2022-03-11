@@ -43,6 +43,8 @@ public class SwaggerConfig {
         tokenPar.name("Authorization")
                 .description("认证信息")
                 .modelRef(new ModelRef("string")).parameterType("header").required(false).build();
+
+        tokenPar.name("access_key").description("接口签名").modelRef(new ModelRef("string")).parameterType("query").required(false).build();
         pars.add(tokenPar.build());
         return pars;
     }
