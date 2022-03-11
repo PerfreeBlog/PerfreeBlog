@@ -14,7 +14,7 @@ server:
     max-connections: 6500
     connection-timeout: 12000
 
-version: 2.2.3
+version: 2.3.0
 # 默认文件上传地址
 web.upload-path: resources/upload/
 # 程序升级备份目录
