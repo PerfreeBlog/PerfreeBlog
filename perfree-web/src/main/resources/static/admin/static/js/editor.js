@@ -147,6 +147,7 @@ function initRichEditor(content){
 function initMarkdownEditor(content) {
     $("#editorBox").html("<div id='editor'></div>");
     markdownEditor = editormd("editor", {
+        htmlDecode : true,
         placeholder: '请输入文章内容',
         width: "100%",
         height: '680',
