@@ -36,7 +36,6 @@ public class PluginInfo {
     private String pluginId;
 
     private String mapperXmlDir;
-    private String typeAliasesPackage;
     private final BasePlugin basePlugin;
 
     private  List<HandlerInterceptor> handlerInterceptorList = new ArrayList<>();
@@ -55,7 +54,6 @@ public class PluginInfo {
         Props setting = PluginsUtils.getSetting(pluginWrapper.getPluginPath().toFile());
         if (!setting.isEmpty()){
             this.mapperXmlDir = setting.getStr("mybatis.mapper.location", null);
-            this.typeAliasesPackage = setting.getStr("mybatis.typeAliasesPackage", null);
             String locations = setting.getStr("static.locations", null);
             if (StringUtils.isNotBlank(locations)) {
                 loadResources(locations);
@@ -219,13 +217,5 @@ public class PluginInfo {
 
     public void setWebsocketPaths(List<String> websocketPaths) {
         this.websocketPaths = websocketPaths;
-    }
-
-    public String getTypeAliasesPackage() {
-        return typeAliasesPackage;
-    }
-
-    public void setTypeAliasesPackage(String typeAliasesPackage) {
-        this.typeAliasesPackage = typeAliasesPackage;
     }
 }

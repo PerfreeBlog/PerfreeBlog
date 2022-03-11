@@ -2,7 +2,6 @@ package com.perfree.plugin.handle;
 
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.handle.base.BasePluginHandle;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.executor.ErrorContext;
@@ -55,12 +54,6 @@ public class MapperHandle implements BasePluginHandle {
         //注册mapper.xml
         SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) plugin.getMainApplicationContext().getBean("sqlSessionFactory");
         Configuration configuration = sqlSessionFactory.getConfiguration();
-        //添加TypeAliasesPackage
-        List<Class<?>> pluginClassList = plugin.getClassList();
-        pluginClassList.stream()
-                //判断是否和插件配置文件一致
-                .filter(c -> !StringUtils.isNoneBlank(plugin.getTypeAliasesPackage())|| !c.getPackage().equals(plugin.getTypeAliasesPackage()))
-                .forEach(c->configuration.getTypeAliasRegistry().registerAlias(c));
         try {
             Resources.setDefaultClassLoader(plugin.getPluginWrapper().getPluginClassLoader());
             String pluginPath = plugin.getPluginWrapper().getPluginPath().toString();
@@ -115,13 +108,7 @@ public class MapperHandle implements BasePluginHandle {
         clearValues(configuration, "parameterMaps");
         clearValues(configuration, "keyGenerators");
         clearValues(configuration, "sqlFragments");
-        Field loadedResourcesField=null;
-        //mybatisplus
-        if(configuration.getClass().getName().equals("com.baomidou.mybatisplus.core.MybatisConfiguration")) {
-            loadedResourcesField=configuration.getClass().getSuperclass().getDeclaredField("loadedResources");
-        }else{
-            loadedResourcesField = configuration.getClass().getDeclaredField("loadedResources");
-        }
+        Field loadedResourcesField = configuration.getClass().getDeclaredField("loadedResources");
         loadedResourcesField.setAccessible(true);
         ((Set<?>) loadedResourcesField.get(configuration)).clear();
     }

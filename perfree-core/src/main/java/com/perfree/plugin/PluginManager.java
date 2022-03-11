@@ -58,6 +58,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
             return PluginHolder.getPlugin(pluginId);
         } catch (Exception e) {
             e.printStackTrace();
+            LOGGER.error("安装插件出现异常:{}", e.getMessage());
             if(StringUtils.isNotBlank(pluginId)) {
                 PluginHolder.remove(pluginId);
             }
@@ -154,6 +155,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
                 PluginsUtils.forceDelete(plugin.getPluginWrapper().getPluginPath().toFile());
             } catch (Exception e) {
                 e.printStackTrace();
+                LOGGER.error("卸载插件出现异常:{}", e.getMessage());
                 throw new Exception(e.getMessage());
             }
         }
@@ -270,6 +272,8 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
             loadPluginHandle.registry(plugin);
             PluginHolder.put(pluginWrapper.getPluginId(), plugin);
         } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("加载插件出现异常:{}", e.getMessage());
             unloadPlugin(pluginWrapper.getPluginId());
         }
         return pluginWrapper.getDescriptor().getPluginId();
