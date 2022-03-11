@@ -291,7 +291,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     public Pager<Article> getApiHotArticleList(Pager<Article> pager, int type) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
-        List<Article> articles = articleMapper.getApiHotArticleList(type);
+        List<Article> articles = articleMapper.getApiHotArticleList(type, pager.getForm());
         PageInfo<Article> pageInfo = new PageInfo<>(articles);
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());
@@ -340,6 +340,17 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article getBySlug(String slug, String articleType) {
         return articleMapper.getBySlug(slug, articleType);
+    }
+
+    @Override
+    public Pager<Article> getListByTagId(Pager<Article> pager, String tagId) {
+        PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
+        List<Article> articles = articleMapper.getListByTagId(pager.getForm(), tagId);
+        PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        pager.setTotal(pageInfo.getTotal());
+        pager.setData(pageInfo.getList());
+        pager.setCode(Pager.SUCCESS_CODE);
+        return pager;
     }
 
 

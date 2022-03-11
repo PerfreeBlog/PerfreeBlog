@@ -45,4 +45,6 @@ public interface PluginService {
     boolean stopPlugin(String id);
 
     Plugin getById(String id);
+
+    Plugin getByName(String id);
 }

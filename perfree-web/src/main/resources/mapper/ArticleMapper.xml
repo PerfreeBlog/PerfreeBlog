@@ -296,6 +296,9 @@
             <bind name="title" value="'%' + _parameter.title + '%'" />
             and t1.title like #{title,jdbcType=VARCHAR}
         </if>
+        <if test="categoryId != null and categoryId != ''">
+            and t1.categoryId = #{categoryId}
+        </if>
         order by t1.createTime desc
         ) t order by t.isTop desc,t.createTime desc
     </select>
@@ -303,7 +306,15 @@
     <select id="getApiHotArticleList" resultMap="LIST_RESULT">
         select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1
         left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
-        where t1.status = 0 and t1.type= 'article' order by
+        where t1.status = 0 and t1.type= 'article'
+        <if test="article.title != null and article.title != ''">
+            <bind name="title" value="'%' + _parameter.article.title + '%'" />
+            and t1.title like #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="article.categoryId != null and article.categoryId != ''">
+            and t1.categoryId = #{article.categoryId}
+        </if>
+        order by
         <if test="type != null and type == 0">
             t1.commentCount
         </if>
@@ -315,5 +326,23 @@
     <select id="getBySlug" resultMap="LIST_RESULT">
         select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         where t1.slug = #{slug} and t1.type= #{type}
+    </select>
+
+    <select id="getListByTagId" resultMap="LIST_RESULT">
+        SELECT t.* from (
+        select DISTINCT t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1
+        left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
+        left join p_article_tag t4 on t1.id = t4.articleId
+        where t1.status = 0 and t1.type= 'article'
+        <if test="article.title != null and article.title != ''">
+            <bind name="title" value="'%' + _parameter.article.title + '%'" />
+            and t1.title like #{title,jdbcType=VARCHAR}
+        </if>
+        <if test="tagId != null and tagId != ''">
+            and t4.tagId = #{tagId}
+        </if>
+        order by t1.createTime desc
+        ) t order by t.isTop desc,t.createTime desc
+
     </select>
 </mapper>

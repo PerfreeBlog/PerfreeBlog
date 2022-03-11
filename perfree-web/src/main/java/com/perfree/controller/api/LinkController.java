@@ -1,4 +1,4 @@
-package com.perfree.controller.api.pub;
+package com.perfree.controller.api;
 
 import com.perfree.commons.Pager;
 import com.perfree.base.BaseApiController;
@@ -26,7 +26,7 @@ public class LinkController extends BaseApiController {
             @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
             @ApiImplicitParam(name = "name", value = "友链名", dataTypeClass = String.class, paramType = "query"),
     })
-    public Pager<Link> getList(@ApiIgnore Pager<Link> pager, @ApiIgnore String name) {
+    public Pager<Link> getList(@ApiIgnore Pager<Link> pager, @ApiIgnore @RequestParam(required = false) String name) {
         pager.setForm(new Link());
         pager.getForm().setName(name);
         return linkService.list(pager);

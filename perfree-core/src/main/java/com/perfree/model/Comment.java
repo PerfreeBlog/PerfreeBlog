@@ -52,7 +52,7 @@ public class Comment implements Serializable {
     private String email;
 
     @ApiModelProperty(value="用户名",name="userName")
-    @Length(min = 1,max = 16,message = "用户名长度要在1-16字之间")
+    @Length(max = 16,message = "用户名长度要在1-16字之间")
     private String userName;
 
     @ApiModelProperty(hidden = true)

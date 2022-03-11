@@ -239,4 +239,9 @@ public class PluginServiceImpl implements PluginService {
     public Plugin getById(String id) {
         return pluginsMapper.getById(id);
     }
+
+    @Override
+    public Plugin getByName(String id) {
+        return pluginsMapper.getByName(id);
+    }
 }

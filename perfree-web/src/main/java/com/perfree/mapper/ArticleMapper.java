@@ -147,10 +147,12 @@ public interface ArticleMapper{
 
     List<Article> apiList(Article form);
 
-    List<Article> getApiHotArticleList(@Param("type") int type);
+    List<Article> getApiHotArticleList(@Param("type") int type, @Param("article") Article article);
 
     void updateSlug(Article article);
 
     Article getBySlug(@Param("slug") String slug, @Param("type")  String type);
+
+    List<Article> getListByTagId(Article article, String tagId);
 
 }

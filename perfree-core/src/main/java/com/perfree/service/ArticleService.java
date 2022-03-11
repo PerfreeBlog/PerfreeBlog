@@ -154,4 +154,6 @@ public interface ArticleService {
 
     Article getBySlug(String slug, String articleType);
 
+    Pager<Article> getListByTagId(Pager<Article> pager, String tagId);
+
 }

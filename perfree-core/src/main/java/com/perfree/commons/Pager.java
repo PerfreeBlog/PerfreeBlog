@@ -19,16 +19,16 @@ public class Pager<T> implements Serializable {
     @ApiModelProperty(value="页码",name="pageIndex",example="1")
     private Integer pageIndex = 1;
     // 每页数据量
-    @ApiModelProperty(value="每页数据量",name="pageSize",example="30")
-    private Integer pageSize = 30;
+    @ApiModelProperty(value="每页数据量",name="pageSize",example="10")
+    private Integer pageSize = 10;
     // 总条数
-    @ApiModelProperty(value="总条数",name="total",example="100")
+    @ApiModelProperty(value="总条数",name="total")
     private Long total;
     // 携带参数实体类
     @ApiModelProperty(value="查询参数",name="form",example="{}", hidden = true)
     private T form;
     // 数据集
-    @ApiModelProperty(value="分页数据",name="data",example="[{},{}]")
+    @ApiModelProperty(value="分页数据",name="data")
     private Object data;
     // 响应码
     @ApiModelProperty(value="响应码",name="code",example="200")

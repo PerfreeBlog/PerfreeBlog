@@ -1,4 +1,4 @@
-package com.perfree.controller.api.pub;
+package com.perfree.controller.api;
 
 import com.perfree.base.BaseController;
 import com.perfree.commons.ResponseBean;
@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.pf4j.PluginState;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
@@ -23,19 +20,19 @@ public class PluginController extends BaseController {
     @Autowired
     private PluginService pluginService;
 
-    @RequestMapping("/getAllPlugin")
+    @GetMapping("/getAllPlugin")
     @ApiOperation(value = "获取所有插件", notes = "获取所有插件")
     public ResponseBean getAllPlugin(){
         return ResponseBean.success("success", pluginService.getAll());
     }
 
-    @RequestMapping("/getStartPlugin")
+    @GetMapping("/getStartPlugin")
     @ApiOperation(value = "根据插件ID获取已启动的插件", notes = "根据插件ID获取已启动的插件")
     public ResponseBean getStartPlugin(@ApiParam(name="id",value="插件的id",required=true) @RequestParam("id") String id){
         PluginInfo plugin = PluginHolder.getPlugin(id);
-        if (plugin.getPluginWrapper().getPluginState().equals(PluginState.STARTED)) {
-            return ResponseBean.success("success", pluginService.getById(id));
+        if (plugin != null && plugin.getPluginWrapper().getPluginState().equals(PluginState.STARTED)) {
+            return ResponseBean.success("success", pluginService.getByName(id));
         }
-        return ResponseBean.error(-1,"未获取到插件", null);
+        return ResponseBean.fail("未获取到插件", null);
     }
 }

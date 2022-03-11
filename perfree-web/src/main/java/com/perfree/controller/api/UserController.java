@@ -1,9 +1,8 @@
-package com.perfree.controller.api.pub;
+package com.perfree.controller.api;
 
 import com.perfree.base.BaseApiController;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.model.Tag;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
 import io.swagger.annotations.*;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -19,9 +19,14 @@ import java.util.List;
 @RequestMapping("/api/user")
 @SuppressWarnings("all")
 public class UserController extends BaseApiController {
-
     @Autowired
     private UserService userService;
+
+    @GetMapping("/getLoginUser")
+    @ApiOperation(value = "获取当前登录用户", notes = "获取当前登录用户")
+    public ResponseBean getApiLoginUser(HttpServletRequest request) {
+        return ResponseBean.success("success", getLoginUser(request));
+    }
 
     @GetMapping("/getById")
     @ApiOperation(value = "根据用户ID获取用户信息", notes = "根据用户ID获取用户信息")

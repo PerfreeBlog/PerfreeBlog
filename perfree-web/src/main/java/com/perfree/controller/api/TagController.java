@@ -1,4 +1,4 @@
-package com.perfree.controller.api.pub;
+package com.perfree.controller.api;
 
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
@@ -44,7 +44,7 @@ public class TagController extends BaseApiController {
             @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
             @ApiImplicitParam(name = "name", value = "标签名", dataTypeClass = String.class, paramType = "query"),
     })
-    public Pager<Tag> getList(@ApiIgnore Pager<Tag> pager, @ApiIgnore String name) {
+    public Pager<Tag> getList(@ApiIgnore Pager<Tag> pager, @ApiIgnore @RequestParam(required = false) String name) {
         pager.setForm(new Tag());
         pager.getForm().setName(name);
         return tagService.list(pager);

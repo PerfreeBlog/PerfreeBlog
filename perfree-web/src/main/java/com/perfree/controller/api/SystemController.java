@@ -1,14 +1,11 @@
-package com.perfree.controller.api.pub;
+package com.perfree.controller.api;
 
 import cn.hutool.core.util.RandomUtil;
 import com.perfree.commons.*;
 import com.perfree.model.Option;
 import com.perfree.model.Role;
 import com.perfree.model.User;
-import com.perfree.service.MailService;
-import com.perfree.service.OptionService;
-import com.perfree.service.RoleService;
-import com.perfree.service.UserService;
+import com.perfree.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -28,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -48,6 +46,8 @@ public class SystemController {
     private RoleService roleService;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private MenuService menuService;
 
     /**
      * 登录
@@ -193,5 +193,12 @@ public class SystemController {
             e.printStackTrace();
             return ResponseBean.fail("发送邮件出错", e.getMessage());
         }
+    }
+
+
+    @GetMapping("/getMenuList")
+    @ApiOperation(value = "获取前台所有的菜单信息", notes = "获取前台所有的菜单信息")
+    public ResponseBean getMenuList() {
+        return ResponseBean.success("success", menuService.getProtalMenus());
     }
 }
