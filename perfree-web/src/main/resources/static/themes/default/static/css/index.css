@@ -53,6 +53,7 @@
     margin-bottom: 10px;
     font-size: 14px;
     line-height: 1.75rem;
+    word-wrap: break-word;
 }
 .p-post-info{
     border-top: 1px solid var(--border-color-b);

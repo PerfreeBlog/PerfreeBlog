@@ -27,6 +27,7 @@
     margin-top: 10px;
     width: 100%;
     overflow: hidden;
+    word-wrap: break-word;
 }
 .a-article-img-box{
     width: 100%;
