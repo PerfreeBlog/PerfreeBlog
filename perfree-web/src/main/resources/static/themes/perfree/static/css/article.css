@@ -558,6 +558,7 @@ pre{
     overflow-y: auto;
     top: 60px;
     -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 100px);
 }
 .f-floor a:hover{
     color: var(--default-primary-color);
@@ -572,5 +573,10 @@ pre{
 @media screen and (max-width:900px) {
     .a-container{
         padding: 15px 10px 15px;
+    }
+}
+@media screen and (max-width:1700px) {
+    .roundDiv{
+        display: none;
     }
 }
