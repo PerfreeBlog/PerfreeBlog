@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -61,5 +62,15 @@ public class FileHandles {
     public void delete(Attach attach) throws Exception {
         String type = StringUtils.isBlank(attach.getSaveType()) ? Constants.WEB_FILE_SAVE_TYPE_LOCAL : attach.getSaveType();
         getFileHandle(type).delete(attach);
+    }
+
+    /**
+     * 下载文件
+     * @param attach attach
+     * @return InputStream
+     */
+    public void download(Attach attach, HttpServletResponse response) throws Exception {
+        String type = StringUtils.isBlank(attach.getSaveType()) ? Constants.WEB_FILE_SAVE_TYPE_LOCAL : attach.getSaveType();
+        getFileHandle(type).download(attach, response);
     }
 }

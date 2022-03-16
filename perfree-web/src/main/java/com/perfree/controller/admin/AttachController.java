@@ -20,7 +20,6 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +28,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -42,8 +40,6 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AttachController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(AttachController.class);
-    @Value("${web.upload-path}")
-    private String uploadPath;
 
     @Autowired
     private AttachService attachService;
@@ -131,7 +127,7 @@ public class AttachController extends BaseController {
             }
         }catch (Exception e){
             logger.error("上传失败: {}", e.getMessage());
-            return ResponseBean.fail("上传失败", e.getMessage());
+            return ResponseBean.fail("上传失败:["+e.getMessage()+"]", e.getMessage());
         }
     }
 
@@ -251,45 +247,15 @@ public class AttachController extends BaseController {
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String downloadFile(HttpServletResponse response, @PathVariable("id") String id) {
         Attach attach = attachService.getById(id);
-        File file = new File(uploadPath + attach.getPath());
-        if (file.exists()) {
-            response.setHeader("Content-Type", "application/octet-stream;charset=utf-8");
-            response.setContentType("application/force-download");
-            byte[] buffer = new byte[1024];
-            FileInputStream fis = null;
-            BufferedInputStream bis = null;
-            try{
-                response.addHeader("Content-Disposition", "attachment;fileName="+ URLEncoder.encode(attach.getName(), "UTF-8"));
-                fis = new FileInputStream(file);
-                bis = new BufferedInputStream(fis);
-                OutputStream outputStream = response.getOutputStream();
-                int i = bis.read(buffer);
-                while (i != -1) {
-                    outputStream.write(buffer, 0 , i);
-                    i = bis.read(buffer);
-                }
-                return "下载成功";
-            } catch (Exception e) {
-                e.printStackTrace();
-                logger.error(e.getMessage());
-            } finally {
-                if (bis != null) {
-                    try {
-                        bis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        logger.error(e.getMessage());
-                    }
-                }
-                if (fis != null) {
-                    try {
-                        fis.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        logger.error(e.getMessage());
-                    }
-                }
-            }
+        response.setHeader("Content-Type", "application/octet-stream;charset=utf-8");
+        response.setContentType("application/force-download");
+        try{
+            response.addHeader("Content-Disposition", "attachment;fileName="+ URLEncoder.encode(attach.getName(), "UTF-8"));
+            fileHandles.download(attach, response);
+            return "下载成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return "下载失败";
     }

@@ -2,6 +2,7 @@ package com.perfree.file;
 
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.PutObjectResult;
 import com.perfree.commons.Constants;
 import com.perfree.commons.FileUtil;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class AliOssHandle implements FileHandle{
@@ -59,6 +62,24 @@ public class AliOssHandle implements FileHandle{
             e.printStackTrace();
             LOGGER.error("文件删除失败:{}", e.getMessage());
             throw new Exception("文件删除失败,请检查OSS配置!");
+        } finally {
+            if (ossClient != null) {
+                ossClient.shutdown();
+            }
+        }
+    }
+
+    @Override
+    public void download(Attach attach, HttpServletResponse response) throws Exception {
+        String bucketName = OptionCacheUtil.getDefaultValue(Constants.WEB_OSS_BUCKET_NAME, "");
+        OSS ossClient = getOssClient();
+        try{
+            OSSObject ossObject = ossClient.getObject(bucketName, attach.getFileKey());
+            FileUtil.downloadFile(ossObject.getObjectContent(), response);
+        }catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("文件下载失败:{}", e.getMessage());
+            throw new Exception("文件下载失败,请检查OSS配置!");
         } finally {
             if (ossClient != null) {
                 ossClient.shutdown();

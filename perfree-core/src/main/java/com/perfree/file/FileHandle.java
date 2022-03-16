@@ -3,6 +3,9 @@ package com.perfree.file;
 import com.perfree.model.Attach;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+
 /**
  * 文件操作相关处理接口
  */
@@ -21,4 +24,11 @@ public interface FileHandle {
      * @param attach attach
      */
     void delete(Attach attach) throws Exception;
+
+    /**
+     * 下载文件
+     * @param attach attach
+     * @return InputStream
+     */
+    void download(Attach attach, HttpServletResponse response) throws Exception;
 }

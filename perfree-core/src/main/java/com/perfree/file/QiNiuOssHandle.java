@@ -18,6 +18,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+
 @Component
 public class QiNiuOssHandle implements FileHandle{
     private final static Logger LOGGER = LoggerFactory.getLogger(QiNiuOssHandle.class);
@@ -60,6 +65,25 @@ public class QiNiuOssHandle implements FileHandle{
             ex.printStackTrace();
             LOGGER.error("文件删除失败:{}", ex.getMessage());
             throw new Exception("文件删除失败,请检查OSS配置!");
+        }
+    }
+
+    @Override
+    public void download(Attach attach, HttpServletResponse response) throws Exception {
+        try {
+            String encodedFileName = URLEncoder.encode(attach.getFileKey(), "utf-8").replace("+", "%20");
+            String publicUrl = String.format("%s/%s", OptionCacheUtil.getDefaultValue(Constants.WEB_OSS_DOMAIN, ""), encodedFileName);
+            String accessKey = OptionCacheUtil.getDefaultValue(Constants.WEB_OSS_ACCESS_KEY, "");
+            String secretKey = OptionCacheUtil.getDefaultValue(Constants.WEB_OSS_SECRET, "");
+            Auth auth = Auth.create(accessKey, secretKey);
+            String finalUrl = auth.privateDownloadUrl(publicUrl);
+            URL url = new URL(finalUrl);
+            URLConnection conn = url.openConnection();
+            FileUtil.downloadFile(conn.getInputStream(), response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("文件下载失败:{}", e.getMessage());
+            throw new Exception("文件下载失败,请检查OSS配置!");
         }
     }
 }

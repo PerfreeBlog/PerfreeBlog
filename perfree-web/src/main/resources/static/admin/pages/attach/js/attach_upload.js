@@ -31,10 +31,15 @@ layui.use(['layer', 'form', 'element','upload'], function () {
         },
         done: function (res) {
             layer.close(loadIndex);
-            parent.queryTable();
-            parent.layer.msg("上传成功", {icon: 1});
-            const index = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(index);
+            if (res.code === 200) {
+                parent.queryTable();
+                parent.layer.msg("上传成功", {icon: 1});
+                const index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            } else {
+                layer.msg(res.msg, {icon: 2});
+            }
+
         }
     });
 });

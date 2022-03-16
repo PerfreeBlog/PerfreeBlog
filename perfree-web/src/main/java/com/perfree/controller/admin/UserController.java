@@ -1,11 +1,12 @@
 package com.perfree.controller.admin;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.GravatarUtil;
-import com.perfree.commons.FileUtil;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.base.BaseController;
+import com.perfree.file.FileHandles;
+import com.perfree.file.FileResult;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.UserService;
@@ -16,7 +17,6 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,8 +37,8 @@ import java.util.HashMap;
 public class UserController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Value("${web.upload-path}")
-    private String uploadPath;
+    @Autowired
+    private FileHandles fileHandles;
 
     @Autowired
     private UserService userService;
@@ -88,8 +88,11 @@ public class UserController extends BaseController {
         try{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
-            String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "avatar");
-            return ResponseBean.success("上传成功", "/static" + path);
+            FileResult fileResult = fileHandles.upload(multiFile, "avatar");
+            if (fileResult != null) {
+                return ResponseBean.success("上传成功", fileResult.getUrl());
+            }
+            return ResponseBean.fail("上传失败", null);
         }catch (Exception e){
             logger.error("上传失败: {}", e.getMessage());
             return ResponseBean.fail("上传失败", e.getMessage());
@@ -157,7 +160,7 @@ public class UserController extends BaseController {
             Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid User user) {
         user.setReadAvatar(false);
-        if (StringUtils.isBlank(user.getAvatar()) || !user.getAvatar().startsWith("/static/avatar")){
+        if (StringUtils.isBlank(user.getAvatar())){
             user.setAvatar(GravatarUtil.getGravatar(user.getEmail()));
         }
         if (userService.update(user) > 0) {

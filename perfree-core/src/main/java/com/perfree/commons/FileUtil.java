@@ -4,7 +4,11 @@ import cn.hutool.core.io.resource.ClassPathResource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -133,4 +137,28 @@ public class FileUtil {
         return category +  Constants.SEPARATOR + formatter.format(new Date()) + Constants.SEPARATOR + filename;
     }
 
+    /**
+     * 下载文件
+     * @param inputStream 文件流
+     * @param response HttpServletResponse
+     */
+    public static void downloadFile(InputStream inputStream, HttpServletResponse response) throws Exception {
+        byte[] buffer = new byte[1024];
+        try (BufferedInputStream bis = new BufferedInputStream(inputStream)) {
+            OutputStream outputStream = response.getOutputStream();
+            int i = bis.read(buffer);
+            while (i != -1) {
+                outputStream.write(buffer, 0, i);
+                i = bis.read(buffer);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new Exception("文件流加载失败!");
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
+        }
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.perfree.file;
 
 import com.perfree.commons.Constants;
+import com.perfree.commons.FileUtil;
 import com.perfree.commons.StringUtil;
 import com.perfree.model.Attach;
 import org.apache.commons.lang3.StringUtils;
@@ -8,7 +9,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -57,5 +60,14 @@ public class LocalFileHandle implements FileHandle{
         if (file.exists()) {
             boolean delete = file.delete();
         }
+    }
+
+    @Override
+    public void download(Attach attach, HttpServletResponse response) throws Exception {
+        File file = new File(webUploadPath + attach.getPath());
+        if (file.exists()) {
+            FileUtil.downloadFile(new FileInputStream(file), response);
+        }
+        throw new Exception("文件下载: 文件不存在!");
     }
 }

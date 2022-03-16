@@ -8,6 +8,8 @@ import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
+import com.qcloud.cos.model.COSObject;
+import com.qcloud.cos.model.GetObjectRequest;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
 import com.qcloud.cos.region.Region;
@@ -15,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class TencentCosHandle implements FileHandle{
@@ -63,6 +67,23 @@ public class TencentCosHandle implements FileHandle{
             e.printStackTrace();
             LOGGER.error("文件删除失败:{}", e.getMessage());
             throw new Exception("文件删除失败,请检查OSS配置!");
+        } finally {
+            cosClient.shutdown();
+        }
+    }
+
+    @Override
+    public void download(Attach attach, HttpServletResponse response) throws Exception {
+        String bucket = OptionCacheUtil.getDefaultValue(Constants.WEB_OSS_BUCKET_NAME, "");
+        COSClient cosClient = getCOSClient();
+        try {
+            GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, attach.getFileKey());
+            COSObject cosObject = cosClient.getObject(getObjectRequest);
+            FileUtil.downloadFile(cosObject.getObjectContent(), response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.error("文件下载失败:{}", e.getMessage());
+            throw new Exception("文件下载失败,请检查OSS配置!");
         } finally {
             cosClient.shutdown();
         }

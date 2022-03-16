@@ -22,7 +22,8 @@ public class GravatarUtil {
      * @param avatar linkAddr
      */
     public static String replaceGravatar(String avatar) {
-        if (StringUtils.isBlank(avatar) || avatar.startsWith("/static/avatar")) {
+        if (StringUtils.isBlank(avatar) || avatar.startsWith("/static/avatar") || avatar.startsWith("/avatar")
+                || avatar.startsWith("http")) {
             return avatar;
         }
         String gravatarUrl = OptionCacheUtil.getValue(Constants.OPTION_GRAVATAR_SOURCE);

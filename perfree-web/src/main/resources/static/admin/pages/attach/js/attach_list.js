@@ -69,15 +69,14 @@ function queryTable() {
         limit: 30,
         cols: [[
             {type: 'checkbox'},
-            {field: 'id', title: 'ID', width: 80, sort: true},
             {field: 'name',  minWidth: 180,title: '文件名'},
             {field: 'desc',  minWidth: 160,title: '描述'},
             {field: 'path',  minWidth: 200,title: '访问路径',
                 templet: '<div><a class="articleHref" href="{{d.path}}" target="_blank">{{d.path}}</a></div>'
             },
-            {field: 'flag',  minWidth: 80,title: '标识'},
+            {field: 'flag',  minWidth: 50,title: '标识'},
             {
-                field: 'type',  minWidth: 80,title: '类型', templet: function (d) {
+                field: 'type',  minWidth: 50,title: '类型', templet: function (d) {
                     let html;
                     switch (d.type) {
                         case 'img':
@@ -96,19 +95,13 @@ function queryTable() {
                     return html;
                 }
             },
+            {field: 'saveType',  minWidth: 100,title: '存储方式'},
             {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
                 minWidth: 160,
                 templet: "<span>{{d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
-            },
-            {
-                field: 'updateTime',
-                title: '更新时间',
-                sort: true,
-                minWidth: 160,
-                templet: "<span>{{d.updateTime==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'id', title: '操作', width: 200,
