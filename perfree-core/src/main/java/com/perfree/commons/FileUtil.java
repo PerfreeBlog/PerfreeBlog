@@ -118,4 +118,19 @@ public class FileUtil {
             return null;
         }
     }
+
+    /**
+     * 生成文件上传路径
+     */
+    public static String genUploadPath(MultipartFile file, String category) throws Exception {
+        String multiFileName = file.getOriginalFilename();
+        if (StringUtils.isBlank(multiFileName)){
+            throw new Exception("文件名为空!");
+        }
+        String suffix = multiFileName.substring(multiFileName.indexOf("."));
+        String filename = StringUtil.getUUID() + suffix;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+        return category +  Constants.SEPARATOR + formatter.format(new Date()) + Constants.SEPARATOR + filename;
+    }
+
 }

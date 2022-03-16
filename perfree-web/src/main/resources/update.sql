@@ -32,3 +32,6 @@ UPDATE `p_plugin` set `status` = 1 where `status` is null;
 --PerfreeBlog
 --v2.2.2;
 ALTER TABLE `p_article` ADD COLUMN `flag` varchar(256) NULL COMMENT '标识' , ADD COLUMN `template` varchar(256) NULL COMMENT '模板';
+--PerfreeBlog
+--v2.3.1;
+ALTER TABLE `p_attach` ADD COLUMN `saveType` varchar(32) NULL COMMENT '存储方式', ADD COLUMN `fileKey` varchar(512) NULL COMMENT 'fileKey';

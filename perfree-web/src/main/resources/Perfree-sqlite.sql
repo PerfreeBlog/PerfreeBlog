@@ -37,7 +37,9 @@ CREATE TABLE "p_attach" (
                             "flag" text(256),
                             "type" text(32),
                             "createTime" DATETIME NOT NULL,
-                            "updateTime" DATETIME
+                            "updateTime" DATETIME,
+                            "saveType" text(32),
+                            "fileKey" text(512)
 );
 drop table if exists `p_category`;
 CREATE TABLE "p_category" (

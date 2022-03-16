@@ -198,8 +198,25 @@ public class Constants {
     // 插件事件类型: 卸载
     public static final int PLUGIN_EVENT_UNINSTALL = 4;
 
-
+    // api 开放
     public static final String WEB_API_OPEN = "0";
-
+    // api 关闭
     public static final String WEB_API_CLOSE = "1";
+
+    // 文件存储方式
+    public static final String WEB_FILE_SAVE_TYPE_ALI = "aliOss";
+    public static final String WEB_FILE_SAVE_TYPE_TENCENT = "tencentCos";
+    public static final String WEB_FILE_SAVE_TYPE_QINIU = "qiNiuOss";
+    public static final String WEB_FILE_SAVE_TYPE_LOCAL = "local";
+
+    // 文件存储方式
+    public static final String WEB_FILE_SAVE_TYPE = "WEB_FILE_SAVE_TYPE";
+
+    // oss相关
+    public static final String WEB_OSS_ENDPOINT = "WEB_OSS_ENDPOINT";
+    public static final String WEB_OSS_ACCESS_KEY = "WEB_OSS_ACCESS_KEY";
+    public static final String WEB_OSS_SECRET = "WEB_OSS_SECRET";
+    public static final String WEB_OSS_BUCKET_NAME = "WEB_OSS_BUCKET_NAME";
+    public static final String WEB_OSS_DOMAIN = "WEB_OSS_DOMAIN";
+    public static final String WEB_OSS_REGION = "WEB_OSS_REGION";
 }

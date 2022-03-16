@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.AttachMapper" >
     <insert id="add">
-        insert into p_attach (`name`, `desc`, `path`, suffix,flag,type,createTime)
-        VALUES (#{name},#{desc},#{path}, #{suffix}, #{flag}, #{type}, #{createTime})
+        insert into p_attach (`name`, `desc`, `path`, suffix,flag,type,createTime, saveType, fileKey)
+        VALUES (#{name},#{desc},#{path}, #{suffix}, #{flag}, #{type}, #{createTime}, #{saveType}, #{fileKey})
     </insert>
 
     <update id="update">

@@ -107,7 +107,7 @@ public class PostAppRunner implements ApplicationRunner {
                     sqlFile = com.perfree.commons.FileUtil.getClassPathFile("classpath:update-sqlite.sql");
                 }
             }
-            if (sqlFile.exists()) {
+            if (sqlFile != null && sqlFile.exists()) {
                 DataSource dataSource = SpringBeanUtils.getBean(DataSource.class);
                 FileReader fileReader = new FileReader(sqlFile);
                 String updateFileStr = fileReader.readString();

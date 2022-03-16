@@ -3,28 +3,28 @@ package com.perfree.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
+import com.perfree.file.FileHandles;
 import com.perfree.mapper.AttachMapper;
 import com.perfree.model.Attach;
 import com.perfree.service.AttachService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
 import java.util.Date;
 import java.util.List;
 
 @Service
 @Transactional
 public class AttachServiceImpl implements AttachService {
-    @Value("${web.upload-path}")
-    private String uploadPath;
     private final Logger logger = LoggerFactory.getLogger(AttachServiceImpl.class);
     @Autowired
     private AttachMapper attachMapper;
+
+    @Autowired
+    private FileHandles fileHandles;
 
     /**
      * 新增附件
@@ -70,9 +70,11 @@ public class AttachServiceImpl implements AttachService {
     public int del(String[] idArr) {
         List<Attach> attachList =  attachMapper.getByIdArr(idArr);
         attachList.forEach(res -> {
-            File file = new File(uploadPath + res.getPath());
-            if (file.exists()) {
-                boolean delete = file.delete();
+            try {
+                fileHandles.delete(res);
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error("文件[{}]删除失败:{}, ", res.getName(),e.getMessage());
             }
         });
         return attachMapper.del(idArr);

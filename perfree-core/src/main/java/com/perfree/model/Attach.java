@@ -40,11 +40,20 @@ public class Attach implements Serializable {
     @ApiModelProperty(value="修改时间",name="updateTime")
     private Date updateTime;
 
+    @ApiModelProperty(value="存储方式",name="saveType")
+    private String saveType;
+
+    @ApiModelProperty(value="fileKey",name="fileKey")
+    private String fileKey;
+
     @ApiModelProperty(value="附件链接",name="url")
     private String url;
 
     public String getUrl() {
-        return "/static" + path;
+       /* if (StringUtils.isNotBlank(path) && !path.startsWith("http")) {
+            return "/static" + path;
+        }*/
+        return path;
     }
 
     public Long getId() {
@@ -117,6 +126,22 @@ public class Attach implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSaveType() {
+        return saveType;
+    }
+
+    public void setSaveType(String saveType) {
+        this.saveType = saveType;
+    }
+
+    public String getFileKey() {
+        return fileKey;
+    }
+
+    public void setFileKey(String fileKey) {
+        this.fileKey = fileKey;
     }
 
     @Override

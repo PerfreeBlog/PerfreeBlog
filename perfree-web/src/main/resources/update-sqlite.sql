@@ -158,3 +158,22 @@ CREATE TABLE "main"."p_article" (
 );
 INSERT INTO "main"."p_article" ("id", "title", "content", "contentModel", "type", "summary", "slug", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime") SELECT "id", "title", "content", "contentModel", "type", "summary", "slug", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "createTime", "updateTime" FROM "main"."_p_article_old_2.2.2";
 drop table if exists "main"."_p_article_old_2.2.2";
+
+--PerfreeBlog
+--v2.3.1;
+ALTER TABLE "main"."p_attach" RENAME TO "_p_attach_old_2.3.1";
+CREATE TABLE "main"."p_attach" (
+                                   "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                   "name" text(256) NOT NULL,
+                                   "desc" text(512),
+                                   "path" text(512) NOT NULL,
+                                   "suffix" text(32),
+                                   "flag" text(256),
+                                   "type" text(32),
+                                   "saveType" text(32),
+                                   "fileKey" text(512),
+                                   "createTime" DATETIME NOT NULL,
+                                   "updateTime" DATETIME
+);
+INSERT INTO "main"."p_attach" ("id", "name", "desc", "path", "suffix", "flag", "type", "createTime", "updateTime") SELECT "id", "name", "desc", "path", "suffix", "flag", "type", "createTime", "updateTime" FROM "main"."_p_attach_old_2.3.1";
+drop table if exists "main"."_p_attach_old_2.3.1";

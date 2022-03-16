@@ -39,6 +39,8 @@ CREATE TABLE `p_attach`  (
                              `suffix` varchar(32) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '附件后缀',
                              `flag` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '标识',
                              `type` varchar(32) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '文件类型',
+                             `saveType` varchar(32) CHARACTER SET utf8mb4 NOT NULL COMMENT '存储方式',
+                             `fileKey` varchar(512) CHARACTER SET utf8mb4 NOT NULL COMMENT 'fileKey',
                              `createTime` datetime(0) NOT NULL COMMENT '创建时间',
                              `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
                              PRIMARY KEY (`id`) USING BTREE

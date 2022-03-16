@@ -2,11 +2,13 @@ package com.perfree.controller.admin;
 
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.map.MapUtil;
+import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.FileUtil;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.base.BaseController;
+import com.perfree.file.FileHandles;
+import com.perfree.file.FileResult;
 import com.perfree.model.Attach;
 import com.perfree.permission.AdminMenu;
 import com.perfree.plugin.proxy.AttachProxy;
@@ -45,6 +47,9 @@ public class AttachController extends BaseController {
 
     @Autowired
     private AttachService attachService;
+
+    @Autowired
+    private FileHandles fileHandles;
 
     /**
      * 附件-图片选择页
@@ -93,7 +98,6 @@ public class AttachController extends BaseController {
                 logger.error("文件不能为空!");
                 return ResponseBean.fail("文件不能为空!", null);
             }
-
             String multiFileName = multiFile.getOriginalFilename();
             if (StringUtils.isBlank(multiFileName)){
                 logger.error("文件名不能为空!");
@@ -101,14 +105,16 @@ public class AttachController extends BaseController {
             }
             String suffix = multiFileName.substring(multiFileName.lastIndexOf("."));
             String type = FileUtil.getFileType(FileTypeUtil.getType(multiFile.getInputStream()),suffix);
-            String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "attach");
+            FileResult fileResult = fileHandles.upload(multiFile, "attach");
             Attach attach = new Attach();
             attach.setName(multiFileName);
             attach.setSuffix(suffix);
-            attach.setPath(path);
+            attach.setPath(fileResult.getUrl());
             attach.setType(type);
             attach.setFlag(flag);
             attach.setDesc(desc);
+            attach.setFileKey(fileResult.getKey());
+            attach.setSaveType(fileResult.getType());
 
             List<AttachProxy> allPluginProxyClass = PluginsUtils.getAllPluginProxyClass(AttachProxy.class);
             for (AttachProxy attachProxy : allPluginProxyClass) {
@@ -156,12 +162,14 @@ public class AttachController extends BaseController {
             }
             String suffix = multiFileName.substring(multiFileName.lastIndexOf("."));
             String type = FileUtil.getFileType(FileTypeUtil.getType(multiFile.getInputStream()),suffix);
-            String path = FileUtil.uploadMultiFile(multiFile, uploadPath, "attach");
+            FileResult fileResult = fileHandles.upload(multiFile, "attach");
             Attach attach = new Attach();
             attach.setName(multiFileName);
             attach.setSuffix(suffix);
-            attach.setPath(path);
+            attach.setPath(fileResult.getUrl());
             attach.setType(type);
+            attach.setFileKey(fileResult.getKey());
+            attach.setSaveType(fileResult.getType());
 
             List<AttachProxy> allPluginProxyClass = PluginsUtils.getAllPluginProxyClass(AttachProxy.class);
             for (AttachProxy attachProxy : allPluginProxyClass) {
