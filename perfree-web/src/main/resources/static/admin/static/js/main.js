@@ -4,6 +4,8 @@ $(function () {
         element = layui.element;
         layer = layui.layer;
         laytpl = layui.laytpl;
+        let flow = layui.flow;
+        flow.lazyimg();
         initEvent();
         setIframeHeight();
 

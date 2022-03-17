@@ -1,5 +1,5 @@
 let table;
-layui.use('table', function () {
+layui.use(['table'], function () {
     table = layui.table;
     initPage();
 });
@@ -73,7 +73,7 @@ function queryTable() {
             {field: 'address',   minWidth: 220,title: '网站地址'},
             {field: 'desc',   minWidth: 260,title: '网站描述'},
             {field: 'logo',   minWidth: 100,title: '网站logo', templet: function (d) {
-                            return "<img src='"+d.logo+"'>";
+                            return "<img src='/static/public/images/loading.gif' data-src='"+d.logo+"' class='lazyload'>";
                     }
             },
             {

@@ -1,12 +1,14 @@
-let form, element, layer, upload;
+let form, element, layer, upload, flow;
 initPage();
 
 function initPage() {
-    layui.use(['layer', 'form', 'element','upload'], function () {
+    layui.use(['layer', 'form', 'element','upload', 'flow'], function () {
         form = layui.form;
         element = layui.element;
         layer = layui.layer;
         upload = layui.upload;
+        flow = layui.flow;
+        flow.lazyimg();
         formEvent();
         initEvent();
         initUpload();

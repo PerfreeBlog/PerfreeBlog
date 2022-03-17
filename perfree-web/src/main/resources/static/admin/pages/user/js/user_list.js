@@ -1,7 +1,8 @@
-let table, form;
-layui.use(['table', 'layer', 'form'], function () {
+let table, form, flow;
+layui.use(['table', 'layer', 'form','flow'], function () {
     table = layui.table;
     form = layui.form;
+    flow = layui.flow;
     initPage();
 });
 
@@ -92,7 +93,7 @@ function queryTable() {
                 field: 'avatar', minWidth: 80,title: '头像', templet: function (d) {
                     let html = '';
                     if (d.avatar !== null && d.avatar !== '') {
-                        html = "<img src='" + d.avatar + "' layer-src='" + d.avatar + "'>";
+                        html = "<img src='/static/public/images/loading.gif' data-src='" + d.avatar + "' class='lazyload'>";
                     }
                     return html;
                 }
@@ -136,7 +137,6 @@ function queryTable() {
             limitName: 'pageSize'
         }
     });
-
     form.on('switch(status)', function (data) {
         const id = this.value;
         const status = this.checked ? 0 : 1;
