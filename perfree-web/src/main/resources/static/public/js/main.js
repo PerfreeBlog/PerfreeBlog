@@ -57,10 +57,7 @@ function selectImg(path, name) {
         $("#" + selectImgId).children(".p-upload").hide();
         $("#" + selectImgId).children(".p-upload-show").show();
     } else if(type === 3) {
-        const viewFragment = editor.data.processor.toView('<img src="'+path+'" alt="'+name+'"><br>');
-        const modelFragment = editor.data.toModel(viewFragment);
-        editor.model.insertContent(modelFragment, editor.model.document.selection);
-        editor.focus();
+        editor.cmd.do('insertHTML', '<img src="'+path+'" style="max-width:100%;"><br>');
     } else {
         EditorCm.replaceSelection("![]("+path+")");
         if(EditorSelection === "") {
@@ -164,10 +161,7 @@ function selectVideo(path) {
         }
         editor.focus();
     } else if (type === 3) {
-        const viewFragment = editor.data.processor.toView('<video src="'+path+'" controls="controls" width="100%"></video>');
-        const modelFragment = editor.data.toModel(viewFragment);
-        editor.model.insertContent(modelFragment, editor.model.document.selection);
-        editor.focus();
+        editor.cmd.do('insertHTML', '<video src="'+path+'" controls="controls" style="max-width: 100%"></video>');
     }
 }
 
@@ -185,10 +179,7 @@ function selectAttach(name,path) {
         }
         editor.focus();
     } else if (type === 3) {
-        const viewFragment = editor.data.processor.toView('<a href="'+path+name+'">'+name+'</a>');
-        const modelFragment = editor.data.toModel(viewFragment);
-        editor.model.insertContent(modelFragment, editor.model.document.selection);
-        editor.focus();
+        editor.cmd.do('insertHTML', '<a href="'+path+name+'">'+name+'</a>');
     }
 }
 

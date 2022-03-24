@@ -76,3 +76,23 @@
 .ck-content .ck-widget.html-object-embed .html-object-embed__content{
     pointer-events: all;
 }
+
+#editor select{
+    display: block;
+}
+
+#editor .w-e-todo input[type="checkbox"]{
+    display: block;
+}
+#editor li{
+    list-style: inherit;
+}
+#editor .w-e-text-container a{
+    color: #4c9fff;
+}
+#editor .w-e-toolbar .w-e-menu i{
+    color: #666;
+}
+#editor .w-e-text pre code{
+    font-family: Consolas,Monaco,'Andale Mono','Ubuntu Mono',monospace;
+}

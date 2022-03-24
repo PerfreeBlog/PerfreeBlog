@@ -51,7 +51,7 @@ function submitArticle(data) {
     if ($("#editorMode").val() === "markdown") {
         data.content = markdownEditor.getMarkdown();
     } else {
-        data.content = richEditor.getData();
+        data.content = richEditor.txt.html();
     }
     data.contentModel = $("#editorMode").val();
     if (categorySelect.getValue().length > 0) {

@@ -62,7 +62,7 @@ function queryTable() {
                 categoryId: $("#category").val()
             }
         },
-        limit: 30,
+        limit: 20,
         cols: [[
             {type: 'checkbox'},
             {field: 'id', title: 'ID', width: 60},

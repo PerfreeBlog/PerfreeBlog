@@ -1,4 +1,5 @@
 var layer,markdownEditor,richEditor;
+const E = window.wangEditor;
 
 /**
  * 初始化编辑器
@@ -52,92 +53,54 @@ function switchEditor(){
  */
 function initRichEditor(content){
     $("#editorBox").html("<div id='editor'></div>");
-    ClassicEditor.create( document.querySelector( '#editor' ), {
-        licenseKey: '',
-        placeholder: '请输入文章内容',
-        toolbar: {
-            items: [ "sourceEditing", '|',
-                'heading', 'bold', 'italic','fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', "removeFormat",  '|',
-                'blockQuote', 'horizontalLine','link', 'code', 'codeBlock', '|',
-                'insertTable', 'numberedList', 'bulletedList', 'undo', 'redo', 'findAndReplace'],
-            shouldNotGroupWhenFull: true
-        },
-        simpleUpload: {
-            uploadUrl: '/admin/attach/ckEditorUpload',
-        },
-        image: {
-            toolbar: [
-                'imageTextAlternative',
-                'imageStyle:alignBlockLeft',
-                'imageStyle:alignBlockRight',
-                'imageStyle:block',
-                'imageStyle:inline',
-                'imageStyle:side',
-                'imageStyle:alignLeft',
-                'imageStyle:alignRight'
-            ]
-        },
-        table: {
-            contentToolbar: [
-                'tableColumn',
-                'tableRow',
-                'mergeTableCells',
-                'tableProperties',
-                'tableCellProperties'
-            ]
-        },
-        htmlSupport: {
-            allow: [{
-                name: /.*/,
-                attributes: true,
-                classes: true,
-                styles: true
-            }]
-        }
-    }).then( editor => {
-        richEditor = editor;
-        $(".ck-toolbar__items").append(`
-                <button class="ck ck-button ck-off" type="button" onclick="openSelectImPanel(3, null,richEditor,null, null, null, null)">
-                    <i class="fa fa-picture-o" aria-hidden="true"></i>
-                    <span class="ck ck-tooltip ck-tooltip_s">
-                        <span class="ck ck-tooltip__text">添加图片</span>
-                    </span>
-                    <span class="ck ck-button__label">添加图片</span>
-                </button>`);
+    richEditor = new E('#editor');
+    richEditor.config.height = 650;
+    richEditor.config.zIndex = 500;
+    richEditor.config.placeholder = '请输入文章内容';
+    richEditor.config.showFullScreen = true;
+    richEditor.highlight = hljs;
+    richEditor.config.menus = [
+        'head',
+        'bold',
+        'fontSize',
+        'fontName',
+        'italic',
+        'underline',
+        'strikeThrough',
+        'indent',
+        'lineHeight',
+        'foreColor',
+        'backColor',
+        'link',
+        'list',
+        'todo',
+        'justify',
+        'quote',
+        'emoticon',
+        'table',
+        'code',
+        'splitLine',
+        'undo',
+        'redo',
+        'image',
+    ];
+    const customVideoMenuKey = 'customVideoMenuKey';
+    richEditor.menus.extend('customVideoMenuKey', CustomVideoMenu);
+    richEditor.config.menus = richEditor.config.menus.concat(customVideoMenuKey);
 
-        $(".ck-toolbar__items").append(`
-                <button class="ck ck-button ck-off" type="button" onclick="openSelectVideoPanel(3, richEditor,null, null, null, null)">
-                    <i class="fa fa-video-camera" aria-hidden="true"></i>
-                    <span class="ck ck-tooltip ck-tooltip_s">
-                        <span class="ck ck-tooltip__text">添加视频</span>
-                    </span>
-                    <span class="ck ck-button__label">添加视频</span>
-                </button>`);
-
-        $(".ck-toolbar__items").append(`
-                <button class="ck ck-button ck-off" type="button" onclick="openSelectAttachPanel(3,richEditor,null, null, null, null)">
-                    <i class="fa fa-file-archive-o" aria-hidden="true"></i>
-                    <span class="ck ck-tooltip ck-tooltip_s">
-                        <span class="ck ck-tooltip__text">添加附件</span>
-                    </span>
-                    <span class="ck ck-button__label">添加附件</span>
-                </button>`);
-        $(".ck-toolbar__items").append(`
-                <button class="ck ck-button ck-off" type="button" onclick="editorFullscreen(2)">
-                    <i class="fa fa-arrows-alt" aria-hidden="true"></i>
-                    <span class="ck ck-tooltip ck-tooltip_s">
-                        <span class="ck ck-tooltip__text">全屏</span>
-                    </span>
-                    <span class="ck ck-button__label">全屏</span>
-                </button>`);
-        richEditor.setData(content);
-        richEditor.focus();
-    }).catch( error => {
-        console.error( 'Oops, something went wrong!' );
-        console.error( 'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:' );
-        console.warn( 'Build id: hn79tswrd14y-4un3e0lq37od' );
-        console.error( error );
-    });
+    const customAttachMenuKey = 'customAttachMenuKey';
+    richEditor.menus.extend('customAttachMenuKey', CustomAttachMenu);
+    richEditor.config.menus = richEditor.config.menus.concat(customAttachMenuKey);
+    richEditor.config.uploadImgFromMedia = function () {
+        openSelectImPanel(3, null,richEditor,null, null, null, null)
+    }
+    richEditor.config.pasteFilterStyle = false;
+    richEditor.create();
+    if (confirmEnding(content,"</pre>")){
+        content += "<p><br></p>";
+    }
+    richEditor.txt.html(content);
+    initPasteDragImg("editor",richEditor, 1);
 }
 
 
@@ -199,7 +162,7 @@ function initMarkdownEditor(content) {
             }
         },
         onload : function() {
-            initPasteDragImg(this);
+            initPasteDragImg(this.id,this, 0);
         }
     });
 }
@@ -249,10 +212,12 @@ function isFullscreen() {
 
 /**
  * markdown编辑器复制粘贴图片
+ * @param eleId
  * @param Editor
+ * @param type
  */
-function initPasteDragImg(Editor){
-    let doc = document.getElementById(Editor.id)
+function initPasteDragImg(eleId, Editor, type){
+    let doc = document.getElementById(eleId)
     doc.addEventListener('paste', function (event) {
         let items = (event.clipboardData || window.clipboardData).items;
         let file = null;
@@ -272,9 +237,9 @@ function initPasteDragImg(Editor){
             console.log("粘贴内容非图片");
             return;
         }
-        uploadImg(file,Editor);
+        uploadImg(file,Editor, type);
     });
-    let dashboard = document.getElementById(Editor.id)
+    let dashboard = document.getElementById(eleId)
     dashboard.addEventListener("dragover", function (e) {
         e.preventDefault()
         e.stopPropagation()
@@ -287,22 +252,23 @@ function initPasteDragImg(Editor){
         e.preventDefault()
         e.stopPropagation()
         let files = this.files || e.dataTransfer.files;
-        uploadImg(files[0],Editor);
+        uploadImg(files[0],Editor,type);
     })
 }
 
 /**
- * markdown编辑器上传图片
+ * 编辑器上传图片
  * @param file
  * @param Editor
+ * @param type 0:markdown,1:富文本
  */
-function uploadImg(file,Editor){
+function uploadImg(file,Editor, type){
     let i = layer.load();
     let formData = new FormData();
     let fileName=new Date().getTime()+"."+file.name.split(".").pop();
     formData.append('file', file, fileName);
     $.ajax({
-        url: Editor.settings.imageUploadURL,
+        url: '/admin/attach/upload',
         type: 'post',
         data: formData,
         processData: false,
@@ -311,11 +277,54 @@ function uploadImg(file,Editor){
         success: function (data) {
             layer.close(i);
             if(data.code === 200){
-                Editor.insertValue("![]("+data.data.url+")");
+                if (type === 0) {
+                    Editor.insertValue("![]("+data.data.url+")");
+                }
+                if (type === 1) {
+                    Editor.cmd.do('insertHTML', '<img src="'+data.data.url+'" style="max-width:100%;"><br>');
+                }
             }else{
                 console.log(data);
                 alert("上传失败");
             }
         }
     });
+}
+
+
+class CustomVideoMenu extends E.BtnMenu {
+    constructor(editor) {
+        const $elem = E.$(
+            `<div class="w-e-menu" data-title="插入视频">
+                <i class="fa fa-video-camera" aria-hidden="true"></i>
+            </div>`
+        )
+        super($elem, editor)
+    }
+    clickHandler() {
+        openSelectVideoPanel(3, richEditor,null, null, null, null)
+    }
+    tryChangeActive() {
+    }
+}
+class CustomAttachMenu extends E.BtnMenu {
+    constructor(editor) {
+        const $elem = E.$(
+            `<div class="w-e-menu" data-title="插入附件">
+                 <i class="fa fa-file-archive-o" aria-hidden="true"></i>
+            </div>`
+        )
+        super($elem, editor)
+    }
+    clickHandler() {
+        openSelectAttachPanel(3,richEditor,null, null, null, null)
+    }
+    tryChangeActive() {
+    }
+}
+
+function confirmEnding(str, target) {
+    let start = str.length-target.length;
+    let arr = str.substr(start,target.length);
+    return arr === target;
 }
