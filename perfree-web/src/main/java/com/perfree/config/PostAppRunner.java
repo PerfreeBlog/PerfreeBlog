@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
+import com.alibaba.druid.pool.DruidDataSource;
 import com.jfinal.template.Directive;
 import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
@@ -66,15 +67,18 @@ public class PostAppRunner implements ApplicationRunner {
         Props dbSetting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
         String installStatus = dbSetting.getStr("installStatus");
         if (StringUtils.isNotBlank(installStatus)) {
-            DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
-            dataSourceBuilder.url(dbSetting.getStr("url"));
-            if (dbSetting.getStr("type").equals("mysql")){
-                dataSourceBuilder.username(dbSetting.getStr("username"));
-                dataSourceBuilder.password(dbSetting.getStr("password"));
+            DruidDataSource druidDataSource = DynamicDataSource.getDataSource();
+            if (druidDataSource.isInited()){
+                druidDataSource.close();
+                druidDataSource = new DruidDataSource();
             }
-            dataSourceBuilder.driverClassName(dbSetting.getStr("driverClassName"));
-            DataSource dataSource = dataSourceBuilder.build();
-            DynamicDataSource.setDataSource(dataSource,dbSetting.getStr("type"));
+            druidDataSource.setUrl(dbSetting.getStr("url"));
+            if (dbSetting.getStr("type").equals("mysql")){
+                druidDataSource.setUsername(dbSetting.getStr("username"));
+                druidDataSource.setPassword(dbSetting.getStr("password"));
+            }
+            druidDataSource.setDriverClassName(dbSetting.getStr("driverClassName"));
+            DynamicDataSource.setDataSource(druidDataSource,dbSetting.getStr("type"));
         }
         dbSetting.autoLoad(true);
         // Load options and put into memory

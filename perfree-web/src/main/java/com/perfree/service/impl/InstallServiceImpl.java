@@ -7,6 +7,7 @@ import cn.hutool.db.Entity;
 import cn.hutool.db.handler.EntityListHandler;
 import cn.hutool.db.sql.SqlExecutor;
 import cn.hutool.setting.dialect.Props;
+import com.alibaba.druid.pool.DruidDataSource;
 import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.model.Database;
@@ -21,10 +22,8 @@ import com.perfree.service.PluginService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -55,7 +54,11 @@ public class InstallServiceImpl implements InstallService {
     private static final int INIT_INSTALL_DATABASE_TYPE_SKIP = 2;
 
     public int addDatabase(Database database) throws Exception{
-        DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
+        DruidDataSource druidDataSource = DynamicDataSource.getDataSource();
+        if (druidDataSource.isInited()){
+            druidDataSource.close();
+            druidDataSource = new DruidDataSource();
+        }
         File file = new File(Constants.DB_PROPERTIES_PATH);
         Props setting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
         File sqlFile = new File("resources/Perfree.sql");
@@ -69,10 +72,10 @@ public class InstallServiceImpl implements InstallService {
                 database.setDataBaseName("perfree");
             }
             String url = String.format(format, database.getAddress(), database.getPort(), database.getDataBaseName());
-            dataSourceBuilder.url(url);
-            dataSourceBuilder.username(database.getUserName());
-            dataSourceBuilder.password(database.getPassword());
-            dataSourceBuilder.driverClassName("com.mysql.jdbc.Driver");
+            druidDataSource.setUrl(url);
+            druidDataSource.setUsername(database.getUserName());
+            druidDataSource.setPassword(database.getPassword());
+            druidDataSource.setDriverClassName("com.mysql.jdbc.Driver");
             setting.setProperty("url",url);
             setting.setProperty("username",database.getUserName());
             setting.setProperty("password",database.getPassword());
@@ -82,8 +85,8 @@ public class InstallServiceImpl implements InstallService {
         // sqlite
         if (database.getType().equals("sqlite")){
             String url = "jdbc:sqlite:resources/db/perfree.db?date_string_format=yyyy-MM-dd HH:mm:ss";
-            dataSourceBuilder.url(url);
-            dataSourceBuilder.driverClassName("org.sqlite.JDBC");
+            druidDataSource.setUrl(url);
+            druidDataSource.setDriverClassName("org.sqlite.JDBC");
             initSqliteFile("resources/db/perfree.db");
             sqlFile = new File("resources/Perfree-sqlite.sql");
             if (!sqlFile.exists()){
@@ -94,9 +97,8 @@ public class InstallServiceImpl implements InstallService {
             setting.setProperty("type","sqlite");
         }
 
-        DataSource dataSource = dataSourceBuilder.build();
-        DynamicDataSource.setDataSource(dataSource, setting.getStr("type"));
-        Connection connection = dataSource.getConnection();
+        DynamicDataSource.setDataSource(druidDataSource, setting.getStr("type"));
+        Connection connection = druidDataSource.getConnection();
 
         try{
             // 检测数据库是否存在
@@ -117,6 +119,7 @@ public class InstallServiceImpl implements InstallService {
         for (int i = 0; i < split.length - 1; i++){
             connection.prepareStatement(split[i]).execute();
         }
+        connection.close();
         setting.setProperty("installStatus","dbSuccess");
         setting.setProperty("dataVersion", version);
         installInitOperate(setting, file);

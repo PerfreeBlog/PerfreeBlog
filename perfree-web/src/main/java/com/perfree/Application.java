@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 import java.io.File;
 import java.util.Arrays;
 
-@SpringBootApplication(exclude = { DruidDataSourceAutoConfigure.class})
+@SpringBootApplication
 @ComponentScan(nameGenerator = UniqueNameGenerator.class)
 @EnableAsync
 @EnableAspectJAutoProxy

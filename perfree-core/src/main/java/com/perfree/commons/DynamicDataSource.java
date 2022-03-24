@@ -1,5 +1,6 @@
 package com.perfree.commons;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 import javax.sql.DataSource;
@@ -11,16 +12,16 @@ import javax.sql.DataSource;
 public class DynamicDataSource extends AbstractRoutingDataSource {
 
     /** 当前数据源 */
-    public static DataSource dataSource = null;
+    public static DruidDataSource dataSource  = new DruidDataSource();
 
     /** 当前数据源类型sqlite/mysql */
-    public static String dataSourceType;
+    public static String dataSourceType = "mysql";
 
     /**
      * 设置数据源
      * @param dataSource 数据源
      */
-    public static void setDataSource(DataSource dataSource,String dataSourceType) {
+    public static void setDataSource(DruidDataSource dataSource,String dataSourceType) {
         DynamicDataSource.dataSource = dataSource;
         DynamicDataSource.dataSourceType = dataSourceType;
     }
@@ -29,7 +30,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      * 获取数据源
      * @return DataSource
      */
-    public static DataSource getDataSource() {
+    public static DruidDataSource getDataSource() {
         return dataSource;
     }
 

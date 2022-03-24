@@ -37,6 +37,13 @@ spring:
       max-active: 20
       min-idle: 5
       max-wait: 60000
+      web-stat-filter:
+        enabled: false
+      stat-view-servlet:
+        enabled: false
+        login-password: 123456
+        login-username: perfree
+      filters: stat
       filter:
         stat:
           db-type: mysql
