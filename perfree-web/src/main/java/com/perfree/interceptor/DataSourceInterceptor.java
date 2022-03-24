@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DataSourceInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if (DynamicDataSource.getDataSource() != null) {
+        if (DynamicDataSource.dataSourceIsInit) {
             return true;
         }
         response.sendRedirect("/install");

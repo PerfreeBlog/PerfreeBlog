@@ -17,6 +17,8 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     /** 当前数据源类型sqlite/mysql */
     public static String dataSourceType = "mysql";
 
+    public static boolean dataSourceIsInit = false;
+
     /**
      * 设置数据源
      * @param dataSource 数据源
@@ -24,6 +26,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
     public static void setDataSource(DruidDataSource dataSource,String dataSourceType) {
         DynamicDataSource.dataSource = dataSource;
         DynamicDataSource.dataSourceType = dataSourceType;
+        DynamicDataSource.dataSourceIsInit = true;
     }
 
     /**
