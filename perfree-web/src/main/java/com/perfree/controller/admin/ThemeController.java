@@ -68,7 +68,7 @@ public class ThemeController extends BaseController {
             FileReader fileReader = new FileReader(file);
             model.addAttribute("content", fileReader.readString());
             model.addAttribute("currEditFile", "index.html");
-            model.addAttribute("currEditFilePath", file.getAbsolutePath());
+            model.addAttribute("currEditFilePath", theme.getPath() + Constants.SEPARATOR + "index.html");
         }
         model.addAttribute("theme", theme);
         return view("static/admin/pages/theme/edit.html");
