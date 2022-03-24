@@ -38,14 +38,20 @@ public class SwaggerConfig {
      * @return List<Parameter>
      */
     private List<Parameter> getTokenPar() {
-        ParameterBuilder tokenPar = new ParameterBuilder();
         List<Parameter> pars = new ArrayList<>();
+        ParameterBuilder tokenPar = new ParameterBuilder();
         tokenPar.name("Authorization")
-                .description("认证信息")
-                .modelRef(new ModelRef("string")).parameterType("header").required(false).build();
-
-        tokenPar.name("access_key").description("接口签名").modelRef(new ModelRef("string")).parameterType("query").required(false).build();
+                .description("认证信息[登录后返回的token]")
+                .modelRef(new ModelRef("string")).parameterType("header").required(false);
         pars.add(tokenPar.build());
+        ParameterBuilder headerAccessKeyTokenPar = new ParameterBuilder();
+        headerAccessKeyTokenPar.name("AccessKey")
+                .description("接口签名[可选择header或query任意一方式传输]")
+                .modelRef(new ModelRef("string")).parameterType("header").required(false);
+        pars.add(headerAccessKeyTokenPar.build());
+        ParameterBuilder accessKeyTokenPar = new ParameterBuilder();
+        accessKeyTokenPar.name("access_key").description("接口签名[可选择header或query任意一方式传输]").modelRef(new ModelRef("string")).parameterType("query").required(false);
+        pars.add(accessKeyTokenPar.build());
         return pars;
     }
 

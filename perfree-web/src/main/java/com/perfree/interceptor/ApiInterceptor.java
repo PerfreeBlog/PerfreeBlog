@@ -24,6 +24,10 @@ public class ApiInterceptor implements HandlerInterceptor {
         if (webApiAccessKey.equals(accessKey)) {
             return true;
         }
+        String headerAccessKey = request.getHeader("AccessKey");
+        if (webApiAccessKey.equals(headerAccessKey)) {
+            return true;
+        }
         response.sendRedirect("/403");
         return false;
     }
