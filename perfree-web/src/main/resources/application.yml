@@ -61,6 +61,8 @@ spring:
   mvc:
     view:
       prefix: /
+    servlet:
+      load-on-startup: 1
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.perfree.model
