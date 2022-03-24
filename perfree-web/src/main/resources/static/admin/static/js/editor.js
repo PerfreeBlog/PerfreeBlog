@@ -131,14 +131,15 @@ function initMarkdownEditor(content) {
                 "h1", "h2", "h3", "h4", "h5", "h6", "|",
                 "list-ul", "list-ol", "hr", "|","customImg","customVideo", "customAttach","|",
                 "link", "reference-link",  "code", "preformatted-text", "code-block", "table", "datetime", "|",
-                "goto-line", "watch", "preview", "clear", "search","customFullscreen"
+                "goto-line", "watch", "preview", "clear", "search","customPageScreen","customFullscreen"
             ]
         },
         toolbarIconsClass: {
             customImg: "fa-picture-o",
             customVideo: "fa-video-camera",
             customAttach: "fa-file-archive-o",
-            customFullscreen: "fa-arrows-alt"
+            customFullscreen: "fa-arrows-alt",
+            customPageScreen: "fa-window-maximize"
         },
         toolbarHandlers: {
             customImg: function (cm, icon, cursor, selection) {
@@ -152,13 +153,18 @@ function initMarkdownEditor(content) {
             },
             customFullscreen: function () {
                 editorFullscreen(1);
+            },
+            customPageScreen: function () {
+                editorPageScreen();
             }
         },
         lang: {
             toolbar: {
                 customImg: "插入图片",
                 customVideo: "插入视频",
-                customAttach: "插入附件"
+                customAttach: "插入附件",
+                customFullscreen: "全屏",
+                customPageScreen: "网页全屏"
             }
         },
         onload : function() {
@@ -327,4 +333,15 @@ function confirmEnding(str, target) {
     let start = str.length-target.length;
     let arr = str.substr(start,target.length);
     return arr === target;
+}
+
+let isPageScreen = false;
+function editorPageScreen(){
+    if (isPageScreen) {
+        $("#editorBox").removeClass("pageScreen");
+    } else {
+        $("#editorBox").addClass("pageScreen");
+    }
+    markdownEditor.resize("100%", "100%");
+    isPageScreen = !isPageScreen;
 }
