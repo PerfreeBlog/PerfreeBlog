@@ -7,7 +7,7 @@
     </insert>
 
     <update id="update">
-        update p_attach set `desc` = #{desc},flag = #{flag},updateTime=#{updateTime} where id = #{id}
+        update p_attach set name=#{name}, `desc` = #{desc},flag = #{flag},updateTime=#{updateTime} where id = #{id}
     </update>
 
     <delete id="del">

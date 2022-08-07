@@ -23,11 +23,14 @@
             })
         },
         layerArea: function (clientWidth, width, height) {
+            if (height !== 'auto') {
+                height += 'px';
+            }
             var a = clientWidth - width;
             if(a > 10) {
-                return [width + 'px', height + 'px']
+                return [width + 'px', height]
             } else{
-                return ['100%', height + 'px']
+                return ['100%', height]
             }
         }
     }

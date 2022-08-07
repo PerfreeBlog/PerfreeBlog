@@ -10,44 +10,26 @@
     <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/admin/static/css/main.css?v=#(version)" rel="stylesheet"/>
+    <style>
+        #upload{width: calc(100% - 65px);}
+        .upload-process{margin-top: 10px;}
+        .upload-process-name{color: #666;}
+        html::-webkit-scrollbar{width: 6px;height: 6px;}
+        html::-webkit-scrollbar-corner{background: #f6f6f6;}
+        html::-webkit-scrollbar-thumb{background: #E6E6E6;border-radius: 2px;}
+        html::-webkit-scrollbar-track{background: white;border-radius: 2px;}
+        .layui-upload-drag .layui-icon{color: #1f9fff;}
+    </style>
 </head>
 <body>
 <div class="p-container p-add-panel">
-    <form class="layui-form" lay-filter="addForm">
-        <div class="layui-input-inline"  style="display: none;">
-            <select lay-verify="" type="hidden"></select>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="p-form-required">*</span>文件:
-            </label>
-            <div class="layui-input-block">
-                <input type="text" name="file" style="cursor: pointer;" id="file" required readonly
-                       lay-verify="required" placeholder="点击选择文件" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">描述:</label>
-            <div class="layui-input-block">
-                <textarea placeholder="请输入文件描述" name="desc" id="desc" class="layui-textarea"
-                          style="resize: none"></textarea>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">标识:</label>
-            <div class="layui-input-block">
-                <input type="text" name="flag" id="flag" placeholder="请输入文件标识" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="add-btn-box">
-            <button type="button" id="add" class="layui-btn layui-btn-normal p-submit-btn">
-                <i class="fa fa-check" aria-hidden="true"></i> 确定
-            </button>
-            <button type="button" class="layui-btn layui-btn-primary p-cancel-btn">
-                <i class="fa fa-close" aria-hidden="true"></i> 取消
-            </button>
-        </div>
-    </form>
+    <div class="layui-upload-drag" id="upload">
+        <i class="layui-icon"></i>
+        <p>点击上传，或将文件拖拽到此处</p>
+    </div>
+    <div id="upload-list">
+
+    </div>
 </div>
 
 <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>

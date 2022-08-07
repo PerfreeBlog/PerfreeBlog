@@ -10,37 +10,64 @@
     <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/admin/static/css/main.css?v=#(version)" rel="stylesheet"/>
+    <link href="/static/admin/pages/attach/css/attach-edit.css?v=#(version)" rel="stylesheet"/>
 </head>
 <body>
-<div class="p-container p-add-panel">
-    <form class="layui-form" lay-filter="addForm">
-        <div class="layui-input-inline"  style="display: none;">
-            <select lay-verify="" type="hidden"></select>
+<div class="p-container layui-row">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+            <a href="#(attach.url)" title="#(attach.name)" target="_blank">
+                <img src="#(attach.url)" width="100%">
+            </a>
         </div>
-        <input type="hidden" name="id" class="layui-input" value="#(attach.id)">
-        <div class="layui-form-item">
-            <label class="layui-form-label">描述:</label>
-            <div class="layui-input-block">
-                <textarea placeholder="请输入文件描述" name="desc" id="desc" class="layui-textarea" style="resize: none"
-                          >#(attach.desc)</textarea>
-            </div>
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6 editForm">
+            <form class="layui-form" lay-filter="addForm">
+                <div class="layui-input-inline"  style="display: none;">
+                    <select lay-verify="" type="hidden"></select>
+                </div>
+                <input type="hidden" name="id" class="layui-input" value="#(attach.id)">
+                <div class="layui-form-item">
+                    <label class="label">文件名:</label>
+                    <input type="text" value="#(attach.name)" name="name" id="name" placeholder="请输入文件名" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="label">文件类型 (#(attach.suffix)):</label>
+                    <input type="text" value="#(attach.type)" name="type" id="type" readonly class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="label">存储方式:</label>
+                    <input type="text" value="#(attach.saveType)" name="saveType" id="saveType" readonly class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="label">访问地址:</label>
+                    <input type="text" value="#(attach.url)" name="url" id="url" readonly class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="label">描述:</label>
+                    <textarea placeholder="请输入文件描述" name="desc" id="desc" class="layui-textarea" style="resize: none;min-height: 50px;">#(attach.desc)</textarea>
+                </div>
+                <div class="layui-form-item">
+                    <label class="label">文件标识:</label>
+                    <input type="text" value="#(attach.flag)" name="flag" id="flag" placeholder="请输入文件标识" autocomplete="off" class="layui-input">
+                </div>
+                <div class="add-btn-box">
+
+                    <button type="button" class="layui-btn layui-btn-normal p-submit-btn" onclick="downloadFile('#(attach.id)')">
+                        <i class="fa fa-download" aria-hidden="true"></i> 下载
+                    </button>
+                    <button type="submit" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-submit-btn">
+                        <i class="fa fa-check" aria-hidden="true"></i> 保存
+                    </button>
+                    <button type="button" class="layui-btn layui-btn-danger p-submit-btn" onclick="deleteData('#(attach.id)');">
+                        <i class="fa fa-trash" aria-hidden="true"></i> 删除
+                    </button>
+
+                    <button type="button" class="layui-btn layui-btn-primary p-cancel-btn">
+                        <i class="fa fa-close" aria-hidden="true"></i> 取消
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">标识:</label>
-            <div class="layui-input-block">
-                <input type="text" value="#(attach.flag)" name="flag" id="flag" placeholder="请输入文件标识"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="add-btn-box">
-            <button type="submit" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-submit-btn">
-                <i class="fa fa-check" aria-hidden="true"></i> 确定
-            </button>
-            <button type="button" class="layui-btn layui-btn-primary p-cancel-btn">
-                <i class="fa fa-close" aria-hidden="true"></i> 取消
-            </button>
-        </div>
-    </form>
+
 </div>
 
 <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>

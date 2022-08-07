@@ -6,46 +6,31 @@ layui.use(['layer', 'form', 'element','upload'], function () {
     upload = layui.upload;
     // 表单验证
     form.verify({});
-    let loadIndex;
     upload.render({
-        elem: '#file',
+        elem: '#upload',
         url: '/admin/attach/upload',
-        auto: false,
-        bindAction: '#add',
         accept: 'file',
+        multiple: true,
         choose: function (obj) {
-            loadIndex = layer.load();
-            let files = obj.pushFile();
             obj.preview(function (index, file, result) {
-                $("#file").val(file.name);
-                layer.close(loadIndex);
+                $("#upload-list").append(`
+                    <div class="upload-process">
+                        <div class="upload-process-name">${file.name}</div>
+                        <div class="layui-progress" lay-showpercent="true" lay-filter="uploadProcess${index}">
+                          <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
+                        </div>
+                    </div>
+                `);
+                element.init();
             });
-        },
-        error: function () {
-            layer.msg("上传失败", {icon: 2});
-        },
-        before: function (obj) {
-            this.data.desc = $("#desc").val();
-            this.data.flag = $("#flag").val();
-            loadIndex = layer.load("正在上传");
-        },
-        done: function (res) {
-            layer.close(loadIndex);
-            if (res.code === 200) {
-                parent.queryTable();
-                parent.layer.msg("上传成功", {icon: 1});
-                const index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
-            } else {
-                layer.msg(res.msg, {icon: 2});
-            }
 
+        },
+        progress: function(n, elem, e, index){
+            element.progress('uploadProcess'+index, n + '%');
+            element.init();
+        },
+        done: function(res){
+            layer.msg('上传成功');
         }
     });
-});
-
-// 取消
-$(".p-cancel-btn").click(function () {
-    const index = parent.layer.getFrameIndex(window.name);
-    parent.layer.close(index);
 });

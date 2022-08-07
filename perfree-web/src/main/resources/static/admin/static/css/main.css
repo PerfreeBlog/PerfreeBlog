@@ -120,20 +120,20 @@ html{
     overflow: auto;
     padding: 15px 30px;
 }
-.p-add-panel form::-webkit-scrollbar{
+.p-add-panel form::-webkit-scrollbar,.p-add-panel::-webkit-scrollbar{
     width: 6px;
     height: 6px;
 }
-.p-add-panel form::-webkit-scrollbar-corner {
+.p-add-panel form::-webkit-scrollbar-corner,.p-add-panel::-webkit-scrollbar-corner {
     background: #f6f6f6;
 }
 
-.p-add-panel form::-webkit-scrollbar-thumb {
+.p-add-panel form::-webkit-scrollbar-thumb,.p-add-panel::-webkit-scrollbar-thumb {
     background: #E6E6E6;
     border-radius: 2px;
 }
 
-.p-add-panel form::-webkit-scrollbar-track {
+.p-add-panel form::-webkit-scrollbar-track,.p-add-panel::-webkit-scrollbar-track {
     background: white;
     border-radius: 2px;
 }

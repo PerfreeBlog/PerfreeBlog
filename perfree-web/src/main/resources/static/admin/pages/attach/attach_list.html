@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="/static/admin/static/css/main.css?v=#(version)" rel="stylesheet"/>
+    <link href="/static/admin/pages/attach/css/attach-list.css?v=#(version)" rel="stylesheet"/>
 </head>
 <body class="layui-layout-body">
 <div class="p-container">
@@ -59,14 +60,38 @@
                     </div>
                 </form>
             </div>
-            <div class="p-table-box">
-                <table class="layui-hide" id="tableBox" lay-filter="tableBox"></table>
+            <div class="p-table-box layui-row layui-col-space10" id="tableBox">
             </div>
+            <div id="tabBoxPage"></div>
         </div>
     </div>
 
 </div>
 
+<script id="tableTpl" type="text/html">
+    #[[{{#  layui.each(d, function(index, item){ }}
+        {{#  if(item.type === 'img'){ }}
+            <div class="layui-col-xs6 layui-col-sm3 layui-col-md2">
+                <div class="p-attach-card" onclick="editData('{{item.id}}')">
+                    <input type="checkbox" name="attach[{{item.id}}]" class="p-attach-check" id="{{item.id}}">
+                    <img src="/static/public/images/loading.gif" lay-src="{{ item.url }}" alt="{{ item.name }}" class="p-attach-img">
+                    <div class="p-attach-info">{{item.name}}</div>
+                </div>
+            </div>
+        {{# } else{ }}
+            <div class="layui-col-xs6 layui-col-sm3 layui-col-md2">
+                <div class="p-attach-card" onclick="editData('{{item.id}}')">
+                    <input type="checkbox" name="attach[{{item.id}}]" class="p-attach-check" id="{{item.id}}">
+                    <div class="p-attach-suffix">{{item.suffix.slice(1)}}</div>
+                    <div class="p-attach-info">{{item.name}}</div>
+                </div>
+            </div>
+        {{# } }}
+    {{#  }); }}
+    {{#  if(d === null || d.length === 0){ }}
+    暂无数据
+    {{#  } }}]]#
+</script>
 <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/static/public/libs/layui-v2.5.6/layui/layui.js"></script>
 <script src="/static/public/js/common.js?v=#(version)"></script>
