@@ -1,6 +1,6 @@
-let table, form, layer, layPage, flow, upload, laytpl;
-let pageIndex = 1, pageSize = 8;
-layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl'], function () {
+let table, form, layer, layPage, flow, upload, laytpl,$,toast;
+let pageIndex = 1, pageSize = 10;
+layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl', 'jquery','toast'], function () {
     table = layui.table;
     form = layui.form;
     layer = layui.layer;
@@ -8,6 +8,8 @@ layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl'], fun
     flow = layui.flow;
     upload = layui.upload;
     laytpl = layui.laytpl;
+    $ = layui.jquery;
+    toast = layui.toast;
     queryTable();
     initUpload();
 
@@ -35,7 +37,7 @@ function queryTable() {
                 type: "other"
             }
         },
-        limit: 30,
+        limit: 10,
         cols: [[
             {field: 'name', title: '文件名'},
             {field: 'desc', title: '描述'},
@@ -43,7 +45,7 @@ function queryTable() {
             {
                 field: 'id', title: '操作', width: 80, fixed: 'right',
                 templet: "<div>" +
-                    "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='selectFile(\"{{d.url}}\",\"{{d.name}}\")'>选择</a> " +
+                    "<a class='pear-btn pear-btn-primary pear-btn-xs' onclick='selectFile(\"{{d.url}}\",\"{{d.name}}\")'>选择</a> " +
                     "</div>"
             },
         ]],
@@ -82,12 +84,12 @@ function initUpload() {
                 parent.layer.close(parent.layer.getFrameIndex(window.name));
                 parent.selectAttach(res.data.name,res.data.url);
             } else {
-                layer.msg(res.msg, {icon: 2});
+                toast.error({message: res.msg,position: 'topCenter'});
             }
         }
         , error: function () {
             layer.close(loadIndex);
-            layer.msg("上传失败", {icon: 2});
+            toast.error({message: "上传失败",position: 'topCenter'});
         }
     });
 }

@@ -1,6 +1,6 @@
-let table, form, layer, layPage, flow, upload, laytpl;
+let table, form, layer, layPage, flow, upload, laytpl,$,toast;
 let pageIndex = 1, pageSize = 8;
-layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl'], function () {
+layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl','jquery', 'toast'], function () {
     table = layui.table;
     form = layui.form;
     layer = layui.layer;
@@ -8,6 +8,8 @@ layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl'], fun
     flow = layui.flow;
     upload = layui.upload;
     laytpl = layui.laytpl;
+    $ = layui.jquery;
+    toast = layui.toast;
     queryTable();
     initUpload();
 
@@ -61,11 +63,11 @@ function queryTable() {
 
                 flow.lazyimg();
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("加载列表失败", {icon: 2});
+            toast.error({message: "加载列表失败",position: 'topCenter'});
         }
     })
 }
@@ -90,12 +92,12 @@ function initUpload() {
                 parent.layer.close(parent.layer.getFrameIndex(window.name));
                 parent.selectImg(res.data.url);
             } else {
-                layer.msg(res.msg, {icon: 2});
+                toast.error({message: res.msg,position: 'topCenter'});
             }
         }
         , error: function () {
             layer.close(loadIndex);
-            layer.msg("上传失败", {icon: 2});
+            toast.error({message: "上传失败",position: 'topCenter'});
         }
     });
 }

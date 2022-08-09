@@ -1,11 +1,10 @@
-let form, element, layer, upload;
-layui.use(['layer', 'form', 'element','upload'], function () {
-    form = layui.form;
+let element, layer, upload, $;
+layui.use(['layer', 'element','upload','jquery'], function () {
     element = layui.element;
     layer = layui.layer;
     upload = layui.upload;
+    $ = layui.jquery;
     // 表单验证
-    form.verify({});
     upload.render({
         elem: '#upload',
         url: '/admin/attach/upload',
@@ -14,7 +13,7 @@ layui.use(['layer', 'form', 'element','upload'], function () {
         choose: function (obj) {
             obj.preview(function (index, file, result) {
                 $("#upload-list").append(`
-                    <div class="upload-process">
+                    <div class="upload-process" id="uploadProcess${index}">
                         <div class="upload-process-name">${file.name}</div>
                         <div class="layui-progress" lay-showpercent="true" lay-filter="uploadProcess${index}">
                           <div class="layui-progress-bar layui-bg-blue" lay-percent="0%"></div>
@@ -29,8 +28,11 @@ layui.use(['layer', 'form', 'element','upload'], function () {
             element.progress('uploadProcess'+index, n + '%');
             element.init();
         },
-        done: function(res){
-            layer.msg('上传成功');
+        done: function(res, index, upload){
+            parent.toast.success({message: '上传成功',position: 'topCenter'});
+            setTimeout(function () {
+                $("#uploadProcess"+index+" .layui-progress-text").text("上传完成");
+            }, 1000)
         }
     });
 });

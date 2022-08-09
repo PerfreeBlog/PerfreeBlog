@@ -1,6 +1,8 @@
-let table;
-layui.use('table', function () {
+let table, $,toast;
+layui.use(['table', 'jquery','toast'], function () {
     table = layui.table;
+    $ = layui.jquery;
+    toast = layui.toast;
     initPage();
 });
 
@@ -9,10 +11,6 @@ layui.use('table', function () {
  */
 function initPage() {
     queryTable();
-
-    layer.config({
-        offset: '20%'
-    });
 
     // 查询
     $("#queryBtn").click(function () {
@@ -23,7 +21,7 @@ function initPage() {
     $("#batchDeleteBtn").click(function () {
         const checkStatus = table.checkStatus('tableBox'), data = checkStatus.data;
         if (data.length <= 0) {
-            layer.msg("至少选择一条数据", {icon: 2});
+            toast.warning({message: "至少选择一条数据",position: 'topCenter'});
         } else {
             let ids = "";
             data.forEach(res => {
@@ -79,9 +77,9 @@ function queryTable() {
                 templet: function (d) {
                     let html = "<div>";
                     if (d.status === 1) {
-                        html += "<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"0\")'>审核</a>";
+                        html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='changeStatus(\"" + d.id + "\",\"0\")'>审核</a>";
                     }
-                    html += "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
+                    html += "<a class='pear-btn pear-btn-xs pear-btn-danger' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
                         "</div>";
                     return html;
                 }
@@ -118,13 +116,13 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    layer.msg(data.msg, {icon: 1});
+                    toast.success({message: "删除成功",position: 'topCenter'});
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("删除失败", {icon: 2});
+                toast.error({message: "删除失败",position: 'topCenter'});
             }
         });
         layer.close(index);
@@ -145,13 +143,13 @@ function changeStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                layer.msg(data.msg, {icon: 1});
+                toast.success({message: "操作成功",position: 'topCenter'});
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("操作失败", {icon: 2});
+            toast.error({message: "操作失败",position: 'topCenter'});
         }
     });
 }

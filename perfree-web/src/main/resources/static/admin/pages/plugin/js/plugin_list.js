@@ -1,7 +1,9 @@
-let table,upload;
-layui.use('table', function () {
+let table,upload, $,toast;
+layui.use(['table','upload', 'jquery','toast'], function () {
     table = layui.table;
     upload = layui.upload;
+    $ = layui.jquery;
+    toast = layui.toast;
     initPage();
 });
 
@@ -10,10 +12,6 @@ layui.use('table', function () {
  */
 function initPage() {
     queryTable();
-
-    layer.config({
-        offset: '20%'
-    });
 
     // 查询
     $("#queryBtn").click(function () {
@@ -33,18 +31,18 @@ function initPage() {
             layer.close(loadIndex);
             if (res.code === 200) {
                 queryTable();
-                parent.layer.msg("插件安装成功", {icon: 1});
+                toast.success({message: "插件安装成功",position: 'topCenter'});
                 setTimeout(function (){
                     localStorage.setItem("plugin", "success");
                     parent.location.reload();
                 }, 500)
             } else {
-                layer.msg(res.msg, {icon: 2});
+                toast.error({message: res.msg,position: 'topCenter'});
             }
         },
         error: function () {
             layer.close(loadIndex);
-            layer.msg("插件安装失败", {icon: 2});
+            toast.error({message: "插件安装失败",position: 'topCenter'});
         }
     });
 }
@@ -94,11 +92,11 @@ function queryTable() {
                 templet: function (d) {
                     let html = "<div>";
                     if (d.status === 0) {
-                        html += "<a class='layui-btn layui-btn-xs' onclick='startPlugin(\""+d.id+"\")'>启用</a>";
+                        html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='startPlugin(\""+d.id+"\")'>启用</a>";
                     } else {
-                        html += "<a class='layui-btn layui-btn-xs' onclick='stopPlugin(\""+d.id+"\")'>禁用</a>";
+                        html += "<a class='pear-btn pear-btn-xs' onclick='stopPlugin(\""+d.id+"\")'>禁用</a>";
                     }
-                    html +=  "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\""+d.id+"\")'>卸载</a></div>";
+                    html +=  "<a class='pear-btn pear-btn-xs pear-btn-danger' style='margin-left: 5px' onclick='deleteData(\""+d.id+"\")'>卸载</a></div>";
                     return html;
                 }
             },
@@ -135,17 +133,17 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    layer.msg("插件卸载成功", {icon: 1});
+                    toast.success({message: "插件卸载成功",position: 'topCenter'});
                     setTimeout(function (){
                         localStorage.setItem("plugin", "success");
                         parent.location.reload();
                     }, 500)
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("卸载失败", {icon: 2});
+                toast.error({message: "卸载失败",position: 'topCenter'});
             }
         });
         layer.close(index);
@@ -161,17 +159,17 @@ function startPlugin(id){
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                layer.msg("插件启用成功", {icon: 1});
+                toast.success({message: "插件启用成功",position: 'topCenter'});
                 setTimeout(function (){
                     localStorage.setItem("plugin", "success");
                     parent.location.reload();
                 }, 500)
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("插件启用失败", {icon: 2});
+            toast.error({message: "插件启用失败",position: 'topCenter'});
         }
     });
 }
@@ -185,17 +183,17 @@ function stopPlugin(id){
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                layer.msg("插件禁用成功", {icon: 1});
+                toast.success({message: "插件禁用成功",position: 'topCenter'});
                 setTimeout(function (){
                     localStorage.setItem("plugin", "success");
                     parent.location.reload();
                 }, 500)
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("插件禁用失败", {icon: 2});
+            toast.error({message: "插件禁用失败",position: 'topCenter'});
         }
     });
 }

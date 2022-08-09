@@ -31,7 +31,8 @@
 }
 .p-attach-check{
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 10px;
+    top: 10px;
     cursor: pointer;
+    z-index: 9;
 }

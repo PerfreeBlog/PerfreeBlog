@@ -7,45 +7,49 @@
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/static/component/pear/css/pear.css" />
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="/static/admin/static/css/main.css?v=#(version)" rel="stylesheet"/>
 </head>
-<body class="layui-layout-body">
-<div class="p-container p-add-panel">
+<body>
     <form class="layui-form" lay-filter="addForm">
-        <div class="layui-input-inline"  style="display: none;">
-            <select lay-verify="" type="hidden"></select>
-        </div>
-        <input type="hidden" name="id" class="layui-input" value="#(tag.id)">
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="p-form-required">*</span>标签名:
-            </label>
-            <div class="layui-input-block">
-                <input type="text" name="name" required lay-verify="required" placeholder="请输入标签名" autocomplete="off"
-                       class="layui-input" value="#(tag.name)">
+        <div class="mainBox">
+            <div class="main-container">
+                <div class="layui-input-inline"  style="display: none;">
+                    <select lay-verify="" type="hidden"></select>
+                </div>
+                <input type="hidden" name="id" class="layui-input" value="#(tag.id)">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="p-form-required">*</span>标签名:
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required lay-verify="required" placeholder="请输入标签名" autocomplete="off"
+                               class="layui-input" value="#(tag.name)">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="add-btn-box">
-            <button type="button" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-submit-btn">
-                <i class="fa fa-check" aria-hidden="true"></i> 确定
-            </button>
-            <button type="button" class="layui-btn layui-btn-primary p-cancel-btn">
-                <i class="fa fa-close" aria-hidden="true"></i> 取消
-            </button>
+
+        <div class="bottom">
+            <div class="button-container">
+                <button type="button" lay-submit lay-filter="addForm" class="pear-btn pear-btn-primary pear-btn-sm">
+                    <i class="fa fa-check" aria-hidden="true"></i> 确定
+                </button>
+                <button type="button" class="pear-btn pear-btn-sm p-cancel-btn">
+                    <i class="fa fa-close" aria-hidden="true"></i> 取消
+                </button>
+            </div>
         </div>
     </form>
-</div>
 
-<script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/static/public/libs/layui-v2.5.6/layui/layui.js"></script>
+<script src="/static/admin/static/component/pear/pear.js"></script>
 <script>
-    let form, element, layer;
-    layui.use(['layer', 'form', 'element'], function () {
+    let form, layer,$;
+    layui.use(['layer', 'form','jquery'], function () {
         form = layui.form;
-        element = layui.element;
         layer = layui.layer;
+        $ = layui.jquery;
         // 表单验证
         form.verify({});
         // 表单提交
@@ -58,26 +62,27 @@
                 success: function (data) {
                     if (data.code === 200) {
                         parent.queryTable();
-                        parent.layer.msg("更新成功", {icon: 1});
+                        parent.toast.success({message: '更新成功',position: 'topCenter'});
                         const index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     } else {
-                        layer.msg(data.msg, {icon: 2});
+                        parent.toast.error({message: data.msg,position: 'topCenter'});
                     }
                 },
                 error: function (data) {
-                    layer.msg("更新失败", {icon: 2});
+                    parent.toast.error({message: "更新失败",position: 'topCenter'});
                 }
             });
             return false;
         });
+
+        // 取消
+        $(".p-cancel-btn").click(function () {
+            const index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        });
     });
 
-    // 取消
-    $(".p-cancel-btn").click(function () {
-        const index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
-    });
 </script>
 </body>
 </html>

@@ -1,9 +1,10 @@
-let layer,form,element;
+let layer,form,element,toast;
 var ws = null;
-layui.use(['layer','form','element'], function() {
+layui.use(['layer','form','element','toast'], function() {
     layer = layui.layer;
     form = layui.form;
     element = layui.element;
+    toast = layui.toast;
     form.on('submit(optionForm2)', function(data){
         save(data);
         return false;
@@ -43,13 +44,13 @@ function save(data) {
         data: JSON.stringify(data.field),
         success:function(d){
             if (d.code === 200){
-                parent.layer.msg("保存成功", {icon: 1})
+                toast.success({message: "保存成功",position: 'topCenter'});
             } else {
-                layer.msg(d.msg, {icon: 2});
+                toast.error({message: d.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("保存失败", {icon: 2});
+            toast.error({message: "保存失败",position: 'topCenter'});
         }
     });
 }
@@ -59,9 +60,9 @@ function sendTestMail(){
         layer.close(index);
         $.post("/admin/setting/testMail",{mail: mail},function(data,status){
             if (data.code === 200) {
-                layer.msg("发送成功", {icon: 1})
+                toast.success({message: "发送成功",position: 'topCenter'});
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         });
     });

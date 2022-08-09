@@ -1,39 +1,14 @@
-.layui-btn{
-    height: 30px;
-    line-height: 30px;
-    padding: 0 10px;
-    background-color: #4b9fff;
-    color: white;
-}
-.layui-btn-primary{
-    background-color: inherit;
-    color: #666;
-}
-.layui-btn-danger{
-    background-color: #FF5722;
-}
-.layui-form-label {
-    padding: 5px 15px;
-    width: auto;
-}
 html{
     overflow: auto;
 }
-.layui-layout-body::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+.layui-layout-body{
+    height: 100%;
+    overflow: auto;
 }
-
-.layui-layout-body::-webkit-scrollbar-thumb {
-    border-radius: 4px;
-    background-color: #adabab;
-}
-
-.layui-layout-body::-webkit-scrollbar-track-piece {
-    background: #e8e8e8;
-}
-.layui-layer-shade{
-    opacity: 0.1!important;
+.p-container{
+    padding: 6px;
+    background: whitesmoke;
+    min-height: calc(100% - 12px);
 }
 .p-add-panel{
     padding: 10px;
@@ -63,52 +38,11 @@ html{
     background: whitesmoke;
     min-height: calc(100% - 12px);
 }
-.layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
-    background-color: #eff2f5;
-}
-.layui-laypage .layui-laypage-curr .layui-laypage-em {
-    background-color: #4a9fff;
-}
-.layui-laypage a:hover {
-    color: #4a9fff;
-}
-.layui-laypage input:focus, .layui-laypage select:focus {
-    border-color: #4a9fff!important;
-}
 #queryBtn,#addBtn,#uploadBtn,.addBtn {
     background-color: #4a9fff;
 }
 #batchDeleteBtn{
     background-color: #FF5722;
-}
-.layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed>i{
-    color: #4a9fff;
-}
-.layui-form-onswitch {
-    border-color: #4a9fff;
-    background-color: #4a9fff;
-}
-.layui-tab-brief>.layui-tab-title .layui-this {
-    color: #4a9fff;
-}
-.layui-form-select dl dd.layui-this {
-    background-color: #4a9fff;
-}
-.layui-btn-primary:hover {
-    border-color: #4a9fff;
-}
-.layui-form-checked[lay-skin=primary] i {
-    border-color: #4a9fff!important;
-    background-color: #4a9fff;
-}
-.layui-form-checked, .layui-form-checked:hover{
-    border-color: #4a9fff!important;
-}
-.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after {
-    border-bottom: 2px solid #4a9fff;
-}
-.layui-form-radio>i:hover, .layui-form-radioed>i {
-    color: #4a9fff;
 }
 .p-add-panel form{
     position: absolute;
@@ -144,39 +78,8 @@ html{
     position: initial;
     margin-right: 5px;
 }
-.layui-input, .layui-select, .layui-textarea{
-    border-radius: 4px;
-    border-color: #eee;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    height: 35px;
-    line-height: 35px;
-    color:#4a4a4a;
-}
-.layui-input:focus, .layui-textarea:focus{
-    border-color: #2d8cf0!important;
-    box-shadow: 0 0 0 3px #ecf5ff !important;
-}
-.layui-table-cell img{
-    width: 25px;
-}
-.layui-form-select dl dd, .layui-form-select dl dt {
-    line-height: 35px;
-}
-.hideMargin{
-    margin: 0;
-}
 html{
     height: 100%;
-}
-.layui-layout-body{
-    height: 100%;
-    overflow: auto;
-}
-.layui-card-body {
-    padding: 15px 15px;
-}
-.layui-card {
-    margin: 6px;
 }
 .p-upload-show{
     display: none;
@@ -196,9 +99,9 @@ html{
 }
 .p-upload-box{
     display: inline-block;
-    width: 180px;
-    height: 160px;
-    line-height: 160px;
+    width: 155px;
+    height: 120px;
+    line-height: 120px;
     border: 1px dashed #e6e6e6;
     text-align: center;
 }
@@ -223,40 +126,4 @@ html{
 }
 .p-add-panel{
     background: white;
-}
-.tagBtn{
-    margin-right: 5px;
-    display: inline-block;
-    background: #5fb878;
-    color: white;
-    padding-left: 3px;
-    padding-right: 3px;
-    border-radius: 5px;
-    font-size: 13px;
-}
-.tagBtn:hover{
-    background: #5fb878;
-    color: white;
-}
-.articleHref{
-    color: #4b9fff;
-    font-weight: 600;
-}
-.p-form-required{
-    color: red;
-    position: absolute;
-    left: 8px;
-}
-.layui-form-label{
-    color: #4a4a4a;
-}
-.layui-textarea{
-    padding: 0 4px;
-    line-height: 20px;
-}
-.layui-form .editormd-dialog-container select{
-    color: #999;
-    padding: 3px 8px;
-    border: 1px solid #ddd;
-    display: inline-block;
 }

@@ -7,68 +7,71 @@
     <meta name="renderer" content="webkit"/>
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/static/component/pear/css/pear.css" />
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-    <link href="/static/admin/static/css/main.css?v=#(version)" rel="stylesheet"/>
 </head>
 <body>
-<div class="p-container p-add-panel">
     <form class="layui-form" lay-filter="addForm">
-        <div class="layui-input-inline"  style="display: none;">
-            <select lay-verify="" type="hidden"></select>
-        </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="p-form-required">*</span>网站名:
-            </label>
-            <div class="layui-input-block">
-                <input type="text" name="name" required lay-verify="required" placeholder="请输入网站名" autocomplete="off"
-                       class="layui-input">
-            </div>
-        </div>
+        <div class="mainBox">
+            <div class="main-container">
+                <div class="layui-input-inline"  style="display: none;">
+                    <select lay-verify="" type="hidden"></select>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="p-form-required">*</span>网站名:
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" name="name" required lay-verify="required" placeholder="请输入网站名" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                <span class="p-form-required">*</span>网站地址:
-            </label>
-            <div class="layui-input-block">
-                <input type="text" name="address" required lay-verify="required" placeholder="请输入网站地址" autocomplete="off"
-                       class="layui-input">
-            </div>
-        </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        <span class="p-form-required">*</span>网站地址:
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" name="address" required lay-verify="required" placeholder="请输入网站地址" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                网站描述:
-            </label>
-            <div class="layui-input-block">
-                 <textarea name="desc" placeholder="请输入网站描述"
-                           class="layui-textarea article-textarea" style="resize: none"></textarea>
-            </div>
-        </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        网站描述:
+                    </label>
+                    <div class="layui-input-block">
+                         <textarea name="desc" placeholder="请输入网站描述"
+                                   class="layui-textarea article-textarea" style="resize: none"></textarea>
+                    </div>
+                </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">
-                网站logo:
-            </label>
-            <div class="layui-input-block">
-                <input type="text" name="logo" placeholder="请输入网站logo地址" autocomplete="off"
-                       class="layui-input">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        网站logo:
+                    </label>
+                    <div class="layui-input-block">
+                        <input type="text" name="logo" placeholder="请输入网站logo地址" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="add-btn-box">
-            <button type="button" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-submit-btn">
-                <i class="fa fa-check" aria-hidden="true"></i> 确定
-            </button>
-            <button type="button" class="layui-btn layui-btn-primary p-cancel-btn">
-                <i class="fa fa-close" aria-hidden="true"></i> 取消
-            </button>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="button" lay-submit lay-filter="addForm" class="pear-btn pear-btn-primary pear-btn-sm">
+                    <i class="fa fa-check" aria-hidden="true"></i> 确定
+                </button>
+                <button type="button" class="pear-btn pear-btn-sm p-cancel-btn">
+                    <i class="fa fa-close" aria-hidden="true"></i> 取消
+                </button>
+            </div>
         </div>
     </form>
-</div>
 
-<script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/static/public/libs/layui-v2.5.6/layui/layui.js"></script>
+<script src="/static/admin/static/component/pear/pear.js"></script>
 <script src="/static/admin/pages/link/js/link_add.js?v=#(version)"></script>
 </body>
 </html>

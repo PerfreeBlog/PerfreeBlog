@@ -1,11 +1,10 @@
-let form, element, layer;
-layui.use(['layer', 'form', 'element'], function () {
+let form, element, layer, $;
+layui.use(['layer', 'form', 'element', 'jquery'], function () {
     form = layui.form;
     element = layui.element;
     layer = layui.layer;
-    // 表单验证
+    $ = layui.jquery;
     form.verify({});
-    // 表单提交
     form.on('submit(addForm)', function (data) {
         $.ajax({
             type: "POST",
@@ -15,7 +14,7 @@ layui.use(['layer', 'form', 'element'], function () {
             success: function (data) {
                 if (data.code === 200) {
                     parent.queryTable();
-                    parent.layer.msg("更新成功", {icon: 1});
+                    parent.toast.success({message: '更新成功',position: 'topCenter'});
                     const index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 } else {
@@ -23,18 +22,20 @@ layui.use(['layer', 'form', 'element'], function () {
                 }
             },
             error: function (data) {
-                layer.msg("更新失败", {icon: 2});
+                parent.toast.error({message: '更新失败',position: 'topCenter'});
             }
         });
         return false;
     });
+
+    // 取消
+    $(".p-cancel-btn").click(function () {
+        const index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    });
 });
 
-// 取消
-$(".p-cancel-btn").click(function () {
-    const index = parent.layer.getFrameIndex(window.name);
-    parent.layer.close(index);
-});
+
 
 /**
  * 下载文件
@@ -65,15 +66,15 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     parent.queryTable();
-                    parent.layer.msg("删除成功", {icon: 1});
+                    parent.toast.success({message: '删除成功',position: 'topCenter'});
                     const index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("删除失败", {icon: 2});
+                parent.toast.error({message: '删除失败',position: 'topCenter'});
             }
         });
         layer.close(index);

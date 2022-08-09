@@ -1,12 +1,13 @@
-let form, element, layer, upload;
+let form, element, layer, upload,$;
 initPage();
 
 function initPage() {
-    layui.use(['layer', 'form', 'element'], function () {
+    layui.use(['layer', 'form', 'element', 'jquery'], function () {
         form = layui.form;
         element = layui.element;
         layer = layui.layer;
         upload = layui.upload;
+        $ = layui.jquery;
         formEvent();
         initEvent();
         loadRoleList();
@@ -31,15 +32,15 @@ function formEvent() {
             success: function (data) {
                 if (data.code === 200) {
                     parent.queryTable();
-                    parent.layer.msg("更新成功", {icon: 1});
+                    parent.toast.success({message: '更新成功',position: 'topCenter'});
                     const index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("更新失败", {icon: 2});
+                parent.toast.error({message: "更新失败",position: 'topCenter'});
             }
         });
         return false;

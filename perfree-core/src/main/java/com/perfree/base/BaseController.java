@@ -53,8 +53,8 @@ public class BaseController {
      * 根据用户id获取后台菜单
      * @return List<Menu>
      */
-    public List<Menu> getMenuByUserIdAndType() {
-        return menuService.getMenuByUserIdAndType(getUser().getId(), 1);
+    public List<Menu> getMenuByUserIdAndType(int type) {
+        return menuService.getMenuByUserIdAndType(getUser().getId(), type);
     }
 
     /**

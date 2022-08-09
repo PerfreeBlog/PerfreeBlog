@@ -72,7 +72,7 @@ public class SystemController extends BaseController {
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
             Constants.ROLE_USER}, logical= Logical.OR)
     public String adminIndex(Model model) {
-        List<Menu> menus = getMenuByUserIdAndType();
+        List<Menu> menus = getMenuByUserIdAndType(1);
         model.addAttribute("menus", menus);
         model.addAttribute("user", getUser());
         return view("static/admin/pages/index.html");

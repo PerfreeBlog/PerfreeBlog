@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -129,5 +130,18 @@ public class MenuController extends BaseController {
         }
         logger.error("菜单修改失败: {}", menu.toString());
         return ResponseBean.fail("修改失败", null);
+    }
+
+
+
+    /**
+     * 更改状态
+     * @return String
+     */
+    @PostMapping("/menu/getAdminMenu")
+    @ResponseBody
+    public ResponseBean getAdminMenu() {
+        List<Menu> menus = getMenuByUserIdAndType(1);
+        return ResponseBean.success("success", menus);
     }
 }

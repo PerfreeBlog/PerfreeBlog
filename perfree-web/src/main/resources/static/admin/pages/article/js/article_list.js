@@ -1,8 +1,9 @@
-let table, form;
+var table, form,toast;
 let roleCode = $("#roleCode").val();
-layui.use(['table', 'layer', 'form'], function () {
+layui.use(['table', 'layer', 'form','toast'], function () {
     table = layui.table;
     form = layui.form;
+    toast = layui.toast;
     initPage();
 });
 
@@ -12,10 +13,6 @@ layui.use(['table', 'layer', 'form'], function () {
 function initPage() {
     queryTable();
 
-    layer.config({
-        offset: '20%'
-    });
-
     // 查询
     $("#queryBtn").click(function () {
         queryTable();
@@ -23,14 +20,14 @@ function initPage() {
 
     // 添加
     $("#addBtn").click(function () {
-        parent.toPage('/admin/article/addPage');
+        parent.layui.admin.toPage( '/admin/article/addPage', '', '');
     });
 
     // 批量删除
     $("#batchDeleteBtn").click(function () {
         const checkStatus = table.checkStatus('tableBox'), data = checkStatus.data;
         if (data.length <= 0) {
-            layer.msg("至少选择一条数据", {icon: 2});
+            toast.warning({message: "至少选择一条数据",position: 'topCenter'});
         } else {
             let ids = "";
             data.forEach(res => {
@@ -109,7 +106,7 @@ function queryTable() {
                 }
             },
             {
-                field: 'isComment', minWidth: 100, title: '允许评论', templet: function (d) {
+                field: 'isComment', minWidth: 80, title: '允许评论', templet: function (d) {
                     let html;
                     if (roleCode === "contribute") {
                         if (d.isComment === 1) {
@@ -132,30 +129,30 @@ function queryTable() {
                 field: 'createTime',
                 title: '创建时间',
                 sort: true,
-                minWidth: 160,
+                minWidth: 150,
                 templet: "<span>{{d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
-                minWidth: 160,
+                minWidth: 150,
                 sort: true,
                 templet: "<span>{{d.updateTime==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 150,
+                field: 'id', title: '操作', width: 180,
                 templet: function (d) {
                     let html = "<div>";
                     if (roleCode !== "contribute") {
                         if (d.status === 1 || d.status === 2) {
-                            html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"0\")'>发布</a>";
+                            html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='changeStatus(\"" + d.id + "\",\"0\")'>发布</a>";
                         }
                         if (d.status === 0) {
-                            html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"1\")'>草稿</a>";
+                            html += "<a class='pear-btn pear-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"1\")'>草稿</a>";
                         }
                     }
-                    html += "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"" + d.id + "\")'>编辑</a> " +
-                        "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
+                    html += "<a class='pear-btn pear-btn-xs pear-btn-primary' style='margin-left: 5px' onclick='editData(\"" + d.id + "\")'>编辑</a> " +
+                        "<a class='pear-btn pear-btn-xs pear-btn-danger' style='margin-left: 5px' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
                         "</div>";
                     return html;
                 }
@@ -195,7 +192,7 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    parent.openTab('', '编辑文章', '/admin/article/updatePage/' + id, "-1");
+    parent.layui.admin.jump('updateArticle', "编辑文章", '/admin/article/updatePage/' + id);
 }
 
 /**
@@ -212,13 +209,13 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    layer.msg(data.msg, {icon: 1});
+                    toast.success({message: "删除成功",position: 'topCenter'});
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("删除失败", {icon: 2});
+                toast.error({message: "删除失败",position: 'topCenter'});
             }
         });
         layer.close(index);
@@ -237,13 +234,13 @@ function changeTopStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                layer.msg(data.msg, {icon: 1});
+                toast.success({message: "修改成功",position: 'topCenter'});
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("修改状态失败", {icon: 2});
+            toast.error({message: "修改状态失败",position: 'topCenter'});
         }
     });
 }
@@ -260,13 +257,13 @@ function changeCommentStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                layer.msg(data.msg, {icon: 1});
+                toast.success({message: "修改成功",position: 'topCenter'});
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("修改状态失败", {icon: 2});
+            toast.error({message: "修改失败",position: 'topCenter'});
         }
     });
 }
@@ -285,13 +282,13 @@ function changeStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                layer.msg(data.msg, {icon: 1});
+                toast.success({message: "修改成功",position: 'topCenter'});
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("修改状态失败", {icon: 2});
+            toast.error({message: "修改状态失败",position: 'topCenter'});
         }
     });
 }

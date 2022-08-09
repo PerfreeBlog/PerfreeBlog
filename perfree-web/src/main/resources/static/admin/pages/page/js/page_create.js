@@ -1,16 +1,9 @@
-let form, xmSelect,categorySelect,tagSelect;
-layui.config({
-    base: '/static/public/libs/layuiComponents/'
-}).extend({
-    xmSelect: 'xm-select/xm-select'
-})
-layui.use(['layer', 'form', 'xmSelect'], function () {
+let form, xmSelect,categorySelect,tagSelect,toast, layer;
+layui.use(['layer', 'form', 'xmSelect','toast'], function () {
     form = layui.form;
+    layer = layui.layer;
     xmSelect = layui.xmSelect;
-    layer.config({
-        offset: '20%'
-    });
-
+    toast = layui.toast;
     initEditor(localStorage.getItem("editor"), "");
     initEvent();
     initTag();
@@ -71,16 +64,15 @@ function submitArticle(data) {
         data: JSON.stringify(data),
         success: function (d) {
             if (d.code === 200) {
-                location.reload();
-                parent.layer.msg("页面添加成功", {icon: 1})
-                parent.toPage('/admin/page');
-                parent.element.tabDelete('tabNav', '-3');
+                parent.toast.success({message: "页面添加成功",position: 'topCenter'});
+                parent.layui.admin.toPage('/admin/page', '', '', true);
+                parent.layui.admin.closeTab('addPage');
             } else {
-                layer.msg(d.msg, {icon: 2});
+                toast.error({message: d.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("页面添加失败", {icon: 2});
+            toast.error({message: "页面添加失败",position: 'topCenter'});
         }
     });
 }
@@ -101,7 +93,7 @@ function initTag() {
                 el: '#tag',
                 tips: '请选择标签',
                 theme: {
-                    color: '#1E9FFF',
+                    color: localStorage.getItem("theme-color-color"),
                 },
                 searchTips: '搜索标签或输入标签名新增',
                 filterable: true,
@@ -125,18 +117,18 @@ function initTag() {
                                     const currentProfileIndex = (data.arr || []).findIndex((profile) => profile.value === d.data.name);
                                     data.arr[currentProfileIndex].id = d.data.id;
                                 } else {
-                                    layer.msg("新建标签失败", {icon: 2});
+                                    toast.error({message: "新建标签失败",position: 'topCenter'});
                                 }
                             },
                             error: function (data) {
-                                layer.msg("新建标签失败", {icon: 2});
+                                toast.error({message: "新建标签失败",position: 'topCenter'});
                             }
                         });
                     }
                 }
             });
         } else {
-            layer.msg(res.msg, {icon: 2});
+            toast.error({message: res.msg,position: 'topCenter'});
         }
     });
 }
@@ -150,7 +142,7 @@ function initCategory() {
             categorySelect = xmSelect.render({
                 el: '#category',
                 theme: {
-                    color: '#1E9FFF',
+                    color: localStorage.getItem("theme-color-color"),
                 },
                 model: {label: {type: 'text'}},
                 radio: true,
@@ -169,7 +161,7 @@ function initCategory() {
                 }
             });
         } else {
-            layer.msg(res.msg, {icon: 2});
+            toast.error({message: res.msg,position: 'topCenter'});
         }
     });
 }

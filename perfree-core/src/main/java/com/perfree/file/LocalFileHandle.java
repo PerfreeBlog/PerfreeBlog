@@ -67,6 +67,7 @@ public class LocalFileHandle implements FileHandle{
         File file = new File(webUploadPath + attach.getPath());
         if (file.exists()) {
             FileUtil.downloadFile(new FileInputStream(file), response);
+            return;
         }
         throw new Exception("文件下载: 文件不存在!");
     }

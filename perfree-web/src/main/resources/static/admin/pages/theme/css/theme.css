@@ -42,18 +42,16 @@
     background: rgb(250 250 250);
     color: #000000a6;
     border-right: 1px solid #e8e8e8;
-    width: calc(25% - 6px);
+    width: calc(25% - 11px);
     font-size: 13px;
 }
 .themeBtn:hover{
      background: rgb(250 250 250);
-     color: #1e9fff;
  }
 .rBtn{
     border-right: none;
 }
 .p-theme-addPanel a{
-    color: #1e9fff;
     cursor: pointer;
 }
 .themeTitle{
@@ -65,7 +63,4 @@
     background: white;
     font-weight: 700;
     color: #000000a8;
-}
-.activeBtn .fa{
-    color: #1e9fff;
 }

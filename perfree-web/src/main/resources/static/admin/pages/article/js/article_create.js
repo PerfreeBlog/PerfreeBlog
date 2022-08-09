@@ -1,16 +1,9 @@
-let form, xmSelect,categorySelect,tagSelect,loadIndex;
-layui.config({
-    base: '/static/public/libs/layuiComponents/'
-}).extend({
-    xmSelect: 'xm-select/xm-select'
-})
-layui.use(['layer', 'form', 'xmSelect'], function () {
+let form, xmSelect,categorySelect,tagSelect,loadIndex,toast, layer;
+layui.use(['layer', 'form', 'xmSelect','toast'], function () {
     layer = layui.layer;
     form = layui.form;
     xmSelect = layui.xmSelect;
-    layer.config({
-        offset: '20%'
-    });
+    toast = layui.toast;
     initEditor(localStorage.getItem("editor"), "");
     initEvent();
     initTag();
@@ -72,15 +65,15 @@ function submitArticle(data) {
         data: JSON.stringify(data),
         success: function (d) {
             if (d.code === 200) {
+                parent.toast.success({message: "文章发表成功",position: 'topCenter'});
+                parent.layui.admin.toPage('/admin/article', '', '', true);
                 location.reload();
-                parent.layer.msg("文章发表成功", {icon: 1})
-                parent.toPage('/admin/article');
             } else {
-                layer.msg(d.msg, {icon: 2});
+                toast.error({message: d.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("文章发表失败", {icon: 2});
+            toast.error({message: "文章发表失败",position: 'topCenter'});
         }
     });
 }
@@ -100,7 +93,7 @@ function initTag() {
                 el: '#tag',
                 tips: '请选择标签',
                 theme: {
-                    color: '#1E9FFF',
+                    color: localStorage.getItem("theme-color-color"),
                 },
                 searchTips: '搜索标签或输入标签名新增',
                 filterable: true,
@@ -124,18 +117,18 @@ function initTag() {
                                     const currentProfileIndex = (data.arr || []).findIndex((profile) => profile.value === d.data.name);
                                     data.arr[currentProfileIndex].id = d.data.id;
                                 } else {
-                                    layer.msg("新建标签失败", {icon: 2});
+                                    toast.error({message: "新建标签失败",position: 'topCenter'});
                                 }
                             },
                             error: function (data) {
-                                layer.msg("新建标签失败", {icon: 2});
+                                toast.error({message: "新建标签失败",position: 'topCenter'});
                             }
                         });
                     }
                 }
             });
         } else {
-            layer.msg(res.msg, {icon: 2});
+            toast.error({message: res.msg,position: 'topCenter'});
         }
     });
 }
@@ -149,7 +142,7 @@ function initCategory() {
             categorySelect = xmSelect.render({
                 el: '#category',
                 theme: {
-                    color: '#1E9FFF',
+                    color: localStorage.getItem("theme-color-color"),
                 },
                 model: {label: {type: 'text'}},
                 radio: true,
@@ -168,7 +161,7 @@ function initCategory() {
                 }
             });
         } else {
-            layer.msg(res.msg, {icon: 2});
+            toast.error({message: res.msg,position: 'topCenter'});
         }
     });
 }

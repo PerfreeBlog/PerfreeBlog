@@ -1,15 +1,12 @@
-let table, treeTable, layPage, form;
+var table, treeTable, layPage, form,$,toast;
 let pageIndex = 1, pageSize = 20;
-layui.config({
-    base: '/static/public/libs/layuiComponents/'
-}).extend({
-    treeTable: 'treetable-lay/treeTable'
-})
-layui.use(['table', 'treeTable', 'laypage', 'form'], function () {
+layui.use(['table', 'treeTable', 'laypage', 'form', 'jquery','toast'], function () {
     table = layui.table;
     treeTable = layui.treeTable;
     layPage = layui.laypage;
     form = layui.form;
+    $ = layui.jquery;
+    toast = layui.toast;
     initPage();
 });
 
@@ -19,10 +16,6 @@ layui.use(['table', 'treeTable', 'laypage', 'form'], function () {
  */
 function initPage() {
     queryTable();
-
-    layer.config({
-        offset: '20%'
-    });
 
     // 查询
     $("#queryBtn").click(function () {
@@ -88,10 +81,10 @@ function queryTable() {
         cols: [[
             {field: 'id', title: 'ID', width: 80},
             {field: 'name', minWidth: 160,title: '分类名'},
-            {field: 'desc', minWidth: 260,title: '描述'},
+            {field: 'desc', minWidth: 250,title: '描述'},
             {field: 'count', minWidth: 80,align: 'center', title: '文章数量'},
-            {field: 'metaKeywords', minWidth: 160,title: 'SEO关键字'},
-            {field: 'metaDescription', minWidth: 160,title: 'SEO描述内容'},
+            {field: 'metaKeywords', minWidth: 150,title: 'SEO关键字'},
+            {field: 'metaDescription', minWidth: 150,title: 'SEO描述内容'},
             {
                 field: 'status', minWidth: 100,title: '状态', templet: function (d) {
                     let html;
@@ -106,22 +99,22 @@ function queryTable() {
             {
                 field: 'createTime',
                 title: '创建时间',
-                minWidth: 160,
+                minWidth: 150,
                 templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
-                minWidth: 160,
+                minWidth: 150,
                 templet: "<span>{{d.updateTime ==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
-                field: 'id', title: '操作', width: 160,
+                field: 'id', title: '操作', width: 220,
                 templet: function (d) {
                     let html = "<div>"
-                    html += "<a class='layui-btn layui-btn-primary layui-btn-xs' onclick='add(\"" + d.id + "\")'>添加</a> " +
-                        "<a class='layui-btn layui-btn-normal layui-btn-xs' onclick='editData(\"" + d.id + "\")'>编辑</a> " +
-                        "<a class='layui-btn layui-btn-danger layui-btn-xs' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
+                    html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='add(\"" + d.id + "\")'>添加子分类</a> " +
+                        "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='editData(\"" + d.id + "\")'>编辑</a> " +
+                        "<a class='pear-btn pear-btn-xs pear-btn-danger' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
                         "</div>";
                     return html;
                 }
@@ -170,13 +163,13 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    layer.msg(data.msg, {icon: 1});
+                    toast.success({message: "删除成功",position: 'topCenter'});
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("删除失败", {icon: 2});
+                toast.error({message: "删除失败",position: 'topCenter'});
             }
         });
         layer.close(index);
@@ -215,13 +208,13 @@ function changeStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                layer.msg(data.msg, {icon: 1});
+                toast.success({message: "修改成功",position: 'topCenter'});
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            layer.msg("修改状态失败", {icon: 2});
+            toast.error({message: "修改状态失败",position: 'topCenter'});
         }
     });
 }

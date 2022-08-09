@@ -6,12 +6,13 @@ var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
     matchTags: {bothTags: true},
     extraKeys: {"Alt-/": "autocomplete"},	// 高亮当前行
 });
-var layer, form, upload;
+var layer, form, upload,toast;
 
-layui.use(['util','form', 'layer','upload'], function(){
+layui.use(['util','form', 'layer','upload','toast'], function(){
     layer = layui.layer;
     util = layui.util;
     form = layui.form;
+    toast = layui.toast;
     loadFileContent($($("#fileList li")[0]).attr("path"), $($("#fileList li")[0]).text());
     $($("#fileList li")[0]).addClass("active");
 });
@@ -33,12 +34,12 @@ function loadFileContent(path, name) {
                 $("#path").val(path);
                 editor.setOption("mode","text/html");
             } else {
-                layer.msg("加载文件失败", {icon: 2});
+                toast.error({message: "加载文件失败",position: 'topCenter'});
             }
         },
         error: function () {
             layer.close(loadIndex);
-            layer.msg("加载文件失败", {icon: 2});
+            toast.error({message: "加载文件失败",position: 'topCenter'});
         }
     });
 }
@@ -63,7 +64,7 @@ window.addEventListener("keydown", function(e) {
 
 function save() {
     if ($("#path").val() === "" || !$("#path").val()){
-        layer.msg("请先选择要编辑的模板", {icon: 2});
+        toast.error({message: "请先选择要编辑的模板",position: 'topCenter'});
         return;
     }
     let loadIndex = layer.load();
@@ -74,14 +75,14 @@ function save() {
         success: function (d) {
             layer.close(loadIndex);
             if (d.code === 200) {
-                layer.msg("文件保存成功", {icon: 1});
+                toast.success({message: "文件保存成功",position: 'topCenter'});
             } else {
-                layer.msg("文件保存失败", {icon: 2});
+                toast.error({message: "文件保存失败",position: 'topCenter'});
             }
         },
         error: function () {
             layer.close(loadIndex);
-            layer.msg("文件保存失败", {icon: 2});
+            toast.error({message: "文件保存失败",position: 'topCenter'});
         }
     });
 }

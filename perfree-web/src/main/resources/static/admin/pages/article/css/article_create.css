@@ -8,6 +8,12 @@
     text-decoration: underline;
     cursor: pointer;
 }
+.p-article-header{
+    height: 62px;
+}
+.p-article-btn-box{
+    padding-top: 10px;
+}
 .layui-form-item {
     margin-bottom: 8px;
 }

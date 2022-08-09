@@ -9,7 +9,6 @@
     position: absolute;
     right: 16px;
     top: 6px;
-    background: #3e404a;
 }
 div#rMenu {
     position: absolute;
@@ -57,6 +56,5 @@ div#rMenu ul li:hover{
     font-weight: 700;
 }
 .tipBox a{
-    color: #1e9fff;
     cursor: pointer;
 }

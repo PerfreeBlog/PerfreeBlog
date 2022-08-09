@@ -2,14 +2,10 @@
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', serif;
     height: 750px;
 }
-.layui-tree-iconClick .layui-icon-file {
-    color: #1E9FFF;
-}
 .saveFileBtn{
     position: absolute;
     right: 16px;
     top: 6px;
-    background: #3e404a;
 }
 div#rMenu {
     position: absolute;
@@ -57,7 +53,6 @@ div#rMenu ul li:hover{
     font-weight: 700;
 }
 .tipBox a{
-    color: #1e9fff;
     cursor: pointer;
 }
 #fileList ul li{
@@ -68,5 +63,4 @@ div#rMenu ul li:hover{
     background: whitesmoke;
 }
 .active{
-    color: #2d8cf0;
 }

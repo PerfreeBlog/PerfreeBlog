@@ -5,16 +5,17 @@
     margin-top: 5px;
     text-align: center;
     overflow: hidden;
-    height: 165px;
+    height: 120px;
     cursor: pointer;
     border: 1px solid white;
+    border-radius: 5px;
 }
 .img-box:hover{
-    border: 1px solid #17233d;
+    border: 1px solid #7292db;
 }
 .img-box img{
     width: 100%;
-    height: 145px;
+    height: 100px;
 }
 .img-box span{
     display: inline-block;

@@ -1,14 +1,15 @@
-let table, form, layer, layPage, flow, upload, laytpl, element;
+var table, form, layer, layPage, flow, laytpl, element,$, toast;
 let pageIndex = 1, pageSize = 18;
-layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl', 'element'], function () {
+layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'laytpl', 'element','jquery','toast'], function () {
     table = layui.table;
     form = layui.form;
     layer = layui.layer;
     layPage = layui.laypage;
     flow = layui.flow;
-    upload = layui.upload;
     laytpl = layui.laytpl;
     element = layui.element;
+    $ = layui.jquery;
+    toast= layui.toast;
     initPage();
 });
 
@@ -17,10 +18,6 @@ layui.use(['table', 'form', 'layer', 'laypage', 'flow', 'upload', 'laytpl', 'ele
  */
 function initPage() {
     queryTable();
-
-    layer.config({
-        offset: '20%'
-    });
 
     // 查询
     $("#queryBtn").click(function () {
@@ -52,7 +49,7 @@ function initPage() {
             ids += $(this).attr('id') + ",";
         });
         if (ids.length <= 0) {
-            layer.msg("至少选择一条数据", {icon: 2});
+            toast.warning({message: "至少选择一条数据",position: 'topCenter'});
             return;
         }
         ids = ids.substring(0, ids.length - 1);
@@ -95,15 +92,15 @@ function queryTable() {
                         if (!first) {queryTable();}
                     }
                 });
-                flow.lazyimg({elem: '.p-attach-card img', scrollElem: '.layui-layout-body'});
+                flow.lazyimg({elem: '.p-attach-card img', scrollElem: '.pear-container'});
             } else {
-                layer.msg(data.msg, {icon: 2});
+                toast.error({message: data.msg,position: 'topCenter'});
             }
             layer.close(loadIndex);
         },
         error: function (data) {
             layer.close(loadIndex);
-            layer.msg("加载列表失败", {icon: 2});
+            toast.error({message: "加载列表失败",position: 'topCenter'});
         }
     })
 }
@@ -118,7 +115,7 @@ function editData(id) {
         type: 2,
         scrollbar: true,
         offset:$(window).height()*0.05,
-        area: common.layerArea($("html")[0].clientWidth, 800, 550),
+        area: common.layerArea($("html")[0].clientWidth, 800, 500),
         shadeClose: true,
         anim: 1,
         content: '/admin/attach/editPage/' + id
@@ -139,13 +136,13 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    layer.msg(data.msg, {icon: 1});
+                    toast.success({message: "删除成功",position: 'topCenter'});
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("删除失败", {icon: 2});
+                toast.error({message: "删除失败",position: 'topCenter'});
             }
         });
         layer.close(index);
