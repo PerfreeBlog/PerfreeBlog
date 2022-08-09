@@ -77,3 +77,6 @@
     top: 0;
     left: 0;
 }
+.editormd-toolbar{
+    position: absolute!important;
+}
