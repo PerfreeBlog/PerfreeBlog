@@ -34,12 +34,12 @@ function loadFileContent(path, name) {
                 $("#path").val(path);
                 editor.setOption("mode","text/html");
             } else {
-                toast.error({message: "加载文件失败",position: 'topCenter'});
+                parent.toast.error({message: "加载文件失败",position: 'topCenter'});
             }
         },
         error: function () {
             layer.close(loadIndex);
-            toast.error({message: "加载文件失败",position: 'topCenter'});
+            parent.toast.error({message: "加载文件失败",position: 'topCenter'});
         }
     });
 }
@@ -75,14 +75,14 @@ function save() {
         success: function (d) {
             layer.close(loadIndex);
             if (d.code === 200) {
-                toast.success({message: "文件保存成功",position: 'topCenter'});
+                parent.toast.success({message: "文件保存成功",position: 'topCenter'});
             } else {
-                toast.error({message: "文件保存失败",position: 'topCenter'});
+                parent.toast.error({message: "文件保存失败",position: 'topCenter'});
             }
         },
         error: function () {
             layer.close(loadIndex);
-            toast.error({message: "文件保存失败",position: 'topCenter'});
+            parent.toast.error({message: "文件保存失败",position: 'topCenter'});
         }
     });
 }

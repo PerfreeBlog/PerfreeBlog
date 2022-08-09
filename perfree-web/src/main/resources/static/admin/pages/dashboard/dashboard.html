@@ -121,7 +121,7 @@
                 }
                 $("#articlePanel").html(html);
             } else {
-                toast.error({message: "加载最新文章失败",position: 'topCenter'});
+                parent.toast.error({message: "加载最新文章失败",position: 'topCenter'});
             }
         });
 
@@ -144,7 +144,7 @@
                 }
                 $("#commentPanel").html(html);
             } else {
-                toast.error({message: "加载最新评论失败",position: 'topCenter'});
+                parent.toast.error({message: "加载最新评论失败",position: 'topCenter'});
             }
 
         });

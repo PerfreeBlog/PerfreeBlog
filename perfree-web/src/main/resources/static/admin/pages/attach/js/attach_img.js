@@ -63,11 +63,11 @@ function queryTable() {
 
                 flow.lazyimg();
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.parent.toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "加载列表失败",position: 'topCenter'});
+            parent.parent.toast.error({message: "加载列表失败",position: 'topCenter'});
         }
     })
 }
@@ -92,12 +92,12 @@ function initUpload() {
                 parent.layer.close(parent.layer.getFrameIndex(window.name));
                 parent.selectImg(res.data.url);
             } else {
-                toast.error({message: res.msg,position: 'topCenter'});
+                parent.parent.toast.error({message: res.msg,position: 'topCenter'});
             }
         }
         , error: function () {
             layer.close(loadIndex);
-            toast.error({message: "上传失败",position: 'topCenter'});
+            parent.parent.toast.error({message: "上传失败",position: 'topCenter'});
         }
     });
 }

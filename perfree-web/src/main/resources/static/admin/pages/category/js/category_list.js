@@ -163,13 +163,13 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    toast.success({message: "删除成功",position: 'topCenter'});
+                    parent.toast.success({message: "删除成功",position: 'topCenter'});
                 } else {
-                    toast.error({message: data.msg,position: 'topCenter'});
+                    parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                toast.error({message: "删除失败",position: 'topCenter'});
+                parent.toast.error({message: "删除失败",position: 'topCenter'});
             }
         });
         layer.close(index);
@@ -208,13 +208,13 @@ function changeStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                toast.success({message: "修改成功",position: 'topCenter'});
+                parent.toast.success({message: "修改成功",position: 'topCenter'});
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "修改状态失败",position: 'topCenter'});
+            parent.toast.error({message: "修改状态失败",position: 'topCenter'});
         }
     });
 }

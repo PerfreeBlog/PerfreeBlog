@@ -49,7 +49,7 @@ function initPage() {
             ids += $(this).attr('id') + ",";
         });
         if (ids.length <= 0) {
-            toast.warning({message: "至少选择一条数据",position: 'topCenter'});
+            parent.toast.warning({message: "至少选择一条数据",position: 'topCenter'});
             return;
         }
         ids = ids.substring(0, ids.length - 1);
@@ -94,13 +94,13 @@ function queryTable() {
                 });
                 flow.lazyimg({elem: '.p-attach-card img', scrollElem: '.pear-container'});
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.toast.error({message: data.msg,position: 'topCenter'});
             }
             layer.close(loadIndex);
         },
         error: function (data) {
             layer.close(loadIndex);
-            toast.error({message: "加载列表失败",position: 'topCenter'});
+            parent.toast.error({message: "加载列表失败",position: 'topCenter'});
         }
     })
 }
@@ -136,13 +136,13 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    toast.success({message: "删除成功",position: 'topCenter'});
+                    parent.toast.success({message: "删除成功",position: 'topCenter'});
                 } else {
-                    toast.error({message: data.msg,position: 'topCenter'});
+                    parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                toast.error({message: "删除失败",position: 'topCenter'});
+                parent.toast.error({message: "删除失败",position: 'topCenter'});
             }
         });
         layer.close(index);

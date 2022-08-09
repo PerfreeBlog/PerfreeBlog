@@ -44,13 +44,13 @@ function save(data) {
         data: JSON.stringify(data.field),
         success:function(d){
             if (d.code === 200){
-                toast.success({message: "保存成功",position: 'topCenter'});
+                parent.toast.success({message: "保存成功",position: 'topCenter'});
             } else {
-                toast.error({message: d.msg,position: 'topCenter'});
+                parent.toast.error({message: d.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "保存失败",position: 'topCenter'});
+            parent.toast.error({message: "保存失败",position: 'topCenter'});
         }
     });
 }
@@ -60,9 +60,9 @@ function sendTestMail(){
         layer.close(index);
         $.post("/admin/setting/testMail",{mail: mail},function(data,status){
             if (data.code === 200) {
-                toast.success({message: "发送成功",position: 'topCenter'});
+                parent.toast.success({message: "发送成功",position: 'topCenter'});
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.toast.error({message: data.msg,position: 'topCenter'});
             }
         });
     });

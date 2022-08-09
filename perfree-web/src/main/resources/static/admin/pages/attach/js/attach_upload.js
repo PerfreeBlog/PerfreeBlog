@@ -29,10 +29,16 @@ layui.use(['layer', 'element','upload','jquery'], function () {
             element.init();
         },
         done: function(res, index, upload){
-            parent.toast.success({message: '上传成功',position: 'topCenter'});
+            parent.parent.toast.success({message: '上传成功',position: 'topCenter'});
             setTimeout(function () {
                 $("#uploadProcess"+index+" .layui-progress-text").text("上传完成");
             }, 1000)
+        } ,
+        error: function(index, upload){
+            setTimeout(function () {
+                $("#uploadProcess"+index+" .layui-progress-text").text("上传失败");
+            }, 1000)
+            parent.parent.toast.error({message: '上传失败',position: 'topCenter'});
         }
     });
 });

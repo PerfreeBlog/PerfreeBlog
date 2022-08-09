@@ -81,15 +81,15 @@ function initUpload() {
         , done: function (res) {
             layer.close(loadIndex);
             if (res.code === 200) {
-                parent.layer.close(parent.layer.getFrameIndex(window.name));
+                parent.parent.layer.close(parent.layer.getFrameIndex(window.name));
                 parent.selectAttach(res.data.name,res.data.url);
             } else {
-                toast.error({message: res.msg,position: 'topCenter'});
+                parent.parent.toast.error({message: res.msg,position: 'topCenter'});
             }
         }
         , error: function () {
             layer.close(loadIndex);
-            toast.error({message: "上传失败",position: 'topCenter'});
+            parent.parent.toast.error({message: "上传失败",position: 'topCenter'});
         }
     });
 }

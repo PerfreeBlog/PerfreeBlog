@@ -31,18 +31,18 @@ function initPage() {
             layer.close(loadIndex);
             if (res.code === 200) {
                 queryTable();
-                toast.success({message: "插件安装成功",position: 'topCenter'});
+                parent.toast.success({message: "插件安装成功",position: 'topCenter'});
                 setTimeout(function (){
                     localStorage.setItem("plugin", "success");
                     parent.location.reload();
                 }, 500)
             } else {
-                toast.error({message: res.msg,position: 'topCenter'});
+                parent.toast.error({message: res.msg,position: 'topCenter'});
             }
         },
         error: function () {
             layer.close(loadIndex);
-            toast.error({message: "插件安装失败",position: 'topCenter'});
+            parent.toast.error({message: "插件安装失败",position: 'topCenter'});
         }
     });
 }
@@ -133,17 +133,17 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    toast.success({message: "插件卸载成功",position: 'topCenter'});
+                    parent.toast.success({message: "插件卸载成功",position: 'topCenter'});
                     setTimeout(function (){
                         localStorage.setItem("plugin", "success");
                         parent.location.reload();
                     }, 500)
                 } else {
-                    toast.error({message: data.msg,position: 'topCenter'});
+                    parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                toast.error({message: "卸载失败",position: 'topCenter'});
+                parent.toast.error({message: "卸载失败",position: 'topCenter'});
             }
         });
         layer.close(index);
@@ -159,17 +159,17 @@ function startPlugin(id){
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                toast.success({message: "插件启用成功",position: 'topCenter'});
+                parent.toast.success({message: "插件启用成功",position: 'topCenter'});
                 setTimeout(function (){
                     localStorage.setItem("plugin", "success");
                     parent.location.reload();
                 }, 500)
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "插件启用失败",position: 'topCenter'});
+            parent.toast.error({message: "插件启用失败",position: 'topCenter'});
         }
     });
 }
@@ -183,17 +183,17 @@ function stopPlugin(id){
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                toast.success({message: "插件禁用成功",position: 'topCenter'});
+                parent.toast.success({message: "插件禁用成功",position: 'topCenter'});
                 setTimeout(function (){
                     localStorage.setItem("plugin", "success");
                     parent.location.reload();
                 }, 500)
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "插件禁用失败",position: 'topCenter'});
+            parent.toast.error({message: "插件禁用失败",position: 'topCenter'});
         }
     });
 }

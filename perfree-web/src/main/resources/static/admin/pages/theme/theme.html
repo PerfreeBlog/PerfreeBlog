@@ -91,15 +91,15 @@
             done: function (res) {
                 layer.close(loadIndex);
                 if (res.code === 200) {
-                    toast.success({message: "主题安装成功",position: 'topCenter'});
+                    parent.toast.success({message: "主题安装成功",position: 'topCenter'});
                     initThemeList();
                 } else {
-                    toast.error({message: res.msg,position: 'topCenter'});
+                    parent.toast.error({message: res.msg,position: 'topCenter'});
                 }
             },
             error: function () {
                 layer.close(loadIndex);
-                toast.error({message: "主题安装失败",position: 'topCenter'});
+                parent.toast.error({message: "主题安装失败",position: 'topCenter'});
             }
         });
 
@@ -129,15 +129,15 @@
                 success: function (d) {
                     layer.close(loadIndex);
                     if (d.code === 200) {
-                        toast.success({message: "切换主题成功",position: 'topCenter'});
+                        parent.toast.success({message: "切换主题成功",position: 'topCenter'});
                         initThemeList();
                     } else {
-                        toast.error({message: "切换主题失败",position: 'topCenter'});
+                        parent.toast.error({message: "切换主题失败",position: 'topCenter'});
                     }
                 },
                 error: function (data) {
                     layer.close(loadIndex);
-                    toast.error({message: "切换主题失败",position: 'topCenter'});
+                    parent.toast.error({message: "切换主题失败",position: 'topCenter'});
                 }
             });
         });
@@ -154,16 +154,16 @@
                     success: function (d) {
                         layer.close(loadIndex);
                         if (d.code === 200) {
-                            toast.success({message: "卸载主题成功",position: 'topCenter'});
+                            parent.toast.success({message: "卸载主题成功",position: 'topCenter'});
                             initThemeList();
                         } else {
-                            toast.error({message: "卸载主题失败",position: 'topCenter'});
+                            parent.toast.error({message: "卸载主题失败",position: 'topCenter'});
                         }
                         layer.close(index);
                     },
                     error: function (data) {
                         layer.close(loadIndex);
-                        toast.error({message: "卸载主题失败",position: 'topCenter'});
+                        parent.toast.error({message: "卸载主题失败",position: 'topCenter'});
                         layer.close(index);
                     }
                 });
@@ -208,12 +208,12 @@
                         elem: '.p-theme-container img'
                     });
                 } else {
-                    toast.error({message: "加载主题列表失败",position: 'topCenter'});
+                    parent.toast.error({message: "加载主题列表失败",position: 'topCenter'});
                 }
             },
             error: function (data) {
                 layer.close(loadIndex);
-                toast.error({message: "加载主题列表失败",position: 'topCenter'});
+                parent.toast.error({message: "加载主题列表失败",position: 'topCenter'});
             }
         });
     }

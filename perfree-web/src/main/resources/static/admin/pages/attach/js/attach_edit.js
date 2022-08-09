@@ -14,15 +14,15 @@ layui.use(['layer', 'form', 'element', 'jquery'], function () {
             success: function (data) {
                 if (data.code === 200) {
                     parent.queryTable();
-                    parent.toast.success({message: '更新成功',position: 'topCenter'});
+                    parent.parent.toast.success({message: '更新成功',position: 'topCenter'});
                     const index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    parent.parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                parent.toast.error({message: '更新失败',position: 'topCenter'});
+                parent.parent.toast.error({message: '更新失败',position: 'topCenter'});
             }
         });
         return false;
@@ -66,15 +66,15 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     parent.queryTable();
-                    parent.toast.success({message: '删除成功',position: 'topCenter'});
+                    parent.parent.toast.success({message: '删除成功',position: 'topCenter'});
                     const index = parent.layer.getFrameIndex(window.name);
                     parent.layer.close(index);
                 } else {
-                    parent.toast.error({message: data.msg,position: 'topCenter'});
+                    parent.parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                parent.toast.error({message: '删除失败',position: 'topCenter'});
+                parent.parent.toast.error({message: '删除失败',position: 'topCenter'});
             }
         });
         layer.close(index);

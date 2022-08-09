@@ -70,11 +70,11 @@ function submitArticle(data) {
                 parent.layui.admin.toPage('/admin/article', '', '', true);
                 parent.layui.admin.closeTab('updateArticle');
             } else {
-                toast.error({message: d.msg,position: 'topCenter'});
+                parent.toast.error({message: d.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "文章修改失败",position: 'topCenter'});
+            parent.toast.error({message: "文章修改失败",position: 'topCenter'});
         }
     });
 }
@@ -123,18 +123,18 @@ function initTag() {
                                     const currentProfileIndex = (data.arr || []).findIndex((profile) => profile.value === d.data.name);
                                     data.arr[currentProfileIndex].id = d.data.id;
                                 } else {
-                                    toast.error({message: "新建标签失败",position: 'topCenter'});
+                                    parent.toast.error({message: "新建标签失败",position: 'topCenter'});
                                 }
                             },
                             error: function (data) {
-                                toast.error({message: "新建标签失败",position: 'topCenter'});
+                                parent.toast.error({message: "新建标签失败",position: 'topCenter'});
                             }
                         });
                     }
                 }
             });
         } else {
-            toast.error({message: res.msg,position: 'topCenter'});
+            parent.toast.error({message: res.msg,position: 'topCenter'});
         }
     });
 }
@@ -168,7 +168,7 @@ function initCategory() {
                 }
             });
         } else {
-            toast.error({message: res.msg,position: 'topCenter'});
+            parent.toast.error({message: res.msg,position: 'topCenter'});
         }
     });
 }

@@ -103,16 +103,16 @@
                 data: JSON.stringify(data.field),
                 success: function (data) {
                     if (data.code === 200) {
-                        parent.toast.success({message: '主题创建成功',position: 'topCenter'});
+                        parent.parent.toast.success({message: '主题创建成功',position: 'topCenter'});
                         parent.initThemeList();
                         const index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                     } else {
-                        parent.toast.error({message: data.msg,position: 'topCenter'});
+                        parent.parent.toast.error({message: data.msg,position: 'topCenter'});
                     }
                 },
                 error: function (data) {
-                    parent.toast.error({message: "创建失败",position: 'topCenter'});
+                    parent.parent.toast.error({message: "创建失败",position: 'topCenter'});
                 }
             });
             return false;

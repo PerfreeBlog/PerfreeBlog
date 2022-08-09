@@ -27,7 +27,7 @@ function initPage() {
     $("#batchDeleteBtn").click(function () {
         const checkStatus = table.checkStatus('tableBox'), data = checkStatus.data;
         if (data.length <= 0) {
-            toast.warning({message: "至少选择一条数据",position: 'topCenter'});
+            parent.toast.warning({message: "至少选择一条数据",position: 'topCenter'});
         } else {
             let ids = "";
             data.forEach(res => {
@@ -171,13 +171,13 @@ function deleteData(ids) {
             success: function (data) {
                 if (data.code === 200) {
                     queryTable();
-                    toast.success({message: "删除成功",position: 'topCenter'});
+                    parent.toast.success({message: "删除成功",position: 'topCenter'});
                 } else {
-                    toast.error({message: data.msg,position: 'topCenter'});
+                    parent.toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                toast.error({message: "删除失败",position: 'topCenter'});
+                parent.toast.error({message: "删除失败",position: 'topCenter'});
             }
         });
         layer.close(index);
@@ -197,13 +197,13 @@ function changeCommentStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                toast.success({message: "修改成功",position: 'topCenter'});
+                parent.toast.success({message: "修改成功",position: 'topCenter'});
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "修改失败",position: 'topCenter'});
+            parent.toast.error({message: "修改失败",position: 'topCenter'});
         }
     });
 }
@@ -222,13 +222,13 @@ function changeStatus(id, status) {
         success: function (data) {
             if (data.code === 200) {
                 queryTable();
-                toast.success({message: "修改成功",position: 'topCenter'});
+                parent.toast.success({message: "修改成功",position: 'topCenter'});
             } else {
-                toast.error({message: data.msg,position: 'topCenter'});
+                parent.toast.error({message: data.msg,position: 'topCenter'});
             }
         },
         error: function (data) {
-            toast.error({message: "修改状态失败",position: 'topCenter'});
+            parent.toast.error({message: "修改状态失败",position: 'topCenter'});
         }
     });
 }
