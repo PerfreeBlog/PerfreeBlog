@@ -1,8 +1,15 @@
-let form, layer,$;
-layui.use(['layer', 'form', 'jquery'], function () {
+let form, layer,colorpicker;
+layui.use(['layer', 'form', 'colorpicker'], function () {
     form = layui.form;
     layer = layui.layer;
-    $ = layui.jquery;
+    colorpicker = layui.colorpicker;
+    colorpicker.render({
+        elem: '#color-picker'
+        ,color: '#1c97f5'
+        ,done: function(color){
+            $('#color-input').val(color);
+        }
+    });
     form.verify({});
     form.on('submit(addForm)', function (data) {
         $.ajax({

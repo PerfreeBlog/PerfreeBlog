@@ -6,16 +6,20 @@
         id,
         name,
         userId,
+        color,
+        thumbnail,
+        slug,
         createTime,
         updateTime
     </sql>
 
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
-        insert into p_tag ( name, userId, createTime) VALUES (#{name},#{userId}, #{createTime})
+        insert into p_tag ( name, userId,color,thumbnail,slug, createTime) VALUES (#{name},#{userId}, #{color},#{thumbnail},#{slug},#{createTime})
     </insert>
 
     <update id="update">
-        update p_tag set name = #{name},updateTime=#{updateTime} where id = #{id}
+        update p_tag set name = #{name},color = #{color},
+         thumbnail = #{thumbnail},slug = #{slug},updateTime=#{updateTime} where id = #{id}
     </update>
 
     <delete id="del">
@@ -29,6 +33,9 @@
         <id property="id" column="id"></id>
         <result property="name" column="name"></result>
         <result property="userId" column="userId"></result>
+        <result property="color" column="color"></result>
+        <result property="thumbnail" column="thumbnail"></result>
+        <result property="slug" column="slug"></result>
         <result property="createTime" column="createTime"></result>
         <result property="updateTime" column="updateTime"></result>
         <association property="user" javaType="com.perfree.model.User">

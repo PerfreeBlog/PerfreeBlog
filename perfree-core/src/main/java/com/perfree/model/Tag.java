@@ -24,6 +24,15 @@ public class Tag implements Serializable {
     @ApiModelProperty(value="用户id",name="userId")
     private Long userId;
 
+    @ApiModelProperty(value="标签颜色",name="color")
+    private String color;
+
+    @ApiModelProperty(value="封面图",name="thumbnail")
+    private String thumbnail;
+
+    @ApiModelProperty(value="别名",name="slug")
+    private String slug;
+
     @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
 
@@ -103,12 +112,39 @@ public class Tag implements Serializable {
         this.url = url;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
     @Override
     public String toString() {
         return "Tag{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", userId=" + userId +
+                ", color=" + color +
+                ", thumbnail=" + thumbnail +
+                ", slug=" + slug +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

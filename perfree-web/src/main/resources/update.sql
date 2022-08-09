@@ -35,3 +35,8 @@ ALTER TABLE `p_article` ADD COLUMN `flag` varchar(256) NULL COMMENT '标识' , A
 --PerfreeBlog
 --v2.3.1;
 ALTER TABLE `p_attach` ADD COLUMN `saveType` varchar(32) NULL COMMENT '存储方式', ADD COLUMN `fileKey` varchar(512) NULL COMMENT 'fileKey';
+--PerfreeBlog
+--v3.0.0;
+ALTER TABLE `p_tag` ADD COLUMN `color` varchar(128) NULL COMMENT '颜色';
+ALTER TABLE `p_tag` ADD COLUMN `thumbnail` varchar(256) NULL COMMENT '缩略图';
+ALTER TABLE `p_tag` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug';
