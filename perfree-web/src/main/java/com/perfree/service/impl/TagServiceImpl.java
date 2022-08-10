@@ -80,6 +80,7 @@ public class TagServiceImpl implements TagService {
      * @return int
      */
     public int del(String[] idArr) {
+        tagMapper.delArticleTag(idArr);
         return tagMapper.del(idArr);
     }
 

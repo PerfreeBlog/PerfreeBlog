@@ -1,7 +1,6 @@
 package com.perfree;
 
 import cn.hutool.core.io.FileUtil;
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure;
 import com.perfree.commons.Constants;
 import com.perfree.config.UniqueNameGenerator;
 import org.slf4j.Logger;

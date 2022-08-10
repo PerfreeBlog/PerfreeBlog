@@ -65,4 +65,6 @@ public interface TagMapper {
 
     void updateSlug(Tag tag);
 
+    void delArticleTag(String[] idArr);
+
 }
