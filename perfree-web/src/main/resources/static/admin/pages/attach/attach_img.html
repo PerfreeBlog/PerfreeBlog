@@ -42,16 +42,18 @@
     </form>
 </div>
 <div class="p-table-box">
-    <div class="img-list-box" id="tableBox">
+    <div class="img-list-box layui-row layui-col-space10" id="tableBox">
     </div>
     <div id="tabBoxPage"></div>
 </div>
 
 <script id="tableTpl" type="text/html">
     #[[{{#  layui.each(d, function(index, item){ }}
-    <div class="img-box">
-        <img src="/static/public/images/loading.gif" lay-src="{{ item.url }}" alt="{{ item.name }}">
-        <span>{{ item.name }}</span>
+    <div class=" layui-col-xs3 layui-col-sm3 layui-col-md3">
+        <div class="img-box">
+            <img src="/static/public/images/loading.gif" lay-src="{{ item.url }}" alt="{{ item.name }}">
+            <span>{{ item.name }}</span>
+        </div>
     </div>
     {{#  }); }}
     {{#  if(d === null || d.length === 0){ }}

@@ -40,3 +40,4 @@ ALTER TABLE `p_attach` ADD COLUMN `saveType` varchar(32) NULL COMMENT '存储方
 ALTER TABLE `p_tag` ADD COLUMN `color` varchar(128) NULL COMMENT '颜色';
 ALTER TABLE `p_tag` ADD COLUMN `thumbnail` varchar(256) NULL COMMENT '缩略图';
 ALTER TABLE `p_tag` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug';
+UPDATE p_tag set slug = id where slug is null;

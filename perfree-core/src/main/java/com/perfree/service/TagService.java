@@ -70,4 +70,6 @@ public interface TagService {
 
     DirectivePage<HashMap<String, String>> frontTagsPage(DirectivePage<HashMap<String, String>> tagsPage);
 
+    Tag getBySlug(String slug);
+
 }

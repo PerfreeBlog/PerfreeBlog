@@ -1,10 +1,89 @@
-var table, $,toast;
-layui.use(['table', 'jquery','toast'], function () {
+var form,table, toast,colorpicker;
+let formType = 'add';
+layui.use(['table', 'toast','form', 'colorpicker'], function () {
     table = layui.table;
-    $ = layui.jquery;
     toast = layui.toast;
+    form = layui.form;
+    colorpicker = layui.colorpicker;
+    colorpicker.render({
+        elem: '#color-picker'
+        ,color: localStorage.getItem("theme-color-color")
+        ,done: function(color){
+            $('#color-input').val(color);
+        }
+    });
     initPage();
+
+    $("#restBtn").on("click",function () {
+        if (formType === 'add') {
+            $(".addForm")[0].reset();
+            form.render();
+        } else {
+            toAddFunc();
+        }
+    });
+
+    form.verify({});
+    form.on('submit(addForm)', function (data) {
+        if (formType === 'add') {
+            addSubmit(data);
+        } else {
+            updateSubmit(data);
+        }
+        return false;
+    });
 });
+
+function toAddFunc() {
+    $(".addForm")[0].reset();
+    form.render();
+    formType = 'add';
+    $("#restBtn").text("重置");
+    $("#form-title").text("添加标签");
+}
+
+function updateSubmit(data) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/tag/update",
+        contentType: "application/json",
+        data: JSON.stringify(data.field),
+        success: function (res) {
+            if (res.code === 200) {
+                queryTable();
+                parent.toast.success({message: '更新成功',position: 'topCenter'});
+                toAddFunc();
+            } else {
+                parent.toast.error({message: res.msg,position: 'topCenter'});
+            }
+        },
+        error: function (res) {
+            parent.toast.error({message: "更新失败",position: 'topCenter'});
+        }
+    });
+}
+
+function addSubmit(data) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/tag/add",
+        contentType: "application/json",
+        data: JSON.stringify(data.field),
+        success: function (res) {
+            if (res.code === 200) {
+                queryTable();
+                parent.toast.success({message: '添加成功',position: 'topCenter'});
+                $(".addForm")[0].reset();
+                form.render();
+            } else {
+                parent.toast.error({message: res.msg,position: 'topCenter'});
+            }
+        },
+        error: function (res) {
+            parent.toast.error({message: "添加失败",position: 'topCenter'});
+        }
+    });
+}
 
 /**
  * 页面初始化事件
@@ -15,18 +94,6 @@ function initPage() {
     // 查询
     $("#queryBtn").click(function () {
         queryTable();
-    });
-
-    // 添加
-    $("#addBtn").click(function () {
-        layer.open({
-            title: "添加标签",
-            type: 2,
-            area: common.layerArea($("html")[0].clientWidth, 500, 400),
-            shadeClose: true,
-            anim: 1,
-            content: '/admin/tag/addPage'
-        });
     });
 
     // 批量删除
@@ -63,26 +130,25 @@ function queryTable() {
                 name: $("#tagName").val()
             }
         },
-        limit: 30,
+        limit: 10,
         cols: [[
             {type: 'checkbox'},
             {field: 'id', title: 'ID', width: 80, sort: true},
             {field: 'name', minWidth: 160,title: '标签名'},
+            {field: 'slug', minWidth: 160,title: '访问别名'},
+            {
+                field: 'color',
+                title: '颜色',
+                minWidth: 80,
+                templet: "<div><span style='background: {{d.color}};display: inline-block;width: 25px;height: 25px'></span></div>"
+            },
+            {
+                field: 'thumbnail',
+                title: '封面图',
+                minWidth: 100,
+                templet: "<div><img src='{{d.thumbnail}}' height='100%'></div>"
+            },
             {field: 'user', minWidth: 100,title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
-            {
-                field: 'createTime',
-                title: '创建时间',
-                sort: true,
-                minWidth: 160,
-                templet: "<span>{{d.createTime == null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
-            },
-            {
-                field: 'updateTime',
-                title: '更新时间',
-                sort: true,
-                minWidth: 160,
-                templet: "<span>{{d.updateTime ==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
-            },
             {
                 field: 'id', title: '操作', width: 120,
                 templet: "<div>" +
@@ -113,13 +179,19 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    layer.open({
-        title: "编辑标签",
-        type: 2,
-        area: common.layerArea($("html")[0].clientWidth, 500, 400),
-        shadeClose: true,
-        anim: 1,
-        content: '/admin/tag/editPage/' + id
+    $.get("/admin/tag/getById?tagId="+id,function(data,status){
+        if (data.code === 200) {
+            $("input[name='id']").val(data.data.id);
+            $("input[name='name']").val(data.data.name);
+            $("input[name='slug']").val(data.data.slug);
+            $("input[name='color']").val(data.data.color);
+            $("input[name='thumbnail']").val(data.data.thumbnail);
+            $("#form-title").text("修改标签");
+            $("#restBtn").text("返回添加");
+            formType = 'edit';
+        } else {
+            parent.toast.error({message: data.msg,position: 'topCenter'});
+        }
     });
 }
 

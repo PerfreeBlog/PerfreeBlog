@@ -20,6 +20,12 @@ function initSelectImg() {
         openSelectImPanel(1,id, null,null,null,null);
     });
 
+    $(".p-upload-input-box").on("click",function () {
+        const id = $(this).attr('id');
+        openSelectImPanel(0,id, null,null,null,null);
+    });
+
+
     $(".p-upload-box").on('mouseenter', '.p-upload-show', function() {
         $(this).children(".p-delete-img").show();
     });
@@ -51,7 +57,9 @@ function initSelectImg() {
  * @param name
  */
 function selectImg(path, name) {
-    if (type === 1){
+    if (type === 0) {
+        $("input[name='"+selectImgId+"']").val(path);
+    } else if (type === 1){
         $("#" + selectImgId).children("input").val(path);
         $("#" + selectImgId).children(".p-upload-show").children(".p-show-img").attr("src", path);
         $("#" + selectImgId).children(".p-upload").hide();
@@ -69,7 +77,7 @@ function selectImg(path, name) {
 
 /**
  * 打开选择图片面板
- * @param activeType 1:正常图片选择,2编辑器图片选择,3富文本
+ * @param activeType 0:input方式图片选择,1:正常图片选择,2编辑器图片选择,3富文本
  * @param id
  * @param currEditor
  * @param cm
@@ -79,7 +87,7 @@ function selectImg(path, name) {
  */
 function openSelectImPanel(activeType,id,currEditor,cm, icon, cursor, selection) {
     type = activeType;
-    if (type === 1) {
+    if (type === 1 || type === 0) {
         selectImgId = id;
     } else if(type === 3) {
         editor = currEditor;
@@ -94,7 +102,7 @@ function openSelectImPanel(activeType,id,currEditor,cm, icon, cursor, selection)
         title: "选择图片",
         type: 2,
         offset: '10%',
-        area:  ['700px', '510px'],
+        area: layerArea($("html")[0].clientWidth, 700, 500),
         shadeClose: true,
         anim: 1,
         move: true,
@@ -117,7 +125,7 @@ function openSelectAttachPanel(activeType,currEditor,cm, icon, cursor, selection
         title: "选择附件",
         type: 2,
         offset: '10%',
-        area:  ['700px', '510px'],
+        area:  layerArea($("html")[0].clientWidth, 700, 500),
         shadeClose: true,
         anim: 1,
         move: true,
@@ -140,7 +148,7 @@ function openSelectVideoPanel(activeType, currEditor,cm, icon, cursor, selection
         title: "选择视频",
         type: 2,
         offset: '10%',
-        area:  ['700px', '510px'],
+        area: layerArea($("html")[0].clientWidth, 700, 500),
         shadeClose: true,
         anim: 1,
         move: true,
@@ -194,5 +202,17 @@ function changeMode(activeType, currEditor,cm, icon, cursor, selection) {
         editor = currEditor;
     } else if(type === 3){
         editor = currEditor;
+    }
+}
+
+function layerArea(clientWidth, width, height) {
+    if (height !== 'auto') {
+        height += 'px';
+    }
+    var a = clientWidth - width;
+    if(a > 10) {
+        return [width + 'px', height]
+    } else{
+        return ['100%', height]
     }
 }

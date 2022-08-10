@@ -61,4 +61,8 @@ public interface TagMapper {
 
     List<Tag> frontTagsList(HashMap<String, String> form);
 
+    Tag getBySlug(String slug);
+
+    void updateSlug(Tag tag);
+
 }

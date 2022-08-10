@@ -4,9 +4,13 @@ import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
+import com.perfree.model.Article;
 import com.perfree.model.Tag;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.TagService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
@@ -39,28 +43,6 @@ public class TagController extends BaseController {
         return view("static/admin/pages/tag/tag_list.html");
     }
 
-    /**
-     * 标签管理列表页
-     * @return String
-     */
-    @RequestMapping("/tag/addPage")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
-    public String addPage() {
-        return view("static/admin/pages/tag/tag_add.html");
-    }
-
-    /**
-     * 标签管理列表页
-     * @return String
-     */
-    @GetMapping("/tag/editPage/{id}")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
-    public String editPage(@PathVariable("id") String id, Model model) {
-        Tag tag = tagService.getById(id);
-        model.addAttribute("tag", tag);
-        return view("static/admin/pages/tag/tag_edit.html");
-    }
-
 
     /**
      * 添加标签
@@ -70,6 +52,10 @@ public class TagController extends BaseController {
     @ResponseBody
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean add(@RequestBody Tag tag) {
+        Tag tagBySlug = tagService.getBySlug(tag.getSlug());
+        if (tagBySlug != null){
+            return ResponseBean.fail("访问地址别名重复!", null);
+        }
         tag.setUserId(getUser().getId());
         if (tagService.add(tag) > 0) {
             return ResponseBean.success("添加成功", tag);
@@ -108,6 +94,13 @@ public class TagController extends BaseController {
     @ResponseBody
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean update(@RequestBody Tag tag) {
+        if (StringUtils.isBlank(tag.getSlug())) {
+            return ResponseBean.fail("访问地址别名不能为空", null);
+        }
+        Tag tagBySlug = tagService.getBySlug(tag.getSlug());
+        if (tagBySlug != null && !tagBySlug.getId().equals(tag.getId())){
+            return ResponseBean.fail("访问地址别名重复", null);
+        }
         if (tagService.update(tag) > 0) {
             return ResponseBean.success("更新成功", null);
         }
@@ -129,5 +122,12 @@ public class TagController extends BaseController {
         }
         logger.error("标签删除失败: {}", ids);
         return ResponseBean.fail("删除失败", null);
+    }
+
+    @GetMapping("/tag/getById")
+    @ResponseBody
+    public ResponseBean getById(@ApiParam(name="tagId",value="标签ID",required=true) @RequestParam("tagId") String tagId) {
+        Tag tag = tagService.getById(tagId);
+        return ResponseBean.success("success", tag);
     }
 }

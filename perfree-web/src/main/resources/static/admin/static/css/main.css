@@ -120,10 +120,22 @@ html{
     color: red;
     display: none;
 }
+.p-span-required{
+    color: red;
+}
 .p-delete-img i{
     font-size: 22px;
     cursor: pointer;
 }
 .p-add-panel{
     background: white;
+}
+.p-upload-input-box{
+    height: 36px;
+    line-height: 36px;
+    border: 1px solid #eee;
+    width: 40px;
+    text-align: center;
+    border-radius: 0px 5px 5px 1px;
+    cursor: pointer;
 }

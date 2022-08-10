@@ -2,6 +2,9 @@ package com.perfree.controller.front;
 
 import com.perfree.commons.Constants;
 import com.perfree.base.BaseController;
+import com.perfree.model.Tag;
+import com.perfree.service.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,20 +12,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class TagController extends BaseController {
+    
+    @Autowired
+    private TagService tagService;
 
-    @RequestMapping("/tag/{tagId}/{pageIndex}")
-    public String articleListPage(@PathVariable("pageIndex") int pageIndex,@PathVariable("tagId") String tagId, Model model) {
+    @RequestMapping("/tag/{slugOrId}/{pageIndex}")
+    public String articleListPage(@PathVariable("pageIndex") int pageIndex,@PathVariable("slugOrId") String slugOrId, Model model) {
+        Tag tag = tagService.getBySlug(slugOrId);
+        if (null == tag) {
+            tag = tagService.getById(slugOrId);
+        }
         model.addAttribute("pageIndex", pageIndex);
-        model.addAttribute("tagId", tagId);
-        model.addAttribute("url", Constants.URL_ARTICLE_TAG + tagId + "/");
+        model.addAttribute("tagId", tag.getId());
+        model.addAttribute("url", Constants.URL_ARTICLE_TAG + tag.getId() + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 
-    @RequestMapping("/tag/{tagId}")
-    public String articleListPage(@PathVariable("tagId") String tagId, Model model) {
+    @RequestMapping("/tag/{slugOrId}")
+    public String articleListPage(@PathVariable("slugOrId") String slugOrId, Model model) {
+        Tag tag = tagService.getBySlug(slugOrId);
+        if (null == tag) {
+            tag = tagService.getById(slugOrId);
+        }
         model.addAttribute("pageIndex", 1);
-        model.addAttribute("tagId", tagId);
-        model.addAttribute("url", Constants.URL_ARTICLE_TAG + tagId + "/");
+        model.addAttribute("tagId", tag.getId());
+        model.addAttribute("url", Constants.URL_ARTICLE_TAG + tag.getId() + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 

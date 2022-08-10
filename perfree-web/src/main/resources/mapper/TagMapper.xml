@@ -13,13 +13,19 @@
         updateTime
     </sql>
 
-    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id" >
         insert into p_tag ( name, userId,color,thumbnail,slug, createTime) VALUES (#{name},#{userId}, #{color},#{thumbnail},#{slug},#{createTime})
     </insert>
 
     <update id="update">
         update p_tag set name = #{name},color = #{color},
          thumbnail = #{thumbnail},slug = #{slug},updateTime=#{updateTime} where id = #{id}
+    </update>
+
+    <update id="updateSlug">
+        update p_tag set
+            slug = #{slug}
+        where id = #{id}
     </update>
 
     <delete id="del">
@@ -74,5 +80,9 @@
             and name like  #{name,jdbcType=VARCHAR}
         </if>
         order by t.createTime desc
+    </select>
+
+    <select id="getBySlug" resultType="com.perfree.model.Tag">
+        select <include refid="BASE_COLUMN"></include> from p_tag where slug = #{slug}
     </select>
 </mapper>

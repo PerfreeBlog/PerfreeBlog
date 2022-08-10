@@ -8,6 +8,7 @@ import com.perfree.mapper.TagMapper;
 import com.perfree.model.Category;
 import com.perfree.model.Tag;
 import com.perfree.service.TagService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,12 @@ public class TagServiceImpl implements TagService {
      */
     public int add(Tag tag) {
         tag.setCreateTime(new Date());
-        return tagMapper.add(tag);
+        int result = tagMapper.add(tag);
+        if(StringUtils.isBlank(tag.getSlug())) {
+            tag.setSlug(tag.getId().toString());
+        }
+        tagMapper.updateSlug(tag);
+        return result;
     }
 
     /**
@@ -111,5 +117,10 @@ public class TagServiceImpl implements TagService {
         tagsPage.setTotal(pageInfo.getTotal());
         tagsPage.setData(pageInfo.getList());
         return tagsPage;
+    }
+
+    @Override
+    public Tag getBySlug(String slug) {
+        return tagMapper.getBySlug(slug);
     }
 }

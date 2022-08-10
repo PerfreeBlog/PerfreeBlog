@@ -91,7 +91,7 @@ function queryTable() {
                 field: 'avatar', minWidth: 80,title: '头像', templet: function (d) {
                     let html = '';
                     if (d.avatar !== null && d.avatar !== '') {
-                        html = "<img src='/static/public/images/loading.gif' height='100%' data-src='" + d.avatar + "' class='lazyload'>";
+                        html = "<img src='" + d.avatar + "' height='100%'>";
                     }
                     return html;
                 }
