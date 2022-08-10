@@ -1,12 +1,10 @@
-let form, element, layer;
+let form, element, layer, toast;
 $("#captcha").attr("src", '/captcha?d='+Math.random());
-layui.use(['layer', 'form', 'element'], function () {
+layui.use(['layer', 'form', 'element', 'toast'], function () {
     form = layui.form;
     element = layui.element;
     layer = layui.layer;
-    layer.config({
-        offset: '10%'
-    });
+    toast = layui.toast;
     // 表单验证
     form.verify({});
     // 表单提交
@@ -18,16 +16,16 @@ layui.use(['layer', 'form', 'element'], function () {
             data: JSON.stringify(data.field),
             success: function (data) {
                 if (data.code === 200) {
-                    layer.msg("验证码已发送至邮箱,请注意查收", {icon: 1});
+                    toast.success({message: "验证码已发送至邮箱,请注意查收",position: 'topCenter'});
                     setTimeout( function (){
                         window.location.href="/restPasswordStep2";
                     }, 1000);
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("操作失败", {icon: 2});
+                toast.error({message: "操作失败",position: 'topCenter'});
             }
         });
         return false;
@@ -42,16 +40,16 @@ layui.use(['layer', 'form', 'element'], function () {
             data: JSON.stringify(data.field),
             success: function (data) {
                 if (data.code === 200) {
-                    layer.msg("密码修改成功,将自动前往登录页", {icon: 1});
+                    toast.success({message: "密码修改成功,将自动前往登录页",position: 'topCenter'});
                     setTimeout( function (){
                         window.location.href="/login";
                     }, 1000);
                 } else {
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("操作失败", {icon: 2});
+                toast.error({message: "操作失败",position: 'topCenter'});
             }
         });
         return false;

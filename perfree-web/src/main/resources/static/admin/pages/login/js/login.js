@@ -1,12 +1,10 @@
-let form, element, layer;
+let form, element, layer, toast;
 $("#captcha").attr("src", '/captcha?d='+Math.random());
-layui.use(['layer', 'form', 'element'], function () {
+layui.use(['layer', 'form', 'element', 'toast'], function () {
     form = layui.form;
     element = layui.element;
     layer = layui.layer;
-    layer.config({
-        offset: '10%'
-    });
+    toast = layui.toast;
     // 表单验证
     form.verify({});
     // 表单提交
@@ -18,14 +16,17 @@ layui.use(['layer', 'form', 'element'], function () {
             data: JSON.stringify(data.field),
             success: function (data) {
                 if (data.code === 200) {
-                    window.location.href="/";
+                    toast.success({message: "登录成功",position: 'topCenter'});
+                    setTimeout(function () {
+                        window.location.href="/";
+                    }, 500);
                 } else {
                     $("#captcha").click();
-                    layer.msg(data.msg, {icon: 2});
+                    toast.error({message: data.msg,position: 'topCenter'});
                 }
             },
             error: function (data) {
-                layer.msg("登录失败", {icon: 2});
+                toast.error({message: "登录失败",position: 'topCenter'});
             }
         });
         return false;

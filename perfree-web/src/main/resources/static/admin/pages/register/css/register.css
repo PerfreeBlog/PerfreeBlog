@@ -1,46 +1,3 @@
-#loading{
-    width: 100%;
-    height: 100vh;
-    line-height: 100vh;
-    background: #eff2f5;
-}
-.loading{
-    width: 100px;
-    height: 40px;
-    margin: 0 auto;
-}
-.loading span{
-    display: inline-block;
-    width: 10px;
-    height: 100%;
-    border-radius: 8px;
-    background: #1e9fff;
-    -webkit-animation: load 1s ease infinite;
-    margin-right: 8px;
-}
-@-webkit-keyframes load{
-    0%,100%{
-        height: 40px;
-        background: #1e9fff;
-    }
-    50%{
-        height: 70px;
-        margin: -20px 0;
-        background: lightblue;
-    }
-}
-.loading span:nth-child(2){
-    -webkit-animation-delay:0.2s;
-}
-.loading span:nth-child(3){
-    -webkit-animation-delay:0.4s;
-}
-.loading span:nth-child(4){
-    -webkit-animation-delay:0.6s;
-}
-.loading span:nth-child(5){
-    -webkit-animation-delay:0.8s;
-}
 .p-login-box{
     width: 360px;
     height: 450px;
@@ -48,11 +5,10 @@
     border-radius: 5px;
     background: white;
     margin: auto;
+    overflow: hidden;
+    box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);
 }
-#p-login-box{
-    display: none;
-}
-.p-form-required{
+.p-required{
     color: red;
 }
 .p-register-btn{
@@ -76,27 +32,14 @@ body{
     margin-top: 5px;
     display: none;
 }
-.p-input-label {
-    font-size: 15px;
-    font-weight: 700;
-    color: #6b6b6b;
-}
 .p-input-box {
     margin-top: 10px;
     width: 350px;
 }
-.p-input {
-    width: 100%;
-    height: 35px;
-    padding-left: 5px;
-    margin-top: 3px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    color: #555;
-}
 .p-login-box-bottom{
     font-size: 14px;
     color: #555;
+    margin-top: 8px;
 }
 .p-input:focus{
     outline: none;
@@ -107,49 +50,34 @@ body{
     font-size: 20px;
     font-weight: 600;
     height: 30px;
-    color: #757575;
+    color: #555555;
     line-height: 30px;
 }
 
-.layui-layer-dialog .layui-layer-content .layui-layer-ico {
-    position: absolute;
-    top: 5px!important;
-    left: 10px!important;
-    width: 30px!important;
-    height: 30px!important;
-}
-.layui-layer-dialog .layui-layer-padding {
-    padding: 8px 8px 8px 50px!important;
-    text-align: left;
-    color: #555;
-}
-.layui-layer-msg {
-    min-width: 180px!important;
-    margin-top: 10px!important;
-    border: none!important;
-    -webkit-box-shadow: 0 3px 3px -2px rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 1px 8px 0 rgba(0,0,0,.12)!important;
-    box-shadow: 0 3px 3px -2px rgba(0,0,0,.2),0 3px 4px 0 rgba(0,0,0,.14),0 1px 8px 0 rgba(0,0,0,.12)!important;
-    border-radius: 5px!important;
-    overflow: hidden!important;
-}
 .captcha-box{
     width: 70px;
     margin-left: -5px;
 }
 .captcha-box img{
-    border: 1px solid  #ccc;
+    border: 1px solid  #efefef;
     height: 35px;
     width: 70px;
     cursor: pointer;
+    border-radius: 0px 5px 5px 0px;
 }
 .captcha-input{
     height: 37px;
     border-right: none;
-    border-color: #ccc;
 }
 .captcha-input-box{
-    width: calc(100% - 70px);
+    width: calc(100% - 76px);
 }
 .captcha-group{
     width: 100%;
+}
+.p-form-tip{
+    color: #555555;
+    font-size: 13px;
+    padding-bottom: 3px;
+    display: inline-block;
 }

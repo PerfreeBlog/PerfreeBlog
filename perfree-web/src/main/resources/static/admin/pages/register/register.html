@@ -8,52 +8,54 @@
     <meta name="force-rendering" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <link rel="Shortcut Icon" href="#option('WEB_LOGO','/static/public/images/favicon.ico')" type="image/x-icon"/>
-    <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
+    <link rel="stylesheet" href="/static/admin/static/component/pear/css/pear.css" />
+    <link rel="stylesheet" href="/static/admin/static/admin/css/loader.css" />
     <link href="/static/admin/pages/register/css/register.css?v=#(version)" rel="stylesheet"/>
     <script type="text/javascript">
         if (window !== top){
             top.location.href = location.href;
         }
-        document.onreadystatechange = function () {
-            document.getElementById("loading").style.display="none";
-            document.getElementById("p-login-box").style.display="block";
+        window.onload = function f() {
+            setTimeout(function () {
+                document.getElementById("loading-box").style.display="none";
+            }, 500);
         };
     </script>
 </head>
-<body class="mdui-theme-primary-indigo">
-    <div id="loading">
-        <div class="loading">
-            <span></span><span></span><span></span><span></span><span></span>
-        </div>
+<body>
+    <!-- 加 载 动 画 -->
+    <div class="loader-main" id="loading-box">
+        <!-- 动 画 对 象 -->
+        <div class="loader"></div>
     </div>
-    <div class="p-login-box mdui-shadow-3" id="p-login-box">
+    <div class="p-login-box" id="p-login-box">
         <div class="p-login-box-title">#option('WEB_NAME', '注册')</div>
         <form class="layui-form" lay-filter="addForm">
             <div class="layui-input-inline"  style="display: none;">
                 <select lay-verify="" type="hidden"></select>
             </div>
             <div class="p-input-box">
-                <span class="p-input-label"><span class="p-form-required">*</span>昵称:</span>
-                <input class="p-input" type="text" name="userName" required lay-verify="required" placeholder="请输入昵称"/>
+                <span class="p-form-tip"><span class="p-required">*</span> 昵称:</span>
+                <input class="layui-input" type="text" name="userName" required lay-verify="required" placeholder="请输入昵称"/>
             </div>
 
             <div class="p-input-box">
-                <span class="p-input-label"><span class="p-form-required">*</span>账号:</span>
-                <input class="p-input" type="text" name="account" required lay-verify="required" placeholder="请输入账号"/>
+                <span class="p-form-tip"><span class="p-required">*</span> 账号:</span>
+                <input class="layui-input" type="text" name="account" required lay-verify="required" placeholder="请输入账号"/>
             </div>
 
             <div class="p-input-box">
-                <span class="p-input-label"><span class="p-form-required">*</span>密码:</span>
-                <input class="p-input" type="password" name="password" required lay-verify="required" placeholder="请输入密码"/>
+                <span class="p-form-tip"><span class="p-required">*</span> 密码:</span>
+                <input class="layui-input" type="password" name="password" required lay-verify="required" placeholder="请输入密码"/>
             </div>
 
             <div class="p-input-box">
-                <span class="p-input-label"><span class="p-form-required">*</span>邮箱:</span>
-                <input class="p-input" type="email" name="email" required lay-verify="required" placeholder="请输入邮箱地址"/>
+                <span class="p-form-tip"><span class="p-required">*</span> 邮箱:</span>
+                <input class="layui-input" type="email" name="email" required lay-verify="required" placeholder="请输入邮箱地址"/>
             </div>
 
             <div class="p-input-box captcha-group-box">
-                <span class="p-input-label"><span class="p-form-required">*</span>验证码:</span><br>
+                <span class="p-form-tip"><span class="p-required">*</span> 验证码:</span><br>
                 <div class="layui-inline captcha-group">
                     <div class="layui-input-inline captcha-input-box">
                         <input type="text" name="captcha" placeholder="请输入验证码" required lay-verify="required" autocomplete="off" class="layui-input captcha-input">
@@ -63,7 +65,7 @@
                     </div>
                 </div>
             </div>
-            <button type="button" lay-submit lay-filter="addForm" class="layui-btn layui-btn-normal p-login-btn">注册</button>
+            <button type="button" lay-submit lay-filter="addForm" class="pear-btn pear-btn-primary p-login-btn">注册</button>
         </form>
         <p class="p-login-box-bottom">
             已有账号? 点击<a class="mdui-text-color-theme p-register-btn" href="/login">登录</a>
@@ -71,6 +73,7 @@
     </div>
     <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
     <script src="/static/public/libs/layui-v2.5.6/layui/layui.js"></script>
+    <script src="/static/admin/static/component/pear/pear.js"></script>
     <script src="/static/admin/pages/register/js/register.js?v=#(version)"></script>
 </body>
 </html>
