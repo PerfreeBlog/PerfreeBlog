@@ -48,6 +48,8 @@ CREATE TABLE "p_category" (
                               "pid" integer NOT NULL,
                               "desc" text(512),
                               "count" integer NOT NULL,
+                              "thumbnail" text(256),
+                              "slug" text(128),
                               "metaKeywords" text(256),
                               "metaDescription" text(256),
                               "status" integer NOT NULL,
@@ -119,6 +121,9 @@ drop table if exists `p_tag`;
 CREATE TABLE "p_tag" (
                          "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                          "name" text(256) NOT NULL,
+                         "color" text(128),
+                         "thumbnail" text(256),
+                         "slug" text(128),
                          "userId" integer NOT NULL,
                          "createTime" DATETIME NOT NULL,
                          "updateTime" DATETIME

@@ -54,6 +54,8 @@ CREATE TABLE `p_category`  (
                                `desc` varchar(512) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '描述',
                                `count` int(0) NOT NULL DEFAULT 0 COMMENT '文章数量',
                                `metaKeywords` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'SEO关键字',
+                               `thumbnail` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT '封面图',
+                               `slug` varchar(128) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'slug',
                                `metaDescription` varchar(256) CHARACTER SET utf8mb4 NULL DEFAULT NULL COMMENT 'SEO描述内容',
                                `status` int(0) NOT NULL DEFAULT 0 COMMENT '状态0:正常,1禁用',
                                `createTime` datetime(0) NOT NULL COMMENT '创建时间',
@@ -154,6 +156,9 @@ drop table if exists `p_tag`;
 CREATE TABLE `p_tag`  (
                           `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '主键',
                           `name` varchar(256) CHARACTER SET utf8mb4 NOT NULL COMMENT '标签名',
+                          `color` varchar(128) CHARACTER SET utf8mb4 NULL COMMENT '颜色',
+                          `thumbnail` varchar(256) CHARACTER SET utf8mb4 NULL COMMENT '缩略图',
+                          `slug` varchar(128) CHARACTER SET utf8mb4 NULL COMMENT 'slug',
                           `userId` int(0) NOT NULL COMMENT '添加人',
                           `createTime` datetime(0) NOT NULL COMMENT '创建时间',
                           `updateTime` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
