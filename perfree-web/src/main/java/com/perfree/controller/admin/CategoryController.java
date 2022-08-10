@@ -7,6 +7,8 @@ import com.perfree.base.BaseController;
 import com.perfree.model.Category;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.CategoryService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
@@ -121,6 +123,9 @@ public class CategoryController extends BaseController  {
     @ResponseBody
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid Category category) {
+        if (category.getPid().equals(category.getId())) {
+            return ResponseBean.fail("不可将当前分类设置为父级分类", null);
+        }
         if (categoryService.update(category) > 0) {
             return ResponseBean.success("更新成功", null);
         }
@@ -141,5 +146,12 @@ public class CategoryController extends BaseController  {
         }
         logger.error("分类修改失败: {}", category.toString());
         return ResponseBean.fail("修改失败", null);
+    }
+
+    @GetMapping("/category/getById")
+    @ResponseBody
+    public ResponseBean getById(@ApiParam(name="categoryId",value="分类ID",required=true) @RequestParam("categoryId") String categoryId) {
+        Category category = categoryService.getById(categoryId);
+        return ResponseBean.success("success", category);
     }
 }

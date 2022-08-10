@@ -18,6 +18,22 @@
                     select="getChildCategory" column="id=id,status=status"></collection>
     </resultMap>
 
+    <resultMap id="CATEGORY_LIST_TREE_ALL"
+               type="com.perfree.model.Category">
+        <result column="id" property="id"></result>
+        <result column="pid" property="pid"></result>
+        <result column="name" property="name"></result>
+        <result column="desc" property="desc"></result>
+        <result column="count" property="count"></result>
+        <result column="metaKeywords" property="metaKeywords"></result>
+        <result column="metaDescription" property="metaDescription"></result>
+        <result column="status" property="status"></result>
+        <result column="createTime" property="createTime"></result>
+        <result column="updateTime" property="updateTime"></result>
+        <collection property="children"
+                    select="getChildCategoryAll" column="id=id"></collection>
+    </resultMap>
+
     <insert id="add">
         insert into p_category (pid, `name`, `desc`, metaKeywords,metaDescription,status,createTime,`count`)
         VALUES (#{pid},#{name},#{desc}, #{metaKeywords}, #{metaDescription}, #{status}, #{createTime},#{count})
@@ -30,7 +46,8 @@
 
     <update id="update">
          update p_category set
-        `name` = #{name},updateTime=#{updateTime},`desc`=#{desc},metaKeywords=#{metaKeywords},metaDescription=#{metaDescription},status=#{status}
+        `name` = #{name},updateTime=#{updateTime},`desc`=#{desc},metaKeywords=#{metaKeywords},metaDescription=#{metaDescription},status=#{status},
+       pid = #{pid}
         where id = #{id}
     </update>
 
@@ -56,7 +73,7 @@
         </foreach>
     </delete>
 
-    <select id="getList" resultMap="CATEGORY_LIST_TREE">
+    <select id="getList" resultMap="CATEGORY_LIST_TREE_ALL">
         select * from p_category where pid = -1
         <if test="name != null and name != ''">
             <bind name="name" value="'%' + _parameter.name + '%'" />
@@ -65,7 +82,7 @@
         order by createTime desc
     </select>
 
-    <select id="getAllList" resultMap="CATEGORY_LIST_TREE">
+    <select id="getAllList" resultMap="CATEGORY_LIST_TREE_ALL">
         select * from p_category where pid = -1
         <if test="status != null">
             and status = #{status}
@@ -84,6 +101,11 @@
     <select id="getChildCategory" resultMap="CATEGORY_LIST_TREE">
         select * from p_category where pid=#{id} and status = #{status} order by createTime
     </select>
+
+    <select id="getChildCategoryAll" resultMap="CATEGORY_LIST_TREE_ALL">
+        select * from p_category where pid=#{id} order by createTime
+    </select>
+
 
     <select id="getById" resultType="com.perfree.model.Category">
         select * from p_category where id=#{id}
