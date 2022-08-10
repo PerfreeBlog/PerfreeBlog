@@ -30,7 +30,7 @@
                         </div>
                         <div class="layui-form-item">
                             <span class="p-form-tip">描述:</span>
-                            <textarea name="desc" style="resize:none;" placeholder="请输入描述" class="layui-textarea"></textarea>
+                            <textarea name="desc" style="resize:none;min-height:60px;" placeholder="请输入描述" class="layui-textarea"></textarea>
                         </div>
 
                         <div class="layui-form-item">
@@ -47,13 +47,32 @@
                         </div>
 
                         <div class="layui-form-item">
+                            <span class="p-form-tip">别名:</span>
+                            <input type="text" name="slug" placeholder="请输入访问别名" autocomplete="off" class="layui-input">
+                        </div>
+
+                        <div class="layui-form-item">
                             <span class="p-form-tip">SEO关键字:</span>
                             <input type="text" name="metaKeywords" placeholder="请输入SEO关键字" autocomplete="off" class="layui-input">
                         </div>
 
                         <div class="layui-form-item">
                             <span class="p-form-tip">SEO描述:</span>
-                            <textarea style="resize:none;" name="metaDescription" placeholder="请输入SEO描述内容" class="layui-textarea"></textarea>
+                            <textarea style="resize:none;min-height:60px;" name="metaDescription" placeholder="请输入SEO描述内容" class="layui-textarea"></textarea>
+                        </div>
+
+                        <div class="layui-form-item">
+                            <span class="p-form-tip">封面图:</span>
+                            <div>
+                                <div class="layui-input-inline" style="width: calc(100% - 70px);">
+                                    <input type="text" value="" placeholder="封面图" name="thumbnail" class="layui-input">
+                                </div>
+                                <div class="layui-inline" style="left: -11px;">
+                                    <div id="thumbnail" class="p-upload-input-box">
+                                        <i class="fa fa-photo" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="layui-form-item" style="text-align: center">
                             <button type="button" lay-submit lay-filter="addForm" class="pear-btn pear-btn-primary pear-btn-sm">
@@ -87,10 +106,6 @@
                                     <button id="queryBtn" class="pear-btn pear-btn-md pear-btn-primary" type="button">
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                         查询
-                                    </button>
-                                    <button id="addBtn" class="pear-btn pear-btn-md pear-btn-primary" type="button">
-                                        <i class="fa fa-plus" aria-hidden="true"></i>
-                                        添加
                                     </button>
                                 </div>
                             </div>

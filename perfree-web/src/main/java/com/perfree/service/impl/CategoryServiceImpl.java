@@ -8,6 +8,7 @@ import com.perfree.mapper.CategoryMapper;
 import com.perfree.model.Article;
 import com.perfree.model.Category;
 import com.perfree.service.CategoryService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,7 +47,13 @@ public class CategoryServiceImpl implements CategoryService {
     public int add(Category category) {
         category.setCreateTime(new Date());
         category.setCount(0L);
-        return categoryMapper.add(category);
+
+        int result = categoryMapper.add(category);
+        if(StringUtils.isBlank(category.getSlug())) {
+            category.setSlug(category.getId().toString());
+        }
+        categoryMapper.updateSlug(category);
+        return result;
     }
 
     /**
@@ -126,5 +133,10 @@ public class CategoryServiceImpl implements CategoryService {
         categoriesPage.setTotal(pageInfo.getTotal());
         categoriesPage.setData(pageInfo.getList());
         return categoriesPage;
+    }
+
+    @Override
+    public Category getBySlug(String slug) {
+        return categoryMapper.getBySlug(slug);
     }
 }

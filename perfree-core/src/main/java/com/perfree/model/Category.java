@@ -48,6 +48,12 @@ public class Category implements Serializable {
     @NotNull(message = "状态不允许为空")
     private Integer status;
 
+    @ApiModelProperty(value="别名",name="slug")
+    private String slug;
+
+    @ApiModelProperty(value="封面图",name="thumbnail")
+    private String thumbnail;
+
     @ApiModelProperty(value="创建时间",name="createTime")
     private Date createTime;
 
@@ -166,6 +172,22 @@ public class Category implements Serializable {
         this.url = url;
     }
 
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
     @Override
     public String toString() {
         return "Category{" +
@@ -177,6 +199,8 @@ public class Category implements Serializable {
                 ", metaKeywords='" + metaKeywords + '\'' +
                 ", metaDescription='" + metaDescription + '\'' +
                 ", status=" + status +
+                ", slug=" + slug +
+                ", thumbnail=" + thumbnail +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 ", childCategory=" + children +

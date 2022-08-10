@@ -1,5 +1,5 @@
 var table, treeTable, layPage, form,$,toast, xmSelect,categorySelect;
-let pageIndex = 1, pageSize = 20;
+let pageIndex = 1, pageSize = 10;
 let formType = 'add';
 layui.use(['table', 'treeTable', 'laypage', 'form', 'jquery','toast', 'xmSelect'], function () {
     table = layui.table;
@@ -155,10 +155,11 @@ function queryTable() {
             };
         },
         cols: [[
-            {field: 'id', title: 'ID', width: 80},
-            {field: 'name', minWidth: 160,title: '分类名'},
-            {field: 'desc', minWidth: 250,title: '描述'},
-            {field: 'count', minWidth: 80,align: 'center', title: '文章数量'},
+            {field: 'id', title: 'ID', width: 60},
+            {field: 'name', minWidth: 180,title: '分类名'},
+            {field: 'desc', minWidth: 180,title: '描述'},
+            {field: 'slug', minWidth: 160,title: '访问别名'},
+            {field: 'count', minWidth: 100,align: 'center', title: '文章数量'},
             {
                 field: 'status', minWidth: 100,title: '状态', templet: function (d) {
                     let html;
@@ -169,12 +170,6 @@ function queryTable() {
                     }
                     return html;
                 }
-            },
-            {
-                field: 'createTime',
-                title: '创建时间',
-                minWidth: 150,
-                templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'id', title: '操作', width: 220,
@@ -214,6 +209,8 @@ function editData(id) {
             $("textarea[name='desc']").val(data.data.desc);
             $("select[name='status']").val(data.data.status + "");
             $("input[name='metaKeywords']").val(data.data.metaKeywords);
+            $("input[name='slug']").val(data.data.slug);
+            $("input[name='thumbnail']").val(data.data.thumbnail);
             $("textarea[name='metaDescription']").val(data.data.metaDescription);
             categorySelect.setValue([data.data.pid]);
             form.render("select");

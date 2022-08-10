@@ -71,4 +71,8 @@ public interface CategoryMapper {
 
     List<Category> getFrontAllList(Category category);
 
+    Category getBySlug(String slug);
+
+    void updateSlug(Category category);
+
 }

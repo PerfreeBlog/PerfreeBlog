@@ -12,6 +12,8 @@
         <result column="metaKeywords" property="metaKeywords"></result>
         <result column="metaDescription" property="metaDescription"></result>
         <result column="status" property="status"></result>
+        <result column="thumbnail" property="thumbnail"></result>
+        <result column="slug" property="slug"></result>
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
         <collection property="children"
@@ -28,15 +30,17 @@
         <result column="metaKeywords" property="metaKeywords"></result>
         <result column="metaDescription" property="metaDescription"></result>
         <result column="status" property="status"></result>
+        <result column="thumbnail" property="thumbnail"></result>
+        <result column="slug" property="slug"></result>
         <result column="createTime" property="createTime"></result>
         <result column="updateTime" property="updateTime"></result>
         <collection property="children"
                     select="getChildCategoryAll" column="id=id"></collection>
     </resultMap>
 
-    <insert id="add">
-        insert into p_category (pid, `name`, `desc`, metaKeywords,metaDescription,status,createTime,`count`)
-        VALUES (#{pid},#{name},#{desc}, #{metaKeywords}, #{metaDescription}, #{status}, #{createTime},#{count})
+    <insert id="add" useGeneratedKeys="true" keyProperty="id" >
+        insert into p_category (pid, `name`, `desc`, metaKeywords,metaDescription,status,createTime,`count`,thumbnail,slug)
+        VALUES (#{pid},#{name},#{desc}, #{metaKeywords}, #{metaDescription}, #{status}, #{createTime},#{count},#{thumbnail},#{slug})
     </insert>
     <update id="addCount">
         update p_category set
@@ -47,7 +51,7 @@
     <update id="update">
          update p_category set
         `name` = #{name},updateTime=#{updateTime},`desc`=#{desc},metaKeywords=#{metaKeywords},metaDescription=#{metaDescription},status=#{status},
-       pid = #{pid}
+       pid = #{pid},thumbnail=#{thumbnail},slug=#{slug}
         where id = #{id}
     </update>
 
@@ -59,6 +63,11 @@
     <update id="subCount">
        update p_category set
          `count` = `count`-1
+        where id = #{id}
+    </update>
+    <update id="updateSlug">
+        update p_category set
+            slug = #{slug}
         where id = #{id}
     </update>
 
@@ -117,5 +126,8 @@
             and name like #{name,jdbcType=VARCHAR}
         </if>
         order by `count` desc
+    </select>
+    <select id="getBySlug" resultType="com.perfree.model.Category">
+        select * from p_category where slug = #{slug}
     </select>
 </mapper>

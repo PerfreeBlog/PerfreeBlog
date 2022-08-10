@@ -2,7 +2,10 @@ package com.perfree.controller.front;
 
 import com.perfree.commons.Constants;
 import com.perfree.base.BaseController;
+import com.perfree.model.Category;
+import com.perfree.model.Tag;
 import com.perfree.service.ArticleService;
+import com.perfree.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,21 +16,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CategoryController extends BaseController {
 
     @Autowired
-    private ArticleService articleService;
+    private CategoryService categoryService;
 
-    @RequestMapping("/category/{categoryId}/{pageIndex}")
-    public String articleListPage(@PathVariable("pageIndex") int pageIndex, @PathVariable("categoryId") String categoryId, Model model) {
+    @RequestMapping("/category/{slugOrId}/{pageIndex}")
+    public String articleListPage(@PathVariable("pageIndex") int pageIndex, @PathVariable("slugOrId") String slugOrId, Model model) {
+        Category category = categoryService.getBySlug(slugOrId);
+        if (null == category) {
+            category = categoryService.getById(slugOrId);
+        }
         model.addAttribute("pageIndex", pageIndex);
-        model.addAttribute("categoryId", categoryId);
-        model.addAttribute("url", Constants.URL_ARTICLE_CATEGORY + categoryId  + "/");
+        model.addAttribute("categoryId", category.getId());
+        model.addAttribute("url", Constants.URL_ARTICLE_CATEGORY + category.getId()  + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 
-    @RequestMapping("/category/{categoryId}")
-    public String articleListPage(@PathVariable("categoryId") String categoryId, Model model) {
+    @RequestMapping("/category/{slugOrId}")
+    public String articleListPage(@PathVariable("slugOrId") String slugOrId, Model model) {
+        Category category = categoryService.getBySlug(slugOrId);
+        if (null == category) {
+            category = categoryService.getById(slugOrId);
+        }
         model.addAttribute("pageIndex", 1);
-        model.addAttribute("categoryId", categoryId);
-        model.addAttribute("url", Constants.URL_ARTICLE_CATEGORY + categoryId  + "/");
+        model.addAttribute("categoryId", category.getId());
+        model.addAttribute("url", Constants.URL_ARTICLE_CATEGORY + category.getId()  + "/");
         return view(currentThemePage() + "/articleList.html");
     }
 
