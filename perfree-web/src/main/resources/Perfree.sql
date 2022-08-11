@@ -15,6 +15,7 @@ CREATE TABLE `p_article`  (
                               `status` int(0) NULL DEFAULT 0 COMMENT '状态0:已发布,1:草稿',
                               `commentCount` int(0) NULL DEFAULT 0 COMMENT '评论数',
                               `viewCount` int(0) NULL DEFAULT 0 COMMENT '访问量',
+                              `greatCount` int(0) NULL DEFAULT 0 COMMENT '访问量',
                               `userId` int(0) NOT NULL COMMENT '创建人',
                               `isComment` int(0) NULL DEFAULT 1 COMMENT '是否允许评论0:否,1是',
                               `flag` varchar(256) NULL COMMENT '标识',

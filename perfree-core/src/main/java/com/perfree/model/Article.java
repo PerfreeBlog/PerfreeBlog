@@ -60,6 +60,9 @@ public class Article implements Serializable {
     @ApiModelProperty(value="文章阅读数",name="viewCount")
     private Long viewCount;
 
+    @ApiModelProperty(value="点赞数",name="greatCount")
+    private Long greatCount;
+
     @ApiModelProperty(value="文章发表人ID",name="userId")
     private Long userId;
 
@@ -317,5 +320,13 @@ public class Article implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Long getGreatCount() {
+        return greatCount;
+    }
+
+    public void setGreatCount(Long greatCount) {
+        this.greatCount = greatCount;
     }
 }

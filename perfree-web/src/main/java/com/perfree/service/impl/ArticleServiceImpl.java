@@ -353,6 +353,11 @@ public class ArticleServiceImpl implements ArticleService {
         return pager;
     }
 
+    @Override
+    public void updateGreatCount(Long articleId) {
+        articleMapper.updateGreatCount(articleId);
+    }
+
 
     /**
      * @description 生成摘要

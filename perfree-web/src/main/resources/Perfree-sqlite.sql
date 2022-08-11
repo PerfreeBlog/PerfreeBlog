@@ -15,6 +15,7 @@ CREATE TABLE "p_article" (
                              "status" integer,
                              "commentCount" integer,
                              "viewCount" integer,
+                             "greatCount" integer,
                              "userId" integer NOT NULL,
                              "isComment" integer,
                              "flag" text(256),

@@ -155,4 +155,5 @@ public interface ArticleMapper{
 
     List<Article> getListByTagId(Article article, String tagId);
 
+    void updateGreatCount(Long articleId);
 }

@@ -44,3 +44,5 @@ UPDATE p_tag set slug = id where slug is null;
 ALTER TABLE `p_category` ADD COLUMN `thumbnail` varchar(256) NULL COMMENT '封面图';
 ALTER TABLE `p_category` ADD COLUMN `slug` varchar(128) NULL COMMENT 'slug';
 UPDATE p_category set slug = id where slug is null;
+ALTER TABLE `p_article` ADD COLUMN `greatCount` int NULL DEFAULT 0 COMMENT '点赞数';
+UPDATE p_article set greatCount = 0;

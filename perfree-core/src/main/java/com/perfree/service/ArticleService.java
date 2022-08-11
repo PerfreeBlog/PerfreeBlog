@@ -156,4 +156,5 @@ public interface ArticleService {
 
     Pager<Article> getListByTagId(Pager<Article> pager, String tagId);
 
+    void updateGreatCount(Long articleId);
 }

@@ -75,6 +75,12 @@
         where id = #{id}
     </update>
 
+    <update id="updateGreatCount">
+        update p_article set
+            greatCount = greatCount+1
+        where id = #{articleId}
+    </update>
+
     <delete id="del">
         DELETE FROM  p_article  WHERE id IN
         <foreach collection="array" item="id" open="(" separator="," close=")">

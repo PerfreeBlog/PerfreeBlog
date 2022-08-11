@@ -116,6 +116,13 @@ public class ArticleController extends BaseApiController {
         return articleService.getApiArchive(pager);
     }
 
+    @GetMapping("/like")
+    @ApiOperation(value = "文章点赞", notes = "文章点赞,前端记得本地缓存~")
+    public ResponseBean like(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") Long articleId){
+        articleService.updateGreatCount(articleId);
+        return ResponseBean.success("success", null);
+    }
+
     @GetMapping("/getListByTagId")
     @ApiOperation(value = "根据标签ID获取文章分页列表", notes = "根据标签ID获取文章分页列表")
     @ApiImplicitParams({
