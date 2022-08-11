@@ -86,6 +86,9 @@ function queryTable() {
                     return html;
                 }
             },
+            {field: 'viewCount', title: '阅读', width: 80},
+            {field: 'greatCount', title: '点赞', width: 80},
+            {field: 'commentCount', title: '评论', width: 80},
             {
                 field: 'isTop', minWidth: 100, title: '是否置顶', templet: function (d) {
                     let html;
@@ -131,13 +134,6 @@ function queryTable() {
                 sort: true,
                 minWidth: 150,
                 templet: "<span>{{d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
-            },
-            {
-                field: 'updateTime',
-                title: '更新时间',
-                minWidth: 150,
-                sort: true,
-                templet: "<span>{{d.updateTime==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'id', title: '操作', width: 180,

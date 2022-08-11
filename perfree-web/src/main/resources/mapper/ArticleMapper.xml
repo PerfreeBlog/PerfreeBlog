@@ -112,6 +112,7 @@
         <result property="slug" column="slug"></result>
         <result property="contentModel" column="contentModel"></result>
         <result property="flag" column="flag"></result>
+        <result property="greatCount" column="greatCount"></result>
         <result property="template" column="template"></result>
         <association property="user" javaType="com.perfree.model.User">
             <id property="id" column="userId" />
