@@ -221,6 +221,7 @@ public class SystemController extends BaseController {
         }
         try {
             String random = RandomUtil.randomString(4);
+            logger.error("重置密码-验证码:{}", random);
             mailService.passwordMail(user, random);
             session.setAttribute("REST-CAPTCHA", random);
             session.setAttribute("REST-ID", queryUser.getId());
