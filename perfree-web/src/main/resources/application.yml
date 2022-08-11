@@ -90,6 +90,8 @@ cache:
 shiro:
   loginUrl: /login
   enabled: true
+  # 会话超时时间(分钟)
+  timeout: 120
 swagger:
   enable: false
   application-name: PerfreeBlog

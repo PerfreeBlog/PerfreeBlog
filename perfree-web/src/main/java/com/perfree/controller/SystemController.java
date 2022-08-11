@@ -25,6 +25,7 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,20 +50,17 @@ public class SystemController extends BaseController {
     @Autowired
     private UserService userService;
     @Autowired
-    private OptionService optionService;
-    @Autowired
     private SEOService seoService;
     @Autowired
     private MailService mailService;
-
     @Autowired
     private UpdateService updateService;
-
     @Autowired
     private RoleService roleService;
-
     @Autowired
     private RssServices rssServices;
+    @Value("${shiro.timeout}")
+    private Long timeout;
 
     /**
      * 后台首页
@@ -175,6 +173,7 @@ public class SystemController extends BaseController {
             HashMap<String, Object> result = new HashMap<>();
             result.put("user", userByAccount);
             result.put("token", token);
+            subject.getSession().setTimeout(timeout * 1000 * 60);
             return ResponseBean.success("登录成功", result);
         }catch (IncorrectCredentialsException e) {
             session.removeAttribute("CAPTCHA_CODE");
