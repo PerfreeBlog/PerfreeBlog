@@ -42,8 +42,6 @@ public class ArticleController extends BaseController {
     @AdminMenu(name = "文章管理", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
     public String index(Model model) {
-        List<Category> categories = categoryService.allList(new Category());
-        model.addAttribute("categories", categories);
         return view("static/admin/pages/article/article_list.html");
     }
 

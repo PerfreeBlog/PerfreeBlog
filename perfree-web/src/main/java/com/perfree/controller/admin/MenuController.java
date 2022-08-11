@@ -30,7 +30,7 @@ public class MenuController extends BaseController {
      * @return String
      */
     @RequestMapping("/menu")
-    @AdminMenu(name = "菜单管理", seq = 9, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
+    @AdminMenu(name = "菜单管理", seq = 10, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/menu/menu_list.html");
     }

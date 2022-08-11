@@ -35,7 +35,7 @@ public class CategoryController extends BaseController  {
      */
     @RequestMapping("/category")
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
-    @AdminMenu(name = "分类管理", seq = 4, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+    @AdminMenu(name = "分类管理", seq = 5, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/category/category_list.html");

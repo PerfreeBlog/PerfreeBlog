@@ -33,7 +33,7 @@ public class CommentController extends BaseController {
      */
     @RequestMapping("/comment")
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
-    @AdminMenu(name = "评论管理", seq = 3, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+    @AdminMenu(name = "评论管理", seq = 4, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
     public String index() {
         return view("static/admin/pages/comment/comment_list.html");

@@ -1,8 +1,8 @@
-var table, form,toast,layer;
+var table, form,toast;
+let roleCode = $("#roleCode").val();
 layui.use(['table', 'layer', 'form','toast'], function () {
     table = layui.table;
     form = layui.form;
-    layer = layui.layer;
     toast = layui.toast;
     initPage();
 });
@@ -20,7 +20,7 @@ function initPage() {
 
     // 添加
     $("#addBtn").click(function () {
-        parent.layui.admin.toPage( '/admin/page/addPage', 'addPage', '添加页面');
+        parent.layui.admin.toPage( '/admin/journal/addPage', 'journalAddPage', '发表动态');
     });
 
     // 批量删除
@@ -54,8 +54,8 @@ function queryTable() {
         totalRow: false,
         where: {
             form: {
-                title: $("#title").val(),
-                type: "page"
+                content: $("#content").val(),
+                type: "journal",
             }
         },
         limit: 10,
@@ -63,28 +63,46 @@ function queryTable() {
             {type: 'checkbox'},
             {field: 'id', title: 'ID', width: 60},
             {
-                field: 'title',
-                title: '标题',
-                minWidth: 220,
-                templet: '<div><a class="articleHref" href="{{d.url}}" target="_blank">{{d.title}}</a></div>'
+                field: 'createTime',
+                title: '发布时间',
+                sort: true,
+                minWidth: 150,
+                templet: "<span>{{d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
-            {field: 'category', title: '分类',  minWidth: 130,templet: "<span>{{d.category === null ? '' : d.category.name}}</span>"},
+            {field: 'content', title: '内容',  minWidth: 360},
+            {field: 'viewCount', title: '阅读', width: 80},
+            {field: 'greatCount', title: '点赞', width: 80},
+            {field: 'commentCount', title: '评论', width: 80},
             {
-                field: 'status',  minWidth: 80, title: '状态', templet: function (d) {
-                    let html = '<span>';
-                    if (d.status === 0) {
-                        html += "已发布";
+                field: 'isTop', minWidth: 100, title: '是否置顶', templet: function (d) {
+                    let html;
+                    if (roleCode === "contribute") {
+                        if (d.isTop === 1) {
+                            html = "置顶";
+                        } else {
+                            html = "不置顶";
+                        }
+                        return html;
                     }
-                    if (d.status === 1) {
-                        html += "草稿";
+                    if (d.isTop === 1) {
+                        html = "<input type='checkbox' name='isTop' lay-filter='isTop' lay-skin='switch' value='" + d.id + "' lay-text='置顶|不置顶' checked>";
+                    } else {
+                        html = "<input type='checkbox' name='isTop' lay-filter='isTop' value='" + d.id + "' lay-skin='switch' lay-text='置顶|不置顶'>";
                     }
-                    html += '</div>';
                     return html;
                 }
             },
             {
-                field: 'isComment',  minWidth: 80, title: '允许评论', templet: function (d) {
+                field: 'isComment', minWidth: 80, title: '允许评论', templet: function (d) {
                     let html;
+                    if (roleCode === "contribute") {
+                        if (d.isComment === 1) {
+                            html = "允许";
+                        } else {
+                            html = "不允许";
+                        }
+                        return html;
+                    }
                     if (d.isComment === 1) {
                         html = "<input type='checkbox' name='isComment' lay-filter='isComment' lay-skin='switch' value='" + d.id + "' lay-text='允许|不允许' checked>";
                     } else {
@@ -93,32 +111,11 @@ function queryTable() {
                     return html;
                 }
             },
-            {field: 'url',  minWidth: 100, title: '访问地址', templet: "<div><a href='{{d.url}}' class='articleHref' target='_blank'>{{d.url}}</a></div>"},
-            {field: 'user',  minWidth: 80, title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
-            {
-                field: 'createTime',
-                title: '创建时间',
-                sort: true,
-                minWidth: 150,
-                templet: "<span>{{d.createTime==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
-            },
-            {
-                field: 'updateTime',
-                title: '更新时间',
-                sort: true,
-                minWidth: 150,
-                templet: "<span>{{d.updateTime ==null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
-            },
+            {field: 'user', minWidth: 80, title: '创建人', templet: "<span>{{d.user.userName}}</span>"},
             {
                 field: 'id', title: '操作', width: 180,
                 templet: function (d) {
                     let html = "<div>";
-                    if (d.status === 1) {
-                        html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='changeStatus(\"" + d.id + "\",\"0\")'>发布</a>";
-                    }
-                    if (d.status === 0) {
-                        html += "<a class='pear-btn pear-btn-xs' onclick='changeStatus(\"" + d.id + "\",\"1\")'>草稿</a>";
-                    }
                     html += "<a class='pear-btn pear-btn-xs pear-btn-primary' style='margin-left: 5px' onclick='editData(\"" + d.id + "\")'>编辑</a> " +
                         "<a class='pear-btn pear-btn-xs pear-btn-danger' style='margin-left: 5px' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
                         "</div>";
@@ -142,6 +139,12 @@ function queryTable() {
         }
     });
 
+    form.on('switch(isTop)', function (data) {
+        const id = this.value;
+        const status = this.checked ? 1 : 0;
+        changeTopStatus(id, status);
+    });
+
     form.on('switch(isComment)', function (data) {
         const id = this.value;
         const status = this.checked ? 1 : 0;
@@ -154,7 +157,7 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    parent.layui.admin.jump('updatePage', "编辑页面", '/admin/page/updatePage/' + id);
+    parent.layui.admin.jump('updateArticle', "编辑文章", '/admin/article/updatePage/' + id);
 }
 
 /**
@@ -165,7 +168,7 @@ function deleteData(ids) {
     layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
         $.ajax({
             type: "POST",
-            url: "/admin/page/del",
+            url: "/admin/article/del",
             contentType: "application/json",
             data: ids,
             success: function (data) {
@@ -184,6 +187,28 @@ function deleteData(ids) {
     });
 }
 
+/**
+ * 更改置顶状态
+ */
+function changeTopStatus(id, status) {
+    $.ajax({
+        type: "POST",
+        url: "/admin/article/changeTopStatus",
+        contentType: "application/json",
+        data: JSON.stringify({id: id, isTop: status}),
+        success: function (data) {
+            if (data.code === 200) {
+                queryTable();
+                parent.toast.success({message: "修改成功",position: 'topCenter'});
+            } else {
+                parent.toast.error({message: data.msg,position: 'topCenter'});
+            }
+        },
+        error: function (data) {
+            parent.toast.error({message: "修改状态失败",position: 'topCenter'});
+        }
+    });
+}
 
 /**
  * 更改是否可以评论
@@ -204,31 +229,6 @@ function changeCommentStatus(id, status) {
         },
         error: function (data) {
             parent.toast.error({message: "修改失败",position: 'topCenter'});
-        }
-    });
-}
-
-/**
- * 更改状态
- * @param id
- * @param status
- */
-function changeStatus(id, status) {
-    $.ajax({
-        type: "POST",
-        url: "/admin/article/changeStatus",
-        contentType: "application/json",
-        data: JSON.stringify({id: id, status: status}),
-        success: function (data) {
-            if (data.code === 200) {
-                queryTable();
-                parent.toast.success({message: "修改成功",position: 'topCenter'});
-            } else {
-                parent.toast.error({message: data.msg,position: 'topCenter'});
-            }
-        },
-        error: function (data) {
-            parent.toast.error({message: "修改状态失败",position: 'topCenter'});
         }
     });
 }

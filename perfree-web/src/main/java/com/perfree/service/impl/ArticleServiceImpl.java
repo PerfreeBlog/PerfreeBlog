@@ -50,18 +50,19 @@ public class ArticleServiceImpl implements ArticleService {
     public int add(Article article) {
         article.setViewCount(0L);
         article.setCommentCount(0L);
+        article.setGreatCount(0L);
         article.setCreateTime(new Date());
         article.setUpdateTime(new Date());
         genSummary(article);
         int result = articleMapper.add(article);
-        if (article.getArticleTags().size() > 0) {
+        if (null != article.getArticleTags() && article.getArticleTags().size() > 0) {
             article.getArticleTags().forEach(r -> {
                 r.setArticleId(article.getId());
             });
             // 添加标签关联
             articleMapper.addArticleTag(article.getArticleTags());
         }
-        if (article.getCategoryId() != null) {
+        if (null != article.getCategoryId()) {
             categoryService.addCount(article.getCategoryId());
         }
         if(StringUtils.isBlank(article.getSlug())) {

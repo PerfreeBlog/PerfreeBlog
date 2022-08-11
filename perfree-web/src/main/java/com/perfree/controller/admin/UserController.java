@@ -49,7 +49,7 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/user")
     @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
-    @AdminMenu(name = "用户管理", seq = 7, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
+    @AdminMenu(name = "用户管理", seq = 8, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/user/user_list.html");
     }

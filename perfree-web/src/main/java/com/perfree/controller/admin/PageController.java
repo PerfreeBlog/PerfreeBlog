@@ -32,7 +32,7 @@ public class PageController extends BaseController {
     private ThemeService themeService;
 
     @RequestMapping("/page")
-    @AdminMenu(name = "页面管理", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+    @AdminMenu(name = "页面管理", seq = 3, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/page/page_list.html");

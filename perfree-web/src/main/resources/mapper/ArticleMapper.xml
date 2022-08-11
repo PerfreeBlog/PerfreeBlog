@@ -4,9 +4,11 @@
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
           insert into p_article
           ( title, content, summary,categoryId,metaKeywords,metaDescription,
-          thumbnail,isTop,status,userId,isComment,createTime,`type`,viewCount,commentCount,contentModel, flag,template,updateTime) VALUES
+          thumbnail,isTop,status,userId,isComment,createTime,`type`,viewCount,commentCount,contentModel, flag,
+            greatCount,template,updateTime) VALUES
           (#{title},#{content}, #{summary},#{categoryId},#{metaKeywords},#{metaDescription},
-          #{thumbnail},#{isTop},#{status},#{userId},#{isComment},#{createTime},#{type},#{viewCount},#{commentCount}, #{contentModel}, #{flag},#{template},#{updateTime})
+          #{thumbnail},#{isTop},#{status},#{userId},#{isComment},#{createTime},#{type},#{viewCount},#{commentCount},
+           #{contentModel}, #{flag},#{greatCount},#{template},#{updateTime})
     </insert>
     <insert id="addArticleTag">
          insert into p_article_tag (articleId,tagId)VALUES
@@ -146,6 +148,10 @@
         </if>
         <if test="userId != null and userId != ''">
             and t1.userId = #{userId}
+        </if>
+        <if test="content != null and content != ''">
+            <bind name="content" value="'%' + _parameter.content + '%'" />
+            and t1.content like #{content,jdbcType=VARCHAR}
         </if>
         order by t1.isTop desc,t1.createTime desc
     </select>

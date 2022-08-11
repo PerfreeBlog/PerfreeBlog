@@ -30,7 +30,7 @@ public class LinkController extends BaseController {
      * @return String
      */
     @RequestMapping("/link")
-    @AdminMenu(name = "友链管理", seq = 8, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
+    @AdminMenu(name = "友链管理", seq = 9, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/link/link_list.html");
     }

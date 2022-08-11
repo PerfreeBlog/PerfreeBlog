@@ -15,6 +15,10 @@ layui.use(['admin','jquery','popup','toast'], function() {
         return true;
     })
 
+    $(".journal-btn").click(function () {
+       admin.toPage( '/admin/journal/addPage', 'journalAddPage', '发表动态');
+    });
+
     // 消息点击回调
     // admin.message(function(id, title, context, form) {});
 })

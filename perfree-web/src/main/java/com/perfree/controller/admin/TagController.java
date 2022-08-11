@@ -37,7 +37,7 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag")
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
-    @AdminMenu(name = "标签管理", seq = 5, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
+    @AdminMenu(name = "标签管理", seq = 6, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/tag/tag_list.html");
