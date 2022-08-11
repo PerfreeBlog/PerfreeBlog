@@ -1,0 +1,8 @@
+#journalPage(pageSize=1)
+    #for(article: journalPage.data)
+        #(article.content)
+    #else
+        <span class="d-no-content">暂无动态</span>
+    #end
+    #pageRender(journalPage, preText="上一页",nextText="下一页", pagerBoxClass="m-pager-box wow fadeInUp")
+#end

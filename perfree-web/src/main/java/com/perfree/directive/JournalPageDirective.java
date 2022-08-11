@@ -13,15 +13,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
-@TemplateDirective("articlePage")
+@TemplateDirective("journalPage")
 @Component
 @SuppressWarnings("all")
-public class ArticlePageDirective extends BaseDirective {
+public class JournalPageDirective extends BaseDirective {
     private static ArticleService articleService;
 
     @Autowired
     public void setArticleService(ArticleService articleService){
-        ArticlePageDirective.articleService = articleService;
+        JournalPageDirective.articleService = articleService;
     }
 
     public void setExprList(ExprList exprList) {
@@ -35,36 +35,19 @@ public class ArticlePageDirective extends BaseDirective {
         DirectivePage<HashMap<String, String>> articlePage = new DirectivePage<>();
         articlePage.setPageIndex(getModelDataToInt("pageIndex", scope, 1));
 
-        String tagId = getModelDataToStr("tagId", scope);
-        if (StringUtils.isNotBlank(tagId)) {
-            query.put("tagId", tagId);
-        }
-
-        String categoryId = getModelDataToStr("categoryId", scope);
-        if (StringUtils.isNotBlank(categoryId)) {
-            query.put("categoryId", categoryId);
-        }
-
-        String title = getModelDataToStr("title", scope);
-        if (StringUtils.isNotBlank(title)) {
-            query.put("title", title);
-            articlePage.setQueryParamName("title");
-            articlePage.setQueryParam(title);
-        }
-
         String orderBy = getExprParamToStr("orderBy");
         if (StringUtils.isNotBlank(orderBy)){
             orderBy = HtmlUtil.filter(orderBy);
             query.put("orderBy", orderBy);
         }
-        query.put("type", Constants.ARTICLE_TYPE_ARTICLE);
+        query.put("type", Constants.ARTICLE_TYPE_JOURNAL);
         articlePage.setForm(query);
         articlePage.setPageSize(getExprParamToInt("pageSize", 10));
         articlePage = articleService.frontArticlesPage(articlePage);
         articlePage.setUrlPrefix(url);
         articlePage.initPagers();
 
-        scope.set("articlePage", articlePage);
+        scope.set("journalPage", articlePage);
         stat.exec(env, scope, writer);
     }
 

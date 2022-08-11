@@ -1,0 +1,7 @@
+#(journal.content ??)
+#commentPage(pageSize=1)
+    #for(comment : commentPage.data)
+        #(comment.content ??)
+    #end
+#pageRender(commentPage, anchor="#commentAnchor",preText="上一页",nextText="下一页")
+#end

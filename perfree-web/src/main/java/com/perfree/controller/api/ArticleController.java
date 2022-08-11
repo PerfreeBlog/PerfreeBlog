@@ -1,10 +1,7 @@
 package com.perfree.controller.api;
 
 import com.perfree.base.BaseApiController;
-import com.perfree.commons.AccessCacheLock;
-import com.perfree.commons.IpUtil;
-import com.perfree.commons.Pager;
-import com.perfree.commons.ResponseBean;
+import com.perfree.commons.*;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
@@ -50,6 +47,7 @@ public class ArticleController extends BaseApiController {
                                @ApiIgnore @RequestParam(required = false) String categoryId){
         pager.setForm(new Article());
         pager.getForm().setTitle(title);
+        pager.getForm().setType(Constants.ARTICLE_TYPE_ARTICLE);
         if (StringUtils.isNotBlank(categoryId)) {
             pager.getForm().setCategoryId(Long.parseLong(categoryId));
         }
@@ -118,10 +116,10 @@ public class ArticleController extends BaseApiController {
     }
 
     @GetMapping("/like")
-    @ApiOperation(value = "文章点赞", notes = "文章点赞,前端记得本地缓存~")
+    @ApiOperation(value = "文章/动态点赞", notes = "文章/动态点赞,前端记得本地缓存~")
     @AccessCacheLock
-    public ResponseBean like(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") Long articleId){
-        articleService.updateGreatCount(articleId);
+    public ResponseBean like(@ApiParam(name="id",value="ID",required=true) @RequestParam("id") Long id){
+        articleService.updateGreatCount(id);
         return ResponseBean.success("success", null);
     }
 

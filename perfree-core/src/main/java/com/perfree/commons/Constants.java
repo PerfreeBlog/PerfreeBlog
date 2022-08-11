@@ -36,6 +36,9 @@ public class Constants {
     /** url - articleList(文章列表) */
     public static final String URL_ARTICLE_LIST = "/articleList/";
 
+    /** url - journalList(动态列表) */
+    public static final String URL_JOURNAL_LIST = "/journalList/";
+
     /** url - archive(文章归档) */
     public static final String URL_ARCHIVE = "/archive/";
     /** url - archive(分类) */
@@ -54,6 +57,8 @@ public class Constants {
 
     /** url - article(文章) */
     public static final String URL_ARTICLE = "/article/";
+    /** url - journal(动态) */
+    public static final String URL_JOURNAL = "/journal/";
 
     /** url - article/search(搜索) */
     public static final String URL_ARTICLE_SEARCH = "/article/search/";
@@ -105,6 +110,8 @@ public class Constants {
 
     /** 文章类型:文章 */
     public static final String ARTICLE_TYPE_ARTICLE = "article";
+    /** 文章类型:动态 */
+    public static final String ARTICLE_TYPE_JOURNAL = "journal";
 
     /** 文章类型:页面 */
     public static final String ARTICLE_TYPE_PAGE = "page";
