@@ -72,10 +72,17 @@ public class SystemController extends BaseController {
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
             Constants.ROLE_USER}, logical= Logical.OR)
     public String adminIndex(Model model) {
-        List<Menu> menus = getMenuByUserIdAndType(1);
-        model.addAttribute("menus", menus);
         model.addAttribute("user", getUser());
         return view("static/admin/pages/index.html");
+    }
+
+    @PostMapping("/admin/menu/getAdminMenu")
+    @ResponseBody
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)
+    public ResponseBean getAdminMenu() {
+        List<Menu> menus = getMenuByUserIdAndType(1);
+        return ResponseBean.success("success", menus);
     }
 
     /**

@@ -87,7 +87,9 @@ logging:
 cache:
   ehcache:
     config: ehcache.xml
-
+shiro:
+  loginUrl: /login
+  enabled: true
 swagger:
   enable: false
   application-name: PerfreeBlog

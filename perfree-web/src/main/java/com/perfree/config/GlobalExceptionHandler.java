@@ -1,6 +1,7 @@
 package com.perfree.config;
 
 import com.perfree.commons.ResponseBean;
+import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -21,8 +22,8 @@ import java.util.Objects;
  * @author Perfree
  */
 @ControllerAdvice
-public class ValidExceptionHandler {
-    private final static Logger LOGGER = LoggerFactory.getLogger(ValidExceptionHandler.class);
+public class GlobalExceptionHandler {
+    private final static Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * Check exception interception processing
@@ -61,5 +62,10 @@ public class ValidExceptionHandler {
             return ResponseBean.error(ResponseBean.ERROR_CODE, list.get(0).getDefaultMessage(), null);
         }
         return ResponseBean.error(ResponseBean.ERROR_CODE, "参数错误", null);
+    }
+
+    @ExceptionHandler(value = AuthorizationException.class)
+    public String handleAuthorizationException() {
+        return "redirect:/403";
     }
 }

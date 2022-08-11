@@ -24,7 +24,7 @@
         <java.version>1.8</java.version>
         <commons.lang3.version>3.9</commons.lang3.version>
         <spring.version>2.5.12</spring.version>
-        <shiro.spring.version>1.9.0</shiro.spring.version>
+        <shiro.spring.version>1.9.1</shiro.spring.version>
         <sqlite.version>3.25.2</sqlite.version>
     </properties>
 
@@ -129,7 +129,7 @@
            <!-- shiro-spring -->
            <dependency>
                <groupId>org.apache.shiro</groupId>
-               <artifactId>shiro-spring</artifactId>
+               <artifactId>shiro-spring-boot-web-starter</artifactId>
                <version>${shiro.spring.version}</version>
            </dependency>
 
