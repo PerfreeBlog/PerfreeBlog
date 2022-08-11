@@ -1,9 +1,11 @@
-var table, form,toast;
+var table, form,toast,categorySelect, xmSelect;
 let roleCode = $("#roleCode").val();
-layui.use(['table', 'layer', 'form','toast'], function () {
+layui.use(['table', 'layer', 'form','toast', 'xmSelect'], function () {
     table = layui.table;
     form = layui.form;
     toast = layui.toast;
+    xmSelect = layui.xmSelect;
+    initCategory();
     initPage();
 });
 
@@ -44,6 +46,10 @@ function initPage() {
  * 查询表格数据
  */
 function queryTable() {
+    let category = '';
+    if (categorySelect && categorySelect.getValue() && categorySelect.getValue().length > 0) {
+        category = categorySelect.getValue()[0].value;
+    }
     table.render({
         elem: '#tableBox',
         url: '/admin/article/list',
@@ -56,7 +62,7 @@ function queryTable() {
             form: {
                 title: $("#title").val(),
                 type: "article",
-                categoryId: $("#category").val()
+                categoryId: category
             }
         },
         limit: 20,
@@ -285,6 +291,39 @@ function changeStatus(id, status) {
         },
         error: function (data) {
             parent.toast.error({message: "修改状态失败",position: 'topCenter'});
+        }
+    });
+}
+
+/**
+ * 初始化分类选择框
+ */
+function initCategory() {
+    $.get("/admin/category/allList", function (res) {
+        if (res.code === 200) {
+            categorySelect = xmSelect.render({
+                el: '#category',
+                theme: {
+                    color: localStorage.getItem("theme-color-color"),
+                },
+                model: {label: {type: 'text'}},
+                radio: true,
+                tips: '请选择分类',
+                filterable: true,
+                searchTips: '输入分类名搜索',
+                clickClose: true,
+                tree: {
+                    show: true,
+                    strict: false,
+                    expandedKeys: [-1],
+                },
+                height: 'auto',
+                data() {
+                    return res.data
+                }
+            });
+        } else {
+            parent.toast.error({message: res.msg,position: 'topCenter'});
         }
     });
 }
