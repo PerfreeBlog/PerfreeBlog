@@ -1,5 +1,6 @@
 package com.perfree.config;
 
+import com.perfree.commons.RequestAccessException;
 import com.perfree.commons.ResponseBean;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
@@ -67,5 +68,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = AuthorizationException.class)
     public String handleAuthorizationException() {
         return "redirect:/403";
+    }
+
+    @ExceptionHandler(value = RequestAccessException.class)
+    @ResponseBody
+    public ResponseBean handleRequestAccessException(RequestAccessException e) {
+        return ResponseBean.error(ResponseBean.ERROR_CODE, e.getMessage(), null);
     }
 }

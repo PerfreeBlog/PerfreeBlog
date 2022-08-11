@@ -141,6 +141,7 @@ public class SystemController extends BaseController {
     @RequestMapping(method = RequestMethod.POST, path = "/doLogin")
     @ResponseBody
     @SuppressWarnings("all")
+    @AccessCacheLock
     public ResponseBean doLogin(@RequestBody User user,Boolean rememberMe, HttpSession session, HttpServletResponse response) {
         if(rememberMe == null) {
             rememberMe = false;
@@ -204,6 +205,7 @@ public class SystemController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doRestPassword")
     @ResponseBody
+    @AccessCacheLock
     public ResponseBean doRestPassword(@RequestBody User user, HttpSession session) {
         if (StringUtils.isBlank(user.getCaptcha()) ||
                 !user.getCaptcha().toUpperCase().equals(session.getAttribute("CAPTCHA_CODE").toString())){
@@ -237,6 +239,7 @@ public class SystemController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doRestPasswordStep2")
     @ResponseBody
+    @AccessCacheLock
     public ResponseBean doRestPasswordStep2(@RequestBody User user, HttpSession session) {
         Object sessionRestPassword = session.getAttribute("REST-CAPTCHA");
         Object sessionRestID = session.getAttribute("REST-ID");
@@ -279,6 +282,7 @@ public class SystemController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doRegister")
     @ResponseBody
+    @AccessCacheLock
     public ResponseBean doRegister(@RequestBody @Valid User user, HttpSession session) {
         String isRegister = OptionCacheUtil.getValue(Constants.OPTION_WEB_IS_REGISTER);
         if (StringUtils.isNotBlank(isRegister) && isRegister.equals(String.valueOf(Constants.REGISTER_NO))) {

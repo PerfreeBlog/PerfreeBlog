@@ -47,6 +47,7 @@ public class CommentController extends BaseController {
 
     @RequestMapping("/comment/submitComment")
     @ResponseBody
+    @AccessCacheLock
     public ResponseBean submitComment(@RequestBody @Valid Comment comment, HttpServletRequest request){
         Article article = articleService.getById(comment.getArticleId().toString());
         if(article.getIsComment() == 0) {

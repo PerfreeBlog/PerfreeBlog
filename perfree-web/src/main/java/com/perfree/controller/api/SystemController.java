@@ -64,6 +64,7 @@ public class SystemController {
             @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
             @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class,  required = true)
     })
+    @AccessCacheLock
     public ResponseBean doLogin(String account, String password) {
         int count = 1;
         Ehcache cache = cacheManager.getEhcache("loginCache");
@@ -134,6 +135,7 @@ public class SystemController {
             @ApiImplicitParam(name = "userName", value = "昵称/用户名", dataTypeClass = String.class,  required = true),
             @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class,  required = true)
     })
+    @AccessCacheLock
     public ResponseBean doRegister(@ApiIgnore @Valid User user,@ApiIgnore  HttpSession session) {
         Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);
         if (optionByKey != null && optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
@@ -177,6 +179,7 @@ public class SystemController {
             @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
             @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class,  required = true)
     })
+    @AccessCacheLock
     public ResponseBean doSendRestPassMail(@ApiIgnore User user, @ApiIgnore  HttpSession session) {
         User queryUser = userService.getUserByAccountAndEmail(user.getAccount(), user.getEmail());
         if (queryUser == null) {

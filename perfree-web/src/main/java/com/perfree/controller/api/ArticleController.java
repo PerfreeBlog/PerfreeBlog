@@ -1,6 +1,7 @@
 package com.perfree.controller.api;
 
 import com.perfree.base.BaseApiController;
+import com.perfree.commons.AccessCacheLock;
 import com.perfree.commons.IpUtil;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
@@ -118,6 +119,7 @@ public class ArticleController extends BaseApiController {
 
     @GetMapping("/like")
     @ApiOperation(value = "文章点赞", notes = "文章点赞,前端记得本地缓存~")
+    @AccessCacheLock
     public ResponseBean like(@ApiParam(name="articleId",value="文章ID",required=true) @RequestParam("articleId") Long articleId){
         articleService.updateGreatCount(articleId);
         return ResponseBean.success("success", null);

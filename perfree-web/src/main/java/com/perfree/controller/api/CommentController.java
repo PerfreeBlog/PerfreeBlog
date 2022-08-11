@@ -63,6 +63,7 @@ public class CommentController extends BaseApiController {
             @ApiImplicitParam(name = "website", value = "网址", dataTypeClass = String.class),
             @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class)
     })
+    @AccessCacheLock
     public ResponseBean submitComment(@ApiIgnore @Valid Comment comment, @ApiIgnore HttpServletRequest request){
         Article article = articleService.getById(comment.getArticleId().toString());
         if(article.getIsComment() == 0) {
