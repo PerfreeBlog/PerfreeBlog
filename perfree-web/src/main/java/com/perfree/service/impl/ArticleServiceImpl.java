@@ -153,7 +153,7 @@ public class ArticleServiceImpl implements ArticleService {
         article.setUpdateTime(new Date());
         // 先删除标签关联
         articleMapper.deleteTagByArticleId(article.getId().toString());
-        if (article.getArticleTags().size() > 0) {
+        if (null != article.getArticleTags() && article.getArticleTags().size() > 0) {
             article.getArticleTags().forEach(r -> {
                 r.setArticleId(article.getId());
             });

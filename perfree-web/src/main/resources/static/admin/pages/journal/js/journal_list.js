@@ -157,7 +157,7 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    parent.layui.admin.jump('updateArticle', "编辑文章", '/admin/article/updatePage/' + id);
+    parent.layui.admin.toPage( '/admin/journal/updatePage/' + id, 'journalUpdatePage', '编辑动态');
 }
 
 /**

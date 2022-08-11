@@ -38,21 +38,35 @@
 
     <update id="update">
         update p_article set
-        `title` = #{title},
+        <if test="title != null and title != ''">
+            `title` = #{title},
+        </if>
         `content` = #{content},
         summary = #{summary},
         categoryId = #{categoryId},
         metaKeywords = #{metaKeywords},
         metaDescription = #{metaDescription},
         thumbnail = #{thumbnail},
-        isTop = #{isTop},
-        isComment = #{isComment},
-        status = #{status},
-        updateTime=#{updateTime},
-        slug=#{slug},
-        `type`=#{type},
+        <if test="isTop != null and isTop != ''">
+            `isTop` = #{isTop},
+        </if>
+        <if test="isComment != null and isComment != ''">
+            `isComment` = #{isComment},
+        </if>
+        <if test="status != null and status != ''">
+            `status` = #{status},
+        </if>
+        <if test="slug != null and slug != ''">
+            `slug` = #{slug},
+        </if>
+        <if test="type != null and type != ''">
+            `type` = #{type},
+        </if>
+        <if test="contentModel != null and contentModel != ''">
+            `contentModel` = #{contentModel},
+        </if>
         template = #{template},
-        contentModel = #{contentModel}
+        updateTime=#{updateTime}
         where id = #{id}
     </update>
     <update id="articleCommentAdd">

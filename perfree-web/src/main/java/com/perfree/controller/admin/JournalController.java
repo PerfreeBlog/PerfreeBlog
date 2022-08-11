@@ -15,11 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 /**
@@ -64,5 +62,31 @@ public class JournalController  extends BaseController {
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index(Model model) {
         return view("static/admin/pages/journal/journal_list.html");
+    }
+
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    @RequestMapping("/journal/updatePage/{id}")
+    public String updatePage(@PathVariable("id") String id, Model model) {
+        Article article = articleService.getById(id);
+        model.addAttribute("article", article);
+        return view("/static/admin/pages/journal/journal_update.html");
+    }
+
+    /**
+     * 更新文章
+     * @return String
+     */
+    @PostMapping("/journal/update")
+    @ResponseBody
+    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    public ResponseBean update(@RequestBody Article article) {
+        if (StringUtils.isBlank(article.getContent())) {
+            return ResponseBean.fail("内容不允许为空", null);
+        }
+        if (articleService.update(article) > 0) {
+            return ResponseBean.success("更新成功", article);
+        }
+        logger.error("动态更新失败: {}", article.toString());
+        return ResponseBean.fail("更新失败", null);
     }
 }
