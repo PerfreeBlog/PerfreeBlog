@@ -1,5 +1,6 @@
 package com.perfree.service;
 
+import cn.hutool.setting.dialect.Props;
 import com.perfree.model.Theme;
 import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
@@ -61,4 +62,7 @@ public interface ThemeService {
     boolean createTheme(Theme theme);
 
     List<String> getPageTplByTheme(String currentTheme);
+
+    void nodeThemeHandle(Theme themeByPath, File themeDir);
+
 }

@@ -3,7 +3,9 @@ package com.perfree.controller.admin;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.setting.dialect.Props;
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
@@ -78,8 +80,19 @@ public class ThemeController extends BaseController {
     @ResponseBody
     public ResponseBean switchTheme(@RequestBody Theme theme){
         if (themeService.switchTheme(theme) > 0) {
+            Theme themeByPath = themeService.getThemeByPath(theme.getPath());
             Ehcache cache = cacheManager.getEhcache("optionData");
             cache.put(new Element(Constants.OPTION_WEB_THEME, theme.getPath()));
+            cache.put(new Element(Constants.OPTION_WEB_THEME_TYPE, themeByPath.getType()), true);
+
+            // angular/vue/node/react类型处理
+            if ("angular".equals(themeByPath.getType()) || "vue".equals(themeByPath.getType())
+                    || "node".equals(themeByPath.getType()) || "react".equals(themeByPath.getType())) {
+                themeService.nodeThemeHandle(themeByPath, themeService.getThemeDir(theme.getPath()));
+            } else {
+                File themeResources = new File(Constants.PROD_THEMES_RESOURCES_PATH);
+                FileUtil.clean(themeResources);
+            }
             return ResponseBean.success("主题切换成功", null);
         }
         return ResponseBean.fail("主题切换失败", null);

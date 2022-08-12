@@ -8,6 +8,8 @@ public class Constants {
 
     /** option key - WEB_THEME(网站主题) */
     public static final String OPTION_WEB_THEME = "WEB_THEME";
+    /** option key - OPTION_WEB_THEME_TYPE(网站主题类型) */
+    public static final String OPTION_WEB_THEME_TYPE = "WEB_THEME_TYPE";
 
     /** option key - WEB_COMMENT_IS_REVIEW(评论是否审核) */
     public static final String OPTION_WEB_COMMENT_IS_REVIEW = "WEB_COMMENT_IS_REVIEW";
@@ -83,6 +85,9 @@ public class Constants {
 
     /** 生产主题路径 */
     public static final String PROD_THEMES_PATH = "resources/static/themes";
+
+    /** 主题资源路径 */
+    public static final String PROD_THEMES_RESOURCES_PATH = "resources/static/themeResources";
 
     /** 开发主题路径 */
     public static final String DEV_THEMES_PATH = "classpath:static/themes";

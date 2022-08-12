@@ -88,6 +88,7 @@ public class SystemController extends BaseController {
      * @return String
      */
     @RequestMapping("/")
+    @FrontViewNodeRender
     public String index(Model model) {
         model.addAttribute("url", Constants.URL_ARTICLE_LIST);
         return view(currentThemePage() + "/index.html");
@@ -103,6 +104,7 @@ public class SystemController extends BaseController {
     }
 
     @RequestMapping("/html/{name}")
+    @FrontViewNodeRender
     public String renderHtml(@PathVariable String name) {
         return view(currentThemePage() + "/html/" + name + ".html");
     }

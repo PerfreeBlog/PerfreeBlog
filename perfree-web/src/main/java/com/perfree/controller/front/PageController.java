@@ -2,6 +2,7 @@ package com.perfree.controller.front;
 
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
+import com.perfree.commons.FrontViewNodeRender;
 import com.perfree.commons.IpUtil;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
@@ -31,6 +32,7 @@ public class PageController extends BaseController {
      * @author Perfree
      */
     @RequestMapping("/page/{slug}")
+    @FrontViewNodeRender(isPageView = true)
     public String page(@PathVariable("slug") String slug, HttpServletRequest request, Model model) {
         if (slug.contains("-")) {
             String[] split = slug.split("-");

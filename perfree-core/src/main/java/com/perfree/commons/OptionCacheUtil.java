@@ -19,7 +19,7 @@ public class OptionCacheUtil {
      */
     public static String getValue(String key) {
         Ehcache dictData = CACHE_MANAGER.getEhcache(Constants.EHCACHE_KEY_OPTION_DATA);
-        if (dictData.get(key) == null){
+        if (dictData.get(key) == null || dictData.get(key).getObjectValue() == null){
             return "";
         }
         return dictData.get(key).getObjectValue().toString();

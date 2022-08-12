@@ -42,6 +42,9 @@ public class Theme implements Serializable {
     @ApiModelProperty(value="主题路径",name="absolutePath")
     private String absolutePath;
 
+    @ApiModelProperty(value="主题类型",name="type")
+    private String type;
+
     public String getPath() {
         return path;
     }
@@ -120,5 +123,13 @@ public class Theme implements Serializable {
 
     public void setAbsolutePath(String absolutePath) {
         this.absolutePath = absolutePath;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

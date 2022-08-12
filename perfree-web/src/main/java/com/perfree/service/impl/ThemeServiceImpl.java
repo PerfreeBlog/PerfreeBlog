@@ -1,5 +1,6 @@
 package com.perfree.service.impl;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.CharsetUtil;
@@ -136,6 +137,32 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     /**
+     * node/vue/angular/react类型主题处理
+     */
+    public void nodeThemeHandle(Theme theme, File themeFile) {
+        File[] files = themeFile.listFiles();
+        if (null == files || files.length <= 0) {
+            return;
+        }
+        File themeResources = new File(Constants.PROD_THEMES_RESOURCES_PATH);
+        if (themeResources.exists()) {
+            cn.hutool.core.io.FileUtil.clean(themeResources);
+        } else {
+            boolean mkdir = themeResources.mkdirs();
+        }
+
+        List<String> noCopyList = ListUtil.toLinkedList("theme.properties", "page", "index.html");
+        if (StringUtils.isNotBlank(theme.getScreenshots())) {
+            noCopyList.add(theme.getScreenshots());
+        }
+        for (File file : files) {
+            if (!noCopyList.contains(file.getName())) {
+                cn.hutool.core.io.FileUtil.copy(file.getAbsoluteFile(), themeResources.getAbsoluteFile(), true);
+            }
+        }
+    }
+
+    /**
      * 卸载主题
      * @param theme theme
      * @return boolean
@@ -178,7 +205,10 @@ public class ThemeServiceImpl implements ThemeService {
         File settingFile = new File(themeDir.getAbsolutePath() + Constants.SEPARATOR + "theme.properties");
         if (settingFile.exists()){
             Props props = new Props(settingFile, CharsetUtil.UTF_8);
-            theme.setName(props.get("name").toString());
+            theme.setName(props.getStr("name"));
+            theme.setType(props.getStr("type"));
+            theme.setVersion(props.getStr("version"));
+            theme.setScreenshots(props.getStr("screenshots"));
             theme.setPath(settingFile.getParentFile().getName());
             theme.setAbsolutePath(themeDir.getAbsolutePath());
         }

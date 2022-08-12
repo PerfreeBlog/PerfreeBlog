@@ -2,6 +2,7 @@ package com.perfree.controller.front;
 
 import com.perfree.commons.Constants;
 import com.perfree.base.BaseController;
+import com.perfree.commons.FrontViewNodeRender;
 import com.perfree.model.Tag;
 import com.perfree.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class TagController extends BaseController {
     private TagService tagService;
 
     @RequestMapping("/tag/{slugOrId}/{pageIndex}")
+    @FrontViewNodeRender
     public String articleListPage(@PathVariable("pageIndex") int pageIndex,@PathVariable("slugOrId") String slugOrId, Model model) {
         Tag tag = tagService.getBySlug(slugOrId);
         if (null == tag) {
@@ -29,6 +31,7 @@ public class TagController extends BaseController {
     }
 
     @RequestMapping("/tag/{slugOrId}")
+    @FrontViewNodeRender
     public String articleListPage(@PathVariable("slugOrId") String slugOrId, Model model) {
         Tag tag = tagService.getBySlug(slugOrId);
         if (null == tag) {
@@ -41,12 +44,14 @@ public class TagController extends BaseController {
     }
 
     @RequestMapping("/tags")
+    @FrontViewNodeRender
     public String tags(Model model) {
         model.addAttribute("url", Constants.URL_TAGS);
         return view(currentThemePage() + "/tags.html");
     }
 
     @RequestMapping("/tags/{pageIndex}")
+    @FrontViewNodeRender
     public String tagsPage(@PathVariable("pageIndex") int pageIndex,Model model) {
         model.addAttribute("url", Constants.URL_TAGS);
         model.addAttribute("pageIndex", pageIndex);

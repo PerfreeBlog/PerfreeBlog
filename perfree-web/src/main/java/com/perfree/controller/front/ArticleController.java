@@ -2,6 +2,7 @@ package com.perfree.controller.front;
 
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
+import com.perfree.commons.FrontViewNodeRender;
 import com.perfree.commons.IpUtil;
 import com.perfree.commons.ResponseBean;
 import com.perfree.model.Article;
@@ -23,6 +24,7 @@ public class ArticleController extends BaseController {
     private ArticleService articleService;
 
     @RequestMapping(value = {"/articleList/{pageIndex}", "/articleList"})
+    @FrontViewNodeRender
     public String articleListPage(@PathVariable(value = "pageIndex", required = false) String pageIndex,Model model) {
         model.addAttribute("url", Constants.URL_ARTICLE_LIST);
         if (StringUtils.isBlank(pageIndex)) {
@@ -33,6 +35,7 @@ public class ArticleController extends BaseController {
     }
 
     @RequestMapping("/article/{slug}")
+    @FrontViewNodeRender
     public String articlePage(@PathVariable("slug") String slug,Model model, HttpServletRequest request) {
         if (slug.contains("-")) {
             String[] split = slug.split("-");

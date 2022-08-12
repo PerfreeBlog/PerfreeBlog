@@ -31,6 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations(
                         "classpath:/static/",
                         "file:./resources/static/",
+                        "file:./resources/static/themeResources/",
                         "file:./resources/plugin/",
                         "file:" + uploadPath
                 );

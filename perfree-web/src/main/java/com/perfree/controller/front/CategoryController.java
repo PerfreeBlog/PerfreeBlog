@@ -2,6 +2,7 @@ package com.perfree.controller.front;
 
 import com.perfree.commons.Constants;
 import com.perfree.base.BaseController;
+import com.perfree.commons.FrontViewNodeRender;
 import com.perfree.model.Category;
 import com.perfree.model.Tag;
 import com.perfree.service.ArticleService;
@@ -19,6 +20,7 @@ public class CategoryController extends BaseController {
     private CategoryService categoryService;
 
     @RequestMapping("/category/{slugOrId}/{pageIndex}")
+    @FrontViewNodeRender
     public String articleListPage(@PathVariable("pageIndex") int pageIndex, @PathVariable("slugOrId") String slugOrId, Model model) {
         Category category = categoryService.getBySlug(slugOrId);
         if (null == category) {
@@ -31,6 +33,7 @@ public class CategoryController extends BaseController {
     }
 
     @RequestMapping("/category/{slugOrId}")
+    @FrontViewNodeRender
     public String articleListPage(@PathVariable("slugOrId") String slugOrId, Model model) {
         Category category = categoryService.getBySlug(slugOrId);
         if (null == category) {
@@ -43,12 +46,14 @@ public class CategoryController extends BaseController {
     }
 
     @RequestMapping("/categories")
+    @FrontViewNodeRender
     public String categories(Model model) {
         model.addAttribute("url", Constants.URL_CATEGORIES);
         return view(currentThemePage() + "/categories.html");
     }
 
     @RequestMapping("/categories/{pageIndex}")
+    @FrontViewNodeRender
     public String categoriesPage(@PathVariable("pageIndex") int pageIndex,Model model) {
         model.addAttribute("url", Constants.URL_CATEGORIES);
         model.addAttribute("pageIndex", pageIndex);
