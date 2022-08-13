@@ -29,6 +29,10 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
         DynamicDataSource.dataSourceIsInit = true;
     }
 
+    public static void removeDataSource() {
+        DynamicDataSource.dataSource = new DruidDataSource();
+    }
+
     /**
      * 获取数据源
      * @return DataSource

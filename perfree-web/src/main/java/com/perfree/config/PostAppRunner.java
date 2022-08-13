@@ -87,7 +87,7 @@ public class PostAppRunner implements ApplicationRunner {
         }
         dbSetting.autoLoad(true);
         // Load options and put into memory
-        if (DynamicDataSource.getDataSource() != null) {
+        if (DynamicDataSource.getDataSource() != null && DynamicDataSource.dataSourceIsInit) {
             if (dbSetting.getStr("dataVersion") == null || !dbSetting.getStr("dataVersion").equals(version)) {
                 updateSql(dbSetting);
             }

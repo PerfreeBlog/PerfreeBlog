@@ -3,7 +3,9 @@ package com.perfree.controller.admin;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
+import com.alibaba.druid.pool.DruidDataSource;
 import com.perfree.commons.Constants;
+import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.GravatarUtil;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
@@ -41,23 +43,6 @@ public class InstallController extends BaseController {
         return view("static/admin/pages/install/install.html");
     }
 
-    @RequestMapping("/install/step2")
-    public String installStep2Page() {
-        String installStatus = getInstallStatus();
-        if (StringUtils.isNotBlank(installStatus)) {
-            return "redirect:/404";
-        }
-        return view("static/admin/pages/install/install-step2.html");
-    }
-
-    @RequestMapping("/install/step3")
-    public String installStep3Page() {
-        String installStatus = getInstallStatus();
-        if (StringUtils.isNotBlank(installStatus) && installStatus.equals("success")) {
-            return "redirect:/404";
-        }
-        return view("static/admin/pages/install/install-step3.html");
-    }
 
     @RequestMapping("/install/addDatabase")
     @ResponseBody
