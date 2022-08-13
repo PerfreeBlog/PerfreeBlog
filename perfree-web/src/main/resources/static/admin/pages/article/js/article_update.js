@@ -35,6 +35,25 @@ function initEvent() {
             $("#publishBtn").click();
         }
     }, false);
+
+    $("#switch-panel-btn").click(function () {
+        $("#p-container-right").css({"display":"none"});
+        $("#p-container-left").removeClass("layui-col-md8");
+        $("#p-container-left").addClass("layui-col-md12");
+        if (markdownEditor){
+            markdownEditor.resize("100%", "100%");
+        }
+        $("#open-right-panel-btn").show();
+    });
+    $("#open-right-panel-btn").click(function () {
+        $("#p-container-right").css({"display":"block"});
+        $("#p-container-left").addClass("layui-col-md8");
+        $("#p-container-left").removeClass("layui-col-md12");
+        if (markdownEditor){
+            markdownEditor.resize("100%", "100%");
+        }
+        $("#open-right-panel-btn").hide();
+    });
 }
 
 /**

@@ -10,6 +10,7 @@
 }
 .p-article-header{
     height: 62px;
+    display: flex;
 }
 .p-article-btn-box{
     padding-top: 10px;
@@ -77,4 +78,29 @@
 }
 .editormd-toolbar{
     position: absolute!important;
+}
+#switch-panel-btn{
+    line-height: 62px;
+    cursor: pointer;
+    padding-left: 15px;
+    padding-right: 10px;
+    display: inline-block;
+    height: 62px;
+}
+html{
+    overflow-x: hidden;
+}
+#open-right-panel-btn{
+    position: fixed;
+    right: 0;
+    top: 20px;
+    height: 45px;
+    width: 45px;
+    text-align: center;
+    cursor: pointer;
+    background: white;
+    line-height: 45px;
+    box-shadow: 0 0 12px 2px rgb(0 0 0 / 10%);
+    display: none;
+    border-radius: 5px 0px 0px 5px;
 }

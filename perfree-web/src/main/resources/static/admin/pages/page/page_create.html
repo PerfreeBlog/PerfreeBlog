@@ -18,7 +18,7 @@
 <div class="">
     <form class="layui-form" action="">
         <div class="layui-row layui-col-space10">
-            <div class="layui-col-xs12 layui-col-sm12 layui-col-md8">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md8" id="p-container-left">
                 <div class="layui-card">
                     <div class="layui-card-body">
                         <div class="layui-input-inline"  style="display: none;">
@@ -44,7 +44,7 @@
                 </div>
 
             </div>
-            <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 p-container-right">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 p-container-right" id="p-container-right">
                 <div class="layui-card">
                     <div class="layui-card-header p-article-header">
                         <div class="p-article-btn-box">
@@ -55,6 +55,9 @@
                             <button type="button" lay-submit lay-filter="draftForm" class="pear-btn pear-btn-md">
                                 <i class="fa fa-folder-open-o" aria-hidden="true"></i> 保存到草稿箱
                             </button>
+                        </div>
+                        <div style="margin-left: auto;">
+                            <a id="switch-panel-btn" title="收起右侧面板" href="javascript:;"><i class="layui-icon layui-icon-right"></i></a>
                         </div>
                     </div>
                     <div class="layui-card-body">
@@ -121,6 +124,7 @@
             </div>
         </div>
     </form>
+    <a id="open-right-panel-btn" title="展开右侧面板" href="javascript:;"><i class="layui-icon layui-icon-left"></i></a>
 </div>
 <script src="/static/public/libs/jquery/jquery-3.5.1.min.js"></script>
 <script src="/static/public/libs/editormd/editormd.min.js"></script>
