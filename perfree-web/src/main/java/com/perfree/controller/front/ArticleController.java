@@ -23,7 +23,7 @@ public class ArticleController extends BaseController {
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping(value = {"/articleList/{pageIndex}", "/articleList"})
+    @RequestMapping(value = {"/articleList/{pageIndex}", "/articleList", "article"})
     @FrontViewNodeRender
     public String articleListPage(@PathVariable(value = "pageIndex", required = false) String pageIndex,Model model) {
         model.addAttribute("url", Constants.URL_ARTICLE_LIST);

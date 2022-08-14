@@ -25,6 +25,6 @@
          select t.* from p_option t
     </select>
     <select id="getMaxId" resultType="java.lang.Integer">
-        select MAX(id) FROM p_option
+        select ifnull(MAX(id),0)  FROM p_option
     </select>
 </mapper>

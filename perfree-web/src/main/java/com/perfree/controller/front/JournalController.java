@@ -21,7 +21,7 @@ public class JournalController extends BaseController {
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping(value = {"/journalList/{pageIndex}", "/journalList"})
+    @RequestMapping(value = {"/journalList/{pageIndex}", "/journalList", "journal"})
     @FrontViewNodeRender
     public String articleListPage(@PathVariable(value = "pageIndex", required = false) String pageIndex, Model model) {
         model.addAttribute("url", Constants.URL_JOURNAL_LIST);

@@ -84,6 +84,7 @@ public class InstallController extends BaseController {
             return ResponseBean.fail("账户已存在", null);
         }
         if (userService.add(user) > 0) {
+            userService.installInitAllUser(user);
             File file = new File(Constants.DB_PROPERTIES_PATH);
             Props setting = new Props(FileUtil.touch(file), CharsetUtil.CHARSET_UTF_8);
             setting.setProperty("installStatus","success");

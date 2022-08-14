@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.perfree.mapper.UserMapper" >
-    <insert id="add">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
         insert into p_user ( account, userName, password,salt,status,avatar,roleId,email,website,createTime)
         VALUES (#{account},#{userName}, #{password},#{salt},#{status},#{avatar},#{roleId},#{email},#{website},#{createTime})
     </insert>
@@ -41,6 +41,14 @@
         password = #{password},
         updateTime=#{updateTime}
         where id = #{id}
+    </update>
+
+    <update id="installInitArticleUserId">
+        update p_article set userId = #{id}
+    </update>
+
+    <update id="installInitTagUserId">
+        update p_tag set userId = #{id}
     </update>
 
     <delete id="del">

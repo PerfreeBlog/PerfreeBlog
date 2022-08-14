@@ -143,4 +143,10 @@ public class UserServiceImpl implements UserService {
     public List<User> allList() {
         return userMapper.getList(null);
     }
+
+    @Override
+    public void installInitAllUser(User user) {
+        userMapper.installInitArticleUserId(user);
+        userMapper.installInitTagUserId(user);
+    }
 }

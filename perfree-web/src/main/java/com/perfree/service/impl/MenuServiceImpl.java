@@ -61,6 +61,7 @@ public class MenuServiceImpl implements MenuService {
     public int add(Menu menu) {
         menu.setId(IdUtil.simpleUUID());
         menu.setCreateTime(new Date());
+        menu.setUpdateTime(new Date());
         return menuMapper.add(menu);
     }
 

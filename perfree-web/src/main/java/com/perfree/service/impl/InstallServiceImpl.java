@@ -1,5 +1,7 @@
 package com.perfree.service.impl;
 
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.CharsetUtil;
@@ -17,16 +19,15 @@ import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.alibaba.druid.util.DruidDataSourceUtils;
 import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
+import com.perfree.commons.GravatarUtil;
 import com.perfree.controller.admin.InstallController;
-import com.perfree.model.Database;
-import com.perfree.model.Plugin;
+import com.perfree.mapper.ArticleMapper;
+import com.perfree.model.*;
 import com.perfree.permission.AdminMenuGroup;
 import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
-import com.perfree.service.InstallService;
-import com.perfree.service.MenuService;
-import com.perfree.service.OptionService;
-import com.perfree.service.PluginService;
+import com.perfree.service.*;
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,8 @@ import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -55,7 +58,18 @@ public class InstallServiceImpl implements InstallService {
 
     @Autowired
     private PluginManagerService pluginManagerService;
-
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private LinkService linkService;
+    @Autowired
+    private RoleService roleService;
     private static final int INSTALL_DATABASE_RESULT_SUCCESS = 200;
     private static final int INSTALL_DATABASE_RESULT_EXIST = -1;
     private static final int INSTALL_DATABASE_RESULT_SKIP = -2;
@@ -139,7 +153,20 @@ public class InstallServiceImpl implements InstallService {
             ds.close();
         }
         DynamicDataSource.setDataSource(druidDataSource, setting.getStr("type"));
-        connection = druidDataSource.getConnection();
+        initData(sqlFile);
+        setting.setProperty("installStatus","dbSuccess");
+        setting.setProperty("dataVersion", version);
+        installInitOperate(setting, file);
+        return INSTALL_DATABASE_RESULT_SUCCESS;
+    }
+
+    /**
+     * 初始化数据
+     * @param sqlFile sqlFile
+     * @throws Exception e
+     */
+    private void initData(File sqlFile) throws Exception{
+        Connection connection = DynamicDataSource.getDataSource().getConnection();
         FileReader fileReader = new FileReader(sqlFile);
         String createSql = fileReader.readString();
         String[] split = createSql.split(";");
@@ -147,10 +174,200 @@ public class InstallServiceImpl implements InstallService {
             connection.prepareStatement(split[i]).execute();
         }
         connection.close();
-        setting.setProperty("installStatus","dbSuccess");
-        setting.setProperty("dataVersion", version);
-        installInitOperate(setting, file);
-        return INSTALL_DATABASE_RESULT_SUCCESS;
+
+        Tag tag = initTag();
+        Category category = initCategory();
+        Article article = initArticle(tag, category);
+        initOption();
+        initRole();
+        initMenu();
+        initPage();
+        initJournal();
+        initComment(article);
+        initLink();
+    }
+
+    private void initOption() {
+        List<Option> optionList = new ArrayList<>();
+        Option themeOption = new Option();
+        themeOption.setKey("WEB_THEME");
+        themeOption.setValue("default");
+        optionList.add(themeOption);
+
+        Option isRegisterOption = new Option();
+        isRegisterOption.setKey("WEB_IS_REGISTER");
+        isRegisterOption.setValue("1");
+        optionList.add(isRegisterOption);
+
+        Option commentReviewOption = new Option();
+        commentReviewOption.setKey("WEB_COMMENT_IS_REVIEW");
+        commentReviewOption.setValue("0");
+        optionList.add(commentReviewOption);
+
+        optionService.addOrUpdateOptions(optionList);
+    }
+
+    private void initRole() {
+        Role adminRole = new Role();
+        adminRole.setCode("admin");
+        adminRole.setName("管理员");
+        adminRole.setDescription("网站管理员");
+        roleService.add(adminRole);
+
+        Role userRole = new Role();
+        userRole.setCode("user");
+        userRole.setName("普通用户");
+        userRole.setDescription("网站用户");
+        roleService.add(userRole);
+
+        Role editorRole = new Role();
+        editorRole.setCode("editor");
+        editorRole.setName("文章编辑");
+        editorRole.setDescription("文章编辑");
+        roleService.add(editorRole);
+
+        Role contributeRole = new Role();
+        contributeRole.setCode("contribute");
+        contributeRole.setName("文章贡献");
+        contributeRole.setDescription("文章贡献");
+        roleService.add(contributeRole);
+    }
+
+    private void initMenu() {
+        Menu archiveMenu = new Menu();
+        archiveMenu.setPid("-1");
+        archiveMenu.setName("归档");
+        archiveMenu.setUrl("/archive");
+        archiveMenu.setIcon("fa-calendar");
+        archiveMenu.setSeq(1);
+        archiveMenu.setType(0);
+        archiveMenu.setTarget(0);
+        archiveMenu.setStatus(0);
+        menuService.add(archiveMenu);
+
+        Menu journalMenu = new Menu();
+        journalMenu.setPid("-1");
+        journalMenu.setName("动态");
+        journalMenu.setUrl("/journal");
+        journalMenu.setIcon("fa-newspaper-o");
+        journalMenu.setSeq(2);
+        journalMenu.setType(0);
+        journalMenu.setTarget(0);
+        journalMenu.setStatus(0);
+        menuService.add(journalMenu);
+
+        Menu linkMenu = new Menu();
+        linkMenu.setPid("-1");
+        linkMenu.setName("友链");
+        linkMenu.setUrl("/page/link");
+        linkMenu.setIcon("fa-user-o");
+        linkMenu.setSeq(3);
+        linkMenu.setType(0);
+        linkMenu.setTarget(0);
+        linkMenu.setStatus(0);
+        menuService.add(linkMenu);
+    }
+
+    private Tag initTag() {
+        Tag tag = new Tag();
+        tag.setColor("#36b368");
+        tag.setName("演示标签");
+        tag.setUserId(1L);
+        tagService.add(tag);
+        return tag;
+    }
+
+    private Category initCategory() {
+        Category category = new Category();
+        category.setName("演示分类");
+        category.setStatus(0);
+        category.setPid(-1L);
+        categoryService.add(category);
+        return category;
+    }
+
+    /**
+     * 初始化文章数据
+     */
+    private Article initArticle(Tag tag,Category category) {
+        Article article = new Article();
+        article.setType(Constants.ARTICLE_TYPE_ARTICLE);
+        article.setCategoryId(category.getId());
+        ArticleTag articleTag = new ArticleTag();
+        articleTag.setTagId(tag.getId());
+        article.setArticleTags(ListUtil.toLinkedList(articleTag));
+        article.setTitle("HelloWorld");
+        article.setContent("欢迎使用 Perfree，如果您看到这篇文章,表示Perfree 已经安装成功.");
+        article.setContentModel("markdown");
+        article.setIsTop(0);
+        article.setStatus(0);
+        article.setIsComment(1);
+        article.setUserId(1L);
+        articleService.add(article);
+        return article;
+    }
+
+    private void initPage() {
+        // 友链
+        Article linkArticle = new Article();
+        linkArticle.setType(Constants.ARTICLE_TYPE_PAGE);
+        linkArticle.setTitle("友链");
+        linkArticle.setContent("友链页面,您可直接访问填写的访问地址进行查看,或者在菜单管理配置该访问地址~");
+        linkArticle.setSlug("link");
+        linkArticle.setContentModel("markdown");
+        linkArticle.setIsTop(0);
+        linkArticle.setStatus(0);
+        linkArticle.setIsComment(1);
+        linkArticle.setUserId(1L);
+        articleService.add(linkArticle);
+
+        // 演示
+        Article demoArticle = new Article();
+        demoArticle.setType(Constants.ARTICLE_TYPE_PAGE);
+        demoArticle.setTitle("演示页面");
+        demoArticle.setContent("这是一个演示页面,您可直接访问填写的访问地址进行查看,或者在菜单管理配置该访问地址~");
+        demoArticle.setSlug("demo");
+        demoArticle.setContentModel("markdown");
+        demoArticle.setIsTop(0);
+        demoArticle.setStatus(0);
+        demoArticle.setIsComment(1);
+        demoArticle.setUserId(1L);
+        articleService.add(demoArticle);
+    }
+
+    private void initJournal() {
+        // 友链
+        Article article = new Article();
+        article.setType(Constants.ARTICLE_TYPE_JOURNAL);
+        article.setTitle(DateUtil.format(new Date(), "yyyy-MM-dd hh:mm:ss"));
+        article.setContent("第一条动态");
+        article.setContentModel("markdown");
+        article.setIsTop(0);
+        article.setStatus(0);
+        article.setIsComment(1);
+        article.setUserId(1L);
+        articleService.add(article);
+    }
+
+    private void initComment(Article article) {
+        Comment comment = new Comment();
+        comment.setArticleId(article.getId());
+        comment.setEmail("perfree@126.com");
+        comment.setStatus(0);
+        comment.setUserName("Perfree");
+        comment.setContent("第一条评论");
+        comment.setWebsite("http://www.perfree.org.cn");
+        comment.setAvatar(GravatarUtil.getGravatar(comment.getEmail()));
+        commentService.add(comment);
+    }
+
+    private void initLink(){
+        Link link = new Link();
+        link.setAddress("http://www.perfree.org.cn");
+        link.setDesc("一款Java开发的博客/CMS系统");
+        link.setLogo("http://www.perfree.org.cn/static/public/images/logo.png");
+        link.setName("Perfree官网");
+        linkService.add(link);
     }
 
     /**

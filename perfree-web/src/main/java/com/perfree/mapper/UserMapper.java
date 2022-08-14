@@ -85,4 +85,8 @@ public interface UserMapper {
      * @author Perfree
      */
     User getUserByAccountAndEmail(@Param("account") String account,@Param("email") String email);
+
+    void installInitArticleUserId(User user);
+
+    void installInitTagUserId(User user);
 }

@@ -94,4 +94,7 @@ public interface UserService {
      * @author Perfree
      */
     List<User> allList();
+
+    void installInitAllUser(User user);
+
 }

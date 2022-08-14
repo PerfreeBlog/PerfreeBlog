@@ -18,4 +18,6 @@ public interface RoleMapper {
 
     Role getRoleByCode(String roleCode);
 
+    int add(Role role);
+
 }

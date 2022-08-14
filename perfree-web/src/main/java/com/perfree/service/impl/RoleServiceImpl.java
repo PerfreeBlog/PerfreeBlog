@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,5 +34,12 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(readOnly = true)
     public Role getRoleByCode(String roleCode) {
         return roleMapper.getRoleByCode(roleCode);
+    }
+
+    @Override
+    public int add(Role role) {
+        role.setCreateTime(new Date());
+        role.setUpdateTime(new Date());
+        return roleMapper.add(role);
     }
 }
