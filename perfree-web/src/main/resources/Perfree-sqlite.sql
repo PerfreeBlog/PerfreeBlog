@@ -168,3 +168,5 @@ CREATE INDEX "main"."p_menu_status" ON "p_menu" ("status");
 CREATE INDEX "main"."p_menu_type" ON "p_menu" ("type");
 CREATE INDEX "main"."p_user_account" ON "p_user" ("account");
 CREATE INDEX "main"."p_user_status" ON "p_user" ("status");
+CREATE INDEX "main"."p_tag_slug" ON "p_tag" ("slug");
+CREATE INDEX "main"."p_category_slug" ON "p_category" ("slug");

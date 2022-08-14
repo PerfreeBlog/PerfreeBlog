@@ -180,7 +180,8 @@ CREATE TABLE `p_plugin`  (
 )ENGINE = InnoDB CHARACTER SET = utf8mb4 ROW_FORMAT = Dynamic;
 ALTER TABLE `p_article` ADD INDEX `slug`(`slug`),ADD INDEX `isTop`(`isTop`), ADD INDEX `type`(`type`), ADD INDEX `categoryId`(`categoryId`);
 ALTER TABLE `p_attach` ADD INDEX `type`(`type`) , ADD INDEX `saveType`(`saveType`);
-ALTER TABLE `p_category` ADD INDEX `status`(`status`);
+ALTER TABLE `p_category` ADD INDEX `status`(`status`),ADD INDEX `slug`(`slug`);
+ALTER TABLE `p_tag` ADD INDEX `slug`(`slug`);
 ALTER TABLE `p_comment` ADD INDEX `articleId`(`articleId`), ADD INDEX `status`(`status`);
 ALTER TABLE `p_menu` ADD INDEX `type`(`type`), ADD INDEX `status`(`status`);
 ALTER TABLE `p_user` ADD INDEX `account`(`account`), ADD INDEX `status`(`status`);

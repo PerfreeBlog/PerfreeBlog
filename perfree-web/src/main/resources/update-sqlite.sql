@@ -1,49 +1,4 @@
 --PerfreeBlog
---v1.2.4;
-INSERT INTO "main".`p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (3, '文章编辑', '文章编辑', 'editor', '2021-09-15 13:59:43', NULL);
-INSERT INTO "main".`p_role`(`id`, `name`, `description`, `code`, `createTime`, `updateTime`) VALUES (4, '文章贡献', '文章贡献', 'contribute', '2021-09-15 14:00:21', NULL);
-UPDATE "main".`p_role` SET `name` = '普通用户', `description` = '网站用户', `code` = 'user', `createTime` = '2020-12-17 13:11:50', `updateTime` = NULL WHERE `id` = 2;
---PerfreeBlog
---v1.2.8;
-ALTER TABLE "main"."p_menu"  ADD COLUMN "pluginId" text(128) DEFAULT(NULL);
---PerfreeBlog
---v1.3.1;
-ALTER TABLE "main"."p_menu" RENAME TO "_p_menu_old_1.3.1";
-CREATE TABLE "main"."p_menu" (
-  "id" text(64) NOT NULL,
-  "pid" text(64),
-  "name" text(128) NOT NULL,
-  "url" text(128),
-  "icon" text(64),
-  "seq" integer,
-  "type" integer NOT NULL,
-  "target" integer,
-  "articleId" integer,
-  "status" integer NOT NULL,
-  "createTime" DATETIME NOT NULL,
-  "updateTime" DATETIME,
-   PRIMARY KEY ("id")
-);
-INSERT INTO "main"."p_menu" ("id", "pid", "name", "url", "icon", "seq", "type", "target", "articleId", "status", "createTime", "updateTime") SELECT "id", "pid", "name", "url", "icon", "seq", "type", "target", "articleId", "status", "createTime", "updateTime" FROM "_p_menu_old_1.3.1";
-drop table if exists "main"."_p_menu_old_1.3.1";
-ALTER TABLE "main"."p_role_menu" RENAME TO "_p_role_menu_old_1.3.1";
-CREATE TABLE "main"."p_role_menu" (
-  "roleId" integer NOT NULL,
-  "menuId" text(64) NOT NULL
-);
-INSERT INTO "main"."p_role_menu" ("roleId", "menuId") SELECT "roleId", "menuId" FROM "main"."_p_role_menu_old_1.3.1";
-drop table if exists "main"."_p_role_menu_old_1.3.1";
---PerfreeBlog
---v1.3.2;
-ALTER TABLE "main"."p_option" RENAME TO "_p_option_old_1.3.2";
-CREATE TABLE "main"."p_option" (
-           "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
-           "key" text(256) NOT NULL,
-           "value" text
-);
-INSERT INTO "main"."p_option" ("id", "key", "value") SELECT "id", "key", "value" FROM "main"."_p_option_old_1.3.2";
-drop table if exists "main"."_p_option_old_1.3.2";
---PerfreeBlog
 --v2.0.0;
 ALTER TABLE "main"."p_article" RENAME TO "_p_article_old_1.3.3";
 CREATE TABLE "main"."p_article" (
@@ -177,3 +132,81 @@ CREATE TABLE "main"."p_attach" (
 );
 INSERT INTO "main"."p_attach" ("id", "name", "desc", "path", "suffix", "flag", "type", "createTime", "updateTime") SELECT "id", "name", "desc", "path", "suffix", "flag", "type", "createTime", "updateTime" FROM "main"."_p_attach_old_2.3.1";
 drop table if exists "main"."_p_attach_old_2.3.1";
+
+--PerfreeBlog
+--v3.0.0;
+ALTER TABLE "main"."p_tag" RENAME TO "_p_tag_old_3.0.0";
+CREATE TABLE "main"."p_tag" (
+                                "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                "name" text(256) NOT NULL,
+                                "userId" integer NOT NULL,
+                                "createTime" DATETIME NOT NULL,
+                                "updateTime" DATETIME,
+                                "color" TEXT,
+                                "thumbnail" TEXT,
+                                "slug" TEXT
+);
+INSERT INTO "main"."p_tag" ("id", "name", "userId", "createTime", "updateTime") SELECT "id", "name", "userId", "createTime", "updateTime" FROM "main"."_p_tag_old_3.0.0";
+drop table if exists "main"."_p_tag_old_3.0.0";
+UPDATE "main"."p_tag" set slug = id where slug is null;
+ALTER TABLE "main"."p_category" RENAME TO "_p_category_old_3.0.0";
+CREATE TABLE "main"."p_category" (
+                                     "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                     "name" text(256) NOT NULL,
+                                     "pid" integer NOT NULL,
+                                     "desc" text(512),
+                                     "count" integer NOT NULL,
+                                     "metaKeywords" text(256),
+                                     "metaDescription" text(256),
+                                     "status" integer NOT NULL,
+                                     "createTime" DATETIME NOT NULL,
+                                     "updateTime" DATETIME,
+                                     "thumbnail" TEXT,
+                                     "slug" TEXT
+);
+INSERT INTO "main"."p_category" ("id", "name", "pid", "desc", "count", "metaKeywords", "metaDescription", "status", "createTime", "updateTime") SELECT "id", "name", "pid", "desc", "count", "metaKeywords", "metaDescription", "status", "createTime", "updateTime" FROM "main"."_p_category_old_3.0.0";
+drop table if exists "main"."_p_category_old_3.0.0";
+UPDATE "main"."p_category" set slug = id where slug is null;
+ALTER TABLE "main"."p_article" RENAME TO "_p_article_old_3.0.0";
+CREATE TABLE "main"."p_article" (
+                                    "id" integer NOT NULL PRIMARY KEY AUTOINCREMENT,
+                                    "title" text(256) NOT NULL,
+                                    "content" text,
+                                    "contentModel" text(32),
+                                    "type" text(32),
+                                    "summary" text(1024),
+                                    "slug" text(128),
+                                    "categoryId" integer,
+                                    "metaKeywords" text(512),
+                                    "metaDescription" text(512),
+                                    "thumbnail" text(256),
+                                    "isTop" integer,
+                                    "status" integer,
+                                    "commentCount" integer,
+                                    "viewCount" integer,
+                                    "userId" integer NOT NULL,
+                                    "isComment" integer,
+                                    "flag" text(256),
+                                    "template" text(256),
+                                    "createTime" DATETIME NOT NULL,
+                                    "updateTime" DATETIME,
+                                    "greatCount" integer DEFAULT 0
+);
+INSERT INTO "main"."p_article" ("id", "title", "content", "contentModel", "type", "summary", "slug", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "flag", "template", "createTime", "updateTime") SELECT "id", "title", "content", "contentModel", "type", "summary", "slug", "categoryId", "metaKeywords", "metaDescription", "thumbnail", "isTop", "status", "commentCount", "viewCount", "userId", "isComment", "flag", "template", "createTime", "updateTime" FROM "main"."_p_article_old_3.0.0";
+drop table if exists "main"."_p_article_old_3.0.0";
+UPDATE "main"."p_article" set greatCount = 0;
+CREATE INDEX "main"."p_article_slug" ON "p_article" ("slug");
+CREATE INDEX "main"."p_article_isTop" ON "p_article" ("isTop");
+CREATE INDEX "main"."p_article_type" ON "p_article" ("type");
+CREATE INDEX "main"."p_attach_type" ON "p_attach" ("type");
+CREATE INDEX "main"."p_attach_saveType" ON "p_attach" ("saveType");
+CREATE INDEX "main"."p_category_status" ON "p_category" ("status");
+CREATE INDEX "main"."p_category_slug" ON "p_category" ("slug");
+CREATE INDEX "main"."p_comment_articleId" ON "p_comment" ("articleId");
+CREATE INDEX "main"."p_comment_status" ON "p_comment" ("status");
+CREATE INDEX "main"."p_menu_status" ON "p_menu" ("status");
+CREATE INDEX "main"."p_menu_type" ON "p_menu" ("type");
+CREATE INDEX "main"."p_user_account" ON "p_user" ("account");
+CREATE INDEX "main"."p_user_status" ON "p_user" ("status");
+CREATE INDEX "main"."p_tag_slug" ON "p_tag" ("slug");
+INSERT INTO `p_menu`(`id`, `pid`, `name`, `url`, `icon`, `seq`, `type`, `target`, `status`, `createTime`, `updateTime`) VALUES ('000000000000000000046b67a553452e','-1', '动态', '/journal', 'fa-newspaper-o', 99, 0, 0, 0, '2022-08-08 08:08:08', '2022-08-08 08:08:08');
