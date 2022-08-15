@@ -71,7 +71,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 );
 
         registry.addInterceptor(new ApiInterceptor())
-                .addPathPatterns("/api/**");
+                .addPathPatterns("/api/**").excludePathPatterns(
+                        "/api/option/**"
+                );
 
         registry.addInterceptor(createEnjoyInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns(
