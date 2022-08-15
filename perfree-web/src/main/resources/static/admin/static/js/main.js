@@ -15,7 +15,7 @@ layui.use(['admin','jquery','popup','toast'], function() {
         return true;
     })
 
-    $(".journal-btn").click(function () {
+    $(".journalBtn").click(function () {
        admin.toPage( '/admin/journal/addPage', 'journalAddPage', '发表动态');
     });
 
