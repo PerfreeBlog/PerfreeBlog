@@ -16,7 +16,12 @@ $('.d-link').each(function(){
 });
 
 $('.d-tag-item').each(function(){
-    $(this).css("background-color", colors[RandomNum(0,6)]);
+    const color = $(this).attr("tagColor");
+    if (color && color !== ''){
+        $(this).css("background-color", color);
+    } else {
+        $(this).css("background-color", colors[RandomNum(0,6)]);
+    }
 });
 
 $('.d-back-top-btn').on('click',function() {

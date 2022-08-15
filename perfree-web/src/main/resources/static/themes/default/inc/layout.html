@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/static/public/libs/layui-v2.5.6/layui/css/layui.css">
     <link href="/static/public/libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="/static/themes/default/static/libs/wow/animate.css">
+    <link rel="stylesheet" href="/static/admin/static/admin/css/loader.css" />
     <link rel="stylesheet" href="/static/themes/default/static/css/style.css?v=#(version)">
     <style>
         html{
@@ -21,9 +22,22 @@
         }
     </style>
     #@css?()
+    <script type="text/javascript">
+        window.onload = function f() {
+            setTimeout(function () {
+                document.getElementById("loading-box").style.display="none";
+                document.getElementById("d-theme-container").style.display="block";
+            }, 100);
+        };
+    </script>
 </head>
 <body>
-<div class="d-theme-container">
+<!-- 加 载 动 画 -->
+<div class="loader-main" id="loading-box">
+    <!-- 动 画 对 象 -->
+    <div class="loader"></div>
+</div>
+<div class="d-theme-container" id="d-theme-container">
 
     #include("/static/themes/default/inc/header.html")
     <div class="d-box">
