@@ -240,6 +240,20 @@
 .d-comments{
     margin-top: 40px;
 }
+.greatBox{
+    width: 100%;
+    margin-top: 30px;
+    text-align: center;
+}
+.like-btn{
+    display: inline-block;
+    padding: 7px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    border: 1px solid var(--border-color-b);
+    background: rgb(244, 126, 96);
+    color: white;
+}
 @media screen and (max-width:1360px) {
     .d-container{
         width: 850px;

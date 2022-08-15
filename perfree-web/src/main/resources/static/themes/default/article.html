@@ -32,6 +32,12 @@
             #else
                 #mdToHtml(article.content ??)
             #end
+
+            <div class="greatBox">
+                  <span class="like-btn" data-id="#(article.id)">
+                    <i class="fa fa-heart-o"></i> #(article.greatCount ??)
+                  </span>
+            </div>
         </article>
 
         <div class="d-article-bottom">
@@ -82,6 +88,8 @@
     let tocLocation = [];
     initViewer();
     buildCTable();
+    like();
+    initLike();
     function initViewer() {
         const articleContentDetail = document.getElementById('d-article-content');
         if (articleContentDetail){
@@ -164,6 +172,48 @@
                 $(this).removeClass("active-toc");
             }
         });
+    }
+
+    function like(){
+        $(".like-btn").click(function (){
+            let that = $(this);
+            let greats = localStorage.getItem('great');
+            if (greats) {
+                let greatArr = greats.split(',');
+                if (greatArr.indexOf(that.attr("data-id")) >= 0) {
+                    return;
+                }
+            }
+            $.get('/article/like?id='+that.attr("data-id"), function (res) {
+                if (res.code === 200) {
+                    let count = Number(that.text()) + 1;
+                    that.html('<i class="fa fa-heart"></i> ' + count);
+                    let great = localStorage.getItem('great');
+                    if (great && great !== '') {
+                        great += ',';
+                    } else {
+                        great = '';
+                    }
+                    localStorage.setItem('great', great + that.attr("data-id"))
+                    notyf.success('点赞成功~');
+                } else {
+                    notyf.error(res.msg);
+                }
+            })
+        });
+    }
+
+    function initLike(){
+        let greats = localStorage.getItem('great');
+        if (greats) {
+            let greatArr = greats.split(',');
+            $('.like-btn').each(function(){
+                if (greatArr.indexOf($(this).attr("data-id")) >= 0) {
+                    $(this).html('<i class="fa fa-heart"></i> ' + $(this).text());
+                }
+            });
+
+        }
     }
 </script>
 #end
