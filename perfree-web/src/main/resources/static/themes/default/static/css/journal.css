@@ -183,6 +183,6 @@
     margin-bottom: 20px;
     margin-top: 20px;
 }
-.like-btn{
+.like-btn,.comment-btn{
     cursor: pointer;
 }
