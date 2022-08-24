@@ -120,8 +120,16 @@
 
                         <div class="layui-form-item">
                             <span class="p-form-tip">封面图:</span>
-                            <div class="p-upload-box" id="thumbnail">
-                                <input type="hidden" name="thumbnail" value="#(article.thumbnail??)">
+                            <div>
+                                <div class="layui-input-inline" style="width: calc(100% - 70px);">
+                                    <input type="text" placeholder="封面图" name="thumbnail" class="layui-input" value="#(article.thumbnail)">
+                                </div>
+                                <div class="layui-inline" style="left: -11px;">
+                                    <div id="thumbnail" class="p-upload-input-box">
+                                        <i class="fa fa-photo" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <p style="color: #8b8b8b;font-size: 12px">封面图是否展示以主题为准</p>
                             </div>
                         </div>
                         <input type="hidden" name="type" value="page">
