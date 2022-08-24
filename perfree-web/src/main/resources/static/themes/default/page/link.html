@@ -8,26 +8,51 @@
 <link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
 <link href="/static/public/libs/perfree-comment/perfree-comment.css?v=#(version)" rel="stylesheet">
 <link rel="stylesheet" href="/static/themes/default/static/css/link.css?v=#(version)">
+<style>
+    .d-banner{
+        #if(option('HOME_BANNER') == "0")
+            background: url(#option("HOME_BANNER_IMG", "/static/themes/default/static/imgs/bg.jpg")) center/cover no-repeat;
+        #else if(option('HOME_BANNER') == "1")
+            background: url(#option("HOME_BANNER_IMG_LINK", "/static/themes/default/static/imgs/bg.jpg")) center/cover no-repeat;
+        #else if(option('HOME_BANNER') == "2")
+            background: #option("HOME_BANNER_COLOR", "#111111");
+        #else
+            background: url(/static/themes/default/static/imgs/bg.jpg) center/cover no-repeat;
+        #end
+    }
+    .d-hero-box .d-hero-title{
+        color: #option('HOME_TITLE_COLOR', 'var(--hero-color)');
+    }
+    .d-hero-box .d-hero-desc{
+        color: #option('HOME_SUB_TITLE_COLOR', 'var(--hero-color)');
+    }
+</style>
 #end
 #define content()
+<div class="d-wrapper">
+    <div class="d-banner">
+        <div class="d-hero-box">
+            <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#(article.title ??)</h1>
+            <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">
+                <span>
+                    <i class="fa fa-user-o"></i> #(article.user.userName ??)
+                </span>
+                <span>
+                    <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
+                </span>
+                <span>
+                    <i class="fa fa-eye"></i> #(article.viewCount ??)
+                </span>
+                <span>
+                    <i class="fa fa-comment-o"></i> #(article.commentCount ??)
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
 <section class="d-container">
     <section class="d-article-container">
         #linkPage(pageSize=999)
-            <h1 class="d-article-title">#(article.title ??)</h1>
-            <div class="d-article-info">
-                 <span>
-                    <i class="fa fa-user-o"></i> #(article.user.userName ??)
-                </span>
-                    <span>
-                    <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
-                </span>
-                    <span>
-                    <i class="fa fa-eye"></i> #(article.viewCount ??)
-                </span>
-                    <span>
-                    <i class="fa fa-comment-o"></i> #(article.commentCount ??)
-                </span>
-            </div>
 
             <ul class="d-link-container layui-row layui-col-space15">
                 #for(link: linkPage.data)

@@ -2,8 +2,34 @@
 #@layout()
 #define css()
     <link rel="stylesheet" href="/static/themes/default/static/css/archive.css?v=#(version)">
+    <style>
+        .d-banner{
+            #if(option('HOME_BANNER') == "0")
+                background: url(#option("HOME_BANNER_IMG", "/static/themes/default/static/imgs/bg.jpg")) center/cover no-repeat;
+            #else if(option('HOME_BANNER') == "1")
+                background: url(#option("HOME_BANNER_IMG_LINK", "/static/themes/default/static/imgs/bg.jpg")) center/cover no-repeat;
+            #else if(option('HOME_BANNER') == "2")
+                background: #option("HOME_BANNER_COLOR", "#111111");
+            #else
+                background: url(/static/themes/default/static/imgs/bg.jpg) center/cover no-repeat;
+            #end
+        }
+        .d-hero-box .d-hero-title{
+            color: #option('HOME_TITLE_COLOR', 'var(--hero-color)');
+        }
+        .d-hero-box .d-hero-desc{
+            color: #option('HOME_SUB_TITLE_COLOR', 'var(--hero-color)');
+        }
+    </style>
 #end
 #define content()
+    <div class="d-wrapper">
+        <div class="d-banner">
+            <div class="d-hero-box">
+                <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">归档</h1>
+            </div>
+        </div>
+    </div>
     <section class="d-container">
         #archivePage(pageSize=12)
             <div class="d-timeline-list">
