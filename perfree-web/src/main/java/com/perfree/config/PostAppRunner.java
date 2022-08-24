@@ -191,6 +191,8 @@ public class PostAppRunner implements ApplicationRunner {
         String currTheme = OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
         Theme themeByPath = themeService.getThemeByPath(currTheme);
         Ehcache cache = cacheManager.getEhcache("optionData");
-        cache.put(new Element(Constants.OPTION_WEB_THEME_TYPE, themeByPath.getType()));
+        if (themeByPath != null && StringUtils.isNotBlank(themeByPath.getType())) {
+            cache.put(new Element(Constants.OPTION_WEB_THEME_TYPE, themeByPath.getType()));
+        }
     }
 }

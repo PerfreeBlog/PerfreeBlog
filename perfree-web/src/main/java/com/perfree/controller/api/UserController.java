@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @Api(value = "用户相关",tags = "用户模块")
-@RequestMapping("/api/user")
+@RequestMapping(value = {"/api/user", "/user"})
 @SuppressWarnings("all")
 public class UserController extends BaseApiController {
     @Autowired

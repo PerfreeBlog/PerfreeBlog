@@ -38,7 +38,7 @@ import java.util.Map;
 @RestController
 @CrossOrigin
 @Api(value = "评论相关",tags = "评论相关")
-@RequestMapping("/api/comment")
+@RequestMapping(value = {"/api/comment", "/comments"})
 @SuppressWarnings("all")
 public class CommentController extends BaseApiController {
     //缓存

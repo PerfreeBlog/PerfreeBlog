@@ -14,7 +14,7 @@ import java.util.HashMap;
 @RestController
 @CrossOrigin
 @Api(value = "配置相关",tags = "配置相关")
-@RequestMapping("/api/option")
+@RequestMapping(value = {"/api/option", "/option"})
 public class OptionController extends BaseApiController {
 
     @GetMapping("/getByKey")
