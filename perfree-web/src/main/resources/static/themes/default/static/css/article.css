@@ -251,8 +251,52 @@
     border-radius: 20px;
     cursor: pointer;
     border: 1px solid var(--border-color-b);
-    background: rgb(244, 126, 96);
+    background: var(--primary-color);
     color: white;
+}
+.comment-box .comment-editor, .comment-box .comment-name-input,
+.comment-box .comment-email-input,.comment-box .comment-website-input,
+.comment-box .comment-submit-box .comment-cancel-btn{
+    background-color: var(--comment-background);
+    border: 1px solid var(--comment-border-color);
+    color: var(--font-color);
+}
+.comment-box .comment-submit-box .comment-submit-btn{
+    background: var(--primary-color);
+}
+.comment-box .comment-emjoi-btn{
+    color: var(--font-color-b);
+}
+.comment-detail-content{
+    background-color: var(--background-b);
+    color: var(--font-color);
+}
+.comment-pagination{
+    margin-top: 15px;
+}
+.comment-pagination .page{
+    background: var(--background);
+    border: 1px solid var(--border-color-b);
+    color: var(--font-color);
+}
+.comment-pagination .page:hover{
+    background: var(--primary-color);
+    color: var(--hero-color)
+}
+.comment-pagination .active{
+    background: var(--primary-color);
+    color: var(--hero-color)
+}
+.comment-pagination .disabled, .comment-pagination .disabled:hover{
+    cursor: not-allowed;
+    background: var(--background);
+    color: var(--font-color);
+}
+.comment-detail-reply-btn{
+    background: var(--primary-color);
+}
+.comment-detail-name{
+    color: var(--primary-color);
 }
 @media screen and (max-width:1360px) {
     .d-container{

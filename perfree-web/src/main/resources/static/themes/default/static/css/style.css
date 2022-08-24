@@ -11,6 +11,8 @@ html{
     --hero-color: white;
     --box-border: 0 1px 8px 0 rgba(0, 0, 0, 0.1);
     --box-border-hover: 0 2px 16px 0 rgba(0, 0, 0, 0.2);
+    --comment-background: #fff;
+    --comment-border-color: #efefef;
 }
 body.d-night{
     --header-background: #222;
@@ -21,6 +23,8 @@ body.d-night{
     --border-color:rgba(0, 0, 0, 0.3);
     --border-color-b:rgba(0, 0, 0, 0.3);
     --background-b: rgba(0, 0, 0, 0.3);
+    --comment-background: rgb(52 52 52 / 80%);
+    --comment-border-color: rgb(68 68 68 / 80%);
 }
 html{
     height: 100%;
@@ -37,9 +41,6 @@ body{
 }
 .d-theme-container{
   height: 100%;
-}
-#d-theme-container{
-    display: none;
 }
 ::selection{
     color: #fff;

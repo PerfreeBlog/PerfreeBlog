@@ -1,6 +1,6 @@
-<div class="d-post-box wow fadeInUp" data-wow-duration="#(for.count * 0.1)s">
+<div class="d-post-box">
 <div class="d-post-panel">
-    <div class="d-post-msg">
+    <div class="d-post-msg wow fadeInUp" data-wow-duration="0.3s">
         <div class="d-post-msg-left">
             <img src="#(isBlank(article.user.avatar) ? '/static/public/images/user.png' : article.user.avatar)" class="p-user-avatar">
         </div>
@@ -9,23 +9,23 @@
             <p class="d-post-msg-right-time">#timeAgo(article.createTime)</p>
         </div>
     </div>
-    <div class="d-post-content">
+    <div class="d-post-content  wow fadeInUp" data-wow-duration="0.3s">
         #if(article.contentModel == "html")
             #(article.content ??)
         #else
             #mdToHtml(article.content ??)
         #end
     </div>
-    <div class="p-post-info">
+    <div class="p-post-info  wow fadeInUp" data-wow-duration="0.3s">
         <span class="like-btn" data-id="#(article.id)">
             <i class="fa fa-heart-o"></i> #(article.greatCount ??)
         </span>
-        <span>
+       <!-- <span>
             <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
-        </span>
-       <!-- <span class="comment-btn">
-            <i class="fa fa-comment-o"></i> #(article.commentCount ??)
         </span>-->
+        <span class="comment-btn" data-article-id="#(article.id)">
+            <i class="fa fa-comment-o"></i> #(article.commentCount ??)
+        </span>
     </div>
 </div>
 </div>

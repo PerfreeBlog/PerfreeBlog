@@ -38,6 +38,19 @@ function initViewer() {
 function initEvent() {
     like();
     initLike();
+    comment();
+}
+
+function comment() {
+    $(".comment-btn").click(function (){
+       if ($(this).parent('.p-post-info').children('.journal-comment').length > 0) {
+           $(this).parent('.p-post-info').children('.journal-comment').remove()
+       } else {
+           $(this).parent('.p-post-info').append(`<div class="journal-comment" data-article-id="${$(this).attr('data-article-id')}"></div>`);
+           let comment = new perfreeComment();
+           comment.customInit( $(this).parent('.p-post-info').children('.journal-comment'));
+       }
+    });
 }
 
 function like(){

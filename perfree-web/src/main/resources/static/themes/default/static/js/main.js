@@ -17,6 +17,7 @@ $('.d-link').each(function(){
 
 $('.d-tag-item').each(function(){
     const color = $(this).attr("tagColor");
+    console.log(color)
     if (color && color !== ''){
         $(this).css("background-color", color);
     } else {
