@@ -182,11 +182,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     /**
-     * 获取最新的22条文章(后台首页)
+     * 获取最新的文章(后台首页)
      * @return List<Article
      */
-    public List<Article> getArticleListByDashboard() {
-        return articleMapper.getLatestArticle(22);
+    public List<Article> getArticleListByDashboard(int count) {
+        return articleMapper.getLatestArticle(count);
     }
 
     /**

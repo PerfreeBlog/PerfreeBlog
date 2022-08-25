@@ -70,11 +70,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     /**
-     * 获取最新的22条评论(后台首页)
+     * 获取最新的评论(后台首页)
      * @return List<Comment>
      */
-    public List<Comment> getCommentListByDashboard() {
-        return commentMapper.getCommentListByDashboard();
+    public List<Comment> getCommentListByDashboard(int count) {
+        return commentMapper.getCommentListByDashboard(count);
     }
 
     public DirectivePage<HashMap<String, String>> getCommentByArticleId(DirectivePage<HashMap<String, String>> commentPage) {

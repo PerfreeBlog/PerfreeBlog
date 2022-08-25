@@ -42,10 +42,10 @@ public interface CommentService {
     Long getCommentCount();
 
     /**
-     * 获取最新的22条评论(后台首页)
+     * 获取最新的评论(后台首页)
      * @return List<Comment>
      */
-    List<Comment> getCommentListByDashboard();
+    List<Comment> getCommentListByDashboard(int count);
 
     DirectivePage<HashMap<String, String>> getCommentByArticleId(DirectivePage<HashMap<String, String>> commentPage);
 

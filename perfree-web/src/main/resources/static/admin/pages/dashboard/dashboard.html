@@ -71,7 +71,7 @@
                 <div class="layui-card-header">
                     <div class="p-card-left">最新文章</div>
                 </div>
-                <div class="layui-card-body" style="min-height: 570px" id="articlePanel">
+                <div class="layui-card-body" style="min-height: 530px" id="articlePanel">
                     加载中...
                 </div>
             </div>
@@ -83,7 +83,7 @@
                 <div class="layui-card-header">
                     <div class="p-card-left">最新评论</div>
                 </div>
-                <div class="layui-card-body" style="min-height: 570px;" id="commentPanel">
+                <div class="layui-card-body" style="min-height: 530px;" id="commentPanel">
                     加载中...
                 </div>
             </div>
@@ -104,14 +104,14 @@
         $ = layui.jquery;
         toast = layui.toast;
         // 加载最新文章
-        $.get("/admin/dashboard/getArticleList", function (res) {
+        $.get("/admin/dashboard/getArticleList?count=" + 12, function (res) {
             if (res.code === 200) {
                 let html = "<ul>";
                 res.data.forEach(d => {
-                    html += '<li class="p-cart-li">\n' +
-                        '    <span class="p-card-article-time">' + util.toDateString(d.createTime, "yyyy-MM-dd") + '</span>\n' +
-                        '    <a class="p-card-article-title" href="' + d.url + '" target="_blank">' + d.title + '</a>\n' +
-                        '</li>'
+                    html += `<li class="p-cart-li">
+                            <span class="p-card-article-time">${util.timeAgo(d.createTime, true)}</span>
+                            <a class="p-card-article-title" href="${d.url}" target="_blank">${d.title}</a>
+                        </li>`;
                 });
 
                 if (res.data === null || res.data.length <= 0) {
@@ -126,21 +126,31 @@
         });
 
         // 加载最新评论
-        $.get("/admin/dashboard/getCommentList", function (res) {
+        $.get("/admin/dashboard/getCommentList?count=" + 6, function (res) {
             if (res.code === 200) {
-                let html = "<ul>";
+                let html = "";
                 res.data.forEach(d => {
-                    html += '<li class="p-cart-li">\n' +
-                        '    <span class="p-card-comment-time">' + util.toDateString(d.createTime, "yyyy-MM-dd") + '</span>\n' +
-                        '    <a class="p-card-comment-user">' + d.userName + ':</a>\n' +
-                        '    <span class="p-card-comment-title">' + d.content + '</span>\n' +
-                        '</li>'
+                    html += `
+                        <div class="comment-box">
+                            <div class="comment-left">
+                                <img src="${d.avatar}">
+                            </div>
+                            <div class="comment-right">
+                                <div>
+                                    <span class="comment-user">${d.userName}</span>
+                                    <span  class="comment-article">发表在《${d.article.title}》</span>
+                                    <span class="comment-time">${util.timeAgo(d.createTime, true)}</span>
+                                </div>
+                                <div class="comment-content">${ d.content}</div>
+                            </div>
+                        </div>
+                    `;
                 });
 
                 if (res.data === null || res.data.length <= 0) {
                     html = "暂无内容";
                 } else {
-                    html += "</ul>";
+                    html += "";
                 }
                 $("#commentPanel").html(html);
             } else {

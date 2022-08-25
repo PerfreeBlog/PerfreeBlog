@@ -70,7 +70,8 @@
         SELECT count(1) FROM p_comment  where `status` = 0
     </select>
     <select id="getCommentListByDashboard" resultMap="COMMENT_RESULT">
-        SELECT t1.* FROM p_comment t1 ORDER BY createTime DESC limit 0,24
+        SELECT t1.*,t3.title,t3.type FROM p_comment t1 left join p_article t3 on t1.articleId = t3.id
+        ORDER BY createTime DESC limit 0,#{count}
     </select>
 
 

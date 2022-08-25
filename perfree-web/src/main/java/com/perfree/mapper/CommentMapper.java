@@ -39,10 +39,10 @@ public interface CommentMapper {
     Long getCommentCount();
 
     /**
-     * 获取最新的22条评论(后台首页)
+     * 获取最新的评论(后台首页)
      * @return List<Comment>
      */
-    List<Comment> getCommentListByDashboard();
+    List<Comment> getCommentListByDashboard(int count);
 
 
     List<Comment> getCommentByArticleId(HashMap<String, String> form);

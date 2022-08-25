@@ -80,10 +80,10 @@ public interface ArticleService {
     Long getArticleCount();
 
     /**
-     * 获取最新的22条文章(后台首页)
+     * 获取最新的文章(后台首页)
      * @return List<Article
      */
-    List<Article> getArticleListByDashboard();
+    List<Article> getArticleListByDashboard(int count);
 
     /**
      * 获取热门文章

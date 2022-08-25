@@ -55,8 +55,8 @@ public class DashboardController extends BaseController {
     @ResponseBody
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
             Constants.ROLE_USER}, logical= Logical.OR)
-    public ResponseBean getArticleList(){
-        return ResponseBean.success("获取成功", articleService.getArticleListByDashboard());
+    public ResponseBean getArticleList(int count){
+        return ResponseBean.success("获取成功", articleService.getArticleListByDashboard(count));
     }
 
 
@@ -68,7 +68,7 @@ public class DashboardController extends BaseController {
     @ResponseBody
     @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
             Constants.ROLE_USER}, logical= Logical.OR)
-    public ResponseBean getCommentList(){
-        return ResponseBean.success("获取成功", commentService.getCommentListByDashboard());
+    public ResponseBean getCommentList(int count){
+        return ResponseBean.success("获取成功", commentService.getCommentListByDashboard(count));
     }
 }
