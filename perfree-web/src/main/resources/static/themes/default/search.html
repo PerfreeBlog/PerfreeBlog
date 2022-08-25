@@ -2,8 +2,24 @@
 #@layout()
 #define css()
     <link rel="stylesheet" href="/static/themes/default/static/css/index.css?v=#(version)">
+<style>
+    .d-hero-title{
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .d-hero-box{
+        padding-top: 175px;
+    }
+</style>
 #end
 #define content()
+<div class="d-wrapper">
+    <div class="d-banner">
+        <div class="d-hero-box">
+            <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">搜索结果</h1>
+        </div>
+    </div>
+</div>
     <section class="d-container">
         <section class="d-container-left">
             <div class="d-post-list">

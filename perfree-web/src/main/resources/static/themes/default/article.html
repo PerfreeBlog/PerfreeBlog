@@ -7,25 +7,32 @@
 <link href="/static/public/libs/perfree-comment/perfree-comment.css?v=#(version)" rel="stylesheet">
 <link rel="stylesheet" href="/static/themes/default/static/css/article.css?v=#(version)">
 <link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
+#include("/static/themes/default/inc/custom_bg.html")
 #end
 #define content()
+<div class="d-wrapper">
+    <div class="d-banner">
+        <div class="d-hero-box">
+            <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#(article.title ??)</h1>
+            <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">
+                <span>
+                    <i class="fa fa-user-o"></i> #(article.user.userName ??)
+                </span>
+                <span>
+                    <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
+                </span>
+                <span>
+                    <i class="fa fa-eye"></i> #(article.viewCount ??)
+                </span>
+                <span>
+                    <i class="fa fa-comment-o"></i> #(article.commentCount ??)
+                </span>
+            </p>
+        </div>
+    </div>
+</div>
 <section class="d-container">
     <section class="d-article-container">
-        <h1 class="d-article-title">#(article.title ??)</h1>
-        <div class="d-article-info">
-             <span>
-                <i class="fa fa-user-o"></i> #(article.user.userName ??)
-            </span>
-                <span>
-                <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
-            </span>
-                <span>
-                <i class="fa fa-eye"></i> #(article.viewCount ??)
-            </span>
-                <span>
-                <i class="fa fa-comment-o"></i> #(article.commentCount ??)
-            </span>
-        </div>
         <article class='d-article-content #if(article.contentModel == "html") ck-content #end' id="d-article-content">
             #if(article.contentModel == "html")
                 #(article.content ??)
@@ -73,8 +80,9 @@
             <div class="perfree-comment" data-article-id="#(article.id)"></div>
         </div>
     </section>
+    <div class="d-toc"></div>
 </section>
-<div class="d-toc"></div>
+
 
 #end
 

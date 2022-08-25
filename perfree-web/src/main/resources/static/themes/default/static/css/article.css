@@ -12,7 +12,7 @@
     padding-top: 175px;
 }
 .d-hero-title{
-    font-size: 35px;
+    font-size: 30px;
     font-weight: 600;
 }
 .d-hero-desc{
@@ -194,6 +194,10 @@
     bottom: 10rem;
     right: 2rem;
     overflow-y: scroll;
+    display: none;
+}
+.d-toc.show{
+    display: block;
 }
 .roundDiv{
     width: 200px;
@@ -326,7 +330,7 @@
     .d-container{
         width: 850px;
     }
-    .d-toc{
+    .d-toc, .d-toc.show{
         right: 0;
     }
 }
@@ -336,7 +340,7 @@
     }
 }
 @media screen and (max-width: 1200px) {
-    .d-toc{
+    .d-toc,.d-toc.show{
         display: none;
     }
 }

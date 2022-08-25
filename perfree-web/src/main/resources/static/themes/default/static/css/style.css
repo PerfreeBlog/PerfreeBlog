@@ -66,11 +66,15 @@ body{
     display: flex;
     width: 100%;
     height: 60px;
-    box-shadow: var(--header-box-shadow);
     position: fixed;
     top: 0;
-    background: var(--header-background);
+    background: transparent;
     z-index: 99;
+    transition: all .5s;
+}
+.d-header-show{
+    background: var(--header-background);
+    box-shadow: var(--header-box-shadow);
 }
 .d-nav-container{
     flex: 1;
@@ -82,7 +86,7 @@ body{
     padding-right: 5px;
 }
 .d-header-nav .layui-nav{
-    background-color: var(--header-background);
+    background-color:transparent;
     color: var(--font-color);
     padding-right: 0;
 }
@@ -95,10 +99,14 @@ body{
     background: var(--background);
 }
 .d-header-nav .layui-nav .layui-nav-item a{
-    color: var(--font-color);
+    color: #ebeef5;
     font-weight: 500;
     padding: 0;
     position: relative;
+    transition: color .5s;
+}
+.d-header-nav .layui-nav .layui-nav-item .d-header-item-show{
+    color: var(--font-color);
 }
 .d-header-nav .layui-nav .layui-nav-item{
     padding: 0 15px;
@@ -116,6 +124,7 @@ body{
     text-align: center;
     padding-left: 15px;
     padding-right: 15px;
+    color: var(--font-color);
 }
 .d-header-nav .layui-nav .layui-this:after{
     display: none;
@@ -160,6 +169,10 @@ body{
     padding-left: 10px;
     font-size: 1.3rem;
     font-weight: 600;
+    color: #ebeef5;
+    transition: color .5s;
+}
+.d-logo-container .d-header-logo-show{
     color: var(--font-color);
 }
 .d-search-box form{
@@ -194,6 +207,10 @@ body{
     position: absolute;
     left: 10px;
     top: 23px;
+    color: #ebeef5;
+    transition: color .5s;
+}
+.d-search-box form .d-header-text-show{
     color: var(--font-color);
 }
 .layui-nav-item .user-img{
@@ -202,8 +219,7 @@ body{
     border-radius: 50%;
 }
 .d-box{
-    margin-top: 60px;
-    min-height: calc(100% - 91px);
+    min-height: calc(100% - 31px);
 }
 .d-container{
     width: 60%;
@@ -447,7 +463,7 @@ body{
     position: fixed;
     left: -280px;
     width: 260px;
-    z-index: 98;
+    z-index: 100;
     background: var(--background);
     box-shadow: var(--box-border);
     height: 100%;
@@ -505,11 +521,15 @@ body{
     background-color: var(--background)!important;
 }
 .mobile-side-switch-btn{
-    color: var(--font-color);
+    color: #ebeef5;
     padding-left: 15px;
     padding-right: 15px;
     font-size: 18px;
     display: none;
+    transition: color .5s;
+}
+.mobile-side-switch-btn.d-header-text-show{
+    color: var(--font-color);
 }
 .mobile-side-switch-btn:hover{
     color: var(--primary-color);
