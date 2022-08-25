@@ -1,5 +1,33 @@
 hljs.initHighlightingOnLoad();
 let tocLocation = [];
+let notyf = new Notyf({
+    duration: 1500,
+    position: {
+        x: 'right',
+        y: 'top',
+    },
+    types: [
+        {
+            type: 'warning',
+            background: 'orange',
+            icon: {
+                className: 'material-icons',
+                tagName: 'i',
+                text: 'warning'
+            }
+        },
+        {
+            type: 'success',
+            background: 'rgb(103, 204, 134)'
+        },
+        {
+            type: 'error',
+            background: 'rgb(225, 91, 100)',
+            duration: 2000,
+            dismissible: true
+        }
+    ]
+});
 initViewer();
 buildCTable();
 like();
