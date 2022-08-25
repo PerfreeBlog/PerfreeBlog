@@ -51,11 +51,6 @@
                 <version>2.5.12</version>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.4.3</version>
-            </plugin>
             <!--assembly插件-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -91,6 +86,7 @@
                         <nonFilteredFileExtension>svg</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
                 </configuration>
+                <version>2.4.3</version>
             </plugin>
             <!--<plugin>
                 <groupId>com.spotify</groupId>
