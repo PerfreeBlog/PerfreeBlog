@@ -1,8 +1,9 @@
-let table, $,toast;
-layui.use(['table', 'jquery','toast'], function () {
+let table, $,toast,util;
+layui.use(['table', 'jquery','toast','util'], function () {
     table = layui.table;
     $ = layui.jquery;
     toast = layui.toast;
+    util = layui.util;
     initPage();
 });
 
@@ -61,7 +62,7 @@ function queryTable() {
             {
                 field: 'email', minWidth: 180, title: '邮箱', templet: "<div>{{d.email}}</div>"
             },
-            {field: 'content', title: '评论内容', minWidth: 240},
+            {field: 'content', title: '评论内容', minWidth: 240, templet: contentFormat},
             {field: 'article', title: '所属文章', minWidth: 240, templet: "<div><a href='{{d.article.url}}' target='_blank'>{{d.article.title}}</a></div>"},
             {field: 'status', minWidth: 60, title: '状态', templet: "<div>{{d.status === 1? '待审核': '正常'}}</div>"},
             {
@@ -152,4 +153,8 @@ function changeStatus(id, status) {
             parent.toast.error({message: "操作失败",position: 'topCenter'});
         }
     });
+}
+
+function contentFormat(d){
+    return '<div>' + d.content + '</div>';
 }

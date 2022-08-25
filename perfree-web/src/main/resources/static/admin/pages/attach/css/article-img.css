@@ -6,6 +6,7 @@
     cursor: pointer;
     border: 1px solid white;
     border-radius: 5px;
+    width: 100%;
 }
 .img-box:hover{
     border: 1px solid #7292db;
@@ -13,6 +14,7 @@
 .img-box img{
     width: 100%;
     height: 100px;
+    object-fit: cover;
 }
 .img-box span{
     display: inline-block;
