@@ -97,6 +97,12 @@
             return false;
         });
     });
+
+    // 取消
+    $(".p-cancel-btn").click(function () {
+        const index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    });
 </script>
 </body>
 </html>
