@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService {
      */
     public Pager<Comment> list(Pager<Comment> pager, String userId) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
-        List<Comment> comments = commentMapper.getList(pager.getForm().getContent(), userId);
+        List<Comment> comments = commentMapper.getList(pager.getForm().getContent(), pager.getForm().getArticleType(), userId);
         PageInfo<Comment> pageInfo = new PageInfo<>(comments);
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());

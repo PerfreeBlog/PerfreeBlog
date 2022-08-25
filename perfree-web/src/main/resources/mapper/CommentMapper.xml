@@ -21,6 +21,7 @@
             <result property="title" column="title"/>
             <result property="slug" column="slug"/>
             <result property="type" column="type"/>
+            <result property="content" column="articleContent"/>
         </association>
     </resultMap>
 
@@ -48,7 +49,9 @@
     </delete>
 
     <select id="getList" resultMap="LIST_RESULT">
-        select t1.*,t3.title,t3.slug,t3.type from p_comment t1
+        select t1.*,t3.title,t3.slug,t3.type,
+        case t3.type when 'journal' then t3.content else '' end as articleContent
+        from p_comment t1
         left join p_article t3 on t1.articleId = t3.id
         where 1 = 1
         <if test="content != null and content != ''">
@@ -57,6 +60,9 @@
         </if>
         <if test="userId != null and userId != ''">
            and t3.userId = #{userId}
+        </if>
+        <if test="articleType != null and articleType != ''">
+            and t3.type = #{articleType}
         </if>
         order by t1.createTime desc
     </select>

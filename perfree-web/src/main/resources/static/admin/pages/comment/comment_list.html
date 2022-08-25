@@ -21,6 +21,17 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-inline">
+                            <label class="layui-form-label">类型:</label>
+                            <div class="layui-input-inline">
+                                <select name="articleType" id="articleType">
+                                    <option value="article">文章</option>
+                                    <option value="page">页面</option>
+                                    <option value="journal">动态</option>
+                                    <option value="">所有</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-inline">
                             <label class="layui-form-label">关键字:</label>
                             <div class="layui-input-inline">
                                 <input type="text" name="content" placeholder="请输入关键字" id="content"
@@ -51,6 +62,7 @@
 
 <script src="/static/public/libs/layui-v2.5.6/layui/layui.js"></script>
 <script src="/static/admin/static/component/pear/pear.js"></script>
+<script src="/static/public/js/common.js?v=#(version)"></script>
 <script src="/static/admin/pages/comment/js/comment_list.js?v=#(version)"></script>
 </body>
 </html>

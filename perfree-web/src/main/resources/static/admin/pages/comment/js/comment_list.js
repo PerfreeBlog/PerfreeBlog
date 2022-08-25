@@ -49,7 +49,8 @@ function queryTable() {
         totalRow: false,
         where: {
             form: {
-                content: $("#content").val()
+                content: $("#content").val(),
+                articleType: $("#articleType").val()
             }
         },
         limit: 30,
@@ -63,7 +64,18 @@ function queryTable() {
                 field: 'email', minWidth: 180, title: '邮箱', templet: "<div>{{d.email}}</div>"
             },
             {field: 'content', title: '评论内容', minWidth: 240, templet: contentFormat},
-            {field: 'article', title: '所属文章', minWidth: 240, templet: "<div><a href='{{d.article.url}}' target='_blank'>{{d.article.title}}</a></div>"},
+            {
+                field: 'article',
+                title: '所属文章',
+                minWidth: 240,
+                templet: function (d) {
+                    if (d.article.type === 'article' || d.article.type === 'page' ) {
+                        return `<div><a href='${d.article.url}' target='_blank'>${d.article.title}</a></div>`;
+                    }else{
+                        return `<div><div>${d.article.content}</div></div>`;
+                    }
+                }
+            },
             {field: 'status', minWidth: 60, title: '状态', templet: "<div>{{d.status === 1? '待审核': '正常'}}</div>"},
             {
                 field: 'createTime',
@@ -79,8 +91,10 @@ function queryTable() {
                     let html = "<div>";
                     if (d.status === 1) {
                         html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='changeStatus(\"" + d.id + "\",\"0\")'>审核</a>";
+                    } else {
+                        html += `<a class='pear-btn pear-btn-xs pear-btn-primary' onclick="reply('${d.id}', '${d.userName}')">回复</a>`;
                     }
-                    html += "<a class='pear-btn pear-btn-xs pear-btn-danger' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
+                    html += "<a class='pear-btn pear-btn-xs pear-btn-danger' style='margin-left: 5px' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
                         "</div>";
                     return html;
                 }
@@ -152,6 +166,20 @@ function changeStatus(id, status) {
         error: function (data) {
             parent.toast.error({message: "操作失败",position: 'topCenter'});
         }
+    });
+}
+
+/**
+ * 回复
+ */
+function reply(id, userName) {
+    layer.open({
+        title: '回复:' + userName,
+        type: 2,
+        area: common.layerArea($("html")[0].clientWidth, 500, 500),
+        shadeClose: true,
+        anim: 1,
+        content: '/admin/comment/reply/' + id
     });
 }
 

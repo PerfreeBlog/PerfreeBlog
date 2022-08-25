@@ -79,6 +79,17 @@ public class Comment implements Serializable {
     @ApiModelProperty(value="父级评论",name="parent")
     private Comment parent;
 
+    @ApiModelProperty(value="文章类型",name="articleType")
+    private String articleType;
+
+    public String getArticleType() {
+        return articleType;
+    }
+
+    public void setArticleType(String articleType) {
+        this.articleType = articleType;
+    }
+
     public Article getArticle() {
         return article;
     }

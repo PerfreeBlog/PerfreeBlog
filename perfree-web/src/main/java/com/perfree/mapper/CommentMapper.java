@@ -17,7 +17,7 @@ public interface CommentMapper {
      * @param content content
      * @return List<Comment>
      */
-    List<Comment> getList(@Param("content") String content, @Param("userId") String userId);
+    List<Comment> getList(@Param("content") String content,@Param("articleType") String articleType,  @Param("userId") String userId);
 
     /**
      * 删除评论
