@@ -43,7 +43,7 @@ public class ArticleController extends BaseApiController {
         @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query"),
         @ApiImplicitParam(name = "categoryId", value = "文章分类ID", dataTypeClass = String.class, paramType = "query"),
         @ApiImplicitParam(name = "type", value = "文章类型:如article/journal/page", dataTypeClass = String.class, paramType = "query"),
-        @ApiImplicitParam(name = "content", value = "关键字", dataTypeClass = String.class, paramType = "query")
+        @ApiImplicitParam(name = "content", value = "关键字: 会从标题及内容中搜索", dataTypeClass = String.class, paramType = "query")
     })
     public Pager<Article> list(@ApiIgnore Pager<Article> pager, @ApiIgnore @RequestParam(required = false) String title,
                                @ApiIgnore @RequestParam(required = false) String categoryId,

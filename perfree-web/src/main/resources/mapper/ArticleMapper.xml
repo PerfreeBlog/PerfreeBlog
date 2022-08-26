@@ -328,7 +328,7 @@
         </if>
         <if test="content != null and content != ''">
             <bind name="content" value="'%' + _parameter.content + '%'" />
-            and t1.content like #{content,jdbcType=VARCHAR}
+            and (t1.content like #{content,jdbcType=VARCHAR} or t1.title like #{content,jdbcType=VARCHAR})
         </if>
         <if test="categoryId != null and categoryId != ''">
             and t1.categoryId = #{categoryId}
