@@ -326,6 +326,10 @@
             <bind name="title" value="'%' + _parameter.title + '%'" />
             and t1.title like #{title,jdbcType=VARCHAR}
         </if>
+        <if test="content != null and content != ''">
+            <bind name="content" value="'%' + _parameter.content + '%'" />
+            and t1.content like #{content,jdbcType=VARCHAR}
+        </if>
         <if test="categoryId != null and categoryId != ''">
             and t1.categoryId = #{categoryId}
         </if>

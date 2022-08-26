@@ -42,11 +42,13 @@ public class ArticleController extends BaseApiController {
         @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
         @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query"),
         @ApiImplicitParam(name = "categoryId", value = "文章分类ID", dataTypeClass = String.class, paramType = "query"),
-        @ApiImplicitParam(name = "type", value = "文章类型:如article/journal/page", dataTypeClass = String.class, paramType = "query")
+        @ApiImplicitParam(name = "type", value = "文章类型:如article/journal/page", dataTypeClass = String.class, paramType = "query"),
+        @ApiImplicitParam(name = "content", value = "关键字", dataTypeClass = String.class, paramType = "query")
     })
     public Pager<Article> list(@ApiIgnore Pager<Article> pager, @ApiIgnore @RequestParam(required = false) String title,
                                @ApiIgnore @RequestParam(required = false) String categoryId,
-                               @ApiIgnore @RequestParam(required = false) String type){
+                               @ApiIgnore @RequestParam(required = false) String type,
+                               @ApiIgnore @RequestParam(required = false) String content){
         pager.setForm(new Article());
         pager.getForm().setTitle(title);
         if (StringUtils.isBlank(type)) {
@@ -56,6 +58,9 @@ public class ArticleController extends BaseApiController {
         }
         if (StringUtils.isNotBlank(categoryId)) {
             pager.getForm().setCategoryId(Long.parseLong(categoryId));
+        }
+        if (StringUtils.isNotBlank(content)) {
+            pager.getForm().setContent(content);
         }
         return articleService.apiList(pager);
     }
