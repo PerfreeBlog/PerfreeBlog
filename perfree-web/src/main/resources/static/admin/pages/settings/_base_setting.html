@@ -9,14 +9,22 @@
                 <input type="text" value="#option('WEB_NAME')" name="WEB_NAME" placeholder="请输入网站名称" autocomplete="off" class="layui-input">
             </div>
         </div>
+
         <div class="layui-form-item">
-            <label class="layui-form-label">网站ICO</label>
+            <label class="layui-form-label">网站ICO:</label>
             <div class="layui-input-block">
-                <div class="p-upload-box" id="WEB_LOGO">
-                    <input type="hidden" value="#option('WEB_LOGO')" name="WEB_LOGO">
+                <div class="layui-input-inline" style="width: calc(100% - 70px);">
+                    <input type="text" value="#option('WEB_LOGO')" placeholder="封面图" name="WEB_LOGO" class="layui-input">
+                </div>
+                <div class="layui-inline" style="left: -11px;">
+                    <div id="WEB_LOGO" class="p-upload-input-box">
+                        <i class="fa fa-photo" aria-hidden="true"></i>
+                    </div>
                 </div>
             </div>
         </div>
+
+
         <div class="layui-form-item">
             <label class="layui-form-label">网站域名</label>
             <div class="layui-input-block">
