@@ -1,4 +1,4 @@
-let form, categorySelect,tagSelect,loadIndex,toast, layer;
+var form, categorySelect,tagSelect,loadIndex,toast, layer;
 layui.use(['layer', 'form','toast'], function () {
     layer = layui.layer;
     form = layui.form;

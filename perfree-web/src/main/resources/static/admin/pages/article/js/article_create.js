@@ -1,4 +1,4 @@
-let form, xmSelect,categorySelect,tagSelect,loadIndex,toast, layer;
+var form, xmSelect,categorySelect,tagSelect,loadIndex,toast, layer;
 layui.use(['layer', 'form', 'xmSelect','toast'], function () {
     layer = layui.layer;
     form = layui.form;
