@@ -277,22 +277,7 @@ public class ArticleServiceImpl implements ArticleService {
      */
     public Pager<Article> apiList(Pager<Article> pager) {
         PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
-        List<Article> articles = articleMapper.apiList(pager.getForm());
-        PageInfo<Article> pageInfo = new PageInfo<>(articles);
-        pager.setTotal(pageInfo.getTotal());
-        pager.setData(pageInfo.getList());
-        pager.setCode(Pager.SUCCESS_CODE);
-        return pager;
-    }
-
-    /**
-     * 获取最热文章分页数据(API)
-     * @param pager pager
-     * @return Pager<Article>
-     */
-    public Pager<Article> getApiHotArticleList(Pager<Article> pager, int type) {
-        PageHelper.startPage(pager.getPageIndex(), pager.getPageSize());
-        List<Article> articles = articleMapper.getApiHotArticleList(type, pager.getForm());
+        List<Article> articles = articleMapper.apiList(pager.getForm(), pager.getOrderBy());
         PageInfo<Article> pageInfo = new PageInfo<>(articles);
         pager.setTotal(pageInfo.getTotal());
         pager.setData(pageInfo.getList());

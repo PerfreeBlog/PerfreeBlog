@@ -321,42 +321,27 @@
         select DISTINCT t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1
         left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         left join p_article_tag t4 on t1.id = t4.articleId
-        where t1.status = 0 and t1.type= #{type}
-        <if test="title != null and title != ''">
-            <bind name="title" value="'%' + _parameter.title + '%'" />
-            and t1.title like #{title,jdbcType=VARCHAR}
-        </if>
-        <if test="content != null and content != ''">
-            <bind name="content" value="'%' + _parameter.content + '%'" />
-            and (t1.content like #{content,jdbcType=VARCHAR} or t1.title like #{content,jdbcType=VARCHAR})
-        </if>
-        <if test="categoryId != null and categoryId != ''">
-            and t1.categoryId = #{categoryId}
-        </if>
-        order by t1.createTime desc
-        ) t order by t.isTop desc,t.createTime desc
-    </select>
-
-    <select id="getApiHotArticleList" resultMap="LIST_RESULT">
-        select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1
-        left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
-        where t1.status = 0 and t1.type= 'article'
+        where t1.status = 0 and t1.type= #{article.type}
         <if test="article.title != null and article.title != ''">
             <bind name="title" value="'%' + _parameter.article.title + '%'" />
             and t1.title like #{title,jdbcType=VARCHAR}
         </if>
+        <if test="article.content != null and article.content != ''">
+            <bind name="content" value="'%' + _parameter.article.content + '%'" />
+            and (t1.content like #{content,jdbcType=VARCHAR} or t1.title like #{content,jdbcType=VARCHAR})
+        </if>
         <if test="article.categoryId != null and article.categoryId != ''">
             and t1.categoryId = #{article.categoryId}
         </if>
-        order by
-        <if test="type != null and type == 0">
-            t1.commentCount
+        )t
+        <if test="orderBy != null and orderBy != ''">
+            ${orderBy}
         </if>
-        <if test="type != null and type == 1">
-            t1.viewCount
+        <if test="orderBy == null or orderBy == ''">
+            order by isTop,createTime desc
         </if>
-        desc
     </select>
+
     <select id="getBySlug" resultMap="LIST_RESULT">
         select t1.*,t2.name categoryName,t3.userName,t3.avatar,t3.email,t3.website from p_article t1 left join p_category t2 on t1.categoryId = t2.id left join p_user t3 on t1.userId = t3.id
         where t1.slug = #{slug} and t1.type= #{type}

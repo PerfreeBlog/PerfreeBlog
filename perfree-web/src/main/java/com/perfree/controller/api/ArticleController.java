@@ -36,19 +36,23 @@ public class ArticleController extends BaseApiController {
 
 
     @GetMapping("/list")
-    @ApiOperation(value = "文章分页数据", notes = "获取文章分页数据(根据发布时间排序,置顶文章优先级会提高),可根据文章标题title模糊查询")
+    @ApiOperation(value = "文章分页数据", notes = "获取文章分页数据,可根据文章标题title模糊查询或根据content全文模糊查询")
     @ApiImplicitParams({
         @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", required = true),
         @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", required = true),
         @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query"),
         @ApiImplicitParam(name = "categoryId", value = "文章分类ID", dataTypeClass = String.class, paramType = "query"),
         @ApiImplicitParam(name = "type", value = "文章类型:如article/journal/page", dataTypeClass = String.class, paramType = "query"),
-        @ApiImplicitParam(name = "content", value = "关键字: 会从标题及内容中搜索", dataTypeClass = String.class, paramType = "query")
+        @ApiImplicitParam(name = "content", value = "关键字: 会从标题及内容中搜索", dataTypeClass = String.class, paramType = "query"),
+        @ApiImplicitParam(name = "orderBy", value = "排序字段,默认isTop,createTime", dataTypeClass = String.class, paramType = "query"),
+        @ApiImplicitParam(name = "orderByWay", value = "排序字段,默认desc", dataTypeClass = String.class, paramType = "query")
     })
     public Pager<Article> list(@ApiIgnore Pager<Article> pager, @ApiIgnore @RequestParam(required = false) String title,
                                @ApiIgnore @RequestParam(required = false) String categoryId,
                                @ApiIgnore @RequestParam(required = false) String type,
-                               @ApiIgnore @RequestParam(required = false) String content){
+                               @ApiIgnore @RequestParam(required = false) String content,
+                               @ApiIgnore @RequestParam(required = false) String orderBy,
+                               @ApiIgnore @RequestParam(required = false) String orderByWay){
         pager.setForm(new Article());
         pager.getForm().setTitle(title);
         if (StringUtils.isBlank(type)) {
@@ -62,44 +66,9 @@ public class ArticleController extends BaseApiController {
         if (StringUtils.isNotBlank(content)) {
             pager.getForm().setContent(content);
         }
+        String orderSql = StringUtil.generateOrderBy(orderBy, orderByWay, pager.getForm());
+        pager.setOrderBy(orderSql);
         return articleService.apiList(pager);
-    }
-
-
-    @GetMapping("/getHotListByView")
-    @ApiOperation(value = "最热文章分页数据(阅读量排序)", notes = "获取最热文章分页数据(根据阅读量排序)")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", example = "1", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", example = "30", required = true),
-            @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query"),
-            @ApiImplicitParam(name = "categoryId", value = "文章分类ID", dataTypeClass = String.class, paramType = "query")
-    })
-    public Pager<Article> getHotListByView(@ApiIgnore Pager<Article> pager, @ApiIgnore @RequestParam(required = false) String title,
-                                           @ApiIgnore @RequestParam(required = false) String categoryId){
-        pager.setForm(new Article());
-        pager.getForm().setTitle(title);
-        if (StringUtils.isNotBlank(categoryId)) {
-            pager.getForm().setCategoryId(Long.parseLong(categoryId));
-        }
-        return articleService.getApiHotArticleList(pager, 1);
-    }
-
-    @GetMapping("/getHotListByComment")
-    @ApiOperation(value = "最热文章分页数据(评论排序)", notes = "获取最热文章分页数据(根据评论量排序)")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "pageIndex", value = "页码", dataTypeClass = Integer.class, paramType = "query", example = "1", required = true),
-            @ApiImplicitParam(name = "pageSize", value = "每页数据量", dataTypeClass = Integer.class, paramType = "query", example = "30", required = true),
-            @ApiImplicitParam(name = "title", value = "文章标题", dataTypeClass = String.class, paramType = "query"),
-            @ApiImplicitParam(name = "categoryId", value = "文章分类ID", dataTypeClass = String.class, paramType = "query")
-    })
-    public Pager<Article> getHotListByComment(@ApiIgnore Pager<Article> pager, @ApiIgnore @RequestParam(required = false) String title,
-                                              @ApiIgnore @RequestParam(required = false) String categoryId){
-        pager.setForm(new Article());
-        pager.getForm().setTitle(title);
-        if (StringUtils.isNotBlank(categoryId)) {
-            pager.getForm().setCategoryId(Long.parseLong(categoryId));
-        }
-        return articleService.getApiHotArticleList(pager, 0);
     }
 
     @GetMapping("/getPreArticle")

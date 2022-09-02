@@ -37,6 +37,16 @@ public class Pager<T> implements Serializable {
     @ApiModelProperty(value="响应消息",name="msg",example="success")
     private String msg;
 
+    private String orderBy;
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
     public Integer getPageIndex() {
         return pageIndex;
     }

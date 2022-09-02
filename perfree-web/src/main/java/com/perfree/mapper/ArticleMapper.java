@@ -145,9 +145,7 @@ public interface ArticleMapper{
 
     List<Archive> frontArchivePageBySqlite();
 
-    List<Article> apiList(Article form);
-
-    List<Article> getApiHotArticleList(@Param("type") int type, @Param("article") Article article);
+    List<Article> apiList(@Param("article") Article article, @Param("orderBy") String orderBy);
 
     void updateSlug(Article article);
 

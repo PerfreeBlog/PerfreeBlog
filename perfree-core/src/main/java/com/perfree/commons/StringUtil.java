@@ -1,7 +1,12 @@
 package com.perfree.commons;
 
+import cn.hutool.core.bean.BeanUtil;
+import com.perfree.model.Article;
+import org.apache.commons.lang3.StringUtils;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -166,5 +171,31 @@ public class StringUtil {
     public static long versionToLong(String versionStr) {
         return Long.parseLong(versionStr.replaceAll("\r\n","").replaceAll("--","")
                 .replaceAll("\\.","").replace("v",""));
+    }
+
+    public static String generateOrderBy(String orderBy, String orderByWay, Object o) {
+        if (StringUtils.isBlank(orderBy)) {
+            return "";
+        }
+        String orderBySql = "";
+        String[] split = orderBy.split(",");
+        Map<String, Object> stringObjectMap = BeanUtil.beanToMap(o);
+        boolean safe = true;
+        for (String s : split) {
+            if (!stringObjectMap.containsKey(s)) {
+                safe = false;
+                break;
+            }
+        }
+        if (!safe) {
+            return "";
+        }
+        orderBySql = "order by " + orderBy;
+        if (StringUtils.isNotBlank(orderByWay) && orderByWay.equals("asc")) {
+            orderBySql += " asc";
+        } else {
+            orderBySql += " desc";
+        }
+        return orderBySql;
     }
 }

@@ -137,13 +137,6 @@ public interface ArticleService {
     Pager<Article> apiList(Pager<Article> pager);
 
     /**
-     * 获取最热文章分页数据(API)
-     * @param pager pager
-     * @return Pager<Article>
-     */
-    Pager<Article> getApiHotArticleList(Pager<Article> pager, int type);
-
-    /**
      * 获取文章归档数据
      * @param pager pager
      * @return Pager<Archive>
