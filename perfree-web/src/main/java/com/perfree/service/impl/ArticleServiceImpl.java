@@ -353,10 +353,11 @@ public class ArticleServiceImpl implements ArticleService {
     private void genSummary(Article article){
         String isGenSummary = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_AUTO_GEN_SUMMARY, Constants.WEB_AUTO_GEN_SUMMARY_TRUE);
         if (!isGenSummary.equals(Constants.WEB_AUTO_GEN_SUMMARY_FALSE) && StringUtils.isBlank(article.getSummary())){
-            if (article.getContent().length() > 200){
-                article.setSummary(HtmlUtil.cleanHtmlTag(MarkdownUtil.mdToHtml(article.getContent())).substring(0, 200));
+            String mdToStr = HtmlUtil.cleanHtmlTag(MarkdownUtil.mdToHtml(article.getContent()));
+            if (mdToStr.length() > 200){
+                article.setSummary(mdToStr.substring(0, 200));
             } else {
-                article.setSummary(HtmlUtil.cleanHtmlTag(MarkdownUtil.mdToHtml(article.getContent())));
+                article.setSummary(mdToStr);
             }
         }
     }
