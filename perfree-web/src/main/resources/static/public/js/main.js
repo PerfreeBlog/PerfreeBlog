@@ -1,5 +1,7 @@
-let selectImgId = "",type = 1,EditorCm, EditorIcon, EditorCursor, EditorSelection,editor;
+let selectImgId = "",type = 1,EditorCm, EditorIcon, EditorCursor, EditorSelection,editor,attachId="";
 initSelectImg();
+initSelectVideo();
+initSelectAttach();
 /**
  * 初始化图片选择
  */
@@ -48,6 +50,20 @@ function initSelectImg() {
             $(this).children(".p-upload").hide();
             $(this).children(".p-upload-show").show();
         }
+    });
+}
+
+function initSelectVideo() {
+    $(".p-upload-video-input-box").on("click",function () {
+        const id = $(this).attr('id');
+        openSelectVideoPanel(4, null,null, null, null, null, id)
+    });
+}
+
+function initSelectAttach() {
+    $(".p-upload-attach-input-box").on("click",function () {
+        const id = $(this).attr('id');
+        openSelectAttachPanel(4,null,null, null, null, null, id);
     });
 }
 
@@ -112,15 +128,16 @@ function openSelectImPanel(activeType,id,currEditor,cm, icon, cursor, selection)
 
 /**
  * 打开选择附件面板
- * @param activeType 1:正常图片选择,2编辑器图片选择,3富文本
+ * @param activeType
  * @param currEditor
  * @param cm
  * @param icon
  * @param cursor
  * @param selection
+ * @param id
  */
-function openSelectAttachPanel(activeType,currEditor,cm, icon, cursor, selection) {
-    changeMode(activeType, currEditor,cm, icon, cursor, selection);
+function openSelectAttachPanel(activeType,currEditor,cm, icon, cursor, selection, id = null) {
+    changeMode(activeType, currEditor,cm, icon, cursor, selection, id);
     layer.open({
         title: "选择附件",
         type: 2,
@@ -135,15 +152,16 @@ function openSelectAttachPanel(activeType,currEditor,cm, icon, cursor, selection
 
 /**
  * 打开选择视频面板
- * @param activeType 1:正常图片选择,2编辑器图片选择,3富文本
+ * @param activeType
  * @param currEditor
  * @param cm
  * @param icon
  * @param cursor
  * @param selection
+ * @param id
  */
-function openSelectVideoPanel(activeType, currEditor,cm, icon, cursor, selection) {
-    changeMode(activeType, currEditor,cm, icon, cursor, selection);
+function openSelectVideoPanel(activeType, currEditor,cm, icon, cursor, selection, id = null) {
+    changeMode(activeType, currEditor,cm, icon, cursor, selection,id);
     layer.open({
         title: "选择视频",
         type: 2,
@@ -170,6 +188,8 @@ function selectVideo(path) {
         editor.focus();
     } else if (type === 3) {
         editor.cmd.do('insertHTML', '<video src="'+path+'" controls="controls" style="max-width: 100%"></video>');
+    } else if (type === 4) {
+        $("input[name='"+attachId+"']").val(path);
     }
 }
 
@@ -188,11 +208,13 @@ function selectAttach(name,path) {
         editor.focus();
     } else if (type === 3) {
         editor.cmd.do('insertHTML', '<a href="'+path+name+'">'+name+'</a>');
+    } else if (type === 4) {
+        $("input[name='"+attachId+"']").val(path);
     }
 }
 
 
-function changeMode(activeType, currEditor,cm, icon, cursor, selection) {
+function changeMode(activeType, currEditor,cm, icon, cursor, selection,id) {
     type = activeType;
     if (activeType === 1) {
         EditorCm = cm;
@@ -202,6 +224,8 @@ function changeMode(activeType, currEditor,cm, icon, cursor, selection) {
         editor = currEditor;
     } else if(type === 3){
         editor = currEditor;
+    } else if(type === 4) {
+        attachId = id;
     }
 }
 

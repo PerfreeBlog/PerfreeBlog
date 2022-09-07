@@ -130,7 +130,7 @@ html{
 .p-add-panel{
     background: white;
 }
-.p-upload-input-box{
+.p-upload-input-box,.p-upload-video-input-box,.p-upload-attach-input-box{
     height: 36px;
     line-height: 36px;
     border: 1px solid #eee;
