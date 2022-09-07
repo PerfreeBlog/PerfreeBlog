@@ -26,12 +26,9 @@ public class GravatarUtil {
                 || avatar.startsWith("http")) {
             return avatar;
         }
-        String gravatarUrl = OptionCacheUtil.getValue(Constants.OPTION_GRAVATAR_SOURCE);
-        if (StringUtils.isBlank(gravatarUrl)) {
-            gravatarUrl = "//www.gravatar.com/avatar/";
-        }
-        if (StringUtils.isNotBlank(avatar) && avatar.contains("http://www.gravatar.com/avatar/")) {
-            avatar = avatar.replace("http://www.gravatar.com/avatar/", "").replace("?s=32", "");
+        String gravatarUrl = OptionCacheUtil.getDefaultValue(Constants.OPTION_GRAVATAR_SOURCE, "//gravatar.webp.se/avatar/");
+        if (StringUtils.isNotBlank(avatar) && avatar.contains("//www.gravatar.com/avatar/")) {
+            avatar = avatar.replace("//www.gravatar.com/avatar/", "").replace("?s=32", "");
         }
         return gravatarUrl + avatar;
     }
