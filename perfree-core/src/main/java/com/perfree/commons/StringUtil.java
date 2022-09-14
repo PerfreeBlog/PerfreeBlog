@@ -177,25 +177,31 @@ public class StringUtil {
         if (StringUtils.isBlank(orderBy)) {
             return "";
         }
-        String orderBySql = "";
         String[] split = orderBy.split(",");
         Map<String, Object> stringObjectMap = BeanUtil.beanToMap(o);
+        String orderType;
+        if (StringUtils.isNotBlank(orderByWay) && orderByWay.equals("asc")) {
+            orderType = " asc";
+        } else {
+            orderType = " desc";
+        }
+        StringBuilder orderByStringBuilder = new StringBuilder();
+        orderByStringBuilder.append("order by ");
         boolean safe = true;
         for (String s : split) {
             if (!stringObjectMap.containsKey(s)) {
                 safe = false;
                 break;
             }
+            orderByStringBuilder.append(s).append(orderType).append(",");
         }
         if (!safe) {
             return "";
         }
-        orderBySql = "order by " + orderBy;
-        if (StringUtils.isNotBlank(orderByWay) && orderByWay.equals("asc")) {
-            orderBySql += " asc";
-        } else {
-            orderBySql += " desc";
+        String orderByStr = orderByStringBuilder.toString();
+        if(orderByStr.lastIndexOf(",") == orderByStr.length() - 1) {
+            orderByStr = orderByStr.substring(0, orderByStr.length()-1);
         }
-        return orderBySql;
+        return orderByStr;
     }
 }
