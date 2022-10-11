@@ -10,6 +10,7 @@ import com.perfree.model.Option;
 import com.perfree.model.Role;
 import com.perfree.model.User;
 import com.perfree.service.*;
+import io.swagger.annotations.ApiOperation;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
@@ -61,6 +62,8 @@ public class SystemController extends BaseController {
     private RssServices rssServices;
     @Value("${shiro.timeout}")
     private Long timeout;
+    @Value("${server.port}")
+    private int serverPort;
 
     /**
      * 后台首页
@@ -386,5 +389,12 @@ public class SystemController extends BaseController {
             logger.error("检查更新出错:{}", e.getMessage());
             return ResponseBean.fail("检查更新出错", null);
         }
+    }
+
+
+    @GetMapping("/getWebSite")
+    @ResponseBody
+    public ResponseBean getWebSite() {
+        return ResponseBean.success("success", OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort)));
     }
 }

@@ -2,6 +2,7 @@ package com.perfree.service.impl;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrFormatter;
+import cn.hutool.http.HtmlUtil;
 import com.jfinal.template.Template;
 import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;

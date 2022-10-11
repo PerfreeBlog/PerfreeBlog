@@ -9,12 +9,16 @@
             commentListApi: '/comments/getCommentByArticleId',
             // 获取当前登录用户
             loginUserApi: '/user/getLoginUser',
+            // 获取当前网站地址
+            webSiteApi: '/getWebSite',
             // 是否显示评论列表
             isShowCommentList: true,
             // 表情按钮的svg
             emjoiBtnIcon: '<svg t="1661157759312" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3077" width="48" height="48"><path d="M510.4 1007.5c-265.1 0-480.8-215.8-480.8-481.1S245.3 45.2 510.4 45.2 991.1 261 991.1 526.3 775.5 1007.5 510.4 1007.5zM510.4 93.3c-238.6 0-432.7 194.3-432.7 433.1s194.1 433.1 432.7 433.1 432.7-194.3 432.7-433.1S749 93.3 510.4 93.3z" p-id="3078" fill="#777e85"></path><path d="M659.9 534.2c-49.3 0-89.4-40.1-89.4-89.4s40.1-89.4 89.4-89.4 89.4 40.1 89.4 89.4S709.2 534.2 659.9 534.2zM659.9 403.5c-22.8 0-41.3 18.5-41.3 41.3s18.5 41.3 41.3 41.3 41.3-18.5 41.3-41.3S682.6 403.5 659.9 403.5z" p-id="3079" fill="#777e85"></path><path d="M318.6 550.2 293.2 509.4 385.8 451.8 291.1 378.1 320.6 340.1 469.8 456.1Z" p-id="3080" fill="#777e85"></path><path d="M514.1 800c-1 0-1.9 0-2.9 0C375.6 798.1 280 669.1 276 663.6l38.8-28.4c0.8 1.2 85.8 115.3 197.3 116.6 0.7 0 1.3 0 2 0 65.6 0 129.2-39.4 189.1-117.1l38.1 29.3C671.8 754.3 595.4 800 514.1 800z" p-id="3081" fill="#777e85"></path></svg>',
             // 是否登录
             isLogin: false,
+            // 网站地址
+            webSite: "",
             // 表情包资源
             emjoiList: [
                 {"url":"/public/libs/perfree-comment/imgs/aini.png","id":"aini"},
@@ -103,16 +107,21 @@
          */
         init: function() {
             let that = this;
-            // 获取当前登录用户 
-            $.get(that.options.loginUserApi, function(res) {
+            $.get(that.options.webSiteApi, function(res) {
                 if (res && res.data) {
-                    that.options.isLogin = true;
-                }
-                let commentContainers = $('.perfree-comment');
-                for (const commentContainer of commentContainers) {
-                    $(commentContainer).addClass('perfree-comment-container');;
-                    that.initComment(commentContainer);
-                    that.initCommentList(commentContainer);
+                    that.options.webSite = res.data;
+                    // 获取当前登录用户
+                    $.get(that.options.loginUserApi, function(res) {
+                        if (res && res.data) {
+                            that.options.isLogin = true;
+                        }
+                        let commentContainers = $('.perfree-comment');
+                        for (const commentContainer of commentContainers) {
+                            $(commentContainer).addClass('perfree-comment-container');;
+                            that.initComment(commentContainer);
+                            that.initCommentList(commentContainer);
+                        }
+                    });
                 }
             });
         },
@@ -151,7 +160,7 @@
                         <a href='javascript:;' class='comment-emjoi-btn'>${this.options.emjoiBtnIcon} 表情</a>
                         <span class='comment-msg'></span>
                         <ul class='comment-emjoi-panel'>
-                            ${renderEmjoiPanel(this.options.emjoiList)}
+                            ${renderEmjoiPanel(this.options.emjoiList,this.options.webSite)}
                         </ul>
                     </div>
                 </div>
@@ -393,10 +402,10 @@
     /**
      * 渲染表情面板
      */
-    function renderEmjoiPanel(emjoiList) {
+    function renderEmjoiPanel(emjoiList, website) {
         let html = '';
         for (const emjoi of emjoiList) {
-            html += `<li data-id='${emjoi.id}' title='${emjoi.id}' class='comment-emjoi'><img src='${emjoi.url}' alt='${emjoi.id}' class='emjoi' width='26px' loading='lazy'></li>`;
+            html += `<li data-id='${emjoi.id}' title='${emjoi.id}' class='comment-emjoi'><img src='${website}${emjoi.url}' alt='${emjoi.id}' class='emjoi' width='26px' loading='lazy'></li>`;
         }
         return html;
     }

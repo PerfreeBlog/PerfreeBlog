@@ -51,6 +51,8 @@ public class SystemController {
     private MenuService menuService;
     @Value("${shiro.timeout}")
     private Long timeout;
+    @Value("${server.port}")
+    private int serverPort;
 
     /**
      * 登录
@@ -207,5 +209,12 @@ public class SystemController {
     @ApiOperation(value = "获取前台所有的菜单信息", notes = "获取前台所有的菜单信息")
     public ResponseBean getMenuList() {
         return ResponseBean.success("success", menuService.getProtalMenus());
+    }
+
+
+    @GetMapping("/getWebSite")
+    @ApiOperation(value = "获取当前网站的地址", notes = "获取当前网站的地址")
+    public ResponseBean getWebSite() {
+        return ResponseBean.success("success", OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort)));
     }
 }
