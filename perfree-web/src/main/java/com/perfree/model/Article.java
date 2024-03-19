@@ -4,9 +4,11 @@ import com.perfree.commons.Constants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +20,8 @@ import java.util.List;
  */
 @Schema(description = "文章数据")
 public class Article implements Serializable {
-    private static final long serialVersionUID = 4900274588193382137L;
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Schema(description = "文章ID", name = "id", example = "1")
     private Long id;
 

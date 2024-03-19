@@ -30,10 +30,9 @@
         <hutool.version>5.8.26</hutool.version>
         <mybatis.spring.version>3.0.1</mybatis.spring.version>
 
-        <commons.lang3.version>3.9</commons.lang3.version>
-        <spring.version>2.5.14</spring.version>
-        <sqlite.version>3.25.2</sqlite.version>
 
+        <commons.lang3.version>3.9</commons.lang3.version>
+        <sqlite.version>3.25.2</sqlite.version>
     </properties>
 
    <dependencyManagement>
