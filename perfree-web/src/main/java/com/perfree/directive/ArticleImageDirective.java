@@ -4,7 +4,6 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.commons.MarkdownUtil;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,9 +21,9 @@ public class ArticleImageDirective  extends BaseDirective{
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
         String mdStr = getParam(0, scope).toString();
-        String html = MarkdownUtil.mdToHtml(mdStr);
+  /*      String html = MarkdownUtil.mdToHtml(mdStr);
         List<String> imageSrc = getImageSrc(html);
-        scope.set("images", imageSrc);
+        scope.set("images", imageSrc);*/
         stat.exec(env, scope, writer);
     }
 

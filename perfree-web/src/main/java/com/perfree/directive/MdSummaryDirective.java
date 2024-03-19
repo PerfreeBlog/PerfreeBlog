@@ -4,7 +4,6 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.commons.MarkdownUtil;
 import org.springframework.stereotype.Component;
 
 @TemplateDirective("mdSummary")
@@ -16,7 +15,7 @@ public class MdSummaryDirective extends BaseDirective {
 
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        String str = getParam(0, scope).toString();
+       /* String str = getParam(0, scope).toString();
         String mdStr = MarkdownUtil.mdToStr(str);
         int maxLength = getParamToInt(1, scope, 0);
         String result;
@@ -25,6 +24,6 @@ public class MdSummaryDirective extends BaseDirective {
         } else {
             result = mdStr;
         }
-        write(writer, result);
+        write(writer, result);*/
     }
 }

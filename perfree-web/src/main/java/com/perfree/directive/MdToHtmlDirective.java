@@ -4,7 +4,6 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.commons.MarkdownUtil;
 import org.springframework.stereotype.Component;
 
 @TemplateDirective("mdToHtml")
@@ -15,7 +14,7 @@ public class MdToHtmlDirective extends BaseDirective {
     }
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        String mdStr = getParam(0, scope).toString();
-        write(writer, MarkdownUtil.mdToHtml(mdStr));
+   /*     String mdStr = getParam(0, scope).toString();
+        write(writer, MarkdownUtil.mdToHtml(mdStr));*/
     }
 }

@@ -2,7 +2,6 @@ package com.perfree.service.impl;
 
 import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
-import com.perfree.commons.MarkdownUtil;
 import com.perfree.commons.OptionCacheUtil;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Article;
@@ -13,9 +12,9 @@ import com.rometools.rome.feed.rss.Description;
 import com.rometools.rome.feed.rss.Item;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.WireFeedOutput;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -70,7 +69,7 @@ public class RssServicesImpl implements RssServices {
             item.setPubDate(new Date());
             Description desc = new Description();
             if (RSS_MODE_FULL.equals(rssGenMode)) {
-                desc.setValue(MarkdownUtil.mdToHtml(article.getContent()));
+               // desc.setValue(MarkdownUtil.mdToHtml(article.getContent()));
             } else {
                 desc.setValue(article.getSummary());
             }
