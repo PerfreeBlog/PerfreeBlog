@@ -1,71 +1,73 @@
 package com.perfree.model;
 
 import com.perfree.commons.GravatarUtil;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * User Table
+ *
  * @author Perfree
  */
-@ApiModel(value="User-用户数据",description="用户数据")
+@Schema(description = "用户数据")
 public class User implements Serializable {
-    private static final long serialVersionUID = -4338379690203608321L;
-    @ApiModelProperty(value="id",name="id")
+    @Serial
+    private static final long serialVersionUID = 1L;
+    @Schema(description = "id", name = "id")
     private Long id;
 
-    @ApiModelProperty(value="账户",name="account")
+    @Schema(description = "账户", name = "account")
     @NotBlank(message = "账户不允许为空")
-    @Pattern(regexp ="^[A-Za-z0-9]+$",message = "账户只能填写字母或数字")
-    @Length(min = 3,max = 12,message = "账户长度要在3-12字符之间")
+    @Pattern(regexp = "^[A-Za-z0-9]+$", message = "账户只能填写字母或数字")
+    @Length(min = 3, max = 12, message = "账户长度要在3-12字符之间")
     private String account;
 
-    @ApiModelProperty(value="用户名",name="userName")
+    @Schema(description = "用户名", name = "userName")
     @NotBlank(message = "用户名不允许为空")
-    @Length(min = 2,max = 16,message = "用户名长度要在2-16字符之间")
+    @Length(min = 2, max = 16, message = "用户名长度要在2-16字符之间")
     private String userName;
 
-    @ApiModelProperty(value="密码",name="password")
+    @Schema(description = "密码", name = "password")
     private String password;
 
-    @ApiModelProperty(value="盐值",name="salt")
+    @Schema(description = "盐值", name = "salt")
     private String salt;
 
-    @ApiModelProperty(value="状态",name="status", example = "0正常,1禁用")
+    @Schema(description = "状态", name = "status", example = "0正常,1禁用")
     private Integer status;
 
-    @ApiModelProperty(value="头像",name="avatar")
+    @Schema(description = "头像", name = "avatar")
     private String avatar;
 
-    @ApiModelProperty(value="角色id",name="roleId")
+    @Schema(description = "角色id", name = "roleId")
     private Long roleId;
 
-    @ApiModelProperty(value="创建时间",name="createTime")
+    @Schema(description = "创建时间", name = "createTime")
     private Date createTime;
 
-    @ApiModelProperty(value="更新时间",name="updateTime")
+    @Schema(description = "更新时间", name = "updateTime")
     private Date updateTime;
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private String captcha;
 
-    @ApiModelProperty(value="网址",name="website")
+    @Schema(description = "网址", name = "website")
     private String website;
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Boolean readAvatar = true;
 
-    @ApiModelProperty(value="角色信息",name="role")
+    @Schema(description = "角色信息", name = "role")
     private Role role;
 
-    @ApiModelProperty(value="邮箱",name="email")
+    @Schema(description = "邮箱", name = "email")
     @NotBlank(message = "邮箱不允许为空")
     @Email(message = "请正确填写邮箱")
     private String email;

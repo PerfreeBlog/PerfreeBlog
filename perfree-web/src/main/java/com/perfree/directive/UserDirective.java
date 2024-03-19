@@ -6,9 +6,6 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +28,9 @@ public class UserDirective extends BaseDirective {
 
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        Subject subject = SecurityUtils.getSubject();
+   //     Subject subject = SecurityUtils.getSubject();
         User user=new User();
-        if (subject.getPrincipals() != null) {
+   /*     if (subject.getPrincipals() != null) {
             BeanUtils.copyProperties(subject.getPrincipals().getPrimaryPrincipal(), user);
             user = userService.getById(user.getId().toString());
             user.setPassword(null);
@@ -41,7 +38,8 @@ public class UserDirective extends BaseDirective {
             scope.set("user", user);
         } else {
             scope.set("user", null);
-        }
+        }*/
+        scope.set("user", null);
         stat.exec(env, scope, writer);
     }
 

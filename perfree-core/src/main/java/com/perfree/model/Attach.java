@@ -1,52 +1,52 @@
 package com.perfree.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * attach table
+ *
  * @author Perfree
  */
-@ApiModel(value="Attach-附件数据",description="附件数据")
+@Schema(description = "附件数据")
 public class Attach implements Serializable {
     private static final long serialVersionUID = 4900174588193382137L;
-    @ApiModelProperty(value="附件ID",name="id")
+    @Schema(description = "附件ID", name = "id")
     private Long id;
 
-    @ApiModelProperty(value="附件名称",name="name")
+    @Schema(description = "附件名称", name = "name")
     private String name;
 
-    @ApiModelProperty(value="附件描述",name="desc")
+    @Schema(description = "附件描述", name = "desc")
     private String desc;
 
-    @ApiModelProperty(value="附件路径",name="path")
+    @Schema(description = "附件路径", name = "path")
     private String path;
 
-    @ApiModelProperty(value="附件后缀",name="suffix")
+    @Schema(description = "附件后缀", name = "suffix")
     private String suffix;
 
-    @ApiModelProperty(value="附件标识",name="flag")
+    @Schema(description = "附件标识", name = "flag")
     private String flag;
 
-    @ApiModelProperty(value="附件类型",name="type")
+    @Schema(description = "附件类型", name = "type")
     private String type;
 
-    @ApiModelProperty(value="创建时间",name="createTime")
+    @Schema(description = "创建时间", name = "createTime")
     private Date createTime;
 
-    @ApiModelProperty(value="修改时间",name="updateTime")
+    @Schema(description = "修改时间", name = "updateTime")
     private Date updateTime;
 
-    @ApiModelProperty(value="存储方式",name="saveType")
+    @Schema(description = "存储方式", name = "saveType")
     private String saveType;
 
-    @ApiModelProperty(value="fileKey",name="fileKey")
+    @Schema(description = "fileKey", name = "fileKey")
     private String fileKey;
 
-    @ApiModelProperty(value="附件链接",name="url")
+    @Schema(description = "附件链接", name = "url")
     private String url;
 
     public String getUrl() {

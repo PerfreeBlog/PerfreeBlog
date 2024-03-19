@@ -1,85 +1,85 @@
 package com.perfree.model;
 
 import com.perfree.commons.GravatarUtil;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * comment table
+ *
  * @author Perfree
  */
-@ApiModel(value="Comment-评论数据",description="评论数据")
+@Schema(description = "评论数据")
 public class Comment implements Serializable {
     private static final long serialVersionUID = 7817277417501762472L;
 
-    @ApiModelProperty(value="评论ID",name="id")
+    @Schema(description = "评论ID", name = "id")
     private Long id;
 
-    @ApiModelProperty(value="父级评论ID",name="pid")
+    @Schema(description = "父级评论ID", name = "pid")
     private Long pid;
 
-    @ApiModelProperty(value="顶级评论ID",name="topPid")
+    @Schema(description = "顶级评论ID", name = "topPid")
     private Long topPid;
 
-    @ApiModelProperty(value="文章id",name="articleId")
+    @Schema(description = "文章id", name = "articleId")
     @NotNull(message = "文章id不允许为空")
     private Long articleId;
 
-    @ApiModelProperty(value="评论人id",name="userId")
+    @Schema(description = "评论人id", name = "userId")
     private Long userId;
 
-    @ApiModelProperty(value="评论内容",name="content")
+    @Schema(description = "评论内容", name = "content")
     @NotBlank(message = "评论内容不允许为空")
-    @Length(max = 1500,message = "评论内容过长")
+    @Length(max = 1500, message = "评论内容过长")
     private String content;
 
-    @ApiModelProperty(value="头像",name="avatar")
+    @Schema(description = "头像", name = "avatar")
     private String avatar;
 
-    @ApiModelProperty(value="网址",name="website")
-    @Length(max = 200,message = "网站地址过长")
+    @Schema(description = "网址", name = "website")
+    @Length(max = 200, message = "网站地址过长")
     private String website;
 
-    @ApiModelProperty(value="邮箱",name="email")
-    @Length(max = 100,message = "邮箱长度过长")
+    @Schema(description = "邮箱", name = "email")
+    @Length(max = 100, message = "邮箱长度过长")
     private String email;
 
-    @ApiModelProperty(value="用户名",name="userName")
-    @Length(max = 16,message = "用户名长度要在1-16字之间")
+    @Schema(description = "用户名", name = "userName")
+    @Length(max = 16, message = "用户名长度要在1-16字之间")
     private String userName;
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Boolean readAvatar = true;
 
-    @ApiModelProperty(value="状态",name="status", example = "0正常,1:待审核")
+    @Schema(description = "状态", name = "status", example = "0正常,1:待审核")
     private Integer status;
 
-    @ApiModelProperty(value="创建时间",name="createTime")
+    @Schema(description = "创建时间", name = "createTime")
     private Date createTime;
 
-    @ApiModelProperty(value="更新时间",name="updateTime")
+    @Schema(description = "更新时间", name = "updateTime")
     private Date updateTime;
 
-    @ApiModelProperty(value="用户信息",name="user")
+    @Schema(description = "用户信息", name = "user")
     private User user;
 
-    @ApiModelProperty(value="文章信息",name="article")
+    @Schema(description = "文章信息", name = "article")
     private Article article;
 
-    @ApiModelProperty(value="子评论",name="child")
+    @Schema(description = "子评论", name = "child")
     private List<Comment> child;
 
-    @ApiModelProperty(value="父级评论",name="parent")
+    @Schema(description = "父级评论", name = "parent")
     private Comment parent;
 
-    @ApiModelProperty(value="文章类型",name="articleType")
+    @Schema(description = "文章类型", name = "articleType")
     private String articleType;
 
     public String getArticleType() {
@@ -184,7 +184,7 @@ public class Comment implements Serializable {
         if (readAvatar) {
             return GravatarUtil.replaceGravatar(avatar);
         }
-       return avatar;
+        return avatar;
     }
 
     public void setAvatar(String avatar) {

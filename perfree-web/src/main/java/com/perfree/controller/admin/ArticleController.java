@@ -1,27 +1,22 @@
 package com.perfree.controller.admin;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.base.BaseController;
 import com.perfree.model.Article;
-import com.perfree.model.Category;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CategoryService;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
 
 /**
  * 文章
@@ -36,8 +31,8 @@ public class ArticleController extends BaseController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR,
-            Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+  /*  @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR,
+            Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)*/
     @RequestMapping("/article")
     @AdminMenu(name = "文章管理", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
@@ -45,13 +40,13 @@ public class ArticleController extends BaseController {
         return view("static/admin/pages/article/article_list.html");
     }
 
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+   // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @RequestMapping("/article/addPage")
     public String addPage() {
         return view("static/admin/pages/article/article_create.html");
     }
 
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    //@RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @RequestMapping("/article/updatePage/{id}")
     public String updatePage(@PathVariable("id") String id, Model model) {
         Article article = articleService.getById(id);
@@ -65,7 +60,7 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/article/add")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    //@RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean add(@RequestBody @Valid Article article) {
         User user = getUser();
         article.setUserId(user.getId());
@@ -89,7 +84,7 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/article/update")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    //@RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid Article article) {
         if (StringUtils.isBlank(article.getSlug())) {
             return ResponseBean.fail("访问地址别名不能为空", null);
@@ -109,7 +104,7 @@ public class ArticleController extends BaseController {
      * 文章管理列表数据
      * @return Pager<Article>
      */
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+   // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @PostMapping("/article/list")
     @ResponseBody
     public Pager<Article> list(@RequestBody Pager<Article> pager) {
@@ -125,7 +120,7 @@ public class ArticleController extends BaseController {
      * 更改置顶状态
      * @return String
      */
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    //@RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @PostMapping("/article/changeTopStatus")
     @ResponseBody
     public ResponseBean changeTopStatus(@RequestBody Article article) {
@@ -141,7 +136,7 @@ public class ArticleController extends BaseController {
      * 更改文章是否可以评论
      * @return String
      */
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+   // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @PostMapping("/article/changeCommentStatus")
     @ResponseBody
     public ResponseBean changeCommentStatus(@RequestBody Article article) {
@@ -156,7 +151,7 @@ public class ArticleController extends BaseController {
      * 更改文章状态
      * @return String
      */
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+   // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @PostMapping("/article/changeStatus")
     @ResponseBody
     public ResponseBean changeStatus(@RequestBody Article article) {
@@ -172,7 +167,7 @@ public class ArticleController extends BaseController {
      * @param ids ids
      * @return ResponseBean
      */
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+   // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @PostMapping("/article/del")
     @ResponseBody
     public ResponseBean del(@RequestBody String ids) {

@@ -3,7 +3,7 @@ package com.perfree.file;
 import com.perfree.model.Attach;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 
 /**

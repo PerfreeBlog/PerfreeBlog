@@ -1,5 +1,6 @@
 package com.perfree.service.impl;
 
+import cn.hutool.crypto.digest.DigestUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
@@ -7,7 +8,6 @@ import com.perfree.commons.StringUtil;
 import com.perfree.mapper.UserMapper;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +56,8 @@ public class UserServiceImpl implements UserService {
      */
     public int add(User user) {
         user.setSalt(StringUtil.getUUID());
-        user.setPassword(new Md5Hash(user.getPassword(), user.getSalt()).toString());
+        String hexPassword = DigestUtil.md5Hex(user.getPassword() + user.getSalt());
+        user.setPassword(hexPassword);
         user.setCreateTime(new Date());
         return userMapper.add(user);
     }
@@ -97,7 +98,8 @@ public class UserServiceImpl implements UserService {
      */
     public int resetPassword(User user) {
         user.setSalt(StringUtil.getUUID());
-        user.setPassword(new Md5Hash("123456", user.getSalt()).toString());
+        String hexPassword = DigestUtil.md5Hex("123456" + user.getSalt());
+        user.setPassword(hexPassword);
         user.setUpdateTime(new Date());
         return userMapper.resetPassword(user);
     }

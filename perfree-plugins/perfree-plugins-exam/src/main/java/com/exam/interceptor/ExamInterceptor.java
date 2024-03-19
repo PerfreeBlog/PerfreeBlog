@@ -3,8 +3,8 @@ package com.exam.interceptor;
 import com.perfree.plugin.annotation.InterceptPath;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * @description 示例插件: 拦截器

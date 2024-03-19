@@ -1,5 +1,6 @@
 package com.perfree.controller.admin;
 
+import cn.hutool.crypto.digest.DigestUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.GravatarUtil;
@@ -10,10 +11,9 @@ import com.perfree.file.FileResult;
 import com.perfree.model.User;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -48,7 +46,7 @@ public class UserController extends BaseController {
      * @return String
      */
     @RequestMapping("/user")
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     @AdminMenu(name = "用户管理", seq = 8, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/user/user_list.html");
@@ -59,7 +57,7 @@ public class UserController extends BaseController {
      * @return String
      */
     @RequestMapping("/user/addPage")
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public String addPage() {
         return view("static/admin/pages/user/user_add.html");
     }
@@ -69,8 +67,8 @@ public class UserController extends BaseController {
      * @return String
      */
     @RequestMapping("/user/userCenter")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
-            Constants.ROLE_USER}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+    //   Constants.ROLE_USER}, logical= Logical.OR)
     public String userCenter(Model model) {
         model.addAttribute("userForm", userService.getById(getUser().getId().toString()));
         return view("static/admin/pages/user/user_center.html");
@@ -82,8 +80,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/uploadImg")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
-            Constants.ROLE_USER}, logical= Logical.OR)
+    //  @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+    //      Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean uploadImg(HttpServletRequest request) {
         try{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -104,7 +102,7 @@ public class UserController extends BaseController {
      * @return String
      */
     @GetMapping("/user/editPage/{id}")
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public String editPage(@PathVariable("id") String id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("userForm", user);
@@ -118,7 +116,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/add")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean add(@RequestBody @Valid User user) {
         if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 || user.getPassword().length() > 18){
             logger.error("密码不能为空且在6-18字符之间: {}", user.toString());
@@ -145,7 +143,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/list")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    //  @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public Pager<User> list(@RequestBody Pager<User> pager) {
         return userService.list(pager);
     }
@@ -156,8 +154,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/update")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
-            Constants.ROLE_USER}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+    //         Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean update(@RequestBody @Valid User user) {
         user.setReadAvatar(false);
         if (StringUtils.isBlank(user.getAvatar())){
@@ -176,7 +174,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/del")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    //  @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
         if (Arrays.asList(idArr).contains(getUser().getId().toString())){
@@ -196,7 +194,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/resetPassword")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean resetPassword(@RequestBody User user) {
         if (userService.resetPassword(user) > 0) {
             return ResponseBean.success("重置密码为123456成功", null);
@@ -211,7 +209,7 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/changeStatus")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
     public ResponseBean changeStatus(@RequestBody User user) {
         if (userService.changeStatus(user) > 0) {
             return ResponseBean.success("修改成功", null);
@@ -226,8 +224,8 @@ public class UserController extends BaseController {
      */
     @PostMapping("/user/updatePassword")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
-            Constants.ROLE_USER}, logical= Logical.OR)
+    //  @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+    //       Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean updatePassword(@RequestBody HashMap<String, String> param) {
         String oldPassword = param.get("oldPassword");
         String newPassword = param.get("newPassword");
@@ -238,11 +236,11 @@ public class UserController extends BaseController {
             return ResponseBean.fail("新密码不能为空且在6-18字符之间", null);
         }
         User user = userService.getById(getUser().getId().toString());
-        String oldMd5Password = new Md5Hash(oldPassword, user.getSalt()).toString();
+        String oldMd5Password = DigestUtil.md5Hex(oldPassword + user.getSalt());
         if (!oldMd5Password.equals(user.getPassword())){
             return ResponseBean.fail("当前密码错误!", null);
         }
-        user.setPassword(new Md5Hash(newPassword, user.getSalt()).toString());
+        user.setPassword(DigestUtil.md5Hex(newPassword + user.getSalt()));
         if (userService.updatePassword(user) > 0) {
             return ResponseBean.success("修改成功", null);
         }

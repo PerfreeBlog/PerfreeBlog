@@ -1,6 +1,6 @@
 package com.perfree.model;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * 定义数据库信息实体

@@ -7,8 +7,6 @@ import com.perfree.base.BaseController;
 import com.perfree.model.Link;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.LinkService;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+// @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class LinkController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(LinkController.class);
 

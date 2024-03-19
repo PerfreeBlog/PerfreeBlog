@@ -7,8 +7,6 @@ import com.perfree.base.BaseController;
 import com.perfree.model.Plugin;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.PluginService;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @description 插件
@@ -29,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RequestMapping("/admin")
 @Controller
-@RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+// @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class PluginController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(PluginController.class);
 

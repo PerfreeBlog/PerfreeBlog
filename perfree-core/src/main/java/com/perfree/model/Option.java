@@ -1,25 +1,25 @@
 package com.perfree.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
 /**
  * option table
+ *
  * @author Perfree
  */
-@ApiModel(value="Option-配置项数据",description="配置项数据")
+@Schema(description = "配置项数据")
 public class Option implements Serializable {
     private static final long serialVersionUID = 7817277417501762377L;
 
-    @ApiModelProperty(value="配置项ID",name="id")
+    @Schema(description = "配置项ID", name = "id")
     private Long id;
 
-    @ApiModelProperty(value="配置key",name="key")
+    @Schema(description = "配置key", name = "key")
     private String key;
 
-    @ApiModelProperty(value="配置value",name="value")
+    @Schema(description = "配置value", name = "value")
     private String value;
 
     public Long getId() {

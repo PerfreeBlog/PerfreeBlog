@@ -6,34 +6,21 @@ import com.perfree.model.Option;
 import com.perfree.model.Role;
 import com.perfree.model.User;
 import com.perfree.service.*;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.HashMap;
 
 @RestController
 @CrossOrigin
-@Api(value = "系统相关",tags = "系统相关")
+@Tag(name = "系统相关")
 @RequestMapping("/api")
 @SuppressWarnings("all")
 public class SystemController {
@@ -56,19 +43,16 @@ public class SystemController {
 
     /**
      * 登录
+     *
      * @return ResponseBean
      */
 
-    @ApiOperation(value = "登录", notes = "用户登录")
+    @Operation(summary = "登录")
     @PostMapping("/doLogin")
     @ResponseBody
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
-            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class,  required = true)
-    })
     @AccessCacheLock
     public ResponseBean doLogin(String account, String password) {
-        int count = 1;
+       /* int count = 1;
         Ehcache cache = cacheManager.getEhcache("loginCache");
         try {
             Element element = cache.get(account);
@@ -108,47 +92,44 @@ public class SystemController {
             return ResponseBean.fail("账户不存在", e.getMessage());
         }catch (Exception e) {
             return ResponseBean.fail("系统异常", e.getMessage());
-        }
+        }*/
+        return null;
     }
 
     /**
      * 退出登录
+     *
      * @return ResponseBean
      */
     @GetMapping("/logout")
     @ResponseBody
-    @ApiOperation(value = "退出登录", notes = "退出登录")
+    @Operation(summary = "退出登录")
     public ResponseBean logout() {
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();
+     /*   Subject subject = SecurityUtils.getSubject();
+        subject.logout();*/
         return ResponseBean.success("success", null);
     }
 
     /**
      * 注册
+     *
      * @return ResponseBean
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doRegister")
     @ResponseBody
-    @ApiOperation(value = "注册", notes = "注册")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
-            @ApiImplicitParam(name = "password", value = "密码", dataTypeClass = String.class,  required = true),
-            @ApiImplicitParam(name = "userName", value = "昵称/用户名", dataTypeClass = String.class,  required = true),
-            @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class,  required = true)
-    })
+    @Operation(summary = "注册")
     @AccessCacheLock
-    public ResponseBean doRegister(@ApiIgnore @Valid User user,@ApiIgnore  HttpSession session) {
+    public ResponseBean doRegister(@Valid User user, HttpSession session) {
         Option optionByKey = optionService.getOptionByKey(Constants.OPTION_WEB_IS_REGISTER);
         if (optionByKey != null && optionByKey.getValue().equals(String.valueOf(Constants.REGISTER_NO))) {
             return ResponseBean.fail("网站已关闭注册功能", null);
         }
         if (StringUtils.isBlank(user.getPassword()) || user.getPassword().length() < 6 ||
-                user.getPassword().length() > 18){
+                user.getPassword().length() > 18) {
             logger.error("密码不能为空且在6-18字符之间: {}", user.toString());
             return ResponseBean.fail("密码不能为空且在6-18字符之间", null);
         }
-        if (userService.getUserByAccount(user.getAccount()) != null){
+        if (userService.getUserByAccount(user.getAccount()) != null) {
             logger.error("账户已存在: {}", user.toString());
             return ResponseBean.fail("账户已存在", null);
         }
@@ -176,13 +157,9 @@ public class SystemController {
      */
     @RequestMapping(method = RequestMethod.POST, path = "/doSendRestPassMail")
     @ResponseBody
-    @ApiOperation(value = "找回/重置密码发送邮件", notes = "找回/重置密码发送邮件")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "account", value = "账户", dataTypeClass = String.class,  required = true),
-            @ApiImplicitParam(name = "email", value = "邮箱", dataTypeClass = String.class,  required = true)
-    })
+    @Operation(summary = "找回/重置密码发送邮件")
     @AccessCacheLock
-    public ResponseBean doSendRestPassMail(@ApiIgnore User user, @ApiIgnore  HttpSession session) {
+    public ResponseBean doSendRestPassMail(User user, HttpSession session) {
         User queryUser = userService.getUserByAccountAndEmail(user.getAccount(), user.getEmail());
         if (queryUser == null) {
             return ResponseBean.fail("账户不存在", null);
@@ -206,14 +183,14 @@ public class SystemController {
 
 
     @GetMapping("/getMenuList")
-    @ApiOperation(value = "获取前台所有的菜单信息", notes = "获取前台所有的菜单信息")
+    @Operation(summary = "获取前台所有的菜单信息")
     public ResponseBean getMenuList() {
         return ResponseBean.success("success", menuService.getProtalMenus());
     }
 
 
     @GetMapping("/getWebSite")
-    @ApiOperation(value = "获取当前网站的地址", notes = "获取当前网站的地址")
+    @Operation(summary = "获取当前网站的地址")
     public ResponseBean getWebSite() {
         return ResponseBean.success("success", OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort)));
     }

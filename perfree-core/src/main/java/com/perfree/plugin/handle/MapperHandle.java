@@ -12,7 +12,6 @@ import org.apache.ibatis.session.defaults.DefaultSqlSession;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
-import org.springframework.core.NestedIOException;
 import org.springframework.util.ClassUtils;
 
 import java.io.File;
@@ -76,7 +75,7 @@ public class MapperHandle implements BasePluginHandle {
                         xmlMapperBuilder.parse();
                         in.close();
                     } catch (Exception e) {
-                        throw new NestedIOException("Failed to parse mapping resource: '" + url.getPath() + "'", e);
+                       //TODO  throw new NestedIOException("Failed to parse mapping resource: '" + url.getPath() + "'", e);
                     } finally {
                         if (in != null) {
                             in.close();

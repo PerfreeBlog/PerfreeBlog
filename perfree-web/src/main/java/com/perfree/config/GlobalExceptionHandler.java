@@ -3,7 +3,6 @@ package com.perfree.config;
 import com.perfree.base.BaseController;
 import com.perfree.commons.*;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 import java.util.Objects;
@@ -70,10 +69,10 @@ public class GlobalExceptionHandler extends BaseController {
         return ResponseBean.error(ResponseBean.ERROR_CODE, "参数错误", null);
     }
 
-    @ExceptionHandler(value = AuthorizationException.class)
+/*    @ExceptionHandler(value = AuthorizationException.class)
     public String handleAuthorizationException() {
         return "redirect:/403";
-    }
+    }*/
 
     @ExceptionHandler(value = RequestAccessException.class)
     @ResponseBody

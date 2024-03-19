@@ -2,10 +2,10 @@ package com.perfree.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.jfinal.template.Engine;
-import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
 import com.perfree.commons.OptionCacheUtil;
+import com.perfree.enjoy.JFinalViewResolver;
 import com.perfree.shared.TplMethodShared;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

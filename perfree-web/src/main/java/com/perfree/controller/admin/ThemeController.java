@@ -3,9 +3,7 @@ package com.perfree.controller.admin;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
-import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.setting.dialect.Props;
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
@@ -14,12 +12,11 @@ import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.ThemeService;
+import jakarta.servlet.http.HttpServletRequest;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +26,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+// @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class ThemeController extends BaseController {
     private static final CacheManager cacheManager = CacheManager.newInstance();
     private final Logger logger = LoggerFactory.getLogger(ThemeController.class);

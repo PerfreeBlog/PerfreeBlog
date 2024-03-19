@@ -7,7 +7,7 @@ import com.perfree.model.Article;
 import com.perfree.model.Menu;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 

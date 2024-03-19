@@ -1,22 +1,22 @@
 package com.perfree.config;
 
 import com.jfinal.template.Template;
-import com.jfinal.template.ext.spring.JFinalView;
-import com.jfinal.template.ext.spring.JFinalViewResolver;
 import com.perfree.commons.Constants;
 import com.perfree.commons.CustomByteArrayOutputStream;
 import com.perfree.commons.OptionCacheUtil;
+import com.perfree.enjoy.JFinalView;
+import com.perfree.enjoy.JFinalViewResolver;
 import com.perfree.plugin.proxy.HtmlRenderProxy;
 import com.perfree.plugin.utils.PluginsUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -28,7 +28,7 @@ public class CustomEnjoyView extends JFinalView {
     protected void renderMergedTemplateModel(Map<String, Object> model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession hs = request.getSession(true);
         if (hs != null) {
-            model.put("session", new JFinalView.InnerSession(hs));
+           // TODO model.put("session", new JFinalView.InnerSession(hs));
         }
 
         try {

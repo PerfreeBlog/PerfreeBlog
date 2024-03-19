@@ -1,37 +1,37 @@
 package com.perfree.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 友链实体
+ *
  * @author Perfree
  */
-@ApiModel(value="Link-友链数据",description="友链数据")
+@Schema(description = "友链数据")
 public class Link implements Serializable {
     private static final long serialVersionUID = 7817276417501762472L;
-    @ApiModelProperty(value="友链ID",name="id")
+    @Schema(description = "友链ID", name = "id")
     private Long id;
 
-    @ApiModelProperty(value="友链名",name="name")
+    @Schema(description = "友链名", name = "name")
     private String name;
 
-    @ApiModelProperty(value="友链logo",name="logo")
+    @Schema(description = "友链logo", name = "logo")
     private String logo;
 
-    @ApiModelProperty(value="友链描述",name="desc")
+    @Schema(description = "友链描述", name = "desc")
     private String desc;
 
-    @ApiModelProperty(value="友链地址",name="address")
+    @Schema(description = "友链地址", name = "address")
     private String address;
 
-    @ApiModelProperty(value="创建时间",name="createTime")
+    @Schema(description = "创建时间", name = "createTime")
     private Date createTime;
 
-    @ApiModelProperty(value="更新时间",name="updateTime")
+    @Schema(description = "更新时间", name = "updateTime")
     private Date updateTime;
 
     public Long getId() {

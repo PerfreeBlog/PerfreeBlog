@@ -1,65 +1,65 @@
 package com.perfree.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * menu table
+ *
  * @author Perfree
  */
-@ApiModel(value="Menu-菜单数据",description="菜单数据")
+@Schema(description = "菜单数据")
 public class Menu implements Serializable {
     private static final long serialVersionUID = 7817277417501762477L;
     public static int TYPE_FRONT = 0;
     public static int TYPE_AFTER = 1;
 
-    @ApiModelProperty(value="菜单ID",name="id")
+    @Schema(description = "菜单ID", name = "id")
     private String id;
 
-    @ApiModelProperty(value="父级菜单ID",name="pid")
+    @Schema(description = "父级菜单ID", name = "pid")
     private String pid;
 
-    @ApiModelProperty(value="菜单名",name="name")
+    @Schema(description = "菜单名", name = "name")
     @NotBlank(message = "菜单名不允许为空")
-    @Length(max = 30,message = "菜单名最多30个字符")
+    @Length(max = 30, message = "菜单名最多30个字符")
     private String name;
 
-    @ApiModelProperty(value="菜单url",name="url")
+    @Schema(description = "菜单url", name = "url")
     @NotBlank(message = "菜单链接不允许为空")
-    @Length(max = 50,message = "菜单链接最多50个字符")
+    @Length(max = 50, message = "菜单链接最多50个字符")
     private String url;
 
-    @ApiModelProperty(value="菜单图标",name="icon")
+    @Schema(description = "菜单图标", name = "icon")
     private String icon;
 
-    @ApiModelProperty(value="菜单序号",name="seq")
+    @Schema(description = "菜单序号", name = "seq")
     private Integer seq;
 
-    @ApiModelProperty(value="菜单类型",name="type", example = "0:前台,1:后台")
+    @Schema(description = "菜单类型", name = "type", example = "0:前台,1:后台")
     private Integer type;
 
-    @ApiModelProperty(value="菜单状态",name="status", example = "0:启用,1禁用")
+    @Schema(description = "菜单状态", name = "status", example = "0:启用,1禁用")
     @NotNull(message = "菜单状态不允许为空")
     private Integer status;
 
-    @ApiModelProperty(value="创建时间",name="createTime")
+    @Schema(description = "创建时间", name = "createTime")
     private Date createTime;
 
-    @ApiModelProperty(value="更新时间",name="updateTime")
+    @Schema(description = "更新时间", name = "updateTime")
     private Date updateTime;
 
-    @ApiModelProperty(value="菜单打开方式",name="target", example = "0本页,1:新窗口")
+    @Schema(description = "菜单打开方式", name = "target", example = "0本页,1:新窗口")
     @NotNull(message = "打开方式不允许为空")
     private Integer target;
 
-    @ApiModelProperty(value="子菜单",name="childMenu")
+    @Schema(description = "子菜单", name = "childMenu")
     private List<Menu> childMenu;
 
 

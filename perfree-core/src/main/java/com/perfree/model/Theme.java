@@ -1,48 +1,48 @@
 package com.perfree.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
 /**
  * 定义主题实体
+ *
  * @author Perfree
  */
-@ApiModel(value="Theme-主题数据",description="主题数据")
+@Schema(description = "Theme-主题数据")
 public class Theme implements Serializable {
     private static final long serialVersionUID = -7478937928185904570L;
-    @ApiModelProperty(value="主题名称",name="name")
+    @Schema(description = "主题名称", name = "name")
     private String name;
 
-    @ApiModelProperty(value="主题版本",name="version")
+    @Schema(description = "主题版本", name = "version")
     private String version;
 
-    @ApiModelProperty(value="主题作者",name="author")
+    @Schema(description = "主题作者", name = "author")
     private String author;
 
-    @ApiModelProperty(value="作者网站",name="authorWebSite")
+    @Schema(description = "作者网站", name = "authorWebSite")
     private String authorWebSite;
 
-    @ApiModelProperty(value="描述",name="description")
+    @Schema(description = "描述", name = "description")
     private String description;
 
-    @ApiModelProperty(value="更新url",name="updateUrl")
+    @Schema(description = "更新url", name = "updateUrl")
     private String updateUrl;
 
-    @ApiModelProperty(value="截图",name="screenshots")
+    @Schema(description = "截图", name = "screenshots")
     private String screenshots;
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Integer isActive = 0;
 
-    @ApiModelProperty(value="主题路径",name="path")
+    @Schema(description = "主题路径", name = "path")
     private String path;
 
-    @ApiModelProperty(value="主题路径",name="absolutePath")
+    @Schema(description = "主题路径", name = "absolutePath")
     private String absolutePath;
 
-    @ApiModelProperty(value="主题类型",name="type")
+    @Schema(description = "主题类型", name = "type")
     private String type;
 
     public String getPath() {

@@ -11,8 +11,6 @@ import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
 import com.perfree.service.MailService;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
-@RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+// @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
 public class CommentController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(TagController.class);
     @Autowired
@@ -41,7 +39,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @RequestMapping("/comment")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @AdminMenu(name = "评论管理", seq = 4, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
     public String index() {
@@ -54,7 +52,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @RequestMapping("/comment/reply/{id}")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public String reply(@PathVariable("id") String id, Model model) {
         model.addAttribute("comment", commentService.getById(Long.parseLong(id)));
         return view("static/admin/pages/comment/comment_reply.html");
@@ -65,7 +63,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/list")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @ResponseBody
     public Pager<Comment> list(@RequestBody Pager<Comment> pager) {
         User user = getUser();
@@ -80,7 +78,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/del")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @ResponseBody
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
@@ -96,7 +94,7 @@ public class CommentController extends BaseController {
      * @return String
      */
     @PostMapping("/comment/changeStatus")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     @ResponseBody
     public ResponseBean changeStatus(@RequestBody Comment comment) {
         if (commentService.changeStatus(comment) > 0) {

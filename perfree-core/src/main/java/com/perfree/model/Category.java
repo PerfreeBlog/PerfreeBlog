@@ -1,72 +1,72 @@
 package com.perfree.model;
 
 import com.perfree.commons.Constants;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 /**
  * category table
+ *
  * @author Perfree
  */
-@ApiModel(value="Category-分类数据",description="分类数据")
+@Schema(description = "分类数据")
 public class Category implements Serializable {
     private static final long serialVersionUID = -3275180034882679507L;
-    @ApiModelProperty(value="分类ID",name="id")
+    @Schema(description = "分类ID", name = "id")
     private Long id;
 
-    @ApiModelProperty(value="分类父级ID",name="pid")
+    @Schema(description = "分类父级ID", name = "pid")
     private Long pid;
 
-    @ApiModelProperty(value="分类名",name="name")
+    @Schema(description = "分类名", name = "name")
     @NotBlank(message = "分类名不允许为空")
-    @Length(max = 50,message = "分类名最多50个字符")
+    @Length(max = 50, message = "分类名最多50个字符")
     private String name;
 
-    @ApiModelProperty(value="分类描述",name="desc")
-    @Length(max = 200,message = "分类描述最多200个字符")
+    @Schema(description = "分类描述", name = "desc")
+    @Length(max = 200, message = "分类描述最多200个字符")
     private String desc;
 
-    @ApiModelProperty(value="文章数量",name="count")
+    @Schema(description = "文章数量", name = "count")
     private Long count;
 
-    @ApiModelProperty(value="SEO关键字",name="metaKeywords")
-    @Length(max = 120,message = "SEO关键字最多120个字符")
+    @Schema(description = "SEO关键字", name = "metaKeywords")
+    @Length(max = 120, message = "SEO关键字最多120个字符")
     private String metaKeywords;
 
-    @ApiModelProperty(value="SEO描述",name="metaDescription")
-    @Length(max = 120,message = "SEO描述最多150个字符")
+    @Schema(description = "SEO描述", name = "metaDescription")
+    @Length(max = 120, message = "SEO描述最多150个字符")
     private String metaDescription;
 
-    @ApiModelProperty(value="状态",name="status", example = "0:正常,1禁用")
+    @Schema(description = "状态", name = "status", example = "0:正常,1禁用")
     @NotNull(message = "状态不允许为空")
     private Integer status;
 
-    @ApiModelProperty(value="别名",name="slug")
+    @Schema(description = "别名", name = "slug")
     private String slug;
 
-    @ApiModelProperty(value="封面图",name="thumbnail")
+    @Schema(description = "封面图", name = "thumbnail")
     private String thumbnail;
 
-    @ApiModelProperty(value="创建时间",name="createTime")
+    @Schema(description = "创建时间", name = "createTime")
     private Date createTime;
 
-    @ApiModelProperty(value="更新时间",name="updateTime")
+    @Schema(description = "更新时间", name = "updateTime")
     private Date updateTime;
 
-    @ApiModelProperty(value="子分类",name="children")
+    @Schema(description = "子分类", name = "children")
     private List<Category> children;
 
-    @ApiModelProperty(hidden = true)
+    @Schema(hidden = true)
     private Long value;
 
-    @ApiModelProperty(value="分类链接",name="url")
+    @Schema(description = "分类链接", name = "url")
     private String url;
 
     public Long getValue() {
@@ -76,6 +76,7 @@ public class Category implements Serializable {
     public void setValue(Long value) {
         this.value = value;
     }
+
     public Integer getStatus() {
         return status;
     }

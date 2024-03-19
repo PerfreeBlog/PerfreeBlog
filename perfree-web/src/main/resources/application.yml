@@ -66,6 +66,8 @@ spring:
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: com.perfree.model
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 #pagehelper配置
 pagehelper:
@@ -82,8 +84,6 @@ logging:
     com.perfree.plugins: info
   file:
     name: ./logs/Perfree.log
-    max-history: 7
-    max-size: 10MB
 cache:
   ehcache:
     config: ehcache.xml
@@ -92,9 +92,19 @@ shiro:
   enabled: true
   # 会话超时时间(分钟)
   timeout: 120
-swagger:
-  enable: false
-  application-name: PerfreeBlog
-  application-version: ${version}
-  application-description: PerfreeBlog接口文档
-  try-host: http://localhost:${server.port}
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/api/**'
+      packages-to-scan:
+# knife4j的增强配置
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn

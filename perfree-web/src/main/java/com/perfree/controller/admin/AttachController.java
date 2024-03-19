@@ -15,8 +15,6 @@ import com.perfree.plugin.proxy.AttachProxy;
 import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.AttachService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +50,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/img")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public String attachImg() {
         return view("static/admin/pages/attach/attach_img.html");
     }
@@ -62,7 +60,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/video")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public String attachVideo() {
         return view("static/admin/pages/attach/attach_video.html");
     }
@@ -72,7 +70,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/attach")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    //  @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public String attachAttach() {
         return view("static/admin/pages/attach/attach_attach.html");
     }
@@ -83,7 +81,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/upload")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean upload(HttpServletRequest request,
                                @RequestParam(required = false, value = "desc") String desc,
                                @RequestParam(required = false, value = "flag") String flag) {
@@ -137,7 +135,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/ckEditorUpload")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public Map<String, Object> ckEditorUpload(HttpServletRequest request) {
         try{
             MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
@@ -197,7 +195,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/list")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public Pager<Attach> list(@RequestBody Pager<Attach> pager) {
         return attachService.list(pager);
     }
@@ -207,7 +205,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @AdminMenu(name = "附件管理", seq = 7, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
@@ -219,7 +217,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @RequestMapping("/attach/uploadPage")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String uploadPage() {
         return view("static/admin/pages/attach/attach_upload.html");
     }
@@ -229,7 +227,7 @@ public class AttachController extends BaseController {
      * @return String
      */
     @GetMapping("/attach/editPage/{id}")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String editPage(@PathVariable("id") String id, Model model) {
         Attach attach = attachService.getById(id);
         model.addAttribute("attach", attach);
@@ -244,7 +242,7 @@ public class AttachController extends BaseController {
      */
     @GetMapping("/attach/download/{id}")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    //  @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public String downloadFile(HttpServletResponse response, @PathVariable("id") String id) {
         Attach attach = attachService.getById(id);
         response.setHeader("Content-Type", "application/octet-stream;charset=utf-8");
@@ -266,7 +264,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/del")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean del(@RequestBody String ids) {
         String[] idArr = ids.split(",");
         if (attachService.del(idArr) > 0) {
@@ -282,7 +280,7 @@ public class AttachController extends BaseController {
      */
     @PostMapping("/attach/update")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean update(@RequestBody Attach attach) {
         if (attachService.update(attach) > 0) {
             return ResponseBean.success("更新成功", null);

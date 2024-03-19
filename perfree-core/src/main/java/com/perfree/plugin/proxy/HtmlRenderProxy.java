@@ -2,8 +2,8 @@ package com.perfree.plugin.proxy;
 
 import org.jsoup.nodes.Document;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * Html渲染代理: 插件可继承该类,获取渲染的html Document对象进行操作

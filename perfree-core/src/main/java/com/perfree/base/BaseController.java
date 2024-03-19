@@ -1,7 +1,6 @@
 package com.perfree.base;
 
 import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.commons.Constants;
@@ -11,16 +10,13 @@ import com.perfree.model.User;
 import com.perfree.service.MenuService;
 import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.List;
 
@@ -36,7 +32,7 @@ public class BaseController {
      * @return User
      */
     public User getUser(){
-        Subject subject = SecurityUtils.getSubject();
+       /* Subject subject = SecurityUtils.getSubject();
         User user=new User();
         PrincipalCollection principals = subject.getPrincipals();
         if (principals == null) {
@@ -46,7 +42,8 @@ public class BaseController {
         user = userService.getById(user.getId().toString());
         user.setPassword(null);
         user.setSalt(null);
-        return user;
+        return user;*/
+        return null;
     }
 
     /**

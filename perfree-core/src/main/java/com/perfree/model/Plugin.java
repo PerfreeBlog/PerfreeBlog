@@ -1,44 +1,43 @@
 package com.perfree.model;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @description Plugin model
  * @author Perfree
+ * @description Plugin model
  * @date 2021/8/13 13:42
  */
-@ApiModel(value="Plugin-插件数据",description="插件数据")
+@Schema(description = "插件数据")
 public class Plugin implements Serializable {
     private static final long serialVersionUID = 7817277417501722377L;
-    @ApiModelProperty(value="插件ID",name="id")
+    @Schema(description = "插件ID", name = "id")
     private Long id;
 
-    @ApiModelProperty(value="插件名",name="name")
+    @Schema(description = "插件名", name = "name")
     private String name;
 
-    @ApiModelProperty(value="插件路径",name="path")
+    @Schema(description = "插件路径", name = "path")
     private String path;
 
-    @ApiModelProperty(value="插件描述",name="desc")
+    @Schema(description = "插件描述", name = "desc")
     private String desc;
 
-    @ApiModelProperty(value="插件版本",name="version")
+    @Schema(description = "插件版本", name = "version")
     private String version;
 
-    @ApiModelProperty(value="插件作者",name="author")
+    @Schema(description = "插件作者", name = "author")
     private String author;
 
-    @ApiModelProperty(value="创建时间",name="createTime")
+    @Schema(description = "创建时间", name = "createTime")
     private Date createTime;
 
-    @ApiModelProperty(value="更新时间",name="updateTime")
+    @Schema(description = "更新时间", name = "updateTime")
     private Date updateTime;
 
-    @ApiModelProperty(value="插件状态",name="status")
+    @Schema(description = "插件状态", name = "status")
     private Integer status = 0;
 
     public Integer getStatus() {

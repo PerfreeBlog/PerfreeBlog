@@ -6,39 +6,26 @@ import cn.hutool.core.util.RandomUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.*;
 import com.perfree.model.Menu;
-import com.perfree.model.Option;
 import com.perfree.model.Role;
 import com.perfree.model.User;
 import com.perfree.service.*;
-import io.swagger.annotations.ApiOperation;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -48,17 +35,17 @@ import java.util.List;
 public class SystemController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(SystemController.class);
     private static final CacheManager cacheManager = CacheManager.newInstance();
-    @Autowired
+    @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private SEOService seoService;
-    @Autowired
+    @Resource
     private MailService mailService;
-    @Autowired
+    @Resource
     private UpdateService updateService;
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private RssServices rssServices;
     @Value("${shiro.timeout}")
     private Long timeout;
@@ -70,8 +57,8 @@ public class SystemController extends BaseController {
      * @return String
      */
     @RequestMapping("/admin")
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
-            Constants.ROLE_USER}, logical= Logical.OR)
+   /* @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)*/
     public String adminIndex(Model model) {
         model.addAttribute("user", getUser());
         return view("static/admin/pages/index.html");
@@ -79,8 +66,8 @@ public class SystemController extends BaseController {
 
     @PostMapping("/admin/menu/getAdminMenu")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
-            Constants.ROLE_USER}, logical= Logical.OR)
+ /*   @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
+            Constants.ROLE_USER}, logical= Logical.OR)*/
     public ResponseBean getAdminMenu() {
         List<Menu> menus = getMenuByUserIdAndType(1);
         return ResponseBean.success("success", menus);
@@ -148,7 +135,7 @@ public class SystemController extends BaseController {
     @SuppressWarnings("all")
     @AccessCacheLock
     public ResponseBean doLogin(@RequestBody User user,Boolean rememberMe, HttpSession session, HttpServletResponse response) {
-        if(rememberMe == null) {
+       /* if(rememberMe == null) {
             rememberMe = false;
         }
         int count = 1;
@@ -200,7 +187,8 @@ public class SystemController extends BaseController {
         }catch (Exception e) {
             session.removeAttribute("CAPTCHA_CODE");
             return ResponseBean.fail("系统异常", e.getMessage());
-        }
+        }*/
+        return ResponseBean.fail("系统异常", null);
     }
 
     /**
@@ -259,7 +247,7 @@ public class SystemController extends BaseController {
         User byId = userService.getById(sessionRestID.toString());
         byId.setReadAvatar(false);
         byId.setSalt(StringUtil.getUUID());
-        byId.setPassword(new Md5Hash(user.getPassword(), byId.getSalt()).toString());
+        // TODO byId.setPassword(new Md5Hash(user.getPassword(), byId.getSalt()).toString());
         byId.setUpdateTime(new Date());
         int update = userService.update(byId);
         if (update > 0) {
@@ -274,11 +262,11 @@ public class SystemController extends BaseController {
      */
     @RequestMapping(method = RequestMethod.GET, path = "/logout")
     public String logout(String path) {
-        Subject subject = SecurityUtils.getSubject();
+        /*Subject subject = SecurityUtils.getSubject();
         subject.logout();
         if (StringUtils.isNotBlank(path)){
             return "redirect:"+path;
-        }
+        }*/
         return view(currentThemePage() + "/index.html");
     }
 
@@ -376,7 +364,7 @@ public class SystemController extends BaseController {
      */
     @GetMapping("/checkUpdate")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
+ /*   @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)*/
     public ResponseBean checkUpdate() {
         try{
             Update update = updateService.checkUpdate();

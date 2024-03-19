@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -92,10 +91,10 @@ public class PostAppRunner implements ApplicationRunner {
                 updateSql(dbSetting);
             }
             optionService.initOptionCache();
-            List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
-            menuService.initSystemMenu(adminMenuGroups);
+      /*      List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
+           menuService.initSystemMenu(adminMenuGroups);*/
             initTheme();
-            initPlugins();
+            // TODO initPlugins();
         }
     }
 

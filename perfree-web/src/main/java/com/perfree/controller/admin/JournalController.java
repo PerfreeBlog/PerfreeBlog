@@ -8,8 +8,6 @@ import com.perfree.model.Article;
 import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import java.util.Date;
 
 /**
@@ -30,7 +28,7 @@ public class JournalController  extends BaseController {
     @Autowired
     private ArticleService articleService;
 
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @RequestMapping("/journal/addPage")
     public String addPage() {
         return view("static/admin/pages/journal/journal_create.html");
@@ -42,7 +40,7 @@ public class JournalController  extends BaseController {
      */
     @PostMapping("/journal/add")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean add(@RequestBody Article article) {
         article.setUserId(getUser().getId());
         article.setTitle(DateUtil.format(new Date(), "yyyy-MM-dd HH:mm:ss"));
@@ -56,7 +54,7 @@ public class JournalController  extends BaseController {
         return ResponseBean.fail("添加失败", null);
     }
 
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @RequestMapping("/journal")
     @AdminMenu(name = "动态管理", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
             role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
@@ -64,7 +62,7 @@ public class JournalController  extends BaseController {
         return view("static/admin/pages/journal/journal_list.html");
     }
 
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     @RequestMapping("/journal/updatePage/{id}")
     public String updatePage(@PathVariable("id") String id, Model model) {
         Article article = articleService.getById(id);
@@ -78,7 +76,7 @@ public class JournalController  extends BaseController {
      */
     @PostMapping("/journal/update")
     @ResponseBody
-    @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
+    // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
     public ResponseBean update(@RequestBody Article article) {
         if (StringUtils.isBlank(article.getContent())) {
             return ResponseBean.fail("内容不允许为空", null);
