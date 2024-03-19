@@ -1,6 +1,5 @@
 package com.perfree.base;
 
-import com.perfree.commons.JwtUtils;
 import com.perfree.shared.api.user.UserApi;
 import com.perfree.shared.api.user.dto.UserDTO;
 import jakarta.annotation.Resource;
@@ -26,7 +25,7 @@ public class BaseApiController extends BaseController{
      * @return UserForm   当前的登录用户
      */
     public UserDTO getLoginUser(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
+        /*String token = request.getHeader("Authorization");
         if (StringUtils.isNotBlank(token)) {
             String account = JwtUtils.getUsername(token);
             UserDTO userByAccount = userApi.getUserByAccount(account);
@@ -35,7 +34,7 @@ public class BaseApiController extends BaseController{
                 userByAccount.setSalt(null);
                 return userByAccount;
             }
-        }
+        }*/
         return getUser();
     }
 }
