@@ -7,7 +7,7 @@ import com.perfree.model.Category;
 import com.perfree.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/category")
 public class CategoryController extends BaseApiController {
 
-    @Autowired
+    @Resource
     private CategoryService categoryService;
 
     @GetMapping("/getById")

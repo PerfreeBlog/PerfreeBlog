@@ -3,7 +3,7 @@ package com.exam.service;
 import com.exam.mapper.HelloWorldMapper;
 import com.exam.model.Article;
 import com.perfree.commons.SpringBeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class HelloWorldService{
 
-    @Autowired
+    @Resource
     private HelloWorldMapper helloWorldMapper;
 
     /**

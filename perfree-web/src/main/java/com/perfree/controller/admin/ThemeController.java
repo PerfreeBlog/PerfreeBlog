@@ -10,8 +10,8 @@ import com.perfree.commons.ResponseBean;
 import com.perfree.model.Theme;
 import com.perfree.model.ThemeFile;
 import com.perfree.model.TreeNode;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.ThemeService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
@@ -19,7 +19,6 @@ import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +35,10 @@ import java.util.List;
 public class ThemeController extends BaseController {
     private static final CacheManager cacheManager = CacheManager.newInstance();
     private final Logger logger = LoggerFactory.getLogger(ThemeController.class);
-    @Autowired
+    @Resource
     private ThemeService themeService;
 
     @GetMapping("/theme")
-    @AdminMenu(name = "所有主题", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_THEME)
     public String themePage(){
         return view("static/admin/pages/theme/theme.html");
     }
@@ -95,7 +93,6 @@ public class ThemeController extends BaseController {
     }
 
     @GetMapping("/theme/setting")
-    @AdminMenu(name = "主题设置", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_THEME)
     public String settingPage(){
         return view("/setting.html", "/setting.html", "static/admin/pages/theme/setting.html");
 

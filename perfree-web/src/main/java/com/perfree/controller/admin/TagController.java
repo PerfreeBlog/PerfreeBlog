@@ -1,16 +1,14 @@
 package com.perfree.controller.admin;
 
 import com.perfree.base.BaseController;
-import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
 import com.perfree.model.Tag;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.TagService;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class TagController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(TagController.class);
-    @Autowired
+    @Resource
     private TagService tagService;
 
     /**
@@ -33,8 +31,6 @@ public class TagController extends BaseController {
      */
     @RequestMapping("/tag")
     // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
-    @AdminMenu(name = "标签管理", seq = 6, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
-            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/tag/tag_list.html");
     }

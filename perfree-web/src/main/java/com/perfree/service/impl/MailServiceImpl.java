@@ -1,8 +1,6 @@
 package com.perfree.service.impl;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.text.StrFormatter;
-import cn.hutool.http.HtmlUtil;
 import com.jfinal.template.Template;
 import com.perfree.commons.Constants;
 import com.perfree.commons.IpUtil;
@@ -17,7 +15,7 @@ import com.perfree.service.MailService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -26,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import java.io.File;
+
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -39,9 +37,9 @@ import java.util.Properties;
 public class MailServiceImpl implements MailService {
     private static JavaMailSenderImpl javaMailSender;
     private final static Logger LOGGER = LoggerFactory.getLogger(MailServiceImpl.class);
-    @Autowired
+    @Resource
     private ArticleService articleService;
-    @Autowired
+    @Resource
     private CommentService commentService;
 
     @Value("${server.port}")

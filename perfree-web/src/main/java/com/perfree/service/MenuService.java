@@ -2,7 +2,6 @@ package com.perfree.service;
 
 import com.perfree.commons.Pager;
 import com.perfree.model.Menu;
-import com.perfree.permission.AdminMenuGroup;
 
 import java.util.List;
 
@@ -78,17 +77,17 @@ public interface MenuService {
      * @description 初始化系统菜单
      * @author Perfree
      */
-    void initSystemMenu(List<AdminMenuGroup> adminMenuGroups);
+    //void initSystemMenu(List<AdminMenuGroup> adminMenuGroups);
 
-    /**
+   /* *//**
      * 添加插件菜单
      * @param adminMenuGroups adminMenuGroups
-     */
+     *//*
     void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups);
 
-    /**
+    *//**
      * 移除插件菜单
      * @param adminMenuGroups adminMenuGroups
-     */
-    void removePluginSystemMenu(List<AdminMenuGroup> adminMenuGroups);
+     *//*
+    void removePluginSystemMenu(List<AdminMenuGroup> adminMenuGroups);*/
 }

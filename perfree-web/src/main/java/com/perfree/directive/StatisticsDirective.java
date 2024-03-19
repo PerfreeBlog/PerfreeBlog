@@ -6,7 +6,7 @@ import com.jfinal.template.stat.Scope;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
 import com.perfree.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -19,17 +19,17 @@ public class StatisticsDirective  extends BaseDirective {
     private static CommentService commentService;
     private static TagService tagService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         StatisticsDirective.articleService = articleService;
     }
 
-    @Autowired
+    @Resource
     public void setCommentService(CommentService commentService){
         StatisticsDirective.commentService = commentService;
     }
 
-    @Autowired
+    @Resource
     public void setTagService(TagService tagService){
         StatisticsDirective.tagService = tagService;
     }

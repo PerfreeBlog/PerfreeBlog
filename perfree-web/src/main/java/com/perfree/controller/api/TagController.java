@@ -6,7 +6,7 @@ import com.perfree.commons.ResponseBean;
 import com.perfree.model.Tag;
 import com.perfree.service.TagService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/tag")
 public class TagController extends BaseApiController {
 
-    @Autowired
+    @Resource
     private TagService tagService;
 
     @GetMapping("/getById")

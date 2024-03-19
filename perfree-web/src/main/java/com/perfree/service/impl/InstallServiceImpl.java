@@ -15,14 +15,12 @@ import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.GravatarUtil;
 import com.perfree.model.*;
-import com.perfree.permission.AdminMenuGroup;
-import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.*;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,29 +34,29 @@ import java.util.List;
 @Service
 public class InstallServiceImpl implements InstallService {
     private final static Logger LOGGER = LoggerFactory.getLogger(InstallServiceImpl.class);
-    @Autowired
+    @Resource
     private OptionService optionService;
-    @Autowired
+    @Resource
     private MenuService menuService;
-    @Autowired
+    @Resource
     private PluginService pluginService;
 
     @Value("${version}")
     private String version;
 
-    @Autowired
+    @Resource
     private PluginManagerService pluginManagerService;
-    @Autowired
+    @Resource
     private ArticleService articleService;
-    @Autowired
+    @Resource
     private CategoryService categoryService;
-    @Autowired
+    @Resource
     private TagService tagService;
-    @Autowired
+    @Resource
     private CommentService commentService;
-    @Autowired
+    @Resource
     private LinkService linkService;
-    @Autowired
+    @Resource
     private RoleService roleService;
     private static final int INSTALL_DATABASE_RESULT_SUCCESS = 200;
     private static final int INSTALL_DATABASE_RESULT_EXIST = -1;
@@ -367,14 +365,14 @@ public class InstallServiceImpl implements InstallService {
     private void installInitOperate(Props setting, File file) throws Exception {
         setting.store(file.getAbsolutePath());
         optionService.initOptionCache();
-        List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
+     /*   List<AdminMenuGroup> adminMenuGroups = MenuManager.initSystemMenu();
         menuService.initSystemMenu(adminMenuGroups);
         try{
             List<Plugin> plugins = pluginService.getAll();
             pluginManagerService.initPlugins(plugins);
         }catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public static void initSqliteFile(String filePath) throws Exception {

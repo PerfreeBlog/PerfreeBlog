@@ -10,16 +10,14 @@ import com.perfree.mapper.OptionMapper;
 import com.perfree.mapper.TagMapper;
 import com.perfree.model.Article;
 import com.perfree.model.Category;
-import com.perfree.model.Option;
 import com.perfree.model.Tag;
 import com.perfree.service.SEOService;
 import com.redfin.sitemapgenerator.ChangeFreq;
 import com.redfin.sitemapgenerator.WebSitemapGenerator;
 import com.redfin.sitemapgenerator.WebSitemapUrl;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -32,13 +30,13 @@ public class SEOServiceImpl implements SEOService {
     private final Logger logger = LoggerFactory.getLogger(SEOServiceImpl.class);
     @Value("${server.port}")
     private int serverPort;
-    @Autowired
+    @Resource
     private ArticleMapper articleMapper;
-    @Autowired
+    @Resource
     private CategoryMapper categoryMapper;
-    @Autowired
+    @Resource
     private TagMapper tagMapper;
-    @Autowired
+    @Resource
     private OptionMapper optionMapper;
 
     public String createSiteMapXmlContent() {

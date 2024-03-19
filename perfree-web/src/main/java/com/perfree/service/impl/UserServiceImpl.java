@@ -8,7 +8,7 @@ import com.perfree.commons.StringUtil;
 import com.perfree.mapper.UserMapper;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
 

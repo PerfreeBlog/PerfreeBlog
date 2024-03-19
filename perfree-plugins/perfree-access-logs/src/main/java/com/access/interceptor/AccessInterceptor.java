@@ -10,7 +10,7 @@ import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import net.sf.ehcache.config.CacheConfiguration;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,7 +20,7 @@ import java.util.Date;
 
 @InterceptPath("/**")
 public class AccessInterceptor implements HandlerInterceptor {
-    @Autowired
+    @Resource
     private AccessLogsService accessLogsService;
 
     @Override

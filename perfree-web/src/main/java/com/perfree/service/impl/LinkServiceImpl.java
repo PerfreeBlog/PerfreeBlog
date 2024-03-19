@@ -7,7 +7,7 @@ import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.LinkMapper;
 import com.perfree.model.Link;
 import com.perfree.service.LinkService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 public class LinkServiceImpl implements LinkService {
-    @Autowired
+    @Resource
     private LinkMapper linkMapper;
 
     public Pager<Link> list(Pager<Link> pager) {

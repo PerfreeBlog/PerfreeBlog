@@ -8,7 +8,7 @@ import com.perfree.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping(value = {"/api/user", "/user"})
 @SuppressWarnings("all")
 public class UserController extends BaseApiController {
-    @Autowired
+    @Resource
     private UserService userService;
 
     @GetMapping("/getLoginUser")

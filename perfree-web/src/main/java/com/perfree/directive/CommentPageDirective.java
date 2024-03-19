@@ -3,11 +3,10 @@ package com.perfree.directive;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.commons.Constants;
 import com.perfree.model.Article;
 import com.perfree.service.CommentService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 public class CommentPageDirective extends BaseDirective{
     private static CommentService commentService;
 
-    @Autowired
+    @Resource
     public void setArticleService(CommentService commentService){
         CommentPageDirective.commentService = commentService;
     }

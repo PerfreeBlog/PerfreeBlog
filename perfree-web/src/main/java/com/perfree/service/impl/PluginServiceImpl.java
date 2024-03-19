@@ -5,11 +5,8 @@ import cn.hutool.setting.dialect.Props;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.*;
-import com.perfree.config.EnjoyConfig;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugin;
-import com.perfree.plugin.PluginEvent;
-import com.perfree.plugin.PluginHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.utils.PluginsUtils;
@@ -19,7 +16,7 @@ import org.pf4j.PluginState;
 import org.pf4j.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,10 +28,10 @@ import java.util.List;
 @Service
 public class PluginServiceImpl implements PluginService {
     private final Logger logger = LoggerFactory.getLogger(PluginServiceImpl.class);
-    @Autowired
+    @Resource
     private PluginsMapper pluginsMapper;
 
-    @Autowired
+    @Resource
     private PluginManager pluginManager;
 
     @Value("${version}")

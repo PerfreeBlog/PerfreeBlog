@@ -6,7 +6,7 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class PagesDirective extends BaseDirective {
 
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setCategoryService(ArticleService articleService){
         PagesDirective.articleService = articleService;
     }

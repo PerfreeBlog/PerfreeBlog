@@ -1,4 +1,4 @@
-package com.perfree.shared;
+package com.perfree.config;
 
 import com.perfree.commons.OptionCacheUtil;
 import com.perfree.plugin.PluginHolder;

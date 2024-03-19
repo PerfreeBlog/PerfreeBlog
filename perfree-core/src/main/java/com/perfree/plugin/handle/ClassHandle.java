@@ -1,6 +1,5 @@
 package com.perfree.plugin.handle;
 
-import com.perfree.permission.AdminGroups;
 import com.perfree.plugin.BasePlugin;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.annotation.InterceptPath;
@@ -46,10 +45,6 @@ public class ClassHandle implements BasePluginHandle {
             Class<?> clazz = pluginClassLoader.loadClass(packageName);
             if (!BasePlugin.class.isAssignableFrom(clazz)) {
                 classList.add(clazz);
-            }
-            AdminGroups annotation = clazz.getAnnotation(AdminGroups.class);
-            if (annotation != null) {
-                adminGroupsClassList.add(clazz);
             }
         }
 

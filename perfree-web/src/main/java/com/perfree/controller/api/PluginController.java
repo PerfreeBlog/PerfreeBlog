@@ -8,7 +8,7 @@ import com.perfree.service.PluginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.pf4j.PluginState;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "插件相关")
 @RequestMapping("/api/plugin")
 public class PluginController extends BaseController {
-    @Autowired
+    @Resource
     private PluginService pluginService;
 
     @GetMapping("/getAllPlugin")

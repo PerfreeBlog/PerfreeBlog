@@ -7,10 +7,6 @@ import com.perfree.model.Article;
 import com.perfree.model.Comment;
 import com.perfree.model.Option;
 import com.perfree.model.User;
-import com.perfree.plugin.PluginHolder;
-import com.perfree.plugin.PluginInfo;
-import com.perfree.plugin.proxy.CommentProxy;
-import com.perfree.plugin.proxy.HtmlRenderProxy;
 import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
@@ -20,7 +16,7 @@ import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,27 +25,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @SuppressWarnings("all")
 public class CommentController extends BaseController {
     //缓存
     private static final CacheManager cacheManager = CacheManager.newInstance();
-    @Autowired
+    @Resource
     private CommentService commentService;
-    @Autowired
+    @Resource
     private ArticleService articleService;
-    @Autowired
+    @Resource
     private OptionService optionService;
-    @Autowired
+    @Resource
     private MailService mailService;
 
     @RequestMapping("/comment/submitComment")
     @ResponseBody
     @AccessCacheLock
     public ResponseBean submitComment(@RequestBody @Valid Comment comment, HttpServletRequest request){
-        Article article = articleService.getById(comment.getArticleId().toString());
+        /*Article article = articleService.getById(comment.getArticleId().toString());
         if(article.getIsComment() == 0) {
             return ResponseBean.error(-1,"该文章已关闭评论功能" , null);
         }
@@ -114,7 +109,7 @@ public class CommentController extends BaseController {
                 return ResponseBean.success("评论成功", comment);
             }
             return ResponseBean.error(201 ,"评论成功,正在等待管理员审核", null);
-        }
+        }*/
         return ResponseBean.fail("评论失败", null);
     }
 

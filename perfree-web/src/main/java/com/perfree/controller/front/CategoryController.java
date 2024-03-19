@@ -4,10 +4,8 @@ import com.perfree.commons.Constants;
 import com.perfree.base.BaseController;
 import com.perfree.commons.FrontViewNodeRender;
 import com.perfree.model.Category;
-import com.perfree.model.Tag;
-import com.perfree.service.ArticleService;
 import com.perfree.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CategoryController extends BaseController {
 
-    @Autowired
+    @Resource
     private CategoryService categoryService;
 
     @RequestMapping("/category/{slugOrId}/{pageIndex}")

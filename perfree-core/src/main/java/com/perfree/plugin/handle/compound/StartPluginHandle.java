@@ -27,7 +27,6 @@ public class StartPluginHandle implements BasePluginHandle, ApplicationContextAw
         pluginRegisterList.add(new ControllerHandle(this.applicationContext));
         pluginRegisterList.add(new InterceptorHandle(this.applicationContext));
         pluginRegisterList.add(new TemplateDirectiveHandle(this.applicationContext));
-        pluginRegisterList.add(new AdminMenuHandle(this.applicationContext));
         pluginRegisterList.add(new ResourcesHandle());
         pluginRegisterList.add(new TemplateHandle(this.applicationContext));
         pluginRegisterList.add(new WebSocketHandle(this.applicationContext));

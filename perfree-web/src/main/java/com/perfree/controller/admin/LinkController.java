@@ -1,15 +1,13 @@
 package com.perfree.controller.admin;
 
-import com.perfree.commons.Constants;
+import com.perfree.base.BaseController;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.base.BaseController;
 import com.perfree.model.Link;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.LinkService;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class LinkController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(LinkController.class);
 
-    @Autowired
+    @Resource
     private LinkService linkService;
 
     /**
@@ -28,7 +26,6 @@ public class LinkController extends BaseController {
      * @return String
      */
     @RequestMapping("/link")
-    @AdminMenu(name = "友链管理", seq = 9, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/link/link_list.html");
     }

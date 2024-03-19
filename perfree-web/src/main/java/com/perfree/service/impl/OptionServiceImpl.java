@@ -7,7 +7,7 @@ import com.perfree.service.OptionService;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Transactional
 public class OptionServiceImpl implements OptionService {
     private static final CacheManager cacheManager = CacheManager.newInstance();
-    @Autowired
+    @Resource
     private OptionMapper optionMapper;
 
     /**

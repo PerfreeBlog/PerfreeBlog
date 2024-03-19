@@ -10,8 +10,6 @@ import com.perfree.commons.*;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.model.Plugin;
 import com.perfree.model.Theme;
-import com.perfree.permission.AdminMenuGroup;
-import com.perfree.permission.MenuManager;
 import com.perfree.plugin.PluginManagerService;
 import com.perfree.service.MenuService;
 import com.perfree.service.OptionService;
@@ -163,7 +161,7 @@ public class PostAppRunner implements ApplicationRunner {
     private void initPlugins() {
         try {
             List<Plugin> plugins = pluginService.getAll();
-            pluginManagerService.initPlugins(plugins);
+            //pluginManagerService.initPlugins(plugins);
         } catch (Exception e) {
             e.printStackTrace();
         }

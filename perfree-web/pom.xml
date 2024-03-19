@@ -20,6 +20,13 @@
             <artifactId>perfree-core</artifactId>
             <version>1.0.0</version>
         </dependency>
+
+        <!-- 引入公共API -->
+        <dependency>
+            <groupId>com.perfree</groupId>
+            <artifactId>perfree-shared-api</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <resources>

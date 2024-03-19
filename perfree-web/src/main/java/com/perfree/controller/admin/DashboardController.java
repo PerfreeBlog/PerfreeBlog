@@ -1,13 +1,12 @@
 package com.perfree.controller.admin;
 
-import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
 import com.perfree.service.TagService;
 import com.perfree.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,16 +20,16 @@ public class DashboardController extends BaseController {
     @Value("${version}")
     private String version;
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private CommentService commentService;
 
-    @Autowired
+    @Resource
     private TagService tagService;
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @RequestMapping("/dashboard")

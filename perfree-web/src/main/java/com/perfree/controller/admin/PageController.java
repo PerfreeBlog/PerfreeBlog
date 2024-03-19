@@ -4,18 +4,17 @@ import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
 import com.perfree.commons.ResponseBean;
 import com.perfree.model.Article;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
 import com.perfree.service.ThemeService;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/admin")
@@ -23,15 +22,13 @@ import java.util.List;
 // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
 public class PageController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(PageController.class);
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private ThemeService themeService;
 
     @RequestMapping("/page")
-    @AdminMenu(name = "页面管理", seq = 3, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
-            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/page/page_list.html");
     }

@@ -5,11 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
 import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.CategoryMapper;
-import com.perfree.model.Article;
 import com.perfree.model.Category;
 import com.perfree.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,7 @@ import java.util.List;
 @Service
 @Transactional
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
+    @Resource
     private CategoryMapper categoryMapper;
 
     /**

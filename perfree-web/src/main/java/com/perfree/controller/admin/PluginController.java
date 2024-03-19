@@ -1,15 +1,14 @@
 package com.perfree.controller.admin;
 
-import com.perfree.commons.Constants;
+import com.perfree.base.BaseController;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.base.BaseController;
 import com.perfree.model.Plugin;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.PluginService;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @description 插件
@@ -31,7 +28,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class PluginController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(PluginController.class);
 
-    @Autowired
+    @Resource
     private PluginService pluginService;
 
     /**
@@ -39,7 +36,6 @@ public class PluginController extends BaseController {
      * @author Perfree
      */
     @RequestMapping("/plugin")
-    @AdminMenu(name = "插件列表", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_PLUGIN)
     public String index() {
         return view("static/admin/pages/plugin/plugin_list.html");
     }

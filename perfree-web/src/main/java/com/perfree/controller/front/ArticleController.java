@@ -8,7 +8,7 @@ import com.perfree.commons.ResponseBean;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class ArticleController extends BaseController {
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
     @RequestMapping(value = {"/articleList/{pageIndex}", "/articleList", "article"})

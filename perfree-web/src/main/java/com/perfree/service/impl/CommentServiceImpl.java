@@ -8,7 +8,7 @@ import com.perfree.mapper.CommentMapper;
 import com.perfree.model.Comment;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +19,10 @@ import java.util.List;
 @Service
 @Transactional
 public class CommentServiceImpl implements CommentService {
-    @Autowired
+    @Resource
     private CommentMapper commentMapper;
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
 

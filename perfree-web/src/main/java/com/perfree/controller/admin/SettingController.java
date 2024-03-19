@@ -7,10 +7,9 @@ import com.perfree.commons.FileUtil;
 import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.ResponseBean;
 import com.perfree.model.Option;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.MailService;
 import com.perfree.service.OptionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,14 +29,13 @@ import java.util.Map;
 // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class SettingController extends BaseController {
 
-    @Autowired
+    @Resource
     private OptionService optionService;
 
-    @Autowired
+    @Resource
     private MailService mailService;
 
     @GetMapping("/setting")
-    @AdminMenu(name = "网站设置", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_SETTING)
     public String index(Model model) {
         return view("static/admin/pages/settings/setting.html");
     }
@@ -46,7 +44,6 @@ public class SettingController extends BaseController {
      * 邮件模板设置
      */
     @GetMapping("/emailSetting")
-    @AdminMenu(name = "邮件模板", seq = 2, groupId = Constants.ADMIN_MENU_GROUP_SETTING)
     public String emailSetting(Model model) {
         List<HashMap<String, String>> param = new ArrayList<>();
 

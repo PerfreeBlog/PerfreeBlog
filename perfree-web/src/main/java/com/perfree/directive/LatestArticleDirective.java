@@ -6,7 +6,7 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.List;
 public class LatestArticleDirective extends BaseDirective {
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         LatestArticleDirective.articleService = articleService;
     }

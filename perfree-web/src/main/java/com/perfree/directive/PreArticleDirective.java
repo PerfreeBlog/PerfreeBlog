@@ -6,14 +6,8 @@ import com.jfinal.template.stat.Scope;
 import com.perfree.model.Article;
 import com.perfree.service.ArticleService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.HandlerMapping;
-
-import jakarta.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @TemplateDirective("preArticle")
 @Component
@@ -21,7 +15,7 @@ public class PreArticleDirective extends BaseDirective {
 
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         PreArticleDirective.articleService = articleService;
     }

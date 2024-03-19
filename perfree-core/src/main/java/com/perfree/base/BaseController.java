@@ -5,33 +5,27 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.commons.Constants;
 import com.perfree.commons.OptionCacheUtil;
-import com.perfree.model.Menu;
-import com.perfree.model.User;
-import com.perfree.service.MenuService;
-import com.perfree.service.UserService;
+import com.perfree.shared.api.user.UserApi;
+import com.perfree.shared.api.user.dto.UserDTO;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.util.List;
 
 @Controller
 public class BaseController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private MenuService menuService;
+    @Resource
+    private UserApi userApi;
 
     /**
      * 获取已登录用户信息
      * @return User
      */
-    public User getUser(){
+    public UserDTO getUser(){
        /* Subject subject = SecurityUtils.getSubject();
         User user=new User();
         PrincipalCollection principals = subject.getPrincipals();
@@ -44,14 +38,6 @@ public class BaseController {
         user.setSalt(null);
         return user;*/
         return null;
-    }
-
-    /**
-     * 根据用户id获取后台菜单
-     * @return List<Menu>
-     */
-    public List<Menu> getMenuByUserIdAndType(int type) {
-        return menuService.getMenuByUserIdAndType(getUser().getId(), type);
     }
 
     /**

@@ -3,7 +3,7 @@ package com.access.service;
 import com.perfree.plugin.BasePluginEvent;
 import com.perfree.plugin.PluginEvent;
 import net.sf.ehcache.CacheManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PluginInitService implements BasePluginEvent {
-    @Autowired
+    @Resource
     private AccessLogsService accessLogsService;
 
     @Override

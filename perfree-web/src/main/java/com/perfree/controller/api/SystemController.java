@@ -14,7 +14,7 @@ import net.sf.ehcache.CacheManager;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,15 +26,15 @@ import org.springframework.web.bind.annotation.*;
 public class SystemController {
     private final Logger logger = LoggerFactory.getLogger(com.perfree.controller.SystemController.class);
     private static final CacheManager cacheManager = CacheManager.newInstance();
-    @Autowired
+    @Resource
     private UserService userService;
-    @Autowired
+    @Resource
     private OptionService optionService;
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private MailService mailService;
-    @Autowired
+    @Resource
     private MenuService menuService;
     @Value("${shiro.timeout}")
     private Long timeout;

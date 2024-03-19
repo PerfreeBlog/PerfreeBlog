@@ -50,9 +50,6 @@ public class Attach implements Serializable {
     private String url;
 
     public String getUrl() {
-       /* if (StringUtils.isNotBlank(path) && !path.startsWith("http")) {
-            return "/static" + path;
-        }*/
         return path;
     }
 

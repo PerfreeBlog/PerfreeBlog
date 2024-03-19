@@ -2,7 +2,7 @@ package com.exam.controller;
 
 import com.exam.model.Article;
 import com.exam.service.HelloWorldService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import java.util.List;
 @Controller
 public class HelloWorldController{
 
-    @Autowired
+    @Resource
     private HelloWorldService helloWorldService;
 
     /** 

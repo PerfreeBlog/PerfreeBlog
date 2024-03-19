@@ -8,7 +8,7 @@ import com.jfinal.template.stat.Scope;
 import com.perfree.commons.Constants;
 import com.perfree.service.ArticleService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class JournalPageDirective extends BaseDirective {
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         JournalPageDirective.articleService = articleService;
     }

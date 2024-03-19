@@ -4,11 +4,9 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.model.Article;
 import com.perfree.model.Comment;
-import com.perfree.service.ArticleService;
 import com.perfree.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -22,7 +20,7 @@ import java.util.List;
 public class RecentCommentDirective extends BaseDirective {
     private static CommentService commentService;
 
-    @Autowired
+    @Resource
     public void setCommentService(CommentService commentService){
         RecentCommentDirective.commentService = commentService;
     }

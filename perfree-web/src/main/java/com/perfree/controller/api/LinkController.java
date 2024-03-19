@@ -7,7 +7,7 @@ import com.perfree.model.Link;
 import com.perfree.service.LinkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "友链相关")
 @RequestMapping("/api/link")
 public class LinkController extends BaseApiController {
-    @Autowired
+    @Resource
     private LinkService linkService;
 
     @GetMapping("/getList")

@@ -1,34 +1,22 @@
 package com.perfree.controller.admin;
 
-import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.map.MapUtil;
 import com.perfree.base.BaseController;
-import com.perfree.commons.Constants;
-import com.perfree.commons.FileUtil;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.file.FileHandles;
-import com.perfree.file.FileResult;
 import com.perfree.model.Attach;
-import com.perfree.permission.AdminMenu;
-import com.perfree.plugin.proxy.AttachProxy;
-import com.perfree.plugin.utils.PluginsUtils;
 import com.perfree.service.AttachService;
-import org.apache.commons.lang3.StringUtils;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,11 +27,8 @@ import java.util.Map;
 public class AttachController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(AttachController.class);
 
-    @Autowired
+    @Resource
     private AttachService attachService;
-
-    @Autowired
-    private FileHandles fileHandles;
 
     /**
      * 附件-图片选择页
@@ -86,7 +71,7 @@ public class AttachController extends BaseController {
                                @RequestParam(required = false, value = "desc") String desc,
                                @RequestParam(required = false, value = "flag") String flag) {
         try{
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+            /*MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
             if (multiFile == null){
                 logger.error("文件不能为空!");
@@ -122,7 +107,8 @@ public class AttachController extends BaseController {
             } else {
                 logger.error("上传失败: {}",attach.toString());
                 return ResponseBean.fail("上传失败",null);
-            }
+            }*/
+            return ResponseBean.fail("上传失败",null);
         }catch (Exception e){
             logger.error("上传失败: {}", e.getMessage());
             return ResponseBean.fail("上传失败:["+e.getMessage()+"]", e.getMessage());
@@ -138,7 +124,7 @@ public class AttachController extends BaseController {
     // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public Map<String, Object> ckEditorUpload(HttpServletRequest request) {
         try{
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+           /* MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("upload");
             if (multiFile == null){
                 logger.error("文件不能为空!");
@@ -180,7 +166,8 @@ public class AttachController extends BaseController {
                 return MapUtil.builder(new HashMap<String, Object>())
                         .put("error", MapUtil.builder(new HashMap<String, Object>()).put("message","上传失败!").build())
                         .build();
-            }
+            }*/
+            return null;
         }catch (Exception e){
             logger.error("上传失败: {}", e.getMessage());
             return MapUtil.builder(new HashMap<String, Object>())
@@ -206,8 +193,6 @@ public class AttachController extends BaseController {
      */
     @RequestMapping("/attach")
     // @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR}, logical= Logical.OR)
-    @AdminMenu(name = "附件管理", seq = 7, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
-            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR})
     public String index() {
         return view("static/admin/pages/attach/attach_list.html");
     }
@@ -249,7 +234,7 @@ public class AttachController extends BaseController {
         response.setContentType("application/force-download");
         try{
             response.addHeader("Content-Disposition", "attachment;fileName="+ URLEncoder.encode(attach.getName(), "UTF-8"));
-            fileHandles.download(attach, response);
+            //fileHandles.download(attach, response);
             return "下载成功";
         } catch (Exception e) {
             e.printStackTrace();

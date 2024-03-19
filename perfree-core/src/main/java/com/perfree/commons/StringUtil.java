@@ -1,7 +1,6 @@
 package com.perfree.commons;
 
 import cn.hutool.core.bean.BeanUtil;
-import com.perfree.model.Article;
 import org.apache.commons.lang3.StringUtils;
 
 import java.security.MessageDigest;

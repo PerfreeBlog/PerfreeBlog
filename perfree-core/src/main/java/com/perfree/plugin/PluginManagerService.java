@@ -1,6 +1,5 @@
 package com.perfree.plugin;
 
-import com.perfree.model.Plugin;
 import org.pf4j.PluginState;
 import org.pf4j.PluginWrapper;
 
@@ -47,7 +46,7 @@ public interface PluginManagerService {
     /**
      * @description 插件初始化
      */
-    void initPlugins(List<Plugin> plugins) throws Exception;
+  //  void initPlugins(List<Plugin> plugins) throws Exception;
 
     /**
      * @description 获取所有插件

@@ -5,7 +5,7 @@ import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.service.LinkService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class LinkPageDirective extends BaseDirective{
     private static LinkService linkService;
 
-    @Autowired
+    @Resource
     public void setArticleService(LinkService linkService){
         LinkPageDirective.linkService = linkService;
     }

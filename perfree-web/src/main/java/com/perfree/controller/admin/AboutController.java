@@ -1,9 +1,7 @@
 package com.perfree.controller.admin;
 
 import com.perfree.base.BaseController;
-import com.perfree.commons.Constants;
 import com.perfree.commons.DynamicDataSource;
-import com.perfree.permission.AdminMenu;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,8 +16,6 @@ public class AboutController extends BaseController {
     @Value("${version}")
     private String version;
     @GetMapping("/about")
-    @AdminMenu(name = "关于系统", seq = 3, groupId = Constants.ADMIN_MENU_GROUP_SETTING,
-            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE, Constants.ROLE_USER})
     public String index(Model model) {
         model.addAttribute("version", version);
         model.addAttribute("dataBase", DynamicDataSource.dataSourceType);

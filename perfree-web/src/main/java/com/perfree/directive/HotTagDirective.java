@@ -6,7 +6,7 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.model.Tag;
 import com.perfree.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -17,7 +17,7 @@ import java.util.List;
 public class HotTagDirective extends BaseDirective {
     private static TagService tagService;
 
-    @Autowired
+    @Resource
     public void setTagService(TagService tagService){
         HotTagDirective.tagService = tagService;
     }

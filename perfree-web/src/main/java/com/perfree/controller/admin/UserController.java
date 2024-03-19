@@ -2,26 +2,20 @@ package com.perfree.controller.admin;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.perfree.base.BaseController;
-import com.perfree.commons.Constants;
 import com.perfree.commons.GravatarUtil;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
-import com.perfree.file.FileHandles;
-import com.perfree.file.FileResult;
 import com.perfree.model.User;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.UserService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -35,10 +29,8 @@ import java.util.HashMap;
 public class UserController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @Autowired
-    private FileHandles fileHandles;
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     /**
@@ -47,7 +39,6 @@ public class UserController extends BaseController {
      */
     @RequestMapping("/user")
     // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
-    @AdminMenu(name = "用户管理", seq = 8, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/user/user_list.html");
     }
@@ -84,12 +75,12 @@ public class UserController extends BaseController {
     //      Constants.ROLE_USER}, logical= Logical.OR)
     public ResponseBean uploadImg(HttpServletRequest request) {
         try{
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+         /*   MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
             MultipartFile multiFile = multipartRequest.getFile("file");
             FileResult fileResult = fileHandles.upload(multiFile, "avatar");
             if (fileResult != null) {
                 return ResponseBean.success("上传成功", fileResult.getUrl());
-            }
+            }*/
             return ResponseBean.fail("上传失败", null);
         }catch (Exception e){
             logger.error("上传失败: {}", e.getMessage());

@@ -69,8 +69,8 @@ public class SystemController extends BaseController {
  /*   @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE,
             Constants.ROLE_USER}, logical= Logical.OR)*/
     public ResponseBean getAdminMenu() {
-        List<Menu> menus = getMenuByUserIdAndType(1);
-        return ResponseBean.success("success", menus);
+        // TODO List<Menu> menus = getMenuByUserIdAndType(1);
+        return ResponseBean.success("success", null);
     }
 
     /**

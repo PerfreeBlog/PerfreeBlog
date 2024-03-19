@@ -8,21 +8,17 @@ import com.perfree.directive.DirectivePage;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.model.Archive;
 import com.perfree.model.Article;
-import com.perfree.model.Menu;
-import com.perfree.permission.MenuManager;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CategoryService;
 import com.perfree.service.MenuService;
+import jakarta.annotation.Resource;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,13 +27,13 @@ import java.util.List;
 @Service
 @Transactional
 public class ArticleServiceImpl implements ArticleService {
-    @Autowired
+    @Resource
     private ArticleMapper articleMapper;
 
-    @Autowired
+    @Resource
     private CategoryService categoryService;
 
-    @Autowired
+    @Resource
     private MenuService menuService;
 
     private static final CacheManager cacheManager = CacheManager.newInstance();

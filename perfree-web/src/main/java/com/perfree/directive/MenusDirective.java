@@ -6,7 +6,7 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.model.Menu;
 import com.perfree.service.MenuService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,7 +20,7 @@ public class MenusDirective extends BaseDirective {
 
     private static MenuService menuService;
 
-    @Autowired
+    @Resource
     public void setMenuService(MenuService menuService){
         MenusDirective.menuService = menuService;
     }

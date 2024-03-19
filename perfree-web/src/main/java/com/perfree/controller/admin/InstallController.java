@@ -3,9 +3,7 @@ package com.perfree.controller.admin;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
-import com.alibaba.druid.pool.DruidDataSource;
 import com.perfree.commons.Constants;
-import com.perfree.commons.DynamicDataSource;
 import com.perfree.commons.GravatarUtil;
 import com.perfree.commons.ResponseBean;
 import com.perfree.base.BaseController;
@@ -16,7 +14,7 @@ import com.perfree.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +26,10 @@ import java.io.File;
 @Controller
 public class InstallController extends BaseController {
     private final static Logger LOGGER = LoggerFactory.getLogger(InstallController.class);
-    @Autowired
+    @Resource
     private InstallService installService;
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @RequestMapping("/install")

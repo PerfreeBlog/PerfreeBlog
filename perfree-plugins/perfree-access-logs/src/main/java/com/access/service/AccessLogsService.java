@@ -4,7 +4,7 @@ import com.access.mapper.AccessLogsMapper;
 import com.access.model.AccessLogs;
 import com.perfree.commons.Pager;
 import com.perfree.commons.DynamicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import java.util.List;
 @Service
 public class AccessLogsService {
 
-    @Autowired
+    @Resource
     private AccessLogsMapper accessLogsMapper;
 
     /**

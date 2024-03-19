@@ -1,6 +1,5 @@
 package com.perfree.mapper;
 
-import com.perfree.model.Article;
 import com.perfree.model.Link;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;

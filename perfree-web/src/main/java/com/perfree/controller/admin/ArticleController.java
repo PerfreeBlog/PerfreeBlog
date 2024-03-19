@@ -5,15 +5,13 @@ import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
 import com.perfree.model.Article;
-import com.perfree.model.User;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.ArticleService;
 import com.perfree.service.CategoryService;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,17 +23,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class ArticleController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(ArticleController.class);
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
-    @Autowired
+    @Resource
     private CategoryService categoryService;
 
   /*  @RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR,
             Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)*/
     @RequestMapping("/article")
-    @AdminMenu(name = "文章管理", seq = 1, groupId = Constants.ADMIN_MENU_GROUP_CONTENT,
-            role = {Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE})
     public String index(Model model) {
         return view("static/admin/pages/article/article_list.html");
     }
@@ -62,7 +58,7 @@ public class ArticleController extends BaseController {
     @ResponseBody
     //@RequiresRoles(value={Constants.ROLE_ADMIN, Constants.ROLE_EDITOR, Constants.ROLE_CONTRIBUTE}, logical= Logical.OR)
     public ResponseBean add(@RequestBody @Valid Article article) {
-        User user = getUser();
+      /*  User user = getUser();
         article.setUserId(user.getId());
         if(user.getRole().getCode().equals("contribute")) {
             article.setStatus(Constants.ARTICLE_STATUS_AUDIT);
@@ -74,7 +70,7 @@ public class ArticleController extends BaseController {
         if (articleService.add(article) > 0) {
             return ResponseBean.success("添加成功", article);
         }
-        logger.error("文章添加失败: {}", article.toString());
+        logger.error("文章添加失败: {}", article.toString());*/
         return ResponseBean.fail("添加失败", null);
     }
 
@@ -108,11 +104,12 @@ public class ArticleController extends BaseController {
     @PostMapping("/article/list")
     @ResponseBody
     public Pager<Article> list(@RequestBody Pager<Article> pager) {
-        User user = getUser();
+      /*  User user = getUser();
         if (user.getRole().getCode().equals("contribute")) {
             pager.getForm().setUserId(user.getId());
         }
-        return articleService.list(pager);
+        return articleService.list(pager);*/
+        return null;
     }
 
 

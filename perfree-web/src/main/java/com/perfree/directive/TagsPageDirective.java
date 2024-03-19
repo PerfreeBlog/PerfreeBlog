@@ -4,9 +4,8 @@ import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
-import com.perfree.service.CategoryService;
 import com.perfree.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ import java.util.HashMap;
 public class TagsPageDirective extends BaseDirective{
     private static TagService tagService;
 
-    @Autowired
+    @Resource
     public void setArticleService(TagService tagService){
         TagsPageDirective.tagService = tagService;
     }

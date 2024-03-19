@@ -1,34 +1,30 @@
 package com.perfree.controller.admin;
 
 import com.perfree.base.BaseController;
-import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.commons.ResponseBean;
 import com.perfree.model.Menu;
-import com.perfree.permission.AdminMenu;
 import com.perfree.service.MenuService;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/admin")
 // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class MenuController extends BaseController {
     private final Logger logger = LoggerFactory.getLogger(MenuController.class);
-    @Autowired
+    @Resource
     private MenuService menuService;
     /**
      * 菜单管理列表页
      * @return String
      */
     @RequestMapping("/menu")
-    @AdminMenu(name = "菜单管理", seq = 10, groupId = Constants.ADMIN_MENU_GROUP_CONTENT)
     public String index() {
         return view("static/admin/pages/menu/menu_list.html");
     }

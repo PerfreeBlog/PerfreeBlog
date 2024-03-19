@@ -7,6 +7,7 @@
         <module>perfree-core</module>
         <module>perfree-plugins</module>
         <module>perfree-web</module>
+        <module>perfree-shared-api</module>
     </modules>
 
 
@@ -217,36 +218,6 @@
                <groupId>com.github.xiaoymin</groupId>
                <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
                <version>${knife4j.version}</version>
-           </dependency>
-
-           <dependency>
-               <groupId>com.aliyun.oss</groupId>
-               <artifactId>aliyun-sdk-oss</artifactId>
-               <version>3.14.0</version>
-               <exclusions>
-                   <exclusion>
-                       <groupId>org.slf4j</groupId>
-                       <artifactId>slf4j-api</artifactId>
-                   </exclusion>
-               </exclusions>
-           </dependency>
-
-           <dependency>
-               <groupId>com.qiniu</groupId>
-               <artifactId>qiniu-java-sdk</artifactId>
-               <version>7.9.3</version>
-           </dependency>
-
-           <dependency>
-               <groupId>com.qcloud</groupId>
-               <artifactId>cos_api</artifactId>
-               <version>5.6.99</version>
-               <exclusions>
-                   <exclusion>
-                       <groupId>org.slf4j</groupId>
-                       <artifactId>slf4j-api</artifactId>
-                   </exclusion>
-               </exclusions>
            </dependency>
 
            <dependency>

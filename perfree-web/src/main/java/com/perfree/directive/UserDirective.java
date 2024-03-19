@@ -6,7 +6,7 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.model.User;
 import com.perfree.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class UserDirective extends BaseDirective {
     private static UserService userService;
 
-    @Autowired
+    @Resource
     public void setUserService(UserService userService){
         UserDirective.userService = userService;
     }

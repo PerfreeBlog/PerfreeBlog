@@ -6,11 +6,9 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.plugin.PluginHolder;
 import com.perfree.plugin.PluginInfo;
-import com.perfree.plugin.proxy.CommentProxy;
 import org.pf4j.PluginState;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.net.JarURLConnection;

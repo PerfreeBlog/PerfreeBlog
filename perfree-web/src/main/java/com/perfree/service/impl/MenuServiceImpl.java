@@ -3,28 +3,22 @@ package com.perfree.service.impl;
 import cn.hutool.core.util.IdUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.perfree.commons.Constants;
 import com.perfree.commons.Pager;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.model.RoleMenu;
-import com.perfree.permission.AdminMenuGroup;
-import com.perfree.permission.MenuItem;
-import com.perfree.permission.MenuManager;
 import com.perfree.service.MenuService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class MenuServiceImpl implements MenuService {
-    @Autowired
+    @Resource
     private MenuMapper menuMapper;
 
     /**
@@ -120,7 +114,7 @@ public class MenuServiceImpl implements MenuService {
      * @description 初始化系统菜单
      * @author Perfree
      */
-    public void initSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
+/*    public void initSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
         // 清除后台菜单及权限,重新生成
         List<Menu> menus  = menuMapper.getAllAdminMenu();
         for (Menu menu : menus) {
@@ -128,13 +122,13 @@ public class MenuServiceImpl implements MenuService {
             menuMapper.delRoleMenuByMenuId(menu.getId());
         }
         saveAdminGroups(adminMenuGroups);
-    }
+    }*/
 
     /**
      * 存储生成的菜单
      * @param adminMenuGroups adminMenuGroups
      */
-    private void saveAdminGroups(List<AdminMenuGroup> adminMenuGroups) {
+   /* private void saveAdminGroups(List<AdminMenuGroup> adminMenuGroups) {
         for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
             Menu parentMenu = menuMapper.getById(adminMenuGroup.getId());
             // 如果菜单组不存在与数据库,则新增
@@ -148,12 +142,12 @@ public class MenuServiceImpl implements MenuService {
                 initMenuRole(childMenu, menuItem.getRole());
             }
         }
-    }
+    }*/
 
     /**
      * 添加插件menu
      */
-    public void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
+   /* public void addPluginSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
         saveAdminGroups(adminMenuGroups);
         for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
             AdminMenuGroup adminMenuGroupByGroupId = MenuManager.getAdminMenuGroupByGroupId(adminMenuGroup.getGroupId());
@@ -164,12 +158,12 @@ public class MenuServiceImpl implements MenuService {
                 MenuManager.SYSTEM_MENU_LIST.add(adminMenuGroup);
             }
         }
-    }
+    }*/
 
     /**
      * 移除插件菜单
      */
-    public void removePluginSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
+    /*public void removePluginSystemMenu(List<AdminMenuGroup> adminMenuGroups) {
         for (AdminMenuGroup adminMenuGroup : adminMenuGroups) {
             AdminMenuGroup adminMenuGroupByGroupId = MenuManager.getAdminMenuGroupByGroupId(adminMenuGroup.getGroupId());
             if (adminMenuGroupByGroupId == null) {
@@ -195,7 +189,7 @@ public class MenuServiceImpl implements MenuService {
                 MenuManager.SYSTEM_MENU_LIST.remove(adminMenuGroupByGroupId);
             }
         }
-    }
+    }*/
 
     /**
      * 生成Menu实体

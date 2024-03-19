@@ -1,10 +1,10 @@
 package com.perfree.plugin;
 
 import com.perfree.commons.Constants;
-import com.perfree.model.Plugin;
 import com.perfree.plugin.handle.compound.LoadPluginHandle;
 import com.perfree.plugin.handle.compound.StartPluginHandle;
 import com.perfree.plugin.utils.PluginsUtils;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.pf4j.DefaultPluginManager;
 import org.pf4j.PluginState;
@@ -12,11 +12,9 @@ import org.pf4j.PluginWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -28,10 +26,10 @@ import java.util.List;
 public class PluginManager extends DefaultPluginManager implements PluginManagerService, ApplicationContextAware {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
-    @Autowired
+    @Resource
     private LoadPluginHandle loadPluginHandle;
 
-    @Autowired
+    @Resource
     private StartPluginHandle startPluginHandle;
 
     ApplicationContext applicationContext;
@@ -226,7 +224,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
      * 初始化所有插件
      * @throws Exception Exception
      */
-    @Override
+   /* @Override
     public void initPlugins(List<Plugin> plugins) throws Exception {
         // 初始化插件处理器
         loadPluginHandle.initialize();
@@ -243,7 +241,7 @@ public class PluginManager extends DefaultPluginManager implements PluginManager
                 this.startPlugin(pluginInfo.getPluginId());
             }
         }
-    }
+    }*/
 
     /**
      * 获取所有已安装的插件

@@ -3,7 +3,7 @@ package com.perfree.controller.admin;
 import com.perfree.base.BaseController;
 import com.perfree.commons.ResponseBean;
 import com.perfree.service.RoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 // @RequiresRoles(value={Constants.ROLE_ADMIN}, logical= Logical.OR)
 public class RoleController extends BaseController {
 
-    @Autowired
+    @Resource
     private RoleService roleService;
     /**
      * 获取角色列表（不分页）

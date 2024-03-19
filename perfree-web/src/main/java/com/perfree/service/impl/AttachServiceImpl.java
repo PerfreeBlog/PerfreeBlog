@@ -3,13 +3,12 @@ package com.perfree.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.perfree.commons.Pager;
-import com.perfree.file.FileHandles;
 import com.perfree.mapper.AttachMapper;
 import com.perfree.model.Attach;
 import com.perfree.service.AttachService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,11 +19,9 @@ import java.util.List;
 @Transactional
 public class AttachServiceImpl implements AttachService {
     private final Logger logger = LoggerFactory.getLogger(AttachServiceImpl.class);
-    @Autowired
+    @Resource
     private AttachMapper attachMapper;
 
-    @Autowired
-    private FileHandles fileHandles;
 
     /**
      * 新增附件
@@ -69,14 +66,14 @@ public class AttachServiceImpl implements AttachService {
      */
     public int del(String[] idArr) {
         List<Attach> attachList =  attachMapper.getByIdArr(idArr);
-        attachList.forEach(res -> {
+      /*  attachList.forEach(res -> {
             try {
                 fileHandles.delete(res);
             } catch (Exception e) {
                 e.printStackTrace();
                 logger.error("文件[{}]删除失败:{}, ", res.getName(),e.getMessage());
             }
-        });
+        });*/
         return attachMapper.del(idArr);
     }
 
