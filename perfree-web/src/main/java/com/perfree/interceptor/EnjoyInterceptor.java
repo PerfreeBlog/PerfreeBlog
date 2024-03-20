@@ -1,10 +1,9 @@
 package com.perfree.interceptor;
 
-import com.perfree.commons.Constants;
-import com.perfree.commons.IpUtil;
-import com.perfree.commons.OptionCacheUtil;
 import com.perfree.commons.SpringBeanUtils;
-import com.perfree.service.UserService;
+import com.perfree.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Component
@@ -33,13 +30,13 @@ public class EnjoyInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         if (modelAndView != null && StringUtils.isNotBlank(modelAndView.getViewName())&& !modelAndView.getViewName().contains("redirect:")) {
             Map<String, Object> model = modelAndView.getModel();
-            String webTitle = OptionCacheUtil.getValue(Constants.OPTION_WEB_TITLE);
+         /*   String webTitle = OptionCacheUtil.getValue(Constants.OPTION_WEB_TITLE);
             String webKeyWord = OptionCacheUtil.getValue(Constants.OPTION_WEB_META_KEYWORD);
             String webDesc = OptionCacheUtil.getValue(Constants.OPTION_WEB_META_DESC);
             model.putIfAbsent(Constants.OPTION_WEB_TITLE, StringUtils.isBlank(webTitle) ? null : webTitle.trim());
             model.putIfAbsent(Constants.OPTION_WEB_META_KEYWORD, StringUtils.isBlank(webKeyWord) ? null : webKeyWord.trim());
             model.putIfAbsent(Constants.OPTION_WEB_META_DESC, StringUtils.isBlank(webDesc) ? null : webDesc.trim());
-            model.putIfAbsent(Constants.WEB_SITE, OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort)));
+            model.putIfAbsent(Constants.WEB_SITE, OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_SITE, IpUtil.getUrl(serverPort)));*/
             setUser(model);
         }
     }

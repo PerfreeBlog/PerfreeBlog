@@ -32,6 +32,9 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>static/public/images/*.ico</exclude>
+                </excludes>
               <!--  <excludes>
                     <exclude>static/**</exclude>
                     <exclude>Perfree.sql</exclude>
@@ -40,6 +43,13 @@
                     <exclude>update-sqlite.sql</exclude>
                 </excludes>-->
                 <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>static/public/images/*.ico</include>
+                </includes>
+                <filtering>false</filtering>
             </resource>
         </resources>
         <finalName>perfree-web</finalName>
@@ -87,6 +97,7 @@
                     <useDefaultDelimiters>true</useDefaultDelimiters>
                     <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ico</nonFilteredFileExtension>
                         <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
                         <nonFilteredFileExtension>eot</nonFilteredFileExtension>
                         <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
@@ -95,27 +106,6 @@
                 </configuration>
                 <version>2.4.3</version>
             </plugin>
-            <!--<plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>1.4.13</version>
-                <configuration>
-                    <imageName>perfree/perfree</imageName>
-                    <repository>perfree/perfree</repository>
-                    <dockerfile>Dockerfile</dockerfile>
-                    <contextDirectory>${project.basedir}</contextDirectory>
-                    <buildArgs>
-                        <PACKAGE_FILE>target/${project.build.finalName}-${version}.tar.gz</PACKAGE_FILE>
-                    </buildArgs>
-                    <resources>
-                        <resource>
-                            <targetPath>/</targetPath>
-                            <directory>${project.build.directory}</directory>
-                            <include>${project.build.finalName}.${version}-tar.gz</include>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>-->
         </plugins>
     </build>
 </project>

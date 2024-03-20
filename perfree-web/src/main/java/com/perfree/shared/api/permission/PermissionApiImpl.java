@@ -1,5 +1,6 @@
 package com.perfree.shared.api.permission;
 
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 @Service

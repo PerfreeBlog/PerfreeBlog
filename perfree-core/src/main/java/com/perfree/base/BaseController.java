@@ -3,8 +3,11 @@ package com.perfree.base;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
+import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.Constants;
-import com.perfree.commons.OptionCacheUtil;
+import com.perfree.enums.OptionEnum;
+import com.perfree.security.SecurityFrameworkUtils;
+import com.perfree.security.vo.LoginUserVO;
 import com.perfree.shared.api.user.UserApi;
 import com.perfree.shared.api.user.dto.UserDTO;
 import jakarta.annotation.Resource;
@@ -21,27 +24,21 @@ public class BaseController {
     @Resource
     private UserApi userApi;
 
+    @Resource
+    private OptionCacheService optionCacheService;
+
     /**
      * 获取已登录用户信息
+     *
      * @return User
      */
-    public UserDTO getUser(){
-       /* Subject subject = SecurityUtils.getSubject();
-        User user=new User();
-        PrincipalCollection principals = subject.getPrincipals();
-        if (principals == null) {
-            return null;
-        }
-        BeanUtils.copyProperties(principals.getPrimaryPrincipal(), user);
-        user = userService.getById(user.getId().toString());
-        user.setPassword(null);
-        user.setSalt(null);
-        return user;*/
-        return null;
+    public LoginUserVO getUser() {
+        return SecurityFrameworkUtils.getLoginUser();
     }
 
     /**
      * 获取当前启用的主题
+     *
      * @return String
      */
     public String currentTheme() {
@@ -50,24 +47,21 @@ public class BaseController {
         if (StringUtils.isNotBlank(previewTheme)) {
             return previewTheme;
         }
-        return OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
+        return optionCacheService.getOptionValue(OptionEnum.WEB_THEME.getKey());
     }
 
     /**
      * 获取当前启用的主题
+     *
      * @return String
      */
     public String currentThemePage() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-        String previewTheme = request.getParameter("previewTheme");
-        if (StringUtils.isNotBlank(previewTheme)) {
-            return "static/themes/" + previewTheme;
-        }
-        return "static/themes/" + OptionCacheUtil.getValue(Constants.OPTION_WEB_THEME);
+        return "static/themes/" + currentTheme();
     }
 
     /**
      * 多出这个方法是因为直接返回的话,idea报黄线且不能自动链接至该文件(该死的强迫症)
+     *
      * @param viewPath viewPath
      * @return String
      */
@@ -82,11 +76,12 @@ public class BaseController {
 
     /**
      * 渲染page
+     *
      * @return String
      */
     public String pageView(String viewPath) {
         File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + currentTheme()
-                + Constants.SEPARATOR +  viewPath);
+                + Constants.SEPARATOR + viewPath);
         File devFile = com.perfree.commons.FileUtil.getClassPathFile(Constants.DEV_THEMES_PATH + Constants.SEPARATOR + currentTheme()
                 + Constants.SEPARATOR + viewPath);
         if (!file.exists() && (devFile == null || !devFile.exists())) {
@@ -97,10 +92,11 @@ public class BaseController {
 
     /**
      * 返回通用的page
+     *
      * @return String
      */
-    public String universalPage(){
-        File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR +  currentTheme() + "/page.html");
+    public String universalPage() {
+        File file = new File(Constants.PROD_THEMES_PATH + Constants.SEPARATOR + currentTheme() + "/page.html");
         File devFile = com.perfree.commons.FileUtil.getClassPathFile(Constants.DEV_THEMES_PATH +
                 Constants.SEPARATOR + currentTheme() + "/page.html");
         if (!file.exists() && (devFile == null || !devFile.exists())) {
@@ -111,7 +107,8 @@ public class BaseController {
 
     /**
      * 自动判断返回哪个页面
-     * @param validPath 要判断的地址
+     *
+     * @param validPath     要判断的地址
      * @param themeViewPath 该页面在主题中的路径
      * @param adminViewPath 该页面在系统中的路径
      * @return String
@@ -130,7 +127,8 @@ public class BaseController {
 
     /**
      * 自动判断返回哪个页面(插件专用)
-     * @param validPath 要判断的地址
+     *
+     * @param validPath     要判断的地址
      * @param themeViewPath 该页面在主题中的路径
      * @param adminViewPath 该页面在系统中的路径
      * @return String
@@ -148,6 +146,7 @@ public class BaseController {
 
     /**
      * 获取安装进度
+     *
      * @return String
      */
     public String getInstallStatus() {

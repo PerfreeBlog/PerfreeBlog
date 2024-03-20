@@ -15,7 +15,6 @@ layui.config({
 	step:"step",		// 分布表单组件
 	tag:"tag",			// 多标签页组件
 	popup:"popup",      // 弹层封装
-	treeTable:"treetable-lay/treeTable",   // 树状表格
 	dtree:"dtree",			// 树结构
 	xmSelect: 'xm-select/xm-select',
 	area:"area",			// 省市级联

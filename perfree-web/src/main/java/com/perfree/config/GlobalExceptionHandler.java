@@ -2,7 +2,9 @@ package com.perfree.config;
 
 import com.perfree.base.BaseController;
 import com.perfree.commons.*;
-import org.apache.commons.lang3.StringUtils;
+import com.perfree.enums.ResultCodeEnum;
+import com.perfree.exception.ServiceException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageConversionException;
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import jakarta.servlet.http.HttpServletRequest;
-import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
@@ -38,11 +38,11 @@ public class GlobalExceptionHandler extends BaseController {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public ResponseBean validationBodyException(MethodArgumentNotValidException exception) {
+    public CommonResult<?> validationBodyException(MethodArgumentNotValidException exception) {
         BindingResult result = exception.getBindingResult();
         Objects.requireNonNull(result.getFieldError());
         LOGGER.error(result.getFieldError().getDefaultMessage());
-        return ResponseBean.fail(result.getFieldError().getDefaultMessage(), null);
+        return CommonResult.error(ResultCodeEnum.FAIL.getCode(), result.getFieldError().getDefaultMessage());
     }
 
     /**
@@ -52,21 +52,27 @@ public class GlobalExceptionHandler extends BaseController {
      * @return exception message
      */
     @ExceptionHandler(HttpMessageConversionException.class)
-    public ResponseBean parameterTypeException(HttpMessageConversionException exception) {
+    public CommonResult<?> parameterTypeException(HttpMessageConversionException exception) {
         LOGGER.error(exception.getMessage());
-        return ResponseBean.fail("ClassCastException", exception.getMessage());
-
+        return CommonResult.error(ResultCodeEnum.FAIL.getCode(), exception.getMessage());
     }
 
     @ExceptionHandler(BindException.class)
     @ResponseBody
-    public ResponseBean handleBindException(Exception e) {
-        List<ObjectError> list = ((BindException) e).getAllErrors();
-        if (list.size() > 0) {
+    public CommonResult<?> handleBindException(Exception exception) {
+        List<ObjectError> list = ((BindException) exception).getAllErrors();
+        if (!list.isEmpty()) {
             LOGGER.error(list.get(0).getDefaultMessage());
-            return ResponseBean.error(ResponseBean.ERROR_CODE, list.get(0).getDefaultMessage(), null);
+            return CommonResult.error(ResponseBean.ERROR_CODE, list.get(0).getDefaultMessage());
         }
-        return ResponseBean.error(ResponseBean.ERROR_CODE, "参数错误", null);
+        return CommonResult.error(ResultCodeEnum.FAIL.getCode(), exception.getMessage());
+    }
+
+    @ExceptionHandler(ServiceException.class)
+    @ResponseBody
+    public CommonResult<?> handleServiceException(Exception exception) {
+        LOGGER.error(exception.getMessage(),exception);
+        return CommonResult.error(ResultCodeEnum.FAIL.getCode(), exception.getMessage());
     }
 
 /*    @ExceptionHandler(value = AuthorizationException.class)
@@ -76,8 +82,8 @@ public class GlobalExceptionHandler extends BaseController {
 
     @ExceptionHandler(value = RequestAccessException.class)
     @ResponseBody
-    public ResponseBean handleRequestAccessException(RequestAccessException e) {
-        return ResponseBean.error(ResponseBean.ERROR_CODE, e.getMessage(), null);
+    public CommonResult<?> handleRequestAccessException(RequestAccessException exception) {
+        return CommonResult.error(ResultCodeEnum.FAIL.getCode(), exception.getMessage());
     }
 
     @ExceptionHandler(value = FrontViewNodeRenderException.class)

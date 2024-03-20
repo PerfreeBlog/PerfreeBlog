@@ -1,7 +1,6 @@
 package com.perfree.interceptor;
 
 import com.perfree.commons.Constants;
-import com.perfree.commons.OptionCacheUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -11,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class ApiInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String webOpenApi = OptionCacheUtil.getDefaultValue("WEB_OPEN_API", Constants.WEB_API_OPEN);
+     /*   String webOpenApi = OptionCacheUtil.getDefaultValue("WEB_OPEN_API", Constants.WEB_API_OPEN);
         if (Constants.WEB_API_CLOSE.equals(webOpenApi)) {
             return false;
         }
@@ -28,8 +27,8 @@ public class ApiInterceptor implements HandlerInterceptor {
         if (webApiAccessKey.equals(headerAccessKey)) {
             return true;
         }
-        response.sendRedirect("/403");
-        return false;
+        response.sendRedirect("/403");*/
+        return true;
     }
 
     @Override

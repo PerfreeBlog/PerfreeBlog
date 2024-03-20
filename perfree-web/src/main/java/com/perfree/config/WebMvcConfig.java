@@ -4,7 +4,6 @@ import com.perfree.interceptor.ApiInterceptor;
 import com.perfree.interceptor.DataSourceInterceptor;
 import com.perfree.interceptor.EnjoyInterceptor;
 import com.perfree.interceptor.HtmlInterceptor;
-import com.perfree.plugin.resources.PluginResourceResolver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +46,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/doc.html").addResourceLocations("classpath:/META-INF/resources/");
         String pathPattern = "/static-plugin/**";
         ResourceHandlerRegistration resourceHandlerRegistration = registry.addResourceHandler(pathPattern);
-        resourceHandlerRegistration.resourceChain(false).addResolver(new PluginResourceResolver());
+        //resourceHandlerRegistration.resourceChain(false).addResolver(new PluginResourceResolver());
         WebMvcConfig.registry = registry;
     }
 

@@ -1,6 +1,5 @@
 package com.perfree.model;
 
-import com.perfree.commons.GravatarUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -180,12 +179,6 @@ public class Comment implements Serializable {
     }
 
 
-    public String getAvatar() {
-        if (readAvatar) {
-            return GravatarUtil.replaceGravatar(avatar);
-        }
-        return avatar;
-    }
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;

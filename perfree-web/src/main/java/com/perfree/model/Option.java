@@ -1,7 +1,12 @@
 package com.perfree.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,40 +14,25 @@ import java.io.Serializable;
  *
  * @author Perfree
  */
-@Schema(description = "配置项数据")
+@TableName("p_option")
+@Data
 public class Option implements Serializable {
-    private static final long serialVersionUID = 7817277417501762377L;
 
-    @Schema(description = "配置项ID", name = "id")
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
-    @Schema(description = "配置key", name = "key")
+    /**
+     * 配置key
+     */
+    @TableField(value = "`key`")
     private String key;
 
-    @Schema(description = "配置value", name = "value")
+    /**
+     * 配置value
+     */
+    @TableField(value = "`value`")
     private String value;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
 }

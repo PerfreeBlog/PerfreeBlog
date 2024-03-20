@@ -63,11 +63,17 @@ spring:
       prefix: /
     servlet:
       load-on-startup: 1
-mybatis:
-  mapper-locations: classpath*:mapper/*.xml
-  type-aliases-package: com.perfree.model
+# MyBatis Plus 的配置项
+mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: false
+  global-config:
+    db-config:
+      id-type: NONE
+  type-aliases-package: com.perfree.model
+  mapper-locations: classpath*:mapper/*.xml
+
 
 #pagehelper配置
 pagehelper:
@@ -78,7 +84,7 @@ pagehelper:
 
 logging:
   level:
-    com.perfree: error
+    com.perfree: info
     com.perfree.config.PostAppRunner: info
     com.perfree.Application: info
     com.perfree.plugins: info

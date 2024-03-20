@@ -7,7 +7,6 @@ import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 public class UniqueNameGenerator extends AnnotationBeanNameGenerator {
     @Override
     public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
-        String beanName = definition.getBeanClassName();
-        return beanName;
+        return definition.getBeanClassName();
     }
 }
