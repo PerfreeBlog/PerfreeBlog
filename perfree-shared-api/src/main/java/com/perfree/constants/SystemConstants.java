@@ -11,6 +11,9 @@ public class SystemConstants {
     /** 验证码位数 */
     public static final int CAPTCHA_LENGTH = 4;
 
+    /** 验证码干扰线宽度 */
+    public static final int CAPTCHA_THICKNESS = 1;
+
     /** 验证码图片宽度 */
     public static final int CAPTCHA_IMAGE_WIDTH = 115;
 

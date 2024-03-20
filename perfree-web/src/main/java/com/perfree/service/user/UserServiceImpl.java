@@ -1,5 +1,6 @@
 package com.perfree.service.user;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.CaptchaCacheService;
