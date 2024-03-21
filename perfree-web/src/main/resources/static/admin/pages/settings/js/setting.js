@@ -6,19 +6,20 @@ layui.use(['layer','form','element','toast'], function() {
     form = layui.form;
     element = layui.element;
     toast = layui.toast;
+    initGlobalSetting();
     initSiteList();
     initEvent();
 
     form.on('submit(optionForm2)', function(data){
-        save(data);
+        save(form.val("optionForm2"));
         return false;
     });
     form.on('submit(siteForm)', function(data){
-        save(data);
+        save( form.val("siteForm"));
         return false;
     });
     form.on('submit(globalForm)', function(data){
-        save(data);
+        save(form.val("globalForm"));
         return false;
     });
     element.on('tab(siteSettingTab)', function() {
@@ -67,6 +68,7 @@ function initEvent() {
 }
 
 function initGlobalSetting() {
+    let loadIndex = layer.load("加载中...");
     let keys = Object.keys(form.val('globalForm'));
     request.post("/api/option/getOptions", JSON.stringify({keys, siteId: currSiteId})).then(res => {
         if (res.code === 200) {
@@ -74,15 +76,35 @@ function initGlobalSetting() {
             $("#siteSetting").hide();
             form.render();
             res.data.forEach(item => {
+                if (item.key === "WEB_OPEN_API" && !item.value) {
+                    item.value = "1";
+                }
+                if (item.key === "WEB_AUTO_GEN_SUMMARY" && !item.value) {
+                    item.value = "1";
+                }
+                if (item.key === "WEB_RSS_GEN_MODE" && !item.value) {
+                    item.value = "1";
+                }
+                if (item.key === "WEB_IS_REGISTER" && !item.value) {
+                    item.value = "1";
+                }
+                if (item.key === "WEB_REGISTER_DEFAULT_ROLE" && !item.value) {
+                    item.value = "user";
+                }
+                if (item.key === "WEB_OPEN_CAPTCHA" && !item.value) {
+                    item.value = "1";
+                }
                 form.val("globalForm", {
                     [item.key]: item.value
                 });
             })
+            layer.close(loadIndex);
         }
     })
 }
 
 function initSiteSetting() {
+    let loadIndex = layer.load("加载中...");
     let keys = Object.keys(form.val('siteForm'));
     request.post("/api/option/getOptions", JSON.stringify({keys, siteId: currSiteId})).then(res => {
         if (res.code === 200) {
@@ -90,10 +112,23 @@ function initSiteSetting() {
             $("#siteSetting").show();
             form.render();
             res.data.forEach(item => {
+                if (item.key === "WEB_COMMENT_IS_REVIEW" && !item.value) {
+                    item.value = "0";
+                }
+                if (item.key === "WEB_COMMENT_IS_STINT" && !item.value) {
+                    item.value = "0";
+                }
+                if (item.key === "COMMENT_IS_SEND_MAIL" && !item.value) {
+                    item.value = "0";
+                }
+                if (item.key === "WEB_IS_AUTO_PUSH_BAIDU" && !item.value) {
+                    item.value = "0";
+                }
                 form.val("siteForm", {
                     [item.key]: item.value
                 });
             })
+            layer.close(loadIndex);
         }
     })
 }
@@ -119,10 +154,10 @@ function initSiteList() {
 
 function save(data) {
     let options = [];
-    for (let key of Object.keys(data.field)) {
+    for (let key of Object.keys(data)) {
         let option = {
             key: key,
-            value: data.field[key]
+            value: data[key]
         };
         options.push(option);
     }

@@ -8,8 +8,8 @@
             <label class="layui-form-label">允许注册新用户</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="WEB_IS_REGISTER">
-                    <option value="1" #(optionCompare('WEB_IS_REGISTER', '1') ? 'selected': '')>允许</option>
-                    <option value="0" #(optionCompare('WEB_IS_REGISTER', '0') ? 'selected': '')>不允许</option>
+                    <option value="1">允许</option>
+                    <option value="0">不允许</option>
                 </select>
             </div>
         </div>
@@ -18,10 +18,10 @@
             <label class="layui-form-label">新用户默认角色</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="WEB_REGISTER_DEFAULT_ROLE">
-                    <option value="user" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'user') ? 'selected': '')>普通用户</option>
-                    <option value="contribute" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'contribute') ? 'selected': '')>文章贡献</option>
-                    <option value="editor" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'editor') ? 'selected': '')>文章编辑</option>
-                    <option value="admin" #(optionCompare('WEB_REGISTER_DEFAULT_ROLE', 'amin') ? 'selected': '')>管理员</option>
+                    <option value="user">普通用户</option>
+                    <option value="contribute">文章贡献</option>
+                    <option value="editor">文章编辑</option>
+                    <option value="admin">管理员</option>
                 </select>
             </div>
         </div>
@@ -30,8 +30,8 @@
             <label class="layui-form-label">登录验证码</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="WEB_OPEN_CAPTCHA">
-                    <option value="1" #(optionCompare('WEB_OPEN_CAPTCHA', '1') ? 'selected': '')>开启</option>
-                    <option value="0" #(optionCompare('WEB_OPEN_CAPTCHA', '0') ? 'selected': '')>关闭</option>
+                    <option value="1">开启</option>
+                    <option value="0">关闭</option>
                 </select>
             </div>
         </div>

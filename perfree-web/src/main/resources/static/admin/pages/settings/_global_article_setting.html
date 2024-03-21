@@ -8,8 +8,8 @@
             <label class="layui-form-label">自动生成摘要</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="WEB_AUTO_GEN_SUMMARY">
-                    <option value="1" #(optionCompare('WEB_AUTO_GEN_SUMMARY', '1') ? 'selected': '')>启用</option>
-                    <option value="0" #(optionCompare('WEB_AUTO_GEN_SUMMARY', '0') ? 'selected': '')>关闭</option>
+                    <option value="1">启用</option>
+                    <option value="0">关闭</option>
                 </select>
             </div>
         </div>
@@ -18,8 +18,8 @@
             <label class="layui-form-label">RSS生成方式</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="WEB_RSS_GEN_MODE">
-                    <option value="0" #(optionCompare('WEB_RSS_GEN_MODE', '0') ? 'selected': '')>全文</option>
-                    <option value="1" #(optionCompare('WEB_RSS_GEN_MODE', '1') ? 'selected': '')>摘要</option>
+                    <option value="0">全文</option>
+                    <option value="1">摘要</option>
                 </select>
             </div>
 

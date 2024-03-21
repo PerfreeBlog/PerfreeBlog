@@ -7,7 +7,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">网站关键词</label>
             <div class="layui-input-block">
-                <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键词,英文逗号分割" class="layui-textarea">#option('WEB_META_KEYWORD')</textarea>
+                <textarea name="WEB_META_KEYWORD" placeholder="请输入META关键词,英文逗号分割" class="layui-textarea"></textarea>
             </div>
         </div>
 
@@ -15,7 +15,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">网站描述</label>
             <div class="layui-input-block">
-                <textarea name="WEB_META_DESC" placeholder="请输入META网站描述" class="layui-textarea">#option('WEB_META_DESC')</textarea>
+                <textarea name="WEB_META_DESC" placeholder="请输入META网站描述" class="layui-textarea"></textarea>
             </div>
         </div>
 
@@ -24,8 +24,8 @@
             <label class="layui-form-label">自动推送百度</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="WEB_IS_AUTO_PUSH_BAIDU">
-                    <option value="0" #(optionCompare('WEB_IS_AUTO_PUSH_BAIDU', '0') ? 'selected': '')>关闭</option>
-                    <option value="1" #(optionCompare('WEB_IS_AUTO_PUSH_BAIDU', '1') ? 'selected': '')>开启</option>
+                    <option value="0">关闭</option>
+                    <option value="1">开启</option>
                 </select>
             </div>
         </div>

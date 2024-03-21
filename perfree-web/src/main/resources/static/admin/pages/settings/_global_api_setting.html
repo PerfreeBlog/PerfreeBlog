@@ -8,8 +8,8 @@
             <label class="layui-form-label">开启接口</label>
             <div class="layui-input-block" style="margin-left: 130px;width: 200px">
                 <select name="WEB_OPEN_API">
-                    <option value="0" #(optionCompare('WEB_OPEN_API', '0') ? 'selected': '')>启用</option>
-                    <option value="1" #(optionCompare('WEB_OPEN_API', '1') ? 'selected': '')>关闭</option>
+                    <option value="1">启用</option>
+                    <option value="0">关闭</option>
                 </select>
             </div>
         </div>
@@ -17,7 +17,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">API Access Key</label>
             <div class="layui-input-block">
-                <input type="text" value="#option('WEB_API_ACCESS_KEY')" name="WEB_API_ACCESS_KEY" placeholder="如填写该值,则访问api时必须携带该参数作为验证" autocomplete="off" class="layui-input">
+                <input type="text" name="WEB_API_ACCESS_KEY" placeholder="如填写该值,则访问api时必须携带该参数作为验证" autocomplete="off" class="layui-input">
             </div>
         </div>
 
