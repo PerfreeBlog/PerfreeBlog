@@ -1,7 +1,7 @@
 package com.perfree.convert;
 
 import com.perfree.model.Menu;
-import com.perfree.vo.menu.MenuTreeRespVO;
+import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

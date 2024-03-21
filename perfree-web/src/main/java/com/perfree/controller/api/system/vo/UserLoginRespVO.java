@@ -1,4 +1,4 @@
-package com.perfree.vo.system;
+package com.perfree.controller.api.system.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -12,6 +12,9 @@ public class UserLoginRespVO {
 
     @Schema(description = "用户编号", example = "1024")
     private Long userId;
+
+    @Schema(description = "用户名称", example = "1024")
+    private String userName;
 
     @Schema(description = "访问令牌", example = "happy")
     private String accessToken;

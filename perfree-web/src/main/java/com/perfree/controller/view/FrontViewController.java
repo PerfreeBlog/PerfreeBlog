@@ -1,4 +1,4 @@
-package com.perfree.controller;
+package com.perfree.controller.view;
 
 
 import com.perfree.base.BaseController;

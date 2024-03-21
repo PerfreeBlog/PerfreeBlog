@@ -1,4 +1,4 @@
-package com.perfree.vo.user;
+package com.perfree.controller.api.user.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;

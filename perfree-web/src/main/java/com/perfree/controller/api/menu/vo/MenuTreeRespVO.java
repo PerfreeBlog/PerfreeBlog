@@ -1,4 +1,4 @@
-package com.perfree.vo.menu;
+package com.perfree.controller.api.menu.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @Schema(description = "菜单 Response VO")
 @Data
-public class MenuTreeRespVO extends MenuBaseVO{
+public class MenuTreeRespVO extends MenuBaseVO {
 
     @Schema(description = "主键")
     private String id;

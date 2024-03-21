@@ -17,18 +17,21 @@ layui.use(['layer','form','element','toast'], function() {
     element.on('tab(settingTab)', function(){
         if (this.getAttribute('lay-id') === "3") {
             let loadIndex = layer.load("正在检查更新...");
-            $.get("/checkUpdate",function(data){
+            request.get("/api/setting/checkUpdate").then(res => {
                 layer.close(loadIndex);
-                if (data.code === 200) {
-                    $("#updateTitle").text(data.data.name);
-                    $("#updateVersion").text(data.data.tagName);
-                    $("#updateContent").html(data.data.body.replaceAll("\r\n","<br>"));
-                    $("#updateSize").text(data.data.sizeString);
-                } else if (data.code === 500) {
+                if (res.code === 200) {
+                    if (res.data) {
+                        $("#updateTitle").text(res.data.name);
+                        $("#updateVersion").text(res.data.tagName);
+                        $("#updateContent").html(res.data.body.replaceAll("\r\n","<br>"));
+                        $("#updateSize").text(res.data.sizeString);
+                    } else {
+                        $(".update-content").html("暂无更新");
+                    }
+
+                } else{
                     console.log("检查更新出错");
                     $(".update-content").html("检查更新出错,请重试");
-                } else {
-                    $(".update-content").html("暂无更新");
                 }
                 $(".update-content").show();
             });
@@ -37,11 +40,19 @@ layui.use(['layer','form','element','toast'], function() {
 });
 
 function save(data) {
+    let options = [];
+    for (let key of Object.keys(data.field)) {
+        let option = {
+            key: key,
+            value: data.field[key]
+        };
+        options.push(option);
+    }
     $.ajax({
         type: "POST",
-        url: "/admin/setting/save",
+        url: "/api/setting/saveOrUpdateSetting",
         contentType:"application/json",
-        data: JSON.stringify(data.field),
+        data: JSON.stringify({options}),
         success:function(d){
             if (d.code === 200){
                 parent.toast.success({message: "保存成功",position: 'topCenter'});

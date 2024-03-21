@@ -1,4 +1,4 @@
-package com.perfree.vo.system;
+package com.perfree.controller.api.system.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

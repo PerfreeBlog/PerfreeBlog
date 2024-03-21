@@ -5,7 +5,7 @@ import com.perfree.constants.SystemConstants;
 import com.perfree.convert.MenuConvert;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
-import com.perfree.vo.menu.MenuTreeRespVO;
+import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

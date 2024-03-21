@@ -1,4 +1,4 @@
-package com.perfree.controller;
+package com.perfree.controller.api.system;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
@@ -12,10 +12,10 @@ import com.perfree.constants.SystemConstants;
 import com.perfree.enums.ErrorCode;
 import com.perfree.service.menu.MenuService;
 import com.perfree.service.user.UserService;
-import com.perfree.vo.menu.MenuTreeRespVO;
-import com.perfree.vo.system.CaptchaImageRespVO;
-import com.perfree.vo.system.UserLoginReqVO;
-import com.perfree.vo.system.UserLoginRespVO;
+import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
+import com.perfree.controller.api.system.vo.CaptchaImageRespVO;
+import com.perfree.controller.api.system.vo.UserLoginReqVO;
+import com.perfree.controller.api.system.vo.UserLoginRespVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;

@@ -1,6 +1,5 @@
 package com.perfree.service.user;
 
-import cn.hutool.core.util.IdUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.CaptchaCacheService;
@@ -14,13 +13,12 @@ import com.perfree.model.User;
 import com.perfree.security.SecurityConstants;
 import com.perfree.security.util.JwtUtil;
 import com.perfree.security.vo.LoginUserVO;
-import com.perfree.vo.system.UserLoginReqVO;
-import com.perfree.vo.system.UserLoginRespVO;
+import com.perfree.controller.api.system.vo.UserLoginReqVO;
+import com.perfree.controller.api.system.vo.UserLoginRespVO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +46,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements U
 
     @Override
     public UserLoginRespVO login(UserLoginReqVO userLoginReqVO, HttpSession session) {
-        String optionValue = optionCacheService.getOptionValue(OptionEnum.LOGIN_CAPTCHA_ENABLE.getKey());
+        String optionValue = optionCacheService.getOptionValue(OptionEnum.WEB_OPEN_CAPTCHA.getKey());
         if (StringUtils.isBlank(optionValue) || optionValue.equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             if (StringUtils.isBlank(userLoginReqVO.getUuid()) || StringUtils.isBlank(userLoginReqVO.getCode())) {
                 throw new ServiceException(ErrorCode.CAPTCHA_IS_NOT_EMPTY);

@@ -15,6 +15,9 @@ public enum ErrorCode {
     CAPTCHA_VALID_ERROR(100000004,"验证码错误!"),
     ACCOUNT_NOT_FOUNT(100000005,"账号不存在!"),
     ACCOUNT_PASSWORD_ERROR(100000006,"账号或密码错误!"),
+    CHECK_UPDATE_ERROR(100000007,"检查更新失败!"),
+
+    SITE_FLAG_EXIST(100000008,"标识已存在!"),
     ;
 
     private final Integer code;

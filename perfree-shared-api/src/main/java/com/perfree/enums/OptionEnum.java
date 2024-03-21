@@ -9,7 +9,7 @@ import lombok.Getter;
  */
 @Getter
 public enum OptionEnum {
-    LOGIN_CAPTCHA_ENABLE("OPTION_WEB_OPEN_CAPTCHA","是否开启登录验证码"),
+    WEB_OPEN_CAPTCHA("WEB_OPEN_CAPTCHA","是否开启登录验证码"),
     WEB_THEME("WEB_THEME","当前主题"),
     ;
     private final String key;

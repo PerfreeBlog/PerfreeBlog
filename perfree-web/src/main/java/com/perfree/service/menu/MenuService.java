@@ -2,7 +2,7 @@ package com.perfree.service.menu;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.model.Menu;
-import com.perfree.vo.menu.MenuTreeRespVO;
+import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
 
 import java.util.List;
 

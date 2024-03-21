@@ -1,4 +1,4 @@
-package com.perfree.vo.menu;
+package com.perfree.controller.api.menu.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

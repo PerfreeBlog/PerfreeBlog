@@ -1,14 +1,10 @@
 package com.perfree.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.perfree.commons.Pager;
-import com.perfree.model.Option;
 import com.perfree.model.User;
-import com.perfree.vo.system.UserLoginReqVO;
-import com.perfree.vo.system.UserLoginRespVO;
+import com.perfree.controller.api.system.vo.UserLoginReqVO;
+import com.perfree.controller.api.system.vo.UserLoginRespVO;
 import jakarta.servlet.http.HttpSession;
-
-import java.util.List;
 
 /**
  * @description UserService
