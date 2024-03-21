@@ -1,6 +1,7 @@
 package com.perfree.enjoy;
 
 import com.perfree.cache.OptionCacheService;
+import com.perfree.commons.MultipleSiteUtil;
 import com.perfree.commons.SpringBeanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class TplMethodShared {
      */
     public String option(String key) {
         OptionCacheService optionCacheService = SpringBeanUtils.getBean(OptionCacheService.class);
-        String value = optionCacheService.getOptionValue(key);
+        String value = optionCacheService.getOptionValue(key, MultipleSiteUtil.currentSite());
         if (StringUtils.isBlank(value)) {
             return null;
         }
@@ -33,7 +34,7 @@ public class TplMethodShared {
      */
     public boolean optionCompare(String key, String compareValue) {
         OptionCacheService optionCacheService = SpringBeanUtils.getBean(OptionCacheService.class);
-        String value = optionCacheService.getOptionValue(key);
+        String value = optionCacheService.getOptionValue(key, MultipleSiteUtil.currentSite());
         if (StringUtils.isBlank(value)) {
             return false;
         }

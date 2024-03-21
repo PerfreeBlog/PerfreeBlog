@@ -1,3 +1,13 @@
+#siteSetting{
+    display: none;
+}
+.site-list li{
+    cursor: pointer;
+    padding: 5px;
+}
+.site-list li:hover{
+    background: whitesmoke;
+}
 .layui-input, .layui-select, .layui-textarea {
     height: 40px;
     line-height: 40px;

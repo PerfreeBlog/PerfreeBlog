@@ -13,4 +13,7 @@ public class OptionBaseVO {
 
     @Schema(description = "配置value", name = "value")
     private String value;
+
+    @Schema(description = "站点ID", name = "value")
+    private Long siteId;
 }

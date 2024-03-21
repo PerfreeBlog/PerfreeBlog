@@ -14,36 +14,58 @@
 </head>
 <body class="pear-container">
 <div class="p-container">
-    <div class="layui-card">
-        <div class="layui-card-body">
-            <div class="layui-tab layui-tab-brief" lay-filter="settingTab">
-                <ul class="layui-tab-title">
-                    <li class="layui-this" lay-id="1">基础设置</li>
-                    <li lay-id="2">SEO设置</li>
-                    <li lay-id="5">文章设置</li>
-                    <li lay-id="4">邮箱服务</li>
-                    <li lay-id="7">登录注册</li>
-                    <li lay-id="8">评论相关</li>
-                    <li lay-id="9">接口设置</li>
-                    <li lay-id="10">附件设置</li>
-                    <li lay-id="6">其他设置</li>
-                    <li lay-id="3">系统更新</li>
-                </ul>
-                <div class="layui-tab-content">
-                    #include("/static/admin/pages/settings/_base_setting.html")
-                    #include("/static/admin/pages/settings/_seo_setting.html")
-                    #include("/static/admin/pages/settings/_article_setting.html")
-                    #include("/static/admin/pages/settings/_email_setting.html")
-                    #include("/static/admin/pages/settings/_login_setting.html")
-                    #include("/static/admin/pages/settings/_comment_setting.html")
-                    #include("/static/admin/pages/settings/_api_setting.html")
-                    #include("/static/admin/pages/settings/_attach_setting.html")
-                    #include("/static/admin/pages/settings/_other_setting.html")
-                    #include("/static/admin/pages/settings/_update_setting.html")
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header"><b>站点列表</b></div>
+                <div class="layui-card-body">
+                  <ul class="site-list" id="siteList">
+                      <li data-id="-1">全局配置</li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-xs12 layui-col-sm12 layui-col-md9">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div class="layui-tab layui-tab-brief" lay-filter="settingTab" id="globalSetting">
+                        <ul class="layui-tab-title">
+                            <li lay-id="1" class="layui-this">文章设置</li>
+                            <li lay-id="2">邮箱服务</li>
+                            <li lay-id="3">登录注册</li>
+                            <li lay-id="4">接口设置</li>
+                            <li lay-id="5">附件设置</li>
+                            <li lay-id="6">系统更新</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            #include("/static/admin/pages/settings/_global_article_setting.html")
+                            #include("/static/admin/pages/settings/_global_email_setting.html")
+                            #include("/static/admin/pages/settings/_global_login_setting.html")
+                            #include("/static/admin/pages/settings/_global_api_setting.html")
+                            #include("/static/admin/pages/settings/_global_attach_setting.html")
+                            #include("/static/admin/pages/settings/_global_update_setting.html")
+                        </div>
+                    </div>
+
+                    <div class="layui-tab layui-tab-brief" lay-filter="siteSettingTab" id="siteSetting">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this" lay-id="a">基础设置</li>
+                            <li lay-id="b">SEO设置</li>
+                            <li lay-id="c">评论相关</li>
+                            <li lay-id="d">其他设置</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            #include("/static/admin/pages/settings/_site_base_setting.html")
+                            #include("/static/admin/pages/settings/_site_seo_setting.html")
+                            #include("/static/admin/pages/settings/_site_comment_setting.html")
+                            #include("/static/admin/pages/settings/_site_other_setting.html")
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <script src="/static/public/libs/jquery/jquery.min.js"></script>
@@ -51,7 +73,7 @@
 <script src="/static/admin/static/component/pear/pear.js"></script>
 <script src="/static/public/js/request.js"></script>
 <script src="/static/public/js/main.js?v=#(version)"></script>
-<script src="/static/admin/pages/settings/js/setting.js?v=#(version)"></script>
+<script src="/static/admin/pages/settings/js/setting.js?v=#(version)111"></script>
 <script src="/static/admin/pages/settings/js/attach_setting.js?v=#(version)"></script>
 </body>
 </html>

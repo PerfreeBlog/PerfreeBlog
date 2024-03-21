@@ -12,4 +12,7 @@ public class OptionCreateOrUpdateReqVO{
     @Schema(description = "配置列表", name = "options")
     @NotNull(message = "配置列表不允许为空")
     private List<OptionBaseVO> options;
+
+    @Schema(description = "站点id", name = "siteId")
+    private Long siteId;
 }

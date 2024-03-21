@@ -7,9 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface OptionMapper extends BaseMapperX<Option> {
 
-    default Option getOptionByKey(String key){
-        return selectOne(new LambdaQueryWrapper<Option>().eq(Option::getKey, key));
+    default Option getOptionByKeyAndSiteId(String key, Long siteId){
+        return selectOne(new LambdaQueryWrapper<Option>().eq(Option::getKey, key).eq(Option::getSiteId, siteId));
     }
-
 }
 

@@ -5,6 +5,7 @@ import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.setting.dialect.Props;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.Constants;
+import com.perfree.commons.MultipleSiteUtil;
 import com.perfree.enums.OptionEnum;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.vo.LoginUserVO;
@@ -47,8 +48,9 @@ public class BaseController {
         if (StringUtils.isNotBlank(previewTheme)) {
             return previewTheme;
         }
-        return optionCacheService.getOptionValue(OptionEnum.WEB_THEME.getKey());
+        return optionCacheService.getOptionValue(OptionEnum.WEB_THEME.getKey(), MultipleSiteUtil.currentSite());
     }
+
 
     /**
      * 获取当前启用的主题

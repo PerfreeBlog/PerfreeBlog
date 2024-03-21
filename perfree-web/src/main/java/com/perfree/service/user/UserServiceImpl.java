@@ -4,6 +4,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.CaptchaCacheService;
 import com.perfree.cache.OptionCacheService;
+import com.perfree.commons.MultipleSiteUtil;
 import com.perfree.constants.OptionConstant;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
@@ -46,7 +47,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>  implements U
 
     @Override
     public UserLoginRespVO login(UserLoginReqVO userLoginReqVO, HttpSession session) {
-        String optionValue = optionCacheService.getOptionValue(OptionEnum.WEB_OPEN_CAPTCHA.getKey());
+        String optionValue = optionCacheService.getOptionValue(OptionEnum.WEB_OPEN_CAPTCHA.getKey(), MultipleSiteUtil.currentSite());
         if (StringUtils.isBlank(optionValue) || optionValue.equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             if (StringUtils.isBlank(userLoginReqVO.getUuid()) || StringUtils.isBlank(userLoginReqVO.getCode())) {
                 throw new ServiceException(ErrorCode.CAPTCHA_IS_NOT_EMPTY);

@@ -35,4 +35,9 @@ public class Option implements Serializable {
      */
     @TableField(value = "`value`")
     private String value;
+
+    /**
+     * 站点ID
+     */
+    private Long siteId;
 }

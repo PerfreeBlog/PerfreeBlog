@@ -1,8 +1,11 @@
 package com.perfree.service.option;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.perfree.controller.api.option.vo.OptionQueryReqVO;
 import com.perfree.model.Option;
 import com.perfree.controller.api.option.vo.OptionCreateOrUpdateReqVO;
+
+import java.util.List;
 
 /**
  * @description OptionService
@@ -21,5 +24,12 @@ public interface OptionService extends IService<Option> {
      * @param optionCreateOrUpdateReqVO optionCreateOrUpdateReqVO
      */
     void saveOrUpdateSetting(OptionCreateOrUpdateReqVO optionCreateOrUpdateReqVO);
+
+    /**
+     * 获取配置(英文逗号分隔)
+     * @param optionQueryReqVO optionQueryReqVO
+     * @return List<Option>
+     */
+    List<Option> getOptions(OptionQueryReqVO optionQueryReqVO);
 
 }

@@ -2,6 +2,7 @@ package com.perfree.cache;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.perfree.constants.OptionConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -20,19 +21,25 @@ public class OptionCacheService {
         optionCache = CacheBuilder.newBuilder().build();
     }
 
-    public void putOption(String key, String value) {
-        optionCache.put(key, value);
+    public void putOption(String key, Long siteId, String value) {
+        optionCache.put(key + OptionConstant.OPTION_CACHE_FLAG + siteId, value);
     }
 
-    public String getOptionValue(String key) {
+    public String getOptionValue(String key, Long siteId) {
         if (StringUtils.isBlank(key)) {
             return null;
         }
-        return optionCache.getIfPresent(key);
+        if (null == siteId) {
+            siteId = -1L;
+        }
+        return optionCache.getIfPresent(key + OptionConstant.OPTION_CACHE_FLAG + siteId);
     }
 
-    public String getDefaultValue(String key, String defaultValue) {
-        String value = optionCache.getIfPresent(key);
+    public String getDefaultValue(String key, Long siteId , String defaultValue) {
+        if (null == siteId) {
+            siteId = -1L;
+        }
+        String value = optionCache.getIfPresent(key + OptionConstant.OPTION_CACHE_FLAG + siteId);
 
         if (StringUtils.isBlank(value)){
             return defaultValue;
@@ -40,8 +47,8 @@ public class OptionCacheService {
         return value;
     }
 
-    public void removeOption(String key) {
-        optionCache.invalidate(key);
+    public void removeOption(String key, Long siteId) {
+        optionCache.invalidate(key + OptionConstant.OPTION_CACHE_FLAG + siteId);
     }
 
     public List<String> getAllOption() {

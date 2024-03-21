@@ -5,6 +5,7 @@ import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.cache.OptionCacheService;
+import com.perfree.commons.MultipleSiteUtil;
 import com.perfree.commons.SpringBeanUtils;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,7 @@ public class OptionDirective extends BaseDirective {
         if (this.exprList.length() >= 2){
             defaultValue = getParam(1, scope).toString();
         }
-        String result = optionCacheService.getDefaultValue(getParam(0, scope).toString(), defaultValue);
+        String result = optionCacheService.getDefaultValue(getParam(0, scope).toString(), MultipleSiteUtil.currentSite(), defaultValue);
         write(writer, StringUtils.isBlank(result) ? "" : result);
     }
 
