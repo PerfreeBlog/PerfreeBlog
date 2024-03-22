@@ -1,10 +1,12 @@
-let form, element, layer,$;
-layui.use(['layer', 'form', 'element', 'jquery'], function () {
+let form, element;
+layui.use(['form', 'element'], function () {
     form = layui.form;
     element = layui.element;
-    layer = layui.layer;
-    $ = layui.jquery;
     loadSiteList();
+    let pid = new URL(window.location.href).searchParams.get('pid');
+    if (pid !== "-1") {
+        $("#siteIdBox").hide();
+    }
     // 表单验证
     form.verify({});
 
@@ -15,28 +17,28 @@ layui.use(['layer', 'form', 'element', 'jquery'], function () {
                 siteId: null
             })
         }else {
-            $("#siteIdBox").show();
+            if (pid === "-1") {
+                $("#siteIdBox").show();
+            }
         }
     });
     // 表单提交
     form.on('submit(addForm)', function (data) {
-        $.ajax({
-            type: "POST",
-            url: "/admin/menu/add",
-            contentType: "application/json",
-            data: JSON.stringify(data.field),
-            success: function (data) {
-                if (data.code === 200) {
-                    parent.queryTable();
-                    parent.parent.toast.success({message: '添加成功',position: 'topCenter'});
-                    const index = parent.layer.getFrameIndex(window.name);
-                    parent.layer.close(index);
-                } else {
-                    parent.parent.toast.error({message: data.msg,position: 'topCenter'});
-                }
-            },
-            error: function (data) {
-                parent.parent.toast.error({message: "添加失败",position: 'topCenter'});
+        if (pid !== "-1") {
+            data.field.pid = pid;
+        }
+        if (data.field.type === "0" && !data.field.siteId && pid === "-1") {
+            common.toast.error({message: "请选择所属站点!",position: 'topCenter'});
+            return false;
+        }
+        request.post("/api/menu/add", JSON.stringify(data.field)).then(res => {
+            if (res.code === 200) {
+                common.activePage.queryTable();
+                common.toast.success({message: '添加成功',position: 'topCenter'});
+                const index = common.layer.getFrameIndex(window.name);
+                common.layer.close(index);
+            } else {
+                common.toast.error({message: res.msg,position: 'topCenter'});
             }
         });
         return false;
@@ -44,8 +46,8 @@ layui.use(['layer', 'form', 'element', 'jquery'], function () {
 
     // 取消
     $(".p-cancel-btn").click(function () {
-        const index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
+        const index = common.layer.getFrameIndex(window.name);
+        common.layer.close(index);
     });
 });
 

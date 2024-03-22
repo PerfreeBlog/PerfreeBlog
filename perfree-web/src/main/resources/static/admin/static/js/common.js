@@ -53,7 +53,10 @@
                 return father[parentId] === rootId;
             });
             return treeData !== '' ? treeData : data;
-        }
+        },
+        layer: window.top.layer,
+        toast: window.top.toast,
+        activePage: window.top.document.getElementById(window.top.activeFrameId ) ?  window.top.document.getElementById(window.top.activeFrameId ).contentWindow : null
     }
     window.common = new common();
 })(window.jQuery);

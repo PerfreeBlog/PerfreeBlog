@@ -2,17 +2,23 @@ package com.perfree.service.menu;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.constants.SystemConstants;
+import com.perfree.controller.api.menu.vo.MenuCreateReqVO;
 import com.perfree.controller.api.menu.vo.MenuListReqVO;
+import com.perfree.controller.api.menu.vo.MenuRespVO;
 import com.perfree.convert.MenuConvert;
+import com.perfree.enums.ErrorCode;
+import com.perfree.exception.ServiceException;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -38,6 +44,25 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>  implements M
     @Override
     public List<Menu> menuList(MenuListReqVO menuListReqVO) {
         return menuMapper.menuList(menuListReqVO);
+    }
+
+    @Override
+    @Transactional
+    public Menu createMenu(MenuCreateReqVO menuCreateReqVO) {
+        Menu menu = MenuConvert.INSTANCE.convertByCreateVO(menuCreateReqVO);
+        if (StringUtils.isBlank(menu.getPid())) {
+            menu.setPid(SystemConstants.ROOT_MENU_CODE);
+        } else {
+            if (!menu.getType().equals(SystemConstants.MENU_TYPE_ADMIN)){
+                Menu parent = menuMapper.selectById(menu.getPid());
+                menu.setSiteId(parent.getSiteId());
+            }
+        }
+        if (!menu.getType().equals(SystemConstants.MENU_TYPE_ADMIN) && null == menu.getSiteId()) {
+            throw new ServiceException(ErrorCode.MENU_MUST_SITE);
+        }
+        menuMapper.insert(menu);
+        return menu;
     }
 
     /**

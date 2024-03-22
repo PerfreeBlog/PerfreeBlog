@@ -1,10 +1,7 @@
-var table, form, flow,$,toast;
-layui.use(['table', 'layer', 'form','flow', 'jquery','toast'], function () {
+let table, form;
+layui.use(['table', 'form'], function () {
     table = layui.table;
     form = layui.form;
-    flow = layui.flow;
-    $ = layui.jquery;
-    toast = layui.toast;
     initPage();
 });
 
@@ -20,7 +17,7 @@ function initPage() {
 
     // 添加
     $("#addBtn").click(function () {
-        layer.open({
+        common.layer.open({
             title: "添加站点",
             type: 2,
             area: common.layerArea($("html")[0].clientWidth, 500, 400),
@@ -34,7 +31,7 @@ function initPage() {
     $("#batchDeleteBtn").click(function () {
         const checkStatus = table.checkStatus('tableBox'), data = checkStatus.data;
         if (data.length <= 0) {
-            parent.toast.warning({message: "至少选择一条数据",position: 'topCenter'});
+            common.toast.warning({message: "至少选择一条数据",position: 'topCenter'});
         } else {
             let ids = "";
             data.forEach(res => {
@@ -131,7 +128,7 @@ function queryTable() {
  * @param id
  */
 function editData(id) {
-    layer.open({
+    common.layer.open({
         title: "编辑站点",
         type: 2,
         area: common.layerArea($("html")[0].clientWidth, 500, 400),
@@ -146,16 +143,16 @@ function editData(id) {
  * @param ids
  */
 function deleteData(ids) {
-    layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
+    common.layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
         request.delete("/api/site/batchDel?ids=" + ids).then(res => {
             if (res.code === 200) {
                 queryTable();
-                parent.toast.success({message: "删除成功",position: 'topCenter'});
+                common.toast.success({message: "删除成功",position: 'topCenter'});
             } else {
-                parent.toast.error({message: data.msg,position: 'topCenter'});
+                common.toast.error({message: data.msg,position: 'topCenter'});
             }
         })
-        layer.close(index);
+        common.layer.close(index);
     });
 }
 
@@ -168,9 +165,9 @@ function changeStatus(id, status) {
     request.put("/api/site/updateStatus", JSON.stringify({id: id, status: status})).then(res => {
         if (res.code === 200) {
             queryTable();
-            parent.toast.success({message: "修改成功",position: 'topCenter'});
+            common.toast.success({message: "修改成功",position: 'topCenter'});
         } else {
-            parent.toast.error({message: data.msg,position: 'topCenter'});
+            common.toast.error({message: data.msg,position: 'topCenter'});
         }
     })
 }

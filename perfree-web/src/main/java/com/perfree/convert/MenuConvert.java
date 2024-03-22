@@ -1,5 +1,6 @@
 package com.perfree.convert;
 
+import com.perfree.controller.api.menu.vo.MenuCreateReqVO;
 import com.perfree.controller.api.menu.vo.MenuRespVO;
 import com.perfree.model.Menu;
 import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
@@ -15,5 +16,9 @@ public interface MenuConvert {
     List<MenuTreeRespVO> convertToMenuTreeRespVOList(List<Menu> menuList);
 
     List<MenuRespVO> convertListRespVO(List<Menu> menuList);
+
+    Menu convertByCreateVO(MenuCreateReqVO menuCreateReqVO);
+
+    MenuRespVO convertRespVO(Menu menu);
 
 }

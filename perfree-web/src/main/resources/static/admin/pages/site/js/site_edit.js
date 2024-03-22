@@ -1,13 +1,11 @@
-let form, element, layer, $;
+let form, element;
 initPage();
 
 function initPage() {
     let id = new URL(window.location.href).searchParams.get('id');
-    layui.use(['layer', 'form', 'element', 'jquery'], function () {
+    layui.use(['form', 'element'], function () {
         form = layui.form;
         element = layui.element;
-        layer = layui.layer;
-        $ = layui.jquery;
         getSite(id);
         formEvent();
         initEvent();
@@ -41,12 +39,12 @@ function formEvent() {
     form.on('submit(editForm)', function (data) {
         request.post("/api/site/update", JSON.stringify(data.field)).then(res => {
             if (res.code === 200) {
-                parent.queryTable();
-                parent.parent.toast.success({message: '更新成功',position: 'topCenter'});
-                const index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
+                common.activePage.queryTable();
+                common.toast.success({message: '更新成功',position: 'topCenter'});
+                const index = common.layer.getFrameIndex(window.name);
+                common.layer.close(index);
             } else {
-                parent.parent.toast.error({message: res.msg,position: 'topCenter'});
+                common.toast.error({message: res.msg,position: 'topCenter'});
             }
         });
         return false;
@@ -59,8 +57,8 @@ function formEvent() {
 function initEvent() {
     // 取消
     $(".p-cancel-btn").click(function () {
-        const index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
+        const index = common.layer.getFrameIndex(window.name);
+        common.layer.close(index);
     });
 }
 

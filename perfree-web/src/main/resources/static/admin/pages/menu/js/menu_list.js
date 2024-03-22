@@ -161,7 +161,6 @@ function loadSiteList() {
         });
         $("#siteId").html(html);
         form.render('select');
-        console.log(sites)
         initPage();
     });
 }
@@ -217,7 +216,7 @@ function add(pid = -1) {
     if (pid !== -1) {
         title = "添加子菜单";
     }
-    parent.layer.open({
+    common.layer.open({
         title: title,
         type: 2,
         area: common.layerArea($("html")[0].clientWidth, 500, 600),

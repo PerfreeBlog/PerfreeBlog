@@ -1,3 +1,4 @@
+var activeFrameId;
 layui.define(['table', 'jquery', 'element'], function (exports) {
 	"use strict";
 
@@ -147,6 +148,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	}
 
 	pearMenu.prototype.selectItem = function (pearId) {
+		activeFrameId = pearId;
 		if (this.option.control != false) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-side-scroll ").find("ul").css({
 				display: "none"

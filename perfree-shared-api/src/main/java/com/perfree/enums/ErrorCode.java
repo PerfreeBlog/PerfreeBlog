@@ -18,6 +18,7 @@ public enum ErrorCode {
     CHECK_UPDATE_ERROR(100000007,"检查更新失败!"),
 
     SITE_FLAG_EXIST(100000008,"标识已存在!"),
+    MENU_MUST_SITE(100000009,"请选择所属站点!"),
     ;
 
     private final Integer code;

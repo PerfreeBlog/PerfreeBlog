@@ -1,12 +1,10 @@
-let form, element, layer,$;
+let form, element;
 initPage();
 
 function initPage() {
-    layui.use(['layer', 'form', 'element', 'jquery'], function () {
+    layui.use(['form', 'element'], function () {
         form = layui.form;
         element = layui.element;
-        layer = layui.layer;
-        $ = layui.jquery;
         formEvent();
         initEvent();
     });
@@ -22,15 +20,14 @@ function formEvent() {
     form.verify({});
     // 表单提交
     form.on('submit(addForm)', function (data) {
-        console.log(data.field);
         request.post("/api/site/add", JSON.stringify(data.field)).then(res => {
             if (res.code === 200) {
-                parent.queryTable();
-                parent.parent.toast.success({message: '添加成功',position: 'topCenter'});
-                const index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
+                common.activePage.queryTable();
+                common.toast.success({message: '添加成功',position: 'topCenter'});
+                const index = common.layer.getFrameIndex(window.name);
+                common.layer.close(index);
             } else {
-                parent.parent.toast.error({message: res.msg,position: 'topCenter'});
+                common.toast.error({message: res.msg,position: 'topCenter'});
             }
         })
         return false;
@@ -43,7 +40,7 @@ function formEvent() {
 function initEvent() {
     // 取消
     $(".p-cancel-btn").click(function () {
-        const index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
+        const index = common.layer.getFrameIndex(window.name);
+        common.layer.close(index);
     });
 }

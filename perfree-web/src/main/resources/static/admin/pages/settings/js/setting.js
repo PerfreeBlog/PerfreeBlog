@@ -1,11 +1,9 @@
-let layer,form,element,toast;
+let form,element;
 var ws = null;
 let currSiteId;
-layui.use(['layer','form','element','toast'], function() {
-    layer = layui.layer;
+layui.use(['form','element'], function() {
     form = layui.form;
     element = layui.element;
-    toast = layui.toast;
     initGlobalSetting();
     initSiteList();
     initEvent();
@@ -22,15 +20,12 @@ layui.use(['layer','form','element','toast'], function() {
         save(form.val("globalForm"));
         return false;
     });
-    element.on('tab(siteSettingTab)', function() {
-
-    });
 
     element.on('tab(settingTab)', function(){
         if (this.getAttribute('lay-id') === "6") {
-            let loadIndex = layer.load("正在检查更新...");
+            let loadIndex = common.layer.load("正在检查更新...");
             request.get("/api/setting/checkUpdate").then(res => {
-                layer.close(loadIndex);
+                common.layer.close(loadIndex);
                 if (res.code === 200) {
                     if (res.data) {
                         $("#updateTitle").text(res.data.name);
@@ -68,7 +63,7 @@ function initEvent() {
 }
 
 function initGlobalSetting() {
-    let loadIndex = layer.load("加载中...");
+    let loadIndex = common.layer.load("加载中...");
     let keys = Object.keys(form.val('globalForm'));
     request.post("/api/option/getOptions", JSON.stringify({keys, siteId: currSiteId})).then(res => {
         if (res.code === 200) {
@@ -98,13 +93,13 @@ function initGlobalSetting() {
                     [item.key]: item.value
                 });
             })
-            layer.close(loadIndex);
+            common.layer.close(loadIndex);
         }
     })
 }
 
 function initSiteSetting() {
-    let loadIndex = layer.load("加载中...");
+    let loadIndex = common.layer.load("加载中...");
     let keys = Object.keys(form.val('siteForm'));
     request.post("/api/option/getOptions", JSON.stringify({keys, siteId: currSiteId})).then(res => {
         if (res.code === 200) {
@@ -128,7 +123,7 @@ function initSiteSetting() {
                     [item.key]: item.value
                 });
             })
-            layer.close(loadIndex);
+            common.layer.close(loadIndex);
         }
     })
 }
@@ -163,21 +158,21 @@ function save(data) {
     }
     request.post("/api/setting/saveOrUpdateSetting", JSON.stringify({options, siteId: currSiteId})).then(res => {
         if (res.code === 200){
-            parent.toast.success({message: "保存成功",position: 'topCenter'});
+            common.toast.success({message: "保存成功",position: 'topCenter'});
         } else {
-            parent.toast.error({message: res.msg,position: 'topCenter'});
+            common.toast.error({message: res.msg,position: 'topCenter'});
         }
     })
 }
 
 function sendTestMail(){
-    layer.prompt({title: '请输入收件人邮箱', formType: 3}, function(mail, index){
-        layer.close(index);
+    common.layer.prompt({title: '请输入收件人邮箱', formType: 3}, function(mail, index){
+        common.layer.close(index);
         $.post("/admin/setting/testMail",{mail: mail},function(data,status){
             if (data.code === 200) {
-                parent.toast.success({message: "发送成功",position: 'topCenter'});
+                common.toast.success({message: "发送成功",position: 'topCenter'});
             } else {
-                parent.toast.error({message: data.msg,position: 'topCenter'});
+                common.toast.error({message: data.msg,position: 'topCenter'});
             }
         });
     });
