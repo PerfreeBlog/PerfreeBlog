@@ -4,8 +4,20 @@ layui.use(['layer', 'form', 'element', 'jquery'], function () {
     element = layui.element;
     layer = layui.layer;
     $ = layui.jquery;
+    loadSiteList();
     // 表单验证
     form.verify({});
+
+    form.on('select(type)', function (data) {
+        if (data.value === "1") {
+            $("#siteIdBox").hide();
+            form.val("addForm", {
+                siteId: null
+            })
+        }else {
+            $("#siteIdBox").show();
+        }
+    });
     // 表单提交
     form.on('submit(addForm)', function (data) {
         $.ajax({
@@ -37,3 +49,16 @@ layui.use(['layer', 'form', 'element', 'jquery'], function () {
     });
 });
 
+/**
+ * 加载站点列表
+ */
+function loadSiteList() {
+    request.get("/api/site/list").then(res => {
+        let html = '<option value="">请选择</option>';
+        res.data.forEach(item => {
+            html += ' <option value="' + item.id + '">' + item.name + '</option>';
+        });
+        $("#siteId").html(html);
+        form.render('select');
+    });
+}

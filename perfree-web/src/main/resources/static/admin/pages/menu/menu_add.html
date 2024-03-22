@@ -17,7 +17,20 @@
                     <div class="layui-input-inline"  style="display: none;">
                         <select lay-verify="" type="hidden"></select>
                     </div>
-                    <input type="hidden" name="pid" value="#(pid)">
+                    <input type="hidden" name="pid">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">
+                            <span class="p-form-required">*</span>菜单分类:
+                        </label>
+                        <div class="layui-input-block">
+                            <select name="type" id="type" lay-filter="type" required lay-verify="required">
+                                <option value="1">后台</option>
+                                <option value="0" selected>前台</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="layui-form-item">
                         <label class="layui-form-label">
                             <span class="p-form-required">*</span>菜单名:
@@ -27,6 +40,8 @@
                                    autocomplete="off" class="layui-input">
                         </div>
                     </div>
+
+
                     <div class="layui-form-item">
                         <label class="layui-form-label">
                             <span class="p-form-required">*</span>菜单链接:
@@ -34,6 +49,17 @@
                         <div class="layui-input-block">
                             <input type="text" name="url" required lay-verify="required" placeholder="请输入菜单链接"
                                    autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item" id="siteIdBox">
+                        <label class="layui-form-label">
+                            <span class="p-form-required">*</span>所属站点:
+                        </label>
+                        <div class="layui-input-block">
+                            <select name="siteId" id="siteId">
+                            </select>
                         </div>
                     </div>
 
@@ -89,7 +115,9 @@
             </div>
         </form>
 
-        <script src="/static/public/libs/layui-v2.5.6/layui/layui.js"></script>
+        <script src="/static/public/libs/jquery/jquery.min.js"></script>
+        <script src="/static/public/libs/layui/layui.js"></script>
+        <script src="/static/public/js/request.js?v=#(version)"></script>
         <script src="/static/admin/static/component/pear/pear.js"></script>
         <script src="/static/admin/pages/menu/js/menu_add.js?v=#(version)"></script>
     </body>

@@ -217,10 +217,10 @@ function add(pid = -1) {
     if (pid !== -1) {
         title = "添加子菜单";
     }
-    layer.open({
+    parent.layer.open({
         title: title,
         type: 2,
-        area: common.layerArea($("html")[0].clientWidth, 500, 400),
+        area: common.layerArea($("html")[0].clientWidth, 500, 600),
         shadeClose: true,
         anim: 1,
         content: '/admin/menu/addPage?pid=' + pid
