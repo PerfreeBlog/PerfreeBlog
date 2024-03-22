@@ -6,6 +6,7 @@ import com.perfree.controller.api.site.vo.SiteRespVO;
 import com.perfree.controller.api.site.vo.SiteUpdateReqVO;
 import com.perfree.controller.api.site.vo.SiteUpdateStatusReqVO;
 import com.perfree.model.Site;
+import com.perfree.shared.api.site.dto.SiteDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -26,5 +27,9 @@ public interface SiteConvert {
     Site convertUpdateStatusReqVO(SiteUpdateStatusReqVO siteUpdateStatusReqVO);
 
     List<SiteRespVO> convertRespVOList(List<Site> list);
+
+    SiteDTO convertDTO(Site site);
+
+    List<SiteRespVO> convertRespVOListByDTO(List<SiteDTO> allSite);
 
 }

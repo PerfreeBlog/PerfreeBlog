@@ -1,5 +1,6 @@
 var table, treeTable, layPage, form,$,toast;
 let pageIndex = 1, pageSize = 20;
+let sites = {};
 layui.use(['table', 'treeTable', 'laypage', 'form', 'jquery','toast'], function () {
     table = layui.table;
     treeTable = layui.treeTable;
@@ -7,7 +8,18 @@ layui.use(['table', 'treeTable', 'laypage', 'form', 'jquery','toast'], function 
     form = layui.form;
     $ = layui.jquery;
     toast = layui.toast;
-    initPage();
+
+    form.on('select(type)', function (data) {
+        if (data.value === "1") {
+            $("#siteIdBox").hide();
+            form.val("searchForm", {
+                siteId: null
+            })
+        }else {
+            $("#siteIdBox").show();
+        }
+    });
+    loadSiteList();
 });
 
 
@@ -35,53 +47,49 @@ function initPage() {
 function queryTable() {
     treeTable.render({
         elem: '#tableBox',
-        url: '/admin/menu/list',
+        url: '/api/menu/queryList',
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         contentType: 'application/json',
         title: '菜单列表',
         totalRow: false,
         where: {
-            pageSize: pageSize,
-            pageIndex: pageIndex,
-            form: {
-                name: $("#name").val()
-            }
+            name: $("#name").val(),
+            type: $("#type").val(),
+            siteId: $("#siteId").val()
         },
         tree: {
-            iconIndex: 1,
-            isPidData: false,
-            idName: 'id',
-            childName: 'childMenu'
+            view: {
+                dblClickExpand: true
+            },
+            customName: {
+                children: 'children',
+                id: 'id',
+                pid: 'pid',
+                icon: 'other'
+            }
         },
         parseData: function (res) {
-            layPage.render({
-                elem: 'tablePage',
-                limit: pageSize,
-                count: res.total,
-                curr: res.pageIndex,
-                layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
-                jump: function (obj, first) {
-                    pageIndex = obj.curr;
-                    pageSize = obj.limit;
-                    //首次不执行
-                    if (!first) {
-                        queryTable();
-                    }
-                }
-            });
-            $("#tablePage").hide();
-            return {
-                "code": res.code === 200 ? 0 : 1,
-                "msg": res.msg,
-                "count": res.total,
-                "data": res.data
-            };
+            if (res.code !== 200) {
+                parent.toast.error({message: res.msg,position: 'topCenter'});
+                return;
+            }
+            let data = common.handleTree(res.data, "id", "pid",'children', '-1')
+            return{
+                "code": res.code,
+                "data": data
+            }
         },
         cols: [[
-            {field: 'id', title: 'ID', width: 80},
             {field: 'name', minWidth: 160,title: '菜单名'},
+            {field: 'type', minWidth: 100,title: '菜单分类', templet: "<div>{{d.type === 1 ? '后台' : '前台'}}</div>"},
             {field: 'url', minWidth: 200,title: '菜单链接'},
+            {field: 'siteId', minWidth: 120,title: '所属站点', hide: $("#type").val() === "1" ,templet: function (d) {
+                if (d.siteId) {
+                    return sites[d.siteId].name;
+                }
+                return "";
+            }},
             {
                 field: 'icon',
                 align: 'center',
@@ -105,13 +113,13 @@ function queryTable() {
             {
                 field: 'createTime',
                 title: '创建时间',
-                minWidth: 150,
+                minWidth: 180,
                 templet: "<span>{{d.createTime ==null?'':layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
                 field: 'updateTime',
                 title: '更新时间',
-                minWidth: 150,
+                minWidth: 180,
                 templet: "<span>{{d.updateTime == null?'':layui.util.toDateString(d.updateTime, 'yyyy-MM-dd HH:mm:ss')}}</span>"
             },
             {
@@ -126,7 +134,7 @@ function queryTable() {
                 }
             },
         ]],
-        page: true,
+        page: false,
         response: {statusCode: 200},
         done: function () {
             $("#tablePage").show();
@@ -139,6 +147,25 @@ function queryTable() {
         changeStatus(id, status);
     });
 }
+
+/**
+ * 加载站点列表
+ */
+function loadSiteList() {
+    sites = {};
+    request.get("/api/site/list").then(res => {
+        let html = '<option value="">请选择</option>';
+        res.data.forEach(item => {
+            html += ' <option value="' + item.id + '">' + item.name + '</option>';
+            sites[item.id] = item;
+        });
+        $("#siteId").html(html);
+        form.render('select');
+        console.log(sites)
+        initPage();
+    });
+}
+
 
 /**
  * 编辑
@@ -196,7 +223,7 @@ function add(pid = -1) {
         area: common.layerArea($("html")[0].clientWidth, 500, 400),
         shadeClose: true,
         anim: 1,
-        content: '/admin/menu/addPage/' + pid
+        content: '/admin/menu/addPage?pid=' + pid
     });
 }
 

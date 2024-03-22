@@ -1,6 +1,7 @@
 package com.perfree.service.menu;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.perfree.controller.api.menu.vo.MenuListReqVO;
 import com.perfree.model.Menu;
 import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
 
@@ -20,4 +21,11 @@ public interface MenuService extends IService<Menu> {
      * @return List<MenuTreeRespVO>
      */
     List<MenuTreeRespVO> getMenuByUserIdAndType(Long userId, int type);
+
+    /**
+     * 获取菜单列表
+     * @param menuListReqVO menuListReqVO
+     * @return List<Menu>
+     */
+    List<Menu> menuList(MenuListReqVO menuListReqVO);
 }

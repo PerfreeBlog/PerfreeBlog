@@ -40,7 +40,7 @@ public class SiteController extends BaseApiController {
     @GetMapping("/list")
     @Operation(summary = "获取所有站点")
     public CommonResult<List<SiteRespVO>> list() {
-        return CommonResult.success(SiteConvert.INSTANCE.convertRespVOList(siteService.list()));
+        return CommonResult.success(siteService.getList());
     }
 
     @PostMapping("/add")

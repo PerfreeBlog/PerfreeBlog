@@ -36,4 +36,13 @@ public class MenuBaseVO {
     @NotNull(message = "打开方式不允许为空")
     private Integer target;
 
+    @Schema(description = "站点ID")
+    private Long siteId;
+
+    @Schema(description = "标识")
+    private String flag;
+
+    @Schema(description = "插件ID")
+    private Long pluginId;
+
 }

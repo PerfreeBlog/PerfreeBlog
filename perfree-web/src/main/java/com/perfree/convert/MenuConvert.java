@@ -1,5 +1,6 @@
 package com.perfree.convert;
 
+import com.perfree.controller.api.menu.vo.MenuRespVO;
 import com.perfree.model.Menu;
 import com.perfree.controller.api.menu.vo.MenuTreeRespVO;
 import org.mapstruct.Mapper;
@@ -12,5 +13,7 @@ public interface MenuConvert {
     MenuConvert INSTANCE = Mappers.getMapper(MenuConvert.class);
 
     List<MenuTreeRespVO> convertToMenuTreeRespVOList(List<Menu> menuList);
+
+    List<MenuRespVO> convertListRespVO(List<Menu> menuList);
 
 }

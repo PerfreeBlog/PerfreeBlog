@@ -2,9 +2,7 @@ package com.perfree.controller.view;
 
 import com.perfree.base.BaseController;
 import com.perfree.commons.Constants;
-import com.perfree.commons.DynamicDataSource;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/")
 public class AdminViewController extends BaseController {
-
-    @Value("${version}")
-    private String version;
-
     @GetMapping("/admin")
     @Operation(summary = "后台布局首页")
     public String adminIndex(Model model) {
@@ -69,4 +63,39 @@ public class AdminViewController extends BaseController {
     }
 
 
+    @GetMapping("/admin/user")
+    @Operation(summary = "用户管理")
+    public String user() {
+        return view("static/admin/pages/user/user_list.html");
+    }
+
+    @GetMapping("/admin/user/addPage")
+    @Operation(summary = "用户管理-添加")
+    public String addPage() {
+        return view("static/admin/pages/user/user_add.html");
+    }
+
+    @GetMapping("/user/editPage")
+    @Operation(summary = "用户管理-编辑")
+    public String editPage() {
+        return view("static/admin/pages/user/user_edit.html");
+    }
+
+    @GetMapping("/admin/menu")
+    @Operation(summary = "菜单管理")
+    public String menu() {
+        return view("static/admin/pages/menu/menu_list.html");
+    }
+
+    @GetMapping("/admin/menu/addPage")
+    @Operation(summary = "菜单管理-添加")
+    public String menuAddPage() {
+        return view("static/admin/pages/menu/menu_add.html");
+    }
+
+    @GetMapping("/admin/menu/editPage")
+    @Operation(summary = "菜单管理-修改")
+    public String menuEditPage() {
+        return view("static/admin/pages/menu/menu_edit.html");
+    }
 }

@@ -2,6 +2,7 @@ package com.perfree.service.menu;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.constants.SystemConstants;
+import com.perfree.controller.api.menu.vo.MenuListReqVO;
 import com.perfree.convert.MenuConvert;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.model.Menu;
@@ -32,6 +33,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu>  implements M
             buildChildMenu(menu, menuTreeListRespVOS);
         }
         return result;
+    }
+
+    @Override
+    public List<Menu> menuList(MenuListReqVO menuListReqVO) {
+        return menuMapper.menuList(menuListReqVO);
     }
 
     /**

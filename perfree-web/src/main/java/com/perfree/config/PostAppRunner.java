@@ -11,6 +11,7 @@ import com.perfree.commons.SpringBeanUtils;
 import com.perfree.directive.TemplateDirective;
 import com.perfree.enjoy.EnjoyConfig;
 import com.perfree.service.option.OptionService;
+import com.perfree.service.site.SiteService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +31,12 @@ public class PostAppRunner implements ApplicationRunner {
     private final static Logger LOGGER = LoggerFactory.getLogger(PostAppRunner.class);
     private final OptionService optionService;
 
-    public PostAppRunner(OptionService optionService) {
+    private final SiteService siteService;
+
+
+    public PostAppRunner(OptionService optionService,  SiteService siteService) {
         this.optionService = optionService;
+        this.siteService = siteService;
     }
 
     @Override
@@ -59,6 +64,7 @@ public class PostAppRunner implements ApplicationRunner {
         // Load options and put into memory
         if (DynamicDataSource.getDataSource() != null && DynamicDataSource.dataSourceIsInit) {
             optionService.initOptionCache();
+            siteService.initSiteCache();
         }
     }
 
