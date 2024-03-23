@@ -10,16 +10,21 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 @Mapper
-public interface MenuMapper extends BaseMapperX<Menu>{
+public interface MenuMapper extends BaseMapperX<Menu> {
 
     List<Menu> getMenuByUserIdAndType(@Param("userId") Long userId, @Param("type") int type);
 
-    default List<Menu> menuList(MenuListReqVO menuListReqVO){
+    default List<Menu> menuList(MenuListReqVO menuListReqVO) {
         return selectList(new LambdaQueryWrapper<Menu>()
                 .like(StringUtils.isNotBlank(menuListReqVO.getName()), Menu::getName, menuListReqVO.getName())
                 .eq(null != menuListReqVO.getType(), Menu::getType, menuListReqVO.getType())
                 .eq(null != menuListReqVO.getSiteId(), Menu::getSiteId, menuListReqVO.getSiteId())
                 .orderByAsc(Menu::getSeq));
+    }
+
+    default List<Menu> selectByPid(String pid) {
+        return selectList(new LambdaQueryWrapper<Menu>()
+                .eq(Menu::getPid, pid));
     }
 
 }

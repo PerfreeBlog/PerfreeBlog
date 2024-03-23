@@ -15,7 +15,6 @@ public class MenuBaseVO {
     private String name;
 
     @Schema(description = "菜单url", name = "url")
-    @NotBlank(message = "菜单链接不允许为空")
     @Length(max = 50, message = "菜单链接最多50个字符")
     private String url;
 

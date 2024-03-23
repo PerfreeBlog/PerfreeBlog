@@ -19,6 +19,7 @@ public enum ErrorCode {
 
     SITE_FLAG_EXIST(100000008,"标识已存在!"),
     MENU_MUST_SITE(100000009,"请选择所属站点!"),
+    MENU_EXIST_CHILD(100000010,"存在子菜单,无法删除!"),
     ;
 
     private final Integer code;

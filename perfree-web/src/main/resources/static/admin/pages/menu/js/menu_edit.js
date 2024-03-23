@@ -1,23 +1,12 @@
 let form, element;
-layui.use(['form', 'element'], function () {
+layui.use([ 'form', 'element'], function () {
     form = layui.form;
     element = layui.element;
     loadSiteList();
-    let pid = new URL(window.location.href).searchParams.get('pid');
-    let type = new URL(window.location.href).searchParams.get('type');
-    if (pid !== "-1") {
-        $("#siteIdBox").hide();
-    }
-    if (type !== "-1") {
-        form.val("addForm", {
-            type: type
-        });
-        $("#type").attr("disabled", "disabled");
-        form.render('select');
-    }
+    let id = new URL(window.location.href).searchParams.get('id');
+    getMenu(id);
     // 表单验证
     form.verify({});
-
     form.on('select(type)', function (data) {
         if (data.value === "1") {
             $("#siteIdBox").hide();
@@ -25,33 +14,25 @@ layui.use(['form', 'element'], function () {
                 siteId: null
             })
         }else {
-            if (pid === "-1") {
+            if ($("#pid").val() === "-1") {
                 $("#siteIdBox").show();
             }
         }
     });
     // 表单提交
-    form.on('submit(addForm)', function (data) {
-        if (pid !== "-1") {
-            data.field.pid = pid;
-        }
-        if (data.field.type === "0" && !data.field.siteId && pid === "-1") {
-            common.toast.error({message: "请选择所属站点!",position: 'topCenter'});
-            return false;
-        }
-        request.post("/api/menu/add", JSON.stringify(data.field)).then(res => {
+    form.on('submit(editForm)', function (data) {
+        request.put("/api/menu/update", JSON.stringify(data.field)).then(res => {
             if (res.code === 200) {
                 common.activePage.queryTable();
-                common.toast.success({message: '添加成功',position: 'topCenter'});
+                common.toast.success({message: '更新成功',position: 'topCenter'});
                 const index = common.layer.getFrameIndex(window.name);
                 common.layer.close(index);
             } else {
-                common.toast.error({message: res.msg,position: 'topCenter'});
+                common.toast.error({message: data.msg,position: 'topCenter'});
             }
         });
         return false;
     });
-
     // 取消
     $(".p-cancel-btn").click(function () {
         const index = common.layer.getFrameIndex(window.name);
@@ -70,5 +51,23 @@ function loadSiteList() {
         });
         $("#siteId").html(html);
         form.render('select');
+    });
+}
+
+/**
+ * 加载菜单数据
+ * @param id
+ */
+function getMenu(id) {
+    request.get("/api/menu/get?id=" + id).then(res => {
+       if (res.code === 200) {
+           form.val('editForm', res.data);
+
+           if (res.data.pid !== "-1") {
+               $("#siteIdBox").hide();
+           }
+       } else {
+           common.toast.error({message: "加载菜单数据失败!",position: 'topCenter'});
+       }
     });
 }

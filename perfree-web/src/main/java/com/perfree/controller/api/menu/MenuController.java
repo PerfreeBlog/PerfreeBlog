@@ -5,6 +5,7 @@ import com.perfree.commons.CommonResult;
 import com.perfree.controller.api.menu.vo.MenuCreateReqVO;
 import com.perfree.controller.api.menu.vo.MenuListReqVO;
 import com.perfree.controller.api.menu.vo.MenuRespVO;
+import com.perfree.controller.api.menu.vo.MenuUpdateReqVO;
 import com.perfree.convert.MenuConvert;
 import com.perfree.model.Menu;
 import com.perfree.service.menu.MenuService;
@@ -40,7 +41,19 @@ public class MenuController extends BaseApiController {
 
     @GetMapping("/get")
     @Operation(summary = "获取菜单")
-    public CommonResult<MenuRespVO> get(@RequestParam(value = "id") Integer id) {
+    public CommonResult<MenuRespVO> get(@RequestParam(value = "id") String id) {
         return CommonResult.success(MenuConvert.INSTANCE.convertRespVO(menuService.getById(id)));
+    }
+
+    @PutMapping("/update")
+    @Operation(summary = "菜单更新")
+    public CommonResult<MenuRespVO> update(@RequestBody @Valid MenuUpdateReqVO menuUpdateReqVO) {
+        return CommonResult.success(MenuConvert.INSTANCE.convertRespVO(menuService.updateMenu(menuUpdateReqVO)));
+    }
+
+    @DeleteMapping("/del")
+    @Operation(summary = "菜单删除")
+    public CommonResult<Boolean> del(@RequestParam(value = "id") String id) {
+        return CommonResult.success(menuService.delMenu(id));
     }
 }

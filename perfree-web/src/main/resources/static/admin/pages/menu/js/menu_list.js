@@ -126,7 +126,7 @@ function queryTable() {
                 field: 'id', title: '操作', width: 220,
                 templet: function (d) {
                     let html = "<div>"
-                    html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='add(\"" + d.id + "\")'>添加子菜单</a> " +
+                    html += "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='add(\"" + d.id + "\", \"" + d.type + "\")'>添加子菜单</a> " +
                         "<a class='pear-btn pear-btn-xs pear-btn-primary' onclick='editData(\"" + d.id + "\")'>编辑</a> " +
                         "<a class='pear-btn pear-btn-xs pear-btn-danger' onclick='deleteData(\"" + d.id + "\")'>删除</a>" +
                         "</div>";
@@ -171,49 +171,40 @@ function loadSiteList() {
  * @param id
  */
 function editData(id) {
-    layer.open({
+    common.layer.open({
         title: "编辑菜单",
         type: 2,
-        area: common.layerArea($("html")[0].clientWidth, 500, 400),
+        area: common.layerArea($("html")[0].clientWidth, 500, 600),
         shadeClose: true,
         anim: 1,
-        content: '/admin/menu/editPage/' + id
+        content: '/admin/menu/editPage?id=' + id
     });
 }
 
 /**
  *
- * @param ids
+ * @param id
  */
-function deleteData(ids) {
-    layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
-        $.ajax({
-            type: "POST",
-            url: "/admin/menu/del",
-            contentType: "application/json",
-            data: ids,
-            success: function (data) {
-                if (data.code === 200) {
-                    queryTable();
-                    parent.toast.success({message: "删除成功",position: 'topCenter'});
-                } else {
-                    parent.toast.error({message: data.msg,position: 'topCenter'});
-                }
-            },
-            error: function (data) {
-                parent.toast.error({message: "删除失败",position: 'topCenter'});
+function deleteData(id) {
+    common.layer.confirm('确定要删除吗?', {icon: 3, title: '提示'}, function (index) {
+        request.delete("/api/menu/del?id=" + id).then(res => {
+            if (res.code === 200) {
+                queryTable();
+                common.toast.success({message: "删除成功",position: 'topCenter'});
+            } else {
+                common.toast.error({message: res.msg,position: 'topCenter'});
             }
+            common.layer.close(index);
         });
-        layer.close(index);
     });
 }
 
 /**
  * 添加
  */
-function add(pid = -1) {
+function add(pid = "-1", type ="-1") {
     let title = "添加一级菜单";
-    if (pid !== -1) {
+    if (pid !== '-1') {
         title = "添加子菜单";
     }
     common.layer.open({
@@ -222,7 +213,7 @@ function add(pid = -1) {
         area: common.layerArea($("html")[0].clientWidth, 500, 600),
         shadeClose: true,
         anim: 1,
-        content: '/admin/menu/addPage?pid=' + pid
+        content: '/admin/menu/addPage?pid=' + pid + '&type=' + type
     });
 }
 
