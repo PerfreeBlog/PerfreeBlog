@@ -1,16 +1,9 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-aside width="200px">
-        <el-menu
-            active-text-color="var(--el-color-primary)"  background-color="var(--el-bg-color)" class="side-menu"
-            text-color="var(--el-text-color-primary)" :default-active="currRouter" router :collapse="menuIsCollapse" :collapse-transition="false"
-        >
-          <menu-tree :menu-list="menuList"></menu-tree>
-        </el-menu>
-      </el-aside>
+  <div class="common-layout fullMaxHeight">
+    <el-container class="fullMaxHeight">
+      <Sider :menu-is-collapse="menuIsCollapse"></Sider>
       <el-container>
-        <el-header>Header</el-header>
+        <Header @menu-collapse="handleMenuCollapse"></Header>
         <el-main>
           <RouterView></RouterView>
         </el-main>
@@ -21,24 +14,13 @@
 </template>
 
 <script setup>
-import MenuTree from "@/layout/components/MenuTree.vue";
-import {menus} from "@/data/menu.js";
+import Sider from '@/layout/components/Sider.vue'
+import Header from '@/layout/components/Header.vue'
 
-const router = useRouter();
-let currRouter = ref(router.currentRoute.value.path);
-const menuList = menus;
 let menuIsCollapse = ref(false)
-function handleOpen(key, keyPath) {
-  console.log(key, keyPath)
-}
-
-function handleClose(key, keyPath) {
-  console.log(key, keyPath)
+function handleMenuCollapse(value) {
+  menuIsCollapse.value = value
 }
 </script>
 
-<style scoped>
-.side-menu{
-  height: 100%;
-}
-</style>
+<style scoped></style>

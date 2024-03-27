@@ -1,18 +1,15 @@
 /* eslint-env node */
-require('@rushstack/eslint-patch/modern-module-resolution')
 
 module.exports = {
   root: true,
-  extends: [
-    'plugin:vue/vue3-essential',
-    'eslint:recommended',
-    '@vue/eslint-config-prettier/skip-formatting',
-    '.eslint-global-variables.json'
-  ],
+  extends: ['@zclzone', '.eslint-global-variables.json'],
   parserOptions: {
-    ecmaVersion: 'latest'
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   rules: {
-    'vue/multi-word-component-names': 'off'
-  }
+    'vue/multi-word-component-names': 'off',
+    'vue/valid-v-for': 'off',
+  },
 }
