@@ -1,13 +1,13 @@
 <template>
-  <div class="common-layout fullMaxHeight">
+  <div :class="classObject">
     <el-container class="fullMaxHeight">
       <Sider :menu-is-collapse="menuIsCollapse"></Sider>
       <el-container>
         <Header @menu-collapse="handleMenuCollapse"></Header>
-        <el-main>
+        <el-main class="p-main">
           <RouterView></RouterView>
         </el-main>
-        <el-footer>Footer</el-footer>
+        <el-footer @click="btn">Footer</el-footer>
       </el-container>
     </el-container>
   </div>
@@ -17,10 +17,20 @@
 import Sider from '@/layout/components/Sider.vue'
 import Header from '@/layout/components/Header.vue'
 
+document.getElementsByTagName('body')[0].setAttribute('class', 'theme-default')
+const classObject = ref({
+  commonLayout: true,
+  fullMaxHeight: true,
+})
+
 let menuIsCollapse = ref(false)
 function handleMenuCollapse(value) {
   menuIsCollapse.value = value
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.p-main {
+  background-color: var(--el-color-info-light-9);
+}
+</style>

@@ -33,16 +33,4 @@ const props = defineProps(['menuList'])
   margin-top: 6px;
   border-radius: 3px;
 }
-.el-menu-item.is-active {
-  background-color: var(--el-color-primary-light-9) !important;
-}
-.is-opened {
-  background-color: white;
-}
-.el-menu-item:hover {
-  background-color: var(--el-bg-color-page);
-}
-:deep() .el-sub-menu__title:hover {
-  background-color: var(--el-bg-color-page);
-}
 </style>
