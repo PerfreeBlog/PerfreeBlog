@@ -5,7 +5,15 @@
       <el-container>
         <Header @menu-collapse="handleMenuCollapse"></Header>
         <el-main class="p-main">
-          <RouterView></RouterView>
+          <RouterView v-slot="{ Component }">
+            <transition
+              name="fade"
+              mode="out-in"
+              enter-active-class="animate__animated animate__fadeIn"
+            >
+              <component :is="Component" />
+            </transition>
+          </RouterView>
         </el-main>
         <el-footer @click="btn">Footer</el-footer>
       </el-container>
@@ -32,5 +40,6 @@ function handleMenuCollapse(value) {
 <style scoped>
 .p-main {
   background-color: var(--el-color-info-light-9);
+  overflow-x: hidden;
 }
 </style>
