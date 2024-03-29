@@ -100,7 +100,7 @@ const changeHeaderColor = (val) => {
 <style scoped>
 .p-header {
   transition: all 0.3s;
-  box-shadow: 0 1px 4px #00152914;
+  border-bottom: solid 1px var(--el-border-color-lighter);
   z-index: 11;
   height: 60px;
   line-height: 60px;
