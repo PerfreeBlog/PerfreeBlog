@@ -1,6 +1,7 @@
 import './assets/main.css'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'animate.css/animate.min.css'
+import 'nprogress/nprogress.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'

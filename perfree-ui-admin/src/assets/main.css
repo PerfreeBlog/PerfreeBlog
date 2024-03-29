@@ -27,7 +27,8 @@ body,
 }
 
 .theme-light,
-.dark .theme-default {
+.dark .theme-default,
+.dark .theme-purple {
   --sider-text-color: var(--el-text-color-primary);
   --sider-bg-color: var(--el-bg-color);
   --sider-menu-hover-bg-color: var(--el-color-info-light-8);
@@ -41,7 +42,13 @@ body,
   --sider-menu-active-bg-color: var(--el-color-primary);
   --sider-menu-open-color: var(--sider-bg-color);
 }
-
+.theme-purple {
+  --sider-text-color: var(--el-color-info-light-9);
+  --sider-bg-color: #302b63;
+  --sider-menu-hover-bg-color: #17293b;
+  --sider-menu-active-bg-color: var(--el-color-primary);
+  --sider-menu-open-color: var(--sider-bg-color);
+}
 .el-popper .poper-menu {
   .el-menu {
     background-color: var(--sider-bg-color);
@@ -64,4 +71,11 @@ body,
       background-color: var(--sider-menu-open-color);
     }
   }
+}
+#nprogress .bar {
+  background: var(--el-color-primary) !important;
+}
+
+.themeSettingBox {
+  color: var(--el-text-color-primary);
 }

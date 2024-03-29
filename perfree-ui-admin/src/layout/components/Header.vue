@@ -1,5 +1,5 @@
 <template>
-  <el-header class="p-header">
+  <el-header :class="{ 'p-header': true, 'header-unified': headerUnified }" id="p-header">
     <div class="h-left">
       <div class="h-btn" v-if="!menuCollapse" @click="handleMenuCollapse">
         <font-awesome-icon icon="fa-solid fa-outdent" />
@@ -59,7 +59,7 @@
         </div>
       </el-tooltip>
     </div>
-    <ThemeSetting ref="themeSettingRef" />
+    <ThemeSetting ref="themeSettingRef" v-on:change-header-color="changeHeaderColor" />
   </el-header>
 </template>
 
@@ -70,6 +70,7 @@ const isDark = useDark()
 const target = ref(null)
 const { isFullscreen, toggle } = useFullscreen(target)
 const themeSettingRef = ref(null)
+let headerUnified = ref(false)
 // 全屏/退出全屏
 const toggleFullscreen = () => {
   toggle()
@@ -90,10 +91,15 @@ const openThemeSetting = () => {
     themeSettingRef.value.openThemeSetting()
   }
 }
+
+const changeHeaderColor = (val) => {
+  headerUnified.value = val
+}
 </script>
 
 <style scoped>
 .p-header {
+  transition: all 0.3s;
   box-shadow: 0 1px 4px #00152914;
   z-index: 11;
   height: 60px;
@@ -135,6 +141,16 @@ const openThemeSetting = () => {
   }
   .h-userName {
     padding-left: 8px;
+  }
+}
+.header-unified {
+  background-color: var(--sider-bg-color);
+  color: var(--sider-text-color);
+  :deep().el-dropdown {
+    color: var(--sider-text-color);
+  }
+  :deep().el-breadcrumb__inner {
+    color: var(--sider-text-color);
   }
 }
 </style>
