@@ -27,7 +27,7 @@
               </RouterView>
             </div>
           </el-main>
-          <el-footer @click="btn">Footer</el-footer>
+          <el-footer >Footer</el-footer>
         </el-container>
       </el-container>
     </div>

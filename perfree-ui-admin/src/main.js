@@ -10,13 +10,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons' //同一个图标的其他系列
 import { fab } from '@fortawesome/free-brands-svg-icons'
+import piniaPersist from 'pinia-plugin-persist'
+
 
 import App from './App.vue'
 import router from './router'
 
 const app = createApp(App)
-
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(piniaPersist)
+app.use(pinia)
 app.use(router)
 library.add(fas, far, fab)
 app.component('font-awesome-icon', FontAwesomeIcon)

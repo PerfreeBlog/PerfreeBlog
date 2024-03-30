@@ -6,11 +6,10 @@
     </div>
     <el-menu
       class="side-menu"
-      :default-active="currRouter"
       router
+      :default-active="currMenuIndex"
       :collapse="menuIsCollapse"
-      @open="handleOpen"
-      @close="handleClose"
+      @select="handleOpen"
       popper-class="poper-menu"
       :collapse-transition="false"
     >
@@ -22,19 +21,19 @@
 <script setup>
 import MenuTree from '@/layout/components/MenuTree.vue'
 import { menus } from '@/data/menu.js'
+import {useAppStore} from "@/stores/appStore.js";
 
 const props = defineProps(['menuIsCollapse'])
 const router = useRouter()
-let currRouter = ref(router.currentRoute.value.path)
+const appStore = useAppStore()
+let currMenuIndex = appStore.currMenu ? appStore.currMenu: '1'
 const menuList = menus
 
-function handleOpen(key, keyPath) {
-  console.log(key, keyPath)
+const handleOpen = (key, keyPath, item) => {
+  console.log(key, keyPath, item)
+  appStore.setCurrMenu(key)
 }
 
-function handleClose(key, keyPath) {
-  console.log(key, keyPath)
-}
 </script>
 
 <style lang="scss" scoped>

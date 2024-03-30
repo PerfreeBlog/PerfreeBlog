@@ -3,7 +3,7 @@
     v-model="themeSettingOpen"
     direction="rtl"
     size="350px"
-    z-index="99"
+    :z-index="99"
     class="themeSettingBox"
   >
     <template #header>
