@@ -9,9 +9,18 @@
             <div class="header-tab">
               <el-scrollbar>
                 <ul class="header-tab-ul">
-                  <li class="header-tab-item active">首页</li>
-                  <li class="header-tab-item">角色管理</li>
-                  <li class="header-tab-item">用户管理</li>
+                  <li class="header-tab-item active">
+                    <span class="tab-item-name">首页</span>
+                    <span class="tab-item-btn"> <font-awesome-icon icon="fa-solid fa-xmark " /></span>
+                  </li>
+                  <li class="header-tab-item">
+                    <span class="tab-item-name">角色管理</span>
+                    <span class="tab-item-btn"> <font-awesome-icon icon="fa-solid fa-xmark " /></span>
+                  </li>
+                  <li class="header-tab-item">
+                    <span class="tab-item-name">用户管理</span>
+                    <span class="tab-item-btn"> <font-awesome-icon icon="fa-solid fa-xmark " /></span>
+                  </li>
                 </ul>
               </el-scrollbar>
             </div>
@@ -78,7 +87,7 @@ function handleMenuCollapse(value) {
     align-items: center;
     .header-tab-item {
       padding-left: 15px;
-      padding-right: 15px;
+      padding-right: 8px;
       font-size: 14px;
       color: var(--el-text-color-regular);
       cursor: pointer;
@@ -87,6 +96,18 @@ function handleMenuCollapse(value) {
       line-height: 25px;
       margin-left: 10px;
       border-radius: 5px;
+      .tab-item-btn{
+        font-size: 14px;
+        margin-left: 6px;
+        font-size: 14px;
+        margin-left: 3px;
+        padding-left: 6px;
+        padding-right: 6px;
+        border-radius: 50%;
+      }
+      .tab-item-btn:hover{
+        background: antiquewhite;
+      }
     }
     .header-tab-item.active {
       background-color: var(--el-color-primary-light-9);
