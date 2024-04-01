@@ -21,19 +21,23 @@
 <script setup>
 import MenuTree from '@/layout/components/MenuTree.vue'
 import { menus } from '@/data/menu.js'
-import {useAppStore} from "@/stores/appStore.js";
+import { useAppStore } from '@/stores/appStore.js'
 
 const props = defineProps(['menuIsCollapse'])
-const router = useRouter()
+const route = useRoute()
 const appStore = useAppStore()
-let currMenuIndex = appStore.currMenu ? appStore.currMenu: '1'
+let currMenuIndex = ref(appStore.currMenu ? appStore.currMenu : '1')
 const menuList = menus
 
+watch(route, () => {
+  console.log(route.meta.id)
+  currMenuIndex.value = route.meta.id
+  appStore.setCurrMenu(route.meta.id)
+})
+
 const handleOpen = (key, keyPath, item) => {
-  console.log(key, keyPath, item)
   appStore.setCurrMenu(key)
 }
-
 </script>
 
 <style lang="scss" scoped>

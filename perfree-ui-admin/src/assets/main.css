@@ -8,6 +8,7 @@ body,
   --el-menu-sub-item-height: 42px;
   --el-menu-horizontal-height: 42px;
   background-color: var(--el-bg-color);
+  overflow-x: hidden;
 }
 
 .fullMaxHeight {

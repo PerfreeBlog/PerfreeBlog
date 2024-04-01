@@ -14,21 +14,33 @@ const router = createRouter({
           path: '/about',
           name: 'about',
           component: () => import('../views/AboutView.vue'),
+          meta: {
+            id: '2',
+          },
         },
         {
           path: '/about2',
           name: 'about2',
           component: () => import('../views/AboutView2.vue'),
+          meta: {
+            id: '4',
+          },
         },
         {
           path: '/about3',
           name: 'about3',
           component: () => import('../views/AboutView3.vue'),
+          meta: {
+            id: '5',
+          },
         },
         {
           path: '/home',
           name: 'home',
           component: () => import('../views/HomeView.vue'),
+          meta: {
+            id: '1',
+          },
         },
       ],
     },
