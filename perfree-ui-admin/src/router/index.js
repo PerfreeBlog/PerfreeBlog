@@ -15,7 +15,7 @@ const router = createRouter({
           name: 'about',
           component: () => import('../views/AboutView.vue'),
           meta: {
-            id: '2',
+            title: '关于',
           },
         },
         {
@@ -23,7 +23,7 @@ const router = createRouter({
           name: 'about2',
           component: () => import('../views/AboutView2.vue'),
           meta: {
-            id: '4',
+            title: '子菜单',
           },
         },
         {
@@ -31,7 +31,7 @@ const router = createRouter({
           name: 'about3',
           component: () => import('../views/AboutView3.vue'),
           meta: {
-            id: '5',
+            title: '子菜单2',
           },
         },
         {
@@ -39,7 +39,7 @@ const router = createRouter({
           name: 'home',
           component: () => import('../views/HomeView.vue'),
           meta: {
-            id: '1',
+            title: '首页',
           },
         },
       ],

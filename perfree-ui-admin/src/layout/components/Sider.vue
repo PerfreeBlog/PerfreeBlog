@@ -7,9 +7,8 @@
     <el-menu
       class="side-menu"
       router
-      :default-active="currMenuIndex"
+      :default-active="currRouter"
       :collapse="menuIsCollapse"
-      @select="handleOpen"
       popper-class="poper-menu"
       :collapse-transition="false"
     >
@@ -21,23 +20,16 @@
 <script setup>
 import MenuTree from '@/layout/components/MenuTree.vue'
 import { menus } from '@/data/menu.js'
-import { useAppStore } from '@/stores/appStore.js'
 
-const props = defineProps(['menuIsCollapse'])
+const router = useRouter()
 const route = useRoute()
-const appStore = useAppStore()
-let currMenuIndex = ref(appStore.currMenu ? appStore.currMenu : '1')
+const props = defineProps(['menuIsCollapse'])
+let currRouter = ref(router.currentRoute.value.path)
 const menuList = menus
 
 watch(route, () => {
-  console.log(route.meta.id)
-  currMenuIndex.value = route.meta.id
-  appStore.setCurrMenu(route.meta.id)
+  currRouter.value = route.fullPath
 })
-
-const handleOpen = (key, keyPath, item) => {
-  appStore.setCurrMenu(key)
-}
 </script>
 
 <style lang="scss" scoped>

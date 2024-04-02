@@ -1,23 +1,53 @@
-import {defineStore} from "pinia";
+import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore({
-    id: 'app',
-    state: () => ({
-        currMenu: "",
-    }),
-    getters: {
-        getCurrMenu() {
-            return this.currMenu;
-        },
+  id: 'app',
+  state: () => ({
+    navTabs: [],
+    // 主题
+    theme: null,
+    // 主题色
+    primaryColor: null,
+    // 顶栏通色
+    headerUnified: null,
+    // 是否开启tab栏
+    tabOpen: null,
+  }),
+  getters: {
+    getNavTabs() {
+      return this.navTabs
     },
-    actions: {
-        setCurrMenu(val) {
-            try {
-                this.currMenu = val;
-            } catch (error) {}
-        },
+    getTheme() {
+      return this.theme
     },
-    persist: {
-        enabled: true,//开启存储
-    }
+    getPrimaryColor() {
+      return this.primaryColor
+    },
+    getHeaderUnified() {
+      return this.headerUnified
+    },
+    getTabOpen() {
+      return this.tabOpen
+    },
+  },
+  actions: {
+    setNavTabs(val) {
+      this.navTabs = val
+    },
+    setTheme(val) {
+      this.theme = val
+    },
+    setPrimaryColor(val) {
+      this.primaryColor = val
+    },
+    setHeaderUnified(val) {
+      this.headerUnified = val
+    },
+    setTabOpen(val) {
+      this.tabOpen = val
+    },
+  },
+  persist: {
+    enabled: true, //开启本地存储
+  },
 })

@@ -12,7 +12,7 @@
       </el-sub-menu>
     </template>
     <template v-else>
-      <el-menu-item :index="menu.id" class="menu-item" :route="menu.path">
+      <el-menu-item :index="menu.path" class="menu-item" :route="menu.path">
         <el-icon v-if="menu.icon" class="menu-icon">
           <font-awesome-icon :icon="menu.icon" />
         </el-icon>

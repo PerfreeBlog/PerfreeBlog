@@ -12,7 +12,7 @@
     <template #default>
       <el-divider>侧边栏样式</el-divider>
       <div class="theme-style-box">
-        <el-radio-group v-model="themeStyle" @change="changeTheme">
+        <el-radio-group v-model="theme" @change="changeTheme">
           <div class="theme-style" @click="selectTheme('default')">
             <el-container class="theme-box t-default">
               <el-aside></el-aside>
@@ -50,7 +50,7 @@
       <div class="other-setting">
         <span class="label">主题颜色</span>
         <el-color-picker
-          v-model="color"
+          v-model="primaryColor"
           :show-alpha="false"
           :predefine="predefineColors"
           color-format="hex"
@@ -59,22 +59,36 @@
       </div>
       <div class="other-setting">
         <span class="label">顶栏通色</span>
-        <el-switch v-model="headerColor" @change="changeHeaderColor" />
+        <el-switch v-model="headerUnified" @change="changeHeaderColor" />
+      </div>
+
+      <div class="other-setting">
+        <span class="label">顶部tab栏</span>
+        <el-switch v-model="tabOpen" @change="changeTabOpen" />
       </div>
     </template>
     <template #footer>
-      <el-button @click="cancelThemeSetting">重置主题</el-button>
-      <el-button type="primary" class="saveTheme">保存配置</el-button>
+      <el-button @click="resetThemeSetting">重置主题</el-button>
+      <el-button type="primary" class="saveTheme" @click="saveTheme">保存配置</el-button>
     </template>
   </el-drawer>
 </template>
 
 <script setup>
 import { useCssVar } from '@vueuse/core'
+import { themeSettings } from '@/theme'
+import { useAppStore } from '@/stores/appStore'
 
+const appStore = useAppStore()
+let theme = ref(appStore.theme === null ? themeSettings.theme : appStore.theme)
+let primaryColor = ref(
+  appStore.primaryColor === null ? themeSettings.primaryColor : appStore.primaryColor,
+)
+let headerUnified = ref(
+  appStore.headerUnified === null ? themeSettings.headerUnified : appStore.headerUnified,
+)
+let tabOpen = ref(appStore.tabOpen === null ? themeSettings.tabOpen : appStore.tabOpen)
 let themeSettingOpen = ref(false)
-let themeStyle = ref('')
-let headerColor = ref(false)
 
 const el = ref(null)
 const color = useCssVar('--el-color-primary', el)
@@ -94,7 +108,7 @@ const predefineColors = ref([
   '#c71585',
 ])
 
-const emits = defineEmits(['changeHeaderColor'])
+const emits = defineEmits(['changeHeaderColor', 'changeTabOpen'])
 
 // 切换主题
 const changeTheme = (x) => {
@@ -107,13 +121,20 @@ const openThemeSetting = () => {
 }
 
 // 关闭主题设置
-const cancelThemeSetting = () => {
-  themeSettingOpen.value = false
+const resetThemeSetting = () => {
+  headerUnified.value = themeSettings.headerUnified
+  primaryColor.value = themeSettings.primaryColor
+  tabOpen.value = themeSettings.tabOpen
+  theme.value = themeSettings.theme
+  changeTheme(theme.value)
+  changePrimaryColor(primaryColor.value)
+  changeHeaderColor(headerUnified.value)
+  changeTabOpen(tabOpen.value)
 }
 
 // 选择主题
 const selectTheme = (val) => {
-  themeStyle.value = val
+  theme.value = val
   changeTheme(val)
 }
 
@@ -130,8 +151,20 @@ const changePrimaryColor = (val) => {
 
 // 改变顶栏通色
 const changeHeaderColor = (val) => {
-  console.log(val)
   emits('changeHeaderColor', val)
+}
+
+// 保存主题
+const saveTheme = () => {
+  appStore.setHeaderUnified(headerUnified.value)
+  appStore.setPrimaryColor(primaryColor.value)
+  appStore.setTabOpen(tabOpen.value)
+  appStore.setTheme(theme.value)
+}
+
+// 改变tab栏是否开启
+const changeTabOpen = () => {
+  emits('changeTabOpen', tabOpen.value)
 }
 
 // 暴露方法

@@ -4,9 +4,13 @@
       <el-container class="fullMaxHeight">
         <Sider :menu-is-collapse="menuIsCollapse"></Sider>
         <el-container>
-          <Header @menu-collapse="handleMenuCollapse"></Header>
+          <Header
+            @menu-collapse="handleMenuCollapse"
+            @changeTabOpen="changeTabOpen"
+            :class="{ headerBoxShadow: !tabOpen }"
+          ></Header>
           <el-main class="p-main">
-            <div class="header-tab">
+            <div class="header-tab" v-if="tabOpen">
               <span class="tab-left-btn" @click="scrollToLeft">
                 <font-awesome-icon icon="fa-solid fa-angle-left " />
               </span>
@@ -15,11 +19,15 @@
                   <li
                     :class="{ 'header-tab-item': true, active: tab.currActive }"
                     v-for="tab in tabs"
-                    :key="tab.id"
+                    :key="tab.path"
                     @click="clickTabHandle(tab)"
                   >
                     <span class="tab-item-name">{{ tab.name }}</span>
-                    <span class="tab-item-btn" v-if="tab.hasClose" @click="closeTabHandle(tab.id)">
+                    <span
+                      class="tab-item-btn"
+                      v-if="tab.hasClose"
+                      @click="closeTabHandle(tab.path, $event)"
+                    >
                       <font-awesome-icon icon="fa-solid fa-xmark " />
                     </span>
                   </li>
@@ -51,44 +59,71 @@
 <script setup>
 import Sider from '@/layout/components/Sider.vue'
 import Header from '@/layout/components/Header.vue'
+import { useAppStore } from '@/stores/appStore'
 import { ElConfigProvider } from 'element-plus'
+import { themeSettings } from '@/theme'
+import { useCssVar } from '@vueuse/core'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+
+const appStore = useAppStore()
+const tabOpen = ref(appStore.tabOpen === null ? themeSettings.tabOpen : appStore.tabOpen)
 const route = useRoute()
 const router = useRouter()
 const scrollbarRef = ref()
 const innerRef = ref()
+const el = ref(null)
+const color = useCssVar('--el-color-primary', el)
+const primaryColor3 = useCssVar('--el-color-primary-light-3', el)
+const primaryColor5 = useCssVar('--el-color-primary-light-5', el)
+const primaryColor7 = useCssVar('--el-color-primary-light-7', el)
+const primaryColor8 = useCssVar('--el-color-primary-light-8', el)
+const primaryColor9 = useCssVar('--el-color-primary-light-9', el)
+const primaryColor2 = useCssVar('--el-color-primary-dark-2', el)
 let locale = ref(zhCn)
 let menuIsCollapse = ref(false)
-let tabs = reactive([
-  { id: '1', name: '首页', hasClose: false, path: '/home', currActive: true },
-  { id: '2', name: '角色管理', hasClose: true, path: '/about', currActive: false },
-  { id: '4', name: '用户管理', hasClose: true, path: '/about2', currActive: false },
-  { id: '5', name: 'xx管理', hasClose: true, path: '/about3', currActive: false },
-])
+let tabs = reactive(
+  appStore.navTabs.length > 0
+    ? appStore.navTabs
+    : [{ name: '首页', hasClose: false, path: '/home', currActive: true }],
+)
 
 const classObject = ref({
   commonLayout: true,
   fullMaxHeight: true,
 })
 
-document.getElementsByTagName('body')[0].setAttribute('class', 'theme-default')
-
 watch(route, () => {
-  console.log(route.meta.id)
-  tabs.forEach((tab) => {
-    tab.currActive = tab.id === route.meta.id
-  })
+  let index = tabs.findIndex((tab) => tab.path === route.fullPath)
+  if (index < 0) {
+    tabs.forEach((tab) => {
+      tab.currActive = false
+    })
+    tabs.push({
+      name: route.meta.title,
+      hasClose: true,
+      path: route.fullPath,
+      currActive: true,
+    })
+  } else {
+    tabs.forEach((tab) => {
+      tab.currActive = tab.path === route.fullPath
+    })
+  }
+  appStore.setNavTabs(tabs)
 })
 
+// 处理菜单收缩
 const handleMenuCollapse = (value) => {
   menuIsCollapse.value = value
 }
 
+// tab栏向左滚动
 const scrollToLeft = () => {
   scrollbarRef.value.style.scrollBehavior = 'smooth'
   scrollbarRef.value.scrollLeft -= 200
 }
 
+// tab栏向右滚动
 const scrollToRight = () => {
   scrollbarRef.value.style.scrollBehavior = 'smooth'
   scrollbarRef.value.scrollLeft += 200
@@ -97,23 +132,49 @@ const scrollToRight = () => {
 // 点击tab
 const clickTabHandle = (val) => {
   tabs.forEach((tab) => {
-    tab.currActive = tab.id === val.id
+    tab.currActive = tab.path === val.path
   })
-  router.replace(val.path)
+  router.push(val.path)
 }
 
 // 关闭tab
-const closeTabHandle = (id) => {
-  let indexToDelete = tabs.findIndex((tab) => tab.id === id)
+const closeTabHandle = (path, event) => {
+  let indexToDelete = tabs.findIndex((tab) => tab.path === path)
   if (tabs[indexToDelete].currActive) {
     tabs.splice(indexToDelete, 1)
     indexToDelete = indexToDelete - 1
-    console.log(tabs[indexToDelete].path)
-    router.replace(tabs[indexToDelete].path)
+    router.push(tabs[indexToDelete].path)
   } else {
     tabs.splice(indexToDelete, 1)
   }
+  event.stopPropagation()
 }
+
+// 改变tab栏开启
+const changeTabOpen = (val) => {
+  tabOpen.value = val
+}
+
+// 初始化主题
+const initTheme = () => {
+  let theme = appStore.theme === null ? themeSettings.theme : appStore.theme
+  document.getElementsByTagName('body')[0].setAttribute('class', 'theme-' + theme)
+}
+
+// 初始化主题色
+const initPrimaryColor = () => {
+  let val = appStore.primaryColor === null ? themeSettings.primaryColor : appStore.primaryColor
+  color.value = val
+  primaryColor3.value = val + 80
+  primaryColor5.value = val
+  primaryColor7.value = val
+  primaryColor8.value = val
+  primaryColor9.value = val + 10
+  primaryColor2.value = val
+}
+
+initPrimaryColor()
+initTheme()
 </script>
 
 <style scoped>
@@ -125,6 +186,10 @@ const closeTabHandle = (id) => {
 }
 .p-page {
   padding: 15px;
+}
+.headerBoxShadow {
+  box-shadow: 0 1px 4px #00152914;
+  border-bottom: none !important;
 }
 .header-tab {
   height: 40px;

@@ -59,7 +59,11 @@
         </div>
       </el-tooltip>
     </div>
-    <ThemeSetting ref="themeSettingRef" v-on:change-header-color="changeHeaderColor" />
+    <ThemeSetting
+      ref="themeSettingRef"
+      v-on:change-header-color="changeHeaderColor"
+      v-on:change-tab-open="changeTabOpen"
+    />
   </el-header>
 </template>
 
@@ -76,7 +80,7 @@ const toggleFullscreen = () => {
   toggle()
 }
 
-const emits = defineEmits(['menuCollapse'])
+const emits = defineEmits(['menuCollapse', 'changeTabOpen'])
 let menuCollapse = ref(false)
 
 // 侧边栏收缩
@@ -92,8 +96,14 @@ const openThemeSetting = () => {
   }
 }
 
+// 顶栏通色改变
 const changeHeaderColor = (val) => {
   headerUnified.value = val
+}
+
+// 改变tab栏是否开启
+const changeTabOpen = (val) => {
+  emits('changeTabOpen', val)
 }
 </script>
 
