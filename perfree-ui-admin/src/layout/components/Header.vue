@@ -7,7 +7,7 @@
       <div class="h-btn" v-if="menuCollapse" @click="handleMenuCollapse">
         <font-awesome-icon icon="fa-solid fa-indent " />
       </div>
-      <div class="h-btn">
+      <div class="h-btn" @click="refreshRoute">
         <font-awesome-icon icon="fa-solid fa-arrows-rotate " />
       </div>
       <el-breadcrumb separator="/" class="h-breadcrumb">
@@ -72,6 +72,8 @@ import { useDark, useFullscreen } from '@vueuse/core'
 import ThemeSetting from './ThemeSetting.vue'
 const isDark = useDark()
 const target = ref(null)
+const route = useRoute()
+const router = useRouter()
 const { isFullscreen, toggle } = useFullscreen(target)
 const themeSettingRef = ref(null)
 let headerUnified = ref(false)
@@ -104,6 +106,12 @@ const changeHeaderColor = (val) => {
 // 改变tab栏是否开启
 const changeTabOpen = (val) => {
   emits('changeTabOpen', val)
+}
+
+// 刷新当前路由
+const refreshRoute = () => {
+  router.refreshRoute()
+  // router.replace({ path: route.fullPath })
 }
 </script>
 

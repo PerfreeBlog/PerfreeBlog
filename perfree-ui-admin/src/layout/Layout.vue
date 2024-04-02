@@ -44,7 +44,9 @@
                   mode="out-in"
                   enter-active-class="animate__animated animate__fadeIn"
                 >
-                  <component :is="Component" />
+                  <keep-alive>
+                    <component :is="Component" />
+                  </keep-alive>
                 </transition>
               </RouterView>
             </div>
