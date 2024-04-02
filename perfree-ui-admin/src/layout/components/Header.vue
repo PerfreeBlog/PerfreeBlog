@@ -1,5 +1,5 @@
 <template>
-  <el-header :class="{ 'p-header': true, 'header-unified': headerUnified }" id="p-header">
+  <el-header :class="{ 'p-header': true, 'header-unified': appStore.headerUnified }" id="p-header">
     <div class="h-left">
       <div class="h-btn" v-if="!menuCollapse" @click="handleMenuCollapse">
         <font-awesome-icon icon="fa-solid fa-outdent" />
@@ -11,8 +11,10 @@
         <font-awesome-icon icon="fa-solid fa-arrows-rotate " />
       </div>
       <el-breadcrumb separator="/" class="h-breadcrumb">
-        <el-breadcrumb-item>首页</el-breadcrumb-item>
-        <el-breadcrumb-item>关于</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item v-if="route.fullPath !== '/' && route.fullPath !== '/home'">
+          {{ route.meta.title }}
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="h-right">
@@ -59,30 +61,28 @@
         </div>
       </el-tooltip>
     </div>
-    <ThemeSetting
-      ref="themeSettingRef"
-      v-on:change-header-color="changeHeaderColor"
-      v-on:change-tab-open="changeTabOpen"
-    />
+    <ThemeSetting ref="themeSettingRef" />
   </el-header>
 </template>
 
 <script setup>
 import { useDark, useFullscreen } from '@vueuse/core'
 import ThemeSetting from './ThemeSetting.vue'
+import { useAppStore } from '@/stores/appStore'
+
+const route = useRoute()
+const appStore = useAppStore()
 const isDark = useDark()
 const target = ref(null)
-const route = useRoute()
-const router = useRouter()
 const { isFullscreen, toggle } = useFullscreen(target)
 const themeSettingRef = ref(null)
-let headerUnified = ref(false)
+
 // 全屏/退出全屏
 const toggleFullscreen = () => {
   toggle()
 }
 
-const emits = defineEmits(['menuCollapse', 'changeTabOpen'])
+const emits = defineEmits(['menuCollapse'])
 let menuCollapse = ref(false)
 
 // 侧边栏收缩
@@ -98,20 +98,14 @@ const openThemeSetting = () => {
   }
 }
 
-// 顶栏通色改变
-const changeHeaderColor = (val) => {
-  headerUnified.value = val
-}
-
-// 改变tab栏是否开启
-const changeTabOpen = (val) => {
-  emits('changeTabOpen', val)
-}
-
 // 刷新当前路由
 const refreshRoute = () => {
-  router.refreshRoute()
-  // router.replace({ path: route.fullPath })
+  appStore.setRefreshRouteflag(true)
+  nextTick(() => {
+    setTimeout(() => {
+      appStore.setRefreshRouteflag(false)
+    }, 200)
+  })
 }
 </script>
 

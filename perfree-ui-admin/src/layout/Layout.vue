@@ -6,11 +6,10 @@
         <el-container>
           <Header
             @menu-collapse="handleMenuCollapse"
-            @changeTabOpen="changeTabOpen"
-            :class="{ headerBoxShadow: !tabOpen }"
+            :class="{ headerBoxShadow: !appStore.tabOpen }"
           ></Header>
           <el-main class="p-main">
-            <div class="header-tab" v-if="tabOpen">
+            <div class="header-tab" v-if="appStore.tabOpen">
               <span class="tab-left-btn" @click="scrollToLeft">
                 <font-awesome-icon icon="fa-solid fa-angle-left " />
               </span>
@@ -38,14 +37,14 @@
               </span>
             </div>
             <div class="p-page">
-              <RouterView v-slot="{ Component }">
+              <RouterView v-slot="{ Component }" v-if="!appStore.refreshRouteflag">
                 <transition
                   name="fade"
                   mode="out-in"
-                  enter-active-class="animate__animated animate__fadeIn"
+                  :enter-active-class="'animate__animated ' + appStore.routeAnimation"
                 >
                   <keep-alive>
-                    <component :is="Component" />
+                    <component :is="Component" :key="Component.key" />
                   </keep-alive>
                 </transition>
               </RouterView>
@@ -68,7 +67,6 @@ import { useCssVar } from '@vueuse/core'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
 const appStore = useAppStore()
-const tabOpen = ref(appStore.tabOpen === null ? themeSettings.tabOpen : appStore.tabOpen)
 const route = useRoute()
 const router = useRouter()
 const scrollbarRef = ref()
@@ -152,20 +150,14 @@ const closeTabHandle = (path, event) => {
   event.stopPropagation()
 }
 
-// 改变tab栏开启
-const changeTabOpen = (val) => {
-  tabOpen.value = val
-}
-
 // 初始化主题
 const initTheme = () => {
-  let theme = appStore.theme === null ? themeSettings.theme : appStore.theme
-  document.getElementsByTagName('body')[0].setAttribute('class', 'theme-' + theme)
+  document.getElementsByTagName('body')[0].setAttribute('class', 'theme-' + appStore.theme)
 }
 
 // 初始化主题色
 const initPrimaryColor = () => {
-  let val = appStore.primaryColor === null ? themeSettings.primaryColor : appStore.primaryColor
+  let val = appStore.primaryColor
   color.value = val
   primaryColor3.value = val + 80
   primaryColor5.value = val
@@ -181,13 +173,28 @@ initTheme()
 
 <style scoped>
 .p-main {
-  background-color: var(--el-color-info-light-9);
+  background-color: var(--el-fill-color-lighter);
   overflow-x: hidden;
   padding: 0;
   margin: 0;
 }
 .p-page {
   padding: 15px;
+  height: calc(100% - 70px);
+  overflow: auto;
+}
+.p-page::-webkit-scrollbar {
+  width: 8px;
+}
+.p-page::-webkit-scrollbar-thumb {
+  background-color: var(--el-color-info-light-3);
+  border-radius: 10px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+.p-page::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: var(--el-color-info-light-7);
 }
 .headerBoxShadow {
   box-shadow: 0 1px 4px #00152914;
@@ -195,13 +202,14 @@ initTheme()
 }
 .header-tab {
   height: 40px;
-  background: white;
+  background: var(--el-bg-color);
   box-shadow: 0 1px 4px #00152914;
   position: relative;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+  z-index: 9;
   user-select: none;
   .h-tab-box {
     margin-left: 30px;
@@ -218,7 +226,7 @@ initTheme()
     line-height: 30px;
     width: 30px;
     text-align: center;
-    background-color: white;
+    background-color: var(--el-bg-color);
     cursor: pointer;
     margin-top: 5px;
   }

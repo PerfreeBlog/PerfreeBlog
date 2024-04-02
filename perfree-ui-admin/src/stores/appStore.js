@@ -12,6 +12,10 @@ export const useAppStore = defineStore({
     headerUnified: null,
     // 是否开启tab栏
     tabOpen: null,
+    // 刷新路由标识
+    refreshRouteflag: false,
+    // 路由动画
+    routeAnimation: null,
   }),
   getters: {
     getNavTabs() {
@@ -29,6 +33,12 @@ export const useAppStore = defineStore({
     getTabOpen() {
       return this.tabOpen
     },
+    getRefreshRouteflag() {
+      return this.refreshRouteflag
+    },
+    getRouteAnimation() {
+      return this.routeAnimation
+    },
   },
   actions: {
     setNavTabs(val) {
@@ -45,6 +55,12 @@ export const useAppStore = defineStore({
     },
     setTabOpen(val) {
       this.tabOpen = val
+    },
+    setRefreshRouteflag(val) {
+      this.refreshRouteflag = val
+    },
+    setRouteAnimation(val) {
+      this.routeAnimation = val
     },
   },
   persist: {

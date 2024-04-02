@@ -66,10 +66,55 @@
         <span class="label">顶部tab栏</span>
         <el-switch v-model="tabOpen" @change="changeTabOpen" />
       </div>
+
+      <div class="other-setting">
+        <span class="label">路由动画</span>
+        <el-select
+          v-model="routeAnimation"
+          placeholder="请选择"
+          style="width: 180px"
+          @change="changeRouteAnimation"
+        >
+          <el-option key="animate__fadeIn" label="fadeIn" value="animate__fadeIn" />
+          <el-option key="animate__fadeInDown" label="fadeInDown" value="animate__fadeInDown" />
+          <el-option key="animate__fadeInLeft" label="fadeInLeft" value="animate__fadeInLeft" />
+          <el-option key="animate__fadeInRight" label="fadeInRight" value="animate__fadeInRight" />
+          <el-option key="animate__fadeInUp" label="fadeInUp" value="animate__fadeInUp" />
+          <el-option key="animate__flipInX" label="flipInX" value="animate__flipInX" />
+          <el-option
+            key="animate__lightSpeedInRight"
+            label="lightSpeedInRight"
+            value="animate__lightSpeedInRight"
+          />
+          <el-option
+            key="animate__lightSpeedInLeft"
+            label="lightSpeedInLeft"
+            value="animate__lightSpeedInLeft"
+          />
+          <el-option
+            key="animate__rotateInDownLeft"
+            label="rotateInDownLeft"
+            value="animate__rotateInDownLeft"
+          />
+          <el-option
+            key="animate__rotateInDownRight"
+            label="rotateInDownRight"
+            value="animate__rotateInDownRight"
+          />
+          <el-option
+            key="animate__rotateInUpLeft"
+            label="rotateInUpLeft"
+            value="animate__rotateInUpLeft"
+          />
+          <el-option key="animate__zoomIn" label="zoomIn" value="animate__zoomIn" />
+          <el-option key="animate__slideInDown" label="slideInDown" value="animate__slideInDown" />
+          <el-option key="animate__slideInLeft" label="slideInLeft" value="animate__slideInLeft" />
+          <el-option key="animate__slideInUp" label="slideInUp" value="animate__slideInUp" />
+        </el-select>
+      </div>
     </template>
     <template #footer>
       <el-button @click="resetThemeSetting">重置主题</el-button>
-      <el-button type="primary" class="saveTheme" @click="saveTheme">保存配置</el-button>
     </template>
   </el-drawer>
 </template>
@@ -80,14 +125,12 @@ import { themeSettings } from '@/theme'
 import { useAppStore } from '@/stores/appStore'
 
 const appStore = useAppStore()
-let theme = ref(appStore.theme === null ? themeSettings.theme : appStore.theme)
-let primaryColor = ref(
-  appStore.primaryColor === null ? themeSettings.primaryColor : appStore.primaryColor,
-)
-let headerUnified = ref(
-  appStore.headerUnified === null ? themeSettings.headerUnified : appStore.headerUnified,
-)
-let tabOpen = ref(appStore.tabOpen === null ? themeSettings.tabOpen : appStore.tabOpen)
+let theme = ref(appStore.theme)
+let primaryColor = ref(appStore.primaryColor)
+let headerUnified = ref(appStore.headerUnified)
+let tabOpen = ref(appStore.tabOpen)
+
+let routeAnimation = ref(appStore.routeAnimation)
 let themeSettingOpen = ref(false)
 
 const el = ref(null)
@@ -108,10 +151,9 @@ const predefineColors = ref([
   '#c71585',
 ])
 
-const emits = defineEmits(['changeHeaderColor', 'changeTabOpen'])
-
 // 切换主题
 const changeTheme = (x) => {
+  appStore.setTheme(x)
   document.getElementsByTagName('body')[0].setAttribute('class', 'theme-' + x)
 }
 
@@ -126,10 +168,12 @@ const resetThemeSetting = () => {
   primaryColor.value = themeSettings.primaryColor
   tabOpen.value = themeSettings.tabOpen
   theme.value = themeSettings.theme
+  routeAnimation.value = themeSettings.routeAnimation
   changeTheme(theme.value)
   changePrimaryColor(primaryColor.value)
   changeHeaderColor(headerUnified.value)
   changeTabOpen(tabOpen.value)
+  changeRouteAnimation()
 }
 
 // 选择主题
@@ -147,24 +191,22 @@ const changePrimaryColor = (val) => {
   primaryColor8.value = val
   primaryColor9.value = val + 10
   primaryColor2.value = val
+  appStore.setPrimaryColor(val)
 }
 
 // 改变顶栏通色
 const changeHeaderColor = (val) => {
-  emits('changeHeaderColor', val)
+  appStore.setHeaderUnified(val)
 }
 
-// 保存主题
-const saveTheme = () => {
-  appStore.setHeaderUnified(headerUnified.value)
-  appStore.setPrimaryColor(primaryColor.value)
-  appStore.setTabOpen(tabOpen.value)
-  appStore.setTheme(theme.value)
+// 改变路由动画
+const changeRouteAnimation = () => {
+  appStore.setRouteAnimation(routeAnimation.value)
 }
 
 // 改变tab栏是否开启
 const changeTabOpen = () => {
-  emits('changeTabOpen', tabOpen.value)
+  appStore.setTabOpen(tabOpen.value)
 }
 
 // 暴露方法

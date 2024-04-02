@@ -7,4 +7,6 @@ export const themeSettings = {
   headerUnified: false,
   // 是否开启tab栏
   tabOpen: true,
+  // 路由动画
+  routeAnimation: 'animate__fadeIn',
 }
