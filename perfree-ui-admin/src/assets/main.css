@@ -81,3 +81,19 @@ body,
 .themeSettingBox {
   color: var(--el-text-color-primary);
 }
+
+
+.page{
+  .right-tool{
+    margin-left: auto;
+  }
+  .table-box {
+    margin-top: 8px;
+
+    .el-pagination {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+  }
+}

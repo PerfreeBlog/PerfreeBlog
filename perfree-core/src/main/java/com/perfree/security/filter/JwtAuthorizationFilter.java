@@ -2,9 +2,9 @@ package com.perfree.security.filter;
 
 import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
-import com.perfree.commons.CommonResult;
-import com.perfree.commons.WebUtils;
-import com.perfree.enums.ResultCodeEnum;
+import com.perfree.commons.common.CommonResult;
+import com.perfree.commons.enums.ResultCodeEnum;
+import com.perfree.commons.utils.WebUtils;
 import com.perfree.security.SecurityConstants;
 import com.perfree.security.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -18,7 +18,6 @@ import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -45,11 +44,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             //  如果token不存在或者携带了刷新token(长度小于150,可以根据自己生成的refreshToken来判断),
             //  直接放行,由系统Security判断是否具有访问权限
             if (StringUtils.isBlank(token) || token.length() < 150) {
-                // 从session读取
-                UsernamePasswordAuthenticationToken authentication = (UsernamePasswordAuthenticationToken) request.getSession().getAttribute("loginUser");
-                if (authentication != null) {
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
                 filterChain.doFilter(request, response);
                 return;
             }

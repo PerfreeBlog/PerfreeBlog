@@ -31,6 +31,13 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 4200,
     open: false,
+    proxy: {
+      "/api": {
+        target: 'http://127.0.0.1:8080/api',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api/, '')
+      }
+    }
   },
   build: {
     chunkSizeWarningLimit: 1024, // chunk 大小警告的限制（单位kb）

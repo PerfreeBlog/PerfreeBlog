@@ -2,8 +2,8 @@ package com.perfree.security.util;
 
 import com.perfree.security.SecurityConstants;
 import com.perfree.security.vo.LoginUserVO;
-import com.perfree.shared.api.user.UserApi;
-import com.perfree.shared.api.user.dto.UserDTO;
+import com.perfree.system.api.user.UserApi;
+import com.perfree.system.api.user.dto.UserRespDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -105,7 +105,7 @@ public class JwtUtil {
             claims = e.getClaims();
         }
         //  获取用户
-        UserDTO byAccount = userApi.getUserByAccount(claims.getSubject());
+        UserRespDTO byAccount = userApi.findByAccount(claims.getSubject());
         LoginUserVO loginUser = new LoginUserVO();
         loginUser.setId(byAccount.getId());
         loginUser.setAccount(byAccount.getAccount());

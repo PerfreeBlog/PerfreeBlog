@@ -11,16 +11,19 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@vueuse/core": "^10.9.0",
     "animate.css": "^4.1.1",
+    "axios": "^1.6.8",
     "element-plus": "^2.6.2",
     "pinia": "^2.1.7",
-    "vue": "^3.4.21",
     "pinia-plugin-persist": "^1.0.0",
+    "vue": "^3.4.21",
+    "vue-i18n": "9",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {

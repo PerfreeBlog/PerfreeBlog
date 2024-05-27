@@ -12,7 +12,7 @@
       </div>
       <el-breadcrumb separator="/" class="h-breadcrumb">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item v-if="route.fullPath !== '/' && route.fullPath !== '/home'">
+        <el-breadcrumb-item v-if="route.fullPath !== '/' && route.fullPath !== '/admin'">
           {{ route.meta.title }}
         </el-breadcrumb-item>
       </el-breadcrumb>

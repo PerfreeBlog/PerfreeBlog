@@ -39,9 +39,9 @@
             <div class="p-page">
               <RouterView v-slot="{ Component }" v-if="!appStore.refreshRouteflag">
                 <transition
-                  name="fade"
-                  mode="out-in"
-                  :enter-active-class="'animate__animated ' + appStore.routeAnimation"
+                    name="fade"
+                    mode="out-in"
+                    :enter-active-class="'animate__animated ' + appStore.routeAnimation"
                 >
                   <keep-alive>
                     <component :is="Component" :key="Component.key" />
@@ -84,7 +84,7 @@ let menuIsCollapse = ref(false)
 let tabs = reactive(
   appStore.navTabs.length > 0
     ? appStore.navTabs
-    : [{ name: '首页', hasClose: false, path: '/home', currActive: true }],
+    : [{ name: '首页', hasClose: false, path: '/admin', currActive: true }],
 )
 
 const classObject = ref({
@@ -182,6 +182,7 @@ initTheme()
   padding: 15px;
   height: calc(100% - 70px);
   overflow: auto;
+  background-color: var(--el-bg-color);
 }
 .p-page::-webkit-scrollbar {
   width: 8px;

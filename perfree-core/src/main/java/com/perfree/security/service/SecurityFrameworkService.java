@@ -4,18 +4,18 @@ public interface SecurityFrameworkService {
 
 
     /**
-     * 判断是否有角色
+     * 判断是否有权限
      *
-     * @param role 角色
+     * @param permission 权限
      * @return 是否
      */
-    boolean hasRole(String role);
+    boolean hasPermission(String permission);
 
     /**
-     * 判断是否有角色，任一一个即可
+     * 判断是否有权限，任一一个即可
      *
-     * @param roles 角色
+     * @param permissions 权限
      * @return 是否
      */
-    boolean hasRoles(String... roles);
+    boolean hasAnyPermissions(String... permissions);
 }

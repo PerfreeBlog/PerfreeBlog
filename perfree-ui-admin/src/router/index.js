@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/Layout.vue'
 import NProgress from 'nprogress'
+import {CONSTANTS} from "@/utils/constants.js";
+import LoginView from "@/views/login/LoginView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,8 +11,24 @@ const router = createRouter({
       path: '/',
       name: 'layout',
       component: Layout,
-      redirect: 'home',
+      redirect: 'admin',
       children: [
+        {
+          path: '/menu',
+          name: 'menu',
+          component: () => import('../views/menu/MenuView.vue'),
+          meta: {
+            title: '菜单管理',
+          },
+        },
+        {
+          path: '/role',
+          name: 'role',
+          component: () => import('../views/role/RoleView.vue'),
+          meta: {
+            title: '角色管理',
+          },
+        },
         {
           path: '/about',
           name: 'about',
@@ -36,7 +54,7 @@ const router = createRouter({
           },
         },
         {
-          path: '/home',
+          path: '/admin',
           name: 'home',
           component: () => import('../views/HomeView.vue'),
           meta: {
@@ -45,16 +63,37 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
+    }
   ],
-})
-
-router.beforeEach((to, from, next) => {
-  NProgress.start() // 进度条开始
-  next()
 })
 
 router.afterEach(() => {
   NProgress.done() // 进度条结束
+})
+
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  NProgress.start();
+  let token_info = localStorage.getItem(CONSTANTS.STORAGE_TOKEN);
+  if (token_info) {
+    token_info = JSON.parse(token_info);
+  }
+  // 判断是否登录
+  if (!token_info || !token_info.accessToken || token_info.accessToken === '') {
+    if (to.path === '/login') {
+      next();
+      return;
+    }
+    next('/login');
+  }
+  else {
+    next();
+  }
 })
 
 export default router

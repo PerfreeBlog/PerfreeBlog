@@ -2,7 +2,7 @@ package com.perfree.cache;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import com.perfree.constants.OptionConstant;
+import com.perfree.system.api.option.dto.OptionCacheDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -15,43 +15,28 @@ import java.util.List;
  */
 @Service
 public class OptionCacheService {
-    private final Cache<String, String> optionCache;
+    private final Cache<String, OptionCacheDTO> optionCache;
 
     public OptionCacheService() {
         optionCache = CacheBuilder.newBuilder().build();
     }
 
-    public void putOption(String key, Long siteId, String value) {
-        optionCache.put(key + OptionConstant.OPTION_CACHE_FLAG + siteId, value);
+    public void putOption(String key, OptionCacheDTO optionCacheDTO) {
+        optionCache.put(key, optionCacheDTO);
     }
 
-    public String getOptionValue(String key, Long siteId) {
+    public OptionCacheDTO getOption(String key) {
         if (StringUtils.isBlank(key)) {
             return null;
         }
-        if (null == siteId) {
-            siteId = -1L;
-        }
-        return optionCache.getIfPresent(key + OptionConstant.OPTION_CACHE_FLAG + siteId);
+        return optionCache.getIfPresent(key);
     }
 
-    public String getDefaultValue(String key, Long siteId , String defaultValue) {
-        if (null == siteId) {
-            siteId = -1L;
-        }
-        String value = optionCache.getIfPresent(key + OptionConstant.OPTION_CACHE_FLAG + siteId);
-
-        if (StringUtils.isBlank(value)){
-            return defaultValue;
-        }
-        return value;
+    public void removeOption(String key) {
+        optionCache.invalidate(key);
     }
 
-    public void removeOption(String key, Long siteId) {
-        optionCache.invalidate(key + OptionConstant.OPTION_CACHE_FLAG + siteId);
-    }
-
-    public List<String> getAllOption() {
+    public List<OptionCacheDTO> getAllOption() {
         return optionCache.asMap().values().stream().toList();
     }
 }
