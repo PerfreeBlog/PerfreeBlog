@@ -19,13 +19,16 @@
 
 <script setup>
 import MenuTree from '@/layout/components/MenuTree.vue'
-import { menus } from '@/data/menu.js'
+import {menuAdminList} from "@/api/system.js";
+import Layout from "@/layout/Layout.vue";
+import {useCommonStore} from "@/stores/commonStore.js";
 
+const commonStore = useCommonStore()
 const router = useRouter()
 const route = useRoute()
 const props = defineProps(['menuIsCollapse'])
 let currRouter = ref(router.currentRoute.value.path)
-const menuList = menus
+let menuList = ref(commonStore.menuList)
 
 watch(route, () => {
   currRouter.value = route.fullPath

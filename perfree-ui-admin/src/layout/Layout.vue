@@ -50,7 +50,9 @@
               </RouterView>
             </div>
           </el-main>
-          <el-footer>Footer</el-footer>
+          <el-footer class="footer">
+            <span>Copyright © 2018-2024  All Rights Reserved. </span>
+          </el-footer>
         </el-container>
       </el-container>
     </div>
@@ -62,7 +64,6 @@ import Sider from '@/layout/components/Sider.vue'
 import Header from '@/layout/components/Header.vue'
 import { useAppStore } from '@/stores/appStore'
 import { ElConfigProvider } from 'element-plus'
-import { themeSettings } from '@/theme'
 import { useCssVar } from '@vueuse/core'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 
@@ -81,11 +82,7 @@ const primaryColor9 = useCssVar('--el-color-primary-light-9', el)
 const primaryColor2 = useCssVar('--el-color-primary-dark-2', el)
 let locale = ref(zhCn)
 let menuIsCollapse = ref(false)
-let tabs = reactive(
-  appStore.navTabs.length > 0
-    ? appStore.navTabs
-    : [{ name: '首页', hasClose: false, path: '/admin', currActive: true }],
-)
+let tabs = reactive([{ name: '首页', hasClose: false, path: '/admin', currActive: true }])
 
 const classObject = ref({
   commonLayout: true,
@@ -93,6 +90,10 @@ const classObject = ref({
 })
 
 watch(route, () => {
+  handleAddTab(route)
+})
+
+const handleAddTab = (route) => {
   let index = tabs.findIndex((tab) => tab.path === route.fullPath)
   if (index < 0) {
     tabs.forEach((tab) => {
@@ -109,9 +110,7 @@ watch(route, () => {
       tab.currActive = tab.path === route.fullPath
     })
   }
-  appStore.setNavTabs(tabs)
-})
-
+}
 // 处理菜单收缩
 const handleMenuCollapse = (value) => {
   menuIsCollapse.value = value
@@ -169,6 +168,7 @@ const initPrimaryColor = () => {
 
 initPrimaryColor()
 initTheme()
+handleAddTab(route)
 </script>
 
 <style scoped>
@@ -294,5 +294,13 @@ initTheme()
       }
     }
   }
+}
+.footer{
+  text-align: center;
+  line-height: 50px;
+  height: 51px;
+  border-top: solid 1px var(--el-border-color-lighter);
+  color: var(--el-color-info);
+  font-size: 14px;
 }
 </style>

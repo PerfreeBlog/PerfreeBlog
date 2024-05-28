@@ -13,3 +13,7 @@ export function roleAddOrUpdateApi(data){
 export function roleDelApi(id) {
     return axios.delete('/api/role/del?id=' + id);
 }
+
+export function roleListAllApi(){
+    return axios.get('/api/role/listAll');
+}

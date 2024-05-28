@@ -46,12 +46,12 @@
       <el-dropdown>
         <div class="h-user">
           <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" />
-          <span class="h-userName">Perfree</span>
+          <span class="h-userName">{{userInfo.userName}}</span>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -69,13 +69,16 @@
 import { useDark, useFullscreen } from '@vueuse/core'
 import ThemeSetting from './ThemeSetting.vue'
 import { useAppStore } from '@/stores/appStore'
+import {CONSTANTS} from "@/utils/constants.js";
 
+const router = useRouter()
 const route = useRoute()
 const appStore = useAppStore()
 const isDark = useDark()
 const target = ref(null)
 const { isFullscreen, toggle } = useFullscreen(target)
 const themeSettingRef = ref(null)
+const userInfo = ref(JSON.parse(localStorage.getItem(CONSTANTS.STORAGE_USER_INFO)))
 
 // 全屏/退出全屏
 const toggleFullscreen = () => {
@@ -106,6 +109,14 @@ const refreshRoute = () => {
       appStore.setRefreshRouteflag(false)
     }, 200)
   })
+}
+
+/**
+ * 退出登录
+ */
+const logout = () => {
+  localStorage.removeItem(CONSTANTS.STORAGE_TOKEN);
+  router.replace("/login")
 }
 </script>
 

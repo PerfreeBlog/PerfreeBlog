@@ -38,6 +38,14 @@ export const menus = [
         icon: '',
         children: [],
       },
+      {
+        id: '7',
+        pid: 3,
+        path: '/user',
+        name: '用户管理',
+        icon: '',
+        children: [],
+      },
     ],
   },
 ]

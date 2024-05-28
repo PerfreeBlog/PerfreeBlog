@@ -17,7 +17,7 @@ public class MenuTreeListRespVO extends MenuBaseVO {
     private String id;
 
     @Schema(description = "父级ID")
-    private String parentId;
+    private String pid;
 
     @Schema(description = "子菜单")
     private List<MenuTreeListRespVO> children;

@@ -59,7 +59,7 @@ public class SystemController {
     }
 
 
-    @GetMapping("menuList")
+    @GetMapping("menuAdminList")
     @Operation(summary = "获取当前账号拥有的菜单")
     public CommonResult<List<MenuTreeListRespVO>> menuList(){
         return CommonResult.success(menuService.menuAdminListByLoginUser());

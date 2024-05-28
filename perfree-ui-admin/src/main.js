@@ -21,6 +21,7 @@ import router from './router'
 import en from "@/language/en.js";
 import zh from "@/language/zh.js";
 import {createI18n} from "vue-i18n";
+import {CONSTANTS} from "@/utils/constants.js";
 
 window.axios = axios;
 const app = createApp(App)
@@ -37,7 +38,7 @@ const i18n = createI18n({
         'zh': zh,
         'en': en
     },
-    locale: 'zh'  // 设置默认语言
+    locale: localStorage.getItem(CONSTANTS.STORAGE_LANGUAGE) ? localStorage.getItem(CONSTANTS.STORAGE_LANGUAGE) : 'zh'  // 设置默认语言
 })
 
 pinia.use(piniaPersist)

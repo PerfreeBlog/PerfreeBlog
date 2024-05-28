@@ -1,8 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import Layout from '@/layout/Layout.vue'
 import NProgress from 'nprogress'
 import {CONSTANTS} from "@/utils/constants.js";
 import LoginView from "@/views/login/LoginView.vue";
+import {useCommonStore} from "@/stores/commonStore.js";
+import {menuAdminList} from "@/api/system.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,54 +15,14 @@ const router = createRouter({
       component: Layout,
       redirect: 'admin',
       children: [
-        {
-          path: '/menu',
-          name: 'menu',
-          component: () => import('../views/menu/MenuView.vue'),
-          meta: {
-            title: '菜单管理',
-          },
-        },
-        {
-          path: '/role',
-          name: 'role',
-          component: () => import('../views/role/RoleView.vue'),
-          meta: {
-            title: '角色管理',
-          },
-        },
-        {
-          path: '/about',
-          name: 'about',
-          component: () => import('../views/AboutView.vue'),
-          meta: {
-            title: '关于',
-          },
-        },
-        {
-          path: '/about2',
-          name: 'about2',
-          component: () => import('../views/AboutView2.vue'),
-          meta: {
-            title: '子菜单',
-          },
-        },
-        {
-          path: '/about3',
-          name: 'about3',
-          component: () => import('../views/AboutView3.vue'),
-          meta: {
-            title: '子菜单2',
-          },
-        },
-        {
+     /*   {
           path: '/admin',
           name: 'home',
           component: () => import('../views/HomeView.vue'),
           meta: {
             title: '首页',
           },
-        },
+        },*/
       ],
     },
     {
@@ -78,6 +40,7 @@ router.afterEach(() => {
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
+  const commonStore = useCommonStore()
   NProgress.start();
   let token_info = localStorage.getItem(CONSTANTS.STORAGE_TOKEN);
   if (token_info) {
@@ -90,10 +53,64 @@ router.beforeEach((to, from, next) => {
       return;
     }
     next('/login');
-  }
-  else {
-    next();
+  } else {
+    if (commonStore.menuInit) {
+      next();
+    } else {
+      initMenu().then(() => {
+        genRouteByMenus(commonStore.menuList).then(() => {
+          commonStore.setMenuInit(true);
+          next({...to, replace: true});
+        })
+      })
+    }
   }
 })
 
+const initMenu = () => {
+  return new Promise((resolve, reject)=> {
+    const commonStore = useCommonStore()
+    menuAdminList().then((res) => {
+      if (res.code === 200) {
+        let menuList = res.data;
+        menuList.unshift( {
+          id: 'home',
+          pid: -1,
+          url: '/admin',
+          name: '首页',
+          componentName: 'home',
+          component: '/home/HomeView',
+          icon: 'fa-solid fa-house',
+          children: [],
+        });
+        commonStore.setMenuList(menuList)
+        resolve()
+      }
+    })
+  })
+}
+
+const genRouteByMenus = (menus) => {
+  return new Promise((resolve, reject)=> {
+    for (let item of menus) {
+      if (item.children && item.children.length > 0) {
+        genRouteByMenus(item.children).then(() => {})
+      } else {
+        if (item.url) {
+          router.addRoute("layout",
+              {
+                path: item.url,
+                name: item.componentName,
+                component: () => import('../views' + item.component + '.vue'),
+                meta: {
+                  title: item.name,
+                }
+              }
+          )
+        }
+      }
+    }
+    resolve()
+  })
+}
 export default router

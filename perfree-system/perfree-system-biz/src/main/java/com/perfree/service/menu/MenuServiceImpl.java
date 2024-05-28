@@ -68,9 +68,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         List<MenuTreeListRespVO> menuTreeListRespVOS = MenuConvert.INSTANCE.convertTreeList(menuList);
         // 获取所有跟节点
-        List<MenuTreeListRespVO> result = menuTreeListRespVOS.stream().filter(menu -> menu.getParentId().equals(SystemConstants.ROOT_MENU_CODE)).toList();
+        List<MenuTreeListRespVO> result = menuTreeListRespVOS.stream().filter(menu -> menu.getPid().equals(SystemConstants.ROOT_MENU_CODE)).toList();
         // 将原数组中所有根节点移除
-        menuTreeListRespVOS.removeIf(menu -> menu.getParentId().equals(SystemConstants.ROOT_MENU_CODE));
+        menuTreeListRespVOS.removeIf(menu -> menu.getPid().equals(SystemConstants.ROOT_MENU_CODE));
         for (MenuTreeListRespVO menu : result) {
             buildChildMenu(menu, menuTreeListRespVOS);
         }
@@ -120,7 +120,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private void buildChildMenu(MenuTreeListRespVO menuTreeListRespVO, List<MenuTreeListRespVO> queryMenuTreeList) {
         List<MenuTreeListRespVO> children = new ArrayList<>();
         for (MenuTreeListRespVO treeListRespVO : queryMenuTreeList) {
-            if (treeListRespVO.getParentId().equals(menuTreeListRespVO.getId())) {
+            if (treeListRespVO.getPid().equals(menuTreeListRespVO.getId())) {
                 children.add(treeListRespVO);
                 buildChildMenu(treeListRespVO, queryMenuTreeList);
             }
