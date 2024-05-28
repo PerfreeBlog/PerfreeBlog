@@ -76,13 +76,14 @@
       </el-form>
     </div>
 
+<!--    todo 国际化
     <div class="language-box">
       <span class="language-icon"><font-awesome-icon icon="fa-solid fa-language"/></span>
       <el-select v-model="locale" placeholder="Select" style="width: 120px" @change="changeLanguage">
         <el-option key="zh" label="中文简体" value="zh"/>
         <el-option key="en" label="English" value="en"/>
       </el-select>
-    </div>
+    </div>-->
     <!--  底部  -->
     <div class="login-footer">
       <span>Copyright © 2018-2024  All Rights Reserved. </span>

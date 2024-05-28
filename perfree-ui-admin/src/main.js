@@ -38,7 +38,9 @@ const i18n = createI18n({
         'zh': zh,
         'en': en
     },
-    locale: localStorage.getItem(CONSTANTS.STORAGE_LANGUAGE) ? localStorage.getItem(CONSTANTS.STORAGE_LANGUAGE) : 'zh'  // 设置默认语言
+    locale: 'zh'
+    // TODO 国际化
+    // locale: localStorage.getItem(CONSTANTS.STORAGE_LANGUAGE) ? localStorage.getItem(CONSTANTS.STORAGE_LANGUAGE) : 'zh'  // 设置默认语言
 })
 
 pinia.use(piniaPersist)

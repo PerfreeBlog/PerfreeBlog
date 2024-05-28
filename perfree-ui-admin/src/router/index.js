@@ -4,7 +4,8 @@ import NProgress from 'nprogress'
 import {CONSTANTS} from "@/utils/constants.js";
 import LoginView from "@/views/login/LoginView.vue";
 import {useCommonStore} from "@/stores/commonStore.js";
-import {menuAdminList} from "@/api/system.js";
+import {getAllOption, menuAdminList, userInfo} from "@/api/system.js";
+import {useOptionStore} from "@/stores/optionStore.js";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,6 +42,7 @@ router.afterEach(() => {
 // 路由守卫
 router.beforeEach((to, from, next) => {
   const commonStore = useCommonStore()
+  const optionStore = useOptionStore()
   NProgress.start();
   let token_info = localStorage.getItem(CONSTANTS.STORAGE_TOKEN);
   if (token_info) {
@@ -58,9 +60,15 @@ router.beforeEach((to, from, next) => {
       next();
     } else {
       initMenu().then(() => {
-        genRouteByMenus(commonStore.menuList).then(() => {
+        Promise.all([genRouteByMenus(commonStore.menuList), getAllOption()]).then(([r, optionRes]) => {
+          let options = {};
+          optionRes.data.forEach(item => {
+            options[item.key] = item;
+          })
+          optionStore.setOptions(optionRes)
           commonStore.setMenuInit(true);
           next({...to, replace: true});
+
         })
       })
     }

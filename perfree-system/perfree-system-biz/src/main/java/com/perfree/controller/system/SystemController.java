@@ -69,7 +69,6 @@ public class SystemController {
     @Operation(summary = "获取未登录时可拥有的配置信息")
     public CommonResult<List<OptionRespVO>> getOptionByNoAuth(){
         List<OptionCacheDTO> optionCacheDTOList = new ArrayList<>();
-        optionCacheDTOList.add(optionCacheService.getOption(OptionEnum.DEFAULT_ADMIN_FRAME.getKey()));
         optionCacheDTOList.add(optionCacheService.getOption(OptionEnum.LOGIN_CAPTCHA_ENABLE.getKey()));
         return CommonResult.success(OptionConvert.INSTANCE.convertCacheDTO2RespListVO(optionCacheDTOList));
     }
