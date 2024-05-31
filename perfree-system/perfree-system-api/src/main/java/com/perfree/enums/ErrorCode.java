@@ -21,6 +21,7 @@ public enum ErrorCode {
     FILE_HANDLE_ERROR(100000011,"文件上传出错!"),
     MASTER_ATTACH_CONFIG_EMPTY(100000012, "未配置默认存储策略或存储策略不存在!"),
     FILE_GET_CONTENT_ERROR(100000013,"获取文件内容出错!"),
+    SITE_SLUG_EXIST(100000014,"该站点Slug访问标识已存在!"),
     ;
 
     private final Integer code;

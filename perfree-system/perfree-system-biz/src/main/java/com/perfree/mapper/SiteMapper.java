@@ -18,4 +18,7 @@ public interface SiteMapper extends BaseMapperX<Site> {
                .orderByDesc(Site::getCreateTime));
    }
 
+    default Site selectBySlug(String siteSlug){
+       return selectOne(new LambdaQueryWrapper<Site>().eq(Site::getSiteSlug, siteSlug));
+    }
 }
