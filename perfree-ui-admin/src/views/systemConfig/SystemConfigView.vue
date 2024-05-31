@@ -27,13 +27,17 @@
             </el-form-item>
 
             <el-form-item :label="item.label" v-if="item.type === 'inputNum'">
-              <el-input-number v-model="item.value" :min="item.other.split('|')[0]" :max="item.other.split('|')[1]"/>
+              <el-input-number v-model="item.value" :min="parseInt(item.other.split('|')[0])" :max="parseInt(item.other.split('|')[1])"/>
             </el-form-item>
 
             <el-form-item :label="item.label" v-if="item.type === 'selectMultiple'">
               <el-select v-model="item.value" :placeholder="item.placeholder" clearable multiple>
                 <el-option :label="op.split('|')[0]" :value="op.split('|')[1]" v-for="op in item.other.split(',')"/>
               </el-select>
+            </el-form-item>
+
+            <el-form-item :label="item.label" v-if="item.type === 'selectAttachInput'">
+              <attach-select-input></attach-select-input>
             </el-form-item>
           </div>
 
@@ -47,6 +51,8 @@
 </template>
 <script setup>
 
+import AttachSelectInput from "@/components/attach-select-input.vue";
+
 const optionData = ref()
 const activeTab = ref(null)
 
@@ -58,10 +64,14 @@ const d = [
   {id: '2', group:'基础配置', name: 'aaa5', label: '多行文本',value: 'bbb0', type: 'textarea', placeholder: '请输入', defaultValue: '0', other: '5'},
   {id: '2', group:'基础配置', name: 'aaa5', label: '数字输入',value: '5', type: 'inputNum', placeholder: '请输入', defaultValue: '0', other: '0|100'},
   {id: '2', group:'基础配置', name: 'aaa3', label: '下拉多选',value: 'a1', type: 'selectMultiple', placeholder: '请输入', defaultValue: '0', other: 'a1|a1,a2|a2,a3|a3'},
+  {id: '2', group:'基础配置', name: 'aaa3', label: '附件选择输入框',value: 'a1', type: 'selectAttachInput', placeholder: '请输入', defaultValue: '0', other: 'a1|a1,a2|a2,a3|a3'},
   {id: '3', group:'高级配置', name: 'aaa6', label: 'xx配置6',value: 'bbb2', type: 'input', placeholder: '请输入', defaultValue: '0', other: ''},
   {id: '4', group:'高级配置', name: 'aaa7', label: 'xx配置7',value: 'bbb3', type: 'input', placeholder: '请输入', defaultValue: '0', other: ''}
 ]
 const groupedData = d.reduce((result, item) => {
+  if (item.type === 'inputNum'){
+    item.value = parseInt( item.value )
+  }
   (result[item.group] = result[item.group] || []).push(item);
   return result;
 }, {});

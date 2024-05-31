@@ -46,27 +46,44 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading"  :show-overflow-tooltip="true">
-        <el-table-column label="序号" min-width="80" type="index" />
+        <el-table-column label="序号" min-width="50" type="index" />
         <el-table-column prop="name" label="附件名称" min-width="150" />
-        <el-table-column prop="path" label="存储路径" min-width="200" />
-        <el-table-column prop="url" label="访问地址" min-width="200">
+        <el-table-column prop="attachGroup" label="预览" min-width="100">
+          <template v-slot="scope">
+
+            <div class="block">
+            <el-image style="width: 100%; max-height: 100%" :src="scope.row.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
+                      :preview-src-list="[scope.row.url]" :initial-index="4" v-if="scope.row.type&&scope.row.type.indexOf('image/') === 0"
+                      append-to-body fit="cover" preview-teleported></el-image>
+            <video v-else-if="scope.row.type&&scope.row.type.indexOf('video/') === 0" controls style="width: 100%; max-height: 100%">
+              <source :src="scope.row.url"/>
+            </video>
+            <i v-else>无法预览，点击
+              <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" target="_blank"
+                       :href="'/api/attach/file/' + scope.row.configId + '/get/' + scope.row.path">下载
+              </el-link>
+            </i>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column prop="url" label="访问地址" min-width="240">
           <template v-slot="scope">
             <el-link :href="scope.row.url" target="_blank" :underline="false">{{ scope.row.url }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="attachGroup" label="分组" min-width="150">
+        <el-table-column prop="type" label="附件类型" min-width="100" />
+        <el-table-column prop="attachGroup" label="分组" min-width="100">
           <template v-slot="scope">
             <span>{{scope.row.attachGroup }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="附件类型" min-width="120" />
-        <el-table-column prop="createTime" label="上传时间" min-width="140" >
+        <el-table-column prop="createTime" label="上传时间" min-width="100" >
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
 
-        <el-table-column label="操作" width="160" fixed="right">
+        <el-table-column label="操作" width="180" fixed="right">
           <template v-slot="scope">
             <el-button size="small" type="primary" link :icon="View" @click="handleShow(scope.row)">详情</el-button>
             <el-link type="primary" :underline="false" target="_blank" :icon="Download" style="font-size: 12px;"
