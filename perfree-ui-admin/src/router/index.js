@@ -6,6 +6,7 @@ import LoginView from "@/views/login/LoginView.vue";
 import {useCommonStore} from "@/stores/commonStore.js";
 import {getAllOption, menuAdminList, userInfo} from "@/api/system.js";
 import {useOptionStore} from "@/stores/optionStore.js";
+const modules = import.meta.glob('../views/**/*.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -109,7 +110,7 @@ const genRouteByMenus = (menus) => {
               {
                 path: item.url,
                 name: item.componentName,
-                component: () => import('../views' + item.component + '.vue'),
+                component: modules[`../views${item.component}.vue`],
                 meta: {
                   title: item.name,
                 }

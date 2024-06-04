@@ -91,8 +91,17 @@ watch(route, () => {
   border: none;
   padding-left: 10px;
   padding-right: 10px;
+    height: calc(100% - 60px);
+    overflow-x: auto;
 }
 
+.side-menu::-webkit-scrollbar {
+  width: 0;
+}
+ 
+.side-menu::-webkit-scrollbar {
+  height: 0;
+}
 .logoBox {
   width: 100%;
   display: flex;

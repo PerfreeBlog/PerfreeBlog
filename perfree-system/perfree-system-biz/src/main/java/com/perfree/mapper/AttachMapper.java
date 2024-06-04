@@ -32,6 +32,7 @@ public interface AttachMapper extends BaseMapperX<Attach> {
                 .eq(StringUtils.isNotBlank(pageVO.getAttachGroup()), Attach::getAttachGroup, pageVO.getAttachGroup())
                 .eq(pageVO.getAttachConfigId() != null, Attach::getConfigId, pageVO.getAttachConfigId())
                 .eq(pageVO.getStorage()!= null, Attach::getStorage, pageVO.getStorage())
+                .eq(StringUtils.isNotBlank(pageVO.getType()), Attach::getType, pageVO.getType())
                 .orderByDesc(Attach::getCreateTime));
     }
 

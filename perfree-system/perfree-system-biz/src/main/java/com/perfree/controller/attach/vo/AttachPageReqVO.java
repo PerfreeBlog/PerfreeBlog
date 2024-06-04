@@ -21,4 +21,7 @@ public class AttachPageReqVO extends PageParam {
 
     @Schema(description = "存储器类型")
     private Integer storage;
+
+    @Schema(description = "附件类型")
+    private String type;
 }

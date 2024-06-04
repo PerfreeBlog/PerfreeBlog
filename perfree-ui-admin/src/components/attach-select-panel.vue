@@ -38,7 +38,7 @@
             <div :class="{'operate-mask': true, 'selected': item.selected}">
             </div>
             <div class="operate-btn-box">
-              <el-icon class="operate-btn"><InfoFilled /></el-icon>
+              <el-icon class="operate-btn" @click.stop="handleShow(item)"><InfoFilled /></el-icon>
               <el-icon class="operate-btn select-btn"><SuccessFilled /></el-icon>
             </div>
           </div>
@@ -56,29 +56,133 @@
           :total="searchForm.total"
       />
     </div>
+
+
+    <el-dialog v-model="showOpen" :title="title" width="800px" draggable>
+      <el-row>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" >
+          <div  style="padding-right: 15px">
+            <el-image style="width: 100%; max-height: 100%" :src="showForm.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
+                      :preview-src-list="[showForm.url]" :initial-index="4" fit="cover" v-if="showForm.type&&showForm.type.indexOf('image/') === 0"/>
+            <video v-else-if="showForm.type&&showForm.type.indexOf('video/') === 0" controls style="width: 100%; max-height: 100%">
+              <source :src="showForm.url"/>
+            </video>
+            <i v-else>无法预览，点击
+              <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" target="_blank"
+                       :href="'/api/attach/file/' + showForm.configId + '/get/' + showForm.path">下载
+              </el-link>
+            </i>
+          </div>
+        </el-col>
+        <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" >
+          <div class="showForm">
+            <el-form
+                ref="showFormRef"
+                :model="showForm"
+                label-width="auto"
+                :rules="showRule"
+                :label-position="'top'"
+            >
+              <el-form-item label="附件名称" prop="name">
+                <el-input v-model="showForm.name" />
+              </el-form-item>
+              <el-form-item label="附件类型">
+                <el-input v-model="showForm.type" disabled />
+              </el-form-item>
+              <el-form-item label="分组">
+                <el-select v-model="showForm.attachGroup" placeholder="请选择分组" filterable style="width: 100%"
+                           allow-create>
+                  <el-option v-for="item in attachGroups" :key="item.attachGroup" :label="item.attachGroup" :value="item.attachGroup" />
+                </el-select>
+              </el-form-item>
+              <el-form-item label="存储路径">
+                <el-input v-model="showForm.path" disabled />
+              </el-form-item>
+              <el-form-item label="访问地址">
+                <el-input v-model="showForm.url" disabled />
+              </el-form-item>
+              <el-form-item label="附件描述">
+                <el-input v-model="showForm.desc"  :autosize="{ minRows: 2, maxRows: 4 }" type="textarea" resize="none" placeholder="请输入附件描述"/>
+              </el-form-item>
+            </el-form>
+          </div>
+        </el-col>
+      </el-row>
+
+      <template #footer>
+        <span class="dialog-footer">
+              <el-button type="primary" @click="submitUpdateForm">修 改</el-button>
+              <el-button @click="showOpen = false; resetShowForm()">取 消</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup>
 import {Refresh, Search} from "@element-plus/icons-vue";
-import {attachPageApi} from "@/api/attach.js";
+import {attachPageApi, getAttachApi, attachUpdateApi, getAllAttachGroupApi} from "@/api/attach.js";
 
 const searchFormRef = ref();
 const searchForm = ref({
   pageNo: 1,
   pageSize: 8,
   total: 0,
-  name: ''
+  name: '',
+  type: ''
 })
 let tableData = ref([]);
 let loading = ref(false);
+let selectedAttach = ref(new Map())
+const emits = defineEmits(['update:selectedAttach'])
+const props = defineProps(['attachType', 'max'])
+let showOpen = ref(false);
+let title = ref('');
+let attachGroups = ref([]);
+const showFormRef = ref();
+const showForm = ref({
+  name: '',
+  type: '',
+  attachGroup: 'default',
+  path: '',
+  url: '',
+  desc: ''
+})
+
+const showRule = reactive({
+  name: [{ required: true, message: '请输入附件名称', trigger: 'blur' }],
+});
+
+/**
+ * 重置详情表单
+ */
+ function resetShowForm() {
+  showForm.value = {
+    name: '',
+    type: '',
+    attachGroup: 'default',
+    path: '',
+    url: '',
+    desc: ''
+  }
+  if (showFormRef.value) {
+    showFormRef.value.resetFields();
+  }
+}
 
 /**
  * 初始化附件列表
  */
 function initList() {
+  if(props.attachType) {
+    searchForm.value.type = props.attachType;
+  }
   loading.value = true;
   attachPageApi(searchForm.value).then((res) => {
+    res.data.list.forEach(r => {
+      const selected = selectedAttach.value.has(r.id);
+      r.selected = selected;
+    })
     tableData.value = res.data.list;
     searchForm.value.total = res.data.total;
     loading.value = false;
@@ -99,10 +203,55 @@ function resetSearchForm() {
 }
 
 function selectAttach(item){
+  if(!item.selected && selectedAttach.value.size >= props.max) {
+    ElMessage.error(`最多选择${props.max}个`);
+    return;
+  }
   item.selected = !item.selected;
-  console.log(item)
+  if(item.selected) {
+    selectedAttach.value.set(item.id, item);
+  } else{
+    selectedAttach.value.delete(item.id);
+  }
+  emits('update:selectedAttach', Array.from(selectedAttach.value.values()));
 }
 
+function initAttachGroups() {
+  getAllAttachGroupApi().then(res => {
+    attachGroups.value = res.data;
+  })
+}
+
+/**
+ * 查看附件
+ * @param row
+ */
+ function handleShow(row) {
+  resetShowForm();
+  initAttachGroups();
+  getAttachApi(row.id).then(res => {
+    showForm.value = res.data;
+    title.value = '详情';
+    showOpen.value = true;
+  })
+}
+
+function submitUpdateForm () {
+  showFormRef.value.validate(valid => {
+    if (valid) {
+      attachUpdateApi(showForm.value).then((res) => {
+        if (res.code === 200) {
+          ElMessage.success('修改成功');
+          showOpen.value = false;
+          resetShowForm();
+          initList();
+        } else {
+          ElMessage.error(res.msg);
+        }
+      })
+    }
+  })
+}
 initList();
 </script>
 

@@ -1,13 +1,14 @@
 <template>
   <div style="width: 100%">
-    <el-input v-model="modelValue" :placeholder="props.placeholder" style="width: 100%"  :disabled="!props.enableInput" >
+    <el-input v-model="modelValue" :placeholder="placeholder" style="width: 100%"  :disabled="!props.enableInput"
+     type="textarea" :rows="3" >
       <template #append>
         <el-button :icon="FolderOpened"  type="info" @click="openSelectImage"/>
       </template>
     </el-input>
 
     <el-dialog v-model="open" :title="title" width="800px" draggable   destroy-on-close>
-      <attach-select-panel @update:selected-attach="selectAttach" :max="1" :attach-type="props.attachType"></attach-select-panel>
+      <attach-select-panel @update:selected-attach="selectAttach" :max="props.max" :attach-type="props.attachType"></attach-select-panel>
       <template #footer>
         <span class="dialog-footer">
               <el-button type="primary" @click="submitAddForm">确 定<span v-if="selectData.length > 0">(已选{{selectData.length}}个)</span></el-button>
@@ -22,19 +23,18 @@
 import {FolderOpened, Search} from "@element-plus/icons-vue";
 import AttachSelectPanel from "@/components/attach-select-panel.vue";
 
-
 const placeholder = ref('请选择图片')
 let open = ref(false)
 let title = ref('')
 let selectData = ref([])
 // attachType: 附件类型
+// max: 最多选几个
 // spliter: 如果是多个，可以设置分割符号
 // enableInput: 是否允许自由输入
-// modelValue: 绑定值
-const props = defineProps(['attachType', 'spliter', 'enableInput', 'placeholder', 'modelValue'])
+const props = defineProps(['attachType', 'max', 'spliter', 'enableInput'])
 const emits = defineEmits(['update:modelValue'])
-
 const modelValue = ref(props.modelValue)
+
 /**
  * 打开选择附件面板
  */
@@ -50,6 +50,9 @@ function submitAddForm() {
   let result = ''
   selectData.value.forEach((r, index) => {
     result += r.url;
+    if (index < selectData.value.length - 1) {
+      result += props.spliter;
+    } 
   });
   modelValue.value = result
   open.value = false
