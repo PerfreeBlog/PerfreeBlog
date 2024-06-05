@@ -4,9 +4,9 @@ package com.perfree.convert.attachConfig;
 import com.perfree.commons.common.PageResult;
 import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
 import com.perfree.model.AttachConfig;
-import com.perfree.controller.attachConfig.vo.AttachConfigCreateVO;
-import com.perfree.controller.attachConfig.vo.AttachConfigRespVO;
-import com.perfree.controller.attachConfig.vo.AttachConfigUpdateVO;
+import com.perfree.controller.auth.attachConfig.vo.AttachConfigCreateVO;
+import com.perfree.controller.auth.attachConfig.vo.AttachConfigRespVO;
+import com.perfree.controller.auth.attachConfig.vo.AttachConfigUpdateVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

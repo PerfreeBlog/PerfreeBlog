@@ -3,12 +3,12 @@ package com.perfree.convert.user;
 import com.perfree.commons.common.PageResult;
 import com.perfree.system.api.user.dto.UserRespDTO;
 import com.perfree.model.User;
-import com.perfree.controller.system.vo.LoginUserInfoRespVO;
-import com.perfree.controller.system.vo.LoginUserReqVO;
-import com.perfree.controller.system.vo.LoginUserRespVO;
-import com.perfree.controller.user.vo.UserAddReqVO;
-import com.perfree.controller.user.vo.UserRespVO;
-import com.perfree.controller.user.vo.UserUpdateReqVO;
+import com.perfree.controller.auth.system.vo.LoginUserInfoRespVO;
+import com.perfree.controller.common.system.vo.LoginUserReqVO;
+import com.perfree.controller.common.system.vo.LoginUserRespVO;
+import com.perfree.controller.auth.user.vo.UserAddReqVO;
+import com.perfree.controller.auth.user.vo.UserRespVO;
+import com.perfree.controller.auth.user.vo.UserUpdateReqVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
-    @Bean
+/*    @Bean
     public OpenAPI springShopOpenAPI() {
         return new OpenAPI()
                 // 接口文档标题
@@ -20,5 +20,5 @@ public class OpenApiConfig {
                         .version("v1.0")
                         // 开发者联系方式
                         .contact(new Contact().name("Perfree").email("Perfree@126.com")));
-    }
+    }*/
 }

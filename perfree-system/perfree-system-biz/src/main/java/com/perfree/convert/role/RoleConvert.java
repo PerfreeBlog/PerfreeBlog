@@ -3,8 +3,8 @@ package com.perfree.convert.role;
 
 import com.perfree.commons.common.PageResult;
 import com.perfree.model.Role;
-import com.perfree.controller.role.vo.RoleAddOrUpdateReqVO;
-import com.perfree.controller.role.vo.RoleRespVO;
+import com.perfree.controller.auth.role.vo.RoleAddOrUpdateReqVO;
+import com.perfree.controller.auth.role.vo.RoleRespVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -2,11 +2,11 @@ package com.perfree.service.user;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
-import com.perfree.controller.user.vo.*;
+import com.perfree.controller.auth.user.vo.*;
 import com.perfree.model.User;
-import com.perfree.controller.system.vo.LoginUserInfoRespVO;
-import com.perfree.controller.system.vo.LoginUserReqVO;
-import com.perfree.controller.system.vo.LoginUserRespVO;
+import com.perfree.controller.auth.system.vo.LoginUserInfoRespVO;
+import com.perfree.controller.common.system.vo.LoginUserReqVO;
+import com.perfree.controller.common.system.vo.LoginUserRespVO;
 
 /**
  * <p>

@@ -3,7 +3,7 @@ package com.perfree.convert.option;
 
 import com.perfree.system.api.option.dto.OptionCacheDTO;
 import com.perfree.model.Option;
-import com.perfree.controller.option.vo.OptionRespVO;
+import com.perfree.controller.auth.option.vo.OptionRespVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

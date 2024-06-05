@@ -3,7 +3,7 @@ package com.perfree.convert.plugins;
 
 import com.perfree.commons.common.PageResult;
 import com.perfree.model.Plugins;
-import com.perfree.controller.plugins.vo.PluginsRespVO;
+import com.perfree.controller.auth.plugins.vo.PluginsRespVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

@@ -3,10 +3,10 @@ package com.perfree.service.attachConfig;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.model.AttachConfig;
-import com.perfree.controller.attachConfig.vo.AttachConfigCreateVO;
-import com.perfree.controller.attachConfig.vo.AttachConfigPageReqVO;
-import com.perfree.controller.attachConfig.vo.AttachConfigUpdateMasterVO;
-import com.perfree.controller.attachConfig.vo.AttachConfigUpdateVO;
+import com.perfree.controller.auth.attachConfig.vo.AttachConfigCreateVO;
+import com.perfree.controller.auth.attachConfig.vo.AttachConfigPageReqVO;
+import com.perfree.controller.auth.attachConfig.vo.AttachConfigUpdateMasterVO;
+import com.perfree.controller.auth.attachConfig.vo.AttachConfigUpdateVO;
 
 import java.util.List;
 

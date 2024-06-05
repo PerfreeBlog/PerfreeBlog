@@ -2,9 +2,9 @@ package com.perfree.service.menu;
 
 import com.perfree.model.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.perfree.controller.menu.vo.MenuAddOrUpdateReqVO;
-import com.perfree.controller.menu.vo.MenuListReqVO;
-import com.perfree.controller.system.vo.MenuTreeListRespVO;
+import com.perfree.controller.auth.menu.vo.MenuAddOrUpdateReqVO;
+import com.perfree.controller.auth.menu.vo.MenuListReqVO;
+import com.perfree.controller.auth.system.vo.MenuTreeListRespVO;
 
 import java.util.List;
 

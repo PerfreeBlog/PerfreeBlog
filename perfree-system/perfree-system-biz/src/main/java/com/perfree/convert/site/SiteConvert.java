@@ -2,9 +2,9 @@ package com.perfree.convert.site;
 
 
 import com.perfree.commons.common.PageResult;
-import com.perfree.controller.site.vo.SiteAddReqVO;
-import com.perfree.controller.site.vo.SiteRespVO;
-import com.perfree.controller.site.vo.SiteUpdateReqVO;
+import com.perfree.controller.auth.site.vo.SiteAddReqVO;
+import com.perfree.controller.auth.site.vo.SiteRespVO;
+import com.perfree.controller.auth.site.vo.SiteUpdateReqVO;
 import com.perfree.model.Site;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

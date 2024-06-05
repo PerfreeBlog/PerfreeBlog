@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.Attach;
-import com.perfree.controller.attach.vo.AttachPageReqVO;
+import com.perfree.controller.auth.attach.vo.AttachPageReqVO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
 

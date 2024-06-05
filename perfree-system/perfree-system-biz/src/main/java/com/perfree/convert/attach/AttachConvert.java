@@ -5,10 +5,10 @@ import com.perfree.commons.common.PageResult;
 import com.perfree.system.api.attach.dto.AttachFileDTO;
 import com.perfree.system.api.attach.dto.AttachUploadDTO;
 import com.perfree.model.Attach;
-import com.perfree.controller.attach.vo.AttachGroupRespVO;
-import com.perfree.controller.attach.vo.AttachRespVO;
-import com.perfree.controller.attach.vo.AttachUpdateVO;
-import com.perfree.controller.attach.vo.AttachUploadVO;
+import com.perfree.controller.auth.attach.vo.AttachGroupRespVO;
+import com.perfree.controller.auth.attach.vo.AttachRespVO;
+import com.perfree.controller.auth.attach.vo.AttachUpdateVO;
+import com.perfree.controller.auth.attach.vo.AttachUploadVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 

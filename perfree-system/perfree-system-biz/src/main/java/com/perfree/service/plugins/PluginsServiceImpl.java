@@ -6,7 +6,7 @@ import com.perfree.commons.common.PageResult;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugins;
 import com.perfree.plugin.PluginManager;
-import com.perfree.controller.plugins.vo.PluginsPageReqVO;
+import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

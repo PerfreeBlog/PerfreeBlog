@@ -3,9 +3,9 @@ package com.perfree.service.attach;
 import com.perfree.commons.common.PageResult;
 import com.perfree.model.Attach;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.perfree.controller.attach.vo.AttachPageReqVO;
-import com.perfree.controller.attach.vo.AttachUpdateVO;
-import com.perfree.controller.attach.vo.AttachUploadVO;
+import com.perfree.controller.auth.attach.vo.AttachPageReqVO;
+import com.perfree.controller.auth.attach.vo.AttachUpdateVO;
+import com.perfree.controller.auth.attach.vo.AttachUploadVO;
 
 import java.io.IOException;
 import java.util.List;

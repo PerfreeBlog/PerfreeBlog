@@ -2,9 +2,9 @@ package com.perfree.service.site;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
-import com.perfree.controller.site.vo.SiteAddReqVO;
-import com.perfree.controller.site.vo.SitePageReqVO;
-import com.perfree.controller.site.vo.SiteUpdateReqVO;
+import com.perfree.controller.auth.site.vo.SiteAddReqVO;
+import com.perfree.controller.auth.site.vo.SitePageReqVO;
+import com.perfree.controller.auth.site.vo.SiteUpdateReqVO;
 import com.perfree.model.Site;
 
 public interface SiteService extends IService<Site> {

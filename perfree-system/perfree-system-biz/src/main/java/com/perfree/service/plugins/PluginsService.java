@@ -3,7 +3,7 @@ package com.perfree.service.plugins;
 import com.perfree.commons.common.PageResult;
 import com.perfree.model.Plugins;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.perfree.controller.plugins.vo.PluginsPageReqVO;
+import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
 import org.springframework.web.multipart.MultipartFile;
 
 /**

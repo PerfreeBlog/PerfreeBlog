@@ -3,7 +3,7 @@ package com.perfree.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.Menu;
-import com.perfree.controller.menu.vo.MenuListReqVO;
+import com.perfree.controller.auth.menu.vo.MenuListReqVO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

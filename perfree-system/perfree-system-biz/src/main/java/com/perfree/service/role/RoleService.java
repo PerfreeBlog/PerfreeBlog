@@ -4,9 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.model.Role;
 import com.perfree.model.RoleMenu;
-import com.perfree.controller.role.vo.RoleAddOrUpdateReqVO;
-import com.perfree.controller.role.vo.RoleMenuReqVO;
-import com.perfree.controller.role.vo.RolePageReqVO;
+import com.perfree.controller.auth.role.vo.RoleAddOrUpdateReqVO;
+import com.perfree.controller.auth.role.vo.RoleMenuReqVO;
+import com.perfree.controller.auth.role.vo.RolePageReqVO;
 
 import java.util.List;
 
