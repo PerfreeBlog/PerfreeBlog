@@ -2,6 +2,8 @@ package com.perfree;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FullyQualifiedAnnotationBeanNameGenerator;
 
 /**
  * @author Perfree
@@ -10,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 // @SpringBootApplication(exclude = { DataSourceAutoConfiguration.class }) TODO 界面完善后再处理安装逻辑
 @SpringBootApplication
+@ComponentScan(nameGenerator = FullyQualifiedAnnotationBeanNameGenerator.class)
 public class Application {
 
     public static void main(String[] args) {

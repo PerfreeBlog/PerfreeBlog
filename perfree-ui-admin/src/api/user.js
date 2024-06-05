@@ -1,31 +1,31 @@
 export function userPageApi(data) {
-    return axios.post('/api/user/page', data);
+    return axios.post('/api/auth/user/page', data);
 }
 
 export function getUserApi(id) {
-    return axios.get('/api/user/get?id=' + id);
+    return axios.get('/api/auth/user/get?id=' + id);
 }
 
 export function addUserApi(data){
-    return axios.post('/api/user/add', data);
+    return axios.post('/api/auth/user/add', data);
 }
 
 export function updateUserApi(data){
-    return axios.post('/api/user/update', data);
+    return axios.post('/api/auth/user/update', data);
 }
 export function delUserApi(id) {
-    return axios.delete('/api/user/del?id=' + id);
+    return axios.delete('/api/auth/user/del?id=' + id);
 }
 
 export function updateUserRoleApi(data) {
-    return axios.post('/api/user/updateUserRole', data);
+    return axios.post('/api/auth/user/updateUserRole', data);
 }
 
 export function getUserRoleApi(id) {
-    return axios.get('/api/user/getUserRole?id=' + id);
+    return axios.get('/api/auth/user/getUserRole?id=' + id);
 }
 
 
 export function resetPasswordApi(data) {
-    return axios.post('/api/user/resetPassword', data);
+    return axios.post('/api/auth/user/resetPassword', data);
 }

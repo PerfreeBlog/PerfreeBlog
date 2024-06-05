@@ -1,23 +1,23 @@
 export function attachPageApi(data) {
-    return axios.post('/api/attach/page', data);
+    return axios.post('/api/auth/attach/page', data);
 }
 
 export function getAllAttachGroupApi() {
-    return axios.get('/api/attach/getAllAttachGroup');
+    return axios.get('/api/auth/attach/getAllAttachGroup');
 }
 
 export function attachUpdateApi(data) {
-    return axios.put('/api/attach/update', data);
+    return axios.put('/apiv/attach/update', data);
 }
 
 export function getAttachApi(id) {
-    return axios.get('/api/attach/get?id=' + id);
+    return axios.get('/api/auth/attach/get?id=' + id);
 }
 
 export function attachDelApi(id) {
-    return axios.delete('/api/attach/del?id=' + id);
+    return axios.delete('/api/auth/attach/del?id=' + id);
 }
 
 export function attachDownloadApi(id) {
-    return axios.delete('/api/role/del?id=' + id);
+    return axios.delete('/api/auth/role/del?id=' + id);
 }

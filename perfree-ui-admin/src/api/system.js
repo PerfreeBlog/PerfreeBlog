@@ -7,14 +7,14 @@ export function login(data) {
 }
 
 export function menuAdminList() {
-    return axios.get('/api/menuAdminList');
+    return axios.get('/api/auth/menuAdminList');
 }
 
 export function userInfo() {
-    return axios.get('/api/userInfo');
+    return axios.get('/api/auth/userInfo');
 }
 
 export function getAllOption() {
-    return axios.get('/api/getAllOption');
+    return axios.get('/api/auth/getAllOption');
 }
 
