@@ -1,4 +1,4 @@
-package com.perfree.controller.auth.codegen.vo;
+package com.perfree.controller.auth.codegen.vo.table;
 
 import com.perfree.commons.common.PageParam;
 import io.swagger.v3.oas.annotations.media.Schema;

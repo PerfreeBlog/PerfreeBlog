@@ -35,7 +35,7 @@
         <el-table-column label="操作" width="280" fixed="right">
           <template v-slot="scope">
             <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">预览</el-button>
-            <el-button size="small" type="primary" link :icon="Filter" @click="handleRoleMenu(scope.row)">配置</el-button>
+            <el-button size="small" type="primary" link :icon="Filter" @click="handleConfig(scope.row)">配置</el-button>
             <el-button size="small" type="primary" link :icon="Filter" @click="handleRoleMenu(scope.row)">下载</el-button>
             <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
 
@@ -91,6 +91,7 @@ import {Delete, Edit, Filter, Refresh, Search, Upload} from "@element-plus/icons
 import {parseTime} from "@/utils/perfree.js";
 import {codegenGetTableList, codegenTablePage, createCodegenList} from "@/api/codegen.js";
 import {ElMessage} from "element-plus";
+import {toPage} from "@/utils/tabs.js";
 
 const searchForm = ref({
   pageNo: 1,
@@ -103,6 +104,7 @@ const addSearchForm = ref({
   tableName: ''
 })
 
+const router = useRouter();
 const addSearchFormRef = ref();
 const multipleTableRef = ref();
 let tableData = ref([]);
@@ -130,6 +132,9 @@ function handleAdd() {
   addTableInit();
 }
 
+/**
+ * 初始化导入表
+ */
 function addTableInit() {
   addLoading.value = true
   codegenGetTableList(addSearchForm.value).then(res => {
@@ -150,6 +155,9 @@ function resetAddSearchForm() {
   }
 }
 
+/**
+ * 导入表确定
+ */
 function submitAddForm() {
   if (multipleTableRef.value.getSelectionRows().length <= 0) {
     ElMessage.error("至少选择一张表!");
@@ -166,6 +174,14 @@ function submitAddForm() {
     initList();
     open.value = false;
   })
+}
+
+/**
+ * 配置方法
+ * @param item
+ */
+function handleConfig(item) {
+  toPage(`代码生成-配置[${item.tableName}]`, '/admin/codegen/editConfig/' + item.id, '')
 }
 
 initList();

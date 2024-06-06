@@ -44,6 +44,8 @@ public class CodegenColumn implements Serializable {
 
     private Integer formType;
 
+    private Integer queryType;
+
     @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 

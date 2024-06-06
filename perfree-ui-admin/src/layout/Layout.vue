@@ -66,6 +66,7 @@ import { useAppStore } from '@/stores/appStore'
 import { ElConfigProvider } from 'element-plus'
 import { useCssVar } from '@vueuse/core'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import {tabsData} from "@/utils/tabs.js";
 
 const appStore = useAppStore()
 const route = useRoute()
@@ -82,7 +83,7 @@ const primaryColor9 = useCssVar('--el-color-primary-light-9', el)
 const primaryColor2 = useCssVar('--el-color-primary-dark-2', el)
 let locale = ref(zhCn)
 let menuIsCollapse = ref(false)
-let tabs = reactive([{ name: '首页', hasClose: false, path: '/admin', currActive: true }])
+let tabs = reactive(tabsData)
 
 const classObject = ref({
   commonLayout: true,
@@ -99,15 +100,20 @@ const handleAddTab = (route) => {
     tabs.forEach((tab) => {
       tab.currActive = false
     })
-    tabs.push({
+    const tabInfo = {
       name: route.meta.title,
       hasClose: true,
       path: route.fullPath,
       currActive: true,
-    })
+    }
+    tabs.push(tabInfo)
+    appStore.setActiveTab(tabInfo)
   } else {
     tabs.forEach((tab) => {
       tab.currActive = tab.path === route.fullPath
+      if (tab.path === route.fullPath) {
+        appStore.setActiveTab(tab)
+      }
     })
   }
 }
@@ -166,9 +172,17 @@ const initPrimaryColor = () => {
   primaryColor2.value = val
 }
 
+function initTabs() {
+  if (appStore.activeTab) {
+    tabs.push(appStore.activeTab)
+  }
+  console.log(appStore.activeTab)
+  handleAddTab(route)
+}
+
 initPrimaryColor()
 initTheme()
-handleAddTab(route)
+initTabs()
 </script>
 
 <style scoped>

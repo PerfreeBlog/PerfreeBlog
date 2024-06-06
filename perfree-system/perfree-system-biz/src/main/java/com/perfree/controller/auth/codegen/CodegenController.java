@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.codegen.vo.CodegenCreateListReqVO;
-import com.perfree.controller.auth.codegen.vo.CodegenTableListReqVO;
-import com.perfree.controller.auth.codegen.vo.CodegenTablePageReqVO;
-import com.perfree.controller.auth.codegen.vo.CodegenTableRespVO;
+import com.perfree.controller.auth.codegen.vo.CodegenInfoReqVO;
+import com.perfree.controller.auth.codegen.vo.CodegenInfoRespVO;
+import com.perfree.controller.auth.codegen.vo.table.CodegenTableListReqVO;
+import com.perfree.controller.auth.codegen.vo.table.CodegenTablePageReqVO;
+import com.perfree.controller.auth.codegen.vo.table.CodegenTableRespVO;
 import com.perfree.convert.codegen.CodegenConvert;
 import com.perfree.model.CodegenTable;
 import com.perfree.service.codegen.CodegenService;
@@ -15,10 +17,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,5 +55,17 @@ public class CodegenController {
     public CommonResult<PageResult<CodegenTableRespVO>> codegenTablePage(@RequestBody CodegenTablePageReqVO pageVO) {
         PageResult<CodegenTable> codegenTablePage = codegenService.codegenTablePage(pageVO);
         return success(CodegenConvert.INSTANCE.convertPageResultVO(codegenTablePage));
+    }
+
+    @GetMapping("/getCodegenInfoByTableId")
+    @Operation(summary = "根据表id获取代码生成信息")
+    public CommonResult<CodegenInfoRespVO> getCodegenInfoByTableId(Integer tableId) {
+        return success(codegenService.getCodegenInfoByTableId(tableId));
+    }
+
+    @PostMapping("/saveConfig")
+    @Operation(summary = "保存代码生成配置")
+    public CommonResult<Boolean> saveConfig(@RequestBody CodegenInfoReqVO codegenInfoReqVO) {
+        return success(codegenService.saveConfig(codegenInfoReqVO));
     }
 }

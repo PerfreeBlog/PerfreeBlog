@@ -45,6 +45,7 @@ const i18n = createI18n({
 
 pinia.use(piniaPersist)
 app.use(pinia)
+app.config.globalProperties.$router = router;
 app.use(router)
 
 app.use(i18n)

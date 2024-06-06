@@ -17,14 +17,14 @@ const router = createRouter({
       component: Layout,
       redirect: 'admin',
       children: [
-     /*   {
-          path: '/admin',
-          name: 'home',
-          component: () => import('../views/HomeView.vue'),
+        {
+          path: '/admin/codegen/editConfig/:id',
+          name: 'editConfig',
+          component: () => import('@/views/codegen/CodegenEditConfig.vue'),
           meta: {
-            title: '首页',
-          },
-        },*/
+            title: "修改代码生成配置"
+          }
+        },
       ],
     },
     {

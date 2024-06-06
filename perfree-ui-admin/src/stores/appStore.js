@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useAppStore = defineStore({
   id: 'app',
   state: () => ({
-    navTabs: [],
+    activeTab: null,
     // 主题
     theme: null,
     // 主题色
@@ -18,8 +18,8 @@ export const useAppStore = defineStore({
     routeAnimation: null,
   }),
   getters: {
-    getNavTabs() {
-      return this.navTabs
+    getActiveTab() {
+      return this.activeTab
     },
     getTheme() {
       return this.theme
@@ -41,8 +41,8 @@ export const useAppStore = defineStore({
     },
   },
   actions: {
-    setNavTabs(val) {
-      this.navTabs = val
+    setActiveTab(val) {
+      this.activeTab = val
     },
     setTheme(val) {
       this.theme = val

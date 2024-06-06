@@ -3,9 +3,8 @@ package com.perfree.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
-import com.perfree.controller.auth.codegen.vo.CodegenTablePageReqVO;
+import com.perfree.controller.auth.codegen.vo.table.CodegenTablePageReqVO;
 import com.perfree.model.CodegenTable;
-import com.perfree.model.Role;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -247,7 +247,6 @@ const addRule = reactive({
 function initList() {
   loading.value = true;
   menuPageApi(searchForm.value).then((res) => {
-    console.log(res)
     tableData.value = handleTree(res.data, "id", "pid",'children', '-1');
     treeData.value = [{id: '-1', name: '主类目', children: tableData.value}];
     loading.value = false;
