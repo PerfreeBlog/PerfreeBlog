@@ -22,7 +22,8 @@ const router = createRouter({
           name: 'editConfig',
           component: () => import('@/views/codegen/CodegenEditConfig.vue'),
           meta: {
-            title: "修改代码生成配置"
+            title: "修改代码生成配置",
+            keepAlive: false
           }
         },
       ],
@@ -101,6 +102,7 @@ const initMenu = () => {
 
 const genRouteByMenus = (menus) => {
   return new Promise((resolve, reject)=> {
+    const commonStore = useCommonStore()
     for (let item of menus) {
       if (item.children && item.children.length > 0) {
         genRouteByMenus(item.children).then(() => {})
@@ -113,12 +115,18 @@ const genRouteByMenus = (menus) => {
                 component: modules[`../views${item.component}.vue`],
                 meta: {
                   title: item.name,
+                  keepAlive: true
                 }
               }
           )
         }
       }
     }
+    router.getRoutes().forEach(r => {
+      if (r.meta.keepAlive) {
+        commonStore.cachedViews.push(r)
+      }
+    })
     resolve()
   })
 }

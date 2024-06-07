@@ -37,6 +37,7 @@ public interface CodegenConvert {
             @Mapping(source = "keyIdentityFlag", target = "autoIncrement"),
             @Mapping(source = "metaInfo.nullable", target = "nullable"),
             @Mapping(source = "columnType.type", target = "javaType"),
+            @Mapping(source = "propertyName", target = "javaField"),
 
     })
     CodegenColumn convertToCodegenColum(TableField field);

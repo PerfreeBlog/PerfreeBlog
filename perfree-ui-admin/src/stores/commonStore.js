@@ -5,6 +5,7 @@ export const useCommonStore = defineStore({
     state: () => ({
         menuInit: false,
         menuList: [],
+        cachedViews: []
     }),
     getters: {
         getMenuInit() {
@@ -14,6 +15,9 @@ export const useCommonStore = defineStore({
         getMenuList() {
             return this.menuList
         },
+        getCachedViews() {
+            return this.cachedViews
+        },
     },
     actions: {
         setMenuInit(val) {
@@ -21,6 +25,9 @@ export const useCommonStore = defineStore({
         },
         setMenuList(val) {
             this.menuList = val
+        },
+        setCachedViews(val) {
+            this.cachedViews = val
         },
     },
     persist: {

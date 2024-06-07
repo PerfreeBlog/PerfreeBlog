@@ -43,7 +43,7 @@
                     mode="out-in"
                     :enter-active-class="'animate__animated ' + appStore.routeAnimation"
                 >
-                  <keep-alive>
+                  <keep-alive :include="cachedViews">
                     <component :is="Component" :key="Component.key" />
                   </keep-alive>
                 </transition>
@@ -67,6 +67,7 @@ import { ElConfigProvider } from 'element-plus'
 import { useCssVar } from '@vueuse/core'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import {tabsData} from "@/utils/tabs.js";
+import {useCommonStore} from "@/stores/commonStore.js";
 
 const appStore = useAppStore()
 const route = useRoute()
@@ -81,6 +82,8 @@ const primaryColor7 = useCssVar('--el-color-primary-light-7', el)
 const primaryColor8 = useCssVar('--el-color-primary-light-8', el)
 const primaryColor9 = useCssVar('--el-color-primary-light-9', el)
 const primaryColor2 = useCssVar('--el-color-primary-dark-2', el)
+const commonStore = useCommonStore()
+let cachedViews = ref(commonStore.cachedViews)
 let locale = ref(zhCn)
 let menuIsCollapse = ref(false)
 let tabs = reactive(tabsData)
