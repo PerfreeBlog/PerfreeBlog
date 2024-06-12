@@ -36,7 +36,9 @@ public class CodegenColumn implements Serializable {
 
     private String javaField;
 
-    private Boolean formOperation;
+    private Boolean insertOperation;
+
+    private Boolean updateOperation;
 
     private Boolean listOperation;
 

@@ -22,6 +22,7 @@ public enum ErrorCode {
     MASTER_ATTACH_CONFIG_EMPTY(100000012, "未配置默认存储策略或存储策略不存在!"),
     FILE_GET_CONTENT_ERROR(100000013,"获取文件内容出错!"),
     SITE_SLUG_EXIST(100000014,"该站点Slug访问标识已存在!"),
+    TAG_SLUG_EXIST(100000015,"该标签Slug访问标识已存在!"),
     ;
 
     private final Integer code;

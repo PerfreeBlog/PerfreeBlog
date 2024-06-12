@@ -35,6 +35,10 @@ const props = defineProps(['attachType', 'spliter', 'enableInput', 'placeholder'
 const emits = defineEmits(['update:modelValue'])
 
 const modelValue = ref(props.modelValue)
+
+watch(() => props.modelValue, (newValue, oldValue) => {
+  modelValue.value = newValue;
+});
 /**
  * 打开选择附件面板
  */

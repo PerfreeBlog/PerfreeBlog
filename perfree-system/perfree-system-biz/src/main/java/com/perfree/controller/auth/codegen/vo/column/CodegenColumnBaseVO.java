@@ -24,7 +24,9 @@ public class CodegenColumnBaseVO {
 
     private String javaField;
 
-    private Boolean formOperation;
+    private Boolean insertOperation;
+
+    private Boolean updateOperation;
 
     private Boolean listOperation;
 

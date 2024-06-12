@@ -1,9 +1,22 @@
 package com.perfree.service.tag;
 
+import com.perfree.commons.common.PageResult;
+import com.perfree.commons.exception.ServiceException;
+import com.perfree.controller.auth.tag.vo.TagCreateReqVO;
+import com.perfree.controller.auth.tag.vo.TagPageReqVO;
+import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
+import com.perfree.convert.tag.TagConvert;
 import com.perfree.mapper.TagMapper;
 import com.perfree.model.Tag;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.perfree.security.SecurityFrameworkUtils;
+import com.perfree.security.vo.LoginUserVO;
+import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import static com.perfree.enums.ErrorCode.TAG_SLUG_EXIST;
 
 /**
  * <p>
@@ -16,4 +29,56 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagService {
 
+    @Resource
+    private TagMapper tagMapper;
+
+    @Override
+    public PageResult<Tag> tagPage(TagPageReqVO pageVO) {
+        return tagMapper.tagPage(pageVO);
+    }
+
+    @Override
+    @Transactional
+    public Tag add(TagCreateReqVO tagCreateReqVO) {
+        if (StringUtils.isNotBlank(tagCreateReqVO.getSlug())) {
+            Tag queryTag = tagMapper.selectBySlug(tagCreateReqVO.getSlug());
+            if (null != queryTag) {
+                throw new ServiceException(TAG_SLUG_EXIST);
+            }
+        }
+        Tag tag = TagConvert.INSTANCE.convertCreateReqVoToModel(tagCreateReqVO);
+        LoginUserVO loginUser = SecurityFrameworkUtils.getLoginUser();
+        assert loginUser != null;
+        tag.setUserId(loginUser.getId());
+        tagMapper.insert(tag);
+        if (StringUtils.isBlank(tag.getSlug())) {
+            tag.setSlug(tag.getId().toString());
+            tagMapper.updateById(tag);
+        }
+        return tag;
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateTag(TagUpdateReqVO tagUpdateReqVO) {
+        if (StringUtils.isNotBlank(tagUpdateReqVO.getSlug())) {
+            Tag queryTag = tagMapper.selectBySlug(tagUpdateReqVO.getSlug());
+            if (null != queryTag && !queryTag.getId().equals(tagUpdateReqVO.getId())) {
+                throw new ServiceException(TAG_SLUG_EXIST);
+            }
+        } else {
+            tagUpdateReqVO.setSlug(tagUpdateReqVO.getId().toString());
+        }
+
+        Tag tag = TagConvert.INSTANCE.convertUpdateReqVoToModel(tagUpdateReqVO);
+        tagMapper.updateById(tag);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean del(Integer id) {
+        tagMapper.deleteById(id);
+        return true;
+    }
 }
