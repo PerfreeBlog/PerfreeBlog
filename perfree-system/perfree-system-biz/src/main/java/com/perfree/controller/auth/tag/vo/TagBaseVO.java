@@ -8,7 +8,7 @@ import lombok.Data;
 public class TagBaseVO {
 
     @Schema(description = "标签名", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "标签名为空")
+    @NotBlank(message = "标签名不能为空")
     private String name;
 
     @Schema(description = "颜色")

@@ -23,6 +23,8 @@ public enum ErrorCode {
     FILE_GET_CONTENT_ERROR(100000013,"获取文件内容出错!"),
     SITE_SLUG_EXIST(100000014,"该站点Slug访问标识已存在!"),
     TAG_SLUG_EXIST(100000015,"该标签Slug访问标识已存在!"),
+    CATEGORY_SLUG_EXIST(100000016,"该分类Slug访问标识已存在!"),
+    CATEGORY_EXIST_CHILD(100000017,"该分类存在子分类,不能删除!"),
     ;
 
     private final Integer code;

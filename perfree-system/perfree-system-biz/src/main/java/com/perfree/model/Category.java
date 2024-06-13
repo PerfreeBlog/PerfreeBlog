@@ -70,6 +70,11 @@ public class Category implements Serializable {
     private String thumbnail;
 
     /**
+     * slug
+     */
+    private String slug;
+
+    /**
      * 状态0:正常,1禁用
      */
     private Integer status;
