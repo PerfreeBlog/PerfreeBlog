@@ -6,6 +6,7 @@ import com.perfree.commons.exception.ServiceException;
 import com.perfree.constant.CategoryConstant;
 import com.perfree.controller.auth.category.vo.*;
 import com.perfree.convert.category.CategoryConvert;
+import com.perfree.mapper.ArticleCategoryMapper;
 import com.perfree.mapper.CategoryMapper;
 import com.perfree.model.Category;
 import jakarta.annotation.Resource;
@@ -32,6 +33,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Resource
     private CategoryMapper categoryMapper;
+
+    @Resource
+    private ArticleCategoryMapper articleCategoryMapper;
 
     @Override
     public PageResult<Category> categoryPage(CategoryPageReqVO pageVO) {
@@ -80,6 +84,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             throw new ServiceException(CATEGORY_EXIST_CHILD);
         }
         categoryMapper.deleteById(id);
+        articleCategoryMapper.delByCategoryId(id);
         return true;
     }
 

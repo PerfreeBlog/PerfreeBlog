@@ -7,6 +7,7 @@ import com.perfree.controller.auth.tag.vo.TagCreateReqVO;
 import com.perfree.controller.auth.tag.vo.TagPageReqVO;
 import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
 import com.perfree.convert.tag.TagConvert;
+import com.perfree.mapper.ArticleTagMapper;
 import com.perfree.mapper.TagMapper;
 import com.perfree.model.Tag;
 import jakarta.annotation.Resource;
@@ -29,6 +30,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
     @Resource
     private TagMapper tagMapper;
+
+    @Resource
+    private ArticleTagMapper articleTagMapper;
 
     @Override
     public PageResult<Tag> tagPage(TagPageReqVO pageVO) {
@@ -74,6 +78,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     @Transactional
     public Boolean del(Integer id) {
         tagMapper.deleteById(id);
+        articleTagMapper.delByTagId(id);
         return true;
     }
 }
