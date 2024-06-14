@@ -85,7 +85,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public List<CategoryTreeRespVO> listTree(CategoryListTreeReqVO categoryListTreeReqVO) {
-        List<Category> categories = categoryMapper.selectList();
+        List<Category> categories = categoryMapper.getAllCategory(categoryListTreeReqVO);
         List<CategoryTreeRespVO> categoryTreeRespVOList = CategoryConvert.INSTANCE.convertToTreeListRespVO(categories);
         // 获取所有跟节点
         List<CategoryTreeRespVO> result = categoryTreeRespVOList.stream().filter(category -> category.getPid().equals(CategoryConstant.ROOT_CATEGORY_CODE)).toList();

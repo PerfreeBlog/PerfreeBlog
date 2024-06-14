@@ -86,7 +86,7 @@
         </el-form-item>
 
         <el-form-item label="封面图" prop="thumbnail">
-          <attach-select-input :attach-type="'image/jpeg'" :enable-input="false" :placeholder="'请选择封面图'" v-model:model-value="addForm.thumbnail"></attach-select-input>
+          <attach-select-input :attach-type="'image/jpeg'" :enable-input="true" :placeholder="'请选择封面图'" v-model:model-value="addForm.thumbnail"></attach-select-input>
         </el-form-item>
       </el-form>
 

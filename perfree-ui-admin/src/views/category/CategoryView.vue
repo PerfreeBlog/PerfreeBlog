@@ -25,7 +25,6 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column label="序号" min-width="80" type="index" />
         <el-table-column prop="name" label="分类名称" width="240" />
         <el-table-column prop="desc" label="描述"  width="150"/>
         <el-table-column prop="count" label="文章数量" min-width="150"/>
@@ -56,12 +55,74 @@
 
     </div>
 
+    <el-dialog v-model="open" :title="title" width="600px" draggable>
+      <el-form
+          ref="addFormRef"
+          :model="addForm"
+          label-width="100px"
+          status-icon
+          :rules="addRule"
+      >
+        <el-form-item label="父级分类" prop="pid">
+          <el-tree-select
+              v-model="addForm.pid"
+              :data="treeData"
+              :props="treeSelectProps"
+              check-strictly
+              :render-after-expand="false"
+              style="width: 100%"
+              clearable
+          />
+        </el-form-item>
+        <el-form-item label="分类名称" prop="name">
+          <el-input v-model="addForm.name" placeholder="请输入分类名称"/>
+        </el-form-item>
+
+        <el-form-item label="分类描述" prop="desc">
+          <el-input v-model="addForm.desc" placeholder="请输入分类描述" :autosize="{ minRows: 3, maxRows: 6 }"
+                    type="textarea"/>
+        </el-form-item>
+
+        <el-form-item label="分类slug" prop="slug">
+          <el-input v-model="addForm.slug" placeholder="请输入分类slug"/>
+        </el-form-item>
+
+        <el-form-item label="封面图" prop="thumbnail">
+          <attach-select-input :attach-type="'image/jpeg'" :enable-input="true" :placeholder="'请选择封面图'" v-model:model-value="addForm.thumbnail"></attach-select-input>
+        </el-form-item>
+
+        <el-form-item label="SEO关键字" prop="metaKeywords">
+          <el-input v-model="addForm.metaKeywords" placeholder="请输入SEO关键字" :autosize="{ minRows: 3, maxRows: 6 }"
+                    type="textarea"/>
+        </el-form-item>
+
+        <el-form-item label="SEO描述内容" prop="metaDescription">
+          <el-input v-model="addForm.metaDescription" placeholder="请输入SEO描述内容" :autosize="{ minRows: 3, maxRows: 6 }"
+                    type="textarea"/>
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <span class="dialog-footer">
+              <el-button type="primary" @click="submitAddForm">确 定</el-button>
+              <el-button @click="open = false; resetAddForm()">取 消</el-button>
+        </span>
+      </template>
+    </el-dialog>
   </div>
 </template>
 <script setup>
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
-import {categoryListTreeApi} from "@/api/category.js";
+import {
+  categoryAddApi,
+  categoryDelApi,
+  categoryGetApi,
+  categoryListTreeApi,
+  categoryUpdateApi
+} from "@/api/category.js";
 import {handleTree} from "@/utils/perfree.js";
+import AttachSelectInput from "@/components/attach-select-input.vue";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 const searchFormRef = ref();
 const searchForm = ref({
@@ -79,6 +140,21 @@ const treeSelectProps = reactive({
   value: 'id',
 })
 
+const addForm = ref({
+  pid: -1,
+  id: '',
+  name: '',
+  desc: '',
+  metaKeywords: '',
+  thumbnail: '',
+  slug: '',
+  metaDescription: ''
+});
+const addRule = reactive({
+  pid: [{required: true, message: '请选择父级分类', trigger: 'blur'}],
+  name: [{required: true, message: '请输入分类名称', trigger: 'blur'}],
+});
+const addFormRef = ref();
 
 /**
  * 初始化列表
@@ -87,7 +163,7 @@ function initList() {
   loading.value = true;
   categoryListTreeApi(searchForm.value).then((res) => {
     tableData.value = handleTree(res.data, "id", "pid",'children', -1);
-    treeData.value = [{id: '-1', name: '主类目', children: tableData.value}];
+    treeData.value = [{id: -1, name: '主类目', children: tableData.value}];
     loading.value = false;
   });
 }
@@ -100,6 +176,104 @@ function resetSearchForm() {
     name: ''
   }
   searchFormRef.value.resetFields();
+}
+
+/**
+ * 新增
+ */
+function handleAdd(row) {
+  resetAddForm();
+  if (row && row.id) {
+    addForm.value.pid = row.id;
+  }
+  title.value = '添加分类';
+  open.value = true;
+}
+
+/**
+ * 重置添加表单
+ */
+function resetAddForm() {
+  addForm.value = {
+    pid: -1,
+    id: '',
+    name: '',
+    desc: '',
+    metaKeywords: '',
+    thumbnail: '',
+    slug: '',
+    metaDescription: ''
+  }
+  if (addFormRef.value) {
+    addFormRef.value.resetFields();
+  }
+}
+
+/**
+ * 添加提交
+ */
+function submitAddForm() {
+  addFormRef.value.validate(valid => {
+    if (valid) {
+      if (addForm.value.id) {
+        categoryUpdateApi(addForm.value).then((res) => {
+          if (res.code === 200) {
+            ElMessage.success('修改成功');
+            open.value = false;
+            resetAddForm();
+            initList();
+          } else {
+            ElMessage.error(res.msg);
+          }
+        })
+      } else {
+        categoryAddApi(addForm.value).then((res) => {
+          if (res.code === 200) {
+            ElMessage.success('添加成功');
+            open.value = false;
+            resetAddForm();
+            initList();
+          } else {
+            ElMessage.error(res.msg);
+          }
+        })
+      }
+    }
+  })
+}
+
+
+/**
+ * 修改
+ */
+function handleUpdate(row) {
+  title.value = '修改分类';
+  resetAddForm();
+  categoryGetApi(row.id).then((res) => {
+    addForm.value = res.data;
+    open.value = true;
+  })
+}
+
+/**
+ * 删除
+ * @param row
+ */
+function handleDelete(row) {
+  ElMessageBox.confirm('确定要删除[' + row.name + ']吗？', '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+  }).then(() => {
+    categoryDelApi(row.id).then((res) => {
+      if (res.code === 200 && res.data) {
+        ElMessage.success('删除成功');
+        initList();
+      } else {
+        ElMessage.error(res.msg);
+      }
+    });
+  }).catch(() => {})
 }
 
 initList();

@@ -45,7 +45,7 @@ public class CategoryController {
         return success(CategoryConvert.INSTANCE.convertRespVO(category));
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @Operation(summary = "更新分类")
     public CommonResult<CategoryRespVO> update(@RequestBody @Valid CategoryUpdateReqVO categoryUpdateReqVO) {
         Category category = categoryService.updateCategory(categoryUpdateReqVO);

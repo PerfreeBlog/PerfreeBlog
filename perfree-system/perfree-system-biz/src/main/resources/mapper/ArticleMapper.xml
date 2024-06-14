@@ -2,4 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.perfree.mapper.ArticleMapper">
 
+    <select id="articlePage" resultType="com.perfree.controller.auth.article.vo.ArticleRespVO">
+        SELECT t1.*,t2.userName FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where 1 =1
+        <if test="pageVO.categoryId != null">
+           and t1.id IN (SELECT articleId FROM p_article_category WHERE categoryId = #{pageVO.categoryId})
+        </if>
+
+        <if test="pageVO.tagId != null">
+            and  t1.id IN (SELECT articleId FROM p_article_tag WHERE tagId = #{pageVO.tagId})
+        </if>
+
+        <if test="pageVO.status != null">
+            and t1.status = #{pageVO.status}
+        </if>
+
+        <if test="pageVO.type != null and pageVO.type != ''">
+            and t1.type = #{pageVO.type}
+        </if>
+
+        <if test="pageVO.title != null and pageVO.title != ''">
+            <bind name="title" value="'%' + _parameter.pageVO.title + '%'" />
+            and t1.title like #{title}
+        </if>
+
+    </select>
 </mapper>
