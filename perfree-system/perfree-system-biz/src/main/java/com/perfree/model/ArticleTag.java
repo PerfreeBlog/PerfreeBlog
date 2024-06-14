@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_article_tag")
-public class ArticleTag implements Serializable {
+public class ArticleTag extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

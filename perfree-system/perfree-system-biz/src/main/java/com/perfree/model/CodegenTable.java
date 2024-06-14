@@ -1,6 +1,7 @@
 package com.perfree.model;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("p_codegen_table")
-public class CodegenTable implements Serializable {
+public class CodegenTable extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -69,11 +70,4 @@ public class CodegenTable implements Serializable {
      * 父菜单编号
      */
     private String parentMenuId;
-
-
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @TableField(fill = FieldFill.UPDATE)
-    private Date updateTime;
 }

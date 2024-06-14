@@ -1,6 +1,7 @@
 package com.perfree.model;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("p_tag")
-public class Tag implements Serializable {
+public class Tag  extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -46,21 +47,4 @@ public class Tag implements Serializable {
      * slug
      */
     private String slug;
-
-    /**
-     * 添加人
-     */
-    private Integer userId;
-
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
 }

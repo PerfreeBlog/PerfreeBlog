@@ -1,16 +1,16 @@
 package com.perfree.model;
 
-import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
-
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.perfree.base.BaseModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * <p>
@@ -25,7 +25,7 @@ import lombok.Setter;
 @TableName("p_user")
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements Serializable {
+public class User extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -75,10 +75,4 @@ public class User implements Serializable {
      * 网站
      */
     private String website;
-
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Date updateTime;
 }

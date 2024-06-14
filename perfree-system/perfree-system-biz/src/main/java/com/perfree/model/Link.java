@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_link")
-public class Link implements Serializable {
+public class Link extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -52,15 +53,4 @@ public class Link implements Serializable {
      */
     private String address;
 
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.UPDATE)
-    private Date updateTime;
 }

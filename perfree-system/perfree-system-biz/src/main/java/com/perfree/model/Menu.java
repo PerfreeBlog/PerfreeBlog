@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.perfree.base.BaseModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_menu")
-public class Menu implements Serializable {
+public class Menu extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -76,11 +77,4 @@ public class Menu implements Serializable {
     /** 是否为外链（0是 1否） */
     private Integer isFrame;
 
-    /** 创建时间 */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    /** 更新时间 */
-    @TableField(fill = FieldFill.UPDATE)
-    private Date updateTime;
 }

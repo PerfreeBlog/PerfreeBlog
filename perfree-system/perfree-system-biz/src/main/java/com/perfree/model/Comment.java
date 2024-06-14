@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_comment")
-public class Comment implements Serializable {
+public class Comment extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -93,14 +94,4 @@ public class Comment implements Serializable {
      * ip
      */
     private String ip;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 }

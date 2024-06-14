@@ -7,6 +7,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serial;
 import java.io.Serializable;
+
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_option")
-public class Option implements Serializable {
+public class Option extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

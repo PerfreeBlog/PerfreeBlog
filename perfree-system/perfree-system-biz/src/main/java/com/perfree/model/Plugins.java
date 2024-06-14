@@ -9,6 +9,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_plugins")
-public class Plugins implements Serializable {
+public class Plugins extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -65,13 +66,4 @@ public class Plugins implements Serializable {
      */
     private Integer status;
 
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 }

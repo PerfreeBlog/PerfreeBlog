@@ -18,7 +18,4 @@ public class TagRespVO extends TagBaseVO {
 
     @Schema(description = "更新时间")
     private Date updateTime;
-
-    @Schema(description = "添加人")
-    private Integer userId;
 }

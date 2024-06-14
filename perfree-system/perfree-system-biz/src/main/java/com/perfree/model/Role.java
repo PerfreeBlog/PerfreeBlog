@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_role")
-public class Role implements Serializable {
+public class Role extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -46,10 +47,4 @@ public class Role implements Serializable {
      * 角色编码
      */
     private String code;
-
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
-
-    @TableField(fill = FieldFill.UPDATE)
-    private Date updateTime;
 }

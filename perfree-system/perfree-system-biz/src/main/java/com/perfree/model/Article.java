@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @TableName("p_article")
-public class Article implements Serializable {
+public class Article extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -104,10 +105,6 @@ public class Article implements Serializable {
      */
     private Integer greatCount;
 
-    /**
-     * 创建人
-     */
-    private Integer userId;
 
     /**
      * 是否允许评论0:否,1是
@@ -124,15 +121,5 @@ public class Article implements Serializable {
      */
     private String template;
 
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private Date createTime;
 
-    /**
-     * 更新时间
-     */
-    @TableField(fill = FieldFill.UPDATE)
-    private Date updateTime;
 }
