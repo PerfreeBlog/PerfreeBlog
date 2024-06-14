@@ -19,8 +19,8 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@TableName("p_user_role")
-public class UserRole implements Serializable {
+@TableName("p_article_category")
+public class ArticleCategory implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -28,8 +28,13 @@ public class UserRole implements Serializable {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private Integer userId;
+    /**
+     * 文章id
+     */
+    private Integer articleId;
 
-    private Integer roleId;
-
+    /**
+     * 分类id
+     */
+    private Integer categoryId;
 }

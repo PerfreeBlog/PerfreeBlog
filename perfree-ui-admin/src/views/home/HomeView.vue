@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+
+import 'perfree-lit-test/dist/js/index'
+</script>
 
 <template>
   <main>
@@ -13,5 +16,8 @@
     <el-alert title="Info alert" type="info" />
     <el-alert title="Warning alert" type="warning" />
     <el-alert title="Error alert" type="error" />
+
+    <my-element docsHint="xx2x">
+    </my-element>
   </main>
 </template>

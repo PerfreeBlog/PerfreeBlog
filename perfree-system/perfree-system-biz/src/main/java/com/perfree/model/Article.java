@@ -60,11 +60,6 @@ public class Article implements Serializable {
     private String summary;
 
     /**
-     * 所属分类
-     */
-    private Integer categoryId;
-
-    /**
      * SEO关键字
      */
     private String metaKeywords;
