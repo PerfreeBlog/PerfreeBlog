@@ -40,7 +40,7 @@ public class LinkController {
         return success(LinkConvert.INSTANCE.convertRespVO(link));
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     @Operation(summary = "更新友链")
     public CommonResult<LinkRespVO> update(@RequestBody @Valid LinkUpdateReqVO linkUpdateReqVO) {
         Link link = linkService.updateLink(linkUpdateReqVO);

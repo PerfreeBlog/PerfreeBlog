@@ -46,6 +46,7 @@ public class Link extends BaseModel implements Serializable {
     /**
      * 网站描述
      */
+    @TableField("`desc`")
     private String desc;
 
     /**
