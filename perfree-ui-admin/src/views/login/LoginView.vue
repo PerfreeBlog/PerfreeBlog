@@ -97,12 +97,15 @@ import {getCodeImg, login, userInfo} from "@/api/system.js";
 import {useI18n} from "vue-i18n";
 import {CONSTANTS} from "@/utils/constants.js";
 import {ElMessage} from "element-plus";
+import {useCommonStore} from "@/stores/commonStore.js";
+import {initTabs} from "@/utils/tabs.js";
 
 const {proxy} = getCurrentInstance();
 const router = useRouter();
 let {locale, t} = useI18n();
 
 let captchaEnabled = true;
+const commonStore = useCommonStore()
 
 const loginForm = ref({
   username: "",
@@ -131,6 +134,8 @@ const handleLogin = () => {
     if (valid) {
       login(loginForm.value).then((res) => {
         if (res.code === 200) {
+          commonStore.setMenuInit(false);
+          initTabs();
           localStorage.setItem(CONSTANTS.STORAGE_TOKEN, JSON.stringify(res.data));
           userInfo().then(r => {
             localStorage.setItem(CONSTANTS.STORAGE_USER_INFO, JSON.stringify(r.data))

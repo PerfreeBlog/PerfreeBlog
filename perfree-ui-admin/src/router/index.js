@@ -122,6 +122,7 @@ const genRouteByMenus = (menus) => {
         }
       }
     }
+    commonStore.setCachedViews([]);
     router.getRoutes().forEach(r => {
       if (r.meta.keepAlive) {
         commonStore.cachedViews.push(r)
