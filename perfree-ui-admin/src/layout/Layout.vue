@@ -179,7 +179,6 @@ function initTabs() {
   if (appStore.activeTab) {
     tabs.push(appStore.activeTab)
   }
-  console.log(appStore.activeTab)
   handleAddTab(route)
 }
 

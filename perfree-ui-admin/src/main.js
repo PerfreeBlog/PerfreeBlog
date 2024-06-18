@@ -21,7 +21,6 @@ import router from './router'
 import en from "@/language/en.js";
 import zh from "@/language/zh.js";
 import {createI18n} from "vue-i18n";
-import {CONSTANTS} from "@/utils/constants.js";
 
 window.axios = axios;
 const app = createApp(App)

@@ -132,7 +132,7 @@
               class="upload-demo"
               drag
               :headers="headers"
-              :action="serverBaseUrl + '/api/attach/upload'"
+              :action="serverBaseUrl + '/api/auth/attach/upload'"
               multiple
               style="width: 100%"
               v-model:file-list="addForm.fileList"
