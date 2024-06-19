@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.utils.MyBatisUtils;
+import com.perfree.controller.auth.article.vo.ArticleAddReqVO;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.mapper.ArticleMapper;
@@ -30,5 +31,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         IPage<ArticleRespVO> page = MyBatisUtils.buildPage(pageVO);
         IPage<ArticleRespVO> articlePage = articleMapper.articlePage(page, pageVO);
         return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
+    }
+
+    @Override
+    public Article createArticle(ArticleAddReqVO articleAddReqVO) {
+        return null;
     }
 }

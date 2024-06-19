@@ -1,6 +1,7 @@
 package com.perfree.service.article;
 
 import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.article.vo.ArticleAddReqVO;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.model.Article;
@@ -22,5 +23,12 @@ public interface ArticleService extends IService<Article> {
      * @return PageResult<ArticleRespVO>
      */
     PageResult<ArticleRespVO> articlePage(ArticlePageReqVO pageVO);
+
+    /**
+     * 发表文章
+     * @param articleAddReqVO articleAddReqVO
+     * @return Article
+     */
+    Article createArticle(ArticleAddReqVO articleAddReqVO);
 
 }

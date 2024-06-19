@@ -82,7 +82,7 @@
         </el-form-item>
 
         <el-form-item label="网站logo" prop="logo">
-          <attach-select-input :attach-type="'image/jpeg'" :enable-input="true" :placeholder="'请输入网站logo地址'" v-model:model-value="addForm.logo"></attach-select-input>
+          <attach-select-input :attach-type="'img'" :enable-input="true" :placeholder="'请输入网站logo地址'" v-model:model-value="addForm.logo"></attach-select-input>
         </el-form-item>
 
         <el-form-item label="网站描述" prop="desc">

@@ -16,4 +16,7 @@ public class ArticleAddReqVO extends ArticleBaseVO {
 
     @Schema(description = "标签id集合")
     private List<String> tagIds;
+
+    @Schema(description = "新增的标签集合")
+    private List<String> addTags;
 }

@@ -17,3 +17,7 @@ export function tagUpdateApi(data) {
 export function tagDelApi(id) {
     return axios.delete('/api/auth/tag/del?id=' + id);
 }
+
+export function getAllTag() {
+    return axios.get('/api/auth/tag/getAllTag');
+}

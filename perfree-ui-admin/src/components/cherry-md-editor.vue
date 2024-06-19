@@ -24,6 +24,8 @@ let title = ref('')
 let selectData = ref([])
 let attachType = ref('')
 let attachMaxSelect = ref(0)
+const props = defineProps(['initValue'])
+const emits = defineEmits(['contentChange'])
 
 // 定义插入图片按钮
 let customImageMenu = Cherry.createMenuHook('插入图片',  {
@@ -89,9 +91,12 @@ function resetAddForm() {
 
 
 onMounted(() => {
+  function afterChange () {
+    emits('contentChange', cherryInstance.getMarkdown());
+  }
   cherryInstance =  new Cherry({
     el: markdownContainer.value,
-    value: '写点什么吧',
+    value: props.initValue ? props.initValue : '写点什么?',
     forceAppend: false,
     engine: {
       global: {
@@ -128,17 +133,17 @@ onMounted(() => {
       enablePreviewerBubble: false,
     }
   });
-  // cherryInstance.on('afterChange', afterChange);
+  cherryInstance.on('afterChange', afterChange);
 })
 
 
 
-
-function afterChange(){
-  /*addForm.value.content = cherryInstance.getMarkdown();
-  console.log(addForm.value);*/
+function resetContent() {
+  cherryInstance.setValue("写点什么?");
 }
-
+defineExpose({
+  resetContent
+})
 </script>
 
 <style>

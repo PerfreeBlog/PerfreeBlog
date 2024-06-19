@@ -9,6 +9,8 @@ import com.perfree.model.Tag;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface TagConvert {
     TagConvert INSTANCE = Mappers.getMapper(TagConvert.class);
@@ -20,5 +22,7 @@ public interface TagConvert {
     Tag convertCreateReqVoToModel(TagCreateReqVO tagCreateReqVO);
 
     Tag convertUpdateReqVoToModel(TagUpdateReqVO tagUpdateReqVO);
+
+    List<TagRespVO> convertRespVOList(List<Tag> list);
 
 }

@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.perfree.commons.common.CommonResult.success;
 
 @RestController
@@ -33,6 +35,13 @@ public class TagController {
     public CommonResult<PageResult<TagRespVO>> page(@RequestBody TagPageReqVO pageVO) {
         PageResult<com.perfree.model.Tag> tagPageResult = tagService.tagPage(pageVO);
         return success(TagConvert.INSTANCE.convertPageResultVO(tagPageResult));
+    }
+
+    @GetMapping("/getAllTag")
+    @Operation(summary = "获取所有标签列表")
+    public CommonResult<List<TagRespVO>> getAllTag() {
+        List<com.perfree.model.Tag> list = tagService.list();
+        return success(TagConvert.INSTANCE.convertRespVOList(list));
     }
 
     @PostMapping("/add")
