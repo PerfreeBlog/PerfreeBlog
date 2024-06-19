@@ -30,6 +30,11 @@ public class AttachFileDTO {
      */
     private String type;
 
+    /**
+     * 文件类型mineType
+     */
+    private String mineType;
+
 
     /**
      * 配置

@@ -60,6 +60,11 @@ public class Attach extends BaseModel implements Serializable {
     private String type;
 
     /**
+     * 文件类型mineType
+     */
+    private String mineType;
+
+    /**
      * 配置id
      */
     private Integer configId;

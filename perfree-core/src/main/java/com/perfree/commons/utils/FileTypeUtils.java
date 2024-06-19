@@ -2,7 +2,10 @@ package com.perfree.commons.utils;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
+
+import java.util.Arrays;
 
 /**
  * 文件类型 Utils
@@ -45,4 +48,19 @@ public class FileTypeUtils {
         return TIKA.get().detect(data, name);
     }
 
+    public static String getFileTypeByMineType(String mineType) {
+        if (StringUtils.isBlank(mineType)) {
+            return "other";
+        }
+        if (mineType.contains("image")){
+            return "img";
+        }
+        if (mineType.contains("video")){
+            return "video";
+        }
+        if (mineType.contains("audio")){
+            return "audio";
+        }
+        return "other";
+    }
 }

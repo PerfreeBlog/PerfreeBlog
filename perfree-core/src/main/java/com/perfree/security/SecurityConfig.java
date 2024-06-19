@@ -4,6 +4,7 @@ import com.perfree.security.filter.JwtAuthorizationFilter;
 import com.perfree.security.service.SecurityFrameworkService;
 import com.perfree.security.service.SecurityFrameworkServiceImpl;
 import com.perfree.system.api.permission.PermissionApi;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +38,7 @@ public class SecurityConfig {
 
     private final CorsFilter corsFilter;
 
+    @Resource
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean("ss") // 使用 Spring Security 的缩写，方便使用
@@ -81,7 +83,8 @@ public class SecurityConfig {
                                 "/webjars/**",
                                 "/swagger-ui.html",
                                 "/favicon.ico",
-                                "/api/plugin/**").permitAll()
+                                "/api/plugin/**",
+                                "/attach/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 //  配置跨域

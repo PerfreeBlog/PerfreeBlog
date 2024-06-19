@@ -29,7 +29,7 @@ let attachMaxSelect = ref(0)
 let customImageMenu = Cherry.createMenuHook('插入图片',  {
   iconName: 'image',
   onClick: function(selection) {
-    attachType.value = 'image/jpeg';
+    attachType.value = 'img';
     attachMaxSelect.value = 8;
     title.value = '选择图片'
     open.value = true;
@@ -40,7 +40,7 @@ let customImageMenu = Cherry.createMenuHook('插入图片',  {
 let customVideoMenu = Cherry.createMenuHook('插入视频',  {
   iconName: 'video',
   onClick: function(selection) {
-    attachType.value = 'video/mp4';
+    attachType.value = 'video';
     attachMaxSelect.value = 1;
     title.value = '选择视频'
     open.value = true;
@@ -60,15 +60,15 @@ function selectAttach(data) {
  */
 function submitAddForm() {
   selectData.value.forEach((r, index) => {
-    if (attachType.value === 'image/jpeg') {
-      let insertStr = `\n![${r.name}](${r.url} "${r.name}")`;
+    if (attachType.value === 'img') {
+      let insertStr = `\n![${r.name}](${r.url})`;
       cherryInstance.insert(insertStr)
       if (index === selectData.value.length -1 )  {
         cherryInstance.insert('\n')
       }
     }
 
-    if (attachType.value === 'video/mp4') {
+    if (attachType.value === 'video') {
       let insertStr = `\n<video src="${r.url}" controls="controls" width="100%"></video>`;
       cherryInstance.insert(insertStr)
     }

@@ -14,6 +14,7 @@ import com.perfree.plugin.PluginDevManager;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.PluginManager;
+import com.perfree.service.attachConfig.AttachConfigService;
 import com.perfree.service.option.OptionService;
 import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
 import com.perfree.system.api.option.dto.OptionCacheDTO;
@@ -51,14 +52,18 @@ public class AppInit implements ApplicationRunner {
 
     private final AttachConfigCacheService attachConfigCacheService;
 
+    private final AttachConfigService attachConfigService;
+
     public AppInit(PluginManager pluginManager, PluginDevManager pluginDevManager, OptionService optionService,
-                   OptionCacheService optionCacheService, AttachConfigMapper attachConfigMapper,AttachConfigCacheService attachConfigCacheService) {
+                   OptionCacheService optionCacheService, AttachConfigMapper attachConfigMapper,
+                   AttachConfigCacheService attachConfigCacheService, AttachConfigService attachConfigService) {
         this.pluginManager = pluginManager;
         this.pluginDevManager = pluginDevManager;
         this.optionService = optionService;
         this.optionCacheService = optionCacheService;
         this.attachConfigMapper = attachConfigMapper;
         this.attachConfigCacheService = attachConfigCacheService;
+        this.attachConfigService = attachConfigService;
     }
 
     @Override
@@ -66,6 +71,7 @@ public class AppInit implements ApplicationRunner {
         initFileHandle();
         initOptions();
         initAttachConfig();
+        attachConfigService.initLocalResourcesPatterns();
         pluginManager.initPlugins();
         String command = System.getProperty("sun.java.command");
         if (command != null && !command.contains(".jar")) {
@@ -105,7 +111,7 @@ public class AppInit implements ApplicationRunner {
     /**
      * 初始化附件配置
      */
-    private void initAttachConfig() {
+    private void initAttachConfig() throws Exception {
         List<AttachConfig> all = attachConfigMapper.getAll();
         List<AttachConfigCacheDTO> attachConfigCacheDTOS = AttachConfigConvert.INSTANCE.convertCacheListDTO(all);
         for (AttachConfigCacheDTO attachConfig : attachConfigCacheDTOS) {

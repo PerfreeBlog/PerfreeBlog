@@ -19,6 +19,13 @@ logging:
 spring:
   web:
     resources:
+      chain:
+        cache: true
+      cache:
+        cachecontrol:
+          max-age: 7200
+        period: 3600
+        use-last-modified: true
       static-locations: classpath:/static/
   aop:
     proxy-target-class: true

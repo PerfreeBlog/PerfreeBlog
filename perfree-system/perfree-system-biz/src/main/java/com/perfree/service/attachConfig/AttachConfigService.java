@@ -62,4 +62,9 @@ public interface AttachConfigService extends IService<AttachConfig> {
      */
     Boolean updateMaster(AttachConfigUpdateMasterVO attachConfigUpdateMasterVO);
 
+    /**
+     * 初始化springboot静态资源映射规则
+     */
+    void initLocalResourcesPatterns();
+
 }

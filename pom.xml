@@ -27,9 +27,9 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring.boot.version>3.1.6</spring.boot.version>
+        <spring.boot.version>3.2.1</spring.boot.version>
         <druid.version>1.2.18</druid.version>
-        <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
+        <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <lombok.version>1.18.30</lombok.version>
         <hutool.version>5.8.20</hutool.version>
         <velocity.version>2.3</velocity.version>
@@ -74,7 +74,7 @@
             </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
             <dependency>

@@ -44,18 +44,16 @@
     </el-row>
 
     <div class="table-box">
-
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading"  :show-overflow-tooltip="true">
         <el-table-column label="序号" min-width="50" type="index" />
         <el-table-column prop="name" label="附件名称" min-width="150" />
         <el-table-column prop="attachGroup" label="预览" min-width="100">
           <template v-slot="scope">
-
             <div class="block">
             <el-image style="width: 100%; max-height: 100%" :src="scope.row.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
-                      :preview-src-list="[scope.row.url]" :initial-index="4" v-if="scope.row.type&&scope.row.type.indexOf('image/') === 0"
+                      :preview-src-list="[scope.row.url]" :initial-index="4" v-if="scope.row.type&&scope.row.type === 'img'"
                       append-to-body fit="cover" preview-teleported></el-image>
-            <video v-else-if="scope.row.type&&scope.row.type.indexOf('video/') === 0" controls style="width: 100%; max-height: 100%">
+            <video v-else-if="scope.row.type&&scope.row.type === 'video'" controls preload="none"  style="width: 100%; max-height: 100%">
               <source :src="scope.row.url"/>
             </video>
             <i v-else>无法预览，点击
@@ -106,7 +104,7 @@
       />
     </div>
 
-
+    <!---添加附件-->
     <el-dialog v-model="open" :title="title" width="600px" draggable  @close="closeAdd">
       <el-form
           ref="addFormRef"
@@ -153,15 +151,19 @@
     </el-dialog>
 
 
+    <!--附件详情-->
     <el-dialog v-model="showOpen" :title="title" width="800px" draggable>
       <el-row>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" >
           <div  style="padding-right: 15px">
             <el-image style="width: 100%; max-height: 100%" :src="showForm.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
-                      :preview-src-list="[showForm.url]" :initial-index="4" fit="cover" v-if="showForm.type&&showForm.type.indexOf('image/') === 0"/>
-            <video v-else-if="showForm.type&&showForm.type.indexOf('video/') === 0" controls style="width: 100%; max-height: 100%">
+                      :preview-src-list="[showForm.url]" :initial-index="4" fit="cover" v-if="showForm.type&&showForm.type === 'img'"/>
+            <video v-else-if="showForm.type&&showForm.type === 'video'" preload="none" controls style="width: 100%; max-height: 100%">
               <source :src="showForm.url"/>
             </video>
+            <audio controls v-else-if="showForm.type&&showForm.type === 'audio'" preload="none">
+              <source :src="showForm.url" />
+            </audio>
             <i v-else>无法预览，点击
               <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" target="_blank"
                        :href="'/api/attach/file/' + showForm.configId + '/get/' + showForm.path">下载
@@ -180,6 +182,9 @@
             >
               <el-form-item label="附件名称" prop="name">
                 <el-input v-model="showForm.name" />
+              </el-form-item>
+              <el-form-item label="附件mineType">
+                <el-input v-model="showForm.mineType" disabled />
               </el-form-item>
               <el-form-item label="附件类型">
                 <el-input v-model="showForm.type" disabled />
@@ -269,7 +274,8 @@ const showForm = ref({
   attachGroup: 'default',
   path: '',
   url: '',
-  desc: ''
+  desc: '',
+  mineType: ''
 })
 
 
@@ -373,7 +379,8 @@ function resetShowForm() {
     attachGroup: 'default',
     path: '',
     url: '',
-    desc: ''
+    desc: '',
+    mineType: ''
   }
   if (showFormRef.value) {
     showFormRef.value.resetFields();

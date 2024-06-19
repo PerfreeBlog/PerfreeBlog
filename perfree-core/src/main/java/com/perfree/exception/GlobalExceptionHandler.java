@@ -5,6 +5,8 @@ import com.perfree.commons.enums.ResultCodeEnum;
 import com.perfree.commons.exception.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -94,6 +97,15 @@ public class GlobalExceptionHandler{
     public CommonResult<?> handleAccessDeniedException(Exception exception) {
         LOGGER.error(exception.getMessage(), exception);
         return CommonResult.error(ResultCodeEnum.AUTH_FORBIDDEN.getCode(), ResultCodeEnum.AUTH_FORBIDDEN.getMsg());
+    }
+
+    @ExceptionHandler(value = IOException.class)
+    public ResponseEntity<Object> handleIOException(IOException ex) {
+        if (ex.getMessage().contains("Connection reset by peer")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        LOGGER.error(ex.getMessage(), ex);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

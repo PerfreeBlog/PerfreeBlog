@@ -54,7 +54,8 @@ public class FileS3HandleImpl extends BaseFileHandle {
                     .stream(new ByteArrayInputStream(bytes), bytes.length, -1) // 文件内容
                     .build());
             AttachFileDTO attachFileDTO = new AttachFileDTO();
-            attachFileDTO.setType(mineType);
+            attachFileDTO.setMineType(mineType);
+            attachFileDTO.setType(FileTypeUtils.getFileTypeByMineType(mineType));
             attachFileDTO.setName(attachUploadDTO.getFile().getOriginalFilename());
             attachFileDTO.setPath(path);
             attachFileDTO.setDesc(attachUploadDTO.getDesc());

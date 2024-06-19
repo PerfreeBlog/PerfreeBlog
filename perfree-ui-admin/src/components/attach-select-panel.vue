@@ -16,7 +16,7 @@
         <el-col :span="6" v-for="item in tableData" class="attach-col"  @click="selectAttach(item)">
           <div :class="{'attach-block': true, 'selected': item.selected}">
             <div class="attach-preview">
-              <el-image  :key="item.url" :src="item.url" lazy class="attach-img" loading="lazy"  v-if="item.type&&item.type.indexOf('image/') === 0">
+              <el-image  :key="item.url" :src="item.url" lazy class="attach-img" loading="lazy"  v-if="item.type&&item.type === 'img'">
                 <template #placeholder>
                   <div class="image-slot">
                     <el-icon class="is-loading">
@@ -25,6 +25,10 @@
                   </div>
                 </template>
               </el-image>
+
+              <video v-else-if="item.type&&item.type === 'video'" preload="none" controls style="width: 100%; max-height: 100%">
+                <source :src="item.url"/>
+              </video>
               <div v-else class="attach-other">
                 {{item.path.split('.').pop()}}
               </div>
@@ -63,10 +67,13 @@
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" >
           <div  style="padding-right: 15px">
             <el-image style="width: 100%; max-height: 100%" :src="showForm.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
-                      :preview-src-list="[showForm.url]" :initial-index="4" fit="cover" v-if="showForm.type&&showForm.type.indexOf('image/') === 0"/>
-            <video v-else-if="showForm.type&&showForm.type.indexOf('video/') === 0" controls style="width: 100%; max-height: 100%">
+                      :preview-src-list="[showForm.url]" :initial-index="4" fit="cover" v-if="showForm.type&&showForm.type === 'img'"/>
+            <video v-else-if="showForm.type&&showForm.type === 'video'" preload="none" controls style="width: 100%; max-height: 100%">
               <source :src="showForm.url"/>
             </video>
+            <audio controls v-else-if="showForm.type&&showForm.type === 'audio'" preload="none">
+              <source :src="showForm.url" />
+            </audio>
             <i v-else>无法预览，点击
               <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" target="_blank"
                        :href="'/api/attach/file/' + showForm.configId + '/get/' + showForm.path">下载

@@ -5,6 +5,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.json.JSONUtil;
+import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.FileTypeUtils;
 import com.perfree.file.handle.BaseFileHandle;
 import com.perfree.system.api.attach.dto.AttachFileDTO;
@@ -21,14 +22,19 @@ import java.util.Date;
 @Service
 public class FileLocalHandleImpl extends BaseFileHandle {
 
+    private final String DEFAULT_ATTACH_URL_PREFIX = "/attach/";
+
+
     @Override
     public AttachFileDTO upload(AttachUploadDTO attachUploadDTO) throws IOException {
         FileLocalConfig fileLocalConfig = JSONUtil.toBean(getAttachConfig().getConfig(), FileLocalConfig.class);
-        if (!fileLocalConfig.getBasePath().endsWith(File.separator)) {
-            fileLocalConfig.setBasePath(fileLocalConfig.getBasePath() + File.separator);
+        // 统一使用/
+        fileLocalConfig.setBasePath(fileLocalConfig.getBasePath().replaceAll("\\\\", SystemConstants.FILE_SEPARATOR));
+        if (!fileLocalConfig.getBasePath().endsWith(SystemConstants.FILE_SEPARATOR)) {
+            fileLocalConfig.setBasePath(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR);
         }
 
-        String datePath = DateUtil.format(new Date(), "yyyy-MM-dd") + File.separator;
+        String datePath = DateUtil.format(new Date(), "yyyy-MM-dd") + SystemConstants.FILE_SEPARATOR;
         fileLocalConfig.setBasePath(fileLocalConfig.getBasePath() + datePath);
         if (!FileUtil.exist(fileLocalConfig.getBasePath())) {
             FileUtil.mkdir(fileLocalConfig.getBasePath());
@@ -38,12 +44,13 @@ public class FileLocalHandleImpl extends BaseFileHandle {
         String mineType = FileTypeUtils.getMineType(attachUploadDTO.getFile().getBytes(), attachUploadDTO.getFile().getOriginalFilename());
         AttachFileDTO attachFileDTO = new AttachFileDTO();
         String originalFilename = attachUploadDTO.getFile().getOriginalFilename();
-        attachFileDTO.setType(mineType);
+        attachFileDTO.setMineType(mineType);
+        attachFileDTO.setType(FileTypeUtils.getFileTypeByMineType(mineType));
         attachUploadDTO.getFile().transferTo(new File(fileLocalConfig.getBasePath() + fileName));
         attachFileDTO.setName(originalFilename);
         attachFileDTO.setPath( datePath  + fileName);
         attachFileDTO.setDesc(attachUploadDTO.getDesc());
-        attachFileDTO.setUrl("/api/attach/file/" + getAttachConfig().getId() + "/get/" + datePath  + fileName);
+        attachFileDTO.setUrl(DEFAULT_ATTACH_URL_PREFIX + datePath  + fileName);
         attachFileDTO.setConfigId(getAttachConfig().getId());
         attachFileDTO.setStorage(getAttachConfig().getStorage());
         attachFileDTO.setAttachGroup(attachUploadDTO.getAttachGroup());
@@ -53,8 +60,10 @@ public class FileLocalHandleImpl extends BaseFileHandle {
     @Override
     public boolean delete(AttachFileDTO attachFileDTO) {
         FileLocalConfig fileLocalConfig = JSONUtil.toBean(getAttachConfig().getConfig(), FileLocalConfig.class);
-        if (FileUtil.exist(fileLocalConfig.getBasePath() + File.separator + attachFileDTO.getPath())) {
-            FileUtil.del(fileLocalConfig.getBasePath() + File.separator + attachFileDTO.getPath());
+        // 统一使用/
+        fileLocalConfig.setBasePath(fileLocalConfig.getBasePath().replaceAll("\\\\", SystemConstants.FILE_SEPARATOR));
+        if (FileUtil.exist(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR + attachFileDTO.getPath())) {
+            FileUtil.del(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR + attachFileDTO.getPath());
             return true;
         }
         return false;
@@ -63,6 +72,8 @@ public class FileLocalHandleImpl extends BaseFileHandle {
     @Override
     public byte[] getFileContent(String path) {
         FileLocalConfig fileLocalConfig = JSONUtil.toBean(getAttachConfig().getConfig(), FileLocalConfig.class);
-        return FileUtil.readBytes(fileLocalConfig.getBasePath() + File.separator + path);
+        // 统一使用/
+        fileLocalConfig.setBasePath(fileLocalConfig.getBasePath().replaceAll("\\\\", SystemConstants.FILE_SEPARATOR));
+        return FileUtil.readBytes(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR + path);
     }
 }

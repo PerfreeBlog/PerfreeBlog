@@ -19,7 +19,6 @@ public class MybatisPlusCodeGen {
                         "root", "215607..")
                 .globalConfig(builder -> {
                     builder.author("perfree") // 设置作者
-                            .fileOverride() // 覆盖已生成文件
                             .outputDir("D://"); // 指定输出目录
                 })
                 .dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {

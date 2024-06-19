@@ -17,5 +17,10 @@ public class SystemConstants {
     /** 验证码图片高度 */
     public static final int CAPTCHA_IMAGE_HEIGHT = 38;
 
+    /** 统一的文件分隔符 */
+    public final static String FILE_SEPARATOR = "/";
+
+    /** 附件上传到本地后,统一的访问url前缀 */
+    public static final String DEFAULT_ATTACH_URL_PATTERNS = "/attach/**";
 
 }

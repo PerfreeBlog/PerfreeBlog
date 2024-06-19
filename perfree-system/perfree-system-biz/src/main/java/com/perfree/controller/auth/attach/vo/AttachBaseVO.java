@@ -28,6 +28,9 @@ public class AttachBaseVO {
     @Schema(description = "文件类型")
     private String type;
 
+    @Schema(description = "文件类型mineType")
+    private String mineType;
+
     @Schema(description = "存储器类型")
     private Integer storage;
 
