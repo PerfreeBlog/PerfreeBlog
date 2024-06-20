@@ -28,6 +28,10 @@ public class ArticleBaseVO {
     @NotBlank(message = "文章类型不能为空")
     private String type;
 
+    @Schema(description = "状态0:已发布,1:草稿", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "文章状态不能为空")
+    private Integer status;
+
     @Schema(description = "文章摘要")
     private String summary;
 

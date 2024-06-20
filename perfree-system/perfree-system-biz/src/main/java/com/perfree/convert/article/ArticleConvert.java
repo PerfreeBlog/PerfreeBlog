@@ -1,8 +1,7 @@
 package com.perfree.convert.article;
 
 
-import com.perfree.controller.auth.article.vo.ArticleAddReqVO;
-import com.perfree.controller.auth.article.vo.ArticleRespVO;
+import com.perfree.controller.auth.article.vo.*;
 import com.perfree.model.Article;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -14,5 +13,11 @@ public interface ArticleConvert {
     ArticleRespVO convertRespVO(Article article);
 
     Article convertModelByCreateArticleVO(ArticleAddReqVO articleAddReqVO);
+
+    Article convertModelByIsCommentVO(ArticleUpdateIsCommentReqVO articleUpdateIsCommentReqVO);
+
+    Article convertModelByIsTopVO(ArticleUpdateIsTopReqVO articleUpdateIsTopReqVO);
+
+    Article convertModelByStatusVO(ArticleUpdateStatusReqVO articleUpdateStatusReqVO);
 
 }

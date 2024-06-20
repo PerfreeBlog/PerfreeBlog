@@ -33,8 +33,8 @@
 
         <el-col :span="7" class="article-right">
           <el-form-item>
-              <el-button type="primary" @click="submitAddForm">发布</el-button>
-              <el-button @click="open = false; resetAddForm()">保存至草稿</el-button>
+              <el-button type="primary" @click="submitAddForm(0)">发布</el-button>
+              <el-button @click="submitAddForm(1)">保存至草稿</el-button>
           </el-form-item>
           <el-form-item label="访问地址别名" prop="slug">
             <el-input v-model="addForm.slug" placeholder="请输入访问地址别名" clearable/>
@@ -99,8 +99,10 @@ import {categoryListTreeApi} from "@/api/category.js";
 import {getAllTag} from "@/api/tag.js";
 import {articleAddApi} from "@/api/article.js";
 import {handleTree} from "@/utils/perfree.js";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 import pinyin from 'js-pinyin'
+import {menuDelApi} from "@/api/menu.js";
+import {closeTab, toPage} from "@/utils/tabs.js";
 
 const editorType = ref('Cherry(markdown)');
 const addFormRef = ref();
@@ -151,9 +153,34 @@ function initTag() {
 }
 
 /**
+ * 重置表单
+ */
+function resetAddForm() {
+  addForm.value = {
+    title: '',
+    content: '',
+    parseContent: '',
+    selectTags: [],
+    categoryIds: [],
+    summary: '',
+    metaKeywords: '',
+    metaDescription: '',
+    thumbnail: '',
+    slug: '',
+    isTop: 0,
+    isComment: 1,
+    flag: '',
+    type: 'article',
+    contentModel: ''
+  }
+  editorRef.value.resetContent();
+  addFormRef.value.resetFields();
+}
+
+/**
  * 发布文章
  */
-function submitAddForm() {
+function submitAddForm(status) {
   if(!addForm.value.title) {
     ElMessage.error("文章标题不能为空");
     return;
@@ -167,6 +194,7 @@ function submitAddForm() {
   } else {
     addForm.value.contentModel = 'html'
   }
+  addForm.value.status = status;
 
   // 处理标签
   addForm.value.tagIds = [];
@@ -180,7 +208,15 @@ function submitAddForm() {
   })
   articleAddApi(addForm.value).then(res => {
     if (res.code === 200) {
-
+      resetAddForm();
+      ElMessageBox.confirm('文章发表成功!', '提示', {
+        confirmButtonText: '前往文章列表',
+        cancelButtonText: '再写一篇',
+        type: 'success',
+      }).then(() => {
+        toPage('', '/admin/article', '')
+        closeTab('/admin/article/create')
+      }).catch(() => {})
     } else {
       ElMessage.error(res.msg);
     }

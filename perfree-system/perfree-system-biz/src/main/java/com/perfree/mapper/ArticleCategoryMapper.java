@@ -18,4 +18,9 @@ public interface ArticleCategoryMapper extends BaseMapperX<ArticleCategory> {
     default void delByCategoryId(Integer id){
         delete(new LambdaQueryWrapper<ArticleCategory>().eq(ArticleCategory::getCategoryId, id));
     }
+
+    default void delByArticleId(Integer id){
+        delete(new LambdaQueryWrapper<ArticleCategory>().eq(ArticleCategory::getArticleId, id));
+    }
+
 }

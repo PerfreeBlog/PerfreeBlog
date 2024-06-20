@@ -16,9 +16,6 @@ public class ArticleRespVO extends ArticleBaseVO{
     @Schema(description = "创建人")
     private String userName;
 
-    @Schema(description = "状态0:已发布,1:草稿")
-    private Integer status;
-
     @Schema(description = "评论数")
     private Integer commentCount;
 

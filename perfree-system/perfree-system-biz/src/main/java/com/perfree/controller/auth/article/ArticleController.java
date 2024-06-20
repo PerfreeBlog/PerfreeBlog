@@ -3,13 +3,8 @@ package com.perfree.controller.auth.article;
 
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
-import com.perfree.controller.auth.article.vo.ArticleAddReqVO;
-import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
-import com.perfree.controller.auth.article.vo.ArticleRespVO;
-import com.perfree.controller.auth.tag.vo.TagCreateReqVO;
-import com.perfree.controller.auth.tag.vo.TagRespVO;
+import com.perfree.controller.auth.article.vo.*;
 import com.perfree.convert.article.ArticleConvert;
-import com.perfree.convert.tag.TagConvert;
 import com.perfree.model.Article;
 import com.perfree.service.article.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +13,7 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.perfree.commons.common.CommonResult.success;
 
@@ -47,5 +39,29 @@ public class ArticleController {
     public CommonResult<ArticleRespVO> createArticle(@RequestBody @Valid ArticleAddReqVO articleAddReqVO) {
         Article article = articleService.createArticle(articleAddReqVO);
         return CommonResult.success(ArticleConvert.INSTANCE.convertRespVO(article));
+    }
+
+    @PostMapping("/updateIsComment")
+    @Operation(summary = "修改是否允许评论")
+    public CommonResult<Boolean> updateIsComment(@RequestBody @Valid ArticleUpdateIsCommentReqVO articleUpdateIsCommentReqVO) {
+        return CommonResult.success(articleService.updateIsComment(articleUpdateIsCommentReqVO));
+    }
+
+    @PostMapping("/updateIsTop")
+    @Operation(summary = "修改是否允许评论")
+    public CommonResult<Boolean> updateIsTop(@RequestBody @Valid ArticleUpdateIsTopReqVO articleUpdateIsTopReqVO) {
+        return CommonResult.success(articleService.updateIsTop(articleUpdateIsTopReqVO));
+    }
+
+    @PostMapping("/updateStatus")
+    @Operation(summary = "修改状态")
+    public CommonResult<Boolean> updateStatus(@RequestBody @Valid ArticleUpdateStatusReqVO articleUpdateStatusReqVO) {
+        return CommonResult.success(articleService.updateStatus(articleUpdateStatusReqVO));
+    }
+
+    @DeleteMapping("/del")
+    @Operation(summary = "根据id删除文章")
+    public CommonResult<Boolean> del(@RequestParam(value = "id") Integer id) {
+        return CommonResult.success(articleService.del(id));
     }
 }

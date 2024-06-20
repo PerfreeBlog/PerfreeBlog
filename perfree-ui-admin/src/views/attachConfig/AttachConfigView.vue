@@ -23,7 +23,7 @@
 
     <div class="table-box">
 
-      <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading">
+      <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="80" type="index" />
         <el-table-column prop="name" label="配置名称" min-width="240" />
         <el-table-column prop="storage" label="存储器类型" min-width="240">

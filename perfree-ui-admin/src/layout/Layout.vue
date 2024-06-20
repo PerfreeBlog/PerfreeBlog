@@ -94,6 +94,7 @@ const classObject = ref({
 })
 
 watch(route, () => {
+  console.log('route变化', route)
   handleAddTab(route)
 })
 

@@ -19,4 +19,9 @@ public interface ArticleTagMapper extends BaseMapperX<ArticleTag> {
     default void delByTagId(Integer id){
         delete(new LambdaQueryWrapper<ArticleTag>().eq(ArticleTag::getTagId, id));
     }
+
+    default void delByArticleId(Integer id){
+        delete(new LambdaQueryWrapper<ArticleTag>().eq(ArticleTag::getArticleId, id));
+    }
+
 }

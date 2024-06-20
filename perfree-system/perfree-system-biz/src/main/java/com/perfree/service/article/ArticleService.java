@@ -1,9 +1,7 @@
 package com.perfree.service.article;
 
 import com.perfree.commons.common.PageResult;
-import com.perfree.controller.auth.article.vo.ArticleAddReqVO;
-import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
-import com.perfree.controller.auth.article.vo.ArticleRespVO;
+import com.perfree.controller.auth.article.vo.*;
 import com.perfree.model.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -31,4 +29,31 @@ public interface ArticleService extends IService<Article> {
      */
     Article createArticle(ArticleAddReqVO articleAddReqVO);
 
+    /**
+     * 修改文章是否允许评论
+     * @param articleUpdateIsCommentReqVO articleUpdateIsCommentReqVO
+     * @return Boolean
+     */
+    Boolean updateIsComment(ArticleUpdateIsCommentReqVO articleUpdateIsCommentReqVO);
+
+    /**
+     * 修改文章是否置顶
+     * @param articleUpdateIsTopReqVO articleUpdateIsTopReqVO
+     * @return Boolean
+     */
+    Boolean updateIsTop(ArticleUpdateIsTopReqVO articleUpdateIsTopReqVO);
+
+    /**
+     * 修改文章状态
+     * @param articleUpdateStatusReqVO articleUpdateStatusReqVO
+     * @return Boolean
+     */
+    Boolean updateStatus(ArticleUpdateStatusReqVO articleUpdateStatusReqVO);
+
+    /**
+     * 根据id删除文章
+     * @param id id
+     * @return Boolean
+     */
+    Boolean del(Integer id);
 }

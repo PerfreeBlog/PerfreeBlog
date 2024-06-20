@@ -9,9 +9,7 @@ import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.constant.OptionConstant;
-import com.perfree.controller.auth.article.vo.ArticleAddReqVO;
-import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
-import com.perfree.controller.auth.article.vo.ArticleRespVO;
+import com.perfree.controller.auth.article.vo.*;
 import com.perfree.convert.article.ArticleConvert;
 import com.perfree.enums.OptionEnum;
 import com.perfree.mapper.ArticleCategoryMapper;
@@ -108,6 +106,39 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleCategoryMapper.insertBatch(articleCategoryList);
 
         return article;
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateIsComment(ArticleUpdateIsCommentReqVO articleUpdateIsCommentReqVO) {
+        Article article = ArticleConvert.INSTANCE.convertModelByIsCommentVO(articleUpdateIsCommentReqVO);
+        articleMapper.updateById(article);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateIsTop(ArticleUpdateIsTopReqVO articleUpdateIsTopReqVO) {
+        Article article = ArticleConvert.INSTANCE.convertModelByIsTopVO(articleUpdateIsTopReqVO);
+        articleMapper.updateById(article);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateStatus(ArticleUpdateStatusReqVO articleUpdateStatusReqVO) {
+        Article article = ArticleConvert.INSTANCE.convertModelByStatusVO(articleUpdateStatusReqVO);
+        articleMapper.updateById(article);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean del(Integer id) {
+        articleCategoryMapper.delByArticleId(id);
+        articleTagMapper.delByArticleId(id);
+        articleMapper.deleteById(id);
+        return true;
     }
 
     /**
