@@ -25,6 +25,7 @@ public enum ErrorCode {
     TAG_SLUG_EXIST(100000015,"该标签Slug访问标识已存在!"),
     CATEGORY_SLUG_EXIST(100000016,"该分类Slug访问标识已存在!"),
     CATEGORY_EXIST_CHILD(100000017,"该分类存在子分类,不能删除!"),
+    ARTICLE_SLUG_EXIST(100000018,"该文章Slug访问标识已存在!"),
     ;
 
     private final Integer code;

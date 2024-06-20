@@ -81,9 +81,9 @@ public class Article extends BaseModel implements Serializable {
     private String slug;
 
     /**
-     * 文章类型: 0默认, 1置顶
+     * 是否置顶0:否,1:是
      */
-    private Integer articleType;
+    private Integer isTop;
 
     /**
      * 状态0:已发布,1:草稿

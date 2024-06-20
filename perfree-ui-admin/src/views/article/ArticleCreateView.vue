@@ -9,7 +9,7 @@
                 <span class="required">*</span>文章标题
               </div>
             </template>
-            <el-input v-model="addForm.title" placeholder="请输入文章标题" clearable/>
+            <el-input v-model="addForm.title" placeholder="请输入文章标题" clearable @change="titleChange"/>
           </el-form-item>
 
           <el-form-item prop="content" class="article-content-item">
@@ -20,9 +20,9 @@
                 </div>
                 <div class="content-label-right">
                   切换编辑器:
-                  <el-select placeholder="Select" size="small" style="width: 120px" v-model="editorType">
-                    <el-option :key="'cherry'" :label="'cherry'" :value="'cherry'" />
-                    <el-option :key="'vditor'" :label="'vditor'" :value="'vditor'" />
+                  <el-select placeholder="Select" size="small" style="width: 180px" v-model="editorType">
+                    <el-option :key="'MdEditor(markdown)'" :label="'MdEditor(markdown)'" :value="'MdEditor(markdown)'" />
+                    <el-option :key="'Cherry(markdown)'" :label="'Cherry(markdown)'" :value="'Cherry(markdown)'" />
                   </el-select>
                 </div>
               </div>
@@ -99,12 +99,15 @@ import {categoryListTreeApi} from "@/api/category.js";
 import {getAllTag} from "@/api/tag.js";
 import {articleAddApi} from "@/api/article.js";
 import {handleTree} from "@/utils/perfree.js";
+import {ElMessage} from "element-plus";
+import pinyin from 'js-pinyin'
 
-const editorType = ref('cherry');
+const editorType = ref('Cherry(markdown)');
 const addFormRef = ref();
 const addForm = ref({
   title: '',
   content: '',
+  parseContent: '',
   selectTags: [],
   categoryIds: [],
   summary: '',
@@ -114,7 +117,10 @@ const addForm = ref({
   slug: '',
   isTop: 0,
   isComment: 1,
-  flag: ''
+  flag: '',
+  type: 'article',
+  contentModel: ''
+
 });
 
 const treeSelectProps = reactive({
@@ -156,6 +162,11 @@ function submitAddForm() {
     ElMessage.error("文章内容不能为空");
     return;
   }
+  if (editorType.value.indexOf("markdown") >= 0) {
+    addForm.value.contentModel = 'markdown'
+  } else {
+    addForm.value.contentModel = 'html'
+  }
 
   // 处理标签
   addForm.value.tagIds = [];
@@ -167,17 +178,28 @@ function submitAddForm() {
       addForm.value.addTags.push(tag);
     }
   })
-  console.log(addForm.value);
   articleAddApi(addForm.value).then(res => {
-    console.log(res)
+    if (res.code === 200) {
+
+    } else {
+      ElMessage.error(res.msg);
+    }
   })
 }
 
 /**
  * 内容改变事件
  */
-function contentChange(value) {
-  addForm.value.content = value;
+function contentChange(content, parseContent) {
+  addForm.value.content = content;
+  addForm.value.parseContent = parseContent;
+}
+
+/**
+ * 文章标题改变事件
+ */
+function titleChange() {
+  addForm.value.slug = pinyin.getCamelChars(addForm.value.title);
 }
 
 initCategory();

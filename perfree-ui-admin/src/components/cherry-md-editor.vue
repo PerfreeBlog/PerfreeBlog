@@ -92,7 +92,7 @@ function resetAddForm() {
 
 onMounted(() => {
   function afterChange () {
-    emits('contentChange', cherryInstance.getMarkdown());
+    emits('contentChange', cherryInstance.getMarkdown(), cherryInstance.getHtml());
   }
   cherryInstance =  new Cherry({
     el: markdownContainer.value,

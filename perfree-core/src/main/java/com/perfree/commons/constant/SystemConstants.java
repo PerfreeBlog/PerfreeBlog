@@ -23,4 +23,7 @@ public class SystemConstants {
     /** 附件上传到本地后,统一的访问url前缀 */
     public static final String DEFAULT_ATTACH_URL_PATTERNS = "/attach/**";
 
+    /** 默认数量 */
+    public static final int DEFAULT_COUNT = 0;
+
 }

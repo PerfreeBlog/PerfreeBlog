@@ -11,6 +11,7 @@ import lombok.Getter;
 public enum OptionEnum {
     LOGIN_CAPTCHA_ENABLE("LOGIN_CAPTCHA_ENABLE","是否开启登录验证码"),
     DEFAULT_ADMIN_FRAME("DEFAULT_ADMIN_FRAME","默认的管理后台基础界面"),
+    WEB_AUTO_GEN_SUMMARY("WEB_AUTO_GEN_SUMMARY","是否自动生成文章摘要"),
     ;
     private final String key;
 

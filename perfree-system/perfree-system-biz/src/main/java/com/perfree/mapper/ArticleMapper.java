@@ -1,5 +1,6 @@
 package com.perfree.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
@@ -26,5 +27,16 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @return IPage<ArticleRespVO>
      */
     IPage<ArticleRespVO> articlePage(IPage<ArticleRespVO> page,  @Param("pageVO") ArticlePageReqVO pageVO);
+
+    /**
+     * 根据slug查询
+     * @param slug slug
+     * @return Article
+     */
+    default Article getBySlug(String slug){
+        return selectOne(new LambdaQueryWrapper<Article>()
+                .eq(Article::getSlug, slug)
+        );
+    }
 
 }

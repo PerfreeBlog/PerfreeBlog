@@ -15,6 +15,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.perfree.enums.ErrorCode.TAG_SLUG_EXIST;
 
 /**
@@ -80,5 +83,27 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         tagMapper.deleteById(id);
         articleTagMapper.delByTagId(id);
         return true;
+    }
+
+    @Override
+    @Transactional
+    public List<Tag> batchAddTagByName(List<String> addTags) {
+        if (addTags.isEmpty()) {
+            return new ArrayList<>();
+        }
+        List<Tag> tagList = new ArrayList<>();
+        for (String addTag : addTags) {
+            Tag tag = new Tag();
+            tag.setName(addTag);
+            tagList.add(tag);
+        }
+
+        tagMapper.insertBatch(tagList);
+
+        for (Tag tag : tagList) {
+            tag.setSlug(tag.getId().toString());
+        }
+        tagMapper.updateBatch(tagList);
+        return tagList;
     }
 }

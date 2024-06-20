@@ -7,6 +7,8 @@ import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
 import com.perfree.model.Tag;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -44,5 +46,12 @@ public interface TagService extends IService<Tag> {
      * @return Boolean
      */
     Boolean del(Integer id);
+
+    /**
+     * 批量新增标签(根据name)
+     * @param addTags addTags
+     * @return List<Tag>
+     */
+    List<Tag> batchAddTagByName(List<String> addTags);
 
 }

@@ -21,6 +21,7 @@
     "axios": "^1.6.8",
     "cherry-markdown": "^0.8.42",
     "element-plus": "^2.6.2",
+    "js-pinyin": "^0.2.5",
     "perfree-lit-test": "^0.0.6",
     "pinia": "^2.1.7",
     "pinia-plugin-persist": "^1.0.0",

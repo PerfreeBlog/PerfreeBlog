@@ -40,12 +40,13 @@ public class ArticleBaseVO {
     @Schema(description = "封面")
     private String thumbnail;
 
-    @Schema(description = "slug")
+    @Schema(description = "slug", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotBlank(message = "文章访问地址别名不能为空")
     private String slug;
 
-    @Schema(description = "文章类型: 0默认, 1置顶", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "文章类型不能为空")
-    private Integer articleType;
+    @Schema(description = "是否置顶0:否,1:是", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "是否置顶不能为空")
+    private Integer isTop;
 
     @Schema(description = "是否允许评论0:否,1是", requiredMode = Schema.RequiredMode.REQUIRED)
     @NotNull(message = "是否允许评论不能为空")

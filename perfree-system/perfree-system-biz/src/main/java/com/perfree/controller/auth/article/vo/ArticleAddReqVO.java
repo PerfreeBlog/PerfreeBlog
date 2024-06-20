@@ -12,10 +12,10 @@ import java.util.List;
 public class ArticleAddReqVO extends ArticleBaseVO {
 
     @Schema(description = "分类id集合")
-    private List<String> categoryIds;
+    private List<Integer> categoryIds;
 
     @Schema(description = "标签id集合")
-    private List<String> tagIds;
+    private List<Integer> tagIds;
 
     @Schema(description = "新增的标签集合")
     private List<String> addTags;
