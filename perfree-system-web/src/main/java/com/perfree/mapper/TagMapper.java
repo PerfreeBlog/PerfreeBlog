@@ -22,7 +22,6 @@ public interface TagMapper extends BaseMapperX<Tag> {
     default PageResult<Tag> tagPage(TagPageReqVO pageVO){
         return selectPage(pageVO, new LambdaQueryWrapper<Tag>()
                 .like(StringUtils.isNotBlank(pageVO.getName()), Tag::getName, pageVO.getName())
-                .orderByDesc(Tag::getCreateTime)
         );
     }
 

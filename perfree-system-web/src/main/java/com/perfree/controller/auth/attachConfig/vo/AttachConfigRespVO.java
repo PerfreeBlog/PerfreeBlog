@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-@Schema(description = "管理后台 - 附件配置RespVO")
+@Schema(description = "附件配置RespVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class AttachConfigRespVO extends AttachConfigBaseVO{

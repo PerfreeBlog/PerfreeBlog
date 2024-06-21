@@ -1,9 +1,13 @@
 package com.perfree.config;
 
+import com.jfinal.template.Directive;
 import com.perfree.cache.AttachConfigCacheService;
 import com.perfree.cache.OptionCacheService;
+import com.perfree.commons.directive.TemplateDirective;
+import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.convert.attachConfig.AttachConfigConvert;
 import com.perfree.convert.option.OptionConvert;
+import com.perfree.enjoy.EnjoyConfig;
 import com.perfree.file.FileHandleStorageHolder;
 import com.perfree.file.handle.local.FileLocalHandleImpl;
 import com.perfree.file.handle.s3.FileS3HandleImpl;
@@ -26,6 +30,7 @@ import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
 import com.perfree.system.api.option.dto.OptionCacheDTO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Perfree
@@ -68,10 +73,11 @@ public class AppInit implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        loadDirective();
         initFileHandle();
         initOptions();
         initAttachConfig();
-        //attachConfigService.initLocalResourcesPatterns();
+        attachConfigService.initLocalResourcesPatterns();
         pluginManager.initPlugins();
         String command = System.getProperty("sun.java.command");
         if (command != null && !command.contains(".jar")) {
@@ -130,5 +136,23 @@ public class AppInit implements ApplicationRunner {
             optionCacheService.putOption(option.getKey(), option);
         }
         LOGGER.info("init option cache success");
+    }
+
+
+    /**
+     * Load Template Directive
+     */
+    public static void loadDirective() {
+        Map<String, Object> beans = SpringBeanUtil.context.getBeansWithAnnotation(TemplateDirective.class);
+        for (Map.Entry<String, Object> entry : beans.entrySet()) {
+            Object bean = entry.getValue();
+            TemplateDirective injectBean = bean.getClass().getAnnotation(TemplateDirective.class);
+            Directive directive = (Directive) bean;
+            Class<? extends Directive> directiveByName = EnjoyConfig.jfr.getEngine().getEngineConfig().getDirective(injectBean.value());
+            if (directiveByName == null) {
+                LOGGER.info("Add Directive: {}", injectBean.value());
+                EnjoyConfig.jfr.addDirective(injectBean.value(), directive.getClass());
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Schema(description = "管理后台 - 评论更新ReqVO")
+@Schema(description = "评论更新ReqVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CommentUpdateReqVO extends CommentBaseVO {

@@ -7,7 +7,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "管理后台 - 代码生成字段定义 Response VO")
+@Schema(description = "代码生成字段定义 Response VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

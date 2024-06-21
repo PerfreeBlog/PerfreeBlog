@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-@Schema(description = "管理后台 - 角色RespVO")
+@Schema(description = "角色RespVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class RoleRespVO extends RoleBaseVO{

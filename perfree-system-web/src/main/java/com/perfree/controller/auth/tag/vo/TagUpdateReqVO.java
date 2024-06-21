@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Schema(description = "管理后台 - 标签updateVO")
+@Schema(description = "标签updateVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class TagUpdateReqVO extends TagBaseVO{

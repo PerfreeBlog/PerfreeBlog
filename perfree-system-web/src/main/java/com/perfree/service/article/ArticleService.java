@@ -1,9 +1,14 @@
 package com.perfree.service.article;
 
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.directive.DirectivePage;
 import com.perfree.controller.auth.article.vo.*;
+import com.perfree.enjoy.directive.article.vo.ArticlePageDirectiveRespVO;
+import com.perfree.enjoy.directive.article.vo.ArticlePageDirectiveVo;
 import com.perfree.model.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.HashMap;
 
 /**
  * <p>

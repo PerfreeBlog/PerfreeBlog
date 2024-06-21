@@ -3,6 +3,7 @@ package com.perfree.service.category;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.CategoryConstant;
 import com.perfree.controller.auth.category.vo.*;
 import com.perfree.convert.category.CategoryConvert;
@@ -39,6 +40,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
 
     @Override
     public PageResult<Category> categoryPage(CategoryPageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return categoryMapper.categoryPage(pageVO);
     }
 

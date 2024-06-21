@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
-@Schema(description = "管理后台 - 角色分页ReqVO")
+@Schema(description = "角色分页ReqVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class RolePageReqVO extends PageParam {

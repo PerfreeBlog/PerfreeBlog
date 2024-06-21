@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-@Schema(description = "管理后台 - 菜单列表RespVO")
+@Schema(description = "菜单列表RespVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class MenuRespVO extends MenuBaseVO {

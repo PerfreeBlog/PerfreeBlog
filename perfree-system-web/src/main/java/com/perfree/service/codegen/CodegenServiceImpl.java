@@ -11,6 +11,7 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.CodegenConstant;
 import com.perfree.controller.auth.codegen.vo.CodegenCreateListReqVO;
 import com.perfree.controller.auth.codegen.vo.CodegenInfoReqVO;
@@ -74,6 +75,7 @@ public class CodegenServiceImpl implements CodegenService{
 
     @Override
     public PageResult<CodegenTable> codegenTablePage(CodegenTablePageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return codegenTableMapper.codegenTablePage(pageVO);
     }
 

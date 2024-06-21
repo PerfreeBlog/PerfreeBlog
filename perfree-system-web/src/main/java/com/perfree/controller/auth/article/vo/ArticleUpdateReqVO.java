@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(description = "管理后台 - 文章更新ReqVO")
+@Schema(description = "文章更新ReqVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ArticleUpdateReqVO extends ArticleBaseVO {

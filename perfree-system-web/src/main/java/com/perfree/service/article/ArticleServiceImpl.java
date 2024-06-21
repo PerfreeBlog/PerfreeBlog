@@ -1,13 +1,18 @@
 package com.perfree.service.article;
 
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.common.SortingField;
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.directive.DirectivePage;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.*;
 import com.perfree.convert.article.ArticleConvert;
@@ -27,6 +32,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.perfree.enums.ErrorCode.ARTICLE_SLUG_EXIST;
@@ -59,7 +65,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public PageResult<ArticleRespVO> articlePage(ArticlePageReqVO pageVO) {
-        IPage<ArticleRespVO> page = MyBatisUtils.buildPage(pageVO);
+        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.toList(
+                new SortingField("isTop", SortingField.ORDER_DESC),
+                new SortingField("createTime", SortingField.ORDER_DESC)
+        ));
+        IPage<ArticleRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
         IPage<ArticleRespVO> articlePage = articleMapper.articlePage(page, pageVO);
         return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
     }

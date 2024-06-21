@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-@Schema(description = "管理后台 - 标签RespVO")
+@Schema(description = "标签RespVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class TagRespVO extends TagBaseVO {

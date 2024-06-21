@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
-@Schema(description = "管理后台 - 附件上传ReqVO")
+@Schema(description = "附件上传ReqVO")
 @Data
 public class AttachUploadVO {
 

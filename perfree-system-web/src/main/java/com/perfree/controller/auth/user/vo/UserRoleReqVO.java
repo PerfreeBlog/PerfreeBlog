@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 
-@Schema(description = "管理后台 - 用户角色ReqVO")
+@Schema(description = "用户角色ReqVO")
 @Data
 public class UserRoleReqVO {
 

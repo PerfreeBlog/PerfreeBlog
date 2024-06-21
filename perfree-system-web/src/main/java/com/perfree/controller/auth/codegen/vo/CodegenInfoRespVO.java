@@ -9,7 +9,7 @@ import lombok.ToString;
 
 import java.util.List;
 
-@Schema(description = "管理后台 - 代码生成信息 Response VO")
+@Schema(description = "代码生成信息 Response VO")
 @Data
 @ToString(callSuper = true)
 public class CodegenInfoRespVO {

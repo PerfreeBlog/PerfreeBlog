@@ -3,6 +3,7 @@ package com.perfree.service.site;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.SiteConstant;
 import com.perfree.controller.auth.site.vo.SiteAddReqVO;
 import com.perfree.controller.auth.site.vo.SitePageReqVO;
@@ -26,6 +27,7 @@ public class SiteServiceImpl extends ServiceImpl<SiteMapper, Site> implements Si
 
     @Override
     public PageResult<Site> sitePage(SitePageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return siteMapper.sitePage(pageVO);
     }
 

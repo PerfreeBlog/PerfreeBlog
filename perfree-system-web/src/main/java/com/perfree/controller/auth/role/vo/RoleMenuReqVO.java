@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
-@Schema(description = "管理后台 - 角色菜单权限ReqVO")
+@Schema(description = "角色菜单权限ReqVO")
 @Data
 public class RoleMenuReqVO {
 

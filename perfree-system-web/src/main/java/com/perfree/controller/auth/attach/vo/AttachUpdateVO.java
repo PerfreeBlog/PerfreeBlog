@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-@Schema(description = "管理后台 - 附件上传ReqVO")
+@Schema(description = "附件上传ReqVO")
 @Data
 public class AttachUpdateVO {
 

@@ -2,7 +2,9 @@ package com.perfree.service.tag;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.common.SortingField;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.tag.vo.TagCreateReqVO;
 import com.perfree.controller.auth.tag.vo.TagPageReqVO;
 import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
@@ -39,6 +41,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
 
     @Override
     public PageResult<Tag> tagPage(TagPageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return tagMapper.tagPage(pageVO);
     }
 

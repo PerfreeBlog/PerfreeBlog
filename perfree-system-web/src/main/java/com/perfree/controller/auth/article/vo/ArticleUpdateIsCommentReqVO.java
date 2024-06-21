@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-@Schema(description = "管理后台 - 文章修改是否允许评论ReqVO")
+@Schema(description = "文章修改是否允许评论ReqVO")
 @Data
 public class ArticleUpdateIsCommentReqVO{
 

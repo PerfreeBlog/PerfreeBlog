@@ -6,7 +6,7 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(description = "管理后台 - 基于数据库的表结构，创建代码生成器的表和字段定义 Request VO")
+@Schema(description = "基于数据库的表结构，创建代码生成器的表和字段定义 Request VO")
 @Data
 public class CodegenCreateListReqVO {
 

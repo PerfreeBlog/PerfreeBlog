@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Schema(description = "管理后台 - 分类更新ReqVO")
+@Schema(description = "分类更新ReqVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class CategoryUpdateReqVO extends CategoryBaseVO {

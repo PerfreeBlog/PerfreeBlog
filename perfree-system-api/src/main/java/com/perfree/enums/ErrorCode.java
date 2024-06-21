@@ -26,6 +26,7 @@ public enum ErrorCode {
     CATEGORY_SLUG_EXIST(100000016,"该分类Slug访问标识已存在!"),
     CATEGORY_EXIST_CHILD(100000017,"该分类存在子分类,不能删除!"),
     ARTICLE_SLUG_EXIST(100000018,"该文章Slug访问标识已存在!"),
+    OPTION_WEB_THEME_NOT_EXIST(100000019,"当前主题配置不存在,请先启用主题!"),
     ;
 
     private final Integer code;

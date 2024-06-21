@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(description = "管理后台 - 文章添加ReqVO")
+@Schema(description = "文章添加ReqVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ArticleAddReqVO extends ArticleBaseVO {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Schema(description = "管理后台 - 用户角色RespVO")
+@Schema(description = "用户角色RespVO")
 @Data
 public class UserRoleRespVO {
 

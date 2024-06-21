@@ -3,7 +3,7 @@ package com.perfree.controller.auth.menu.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-@Schema(description = "管理后台 - 菜单列表ReqVO")
+@Schema(description = "菜单列表ReqVO")
 @Data
 public class MenuListReqVO {
     @Schema(description = "菜单名")

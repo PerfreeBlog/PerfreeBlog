@@ -7,6 +7,7 @@ import com.perfree.cache.CaptchaCacheService;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.user.vo.*;
 import com.perfree.convert.user.UserConvert;
@@ -137,6 +138,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public PageResult<User> userPage(UserPageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return userMapper.selectPage(pageVO);
     }
 

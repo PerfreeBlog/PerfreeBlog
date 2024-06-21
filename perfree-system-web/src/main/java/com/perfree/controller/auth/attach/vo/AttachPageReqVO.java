@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 
-@Schema(description = "管理后台 - 附件色分页ReqVO")
+@Schema(description = "附件色分页ReqVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class AttachPageReqVO extends PageParam {

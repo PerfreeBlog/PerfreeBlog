@@ -28,4 +28,16 @@ public class SystemConstants {
 
     /** version */
     public static final String VERSION = "version";
+
+    /** resources路径 */
+    public static final String RESOURCES_DIR = "resources";
+
+    /** 插件静态资源目录 */
+    public static final String PLUGINS_RESOURCES_DIR = "resources/pluginResources";
+
+    /** 预览主题的前缀 */
+    public static final String PREVIEW_THEME_URL = "previewTheme";
+
+    /** 主题根目录 */
+    public static final String THEME_BASE_DIR = "static/themes/";
 }

@@ -2,6 +2,7 @@ package com.perfree.service.role;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.convert.role.RoleConvert;
 import com.perfree.mapper.RoleMapper;
 import com.perfree.mapper.RoleMenuMapper;
@@ -37,6 +38,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public PageResult<Role> rolePage(RolePageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return roleMapper.selectPage(pageVO);
     }
 

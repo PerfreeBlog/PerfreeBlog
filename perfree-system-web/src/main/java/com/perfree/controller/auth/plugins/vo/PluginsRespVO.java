@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-@Schema(description = "管理后台 - 插件RespVO")
+@Schema(description = "插件RespVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class PluginsRespVO extends PluginsBaseVO{

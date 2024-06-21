@@ -14,7 +14,7 @@ public interface SiteMapper extends BaseMapperX<Site> {
    default PageResult<Site> sitePage(SitePageReqVO pageVO){
        return selectPage(pageVO, new LambdaQueryWrapper<Site>()
                .like(StringUtils.isNotBlank(pageVO.getSiteName()), Site::getSiteName, pageVO.getSiteName())
-               .orderByDesc(Site::getCreateTime));
+       );
    }
 
     default Site selectBySlug(String siteSlug){

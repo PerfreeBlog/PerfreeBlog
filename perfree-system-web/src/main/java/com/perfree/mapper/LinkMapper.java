@@ -22,7 +22,6 @@ public interface LinkMapper extends BaseMapperX<Link> {
     default PageResult<Link> linkPage(LinkPageReqVO pageVO){
         return selectPage(pageVO, new LambdaUpdateWrapper<Link>()
                 .eq(StringUtils.isNotBlank(pageVO.getName()), Link::getName, pageVO.getName())
-                .orderByDesc(Link::getCreateTime)
         );
     }
 

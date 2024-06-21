@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.AttachConfigCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.controller.auth.attachConfig.vo.AttachConfigCreateVO;
 import com.perfree.controller.auth.attachConfig.vo.AttachConfigPageReqVO;
@@ -82,6 +83,7 @@ public class AttachConfigServiceImpl extends ServiceImpl<AttachConfigMapper, Att
 
     @Override
     public PageResult<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return attachConfigMapper.attachConfigPage(pageVO);
     }
 

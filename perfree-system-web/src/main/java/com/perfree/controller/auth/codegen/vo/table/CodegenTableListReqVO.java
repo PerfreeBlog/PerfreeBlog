@@ -3,7 +3,7 @@ package com.perfree.controller.auth.codegen.vo.table;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-@Schema(description = "管理后台 - 获取数据库表 Request VO")
+@Schema(description = "获取数据库表 Request VO")
 @Data
 public class CodegenTableListReqVO {
 

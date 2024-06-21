@@ -2,6 +2,7 @@ package com.perfree.service.link;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.link.vo.LinkAddReqVO;
 import com.perfree.controller.auth.link.vo.LinkPageReqVO;
 import com.perfree.controller.auth.link.vo.LinkUpdateReqVO;
@@ -28,6 +29,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Override
     public PageResult<Link> linkPage(LinkPageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return linkMapper.linkPage(pageVO);
     }
 

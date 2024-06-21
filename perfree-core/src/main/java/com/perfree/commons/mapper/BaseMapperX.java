@@ -22,7 +22,7 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
 
     default PageResult<T> selectPage(PageParam pageParam, @Param("ew") Wrapper<T> queryWrapper) {
         // MyBatis Plus 查询
-        IPage<T> mpPage = MyBatisUtils.buildPage(pageParam);
+        IPage<T> mpPage = MyBatisUtils.buildPage(pageParam, pageParam.getSortingFields());
         selectPage(mpPage, queryWrapper);
         // 转换返回
         return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());

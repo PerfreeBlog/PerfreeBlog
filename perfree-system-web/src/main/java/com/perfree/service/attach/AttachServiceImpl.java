@@ -3,6 +3,7 @@ package com.perfree.service.attach;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.convert.attach.AttachConvert;
 import com.perfree.enums.ErrorCode;
 import com.perfree.file.FileHandleService;
@@ -43,6 +44,7 @@ public class AttachServiceImpl extends ServiceImpl<AttachMapper, Attach> impleme
 
     @Override
     public PageResult<Attach> attachPage(AttachPageReqVO pageVO) {
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
         return attachMapper.selectPage(pageVO);
     }
 

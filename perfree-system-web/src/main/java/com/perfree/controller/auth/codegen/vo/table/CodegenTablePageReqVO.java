@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 
-@Schema(description = "管理后台 - 表定义分页 Request VO")
+@Schema(description = "表定义分页 Request VO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)

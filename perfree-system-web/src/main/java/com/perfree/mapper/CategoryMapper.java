@@ -25,7 +25,6 @@ public interface CategoryMapper extends BaseMapperX<Category> {
     default PageResult<Category> categoryPage(CategoryPageReqVO pageVO){
         return selectPage(pageVO, new LambdaQueryWrapper<Category>()
                 .eq(StringUtils.isNotBlank(pageVO.getName()), Category::getName, pageVO.getName())
-                .orderByDesc(Category::getCreateTime)
         );
     }
 

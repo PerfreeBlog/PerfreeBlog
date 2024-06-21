@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Schema(description="分页参数")
 @Data
@@ -26,4 +27,6 @@ public class PageParam implements Serializable {
     @Max(value = 100, message = "每页条数最大值为 100")
     private Integer pageSize = PAGE_SIZE;
 
+    @Schema(description = "排序字段")
+    private List<SortingField> sortingFields;
 }

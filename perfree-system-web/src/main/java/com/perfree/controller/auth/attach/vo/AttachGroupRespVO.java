@@ -3,7 +3,7 @@ package com.perfree.controller.auth.attach.vo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-@Schema(description = "管理后台 - 附件RespVO")
+@Schema(description = "附件RespVO")
 @Data
 public class AttachGroupRespVO {
 

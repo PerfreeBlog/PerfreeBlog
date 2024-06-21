@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
-@Schema(description = "管理后台 - 站点RespVO")
+@Schema(description = "站点RespVO")
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class SiteRespVO extends SiteBaseVO{
