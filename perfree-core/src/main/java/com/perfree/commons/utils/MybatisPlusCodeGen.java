@@ -18,7 +18,7 @@ public class MybatisPlusCodeGen {
                         "jdbc:mysql://127.0.0.1:3306/perfree?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&nullCatalogMeansCurrent=true",
                         "root", "215607..")
                 .globalConfig(builder -> {
-                    builder.author("perfree") // 设置作者
+                    builder.author("com/perfree") // 设置作者
                             .outputDir("D://"); // 指定输出目录
                 })
                 .dataSourceConfig(builder -> builder.typeConvertHandler((globalConfig, typeRegistry, metaInfo) -> {

@@ -26,4 +26,6 @@ public class SystemConstants {
     /** 默认数量 */
     public static final int DEFAULT_COUNT = 0;
 
+    /** version */
+    public static final String VERSION = "version";
 }

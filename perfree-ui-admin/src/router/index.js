@@ -36,6 +36,7 @@ const router = createRouter({
   ],
 })
 
+// router加载完毕
 router.afterEach(() => {
   NProgress.done() // 进度条结束
 })
@@ -58,6 +59,7 @@ router.beforeEach((to, from, next) => {
     }
     next('/login');
   } else {
+    console.log(commonStore.menuList)
     if (commonStore.menuInit) {
       next();
     } else {
@@ -77,6 +79,7 @@ router.beforeEach((to, from, next) => {
   }
 })
 
+// 初始化菜单
 const initMenu = () => {
   return new Promise((resolve, reject)=> {
     const commonStore = useCommonStore()
@@ -100,6 +103,8 @@ const initMenu = () => {
   })
 }
 
+
+// 根据菜单生成路由
 const genRouteByMenus = (menus) => {
   return new Promise((resolve, reject)=> {
     const commonStore = useCommonStore()
@@ -122,6 +127,8 @@ const genRouteByMenus = (menus) => {
         }
       }
     }
+
+    // 设置缓存的路由
     commonStore.setCachedViews([]);
     router.getRoutes().forEach(r => {
       if (r.meta.keepAlive) {
