@@ -3,6 +3,7 @@ package com.perfree.service.comment;
 import com.perfree.mapper.CommentMapper;
 import com.perfree.model.Comment;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,4 +17,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
 
+    @Resource
+    private CommentMapper commentMapper;
+
+    @Override
+    public Long getCommentCount() {
+        return commentMapper.selectCount();
+    }
 }

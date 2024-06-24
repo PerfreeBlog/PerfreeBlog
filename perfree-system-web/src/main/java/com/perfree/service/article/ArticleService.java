@@ -1,14 +1,9 @@
 package com.perfree.service.article;
 
-import com.perfree.commons.common.PageResult;
-import com.perfree.commons.directive.DirectivePage;
-import com.perfree.controller.auth.article.vo.*;
-import com.perfree.enjoy.directive.article.vo.ArticlePageDirectiveRespVO;
-import com.perfree.enjoy.directive.article.vo.ArticlePageDirectiveVo;
-import com.perfree.model.Article;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.HashMap;
+import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.article.vo.*;
+import com.perfree.model.Article;
 
 /**
  * <p>
@@ -61,4 +56,17 @@ public interface ArticleService extends IService<Article> {
      * @return Boolean
      */
     Boolean del(Integer id);
+
+
+    /**
+     * 获取文章数量
+     * @return Long
+     */
+    Long getArticleCount();
+
+    /**
+     * 获取动态数量
+     * @return Long
+     */
+    Long getJournalCount();
 }

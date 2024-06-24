@@ -1,5 +1,6 @@
 package com.perfree.enjoy;
 
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
 import com.jfinal.template.Engine;
 import com.perfree.commons.constant.SystemConstants;

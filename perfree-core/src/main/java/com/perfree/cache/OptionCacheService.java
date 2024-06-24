@@ -39,4 +39,16 @@ public class OptionCacheService {
     public List<OptionCacheDTO> getAllOption() {
         return optionCache.asMap().values().stream().toList();
     }
+
+    public String getDefaultValue(String key, String defaultValue) {
+        OptionCacheDTO option = getOption(key);
+        if (null == option || StringUtils.isBlank(option.getValue())) {
+            if (StringUtils.isNotBlank(defaultValue)) {
+                return defaultValue;
+            }
+            return "";
+        }
+
+        return option.getValue();
+    }
 }

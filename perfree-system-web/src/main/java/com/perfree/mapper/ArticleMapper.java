@@ -3,6 +3,7 @@ package com.perfree.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.perfree.commons.mapper.BaseMapperX;
+import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticleCategoryRespVO;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
@@ -58,4 +59,25 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      */
     List<ArticleCategoryRespVO> getArticleCategoryById(Integer id);
 
+    /**
+     * 获取动态数量
+     * @return Long
+     */
+    default Long getJournalCount(){
+        return selectCount(new LambdaQueryWrapper<Article>()
+                .eq(Article::getType, ArticleConstant.ARTICLE_TYPE_JOURNAL)
+                .eq(Article::getStatus, ArticleConstant.ARTICLE_STATUS_PUBLISHED)
+        );
+    }
+
+    /**
+     * 获取文章数量
+     * @return Long
+     */
+    default Long getArticleCount(){
+        return selectCount(new LambdaQueryWrapper<Article>()
+                .eq(Article::getType, ArticleConstant.ARTICLE_TYPE_ARTICLE)
+                .eq(Article::getStatus, ArticleConstant.ARTICLE_STATUS_PUBLISHED)
+        );
+    }
 }

@@ -135,9 +135,12 @@ public abstract class BaseDirective extends Directive {
      * @param key key
      * @return String
      */
-    public String getExprParamToStr(String key) {
+    public String getExprParamToStr(String key, String defaultValue) {
         HashMap<String, String> params = this.exprListToMap();
         String result = params.get(key);
+        if (StringUtils.isBlank(result) && StringUtils.isNotBlank(defaultValue)) {
+            return defaultValue;
+        }
         return StringUtils.isBlank(result)?"":result;
     }
 

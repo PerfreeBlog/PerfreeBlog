@@ -109,4 +109,14 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         tagMapper.updateBatch(tagList);
         return tagList;
     }
+
+    @Override
+    public Long getTagCount() {
+        return tagMapper.selectCount();
+    }
+
+    @Override
+    public List<Tag> getHotTag(int count) {
+        return tagMapper.getHotTag(count);
+    }
 }

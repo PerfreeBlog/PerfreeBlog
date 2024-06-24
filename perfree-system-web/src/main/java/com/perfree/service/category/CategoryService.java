@@ -51,4 +51,10 @@ public interface CategoryService extends IService<Category> {
      * @return List<CategoryTreeRespVO>
      */
     List<CategoryTreeRespVO> listTree(CategoryListTreeReqVO categoryListTreeReqVO);
+
+    /**
+     * 获取分类数量
+     * @return Long
+     */
+    Long getCategoryCount();
 }

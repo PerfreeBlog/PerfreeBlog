@@ -6,11 +6,13 @@ import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.directive.BaseDirective;
+import com.perfree.commons.directive.DirectivePageResult;
 import com.perfree.commons.directive.TemplateDirective;
+import com.perfree.commons.utils.DirectiveSortingUtils;
+import com.perfree.constant.ArticleConstant;
 import com.perfree.constant.ViewConstant;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
-import com.perfree.enjoy.directive.article.vo.ArticlePageDirectiveVo;
 import com.perfree.service.article.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,14 +40,18 @@ public class ArticlePageDirective extends BaseDirective {
         articlePageReqVO.setTagId(getModelDataToInt(ViewConstant.TAG_ID, scope, null));
         articlePageReqVO.setCategoryId(getModelDataToInt(ViewConstant.CATEGORY_ID, scope, null));
         articlePageReqVO.setTitle(getModelDataToStr(ViewConstant.TITLE, scope));
-        // articlePageReqVO.setOrderBy(getModelDataToStr(ViewConstant.ORDER_BY, scope));
 
         // 组装来自指令编写的参数
-        articlePageReqVO.setType(getExprParamToStr(ViewConstant.ARTICLE_TYPE));
+        articlePageReqVO.setType(getExprParamToStr(ViewConstant.ARTICLE_TYPE, ArticleConstant.ARTICLE_TYPE_ARTICLE));
         articlePageReqVO.setPageSize(getExprParamToInt(ViewConstant.PAGE_SIZE, 10));
+        articlePageReqVO.setSortingFields(DirectiveSortingUtils.handleSortingField(getExprParamToStr(ViewConstant.ORDER_BY, null)));
         // 查询数据
         PageResult<ArticleRespVO> articleRespVOPageResult = articleService.articlePage(articlePageReqVO);
-        scope.set("articlePage", articleRespVOPageResult);
+
+        // 组装结果集
+        DirectivePageResult<ArticleRespVO> result = new DirectivePageResult<>(articleRespVOPageResult.getList(),articleRespVOPageResult.getTotal(),
+                articlePageReqVO.getPageNo(), articlePageReqVO.getPageSize());
+        scope.set("articlePage", result);
         stat.exec(env, scope, writer);
     }
 

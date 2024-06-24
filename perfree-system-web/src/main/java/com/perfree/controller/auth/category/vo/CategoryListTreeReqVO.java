@@ -10,4 +10,7 @@ public class CategoryListTreeReqVO {
 
     @Schema(description = "分类名")
     private String name;
+
+    @Schema(description = "状态0:正常,1禁用")
+    private Integer status;
 }

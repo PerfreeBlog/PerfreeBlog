@@ -29,6 +29,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("file:resources/upload/")
                 .setCachePeriod(3600)
                 .setCacheControl(CacheControl.maxAge(Duration.ofMinutes(30)));
+        registry.addResourceHandler("/static/**").addResourceLocations( "classpath:/static/");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         WebMvcConfigurer.super.addResourceHandlers(registry);

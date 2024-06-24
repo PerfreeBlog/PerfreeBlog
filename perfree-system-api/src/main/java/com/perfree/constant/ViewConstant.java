@@ -16,8 +16,7 @@ public class ViewConstant {
 
     public final static String ARTICLE_TYPE = "type";
 
-    public final static String ARTICLE_PAGE = "articlePage";
 
-
+    public static final String COUNT = "count";
 }
 

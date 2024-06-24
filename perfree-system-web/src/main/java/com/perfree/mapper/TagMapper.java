@@ -7,6 +7,9 @@ import com.perfree.controller.auth.tag.vo.TagPageReqVO;
 import com.perfree.model.Tag;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -30,4 +33,5 @@ public interface TagMapper extends BaseMapperX<Tag> {
                 .eq(Tag::getSlug, slug));
     }
 
+    List<Tag> getHotTag(@Param("count") int count);
 }

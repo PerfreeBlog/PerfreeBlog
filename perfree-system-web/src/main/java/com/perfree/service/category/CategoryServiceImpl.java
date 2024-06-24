@@ -104,6 +104,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return result;
     }
 
+    @Override
+    public Long getCategoryCount() {
+        return categoryMapper.getCategoryCount();
+    }
+
 
     /**
      * 生成子分类

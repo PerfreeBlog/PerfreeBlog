@@ -20,6 +20,9 @@ public class SystemConstants {
     /** 统一的文件分隔符 */
     public final static String FILE_SEPARATOR = "/";
 
+    /** 统一的url分隔符 */
+    public final static String URL_SEPARATOR = "/";
+
     /** 附件上传到本地后,统一的访问url前缀 */
     public static final String DEFAULT_ATTACH_URL_PATTERNS = "/attach/**";
 
@@ -40,4 +43,10 @@ public class SystemConstants {
 
     /** 主题根目录 */
     public static final String THEME_BASE_DIR = "static/themes/";
+
+    /** url-  /articleList/ */
+    public static final String ARTICLE_LIST_URL = " /articleList/";
+
+
+
 }
