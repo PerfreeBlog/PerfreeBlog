@@ -31,6 +31,8 @@ import com.perfree.controller.common.system.vo.LoginUserReqVO;
 import com.perfree.controller.common.system.vo.LoginUserRespVO;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -107,6 +109,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         loginUserRespVO.setAccessToken(token);
         loginUserRespVO.setRefreshToken(refreshToken);
         loginUserRespVO.setExpiresTime(expirationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+
+        Authentication authentication = JwtUtil.getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return loginUserRespVO;
     }
 

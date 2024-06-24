@@ -22,6 +22,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 /**
@@ -59,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").authenticated()
                         .anyRequest().permitAll()
                 )
-                .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
+                .sessionManagement(manager -> manager.sessionCreationPolicy(IF_REQUIRED))
                 //  配置跨域
                 .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
                 //  将配置交由JWT
