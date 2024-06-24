@@ -18,7 +18,7 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/admin/**").setViewName("admin/index");
+        registry.addViewController("/admin/**").setViewName("/static/admin/index.html");
         registry.addViewController("/login").setViewName("admin/index");
     }
 
@@ -30,6 +30,7 @@ public class MvcConfig implements WebMvcConfigurer {
                 .setCachePeriod(3600)
                 .setCacheControl(CacheControl.maxAge(Duration.ofMinutes(30)));
         registry.addResourceHandler("/static/**").addResourceLocations( "classpath:/static/");
+        registry.addResourceHandler("/assets/**").addResourceLocations( "classpath:/static/admin/assets/");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
         WebMvcConfigurer.super.addResourceHandlers(registry);

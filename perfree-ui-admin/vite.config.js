@@ -57,5 +57,7 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1024, // chunk 大小警告的限制（单位kb）
+    outDir: '../perfree-system-web/src/main/resources/static/admin',
+    emptyOutDir: true
   },
 })

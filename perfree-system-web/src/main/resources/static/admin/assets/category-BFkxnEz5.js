@@ -1,0 +1,1 @@
+function a(t){return axios.post("/api/auth/category/listTree",t)}function e(t){return axios.post("/api/auth/category/add",t)}function i(t){return axios.put("/api/auth/category/update",t)}function o(t){return axios.get("/api/auth/category/get?id="+t)}function r(t){return axios.delete("/api/auth/category/del?id="+t)}export{i as a,e as b,a as c,o as d,r as e};
