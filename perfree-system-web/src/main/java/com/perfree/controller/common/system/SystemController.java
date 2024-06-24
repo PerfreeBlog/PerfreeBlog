@@ -11,11 +11,16 @@ import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.controller.auth.option.vo.OptionRespVO;
 import com.perfree.controller.auth.system.vo.CaptchaImageRespVO;
+import com.perfree.controller.auth.user.vo.UserRespVO;
 import com.perfree.controller.common.system.vo.LoginUserReqVO;
 import com.perfree.controller.common.system.vo.LoginUserRespVO;
 import com.perfree.convert.option.OptionConvert;
+import com.perfree.convert.user.UserConvert;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
+import com.perfree.model.User;
+import com.perfree.security.SecurityFrameworkUtils;
+import com.perfree.security.vo.LoginUserVO;
 import com.perfree.service.user.UserService;
 import com.perfree.system.api.option.dto.OptionCacheDTO;
 import io.swagger.v3.oas.annotations.Operation;
@@ -85,5 +90,16 @@ public class SystemController {
         }
         captchaImageResp.setImg(Base64.encode(os.toByteArray()));
         return CommonResult.success(captchaImageResp);
+    }
+
+    @GetMapping("/getLoginUser")
+    @Operation(summary = "获取当前登录用户")
+    public CommonResult<UserRespVO> getApiLoginUser() {
+        LoginUserVO loginUser = SecurityFrameworkUtils.getLoginUser();
+        if (null == loginUser) {
+            return CommonResult.success(null);
+        }
+        User byId = userService.getById(loginUser.getId());
+        return CommonResult.success(UserConvert.INSTANCE.convertRespVO(byId));
     }
 }

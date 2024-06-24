@@ -159,6 +159,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.getJournalCount();
     }
 
+    @Override
+    public ArticleRespVO getBySlugAndTypeAndStatus(String slug, String articleType, Integer status) {
+        return articleMapper.getBySlugAndTypeAndStatus(slug, articleType, status);
+    }
+
+    @Override
+    public ArticleRespVO getPreArticle(Integer id, String articleType, Integer status) {
+        return articleMapper.getPreArticle(id, articleType, status);
+    }
+
+    @Override
+    public ArticleRespVO getNextArticle(Integer id, String articleType, Integer status) {
+        return articleMapper.getNextArticle(id, articleType, status);
+    }
+
     /**
      * 生成文章摘要
      * @param summary summary

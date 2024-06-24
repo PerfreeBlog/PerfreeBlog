@@ -45,6 +45,10 @@ public class ArticlePageDirective extends BaseDirective {
         articlePageReqVO.setType(getExprParamToStr(ViewConstant.ARTICLE_TYPE, ArticleConstant.ARTICLE_TYPE_ARTICLE));
         articlePageReqVO.setPageSize(getExprParamToInt(ViewConstant.PAGE_SIZE, 10));
         articlePageReqVO.setSortingFields(DirectiveSortingUtils.handleSortingField(getExprParamToStr(ViewConstant.ORDER_BY, null)));
+
+        // 必须的参数,至查询已发布的文章
+        articlePageReqVO.setStatus(ArticleConstant.ARTICLE_STATUS_PUBLISHED);
+
         // 查询数据
         PageResult<ArticleRespVO> articleRespVOPageResult = articleService.articlePage(articlePageReqVO);
 

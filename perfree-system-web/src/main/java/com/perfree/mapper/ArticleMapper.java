@@ -80,4 +80,27 @@ public interface ArticleMapper extends BaseMapperX<Article> {
                 .eq(Article::getStatus, ArticleConstant.ARTICLE_STATUS_PUBLISHED)
         );
     }
+
+    /**
+     * 根据slug/articleType/status获取文章信息
+     * @param slug slug
+     * @param articleType articleType
+     * @param status status
+     * @return ArticleRespVO
+     */
+    ArticleRespVO getBySlugAndTypeAndStatus(@Param("slug") String slug, @Param("articleType") String articleType, @Param("status") Integer status);
+
+    /**
+     * 根据当前文章id获取上一篇文章
+     * @param id id
+     * @return ArticleRespVO
+     */
+    ArticleRespVO getPreArticle(@Param("id") Integer id,@Param("articleType")  String articleType,@Param("status")  Integer status);
+
+    /**
+     * 根据当前文章id获取下一篇文章
+     * @param id id
+     * @return ArticleRespVO
+     */
+    ArticleRespVO getNextArticle(@Param("id") Integer id,@Param("articleType")  String articleType,@Param("status")  Integer status);
 }

@@ -83,6 +83,9 @@ springdoc:
     - group: '认证接口'
       paths-to-match: '/**'
       packages-to-scan: com.perfree.controller.auth
+    - group: '视图接口'
+      paths-to-match: '/**'
+      packages-to-scan: com.perfree.controller.view
 # knife4j的增强配置
 knife4j:
   enable: true

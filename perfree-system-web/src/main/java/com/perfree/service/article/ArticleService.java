@@ -69,4 +69,31 @@ public interface ArticleService extends IService<Article> {
      * @return Long
      */
     Long getJournalCount();
+
+    /**
+     * 根据slug/articleType/status获取文章
+     * @param slug slug
+     * @param articleType articleType
+     * @param status status
+     * @return ArticleRespVO
+     */
+    ArticleRespVO getBySlugAndTypeAndStatus(String slug, String articleType, Integer status);
+
+    /**
+     * 根据文章id获取上一篇文章
+     * @param id id
+     * @param articleType articleType
+     * @param status status
+     * @return ArticleRespVO ArticleRespVO
+     */
+    ArticleRespVO getPreArticle(Integer id, String articleType, Integer status);
+
+    /**
+     * 根据文章id获取下一篇文章
+     * @param id id
+     * @param articleType articleType
+     * @param status status
+     * @return ArticleRespVO ArticleRespVO
+     */
+    ArticleRespVO getNextArticle(Integer id, String articleType, Integer status);
 }

@@ -24,8 +24,22 @@ public abstract class BaseDirective extends Directive {
      */
     public Object getModelData(String key, Scope scope) {
         Map rootData = scope.getRootData();
-        if (scope.getRootData() != null && scope.getRootData().size() > 0 ) {
+        if (scope.getRootData() != null && !scope.getRootData().isEmpty()) {
             return scope.getRootData().get(key);
+        }
+        return null;
+    }
+
+    /**
+     * 获取模板数据(转换为实体类)
+     * @param key key
+     * @param scope scope
+     * @return Object
+     */
+    public <T> T getModelDataToClass(String key, Scope scope, Class<T> clazz) {
+        Object modelData = getModelData(key, scope);
+        if (clazz.isInstance(modelData)) {
+            return clazz.cast(modelData);
         }
         return null;
     }

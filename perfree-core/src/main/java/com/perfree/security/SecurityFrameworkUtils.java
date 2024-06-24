@@ -15,6 +15,7 @@ public class SecurityFrameworkUtils {
 
     /**
      * 获得当前认证信息
+     *
      * @return 认证信息
      */
     public static Authentication getAuthentication() {
@@ -26,17 +27,20 @@ public class SecurityFrameworkUtils {
     }
 
 
-
     /**
      * 获取当前登录用户
+     *
      * @return User
      */
     @Nullable
     public static LoginUserVO getLoginUser() {
         Authentication authentication = getAuthentication();
-        if (authentication == null) {
+        if (null == authentication || null == authentication.getPrincipal()) {
             return null;
         }
-        return (LoginUserVO) authentication.getPrincipal();
+        if (authentication.getPrincipal() instanceof LoginUserVO){
+            return (LoginUserVO) authentication.getPrincipal();
+        }
+        return null;
     }
 }

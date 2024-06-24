@@ -2,11 +2,10 @@
 #@layout()
 #define css()
 <link href="/static/themes/default/static/libs/viewerjs/viewer.min.css" rel="stylesheet">
-<link href="/static/public/libs/highlight/styles/atom-one-dark.css" rel="stylesheet">
+<link href="/static/themes/default/static/libs/highlight/styles/atom-one-dark.css" rel="stylesheet">
 <link href="/static/themes/default/static/libs/notyf/notyf.min.css" rel="stylesheet">
-<link href="/static/public/libs/perfree-comment/perfree-comment.css?v=#(version)" rel="stylesheet">
-<link rel="stylesheet" href="/static/themes/default/static/css/article.css?v=#(version)">
-<link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
+<link href="/static/public/libs/perfree-comment/perfree-comment.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/themes/default/static/css/article.css">
 #include("/static/themes/default/inc/custom_bg.html")
 #end
 #define content()
@@ -34,11 +33,7 @@
 <section class="d-container">
     <section class="d-article-container">
         <article class='d-article-content #if(article.contentModel == "html") ck-content #end' id="d-article-content">
-            #if(article.contentModel == "html")
-                #(article.content ??)
-            #else
-                #mdToHtml(article.content ??)
-            #end
+            #(article.parseContent ??)
 
             <div class="greatBox">
                   <span class="like-btn" data-id="#(article.id)">
@@ -61,14 +56,14 @@
         <div class="d-switch-article-box">
             #preArticle()
                 #if(preArticle)
-                    <a class="d-pre-article" href="#(preArticle.url)" title="#(preArticle.title)">
+                    <a class="d-pre-article" href="/article/#(preArticle.slug)" title="#(preArticle.title)">
                         <i class="fa fa-long-arrow-left"></i> #(preArticle.title)
                     </a>
                 #end
             #end
             #nextArticle()
                 #if(nextArticle)
-                    <a class="d-next-article" href="#(nextArticle.url)" title="#(nextArticle.title)">
+                    <a class="d-next-article" href="/article/#(nextArticle.slug)" title="#(nextArticle.title)">
                         #(nextArticle.title) <i class="fa fa-long-arrow-right"></i>
                     </a>
                 #end
@@ -88,8 +83,8 @@
 
 #define script()
 <script src="/static/themes/default/static/libs/viewerjs/viewer.min.js"></script>
-<script src="/static/public/libs/highlight/highlight.pack.js"></script>
+<script src="/static/themes/default/static/libs/highlight/highlight.pack.js"></script>
 <script src="/static/themes/default/static/libs/notyf/notyf.min.js"></script>
-<script src="/static/public/libs/perfree-comment/perfree-comment.js?v=#(version)"></script>
+<script src="/static/public/libs/perfree-comment/perfree-comment.js"></script>
 <script src="/static/themes/default/static/js/article.js"></script>
 #end
