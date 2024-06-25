@@ -22,7 +22,7 @@ import com.perfree.model.User;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.vo.LoginUserVO;
 import com.perfree.service.user.UserService;
-import com.perfree.system.api.option.dto.OptionCacheDTO;
+import com.perfree.system.api.option.dto.OptionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -65,9 +65,9 @@ public class SystemController {
     @GetMapping("getOptionByNoAuth")
     @Operation(summary = "获取未登录时可拥有的配置信息")
     public CommonResult<List<OptionRespVO>> getOptionByNoAuth(){
-        List<OptionCacheDTO> optionCacheDTOList = new ArrayList<>();
-        optionCacheDTOList.add(optionCacheService.getOption(OptionEnum.LOGIN_CAPTCHA_ENABLE.getKey()));
-        return CommonResult.success(OptionConvert.INSTANCE.convertCacheDTO2RespListVO(optionCacheDTOList));
+        List<OptionDTO> optionDTOList = new ArrayList<>();
+        optionDTOList.add(optionCacheService.getOption(OptionEnum.LOGIN_CAPTCHA_ENABLE.getKey()));
+        return CommonResult.success(OptionConvert.INSTANCE.convertCacheDTO2RespListVO(optionDTOList));
     }
 
     @PostMapping("captchaImage")

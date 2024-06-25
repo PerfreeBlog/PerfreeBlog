@@ -4,7 +4,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import com.perfree.system.api.option.dto.OptionCacheDTO;
+import com.perfree.system.api.option.dto.OptionDTO;
 
 import java.util.List;
 
@@ -15,17 +15,17 @@ import java.util.List;
  */
 @Service
 public class OptionCacheService {
-    private final Cache<String, OptionCacheDTO> optionCache;
+    private final Cache<String, OptionDTO> optionCache;
 
     public OptionCacheService() {
         optionCache = CacheBuilder.newBuilder().build();
     }
 
-    public void putOption(String key, OptionCacheDTO optionCacheDTO) {
-        optionCache.put(key, optionCacheDTO);
+    public void putOption(String key, OptionDTO optionDTO) {
+        optionCache.put(key, optionDTO);
     }
 
-    public OptionCacheDTO getOption(String key) {
+    public OptionDTO getOption(String key) {
         if (StringUtils.isBlank(key)) {
             return null;
         }
@@ -36,12 +36,12 @@ public class OptionCacheService {
         optionCache.invalidate(key);
     }
 
-    public List<OptionCacheDTO> getAllOption() {
+    public List<OptionDTO> getAllOption() {
         return optionCache.asMap().values().stream().toList();
     }
 
     public String getDefaultValue(String key, String defaultValue) {
-        OptionCacheDTO option = getOption(key);
+        OptionDTO option = getOption(key);
         if (null == option || StringUtils.isBlank(option.getValue())) {
             if (StringUtils.isNotBlank(defaultValue)) {
                 return defaultValue;

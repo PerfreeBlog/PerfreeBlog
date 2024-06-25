@@ -27,6 +27,11 @@ public enum ErrorCode {
     CATEGORY_EXIST_CHILD(100000017,"该分类存在子分类,不能删除!"),
     ARTICLE_SLUG_EXIST(100000018,"该文章Slug访问标识已存在!"),
     OPTION_WEB_THEME_NOT_EXIST(100000019,"当前主题配置不存在,请先启用主题!"),
+    SAVE_THEME_ERROR(100000020, "保存主题文件出错,创建目录失败,请检查程序是否有创建目录权限!"),
+    THEME_CONFIG_YAML_ERROR(100000021, "主题配置文件不存在或格式错误!"),
+    THEME_SWITCH_CHECK_ERROR(100000022, "切换主题失败,该主题不存在或主题配置信息有误!"),
+    THEME_UNINSTALL_ERROR_BY_USE(100000023, "当前主题正在使用,不能卸载!"),
+    THEME_NOT_EXIST_OR_IS_DEV(100000024, "主题文件不存在或当前主题所在目录为开发环境!"),
     ;
 
     private final Integer code;

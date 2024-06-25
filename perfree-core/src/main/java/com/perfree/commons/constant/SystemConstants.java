@@ -47,6 +47,11 @@ public class SystemConstants {
     /** url-  /articleList/ */
     public static final String ARTICLE_LIST_URL = " /articleList/";
 
+    /** 生产主题路径 */
+    public static final String PROD_THEMES_PATH = "resources/static/themes";
+
+    /** 开发主题路径 */
+    public static final String DEV_THEMES_PATH = "classpath:static/themes";
 
 
 }

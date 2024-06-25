@@ -25,7 +25,7 @@ import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.util.JwtUtil;
 import com.perfree.security.vo.LoginUserVO;
 import com.perfree.service.menu.MenuService;
-import com.perfree.system.api.option.dto.OptionCacheDTO;
+import com.perfree.system.api.option.dto.OptionDTO;
 import com.perfree.controller.auth.system.vo.LoginUserInfoRespVO;
 import com.perfree.controller.common.system.vo.LoginUserReqVO;
 import com.perfree.controller.common.system.vo.LoginUserRespVO;
@@ -75,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public LoginUserRespVO login(LoginUserReqVO loginUserVO) {
-        OptionCacheDTO option = optionCacheService.getOption(OptionEnum.LOGIN_CAPTCHA_ENABLE.getKey());
+        OptionDTO option = optionCacheService.getOption(OptionEnum.LOGIN_CAPTCHA_ENABLE.getKey());
         if (null == option || option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             if (StringUtils.isBlank(loginUserVO.getUuid()) || StringUtils.isBlank(loginUserVO.getCode())) {
                 throw new ServiceException(ErrorCode.CAPTCHA_IS_NOT_EMPTY);

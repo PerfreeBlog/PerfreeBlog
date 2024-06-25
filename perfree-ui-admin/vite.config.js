@@ -48,11 +48,6 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: path => path.replace(/^\/attach/, '')
       },
-      "/admin/theme/setting": {
-        target: 'http://127.0.0.1:8080/admin/theme/setting',
-        changeOrigin: true,
-        rewrite: path => path.replace(/^\/admin\/theme\/setting/, '')
-      }
     }
   },
   build: {
@@ -60,4 +55,5 @@ export default defineConfig({
     outDir: '../perfree-system-web/src/main/resources/static/admin',
     emptyOutDir: true
   },
+  base: './'
 })

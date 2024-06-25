@@ -11,7 +11,6 @@ import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
-import com.perfree.constant.ArticleConstant;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.*;
 import com.perfree.convert.article.ArticleConvert;
@@ -24,7 +23,7 @@ import com.perfree.model.ArticleCategory;
 import com.perfree.model.ArticleTag;
 import com.perfree.model.Tag;
 import com.perfree.service.tag.TagService;
-import com.perfree.system.api.option.dto.OptionCacheDTO;
+import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -184,7 +183,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (StringUtils.isNotBlank(summary)) {
             return summary;
         }
-        OptionCacheDTO option = optionCacheService.getOption(OptionEnum.WEB_AUTO_GEN_SUMMARY.getKey());
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_AUTO_GEN_SUMMARY.getKey());
         if (null != option && !option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             return summary;
         }

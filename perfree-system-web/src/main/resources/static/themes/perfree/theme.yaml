@@ -1,0 +1,10 @@
+name: Perfree
+version: 2.2.1
+author:
+  name: Perfree
+  email: perfree@126.com
+  webSite: http://yinpengfei.com
+description: 描述
+updateUrl: http://yinpengfei.com
+screenshots: screenshots.jpg
+type: html

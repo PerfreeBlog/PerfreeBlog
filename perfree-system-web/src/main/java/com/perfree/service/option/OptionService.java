@@ -21,4 +21,11 @@ public interface OptionService extends IService<Option> {
      */
     List<Option> getAllOption();
 
+    /**
+     * 根据key修改value
+     * @param key key
+     * @param value value
+     * @return Boolean
+     */
+    Boolean updateOptionByKey(String key, String value);
 }

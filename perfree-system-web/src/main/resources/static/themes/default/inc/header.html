@@ -50,22 +50,23 @@
                         </li>
                     #end
                 #end
-                #if(loginUser)
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">
-                            <img src=" #(isBlank(loginUser.avatar) ? '/static/public/images/user.png': loginUser.avatar)?s=32" alt="" class="user-img"> #(loginUser.userName ??)
-                        </a>
-                        <dl class="layui-nav-child">
-                            #if(loginUser.hasAdmin())
+                #loginUser()
+                    #(loginUser)
+                    #if(null != loginUser)
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">
+                                <img src=" #(isBlank(loginUser.avatar) ? '/static/public/images/user.png': loginUser.avatar)?s=32" alt="" class="user-img"> #(loginUser.userName ??)
+                            </a>
+                            <dl class="layui-nav-child">
                                 <dd><a href="/admin"><i class="fa fa-briefcase"></i> 后台管理</a></dd>
-                            #end
-                            <dd><a href="/logout" data-pjax="no"><i class="fa fa-sign-out"></i> 退出登录</a></dd>
-                        </dl>
-                    </li>
-                #else
-                    <li class="layui-nav-item">
-                        <a href="/login" class="d-nav-item"><i class="fa fa-sign-in"></i>登录</a>
-                    </li>
+                                <dd><a href="/logout" data-pjax="no"><i class="fa fa-sign-out"></i> 退出登录</a></dd>
+                            </dl>
+                        </li>
+                    #else
+                        <li class="layui-nav-item">
+                            <a href="/login" class="d-nav-item"><i class="fa fa-sign-in"></i>登录</a>
+                        </li>
+                    #end
                 #end
             </ul>
         </nav>
@@ -127,22 +128,22 @@
                     </li>
                 #end
             #end
-            #if(loginUser)
-                <li class="layui-nav-item">
-                    <a href="javascript:;" class="d-nav-item">
-                        <i class="fa fa-user-o"></i>#(loginUser.userName ??)
-                    </a>
-                    <dl class="layui-nav-child">
-                        #if(loginUser.hasAdmin())
-                            <dd><a href="/admin">后台管理</a></dd>
-                        #end
-                        <dd><a href="/logout" data-pjax="no">退出登录</a></dd>
-                    </dl>
-                </li>
-            #else
-                <li class="layui-nav-item">
-                    <a href="/login" class="d-nav-item"><i class="fa fa-sign-in"></i>登录</a>
-                </li>
+            #loginUser()
+                #if(loginUser)
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" class="d-nav-item">
+                            <i class="fa fa-user-o"></i>#(loginUser.userName ??)
+                        </a>
+                        <dl class="layui-nav-child">
+
+                            <dd><a href="/logout" data-pjax="no">退出登录</a></dd>
+                        </dl>
+                    </li>
+                #else
+                    <li class="layui-nav-item">
+                        <a href="/login" class="d-nav-item"><i class="fa fa-sign-in"></i>登录</a>
+                    </li>
+                #end
             #end
         </ul>
     </div>

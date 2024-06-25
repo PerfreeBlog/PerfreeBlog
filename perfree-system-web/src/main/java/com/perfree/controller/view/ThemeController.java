@@ -1,13 +1,15 @@
 package com.perfree.controller.view;
 
+import com.perfree.base.BaseViewController;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("/admin/theme")
-public class ThemeController {
+@Controller
+public class ThemeController extends BaseViewController {
 
-    @RequestMapping("/setting")
-    public String themeSettingView() {
-        return "theme/setting";
+    @GetMapping("/console/theme/setting")
+    public String settingPage(){
+        return themeView("setting.html", "static/admin/pages/theme/setting.html");
     }
 }

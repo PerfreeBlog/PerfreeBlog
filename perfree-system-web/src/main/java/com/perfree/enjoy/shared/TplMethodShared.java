@@ -2,10 +2,8 @@ package com.perfree.enjoy.shared;
 
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.utils.SpringBeanUtil;
-import com.perfree.system.api.option.dto.OptionCacheDTO;
-import jakarta.annotation.Resource;
+import com.perfree.system.api.option.dto.OptionDTO;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Component;
 
 public class TplMethodShared {
 
@@ -16,7 +14,7 @@ public class TplMethodShared {
      * @author Perfree
      */
     public String option(String key) {
-        OptionCacheDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key);
+        OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key);
         if (null == option || StringUtils.isBlank(option.getValue())) {
             return null;
         }
@@ -31,7 +29,7 @@ public class TplMethodShared {
      * @author Perfree
      */
     public boolean optionCompare(String key, String compareValue) {
-        OptionCacheDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key);
+        OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key);
         if (null == option || StringUtils.isBlank(option.getValue())) {
             return false;
         }

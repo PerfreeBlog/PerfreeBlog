@@ -27,7 +27,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
-import com.perfree.system.api.option.dto.OptionCacheDTO;
+import com.perfree.system.api.option.dto.OptionDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -131,8 +131,8 @@ public class AppInit implements ApplicationRunner {
     private void initOptions() {
         LOGGER.info("start init option cache");
         List<Option> optionList = optionService.getAllOption();
-        List<OptionCacheDTO> options = OptionConvert.INSTANCE.convertCacheDTO(optionList);
-        for (OptionCacheDTO option : options) {
+        List<OptionDTO> options = OptionConvert.INSTANCE.convertCacheDTO(optionList);
+        for (OptionDTO option : options) {
             optionCacheService.putOption(option.getKey(), option);
         }
         LOGGER.info("init option cache success");

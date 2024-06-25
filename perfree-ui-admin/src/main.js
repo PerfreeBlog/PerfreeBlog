@@ -14,7 +14,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import piniaPersist from 'pinia-plugin-persist'
 import axios from "./api/axios";
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-
+import WujieVue from "wujie-vue3";
 
 import App from './App.vue'
 import router from './router'
@@ -44,6 +44,7 @@ const i18n = createI18n({
 
 pinia.use(piniaPersist)
 app.use(pinia)
+app.use(WujieVue);
 app.config.globalProperties.$router = router;
 app.use(router)
 

@@ -59,7 +59,6 @@ router.beforeEach((to, from, next) => {
     }
     next('/login');
   } else {
-    console.log(commonStore.menuList)
     if (commonStore.menuInit) {
       next();
     } else {
@@ -113,17 +112,31 @@ const genRouteByMenus = (menus) => {
         genRouteByMenus(item.children).then(() => {})
       } else {
         if (item.url) {
-          router.addRoute("layout",
-              {
-                path: item.url,
-                name: item.componentName,
-                component: modules[`../views${item.component}.vue`],
-                meta: {
-                  title: item.name,
-                  keepAlive: true
+          if (item.isFrame === 0) {
+            router.addRoute("layout",
+                {
+                  path: item.url + 1,
+                  name: item.componentName,
+                  component: modules[`../views/wujie/WuJieView.vue`],
+                  meta: {
+                    title: item.name,
+                    keepAlive: true
+                  }
                 }
-              }
-          )
+            )
+          } else {
+            router.addRoute("layout",
+                {
+                  path: item.url,
+                  name: item.componentName,
+                  component: modules[`../views${item.component}.vue`],
+                  meta: {
+                    title: item.name,
+                    keepAlive: true
+                  }
+                }
+            )
+          }
         }
       }
     }
