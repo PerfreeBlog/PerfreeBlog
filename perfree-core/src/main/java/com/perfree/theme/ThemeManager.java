@@ -71,7 +71,7 @@ public class ThemeManager {
             // 读取 YAML 文件
             Yaml yaml = new Yaml();
             themeInfo = yaml.loadAs(input, ThemeInfo.class);
-            if (file.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), ""))) {
+            if (themeInfo.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), ""))) {
                 themeInfo.setIsActive(1);
             }
             themeInfo.setPath(file.getName());
