@@ -3,6 +3,7 @@ package com.perfree.plugin;
 import cn.hutool.core.io.watch.SimpleWatcher;
 import cn.hutool.core.io.watch.WatchMonitor;
 import cn.hutool.core.io.watch.watchers.DelayWatcher;
+import com.perfree.commons.constant.SystemConstants;
 import com.perfree.plugin.commons.PluginUtils;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import com.perfree.plugin.pojo.PluginBaseConfig;
@@ -28,9 +29,6 @@ import java.util.List;
 @Component
 public class PluginDevManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(PluginDevManager.class);
-
-    @Value("${perfree.plugin-dir}")
-    private String pluginBaseDir;
 
     private final PluginHandle pluginHandle;
     private final PluginManager pluginManager;
@@ -82,11 +80,11 @@ public class PluginDevManager {
             LOGGER.error("{} plugin.yaml not found", pluginPath);
             return;
         }
-        Boolean update = PluginUtils.isUpdate(pluginConfig, pluginBaseDir);
+        Boolean update = PluginUtils.isUpdate(pluginConfig, SystemConstants.PLUGINS_DEV_DIR);
         if (update && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getName()) != null) {
             pluginManager.stopPlugin(pluginConfig.getPlugin().getName());
         }
-        File pluginDir = PluginUtils.devCopyPluginToPluginDir(pluginPath, pluginBaseDir);
+        File pluginDir = PluginUtils.devCopyPluginToPluginDir(pluginPath, SystemConstants.PLUGINS_DEV_DIR);
         PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
         BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
         if (null != bean) {

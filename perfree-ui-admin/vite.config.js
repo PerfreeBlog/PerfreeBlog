@@ -48,6 +48,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: path => path.replace(/^\/attach/, '')
       },
+      "/static": {
+        target: 'http://127.0.0.1:8080/static',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/static/, '')
+      },
     }
   },
   build: {

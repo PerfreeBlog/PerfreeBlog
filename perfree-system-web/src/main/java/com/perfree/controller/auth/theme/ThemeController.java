@@ -45,14 +45,14 @@ public class ThemeController {
     @Operation(summary = "安装主题")
     public CommonResult<ThemeInfo> installTheme(InstallThemeReqVO installThemeReqVO) throws IOException {
         String multiFileName = installThemeReqVO.getFile().getOriginalFilename();
-        File dir = new File(SystemConstants.PROD_THEMES_PATH);
+        File dir = new File(SystemConstants.UPLOAD_TEMP_PATH);
         if (!dir.exists()){
             boolean mkdirs = dir.mkdirs();
             if (!mkdirs) {
                 throw new ServiceException(ErrorCode.SAVE_THEME_ERROR);
             }
         }
-        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + multiFileName);
+        File file = new File(SystemConstants.UPLOAD_TEMP_PATH + SystemConstants.FILE_SEPARATOR + multiFileName);
         installThemeReqVO.getFile().transferTo(file.getAbsoluteFile());
         return success(themeManager.installTheme(file));
     }
@@ -60,15 +60,15 @@ public class ThemeController {
 
     @PostMapping("swatchTheme")
     @Operation(summary = "切换主题")
-    public CommonResult<Boolean> swatchTheme(@RequestParam(value = "themePath") String themePath) {
-        return success(themeManager.swatchTheme(themePath));
+    public CommonResult<Boolean> swatchTheme(@RequestParam(value = "themeName") String themeName) {
+        return success(themeManager.swatchTheme(themeName));
     }
 
 
     @DeleteMapping("unInstallTheme")
     @Operation(summary = "卸载主题")
-    public CommonResult<Boolean> unInstallTheme(@RequestParam(value = "themePath") String themePath) {
-        return success(themeManager.unInstallTheme(themePath));
+    public CommonResult<Boolean> unInstallTheme(@RequestParam(value = "themeName") String themeName) {
+        return success(themeManager.unInstallTheme(themeName));
     }
 
 }

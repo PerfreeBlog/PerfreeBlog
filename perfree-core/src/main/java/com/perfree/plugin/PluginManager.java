@@ -1,5 +1,6 @@
 package com.perfree.plugin;
 
+import com.perfree.commons.constant.SystemConstants;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -18,12 +19,6 @@ import java.io.File;
 public class PluginManager{
     private static final Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
 
-    @Value("${perfree.plugin-dir}")
-    private String pluginBaseDir;
-
-    @Value("${perfree.temp-dir}")
-    private String tempDir;
-
     @Resource
     private PluginHandle pluginHandle;
 
@@ -33,7 +28,7 @@ public class PluginManager{
      * @date 2023-09-27 16:09:44
      */
     public void initPlugins() throws Exception {
-        File pluginBaseDirFile = new File(pluginBaseDir);
+        File pluginBaseDirFile = new File(SystemConstants.PLUGINS_DIR);
         if (!pluginBaseDirFile.exists()) {
            return;
         }

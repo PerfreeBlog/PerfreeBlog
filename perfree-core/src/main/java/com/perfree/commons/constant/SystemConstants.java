@@ -35,6 +35,11 @@ public class SystemConstants {
     /** resources路径 */
     public static final String RESOURCES_DIR = "resources";
 
+    /** 插件路径 */
+    public static final String PLUGINS_DIR = "resources/plugins";
+    /** 插件开发环境路径 */
+    public static final String PLUGINS_DEV_DIR = "resources/devPlugins";
+
     /** 插件静态资源目录 */
     public static final String PLUGINS_RESOURCES_DIR = "resources/pluginResources";
 
@@ -52,6 +57,9 @@ public class SystemConstants {
 
     /** 开发主题路径 */
     public static final String DEV_THEMES_PATH = "classpath:static/themes";
+
+    /** 临时目录 */
+    public static final String UPLOAD_TEMP_PATH = "resources/temp";
 
 
 }
