@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <link rel="stylesheet" href="/static/admin/assets/libs/elementPlus/elementPlus.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="common-layout">
+        <el-container>
+          <el-aside width="200px">Aside</el-aside>
+          <el-container>
+            <el-header>Header</el-header>
+            <el-main>
+              <el-button>Default</el-button>
+              <el-button type="primary">Primary</el-button>
+              <el-button type="success">Success</el-button>
+              <el-button type="info">Info</el-button>
+              <el-button type="warning">Warning</el-button>
+              <el-button type="danger" @click="messageBox">Danger</el-button>
+              <my-component></my-component>
+            </el-main>
+            <el-footer>Footer</el-footer>
+          </el-container>
+        </el-container>
+      </div>
+    </div>
+    <script src="/static/admin/assets/libs/vue/vue.global.js"></script>
+    <script src="/static/admin/assets/libs/elementPlus/elementPlus.js"></script>
+    <script src="/static/admin/assets/libs/elementPlus/icons-vue.js"></script>
+    <script src="/static/admin/assets/libs/axios/axios.min.js"></script>
+    <script src="/static/admin/assets/js/main.js"></script>
+    <script src="/static/admin/components/my-component.js"></script>
+    <script>
+      const App = {
+        data() {
+          return {
+            message: "Hello Element Plus",
+          };
+        },
+        methods: {
+          messageBox() {
+            ElementPlus.ElMessage.error("登录状态已过期，请重新登陆")
+            axiosInstance.get('/api/auth/tag/getAllTag').then(res => {
+              console.log(res)
+            })
+          }
+        }
+      };
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.component("myComponent", myComponent)
+      for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+        app.component(key, component)
+      }
+      app.mount("#app");
+    </script>
+  </body>
+</html>

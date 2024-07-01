@@ -12,6 +12,7 @@ import com.perfree.system.api.option.OptionApi;
 import com.perfree.theme.commons.ThemeInfo;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -142,16 +143,7 @@ public class ThemeManager {
      * @return Boolean
      */
     public Boolean swatchTheme(String themeName) {
-        ThemeInfo themeInfo = null;
-        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
-        File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
-        if (file.exists()) {
-            themeInfo = getThemeInfoByThemeFile(file);
-        }
-        if (null != devFile && devFile.exists()) {
-            themeInfo = getThemeInfoByThemeFile(devFile);
-        }
-
+        ThemeInfo themeInfo = getThemeInfo(themeName);
         if (null == themeInfo) {
             throw new ServiceException(ErrorCode.THEME_SWITCH_CHECK_ERROR);
         }
@@ -175,5 +167,26 @@ public class ThemeManager {
             return true;
         }
         throw new ServiceException(ErrorCode.THEME_NOT_EXIST_OR_IS_DEV);
+    }
+
+    /**
+     * 获取主题配置信息
+     * @param themeName themeName 可为空,为空获取当前默认主题
+     * @return ThemeInfo
+     */
+    public ThemeInfo getThemeInfo(String themeName) {
+        if (StringUtils.isBlank(themeName)) {
+            themeName = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), "");
+        }
+        ThemeInfo themeInfo = null;
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        if (file.exists()) {
+            themeInfo = getThemeInfoByThemeFile(file);
+        }
+        if (null != devFile && devFile.exists()) {
+            themeInfo = getThemeInfoByThemeFile(devFile);
+        }
+        return themeInfo;
     }
 }

@@ -24,6 +24,9 @@ public class ThemeInfo {
     @Schema(description = "更新url")
     private String updateUrl;
 
+    @Schema(description = "主题设置页类型(可为json/html)")
+    private String settingType;
+
     @Schema(description = "截图")
     private String screenshots;
 

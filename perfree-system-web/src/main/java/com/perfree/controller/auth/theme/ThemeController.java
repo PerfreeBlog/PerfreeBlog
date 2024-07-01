@@ -71,4 +71,10 @@ public class ThemeController {
         return success(themeManager.unInstallTheme(themeName));
     }
 
+    @GetMapping("getCurrThemeInfo")
+    @Operation(summary = "获取当前启用主题的配置信息")
+    public CommonResult<ThemeInfo> getCurrThemeInfo() {
+        return success(themeManager.getThemeInfo(null));
+    }
+
 }

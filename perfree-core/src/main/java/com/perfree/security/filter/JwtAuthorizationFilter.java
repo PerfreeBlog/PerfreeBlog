@@ -40,7 +40,6 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         try {
             //  从request中获取token
             String token = this.getTokenFromHttpServletRequest(request);
-            Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
             //  如果token不存在或者携带了刷新token(长度小于150,可以根据自己生成的refreshToken来判断),
             //  直接放行,由系统Security判断是否具有访问权限
             if (StringUtils.isBlank(token) || token.length() < 150) {
