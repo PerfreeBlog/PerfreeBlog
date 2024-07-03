@@ -1,6 +1,7 @@
 package com.perfree.convert.option;
 
 
+import com.perfree.controller.auth.option.vo.OptionAddReqVO;
 import com.perfree.model.Option;
 import com.perfree.controller.auth.option.vo.OptionRespVO;
 import org.mapstruct.Mapper;
@@ -18,4 +19,9 @@ public interface OptionConvert {
     List<OptionRespVO> convertCacheDTO2RespListVO(List<OptionDTO> optionDTOList);
 
     OptionDTO convertModelToDTO(Option option);
+
+    Option convertByAddReqVO(OptionAddReqVO optionAddReqVO);
+
+    List<OptionRespVO> convertToRespVOList(List<Option> optionList);
+
 }

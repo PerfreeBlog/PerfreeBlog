@@ -1,5 +1,165 @@
-[
-  {"group": "基础配置", "name" : "name1", "label":  "输入框", "value":  "", "type":  "input", "placeholder": "请输入", "defaultValue":  "", "other": ""},
-  {"group": "基础配置", "name" : "name2", "label":  "输入框", "value":  "", "type":  "selectAttachInput", "placeholder": "请输入", "defaultValue":  "",
-    "other": {"attachType": "image/jpeg", "spliter": ",", "enableInput": true}}
-]
+{
+  "option": {
+    "form": {
+      "inline": false,
+      "hideRequiredAsterisk": false,
+      "labelPosition": "right",
+      "size": "default",
+      "labelWidth": "125px"
+    },
+    "resetBtn": {
+      "show": false,
+      "innerText": "重置"
+    },
+    "submitBtn": {
+      "show": true,
+      "innerText": "提交"
+    }
+  },
+  "rule": [
+    {
+      "type": "elTabs",
+      "style": {
+        "width": "100%"
+      },
+      "children": [
+        {
+          "type": "elTabPane",
+          "props": {
+            "label": "选项卡"
+          },
+          "children": [
+            {
+              "type": "input",
+              "field": "Ff0jly5mxxftbjc",
+              "title": "输入框",
+              "info": "",
+              "$required": false,
+              "_fc_id": "id_F1vdly5mxxftbkc",
+              "name": "ref_Ficzly5mxxftblc",
+              "display": true,
+              "hidden": false,
+              "_fc_drag_tag": "input"
+            },
+            {
+              "type": "input",
+              "field": "Fuhjly5mxy9dbmc",
+              "title": "多行输入框",
+              "info": "",
+              "$required": false,
+              "props": {
+                "type": "textarea"
+              },
+              "_fc_id": "id_Fapvly5mxy9dbnc",
+              "name": "ref_Faxmly5mxy9dboc",
+              "display": true,
+              "hidden": false,
+              "_fc_drag_tag": "textarea"
+            },
+            {
+              "type": "input",
+              "field": "Fsywly5mxz7sbpc",
+              "title": "密码输入框",
+              "info": "",
+              "$required": false,
+              "props": {
+                "type": "password"
+              },
+              "_fc_id": "id_Fejtly5mxz7sbqc",
+              "name": "ref_Fqfdly5mxz7sbrc",
+              "display": true,
+              "hidden": false,
+              "_fc_drag_tag": "password"
+            }
+          ],
+          "_fc_id": "id_Fo4yly5mxqpfbbc",
+          "name": "ref_Fo6dly5mxqpfbcc",
+          "display": true,
+          "hidden": false,
+          "_fc_drag_tag": "elTabPane"
+        },
+        {
+          "type": "elTabPane",
+          "props": {
+            "label": "选项卡"
+          },
+          "children": [
+            {
+              "type": "select",
+              "field": "F1kuly5my3yebsc",
+              "title": "选择器",
+              "info": "",
+              "effect": {
+                "fetch": ""
+              },
+              "$required": false,
+              "options": [
+                {
+                  "label": "选项00",
+                  "value": 1
+                },
+                {
+                  "label": "选项01",
+                  "value": 2
+                },
+                {
+                  "label": "选项02",
+                  "value": 3
+                }
+              ],
+              "_fc_id": "id_Fiaoly5my3yebtc",
+              "name": "ref_F053ly5my3yebuc",
+              "display": true,
+              "hidden": false,
+              "_fc_drag_tag": "select"
+            },
+            {
+              "type": "fcEditor",
+              "field": "Fuyyly5my8gmbvc",
+              "title": "富文本框",
+              "info": "",
+              "$required": false,
+              "_fc_id": "id_F149ly5my8gmbwc",
+              "name": "ref_Fdg1ly5my8gmbxc",
+              "display": true,
+              "hidden": false,
+              "_fc_drag_tag": "fcEditor"
+            }
+          ],
+          "_fc_id": "id_F2fdly5mxuidbdc",
+          "name": "ref_Fzq6ly5mxuidbec",
+          "display": true,
+          "hidden": false,
+          "_fc_drag_tag": "elTabPane"
+        },
+        {
+          "type": "elTabPane",
+          "props": {
+            "label": "选项卡"
+          },
+          "_fc_id": "id_Fubgly5mxutubfc",
+          "name": "ref_Fg4tly5mxutubgc",
+          "display": true,
+          "hidden": false,
+          "_fc_drag_tag": "elTabPane"
+        },
+        {
+          "type": "elTabPane",
+          "props": {
+            "label": "选项卡"
+          },
+          "_fc_id": "id_Fugtly5mxv1ibhc",
+          "name": "ref_Fb20ly5mxv1ibic",
+          "display": true,
+          "hidden": false,
+          "_fc_drag_tag": "elTabPane"
+        }
+      ],
+      "_fc_id": "id_F491ly5mxqpeb9c",
+      "name": "ref_F40sly5mxqpebac",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "elTabs"
+    }
+  ]
+}

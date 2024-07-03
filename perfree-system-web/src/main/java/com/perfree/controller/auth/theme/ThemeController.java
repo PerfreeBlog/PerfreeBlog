@@ -13,6 +13,7 @@ import com.perfree.model.Attach;
 import com.perfree.service.theme.ThemeService;
 import com.perfree.theme.commons.ThemeInfo;
 import com.perfree.theme.ThemeManager;
+import com.perfree.theme.commons.ThemeSetting;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -71,10 +72,10 @@ public class ThemeController {
         return success(themeManager.unInstallTheme(themeName));
     }
 
-    @GetMapping("getCurrThemeInfo")
+    @GetMapping("getCurrentThemeSetting")
     @Operation(summary = "获取当前启用主题的配置信息")
-    public CommonResult<ThemeInfo> getCurrThemeInfo() {
-        return success(themeManager.getThemeInfo(null));
+    public CommonResult<ThemeSetting> getCurrentThemeSetting() {
+        return success(themeManager.getCurrentThemeSetting());
     }
 
 }

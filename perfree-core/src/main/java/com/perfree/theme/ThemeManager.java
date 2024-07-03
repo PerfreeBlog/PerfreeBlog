@@ -3,6 +3,7 @@ package com.perfree.theme;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
 import cn.hutool.core.util.ZipUtil;
+import cn.hutool.json.JSONUtil;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
@@ -10,6 +11,7 @@ import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.system.api.option.OptionApi;
 import com.perfree.theme.commons.ThemeInfo;
+import com.perfree.theme.commons.ThemeSetting;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -175,18 +177,44 @@ public class ThemeManager {
      * @return ThemeInfo
      */
     public ThemeInfo getThemeInfo(String themeName) {
+        File themeDirFile = getThemeDirFile(themeName);
+        if (null == themeDirFile) {
+            return null;
+        }
+        return getThemeInfoByThemeFile(themeDirFile);
+    }
+
+    /**
+     * 获取当前主题的设置项
+     * @return ThemeSetting
+     */
+    public ThemeSetting getCurrentThemeSetting() {
+        File themeDirFile = getThemeDirFile(null);
+        if (null == themeDirFile) {
+            return null;
+        }
+        File settingJsonFile = new File(themeDirFile.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + "setting.json");
+        String fileContent = FileUtil.readUtf8String(settingJsonFile);
+        return JSONUtil.toBean(fileContent, ThemeSetting.class);
+    }
+
+    /**
+     * 获取主题所在目录的File对象,如果themeName为空则获取当前启用主题
+     * @param themeName themeName
+     * @return File
+     */
+    private File getThemeDirFile(String themeName) {
         if (StringUtils.isBlank(themeName)) {
             themeName = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), "");
         }
-        ThemeInfo themeInfo = null;
         File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
         File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
-        if (file.exists()) {
-            themeInfo = getThemeInfoByThemeFile(file);
-        }
         if (null != devFile && devFile.exists()) {
-            themeInfo = getThemeInfoByThemeFile(devFile);
+            return devFile;
         }
-        return themeInfo;
+        if (file.exists()) {
+            return file;
+        }
+        return null;
     }
 }

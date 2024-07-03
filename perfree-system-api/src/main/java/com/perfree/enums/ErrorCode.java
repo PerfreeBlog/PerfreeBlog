@@ -32,6 +32,7 @@ public enum ErrorCode {
     THEME_SWITCH_CHECK_ERROR(100000022, "切换主题失败,该主题不存在或主题配置信息有误!"),
     THEME_UNINSTALL_ERROR_BY_USE(100000023, "当前主题正在使用,不能卸载!"),
     THEME_NOT_EXIST_OR_IS_DEV(100000024, "主题文件不存在或当前主题所在目录为开发环境!"),
+    GET_CURRENT_THEME_ERROR(100000025, "获取当前启用的主题失败,请检查是否已启用主题!"),
     ;
 
     private final Integer code;

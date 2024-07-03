@@ -45,4 +45,9 @@ public class Option extends BaseModel implements Serializable {
      */
     @TableField(value = "`value`")
     private String value;
+
+    /**
+     * theme
+     */
+    private String theme;
 }

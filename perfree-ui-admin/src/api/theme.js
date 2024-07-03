@@ -10,8 +10,8 @@ export function unInstallThemeApi(themeName) {
     return axios.delete('/api/auth/theme/unInstallTheme?themeName=' + themeName);
 }
 
-export function getThemeInfoApi() {
-    return axios.get('/api/auth/theme/getCurrThemeInfo');
+export function getCurrentThemeSettingApi() {
+    return axios.get('/api/auth/theme/getCurrentThemeSetting');
 }
 
 
