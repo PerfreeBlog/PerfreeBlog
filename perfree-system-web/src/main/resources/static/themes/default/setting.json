@@ -1,3 +1,5 @@
 [
-  {"group": "", "name" : "", "label":  "", "value":  "", "type":  "", "placeholder": "", "defaultValue":  "", "other": ""}
+  {"group": "基础配置", "name" : "name1", "label":  "输入框", "value":  "", "type":  "input", "placeholder": "请输入", "defaultValue":  "", "other": ""},
+  {"group": "基础配置", "name" : "name2", "label":  "输入框", "value":  "", "type":  "selectAttachInput", "placeholder": "请输入", "defaultValue":  "",
+    "other": {"attachType": "image/jpeg", "spliter": ",", "enableInput": true}}
 ]

@@ -11,6 +11,7 @@
       :collapse="menuIsCollapse"
       popper-class="poper-menu"
       :collapse-transition="false"
+      :unique-opened="true"
     >
       <menu-tree :menu-list="menuList"></menu-tree>
     </el-menu>
@@ -19,8 +20,6 @@
 
 <script setup>
 import MenuTree from '@/layout/components/MenuTree.vue'
-import {menuAdminList} from "@/api/system.js";
-import Layout from "@/layout/Layout.vue";
 import {useCommonStore} from "@/stores/commonStore.js";
 
 const commonStore = useCommonStore()

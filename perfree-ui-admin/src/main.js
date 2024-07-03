@@ -15,16 +15,21 @@ import piniaPersist from 'pinia-plugin-persist'
 import axios from "./api/axios";
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import WujieVue from "wujie-vue3";
+import FcDesigner from '@form-create/designer'
+import formCreate from '@form-create/element-ui'
+import install from '@form-create/element-ui/auto-import'
+import ElementPlus from 'element-plus'
 
 import App from './App.vue'
 import router from './router'
 import en from "@/language/en.js";
 import zh from "@/language/zh.js";
 import {createI18n} from "vue-i18n";
+import VueDOMPurifyHTML from 'vue-dompurify-html'
 
 window.axios = axios;
 const app = createApp(App)
-
+app.use(ElementPlus)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
@@ -48,7 +53,11 @@ app.use(WujieVue);
 app.config.globalProperties.$router = router;
 app.use(router)
 
+formCreate.use(install)
+app.use(formCreate)
+app.use(FcDesigner)
 app.use(i18n)
 library.add(fas, far, fab)
 app.component('font-awesome-icon', FontAwesomeIcon)
+app.use(VueDOMPurifyHTML)
 app.mount('#app')

@@ -5,88 +5,47 @@
     <link rel="icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-    <link rel="stylesheet" href="/static/admin/assets/libs/elementPlus/elementPlus.css" />
     <link rel="stylesheet" href="/static/admin/assets/css/main.css" />
   </head>
   <body>
     <div id="app">
-      <div class="common-layout">
-        <el-container>
-          <el-aside width="200px">
-            <el-menu
-                    active-text-color="#ffd04b"
-                    background-color="#545c64"
-                    class="el-menu-vertical-demo"
-                    default-active="2"
-                    text-color="#fff"
-            >
-              <el-sub-menu index="1">
-                <template #title>
-                  <el-icon><location></location></el-icon>
-                  <span>Navigator One</span>
-                </template>
-                <el-menu-item-group title="Group One">
-                  <el-menu-item index="1-1">item one</el-menu-item>
-                  <el-menu-item index="1-2">item two</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="Group Two">
-                  <el-menu-item index="1-3">item three</el-menu-item>
-                </el-menu-item-group>
-                <el-sub-menu index="1-4">
-                  <template #title>item four</template>
-                  <el-menu-item index="1-4-1">item one</el-menu-item>
-                </el-sub-menu>
-              </el-sub-menu>
-              <el-menu-item index="2">
-                <el-icon><icon-menu></icon-menu></el-icon>
-                <span>Navigator Two</span>
-              </el-menu-item>
-              <el-menu-item index="3" disabled>
-                <el-icon><document></document></el-icon>
-                <span>Navigator Three</span>
-              </el-menu-item>
-              <el-menu-item index="4">
-                <el-icon><setting></setting></el-icon>
-                <span>Navigator Four</span>
-              </el-menu-item>
-            </el-menu>
-          </el-aside>
-          <el-container>
-            <el-header>
-              <my-component></my-component>
-            </el-header>
-            <el-main>
-              <iframe></iframe>
-            </el-main>
-            <el-footer>Footer</el-footer>
-          </el-container>
-        </el-container>
-      </div>
+      <n-button>Default</n-button>
+      <n-button type="tertiary">
+        Tertiary
+      </n-button>
+      <n-button type="primary">
+        Primary
+      </n-button>
+      <n-button type="info">
+        Info
+      </n-button>
+      <n-button type="success">
+        Success
+      </n-button>
+      <n-button type="warning">
+        Warning
+      </n-button>
+      <n-button type="error">
+        Error
+      </n-button>
+
+      <iframe src="/admin/2"></iframe>
     </div>
     <script src="/static/admin/assets/libs/vue/vue.global.js"></script>
-    <script src="/static/admin/assets/libs/elementPlus/elementPlus.js"></script>
-    <script src="/static/admin/assets/libs/elementPlus/icons-vue.js"></script>
+    <script src="https://unpkg.com/naive-ui"></script>
     <script src="/static/admin/assets/libs/axios/axios.min.js"></script>
-    <script src="/static/admin/assets/js/main.js"></script>
     <script src="/static/admin/components/my-component.js"></script>
     <script>
-      const App = {
-        data() {
-          return {
-            message: "Hello Element Plus",
-          };
-        },
-        methods: {
-          messageBox() {
-            ElementPlus.ElMessage.error("登录状态已过期，请重新登陆")
-            axiosInstance.get('/api/auth/tag/getAllTag').then(res => {
-              console.log(res)
-            })
-          }
+    const App = {
+      setup() {
+        return {
+          message: 'naive'
         }
-      };
-      const vueSetup = new VueSetup(App, "#app", true);
-      vueSetup.component("myComponent", myComponent);
+      }
+    }
+    const app = Vue.createApp(App)
+    app.use(naive)
+    app.mount('#app')
     </script>
   </body>
 </html>

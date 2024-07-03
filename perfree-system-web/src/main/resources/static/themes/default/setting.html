@@ -2,14 +2,21 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <script src="https://unpkg.com/vue@3.4.30/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/naive-ui@2.38.2/dist/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/petite-vue"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
 <div id="app">
-    <attach-select-input :attach-type="'img'" :enable-input="true" :placeholder="'请选择或输入封面图地址'" ></attach-select-input>
+    <el-button >Click Me</el-button>
 </div>
-<script>
+<script >
+    PetiteVue.createApp({
+        clickHandler() {
+            this.$message('Button clicked!');
+        }
+    }).mount()
 </script>
 </body>
 </html>

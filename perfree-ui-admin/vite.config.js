@@ -10,23 +10,24 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue({
+ /*   vue({
       template: {
         compilerOptions: {
           isCustomElement: (tag) => tag === 'my-element'
         }
       }
-    }),
+    }),*/
+    vue(),
     vueJsx(),
     AutoImport({
       imports: ['vue', 'vue-router'],
       dts: false,
-      resolvers: [ElementPlusResolver()],
+      /*resolvers: [ElementPlusResolver()],*/
     }),
-    Components({
+   /* Components({
       resolvers: [ElementPlusResolver()],
       dts: false,
-    }),
+    }),*/
   ],
   resolve: {
     alias: {

@@ -12,4 +12,9 @@ public class AdminViewController {
     public String index() {
         return "/static/admin/index.html";
     }
+
+    @GetMapping("/2")
+    public String index2() {
+        return "/static/admin/index2.html";
+    }
 }

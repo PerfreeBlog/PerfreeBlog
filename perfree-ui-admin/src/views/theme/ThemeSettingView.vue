@@ -6,7 +6,7 @@
         height="100%"
         name="xxx"
         :url="'http://127.0.0.1:8080/console/theme/setting'"
-    ></WujieVue>
+    ></WujieVue>123
   </div>
 </template>
 <script setup>
