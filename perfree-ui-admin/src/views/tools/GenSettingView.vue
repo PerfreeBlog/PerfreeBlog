@@ -46,6 +46,7 @@ import 'highlight.js/styles/atom-one-light.css'
 import json from 'highlight.js/lib/languages/json'
 import {useClipboard} from "@vueuse/core";
 import {ElMessage} from "element-plus";
+import {AttachSelectInputRule} from "@/components/fc-components/AttachSelectInput.js";
 
 const { copy, isSupported } = useClipboard({ legacy: true })
 const designer = ref();
@@ -84,6 +85,7 @@ function onImportJson() {
 }
 /** 初始化 **/
 onMounted(async () => {
+  designer.value.addComponent(AttachSelectInputRule)
   // 注册代码高亮的各种语言
   hljs.registerLanguage('json', json)
 })

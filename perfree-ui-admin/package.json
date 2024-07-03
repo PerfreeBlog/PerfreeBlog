@@ -14,6 +14,7 @@
     "@element-plus/icons-vue": "^2.3.1",
     "@form-create/designer": "^3.2.2",
     "@form-create/element-ui": "^3.2.0",
+    "@form-create/utils": "^3.2.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-regular-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",

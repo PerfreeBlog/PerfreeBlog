@@ -26,6 +26,7 @@ import en from "@/language/en.js";
 import zh from "@/language/zh.js";
 import {createI18n} from "vue-i18n";
 import VueDOMPurifyHTML from 'vue-dompurify-html'
+import AttachSelectInput from "@/components/attach-select-input.vue";
 
 window.axios = axios;
 const app = createApp(App)
@@ -53,6 +54,7 @@ app.use(WujieVue);
 app.config.globalProperties.$router = router;
 app.use(router)
 
+FcDesigner.component('AttachSelectInput', AttachSelectInput);
 formCreate.use(install)
 app.use(formCreate)
 app.use(FcDesigner)

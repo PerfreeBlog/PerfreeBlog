@@ -31,7 +31,7 @@ let selectData = ref([])
 // spliter: 如果是多个，可以设置分割符号
 // enableInput: 是否允许自由输入
 // modelValue: 绑定值
-const props = defineProps(['attachType', 'spliter', 'enableInput', 'placeholder', 'modelValue'])
+const props = defineProps(['attachType', 'enableInput', 'placeholder', 'modelValue'])
 const emits = defineEmits(['update:modelValue'])
 
 const modelValue = ref(props.modelValue)
@@ -77,3 +77,18 @@ function selectAttach(data) {
  
 }
 </script>
+
+<style scoped>
+:deep().el-dialog.is-draggable .el-dialog__header{
+  cursor: move;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  float: none;
+  position: initial;
+  right: 0;
+  top: 0;
+  z-index: 1;
+}
+</style>
