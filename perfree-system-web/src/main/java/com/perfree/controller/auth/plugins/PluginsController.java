@@ -11,10 +11,7 @@ import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import static com.perfree.commons.common.CommonResult.success;
@@ -39,5 +36,17 @@ public class PluginsController {
     @Operation(summary = "插件安装")
     public CommonResult<Boolean> installPlugin(InstallPluginReqVO installPluginReqVO) {
         return success( pluginsService.installPlugin(installPluginReqVO.getFile()));
+    }
+
+    @PostMapping("/disablePlugin")
+    @Operation(summary = "插件禁用")
+    public CommonResult<Boolean> disablePlugin(@RequestParam(value = "id") Integer id) {
+        return success( pluginsService.disablePlugin(id));
+    }
+
+    @PostMapping("/enablePlugin")
+    @Operation(summary = "插件启用")
+    public CommonResult<Boolean> enablePlugin(@RequestParam(value = "id") Integer id) {
+        return success( pluginsService.enablePlugin(id));
     }
 }

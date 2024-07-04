@@ -26,19 +26,31 @@
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="80" type="index" />
         <el-table-column prop="name" label="插件名称" min-width="150"/>
-        <el-table-column prop="desc" label="描述信息" min-width="150"/>
-        <el-table-column prop="version" label="版本" min-width="150"/>
+        <el-table-column prop="desc" label="描述信息" min-width="200"/>
+        <el-table-column prop="version" label="版本" min-width="80"/>
+        <el-table-column prop="status" label="状态" width="100">
+          <template #default="scope">
+            <el-tag class="ml-2" type="success" v-if="scope.row.status === 1">已启用</el-tag>
+            <el-tag class="ml-2" type="danger" v-else>已禁用</el-tag>
+          </template>
+        </el-table-column>
         <el-table-column prop="author" label="作者" min-width="150"/>
-        <el-table-column prop="createTime" label="安装时间" min-width="120">
+        <el-table-column prop="website" label="作者网站" min-width="150">
+          <template v-slot="scope">
+            <a :href="scope.row.website" target="_blank">{{scope.row.website}}</a>
+          </template>
+        </el-table-column>
+        <el-table-column prop="email" label="联系方式" min-width="150"/>
+        <el-table-column prop="createTime" label="安装时间" min-width="150">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="140" fixed="right">
           <template v-slot="scope">
-            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">修改</el-button>
-            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
-
+            <el-button size="small" type="primary" link :icon="Unlock" @click="handleEnable(scope.row)"  v-if="scope.row.status === 0">启用</el-button>
+            <el-button size="small" type="primary" link :icon="Lock" @click="handleDisable(scope.row)"  v-if="scope.row.status === 1">禁用</el-button>
+            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">卸载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -80,9 +92,9 @@
   </div>
 </template>
 <script setup>
-import {Delete, Edit, Plus, Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
+import {Delete, Edit, Plus,Lock, Unlock,Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
 import {parseTime} from "@/utils/perfree.js";
-import {pluginsPageApi} from "@/api/plugin.js";
+import {disablePluginApi, enablePluginApi, pluginsPageApi} from "@/api/plugin.js";
 import {CONSTANTS} from "@/utils/constants.js";
 import axios_config from "@/api/axios_config.js";
 import {ElMessage} from "element-plus";
@@ -161,4 +173,26 @@ function pluginUploadError(error) {
   ElMessage.error('插件上传失败,请检查网络是否通通畅');
 }
 
+function handleDisable(row) {
+  disablePluginApi(row.id).then(res => {
+    if (res.code === 200) {
+      ElMessage.success('插件禁用成功');
+      initList();
+    }else {
+      ElMessage.success(res.msg);
+    }
+  })
+}
+
+function handleEnable(row){
+  enablePluginApi(row.id).then(res => {
+    if (res.code === 200) {
+      ElMessage.success('插件启用成功');
+      initList();
+    }else {
+      ElMessage.success(res.msg);
+    }
+  })
+}
+initList();
 </script>

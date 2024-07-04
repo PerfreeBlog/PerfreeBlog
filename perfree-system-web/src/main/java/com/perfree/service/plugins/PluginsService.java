@@ -40,4 +40,19 @@ public interface PluginsService extends IService<Plugins> {
      */
     void initPlugins();
 
+
+    /**
+     * 禁用插件
+     * @param id id
+     * @return Boolean
+     */
+    Boolean disablePlugin(Integer id);
+
+    /**
+     * 启用插件
+     * @param id id
+     * @return Boolean
+     */
+    Boolean enablePlugin(Integer id);
+
 }

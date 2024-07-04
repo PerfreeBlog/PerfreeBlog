@@ -7,8 +7,11 @@ import cn.hutool.core.io.watch.watchers.DelayWatcher;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.exception.ServiceException;
+import com.perfree.constant.PluginConstant;
 import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
 import com.perfree.convert.plugins.PluginsConvert;
+import com.perfree.enums.ErrorCode;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugins;
 import com.perfree.plugin.PluginDevManager;
@@ -136,6 +139,37 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
                     pluginsMapper.delByPluginId(plugins.getPluginId());
                 }
             }
+        }
+    }
+
+    @Override
+    @Transactional
+    public Boolean disablePlugin(Integer id) {
+        Plugins plugins = pluginsMapper.selectById(id);
+        if (null != PluginInfoHolder.getPluginInfo(plugins.getPluginId())) {
+            pluginManager.stopPlugin(plugins.getPluginId());
+        }
+        plugins.setStatus(PluginConstant.PLUGIN_STATUS_DISABLE);
+        pluginsMapper.updateById(plugins);
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean enablePlugin(Integer id) {
+        Plugins plugins = pluginsMapper.selectById(id);
+        File pluginDirFile = new File(SystemConstants.PLUGINS_DIR + SystemConstants.FILE_SEPARATOR + plugins.getPluginId());
+        if (pluginDirFile.exists()) {
+            if (null == PluginInfoHolder.getPluginInfo(plugins.getPluginId())) {
+                pluginManager.runPlugin(pluginDirFile);
+            }
+            plugins.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
+            pluginsMapper.updateById(plugins);
+            return true;
+        } else {
+            // 可能是冗余数据,删掉
+            pluginsMapper.delByPluginId(plugins.getPluginId());
+            throw new ServiceException(ErrorCode.PLUGIN_FILE_NOT_EXIST);
         }
     }
 
