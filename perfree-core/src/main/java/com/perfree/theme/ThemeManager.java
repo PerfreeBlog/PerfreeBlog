@@ -194,6 +194,9 @@ public class ThemeManager {
             return null;
         }
         File settingJsonFile = new File(themeDirFile.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + "setting.json");
+        if (!settingJsonFile.exists()) {
+            return null;
+        }
         String fileContent = FileUtil.readUtf8String(settingJsonFile);
         return JSONUtil.toBean(fileContent, ThemeSetting.class);
     }
