@@ -97,7 +97,7 @@ import {parseTime} from "@/utils/perfree.js";
 import {disablePluginApi, enablePluginApi, pluginsPageApi} from "@/api/plugin.js";
 import {CONSTANTS} from "@/utils/constants.js";
 import axios_config from "@/api/axios_config.js";
-import {ElMessage} from "element-plus";
+import {ElMessage, ElMessageBox} from "element-plus";
 
 const searchForm = ref({
   pageNo: 1,
@@ -174,25 +174,37 @@ function pluginUploadError(error) {
 }
 
 function handleDisable(row) {
-  disablePluginApi(row.id).then(res => {
-    if (res.code === 200) {
-      ElMessage.success('插件禁用成功');
-      initList();
-    }else {
-      ElMessage.success(res.msg);
-    }
-  })
+  ElMessageBox.confirm('确定要禁用[' + row.name + ']吗？', '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+  }).then(() => {
+    disablePluginApi(row.id).then(res => {
+      if (res.code === 200) {
+        ElMessage.success('插件禁用成功');
+        initList();
+      }else {
+        ElMessage.success(res.msg);
+      }
+    })
+  }).catch(() => {})
 }
 
 function handleEnable(row){
-  enablePluginApi(row.id).then(res => {
-    if (res.code === 200) {
-      ElMessage.success('插件启用成功');
-      initList();
-    }else {
-      ElMessage.success(res.msg);
-    }
-  })
+  ElMessageBox.confirm('确定要启用[' + row.name + ']吗？', '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+  }).then(() => {
+    enablePluginApi(row.id).then(res => {
+      if (res.code === 200) {
+        ElMessage.success('插件启用成功');
+        initList();
+      }else {
+        ElMessage.success(res.msg);
+      }
+    })
+  }).catch(() => {})
 }
 initList();
 </script>
