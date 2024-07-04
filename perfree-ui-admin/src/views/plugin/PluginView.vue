@@ -1,0 +1,164 @@
+<template>
+  <div class="page">
+    <div class="search-box">
+      <el-form :inline="true" :model="searchForm" class="demo-form-inline" ref="searchFormRef">
+        <el-form-item label="插件名称">
+          <el-input v-model="searchForm.name" placeholder="请输入插件名称" clearable/>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="initList" :icon="Search">查询</el-button>
+          <el-button :icon="Refresh" @click="resetSearchForm">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+
+    <el-row :gutter="10" class="mb8">
+      <el-col :span="1.5">
+        <el-button :icon="Plus" type="primary" plain @click="handleInstallPlugin">安装插件</el-button>
+      </el-col>
+      <div class="right-tool">
+        <el-button :icon="Refresh" circle @click="initList"/>
+      </div>
+    </el-row>
+
+    <div class="table-box">
+
+      <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
+        <el-table-column label="序号" min-width="80" type="index" />
+        <el-table-column prop="name" label="插件名称" min-width="150"/>
+        <el-table-column prop="desc" label="描述信息" min-width="150"/>
+        <el-table-column prop="version" label="版本" min-width="150"/>
+        <el-table-column prop="author" label="作者" min-width="150"/>
+        <el-table-column prop="createTime" label="安装时间" min-width="120">
+          <template v-slot="scope">
+            <span>{{ parseTime(scope.row.createTime) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="140" fixed="right">
+          <template v-slot="scope">
+            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">修改</el-button>
+            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <el-pagination
+          v-model:current-page="searchForm.pageNo"
+          v-model:page-size="searchForm.pageSize"
+          :page-sizes="[10, 20, 30, 50]"
+          layout="total,sizes,prev, pager, next, jumper"
+          background
+          small
+          @change="initList"
+          :total="searchForm.total"
+      />
+    </div>
+
+    <el-dialog v-model="pluginUploadOpen" :title="'安装插件'" width="500px" draggable>
+      <el-upload
+          class="upload-demo"
+          drag
+          ref="uploadRef"
+          accept="application/zip"
+          :on-success="pluginUploadSuccess"
+          :on-error="pluginUploadError"
+          :headers="headers"
+          :action="serverBaseUrl + '/api/auth/plugins/installPlugin'"
+      >
+        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+        <div class="el-upload__text">
+          拖拽插件文件到此或<em>点击上传插件文件</em>
+        </div>
+        <template #tip>
+          <div class="el-upload__tip">
+            插件文件为zip格式,若插件已存在,则会自动覆盖更新!
+          </div>
+        </template>
+      </el-upload>
+    </el-dialog>
+  </div>
+</template>
+<script setup>
+import {Delete, Edit, Plus, Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
+import {parseTime} from "@/utils/perfree.js";
+import {pluginsPageApi} from "@/api/plugin.js";
+import {CONSTANTS} from "@/utils/constants.js";
+import axios_config from "@/api/axios_config.js";
+import {ElMessage} from "element-plus";
+
+const searchForm = ref({
+  pageNo: 1,
+  pageSize: 20,
+  total: 0,
+  name: ''
+})
+const searchFormRef = ref();
+let tableData = ref([]);
+let loading = ref(false);
+
+let pluginUploadOpen = ref(false);
+let token_info = localStorage.getItem(CONSTANTS.STORAGE_TOKEN);
+let serverBaseUrl = axios_config.baseURL;
+let  headers = {
+  Authorization: "Bearer " + JSON.parse(token_info).accessToken,
+};
+let uploadRef = ref();
+
+/**
+ * 加载列表
+ */
+function initList() {
+  loading.value = true;
+  pluginsPageApi(searchForm.value).then((res) => {
+    tableData.value = res.data.list;
+    searchForm.value.total = res.data.total;
+    loading.value = false;
+  })
+}
+
+
+/**
+ * 重置搜索表单
+ */
+function resetSearchForm() {
+  searchForm.value = {
+    name: ''
+  }
+  searchFormRef.value.resetFields();
+}
+
+/**
+ * 安装插件处理
+ */
+function handleInstallPlugin() {
+  pluginUploadOpen.value = true;
+}
+
+/**
+ * 插件上传成功回调
+ * @param response
+ * @param uploadFile
+ * @param uploadFiles
+ */
+function pluginUploadSuccess(response, uploadFile, uploadFiles) {
+  if (response.code === 200) {
+    ElMessage.success('插件安装成功');
+    pluginUploadOpen.value = false;
+    uploadRef.value.clearFiles();
+    initList();
+  }else {
+    ElMessage.error(response.msg);
+    uploadRef.value.handleRemove(uploadFile);
+  }
+}
+
+/**
+ * 插件上传失败回调
+ * @param error
+ */
+function pluginUploadError(error) {
+  ElMessage.error('插件上传失败,请检查网络是否通通畅');
+}
+
+</script>

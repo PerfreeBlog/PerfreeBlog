@@ -20,6 +20,7 @@ import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.PluginManager;
 import com.perfree.service.attachConfig.AttachConfigService;
 import com.perfree.service.option.OptionService;
+import com.perfree.service.plugins.PluginsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,9 +46,7 @@ public class AppInit implements ApplicationRunner {
     @Value("${server.port}")
     private String port;
 
-    private final PluginManager pluginManager;
-
-    private final PluginDevManager pluginDevManager;
+    private final PluginsService pluginsService;
 
     private final AttachConfigMapper attachConfigMapper;
 
@@ -59,16 +58,15 @@ public class AppInit implements ApplicationRunner {
 
     private final AttachConfigService attachConfigService;
 
-    public AppInit(PluginManager pluginManager, PluginDevManager pluginDevManager, OptionService optionService,
-                   OptionCacheService optionCacheService, AttachConfigMapper attachConfigMapper,
-                   AttachConfigCacheService attachConfigCacheService, AttachConfigService attachConfigService) {
-        this.pluginManager = pluginManager;
-        this.pluginDevManager = pluginDevManager;
+    public AppInit(OptionService optionService, OptionCacheService optionCacheService,
+                   AttachConfigMapper attachConfigMapper, AttachConfigCacheService attachConfigCacheService,
+                   AttachConfigService attachConfigService, PluginsService pluginsService) {
         this.optionService = optionService;
         this.optionCacheService = optionCacheService;
         this.attachConfigMapper = attachConfigMapper;
         this.attachConfigCacheService = attachConfigCacheService;
         this.attachConfigService = attachConfigService;
+        this.pluginsService = pluginsService;
     }
 
     @Override
@@ -78,12 +76,8 @@ public class AppInit implements ApplicationRunner {
         initOptions();
         initAttachConfig();
         attachConfigService.initLocalResourcesPatterns();
-        pluginManager.initPlugins();
-        String command = System.getProperty("sun.java.command");
-        if (command != null && !command.contains(".jar")) {
-            // 源码运行,加载本地插件
-            pluginDevManager.initPlugins();
-        }
+        pluginsService.watchMonitorDevPlugins();
+        pluginsService.initPlugins();
         List<PluginInfo> pluginInfoList = PluginInfoHolder.getAllPluginInfo();
         StringBuilder successPluginStr = new StringBuilder();
         pluginInfoList.forEach(pluginInfo -> successPluginStr.append("Success Load Plugin -> ").append(pluginInfo.getPluginPath()).append("\n"));

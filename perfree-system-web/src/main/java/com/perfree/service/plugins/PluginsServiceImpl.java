@@ -1,20 +1,36 @@
 package com.perfree.service.plugins;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.watch.SimpleWatcher;
+import cn.hutool.core.io.watch.WatchMonitor;
+import cn.hutool.core.io.watch.watchers.DelayWatcher;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.constant.SystemConstants;
+import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
+import com.perfree.convert.plugins.PluginsConvert;
 import com.perfree.mapper.PluginsMapper;
 import com.perfree.model.Plugins;
+import com.perfree.plugin.PluginDevManager;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.PluginManager;
-import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
+import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.pojo.PluginBaseConfig;
+import com.perfree.system.api.plugin.dto.PluginsDTO;
 import jakarta.annotation.Resource;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.WatchEvent;
+import java.util.List;
 
 /**
  * <p>
@@ -26,16 +42,19 @@ import java.io.File;
  */
 @Service
 public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> implements PluginsService {
-
     private final static Logger LOGGER = LoggerFactory.getLogger(PluginsServiceImpl.class);
+
+    @Value("${perfree.autoLoadDevPlugin}")
+    private Boolean autoLoadDevPlugin;
+
     @Resource
     private PluginsMapper pluginsMapper;
 
     @Resource
     private PluginManager pluginManager;
 
-    @Value("${perfree.temp-dir}")
-    private String tempDir;
+    @Resource
+    private PluginDevManager pluginDevManager;
 
 
     @Override
@@ -46,18 +65,97 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
     @Override
     public Boolean installPlugin(MultipartFile file) {
         try {
-            File dir = new File(tempDir + File.separator + "plugin");
+            File dir = new File(SystemConstants.UPLOAD_TEMP_PATH);
             if (!dir.exists()) {
                 FileUtil.mkdir(dir.getAbsolutePath());
             }
             File pluginFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
             file.transferTo(pluginFile);
-            pluginManager.installPlugin(pluginFile);
-            FileUtil.del(pluginFile);
+            savePluginsHandle(pluginManager.installPlugin(pluginFile));
             return true;
         } catch (Exception e) {
-            LOGGER.error("", e);
+            LOGGER.error("插件安装失败", e);
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void watchMonitorDevPlugins() {
+        String command = System.getProperty("sun.java.command");
+        if (command != null && !command.contains(".jar") && autoLoadDevPlugin) {
+            // 源码运行,且开启了插件监听,自动监听插件 TODO 不是很完美,需要改动
+            List<String> pluginsList = pluginDevManager.getPluginClassPath();
+            if (null == pluginsList || pluginsList.isEmpty()) {
+                return;
+            }
+            for (String plugin : pluginsList) {
+                try {
+                    initDevPlugin(plugin);
+                } catch (Exception e) {
+                    LOGGER.error("初始化开发环境插件出错", e);
+                }
+                WatchMonitor watchMonitor = WatchMonitor.createAll(plugin,  new DelayWatcher(new SimpleWatcher() {
+                    @Override
+                    public void onModify(WatchEvent<?> event, Path currentPath) {
+                        try {
+                            initDevPlugin(plugin);
+                        } catch (Exception e) {
+                            LOGGER.error("动态更新开发环境插件出错", e);
+                        }
+                    }
+                },1000));
+                watchMonitor.setMaxDepth(20);
+                watchMonitor.start();
+            }
+        }
+    }
+
+    private synchronized void initDevPlugin (String pluginPath) throws Exception {
+        PluginBaseConfig pluginConfig = PluginUtils.getDevPluginConfig(pluginPath);
+        if (null == pluginConfig) {
+            LOGGER.error("{} plugin.yaml not found", pluginPath);
+            return;
+        }
+        Plugins plugins = pluginsMapper.getByPluginId(pluginConfig.getPlugin().getId());
+        PluginsDTO pluginsDTO = PluginsConvert.INSTANCE.convertToDTO(plugins);
+        savePluginsHandle(pluginDevManager.initPlugin(pluginPath, pluginsDTO));
+    }
+
+    @Override
+    @Transactional
+    public void initPlugins() {
+        List<Plugins> pluginsList = pluginsMapper.getAllEnablePlugins();
+        for (Plugins plugins : pluginsList) {
+            PluginInfo pluginInfo = PluginInfoHolder.getPluginInfo(plugins.getPluginId());
+            if (null == pluginInfo) {
+                File pluginDirFile = new File(SystemConstants.PLUGINS_DIR + SystemConstants.FILE_SEPARATOR + plugins.getPluginId());
+                if (pluginDirFile.exists()) {
+                    pluginManager.runPlugin(pluginDirFile);
+                } else {
+                    // 可能是冗余数据,删掉
+                    pluginsMapper.delByPluginId(plugins.getPluginId());
+                }
+            }
+        }
+    }
+
+    private void savePluginsHandle(PluginBaseConfig pluginBaseConfig) {
+        pluginsMapper.delByPluginId(pluginBaseConfig.getPlugin().getId());
+        Plugins plugins = getPlugins(pluginBaseConfig);
+        pluginsMapper.insert(plugins);
+    }
+
+    @NotNull
+    private static Plugins getPlugins(PluginBaseConfig pluginBaseConfig) {
+        Plugins plugins = new Plugins();
+        plugins.setName(pluginBaseConfig.getPlugin().getName());
+        plugins.setPluginId(pluginBaseConfig.getPlugin().getId());
+        plugins.setDesc(pluginBaseConfig.getPlugin().getDescription());
+        plugins.setVersion(pluginBaseConfig.getPlugin().getVersion());
+        plugins.setAuthor(pluginBaseConfig.getAuthor().getName());
+        plugins.setWebsite(pluginBaseConfig.getAuthor().getWebSite());
+        plugins.setEmail(pluginBaseConfig.getAuthor().getEmail());
+        plugins.setStatus(pluginBaseConfig.getStatus());
+        return plugins;
     }
 }

@@ -1,12 +1,24 @@
 plugin:
-  name: perfree-exam123
+  # 插件id(必须唯一)
+  id: perfree-exam
+  # 插件名称,
+  name: 示例插件
+  # 插件mapperXml文件位置, 没有可不写
   mapperLocation: mapper/*.xml
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: false
-  global-config:
-    db-config:
-      id-type: NONE
-  type-aliases-package: com.exam.*.model
-  mapper-locations: classpath*:mapper/*.xml
+  # 插件描述信息
+  description: 描述信息
+  # 插件最低支持版本
+  minimalVersion: 2.2.0
+  # 插件版本
+  version: 2.23.0
+  # 插件静态资源路径
+  staticLocations: classpath:/exam-static/
+  # 插件更新url
+  updateUrl:
+author:
+  # 作者名
+  name: Perfree
+  # 作者邮箱
+  email: perfree@126.com
+  # 作者网站
+  webSite: http://111111

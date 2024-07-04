@@ -37,8 +37,6 @@ public class SystemConstants {
 
     /** 插件路径 */
     public static final String PLUGINS_DIR = "resources/plugins";
-    /** 插件开发环境路径 */
-    public static final String PLUGINS_DEV_DIR = "resources/devPlugins";
 
     /** 插件静态资源目录 */
     public static final String PLUGINS_RESOURCES_DIR = "resources/pluginResources";

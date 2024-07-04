@@ -103,5 +103,5 @@ knife4j:
     username: test
     password: 12313
 perfree:
-  temp-dir: resources/temp
-  plugin-dir: resources/plugins
+  # 是否开启开发环境插件自动更新,当执行build modules时,会自动更新插件
+  autoLoadDevPlugin: true

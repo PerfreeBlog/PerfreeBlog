@@ -2,6 +2,7 @@ package com.perfree.controller.auth.plugins;
 
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.plugins.vo.InstallPluginReqVO;
 import com.perfree.controller.auth.plugins.vo.PluginsRespVO;
 import com.perfree.convert.plugins.PluginsConvert;
 import com.perfree.model.Plugins;
@@ -36,7 +37,7 @@ public class PluginsController {
 
     @PostMapping("/installPlugin")
     @Operation(summary = "插件安装")
-    public CommonResult<Boolean> installPlugin(MultipartFile file) {
-        return success(pluginsService.installPlugin(file));
+    public CommonResult<Boolean> installPlugin(InstallPluginReqVO installPluginReqVO) {
+        return success( pluginsService.installPlugin(installPluginReqVO.getFile()));
     }
 }

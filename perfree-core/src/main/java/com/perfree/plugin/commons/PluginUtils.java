@@ -2,8 +2,13 @@ package com.perfree.plugin.commons;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ZipUtil;
+import com.perfree.commons.constant.SystemConstants;
+import com.perfree.enums.OptionEnum;
 import com.perfree.plugin.pojo.PluginBaseConfig;
-import com.perfree.plugin.pojo.PluginBasisConfig;
+import com.perfree.plugin.pojo.PluginConfig;
+import com.perfree.theme.commons.ThemeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -31,37 +36,29 @@ public class PluginUtils {
      * @param pluginFile pluginFile
      * @return PluginBaseConfig
      */
-    public static PluginBaseConfig getPluginConfig(File pluginFile, boolean dev) {
-        File file;
-        if (dev) {
-            file = new File(pluginFile.getAbsolutePath() + File.separator + PLUGIN_CONFIG_NAME);
-        } else {
-            file = new File(pluginFile.getAbsolutePath() + File.separator + CODE_DIR + File.separator + PLUGIN_CONFIG_NAME);
-        }
+    public static PluginBaseConfig getPluginConfig(File pluginFile) {
+        File file = new File(pluginFile.getAbsolutePath() + File.separator + PLUGIN_CONFIG_NAME);
         if (!file.exists()) {
             LOGGER.error("plugin.yaml not found");
             return null;
         }
-        Yaml yaml = new Yaml();
-        HashMap<String, Object> hashMap = yaml.loadAs(new FileReader(file).readString(), HashMap.class);
-        PluginBaseConfig pluginBaseConfig = new PluginBaseConfig();
-        PluginBasisConfig pluginBasisConfig = new PluginBasisConfig();
-        HashMap<String, Object> plugin = (HashMap<String, Object>) hashMap.get("plugin");
-        pluginBasisConfig.setName(plugin.get("name").toString());
-        pluginBasisConfig.setMapperLocation(plugin.get("mapperLocation").toString());
-        pluginBaseConfig.setPlugin(pluginBasisConfig);
+        PluginBaseConfig pluginBaseConfig = null;
+        try (InputStream input = new FileInputStream(file)) {
+            Yaml yaml = new Yaml();
+            pluginBaseConfig = yaml.loadAs(input, PluginBaseConfig.class);
+        } catch (Exception ignored) {}
         return pluginBaseConfig;
     }
 
     /**
-     * 判断是否为更新插件
-     * @param pluginConfig PluginBaseConfig
-     * @param pluginBaseDir pluginBaseDir
-     * @return Boolean
+     * 根据插件id获取已经安装的插件的配置
      */
-    public static Boolean isUpdate(PluginBaseConfig pluginConfig,String pluginBaseDir) {
-        File file = new File(pluginBaseDir + File.separator + pluginConfig.getPlugin().getName());
-        return file.exists();
+    public static PluginBaseConfig getInstalledPluginConfig(String pluginId) {
+        File file = new File(SystemConstants.PLUGINS_DIR + File.separator + pluginId);
+        if (file.exists()) {
+            return getPluginConfig(file);
+        }
+        return null;
     }
 
     /**
@@ -70,24 +67,28 @@ public class PluginUtils {
     public static File devCopyPluginToPluginDir(String devPluginDir, String pluginBaseDir) {
         // 拷贝源代码
         File codeDirFile = new File(devPluginDir +File.separator + "classes");
-        PluginBaseConfig pluginConfig = getPluginConfig(codeDirFile, true);
+        PluginBaseConfig pluginConfig = getPluginConfig(codeDirFile);
         if (null == pluginConfig) {
             LOGGER.error("plugin.yaml parse fail");
             return null;
         }
 
-        File pluginDir = new File(pluginBaseDir + File.separator + pluginConfig.getPlugin().getName());
+        File pluginDir = new File(pluginBaseDir + File.separator + pluginConfig.getPlugin().getId());
 
         File[] codeFiles = codeDirFile.listFiles();
         if (null == codeFiles) {
            return null;
         }
-        File codeDestDirFile = new File(pluginBaseDir + File.separator + pluginConfig.getPlugin().getName() + File.separator + PluginUtils.CODE_DIR);
+        File codeDestDirFile = new File(pluginDir.getAbsolutePath() + File.separator + PluginUtils.CODE_DIR);
         if (!codeDestDirFile.exists()) {
             FileUtil.mkdir(codeDestDirFile);
         }
         for (File pluginSource : codeFiles) {
-            FileUtil.copy(pluginSource, codeDestDirFile, true);
+            if (pluginSource.getName().equals(PLUGIN_CONFIG_NAME)) {
+                FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
+            } else {
+                FileUtil.copy(pluginSource, codeDestDirFile, true);
+            }
         }
 
         // 拷贝依赖文件
@@ -96,7 +97,7 @@ public class PluginUtils {
         if (null == libFiles) {
             return pluginDir;
         }
-        File libeDestDirFile = new File(pluginBaseDir + File.separator + pluginConfig.getPlugin().getName() + File.separator + PluginUtils.LIB_DIR);
+        File libeDestDirFile = new File(pluginDir.getAbsolutePath() + File.separator + PluginUtils.LIB_DIR);
         if (!libeDestDirFile.exists()) {
             FileUtil.mkdir(libeDestDirFile);
         }
@@ -108,24 +109,21 @@ public class PluginUtils {
 
     /**
      * 解压jar格式的插件
-     * @param pluginFile pluginFile
-     * @param tempDir 临时处理目录
-     * @param pluginBaseDir 插件存放基础目录
-     * @throws IOException
      */
-    public static File extractJarPlugin (File pluginFile, String tempDir, String pluginBaseDir) throws Exception {
-        File dir = new File(tempDir + File.separator + "pluginHandle" + File.separator +  pluginFile.getName());
-        FileUtil.mkdir(dir);
+    public static void extractJarPlugin (File srcJarFile, File destFile) throws Exception {
+        if (!destFile.exists()) {
+            FileUtil.mkdir(destFile);
+        }
         Enumeration<JarEntry> jarEntries;
-        try (JarFile jarFile = new JarFile(pluginFile)) {
+        try (JarFile jarFile = new JarFile(srcJarFile)) {
             jarEntries = jarFile.entries();
             while (jarEntries.hasMoreElements()) {
                 JarEntry entry = jarEntries.nextElement();
                 if (entry.getName().endsWith("/")) {
-                    File dirFile = new File(dir + File.separator + entry.getName());
+                    File dirFile = new File(destFile + File.separator + entry.getName());
                     FileUtil.mkdir(dirFile);
                 } else {
-                    File file = new File(dir + File.separator + entry.getName());
+                    File file = new File(destFile + File.separator + entry.getName());
                     InputStream inputStream = jarFile.getInputStream(entry);
                     OutputStream outputStream = new FileOutputStream(file);
                     byte[] buffer = new byte[1024];
@@ -138,7 +136,6 @@ public class PluginUtils {
                     outputStream.close();
                 }
             }
-            return dir;
         }
     }
 
@@ -146,12 +143,26 @@ public class PluginUtils {
     /**
      * 解压压缩包形式的插件
      * @param pluginFile pluginFile
-     * @param tempDir 临时目录
-     * @param pluginBaseDir 插件存放基础目录
      * @return File
      */
-    public static File extractZipPlugin(File pluginFile, String tempDir, String pluginBaseDir) {
-        return null;
+    public static File extractZipPlugin(File pluginFile) throws Exception {
+        File unzip = ZipUtil.unzip(pluginFile,
+                new File(SystemConstants.UPLOAD_TEMP_PATH + SystemConstants.FILE_SEPARATOR + IdUtil.fastSimpleUUID()).getAbsoluteFile());
+        File codeFile = new File(unzip.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + CODE_DIR);
+        if (codeFile.exists() && null != codeFile.listFiles()) {
+            File[] files = codeFile.listFiles();
+            if (null == files) {
+                return unzip;
+            }
+            for (File file : files) {
+                if (file.getName().endsWith(".jar")) {
+                    extractJarPlugin(file, codeFile);
+                    FileUtil.del(file);
+                }
+
+            }
+        }
+        return unzip;
     }
 
 
@@ -236,5 +247,34 @@ public class PluginUtils {
             }
         }
         return result;
+    }
+
+    public static File copyPluginTempToPlugin(File pluginTempDir, PluginBaseConfig pluginConfig) {
+        File pluginDir = new File(SystemConstants.PLUGINS_DIR + File.separator + pluginConfig.getPlugin().getId());
+        if (!pluginDir.exists()) {
+            FileUtil.mkdir(pluginDir);
+        }
+        File[] files = pluginTempDir.listFiles();
+        if (null == files) {
+            return null;
+        }
+        for (File file : files) {
+            FileUtil.copy(file, pluginDir, true);
+        }
+        return pluginDir;
+    }
+
+    public static long versionToLong(String versionStr) {
+        return Long.parseLong(versionStr.replaceAll("\r\n","").replaceAll("--","")
+                .replaceAll("\\.","").replace("v",""));
+    }
+
+    public static PluginBaseConfig getDevPluginConfig(String pluginPath) {
+        File classes = new File(pluginPath + "/classes");
+        if (!classes.exists()) {
+            LOGGER.error("{} not found", pluginPath);
+            return null;
+        }
+        return PluginUtils.getPluginConfig(classes);
     }
 }

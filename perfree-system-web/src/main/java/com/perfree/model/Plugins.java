@@ -23,7 +23,7 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@TableName("p_plugins")
+@TableName("p_plugin")
 public class Plugins extends BaseModel implements Serializable {
 
     @Serial
@@ -41,9 +41,9 @@ public class Plugins extends BaseModel implements Serializable {
     private String name;
 
     /**
-     * 路径
+     * 插件id
      */
-    private String path;
+    private String pluginId;
 
     /**
      * 插件描述
@@ -65,5 +65,9 @@ public class Plugins extends BaseModel implements Serializable {
      * 插件状态:0禁用,1启用
      */
     private Integer status;
+
+    private String website;
+
+    private String email;
 
 }

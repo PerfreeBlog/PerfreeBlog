@@ -30,4 +30,14 @@ public interface PluginsService extends IService<Plugins> {
      */
     Boolean installPlugin(MultipartFile file);
 
+    /**
+     * 监控开发环境插件变更
+     */
+    void watchMonitorDevPlugins();
+
+    /**
+     * 初始化插件
+     */
+    void initPlugins();
+
 }

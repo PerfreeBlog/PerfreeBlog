@@ -4,14 +4,15 @@ import cn.hutool.core.io.watch.SimpleWatcher;
 import cn.hutool.core.io.watch.WatchMonitor;
 import cn.hutool.core.io.watch.watchers.DelayWatcher;
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.constant.PluginConstant;
 import com.perfree.plugin.commons.PluginUtils;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import com.perfree.plugin.pojo.PluginBaseConfig;
+import com.perfree.system.api.plugin.dto.PluginsDTO;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
@@ -38,62 +39,43 @@ public class PluginDevManager {
         this.pluginManager = pluginManager;
     }
 
-    /**
-     * 初始化所有插件
-     * @author perfree
-     * @date 2023-09-27 16:09:44
-     */
-    public void initPlugins() throws Exception {
-        List<String> plugins = getPluginClassPath();
-        if (null == plugins || plugins.isEmpty()) {
-            return;
-        }
-        for (String plugin : plugins) {
-            initPlugin(plugin);
-            WatchMonitor watchMonitor = WatchMonitor.createAll(plugin,  new DelayWatcher(new SimpleWatcher() {
-                @Override
-                public void onModify(WatchEvent<?> event, Path currentPath) {
-                    try {
-                        initPlugin(plugin);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            },1000));
-            watchMonitor.start();
-        }
-    }
 
     /**
      * 初始化插件
-     * @param pluginPath
-     * @throws Exception
      */
-    private void initPlugin(String pluginPath) throws Exception {
-        File classes = new File(pluginPath + "/classes");
-        if (!classes.exists()) {
-            LOGGER.error("{} not found", pluginPath);
-            return;
-        }
-        PluginBaseConfig pluginConfig = PluginUtils.getPluginConfig(classes, true);
+    public PluginBaseConfig initPlugin(String pluginPath, PluginsDTO pluginsDTO) throws Exception {
+        PluginBaseConfig pluginConfig = PluginUtils.getDevPluginConfig(pluginPath);
         if (null == pluginConfig) {
             LOGGER.error("{} plugin.yaml not found", pluginPath);
-            return;
+            return null;
         }
-        Boolean update = PluginUtils.isUpdate(pluginConfig, SystemConstants.PLUGINS_DEV_DIR);
-        if (update && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getName()) != null) {
-            pluginManager.stopPlugin(pluginConfig.getPlugin().getName());
+        boolean update = false;
+        PluginBaseConfig installedPluginConfig = PluginUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
+        if (null != installedPluginConfig) {
+            update = true;
         }
-        File pluginDir = PluginUtils.devCopyPluginToPluginDir(pluginPath, SystemConstants.PLUGINS_DEV_DIR);
+        if (update && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getId()) != null) {
+            pluginManager.stopPlugin(pluginConfig.getPlugin().getId());
+        }
+        File pluginDir = PluginUtils.devCopyPluginToPluginDir(pluginPath, SystemConstants.PLUGINS_DIR);
         PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
         BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
-        if (null != bean) {
-            if (update) {
+        pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
+        if (update) {
+            if (null != bean) {
                 bean.onUpdate();
-            } else {
+            }
+        } else {
+            if (null != bean) {
                 bean.onInstall();
             }
+            if (null != pluginsDTO && pluginsDTO.getStatus().equals(PluginConstant.PLUGIN_STATUS_DISABLE)) {
+                pluginHandle.stopPlugin(pluginInfo.getPluginId());
+                pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_DISABLE);
+            }
+
         }
+        return pluginConfig;
     }
 
     /**
@@ -112,7 +94,7 @@ public class PluginDevManager {
     }
 
 
-    private List<String> getPluginClassPath() {
+    public List<String> getPluginClassPath() {
         String projectRootPath = System.getProperty("user.dir");
         File pluginsPom = new File(projectRootPath + "/perfree-plugins/pom.xml");
         File pluginsDir = new File(projectRootPath + "/perfree-plugins");

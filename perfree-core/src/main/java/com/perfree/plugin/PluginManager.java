@@ -1,8 +1,14 @@
 package com.perfree.plugin;
 
+import cn.hutool.core.io.FileUtil;
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.constant.PluginConstant;
+import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.exception.PluginException;
 import com.perfree.plugin.handle.compound.PluginHandle;
+import com.perfree.plugin.pojo.PluginBaseConfig;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,30 +25,11 @@ import java.io.File;
 public class PluginManager{
     private static final Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
 
+    @Value("${version}")
+    private String version;
+
     @Resource
     private PluginHandle pluginHandle;
-
-    /**
-     * 初始化所有插件
-     * @author perfree
-     * @date 2023-09-27 16:09:44
-     */
-    public void initPlugins() throws Exception {
-        File pluginBaseDirFile = new File(SystemConstants.PLUGINS_DIR);
-        if (!pluginBaseDirFile.exists()) {
-           return;
-        }
-        File[] files = pluginBaseDirFile.listFiles();
-        if (files == null) {
-            return;
-        }
-        for (File file : files) {
-            if (file.isDirectory()) {
-                runPlugin(file);
-            }
-        }
-
-    }
 
     /**
      * 运行插件
@@ -71,10 +58,10 @@ public class PluginManager{
     public void stopPlugin(String pluginId) {
         try {
             PluginInfo pluginInfo = PluginInfoHolder.getPluginInfo(pluginId);
-          /*  BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
+            BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
             if (null != bean) {
                 bean.onStop();
-            }*/
+            }
             pluginHandle.stopPlugin(pluginId);
         } catch (Exception e) {
             LOGGER.error("plugin  ----->  stop error:{}", e.getMessage(), e);
@@ -85,40 +72,55 @@ public class PluginManager{
      * 安装插件
      * @param pluginFile pluginFile
      */
-    public void installPlugin(File pluginFile) throws Exception {
-      /*  if (null == pluginFile || !pluginFile.exists()) {
-            throw new PluginException("pluginFile not found!");
+    public PluginBaseConfig installPlugin(File pluginFile) throws Exception {
+        if (null == pluginFile || !pluginFile.exists()) {
+            throw new PluginException("插件文件未找到!");
         }
-        File pluginTempDir;
-        if (pluginFile.getName().endsWith(".jar")) {
-            pluginTempDir = PluginUtils.extractJarPlugin(pluginFile, tempDir, pluginBaseDir);
-        }else {
-            pluginTempDir = PluginUtils.extractZipPlugin(pluginFile, tempDir, pluginBaseDir);
-        }
-        if (null == pluginTempDir) {
-            throw new PluginException("plugin extract fail!");
-        }
-
+        File pluginTempDir = PluginUtils.extractZipPlugin(pluginFile);
+        FileUtil.del(pluginFile);
         PluginBaseConfig pluginConfig = PluginUtils.getPluginConfig(pluginTempDir);
         if (null == pluginConfig) {
-            throw new PluginException("plugin.yaml parse fail");
+            throw new PluginException("解析plugin.yaml失败!");
         }
 
-        Boolean update = PluginUtils.isUpdate(pluginConfig, pluginBaseDir);
-        if (update && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getName()) != null) {
-            stopPlugin(pluginConfig.getPlugin().getName());
+        if (StringUtils.isNotBlank(pluginConfig.getPlugin().getMinimalVersion()) &&
+                PluginUtils.versionToLong(pluginConfig.getPlugin().getMinimalVersion()) > PluginUtils.versionToLong(version)){
+            throw new PluginException("插件安装失败:该插件最低需要" + pluginConfig.getPlugin().getMinimalVersion() + "版本的PerfreeBlog");
         }
-        File pluginDir = PluginUtils.copyPluginTempToPlugin(pluginTempDir, pluginBaseDir, true);
-        PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
-        BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
-        if (null != bean) {
-            if (update) {
-                bean.onUpdate();
+
+        boolean update = false;
+        PluginBaseConfig installedPluginConfig = PluginUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
+        if (null != installedPluginConfig) {
+            long oldVersion = PluginUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
+            long newVersion = PluginUtils.versionToLong(pluginConfig.getPlugin().getVersion());
+            if (oldVersion == newVersion) {
+                throw new PluginException("插件安装失败:该版本插件已经安装,请勿再次安装");
+            } else if (oldVersion > newVersion) {
+                throw new PluginException("插件安装失败:更高版本的插件已存在,请勿再次安装低版本插件");
             } else {
-                bean.onInstall();
+                update = true;
             }
         }
-        pluginHandle.stopPlugin(pluginInfo.getPluginId());*/
+
+        if (update && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getId()) != null) {
+            stopPlugin(pluginConfig.getPlugin().getId());
+        }
+        File pluginDir = PluginUtils.copyPluginTempToPlugin(pluginTempDir, pluginConfig);
+        PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
+        BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
+        if (update) {
+            if (null != bean) {
+                bean.onUpdate();
+            }
+            pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
+        } else {
+            if (null != bean) {
+                bean.onInstall();
+            }
+            pluginHandle.stopPlugin(pluginInfo.getPluginId());
+            pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_DISABLE);
+        }
+        return pluginConfig;
     }
 
 }

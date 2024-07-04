@@ -126,7 +126,7 @@ function handleInstallTheme() {
 }
 
 /**
- * 主题上海南成功回调
+ * 主题上传成功回调
  * @param response
  * @param uploadFile
  * @param uploadFiles
