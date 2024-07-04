@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    <fc-designer ref="designer" height="500px"/>
+    首页
   </main>
 </template>
