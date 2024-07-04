@@ -80,11 +80,13 @@ public class PluginManager{
         FileUtil.del(pluginFile);
         PluginBaseConfig pluginConfig = PluginUtils.getPluginConfig(pluginTempDir);
         if (null == pluginConfig) {
+            FileUtil.del(pluginTempDir);
             throw new PluginException("解析plugin.yaml失败!");
         }
 
         if (StringUtils.isNotBlank(pluginConfig.getPlugin().getMinimalVersion()) &&
                 PluginUtils.versionToLong(pluginConfig.getPlugin().getMinimalVersion()) > PluginUtils.versionToLong(version)){
+            FileUtil.del(pluginTempDir);
             throw new PluginException("插件安装失败:该插件最低需要" + pluginConfig.getPlugin().getMinimalVersion() + "版本的PerfreeBlog");
         }
 
@@ -94,8 +96,10 @@ public class PluginManager{
             long oldVersion = PluginUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
             long newVersion = PluginUtils.versionToLong(pluginConfig.getPlugin().getVersion());
             if (oldVersion == newVersion) {
+                FileUtil.del(pluginTempDir);
                 throw new PluginException("插件安装失败:该版本插件已经安装,请勿再次安装");
             } else if (oldVersion > newVersion) {
+                FileUtil.del(pluginTempDir);
                 throw new PluginException("插件安装失败:更高版本的插件已存在,请勿再次安装低版本插件");
             } else {
                 update = true;
@@ -106,6 +110,7 @@ public class PluginManager{
             stopPlugin(pluginConfig.getPlugin().getId());
         }
         File pluginDir = PluginUtils.copyPluginTempToPlugin(pluginTempDir, pluginConfig);
+        FileUtil.del(pluginTempDir);
         PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
         BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
         if (update) {
@@ -123,4 +128,17 @@ public class PluginManager{
         return pluginConfig;
     }
 
+    /**
+     * 卸载插件
+     * @param pluginDirFile pluginDirFile
+     */
+    public void unInstallPlugin(File pluginDirFile) throws Exception {
+        PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDirFile);
+        BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
+        if (null != bean) {
+            bean.onUnInstall();
+        }
+        pluginHandle.stopPlugin(pluginInfo.getPluginId());
+        FileUtil.del(pluginDirFile);
+    }
 }

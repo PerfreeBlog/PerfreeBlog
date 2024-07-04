@@ -10,3 +10,7 @@ export function disablePluginApi(id) {
 export function enablePluginApi(id) {
     return axios.post('/api/auth/plugins/enablePlugin?id=' + id);
 }
+
+export function uninstallPluginApi(id) {
+    return axios.post('/api/auth/plugins/uninstallPlugin?id=' + id);
+}

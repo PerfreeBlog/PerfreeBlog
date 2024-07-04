@@ -55,4 +55,11 @@ public interface PluginsService extends IService<Plugins> {
      */
     Boolean enablePlugin(Integer id);
 
+    /**
+     * 卸载插件
+     * @param id id
+     * @return Boolean
+     */
+    Boolean unInstallPlugin(Integer id);
+
 }

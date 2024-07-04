@@ -120,6 +120,9 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
             return;
         }
         Plugins plugins = pluginsMapper.getByPluginId(pluginConfig.getPlugin().getId());
+        if (null != plugins && plugins.getStatus().equals(PluginConstant.PLUGIN_STATUS_DISABLE)) {
+            return;
+        }
         PluginsDTO pluginsDTO = PluginsConvert.INSTANCE.convertToDTO(plugins);
         savePluginsHandle(pluginDevManager.initPlugin(pluginPath, pluginsDTO));
     }
@@ -173,6 +176,33 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
         }
     }
 
+    @Override
+    public Boolean unInstallPlugin(Integer id) {
+        Plugins plugins = pluginsMapper.selectById(id);
+        if (null != PluginInfoHolder.getPluginInfo(plugins.getPluginId())) {
+            throw new ServiceException(ErrorCode.PLUGIN_IS_RUN);
+        }
+        File pluginDirFile = new File(SystemConstants.PLUGINS_DIR + SystemConstants.FILE_SEPARATOR + plugins.getPluginId());
+        if (pluginDirFile.exists()) {
+            try {
+                pluginManager.unInstallPlugin(pluginDirFile);
+                pluginsMapper.delByPluginId(plugins.getPluginId());
+                return true;
+            } catch (Exception e) {
+                LOGGER.error("插件卸载失败", e);
+                return false;
+            }
+        } else {
+            // 可能是冗余数据,删掉
+            pluginsMapper.delByPluginId(plugins.getPluginId());
+            throw new ServiceException(ErrorCode.PLUGIN_FILE_NOT_EXIST);
+        }
+    }
+
+    /**
+     * 保存插件逻辑
+     * @param pluginBaseConfig pluginBaseConfig
+     */
     private void savePluginsHandle(PluginBaseConfig pluginBaseConfig) {
         pluginsMapper.delByPluginId(pluginBaseConfig.getPlugin().getId());
         Plugins plugins = getPlugins(pluginBaseConfig);

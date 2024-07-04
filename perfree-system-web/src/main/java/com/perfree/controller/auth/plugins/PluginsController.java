@@ -49,4 +49,10 @@ public class PluginsController {
     public CommonResult<Boolean> enablePlugin(@RequestParam(value = "id") Integer id) {
         return success( pluginsService.enablePlugin(id));
     }
+
+    @PostMapping("/uninstallPlugin")
+    @Operation(summary = "卸载插件")
+    public CommonResult<Boolean> uninstallPlugin(@RequestParam(value = "id") Integer id) {
+        return success( pluginsService.unInstallPlugin(id));
+    }
 }

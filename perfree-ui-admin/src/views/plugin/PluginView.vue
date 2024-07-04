@@ -50,7 +50,7 @@
           <template v-slot="scope">
             <el-button size="small" type="primary" link :icon="Unlock" @click="handleEnable(scope.row)"  v-if="scope.row.status === 0">启用</el-button>
             <el-button size="small" type="primary" link :icon="Lock" @click="handleDisable(scope.row)"  v-if="scope.row.status === 1">禁用</el-button>
-            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">卸载</el-button>
+            <el-button size="small" type="primary" link :icon="Delete" @click="handleUnInstall(scope.row)">卸载</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -94,7 +94,7 @@
 <script setup>
 import {Delete, Edit, Plus,Lock, Unlock,Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
 import {parseTime} from "@/utils/perfree.js";
-import {disablePluginApi, enablePluginApi, pluginsPageApi} from "@/api/plugin.js";
+import {disablePluginApi, enablePluginApi, pluginsPageApi, uninstallPluginApi} from "@/api/plugin.js";
 import {CONSTANTS} from "@/utils/constants.js";
 import axios_config from "@/api/axios_config.js";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -173,6 +173,10 @@ function pluginUploadError(error) {
   ElMessage.error('插件上传失败,请检查网络是否通通畅');
 }
 
+/**
+ * 插件禁用
+ * @param row
+ */
 function handleDisable(row) {
   ElMessageBox.confirm('确定要禁用[' + row.name + ']吗？', '提示', {
     confirmButtonText: '确认',
@@ -180,16 +184,20 @@ function handleDisable(row) {
     type: 'warning',
   }).then(() => {
     disablePluginApi(row.id).then(res => {
-      if (res.code === 200) {
+      if (res.code === 200 && res.data) {
         ElMessage.success('插件禁用成功');
         initList();
       }else {
-        ElMessage.success(res.msg);
+        ElMessage.error(res.msg);
       }
     })
   }).catch(() => {})
 }
 
+/**
+ * 插件启用
+ * @param row
+ */
 function handleEnable(row){
   ElMessageBox.confirm('确定要启用[' + row.name + ']吗？', '提示', {
     confirmButtonText: '确认',
@@ -197,11 +205,32 @@ function handleEnable(row){
     type: 'warning',
   }).then(() => {
     enablePluginApi(row.id).then(res => {
-      if (res.code === 200) {
+      if (res.code === 200 && res.data) {
         ElMessage.success('插件启用成功');
         initList();
       }else {
-        ElMessage.success(res.msg);
+        ElMessage.error(res.msg);
+      }
+    })
+  }).catch(() => {})
+}
+
+function handleUnInstall(row) {
+  ElMessageBox.confirm('确定要卸载[' + row.name + ']吗？', '提示', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning',
+  }).then(() => {
+    uninstallPluginApi(row.id).then(res => {
+      if (res.code === 200) {
+        if (res.data) {
+          ElMessage.success('插件卸载成功');
+          initList();
+        } else {
+          ElMessage.error('插件卸载失败');
+        }
+      }else {
+        ElMessage.error(res.msg);
       }
     })
   }).catch(() => {})
