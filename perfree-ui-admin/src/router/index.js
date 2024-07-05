@@ -115,12 +115,13 @@ const genRouteByMenus = (menus) => {
           if (item.isFrame === 0) {
             router.addRoute("layout",
                 {
-                  path: item.url + 1,
+                  path: item.url,
                   name: item.componentName,
-                  component: modules[`../views/wujie/WuJieView.vue`],
+                  component: modules[`../views/external/ExternalView.vue`],
                   meta: {
                     title: item.name,
-                    keepAlive: true
+                    keepAlive: true,
+                    url: item.component
                   }
                 }
             )

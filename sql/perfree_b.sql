@@ -11,7 +11,7 @@
  Target Server Version : 80100
  File Encoding         : 65001
 
- Date: 04/07/2024 18:02:10
+ Date: 05/07/2024 17:46:57
 */
 
 SET NAMES utf8mb4;
@@ -433,12 +433,14 @@ INSERT INTO `p_menu` VALUES ('137a52c0b1c34293857d8a52dfca97e7', '6453ca30d9c840
 INSERT INTO `p_menu` VALUES ('26583191a63d4970a5d2f6e1b294121c', '-1', '写文章', '/admin/article/create', 'fa-solid fa-pencil-alt', 0, 1, 0, 0, '2024-06-17 14:02:17', NULL, 1, NULL, NULL, '/article/ArticleCreateView', 'articleCreate', '', 1, 1, NULL);
 INSERT INTO `p_menu` VALUES ('26b41a12802541a2bb7054600b114c10', 'a98d36d52c174124a5fdf1884e572a0f', '附件相关', '', 'fa-solid fa-folder-closed', 9, 1, 0, 0, '2024-05-28 15:01:18', '2024-06-20 10:49:40', 0, NULL, NULL, '', '', '', 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('2c6d9fb51d2e45dbaba4574472d9b252', '-1', '主题管理', NULL, 'fa-solid fa-comment-alt', 4, 1, 0, 0, '2024-03-19 15:40:46', '2024-05-27 11:17:47', 0, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('2da98763a0414d46b40d7ddbe7f9b9ce', '-1', '测试', '/admin/plugin/demo', 'fa-solid fa-3', 0, 1, 0, 0, '2024-07-05 11:35:49', '2024-07-05 14:30:27', 1, NULL, NULL, 'http://127.0.0.1:4201/admin/plugin/demo', 'demo', '', 0, 1, 1);
 INSERT INTO `p_menu` VALUES ('38a64c087da742719c8543b554586529', 'a98d36d52c174124a5fdf1884e572a0f', '友链管理', '/admin/link', 'fa-solid fa-feather', 0, 1, 0, 0, '2024-06-14 14:45:47', NULL, 1, NULL, NULL, '/link/LinkView', 'link', '', 1, 1, NULL);
 INSERT INTO `p_menu` VALUES ('50508321af38403e833f6e4fef896c0e', '-1', '归档', '/archive', 'fa-calendar', 1, 0, 0, 0, '2024-03-19 11:39:26', '2024-05-27 11:13:05', 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
 INSERT INTO `p_menu` VALUES ('5a86941f652b4c79b25ba6922823f098', '2c6d9fb51d2e45dbaba4574472d9b252', '所有主题', '/admin/theme', 'fa-solid fa-dashboard', 1, 1, 0, 0, '2024-03-19 15:40:46', '2024-06-25 15:36:37', 1, NULL, NULL, '/theme/ThemeView', 'theme', NULL, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('6453ca30d9c8407f81e50a78a3adee9d', '-1', '系统管理', '', 'fa-solid fa-shield-blank', 3, 1, 0, 0, '2024-05-27 13:48:37', '2024-05-27 13:48:47', 0, NULL, NULL, '', '', '', 1, NULL, NULL);
 INSERT INTO `p_menu` VALUES ('7bcb68dcf18f45838d53d019fff1d0ba', 'a98d36d52c174124a5fdf1884e572a0f', '文章管理', '/admin/article', 'fa-solid fa-file-alt', 0, 1, 0, 0, '2024-06-20 10:50:40', NULL, 1, NULL, NULL, '/article/ArticleView', 'article', '', 1, 1, NULL);
 INSERT INTO `p_menu` VALUES ('8a693ffb64a44d6cb9e0bbdf748b907f', '6453ca30d9c8407f81e50a78a3adee9d', '角色管理', '/admin/role', 'fa-solid fa-user-times', 0, 1, 0, 0, '2024-05-27 13:51:17', '2024-05-28 13:47:30', 1, NULL, NULL, '/role/RoleView', 'role', '', 1, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('9a4370c9862d4a0a8682d179b7f9940b', '-1', '测试2', '/admin/plugin/demo2', 'fa-solid fa-2', 0, 1, 0, 0, '2024-07-05 14:31:13', NULL, 1, NULL, NULL, 'http://127.0.0.1:4201/admin/plugin/demo', 'demo2', '', 0, 1, NULL);
 INSERT INTO `p_menu` VALUES ('a98d36d52c174124a5fdf1884e572a0f', '-1', '内容管理', NULL, 'fa-solid fa-r', 3, 1, 0, 0, '2024-03-19 15:40:41', '2024-05-27 11:18:54', 0, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
 INSERT INTO `p_menu` VALUES ('b6c7309370be44ec8a925f50699ff157', '-1', '系统工具', '', 'fa-solid fa-briefcase-clock', 99, 1, 0, 0, '2024-07-03 10:31:06', '2024-07-03 10:34:29', 0, NULL, NULL, '', '', '', 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('c1b3c57e13974ff7928f86ca1e58fa57', 'a98d36d52c174124a5fdf1884e572a0f', '分类管理', '/admin/category', 'fa-solid fa-table', 0, 1, 0, 0, '2024-06-13 13:57:48', NULL, 1, NULL, NULL, '/category/CategoryView', 'category', '', 1, NULL, NULL);
@@ -509,7 +511,7 @@ CREATE TABLE `p_plugin`  (
 -- ----------------------------
 -- Records of p_plugin
 -- ----------------------------
-INSERT INTO `p_plugin` VALUES (47, '示例插件', 'perfree-exam', '描述信息', '2.23.0', 'Perfree', 'http://111111', 'perfree@126.com', 1, '2024-07-04 17:22:55', '2024-07-04 17:54:41', NULL, 1);
+INSERT INTO `p_plugin` VALUES (56, '示例插件', 'perfree-exam', '描述信息', '2.23.0', 'Perfree', 'http://111111', 'perfree@126.com', 1, '2024-07-05 17:18:50', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for p_role

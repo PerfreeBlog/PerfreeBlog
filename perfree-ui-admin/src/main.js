@@ -14,12 +14,11 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import piniaPersist from 'pinia-plugin-persist'
 import axios from "./api/axios";
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
-import WujieVue from "wujie-vue3";
 import FcDesigner from '@form-create/designer'
 import formCreate from '@form-create/element-ui'
 import install from '@form-create/element-ui/auto-import'
 import ElementPlus from 'element-plus'
-
+import microApp from '@micro-zoe/micro-app'
 import App from './App.vue'
 import router from './router'
 import en from "@/language/en.js";
@@ -50,7 +49,6 @@ const i18n = createI18n({
 
 pinia.use(piniaPersist)
 app.use(pinia)
-app.use(WujieVue);
 app.config.globalProperties.$router = router;
 app.use(router)
 
@@ -62,4 +60,7 @@ app.use(i18n)
 library.add(fas, far, fab)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueDOMPurifyHTML)
+microApp.start({
+    'disable-memory-router': true, // 关闭虚拟路由
+})
 app.mount('#app')
