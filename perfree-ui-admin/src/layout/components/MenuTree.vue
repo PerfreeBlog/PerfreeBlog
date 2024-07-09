@@ -12,7 +12,7 @@
       </el-sub-menu>
     </template>
     <template v-else>
-      <el-menu-item :index="menu.url" class="menu-item" :route="menu.url">
+      <el-menu-item :index="menu.isFrame === 0 ? '/frame/' + menu.id : menu.url" class="menu-item"  @click="clickMenu(menu)">
         <el-icon v-if="menu.icon" class="menu-icon">
           <font-awesome-icon :icon="menu.icon" />
         </el-icon>
@@ -22,7 +22,20 @@
   </template>
 </template>
 <script setup>
+const router = useRouter();
 const props = defineProps(['menuList'])
+
+function clickMenu(menu) {
+  if (menu.isFrame === 0) {
+    if (menu.target === 1) {
+      window.open(menu.url, '_blank');
+    } else {
+      router.replace('/frame/' + menu.id);
+    }
+  } else {
+    router.replace(menu.url);
+  }
+}
 </script>
 
 <style scoped>

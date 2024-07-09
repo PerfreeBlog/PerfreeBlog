@@ -6,6 +6,7 @@ import LoginView from "@/views/login/LoginView.vue";
 import {useCommonStore} from "@/stores/commonStore.js";
 import {getAllOption, menuAdminList, userInfo} from "@/api/system.js";
 import {useOptionStore} from "@/stores/optionStore.js";
+import { initMenu } from "@/utils/perfree.js";
 const modules = import.meta.glob('../views/**/*.vue')
 
 const router = createRouter({
@@ -78,30 +79,6 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-// 初始化菜单
-const initMenu = () => {
-  return new Promise((resolve, reject)=> {
-    const commonStore = useCommonStore()
-    menuAdminList().then((res) => {
-      if (res.code === 200) {
-        let menuList = res.data;
-        menuList.unshift( {
-          id: 'home',
-          pid: -1,
-          url: '/admin',
-          name: '首页',
-          componentName: 'home',
-          component: '/home/HomeView',
-          icon: 'fa-solid fa-house',
-          children: [],
-        });
-        commonStore.setMenuList(menuList)
-        resolve()
-      }
-    })
-  })
-}
-
 
 // 根据菜单生成路由
 const genRouteByMenus = (menus) => {
@@ -113,6 +90,19 @@ const genRouteByMenus = (menus) => {
       } else {
         if (item.url) {
           if (item.isFrame === 0) {
+            router.addRoute("layout",
+              {
+                path: '/frame/' + item.id,
+                name: item.componentName,
+                component: modules[`../views/external/FrameView.vue`],
+                meta: {
+                  title: item.name,
+                  keepAlive: true,
+                  url: item.url
+                }
+              }
+            )
+          } else if (item.pluginId) {
             router.addRoute("layout",
                 {
                   path: item.url,

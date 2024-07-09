@@ -13,6 +13,7 @@ import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.CodegenConstant;
+import com.perfree.constant.MenuConstant;
 import com.perfree.controller.auth.codegen.vo.CodegenCreateListReqVO;
 import com.perfree.controller.auth.codegen.vo.CodegenInfoReqVO;
 import com.perfree.controller.auth.codegen.vo.CodegenInfoRespVO;
@@ -113,7 +114,7 @@ public class CodegenServiceImpl implements CodegenService{
         codegenTable.setClassName(StrUtil.toCamelCase(codegenTable.getTableName()));
         codegenTable.setModuleName(CodegenConstant.DEFAULT_MODULE_NAME);
         codegenTable.setClassComment(codegenTable.getTableComment());
-        codegenTable.setParentMenuId(SystemConstants.ROOT_MENU_CODE);
+        codegenTable.setParentMenuId(MenuConstant.ROOT_MENU_CODE);
     }
 
     /**

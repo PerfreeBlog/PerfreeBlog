@@ -93,7 +93,7 @@
 </template>
 <script setup>
 import {Delete, Edit, Plus,Lock, Unlock,Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
-import {parseTime} from "@/utils/perfree.js";
+import { initMenu, parseTime } from "@/utils/perfree.js";
 import {disablePluginApi, enablePluginApi, pluginsPageApi, uninstallPluginApi} from "@/api/plugin.js";
 import {CONSTANTS} from "@/utils/constants.js";
 import axios_config from "@/api/axios_config.js";
@@ -185,6 +185,9 @@ function handleDisable(row) {
   }).then(() => {
     disablePluginApi(row.id).then(res => {
       if (res.code === 200 && res.data) {
+        initMenu().then(res => {
+
+        })
         ElMessage.success('插件禁用成功');
         initList();
       }else {
@@ -206,6 +209,9 @@ function handleEnable(row){
   }).then(() => {
     enablePluginApi(row.id).then(res => {
       if (res.code === 200 && res.data) {
+        initMenu().then(res => {
+
+        })
         ElMessage.success('插件启用成功');
         initList();
       }else {

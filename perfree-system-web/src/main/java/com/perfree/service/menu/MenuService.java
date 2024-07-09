@@ -56,4 +56,18 @@ public interface MenuService extends IService<Menu> {
      * @return List<MenuTreeListRespVO>
      */
     List<MenuTreeListRespVO> menuFrontList();
+
+    /**
+     * 创建菜单
+     * @param menu menu
+     */
+    Menu createMenu(Menu menu);
+
+    /**
+     * 根据插件id删除菜单
+     * @param pluginId pluginId
+     * @return Boolean
+     */
+    Boolean deleteMenuByPluginId(String pluginId);
+
 }

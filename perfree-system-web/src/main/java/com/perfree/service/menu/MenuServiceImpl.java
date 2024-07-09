@@ -2,14 +2,12 @@ package com.perfree.service.menu;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.perfree.commons.constant.SystemConstants;
-import com.perfree.commons.enums.MenuTypeEnum;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.constant.MenuConstant;
 import com.perfree.controller.auth.menu.vo.MenuAddOrUpdateReqVO;
 import com.perfree.controller.auth.menu.vo.MenuListReqVO;
 import com.perfree.controller.auth.system.vo.MenuTreeListRespVO;
 import com.perfree.convert.menu.MenuConvert;
-import com.perfree.enums.MenuEnum;
 import com.perfree.enums.RoleEnum;
 import com.perfree.mapper.MenuMapper;
 import com.perfree.mapper.RoleMenuMapper;
@@ -62,9 +60,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         List<Menu> menuList;
         if (isAdmin) {
-            menuList = menuMapper.menuListByAdmin(MenuTypeEnum.ADMIN.getType());
+            menuList = menuMapper.menuListByAdmin(MenuConstant.MENU_TYPE_ADMIN);
         } else {
-            menuList = menuMapper.menuListByUserId(loginUser.getId(), MenuTypeEnum.ADMIN.getType());
+            menuList = menuMapper.menuListByUserId(loginUser.getId(), MenuConstant.MENU_TYPE_ADMIN);
         }
         return handleMenuTree(menuList);
     }
@@ -101,14 +99,30 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Override
     public List<String> getPermissionByUserId(Integer userId) {
-        return menuMapper.getPermissionByUserId(userId, MenuEnum.MENU_TYPE_PERMISSION.getCode());
+        return menuMapper.getPermissionByUserId(userId, MenuConstant.MENU_MENU_TYPE_PERMISSION);
     }
 
     @Override
     public List<MenuTreeListRespVO> menuFrontList() {
-        List<Menu> menuList = menuMapper.menuListByAdmin(MenuTypeEnum.FRONT.getType());
+        List<Menu> menuList = menuMapper.menuListByAdmin(MenuConstant.MENU_TYPE_FRONT);
         return handleMenuTree(menuList);
     }
+
+    @Override
+    @Transactional
+    public Menu createMenu(Menu menu) {
+        menu.setId(IdUtil.simpleUUID());
+        menuMapper.insert(menu);
+        return menu;
+    }
+
+    @Override
+    @Transactional
+    public Boolean deleteMenuByPluginId(String pluginId) {
+        menuMapper.deleteMenuByPluginId(pluginId);
+        return true;
+    }
+
 
     /**
      * 处理菜单树
@@ -118,9 +132,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     private List<MenuTreeListRespVO> handleMenuTree(List<Menu> menuList) {
         List<MenuTreeListRespVO> menuTreeListRespVOS = MenuConvert.INSTANCE.convertTreeList(menuList);
         // 获取所有跟节点
-        List<MenuTreeListRespVO> result = menuTreeListRespVOS.stream().filter(menu -> menu.getPid().equals(SystemConstants.ROOT_MENU_CODE)).toList();
+        List<MenuTreeListRespVO> result = menuTreeListRespVOS.stream().filter(menu -> menu.getPid().equals(MenuConstant.ROOT_MENU_CODE)).toList();
         // 将原数组中所有根节点移除
-        menuTreeListRespVOS.removeIf(menu -> menu.getPid().equals(SystemConstants.ROOT_MENU_CODE));
+        menuTreeListRespVOS.removeIf(menu -> menu.getPid().equals(MenuConstant.ROOT_MENU_CODE));
         for (MenuTreeListRespVO menu : result) {
             buildChildMenu(menu, menuTreeListRespVOS);
         }

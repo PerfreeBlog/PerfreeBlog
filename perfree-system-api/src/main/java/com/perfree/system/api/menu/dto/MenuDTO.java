@@ -1,35 +1,12 @@
-package com.perfree.model;
+package com.perfree.system.api.menu.dto;
 
-import com.baomidou.mybatisplus.annotation.*;
+import lombok.Builder;
+import lombok.Data;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.Date;
+@Data
+@Builder
+public class MenuDTO {
 
-import com.perfree.base.BaseModel;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.Getter;
-import lombok.Setter;
-
-/**
- * <p>
- * 
- * </p>
- *
- * @author perfree
- * @since 2023-09-27
- */
-@Getter
-@Setter
-@TableName("p_menu")
-public class Menu extends BaseModel implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = 1L;
-
-    /** 主键 */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
     /** 父级id */
@@ -59,9 +36,6 @@ public class Menu extends BaseModel implements Serializable {
     /** 插件id */
     private String pluginId;
 
-    /** 菜单标识:0:系统自带,1:用户创建,2:插件 */
-    private Integer flag;
-
     /** 组件路径 */
     private String component;
 
@@ -76,5 +50,4 @@ public class Menu extends BaseModel implements Serializable {
 
     /** 是否为外链（0是 1否） */
     private Integer isFrame;
-
 }

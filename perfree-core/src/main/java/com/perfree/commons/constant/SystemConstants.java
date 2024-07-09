@@ -2,9 +2,6 @@ package com.perfree.commons.constant;
 
 public class SystemConstants {
 
-    /** 菜单根节点id */
-    public static final String ROOT_MENU_CODE = "-1";
-
     /** 验证码随机字符 */
     public static final String CAPTCHA_RANDOM = "0123456789";
 

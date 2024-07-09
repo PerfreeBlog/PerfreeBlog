@@ -66,4 +66,8 @@ public interface MenuMapper extends BaseMapperX<Menu> {
      */
     List<Menu> menuListByAdmin(@Param("type") Integer type);
 
+    default void deleteMenuByPluginId(String pluginId){
+        delete(new LambdaQueryWrapper<Menu>().eq(Menu::getPluginId, pluginId));
+    }
+
 }

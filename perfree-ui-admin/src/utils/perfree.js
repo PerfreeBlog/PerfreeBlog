@@ -1,4 +1,7 @@
 // 日期格式化
+import { useCommonStore } from "@/stores/commonStore.js";
+import { menuAdminList } from "@/api/system.js";
+
 export function parseTime(time, pattern) {
     if (arguments.length === 0 || !time) {
         return null
@@ -71,4 +74,29 @@ export function handleTree(data, id, parentId, children, rootId) {
         return father[parentId] === rootId;
     });
     return treeData !== '' ? treeData : data;
+}
+
+
+// 初始化菜单
+export function initMenu(){
+    return new Promise((resolve, reject)=> {
+        const commonStore = useCommonStore()
+        menuAdminList().then((res) => {
+            if (res.code === 200) {
+                let menuList = res.data;
+                menuList.unshift( {
+                    id: 'home',
+                    pid: -1,
+                    url: '/admin',
+                    name: '首页',
+                    componentName: 'home',
+                    component: '/home/HomeView',
+                    icon: 'fa-solid fa-house',
+                    children: [],
+                });
+                commonStore.setMenuList(menuList)
+                resolve()
+            }
+        })
+    })
 }

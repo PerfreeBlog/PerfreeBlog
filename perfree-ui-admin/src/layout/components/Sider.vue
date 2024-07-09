@@ -6,7 +6,6 @@
     </div>
     <el-menu
       class="side-menu"
-      router
       :default-active="currRouter"
       :collapse="menuIsCollapse"
       popper-class="poper-menu"
@@ -32,6 +31,15 @@ let menuList = ref(commonStore.menuList)
 watch(route, () => {
   currRouter.value = route.fullPath
 })
+
+// 监听 menuList 变化
+watch(
+  () => commonStore.menuList,
+  (newMenuList, oldMenuList) => {
+    menuList.value = newMenuList;
+  },
+  { deep: true }
+)
 </script>
 
 <style lang="scss" scoped>

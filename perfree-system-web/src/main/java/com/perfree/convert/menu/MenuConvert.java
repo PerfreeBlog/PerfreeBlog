@@ -4,6 +4,7 @@ import com.perfree.model.Menu;
 import com.perfree.controller.auth.menu.vo.MenuAddOrUpdateReqVO;
 import com.perfree.controller.auth.menu.vo.MenuRespVO;
 import com.perfree.controller.auth.system.vo.MenuTreeListRespVO;
+import com.perfree.system.api.menu.dto.MenuDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -20,5 +21,9 @@ public interface MenuConvert {
     MenuRespVO convertRespVO(Menu menu);
 
     Menu convertMenu(MenuAddOrUpdateReqVO menuAddOrUpdateReqVO);
+
+    Menu convertByDTO(MenuDTO menuDTO);
+
+    MenuDTO convertToDTO(Menu menu);
 
 }
