@@ -16,6 +16,9 @@ const url = route.meta.url
 </script>
 
 <style scoped>
+.page{
+  height: 100%;
+}
 .frame{
   box-shadow: var(--el-box-shadow-light);
 }

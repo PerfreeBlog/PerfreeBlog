@@ -60,6 +60,7 @@ app.use(i18n)
 library.add(fas, far, fab)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueDOMPurifyHTML)
+microApp.router.setBaseAppRouter(router)
 microApp.start({
     'disable-memory-router': true, // 关闭虚拟路由
 })
