@@ -61,5 +61,5 @@ export default defineConfig({
     outDir: '../perfree-system-web/src/main/resources/static/admin',
     emptyOutDir: true
   },
-  base: './'
+  base: '/'
 })

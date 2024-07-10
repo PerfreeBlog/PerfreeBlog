@@ -1,1 +1,0 @@
-import{a0 as o,a as t,b as r,d as s,f as n,u as c}from"./index-DQCGZ03O.js";const p={class:"page"},f={__name:"ExternalView",setup(u){const e=o().meta.url;return(m,_)=>{const a=t("micro-app");return r(),s("div",p,[n(a,{name:"my-app",url:c(e),iframe:""},null,8,["url"])])}}};export{f as default};

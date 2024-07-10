@@ -19,6 +19,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/admin/**").setViewName("/static/admin/index.html");
         registry.addViewController("/login").setViewName("/static/admin/index.html");
+        WebMvcConfigurer.super.addViewControllers(registry);
     }
 
     @Override
