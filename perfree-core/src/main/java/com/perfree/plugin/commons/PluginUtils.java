@@ -3,24 +3,24 @@ package com.perfree.plugin.commons;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.perfree.commons.constant.SystemConstants;
-import com.perfree.enums.OptionEnum;
+import com.perfree.commons.utils.SqlExecUtils;
 import com.perfree.plugin.pojo.PluginBaseConfig;
-import com.perfree.plugin.pojo.PluginConfig;
-import com.perfree.theme.commons.ThemeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class PluginUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(PluginUtils.class);
@@ -31,8 +31,13 @@ public class PluginUtils {
 
     public static final String PLUGIN_CONFIG_NAME = "plugin.yaml";
 
+    public static final String TARGET_CLASS_DIR = "classes";
+
+    public static final String SQL_DIR = "sql";
+
     /**
      * 获取插件配置信息
+     *
      * @param pluginFile pluginFile
      * @return PluginBaseConfig
      */
@@ -46,7 +51,8 @@ public class PluginUtils {
         try (InputStream input = new FileInputStream(file)) {
             Yaml yaml = new Yaml();
             pluginBaseConfig = yaml.loadAs(input, PluginBaseConfig.class);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
         return pluginBaseConfig;
     }
 
@@ -65,8 +71,7 @@ public class PluginUtils {
      * 将临时插件文件拷贝至指定目录
      */
     public static File devCopyPluginToPluginDir(String devPluginDir, String pluginBaseDir) {
-        // 拷贝源代码
-        File codeDirFile = new File(devPluginDir +File.separator + "classes");
+        File codeDirFile = new File(devPluginDir + File.separator + TARGET_CLASS_DIR);
         PluginBaseConfig pluginConfig = getPluginConfig(codeDirFile);
         if (null == pluginConfig) {
             LOGGER.error("plugin.yaml parse fail");
@@ -77,8 +82,10 @@ public class PluginUtils {
 
         File[] codeFiles = codeDirFile.listFiles();
         if (null == codeFiles) {
-           return null;
+            return null;
         }
+
+
         File codeDestDirFile = new File(pluginDir.getAbsolutePath() + File.separator + PluginUtils.CODE_DIR);
         if (!codeDestDirFile.exists()) {
             FileUtil.mkdir(codeDestDirFile);
@@ -86,13 +93,15 @@ public class PluginUtils {
         for (File pluginSource : codeFiles) {
             if (pluginSource.getName().equals(PLUGIN_CONFIG_NAME)) {
                 FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
+            } else if (pluginSource.getName().equals(SQL_DIR)) {
+                FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
             } else {
                 FileUtil.copy(pluginSource, codeDestDirFile, true);
             }
         }
 
         // 拷贝依赖文件
-        File libDirFile = new File(devPluginDir +File.separator + PluginUtils.LIB_DIR);
+        File libDirFile = new File(devPluginDir + File.separator + PluginUtils.LIB_DIR);
         File[] libFiles = libDirFile.listFiles();
         if (null == libFiles) {
             return pluginDir;
@@ -110,7 +119,7 @@ public class PluginUtils {
     /**
      * 解压jar格式的插件
      */
-    public static void extractJarPlugin (File srcJarFile, File destFile) throws Exception {
+    public static void extractJarPlugin(File srcJarFile, File destFile) throws Exception {
         if (!destFile.exists()) {
             FileUtil.mkdir(destFile);
         }
@@ -128,7 +137,7 @@ public class PluginUtils {
                     OutputStream outputStream = new FileOutputStream(file);
                     byte[] buffer = new byte[1024];
                     int bytesRead;
-                    while((bytesRead = inputStream.read(buffer)) != -1) {
+                    while ((bytesRead = inputStream.read(buffer)) != -1) {
                         outputStream.write(buffer, 0, bytesRead);
                     }
                     inputStream.close();
@@ -142,6 +151,7 @@ public class PluginUtils {
 
     /**
      * 解压压缩包形式的插件
+     *
      * @param pluginFile pluginFile
      * @return File
      */
@@ -168,11 +178,12 @@ public class PluginUtils {
 
     /**
      * 获取插件中所有的class集合
-     * @author perfree
-     * @date 2023-09-27 16:09:53
-     * @param pluginDir 插件目录
+     *
+     * @param pluginDir   插件目录
      * @param classLoader 插件classLoader
      * @return java.util.List<java.lang.Class < ?>>
+     * @author perfree
+     * @date 2023-09-27 16:09:53
      */
     public static List<Class<?>> getClassList(File pluginDir, ClassLoader classLoader) {
         List<Class<?>> classList = new ArrayList<>();
@@ -202,7 +213,8 @@ public class PluginUtils {
 
     /**
      * 获取插件中所有的mapperXml
-     * @param pluginDir pluginDir
+     *
+     * @param pluginDir        pluginDir
      * @param pluginBaseConfig pluginBaseConfig
      * @return List<File>
      */
@@ -217,7 +229,7 @@ public class PluginUtils {
         List<File> files = FileUtil.loopFiles(codeDir);
         List<File> result = new ArrayList<>();
         for (File file : files) {
-            String realPath = file.getAbsolutePath().replace(codeDir.getAbsolutePath() + File.separator, "").replaceAll("\\\\","/");
+            String realPath = file.getAbsolutePath().replace(codeDir.getAbsolutePath() + File.separator, "").replaceAll("\\\\", "/");
             if (Pattern.matches(xmlLocationPattern, realPath) && file.getName().endsWith(".xml")) {
                 result.add(file);
             }
@@ -227,7 +239,8 @@ public class PluginUtils {
 
     /**
      * 获取插件中所有的mapperXml路径
-     * @param pluginDir pluginDir
+     *
+     * @param pluginDir        pluginDir
      * @param pluginBaseConfig pluginBaseConfig
      * @return List<String>
      */
@@ -241,7 +254,7 @@ public class PluginUtils {
         List<File> files = FileUtil.loopFiles(codeDir);
         List<String> result = new ArrayList<>();
         for (File file : files) {
-            String realPath = file.getAbsolutePath().replace(codeDir.getAbsolutePath() + File.separator, "").replaceAll("\\\\","/");
+            String realPath = file.getAbsolutePath().replace(codeDir.getAbsolutePath() + File.separator, "").replaceAll("\\\\", "/");
             if (Pattern.matches(xmlLocationPattern, realPath) && file.getName().endsWith(".xml")) {
                 result.add(file.getAbsolutePath());
             }
@@ -265,8 +278,8 @@ public class PluginUtils {
     }
 
     public static long versionToLong(String versionStr) {
-        return Long.parseLong(versionStr.replaceAll("\r\n","").replaceAll("--","")
-                .replaceAll("\\.","").replace("v",""));
+        return Long.parseLong(versionStr.replaceAll("\r\n", "").replaceAll("--", "")
+                .replaceAll("\\.", "").replace("v", ""));
     }
 
     public static PluginBaseConfig getDevPluginConfig(String pluginPath) {
@@ -276,5 +289,85 @@ public class PluginUtils {
             return null;
         }
         return PluginUtils.getPluginConfig(classes);
+    }
+
+    /**
+     * 执行插件安装sql脚本
+     *
+     * @param pluginDir pluginDir
+     */
+    public static void execPluginInstallSql(File pluginDir) throws SQLException {
+        if (null == pluginDir || !pluginDir.exists()){
+            return;
+        }
+        File installSqlFile = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR + File.separator + "install.sql");
+        if (installSqlFile.exists()) {
+            FileReader fileReader = new FileReader(installSqlFile);
+            String sqlStr = fileReader.readString();
+            SqlExecUtils.execSql(sqlStr);
+            LOGGER.info("执行插件安装sql: {}", sqlStr);
+        }
+    }
+
+    /**
+     * 执行更新sql
+     * @param pluginDir pluginDir
+     * @param oldVersion oldVersion
+     * @param newVersion newVersion
+     */
+    public static void execPluginUpdateSql(File pluginDir, String oldVersion, String newVersion) throws SQLException {
+        if (null == pluginDir || !pluginDir.exists()){
+            return;
+        }
+        File sqlDir = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR );
+        if (!sqlDir.exists()) {
+            return;
+        }
+
+        // 获取要执行的更新sql文件
+        List<File> updateSqlFiles = FileUtil.loopFiles(sqlDir)
+                .stream()
+                .filter(file -> file.isFile() && StrUtil.startWith(file.getName(), "update-") && file.getName().endsWith(".sql")
+                        && isWithinVersionRange(file, oldVersion, newVersion))
+                .toList();
+        for (File updateSqlFile : updateSqlFiles) {
+            FileReader fileReader = new FileReader(updateSqlFile);
+            String sqlStr = fileReader.readString();
+            SqlExecUtils.execSql(sqlStr);
+            LOGGER.info("执行插件更新sql: {}", sqlStr);
+        }
+    }
+
+    /**
+     * 判断更新文件是否在版本范围内
+     * @param file file
+     * @param oldVersion oldVersion
+     * @param newVersion newVersion
+     * @return boolean
+     */
+    private static boolean isWithinVersionRange(File file, String oldVersion, String newVersion) {
+        String fileName = file.getName();
+        String versionStr = fileName.substring("update-".length(), fileName.length() - ".sql".length());
+        long currFileVersionNum = PluginUtils.versionToLong(versionStr);
+        long oldVersionNum = PluginUtils.versionToLong(oldVersion);
+        long newVersionNum = PluginUtils.versionToLong(newVersion);
+        return currFileVersionNum > oldVersionNum && currFileVersionNum <= newVersionNum;
+    }
+
+    /**
+     * 执行卸载插件sql
+     * @param pluginDir pluginDirFile
+     */
+    public static void execPluginUnInstallSql(File pluginDir) throws SQLException {
+        if (null == pluginDir || !pluginDir.exists()){
+            return;
+        }
+        File installSqlFile = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR + File.separator + "uninstall.sql");
+        if (installSqlFile.exists()) {
+            FileReader fileReader = new FileReader(installSqlFile);
+            String sqlStr = fileReader.readString();
+            SqlExecUtils.execSql(sqlStr);
+            LOGGER.info("执行插件卸载sql: {}", sqlStr);
+        }
     }
 }

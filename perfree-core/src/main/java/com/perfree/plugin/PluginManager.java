@@ -114,11 +114,13 @@ public class PluginManager{
         PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
         BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
         if (update) {
+            PluginUtils.execPluginUpdateSql(pluginDir, installedPluginConfig.getPlugin().getVersion(), pluginConfig.getPlugin().getVersion());
             if (null != bean) {
                 bean.onUpdate();
             }
             pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
         } else {
+            PluginUtils.execPluginInstallSql(pluginDir);
             if (null != bean) {
                 bean.onInstall();
             }
@@ -139,6 +141,7 @@ public class PluginManager{
             bean.onUnInstall();
         }
         pluginHandle.stopPlugin(pluginInfo.getPluginId());
+        PluginUtils.execPluginUnInstallSql(pluginDirFile);
         FileUtil.del(pluginDirFile);
     }
 }

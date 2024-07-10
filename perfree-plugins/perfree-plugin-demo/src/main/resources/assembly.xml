@@ -13,6 +13,13 @@
             <outputDirectory>/</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>${basedir}/src/main/resources/sql</directory>
+            <includes>
+                <include>*.sql</include>
+            </includes>
+            <outputDirectory>sql</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>${basedir}/target/lib</directory>
             <includes>
                 <include>*.jar</include>

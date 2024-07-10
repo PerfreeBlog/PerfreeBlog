@@ -1,11 +1,13 @@
 package com.perfree.plugin;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.watch.SimpleWatcher;
 import cn.hutool.core.io.watch.WatchMonitor;
 import cn.hutool.core.io.watch.watchers.DelayWatcher;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.constant.PluginConstant;
 import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.exception.PluginException;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
@@ -49,40 +51,67 @@ public class PluginDevManager {
             LOGGER.error("{} plugin.yaml not found", pluginPath);
             return null;
         }
+
+        // 记录是否更新及是否存在标识
         boolean update = false;
+        boolean isExist = false;
         PluginBaseConfig installedPluginConfig = PluginUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
         if (null != installedPluginConfig) {
-            update = true;
+            isExist = true;
+            long oldVersion = PluginUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
+            long newVersion = PluginUtils.versionToLong(pluginConfig.getPlugin().getVersion());
+            if (newVersion > oldVersion) {
+                update = true;
+            }
         }
-        if (update && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getId()) != null) {
+
+        // 如果存在该插件,先停止
+        if (isExist && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getId()) != null) {
             pluginManager.stopPlugin(pluginConfig.getPlugin().getId());
         }
+
+        // 拷贝资源文件
         File pluginDir = PluginUtils.devCopyPluginToPluginDir(pluginPath, SystemConstants.PLUGINS_DIR);
+
+        // 启动插件
         PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
+
+        // 获取插件事件Bean
         BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
         pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
+
+        // 如果是更新,执行更新sql, 回调更新事件
         if (update) {
+            PluginUtils.execPluginUpdateSql(pluginDir, installedPluginConfig.getPlugin().getVersion(), pluginConfig.getPlugin().getVersion());
             if (null != bean) {
                 bean.onUpdate();
             }
-        } else {
+            pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
+            return pluginConfig;
+        }
+
+        // 如果不存在,执行安装sql,回调安装事件
+        if (!isExist) {
+            PluginUtils.execPluginInstallSql(pluginDir);
             if (null != bean) {
                 bean.onInstall();
             }
-            if (null != pluginsDTO && pluginsDTO.getStatus().equals(PluginConstant.PLUGIN_STATUS_DISABLE)) {
-                pluginHandle.stopPlugin(pluginInfo.getPluginId());
-                pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_DISABLE);
-            }
+        }
 
+        // 如果数据库存储的插件信息为禁用,则停掉该插件
+        if (null != pluginsDTO && pluginsDTO.getStatus().equals(PluginConstant.PLUGIN_STATUS_DISABLE)) {
+            pluginHandle.stopPlugin(pluginInfo.getPluginId());
+            pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_DISABLE);
         }
         return pluginConfig;
     }
 
     /**
      * 获取启用的插件
+     *
      * @return List<String>
      */
-    private List<String> getEnablePlugin(File pluginsPom){
+    private List<String> getEnablePlugin(File pluginsPom) {
         try (FileInputStream fileInputStream = new FileInputStream(pluginsPom)) {
             MavenXpp3Reader mavenXpp3Reader = new MavenXpp3Reader();
             Model model = mavenXpp3Reader.read(fileInputStream);
@@ -99,10 +128,10 @@ public class PluginDevManager {
         File pluginsPom = new File(projectRootPath + "/perfree-plugins/pom.xml");
         File pluginsDir = new File(projectRootPath + "/perfree-plugins");
         File[] files = pluginsDir.listFiles();
-        if (null == files){
+        if (null == files) {
             return null;
         }
-        List<String> pluginPaths =  new ArrayList<>();
+        List<String> pluginPaths = new ArrayList<>();
         List<String> enablePlugins = getEnablePlugin(pluginsPom);
         if (null == enablePlugins || enablePlugins.isEmpty()) {
             return null;
@@ -121,6 +150,7 @@ public class PluginDevManager {
 
     /**
      * 获取插件ArtifactId
+     *
      * @param pomFilePath pomFilePath
      * @return String
      */

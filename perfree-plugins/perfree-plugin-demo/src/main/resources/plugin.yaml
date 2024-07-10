@@ -10,7 +10,7 @@ plugin:
   # 插件最低支持版本
   minimalVersion: 2.2.0
   # 插件版本
-  version: 2.23.0
+  version: 1.0.2
   # 插件静态资源路径
   staticLocations: classpath:/exam-static/
   # 插件更新url
