@@ -19,5 +19,11 @@ export default defineConfig({
     port: 4201,
     host: '0.0.0.0',
     cors: true
-  }
+  },
+  build: {
+    chunkSizeWarningLimit: 1024, // chunk 大小警告的限制（单位kb）
+    outDir: '../src/main/resources/ui',
+    emptyOutDir: true
+  },
+  base: './'
 })

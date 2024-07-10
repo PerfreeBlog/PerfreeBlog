@@ -20,6 +20,10 @@
             <outputDirectory>sql</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>${basedir}/src/main/resources/ui</directory>
+            <outputDirectory>ui</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>${basedir}/target/lib</directory>
             <includes>
                 <include>*.jar</include>

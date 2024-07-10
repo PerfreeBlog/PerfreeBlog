@@ -15,11 +15,10 @@ import java.time.Duration;
 public class MvcConfig implements WebMvcConfigurer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MvcConfig.class);
-
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-      /*  registry.addViewController("/admin/**").setViewName("/static/admin/index.html");
-        registry.addViewController("/login").setViewName("/static/admin/index.html");*/
+        registry.addViewController("/admin/**").setViewName("/static/admin/index.html");
+        registry.addViewController("/login").setViewName("/static/admin/index.html");
     }
 
     @Override
