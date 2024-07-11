@@ -15,17 +15,17 @@ public class PluginEventService implements BasePluginEvent {
 
     @Override
     public void onStart() {
-        System.out.println("---------exam插件启动了-------------");
+        System.out.println("---------demo插件启动了-------------");
     }
 
     @Override
     public void onStop() {
-        System.out.println("---------exam插件停止了-------------");
+        System.out.println("---------demo插件停止了-------------");
     }
 
     @Override
     public void onUpdate() {
-        System.out.println("---------exam插件更新了-------------");
+        System.out.println("---------demo插件更新了-------------");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class PluginEventService implements BasePluginEvent {
                 // 注意,插件id必须和插件配置文件中的id保持一致
                 .pluginId(PLUGIN_ID)
                 // 菜单名称
-                .name("演示插件")
+                .name("演示插件1")
                 // 图标
                 .icon("fa-solid fa-feather")
                 // 菜单父级ID, -1 为根节点
@@ -112,6 +112,6 @@ public class PluginEventService implements BasePluginEvent {
     public void onUnInstall() {
         // 卸载时删除插件菜单
         menuApi.deleteMenuByPluginId("perfree-demo");
-        System.out.println("---------exam插件卸载了-------------");
+        System.out.println("---------demo插件卸载了-------------");
     }
 }

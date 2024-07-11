@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <micro-app name='my-app' :url="url" :iframe="route.meta.url.startsWith('http')" router-mode='state'></micro-app>
+    <micro-app name='my-app' :url="url" :iframe="route.meta.url.startsWith('http')" router-mode='state' destroy></micro-app>
   </div>
 </template>
 <script setup>
