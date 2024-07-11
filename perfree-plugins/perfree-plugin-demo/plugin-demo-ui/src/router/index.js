@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
-import DemoView from "../views/demo/DemoView.vue";
+import HomeView from "../views/home/HomeView.vue";
 
 
 const router = createRouter({
@@ -7,19 +7,14 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'layout',
-            redirect: 'demo',
-        },
-        {
-            path: '/demo',
             name: 'demo',
-            component: DemoView,
+            redirect: "home"
         },
         {
-            path: '/demo/2',
-            name: 'demo2',
-            component: DemoView,
-        }
+            path: '/home',
+            name: 'home',
+            component: HomeView,
+        },
     ],
 })
 export default router

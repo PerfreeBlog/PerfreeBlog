@@ -95,6 +95,8 @@ public class PluginUtils {
                 FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
             } else if (pluginSource.getName().equals(SQL_DIR)) {
                 FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
+            }  else if (pluginSource.getName().equals("ui")) {
+                FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
             } else {
                 FileUtil.copy(pluginSource, codeDestDirFile, true);
             }

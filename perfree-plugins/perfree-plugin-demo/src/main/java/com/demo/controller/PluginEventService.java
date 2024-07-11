@@ -67,7 +67,7 @@ public class PluginEventService implements BasePluginEvent {
                 .seq(0)
                 // 菜单地址(前端的真实访问地址,如果是vue项目,开发环境和正式环境可能不一样,注意区分,
                 // 比如开发环境使用vite启动,访问地址可能是http://127.0.0.1:4201/xxx,生产为/xxx)
-                .component("/plugin/perfree-demo/demo")
+                .component("/plugin/perfree-demo/home")
                 // 组件名称(主要用来做区分,建议唯一)
                 .componentName("demo")
                 // 菜单打开方式

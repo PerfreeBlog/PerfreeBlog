@@ -104,4 +104,4 @@ knife4j:
     password: 12313
 perfree:
   # 是否开启开发环境插件自动更新,当执行build modules时,会自动更新插件
-  autoLoadDevPlugin: false
+  autoLoadDevPlugin: true

@@ -1,1 +1,0 @@
-import{_ as t,a as o,b as c,d as n,f as s}from"./index-R5kZ6j8p.js";const a={},r={class:"page"};function _(i,u){const e=o("WujieVue");return c(),n("div",r,[s(e,{width:"100%",height:"100%",name:"xxx",url:"http://127.0.0.1:8080"})])}const p=t(a,[["render",_]]);export{p as default};
