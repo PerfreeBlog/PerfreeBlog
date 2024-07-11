@@ -65,8 +65,9 @@ public class PluginEventService implements BasePluginEvent {
                 .pid(parentMenu.getId())
                 // 菜单排序
                 .seq(0)
-                // 菜单地址(前端的真实访问地址,如果是vue项目,开发环境和正式环境可能不一样,注意区分)
-                .component("http://127.0.0.1:4201/admin/plugin/demo")
+                // 菜单地址(前端的真实访问地址,如果是vue项目,开发环境和正式环境可能不一样,注意区分,
+                // 比如开发环境使用vite启动,访问地址可能是http://127.0.0.1:4201/xxx,生产为/xxx)
+                .component("/plugin/perfree-exam/demo")
                 // 组件名称(主要用来做区分,建议唯一)
                 .componentName("demo")
                 // 菜单打开方式
@@ -89,7 +90,7 @@ public class PluginEventService implements BasePluginEvent {
                 // 注意,插件id必须和插件配置文件中的id保持一致
                 .pluginId(PLUGIN_ID)
                 // 菜单名称
-                .name("百度一下")
+                .name("PerfreeBlog")
                 // 菜单父级ID, -1 为根节点
                 .pid(parentMenu.getId())
                 // 菜单排序
@@ -97,7 +98,7 @@ public class PluginEventService implements BasePluginEvent {
                 // 菜单打开方式
                 .target(MenuConstant.MENU_TARGET_SELF)
                 // url,因为采用了微前端架构,这里可以自定义个展示的url
-                .url("https://www.baidu.com")
+                .url("https://www.perfree.org.cn")
                 // 菜单图标
                 .icon("fa-solid fa-feather")
                 // 是否为外链

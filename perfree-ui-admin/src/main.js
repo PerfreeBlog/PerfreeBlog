@@ -62,6 +62,5 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(VueDOMPurifyHTML)
 microApp.router.setBaseAppRouter(router)
 microApp.start({
-    'disable-memory-router': true, // 关闭虚拟路由
 })
 app.mount('#app')
