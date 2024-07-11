@@ -6,6 +6,8 @@ import com.jfinal.template.source.ISource;
 import com.jfinal.template.source.ISourceFactory;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.SpringBeanUtil;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.PluginInfoHolder;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 /**
  * TemplateSource Configuration
@@ -50,13 +53,13 @@ public class TemplateSourceFactory implements ISourceFactory {
             HandlerMethod handler = (HandlerMethod) handlerChain.getHandler();
             Object bean = handler.getBean();
             ClassLoader classLoader = bean.getClass().getClassLoader();
-          /*  插件静态资源处理 todo
-           Map<String, PluginInfo> allPlugin = PluginHolder.getAllPlugin();
-            for (Map.Entry<String, PluginInfo> entry : allPlugin.entrySet()) {
-                if (entry.getValue().getPluginWrapper().getPluginClassLoader() == classLoader) {
-                    return new FileSourceFactory().getSource(SystemConstants.PLUGINS_RESOURCES_DIR + File.separator + entry.getKey(), s1, s2);
+            // 插件静态资源处理 todo
+            List<PluginInfo> allPluginInfo = PluginInfoHolder.getAllPluginInfo();
+            for (PluginInfo pluginInfo : allPluginInfo) {
+                if (pluginInfo.getPluginClassLoader() == classLoader) {
+                    return new FileSourceFactory().getSource(pluginInfo.getPluginPath() , s1, s2);
                 }
-            }*/
+            }
         }catch (Exception exception) {
             LOGGER.error("error render tpl", exception);
         }

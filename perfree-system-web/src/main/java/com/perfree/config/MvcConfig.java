@@ -1,10 +1,12 @@
 package com.perfree.config;
 
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.plugin.core.PluginResourceResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.CacheControl;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -33,7 +35,11 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/assets/**").addResourceLocations( "classpath:/static/admin/assets/");
         registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        String pathPattern = "/plugin-static/**";
+        ResourceHandlerRegistration resourceHandlerRegistration = registry.addResourceHandler(pathPattern);
+        resourceHandlerRegistration.resourceChain(false).addResolver(new PluginResourceResolver());
         WebMvcConfigurer.super.addResourceHandlers(registry);
+
     }
 
 

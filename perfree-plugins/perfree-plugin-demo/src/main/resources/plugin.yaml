@@ -12,7 +12,7 @@ plugin:
   # 插件版本
   version: 1.0.2
   # 插件静态资源路径
-  staticLocations: classpath:/exam-static/
+  staticLocations: classpath:/exam-static/,classpath:/ui/
   # 插件更新url
   updateUrl:
 author:
