@@ -18,7 +18,7 @@ import static com.perfree.commons.common.CommonResult.success;
 
 @RestController
 @Tag(name = "系统配置相关接口")
-@RequestMapping("api/demo")
+@RequestMapping("api/plugin/demo")
 public class DemoController {
 
     @GetMapping("/test")

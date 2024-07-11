@@ -3,8 +3,7 @@ import DemoView from "../views/demo/DemoView.vue";
 
 
 const router = createRouter({
-    //
-    history: createWebHistory(import.meta.env.DEV ? import.meta.env.BASE_URL : '/plugin/perfree-exam/'),
+    history: createWebHistory(import.meta.env.DEV ? import.meta.env.BASE_URL : '/plugin/perfree-demo/'),
     routes: [
         {
             path: '/',

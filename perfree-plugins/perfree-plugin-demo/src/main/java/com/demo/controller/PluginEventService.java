@@ -31,7 +31,7 @@ public class PluginEventService implements BasePluginEvent {
     @Override
     public void onInstall() {
         // 演示创建一个目录菜单
-        String PLUGIN_ID = "perfree-exam";
+        String PLUGIN_ID = "perfree-demo";
         MenuDTO parentMenu = MenuDTO.builder()
                 // 菜单类型,管理后台
                 .type(MenuConstant.MENU_TYPE_ADMIN)
@@ -67,7 +67,7 @@ public class PluginEventService implements BasePluginEvent {
                 .seq(0)
                 // 菜单地址(前端的真实访问地址,如果是vue项目,开发环境和正式环境可能不一样,注意区分,
                 // 比如开发环境使用vite启动,访问地址可能是http://127.0.0.1:4201/xxx,生产为/xxx)
-                .component("/plugin/perfree-exam/demo")
+                .component("/plugin/perfree-demo/demo")
                 // 组件名称(主要用来做区分,建议唯一)
                 .componentName("demo")
                 // 菜单打开方式
@@ -111,7 +111,7 @@ public class PluginEventService implements BasePluginEvent {
     @Override
     public void onUnInstall() {
         // 卸载时删除插件菜单
-        menuApi.deleteMenuByPluginId("perfree-exam");
+        menuApi.deleteMenuByPluginId("perfree-demo");
         System.out.println("---------exam插件卸载了-------------");
     }
 }

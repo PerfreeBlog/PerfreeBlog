@@ -29,5 +29,5 @@ export default defineConfig({
     emptyOutDir: true,
   },
   // 设置基础url, 如果是开发环境,则使用plugin/插件ID方式,生产环境则为/plugin-static/插件ID方式
-  base: isDev ? '/plugin/perfree-exam/' : '/plugin-static/perfree-exam/',
+  base: isDev ? '/plugin/perfree-demo/' : '/plugin-static/perfree-demo/',
 })
