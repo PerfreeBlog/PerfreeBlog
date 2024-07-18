@@ -63,6 +63,22 @@ router.beforeEach((to, from, next) => {
     if (commonStore.menuInit) {
       next();
     } else {
+      let childRouter2 = [{
+        componentName: "home",
+        moduleName: "home",
+        name: "home",
+        path: "/homexxx",
+        component: "/Home"
+      }]
+      let xxx = import(`http://127.0.0.1:8089/modules/home/home.js`);
+      xxx.then(res => {
+        console.log(res)
+        let moduleRouter = res.default().router(childRouter2, "home");
+        moduleRouter.forEach(r => {
+          router.addRoute("layout", r)
+        })
+        console.log(router.getRoutes())
+      })
       initMenu().then(() => {
         Promise.all([genRouteByMenus(commonStore.menuList), getAllOption()]).then(([r, optionRes]) => {
           let options = {};

@@ -68,6 +68,9 @@ public class Menu extends BaseModel implements Serializable {
     /** 组件名称 */
     private String componentName;
 
+    /** 模块名称 */
+    private String moduleName;
+
     /** 菜单类型（0目录1菜单2按钮）*/
     private Integer menuType;
 

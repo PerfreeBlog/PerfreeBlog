@@ -46,6 +46,9 @@ public class MenuBaseVO {
     @Schema(description = "组件名称")
     private String componentName;
 
+    @Schema(description = "模块名称")
+    private String moduleName;
+
 
     @Schema(description = "菜单类型（0目录1菜单2按钮）")
     private Integer menuType;
