@@ -17,6 +17,10 @@ import { fab } from '@fortawesome/free-brands-svg-icons'
 import piniaPersist from 'pinia-plugin-persist'
 import axios from "./api/axios";
 import VueDOMPurifyHTML from 'vue-dompurify-html'
+import AttachSelectInput from "@/core/components/attach-select-input.vue";
+import FcDesigner from '@form-create/designer'
+import formCreate from '@form-create/element-ui'
+import install from '@form-create/element-ui/auto-import'
 
 const app = createApp(App);
 
@@ -43,5 +47,11 @@ app.use(VueDOMPurifyHTML)
 
 // axios
 window.axios = axios;
+
+// form-create
+FcDesigner.component('AttachSelectInput', AttachSelectInput);
+formCreate.use(install)
+app.use(formCreate)
+app.use(FcDesigner)
 
 app.mount('#app')
