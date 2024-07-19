@@ -35,6 +35,7 @@ public enum ErrorCode {
     GET_CURRENT_THEME_ERROR(100000025, "获取当前启用的主题失败,请检查是否已启用主题!"),
     PLUGIN_FILE_NOT_EXIST(100000026,"插件文件不存在,该数据可能为冗余数据,已删除!"),
     PLUGIN_IS_RUN(100000027,"该插件已启用,正在运行,请禁用后再卸载!"),
+    PLUGIN_NOT_FOUND(100000028,"未查询到插件信息!"),
     ;
 
     private final Integer code;

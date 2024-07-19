@@ -4,7 +4,7 @@ package com.perfree.plugin.handle.compound;
 import com.perfree.plugin.PluginApplicationContextHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
-import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.core.PluginClassLoader;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
@@ -35,14 +35,14 @@ public class PluginHandle implements ApplicationContextAware {
         PluginInfo pluginInfo = new PluginInfo();
 
         // 加载插件配置文件
-        pluginInfo.setPluginConfig(PluginUtils.getPluginConfig(pluginDir));
+        pluginInfo.setPluginConfig(PluginHandleUtils.getPluginConfig(pluginDir));
         pluginInfo.setPluginId(pluginInfo.getPluginConfig().getPlugin().getId());
 
         // 加载插件JarClassLoader
         PluginClassLoader pluginClassLoader = new PluginClassLoader(getClass().getClassLoader());
         pluginClassLoader.addFile(pluginDir);
         pluginInfo.setPluginClassLoader(pluginClassLoader);
-        pluginInfo.setClassList(PluginUtils.getClassList(pluginDir, pluginClassLoader));
+        pluginInfo.setClassList(PluginHandleUtils.getClassList(pluginDir, pluginClassLoader));
         pluginInfo.setPluginPath(pluginDir.getAbsolutePath());
 
         // 加载插件专属AnnotationConfigApplicationContext

@@ -21,4 +21,10 @@ public class MenuTreeListRespVO extends MenuBaseVO {
 
     @Schema(description = "子菜单")
     private List<MenuTreeListRespVO> children;
+
+    @Schema(description = "插件是否为开发环境")
+    private Boolean pluginIsDev;
+
+    @Schema(description = "插件前端开发环境地址")
+    private String pluginFrontDevAddress;
 }

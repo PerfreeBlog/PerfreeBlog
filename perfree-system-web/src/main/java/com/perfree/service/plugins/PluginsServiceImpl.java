@@ -18,7 +18,7 @@ import com.perfree.plugin.PluginDevManager;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.PluginManager;
-import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
 import jakarta.annotation.Resource;
@@ -114,7 +114,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
     }
 
     private synchronized void initDevPlugin (String pluginPath) throws Exception {
-        PluginBaseConfig pluginConfig = PluginUtils.getDevPluginConfig(pluginPath);
+        PluginBaseConfig pluginConfig = PluginHandleUtils.getDevPluginConfig(pluginPath);
         if (null == pluginConfig) {
             LOGGER.error("{} plugin.yaml not found", pluginPath);
             return;

@@ -1,1 +1,0 @@
-function t(e){return axios.post("/api/auth/role/page",e)}function a(e){return axios.get("/api/auth/role/get?id="+e)}function i(e){return axios.post("/api/auth/role/addOrUpdate",e)}function o(e){return axios.delete("/api/auth/role/del?id="+e)}function r(){return axios.get("/api/auth/role/listAll")}export{a,o as b,t as c,r as d,i as r};

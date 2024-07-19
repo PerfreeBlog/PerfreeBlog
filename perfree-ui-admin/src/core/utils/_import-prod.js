@@ -1,13 +1,16 @@
 /**
  * 导入生产环境js
- * @param type
+ * @param moduleInfo
  * @param name
  * @returns {Promise<unknown>}
  */
 
-export default (type, name) => {
-   /* if (type === "1") {
-        return import(`http://localhost:5173/src/modules/demo02/index.js`)
-    }*/
-    return  import(`/modules/${name}/index.js`)
+export default (moduleInfo, name) => {
+    if (moduleInfo.pluginId && moduleInfo.pluginIsDev) {
+        return import(/* @vite-ignore */`${moduleInfo.pluginFrontDevAddress}/plugin/${moduleInfo.pluginId}/src/modules/${name}/index.js`)
+    }
+    if (moduleInfo.pluginId) {
+        return import(/* @vite-ignore */`/plugin-static/${moduleInfo.pluginId}/modules/${name}/index.js`)
+    }
+    return  import(/* @vite-ignore */`/modules/${name}/index.js`)
 }

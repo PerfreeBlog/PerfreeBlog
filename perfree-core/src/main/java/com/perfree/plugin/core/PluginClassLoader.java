@@ -1,6 +1,6 @@
 package com.perfree.plugin.core;
 
-import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.commons.PluginHandleUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +31,9 @@ public class PluginClassLoader extends URLClassLoader {
 
     public void addFile(File file) {
         try {
-            File codeFile = new File(file.getAbsolutePath() + File.separator + PluginUtils.CODE_DIR);
+            File codeFile = new File(file.getAbsolutePath() + File.separator + PluginHandleUtils.CODE_DIR);
             addURL(codeFile.getCanonicalFile().toURI().toURL());
-            File libFile = new File(file.getAbsolutePath() + File.separator + PluginUtils.LIB_DIR);
+            File libFile = new File(file.getAbsolutePath() + File.separator + PluginHandleUtils.LIB_DIR);
             if (libFile.exists() && libFile.listFiles() != null) {
                 File[] files = libFile.listFiles();
                 if (null == files || files.length == 0) {

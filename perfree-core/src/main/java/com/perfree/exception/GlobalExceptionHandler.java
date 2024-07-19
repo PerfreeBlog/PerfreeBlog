@@ -16,6 +16,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +31,13 @@ import java.util.Objects;
 public class GlobalExceptionHandler{
     private final static Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseBody
+    public void handleNoResourceFoundException(NoResourceFoundException exception) {
+        LOGGER.error(exception.getMessage());
+    }
     /**
      * @author Perfree
      * @description MethodArgumentNotValidException

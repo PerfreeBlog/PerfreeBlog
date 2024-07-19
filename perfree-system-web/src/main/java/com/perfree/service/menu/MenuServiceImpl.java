@@ -13,6 +13,8 @@ import com.perfree.mapper.MenuMapper;
 import com.perfree.mapper.RoleMenuMapper;
 import com.perfree.model.Menu;
 import com.perfree.model.Role;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.vo.LoginUserVO;
 import com.perfree.service.role.RoleService;
@@ -136,6 +138,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 将原数组中所有根节点移除
         menuTreeListRespVOS.removeIf(menu -> menu.getPid().equals(MenuConstant.ROOT_MENU_CODE));
         for (MenuTreeListRespVO menu : result) {
+            if (StringUtils.isNotBlank(menu.getPluginId())) {
+                PluginInfo pluginInfo = PluginInfoHolder.getPluginInfo(menu.getPluginId());
+                menu.setPluginIsDev(pluginInfo.getPluginConfig().getPlugin().getIsDev());
+                menu.setPluginFrontDevAddress(pluginInfo.getPluginConfig().getPlugin().getFrontDevAddress());
+            }
             buildChildMenu(menu, menuTreeListRespVOS);
         }
         return result;
@@ -152,6 +159,11 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         for (MenuTreeListRespVO treeListRespVO : queryMenuTreeList) {
             if (treeListRespVO.getPid().equals(menuTreeListRespVO.getId())) {
                 children.add(treeListRespVO);
+                if (StringUtils.isNotBlank(treeListRespVO.getPluginId())) {
+                    PluginInfo pluginInfo = PluginInfoHolder.getPluginInfo(treeListRespVO.getPluginId());
+                    treeListRespVO.setPluginIsDev(pluginInfo.getPluginConfig().getPlugin().getIsDev());
+                    treeListRespVO.setPluginFrontDevAddress(pluginInfo.getPluginConfig().getPlugin().getFrontDevAddress());
+                }
                 buildChildMenu(treeListRespVO, queryMenuTreeList);
             }
         }

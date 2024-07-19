@@ -22,4 +22,8 @@ public class PluginConfig {
     private String staticLocations;
 
     private String updateUrl;
+
+    private Boolean isDev;
+
+    private String frontDevAddress;
 }

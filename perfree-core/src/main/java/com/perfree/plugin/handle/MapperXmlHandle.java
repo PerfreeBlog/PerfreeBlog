@@ -3,7 +3,7 @@ package com.perfree.plugin.handle;
 import cn.hutool.core.io.FileUtil;
 import com.perfree.plugin.PluginApplicationContextHolder;
 import com.perfree.plugin.PluginInfo;
-import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.commons.PluginHandleUtils;
 import org.apache.ibatis.builder.xml.XMLMapperBuilder;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -39,7 +39,7 @@ public class MapperXmlHandle implements BasePluginRegistryHandler {
 
         try {
             Resources.setDefaultClassLoader(plugin.getPluginClassLoader());
-            List<File> mapperXml = PluginUtils.getMapperXml(new File(plugin.getPluginPath()), plugin.getPluginConfig());
+            List<File> mapperXml = PluginHandleUtils.getMapperXml(new File(plugin.getPluginPath()), plugin.getPluginConfig());
             for (File file : mapperXml) {
                 BufferedInputStream inputStream = FileUtil.getInputStream(file);
                 XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(inputStream,
@@ -54,7 +54,7 @@ public class MapperXmlHandle implements BasePluginRegistryHandler {
 
     @Override
     public void unRegistry(PluginInfo plugin) throws Exception {
-        List<String> mapperXml = PluginUtils.getMapperXmlPath(new File(plugin.getPluginPath()), plugin.getPluginConfig());
+        List<String> mapperXml = PluginHandleUtils.getMapperXmlPath(new File(plugin.getPluginPath()), plugin.getPluginConfig());
         SqlSessionFactory sqlSessionFactory = PluginApplicationContextHolder.getApplicationContext(plugin.getPluginId()).getBean(SqlSessionFactory.class);
         Configuration configuration = sqlSessionFactory.getConfiguration();
         clearValues(configuration, "mappedStatements", mapperXml);

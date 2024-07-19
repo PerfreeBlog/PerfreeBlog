@@ -1,9 +1,8 @@
 package com.perfree.plugin;
 
 import cn.hutool.core.io.FileUtil;
-import com.perfree.commons.constant.SystemConstants;
 import com.perfree.constant.PluginConstant;
-import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.exception.PluginException;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import com.perfree.plugin.pojo.PluginBaseConfig;
@@ -76,25 +75,25 @@ public class PluginManager{
         if (null == pluginFile || !pluginFile.exists()) {
             throw new PluginException("插件文件未找到!");
         }
-        File pluginTempDir = PluginUtils.extractZipPlugin(pluginFile);
+        File pluginTempDir = PluginHandleUtils.extractZipPlugin(pluginFile);
         FileUtil.del(pluginFile);
-        PluginBaseConfig pluginConfig = PluginUtils.getPluginConfig(pluginTempDir);
+        PluginBaseConfig pluginConfig = PluginHandleUtils.getPluginConfig(pluginTempDir);
         if (null == pluginConfig) {
             FileUtil.del(pluginTempDir);
             throw new PluginException("解析plugin.yaml失败!");
         }
 
         if (StringUtils.isNotBlank(pluginConfig.getPlugin().getMinimalVersion()) &&
-                PluginUtils.versionToLong(pluginConfig.getPlugin().getMinimalVersion()) > PluginUtils.versionToLong(version)){
+                PluginHandleUtils.versionToLong(pluginConfig.getPlugin().getMinimalVersion()) > PluginHandleUtils.versionToLong(version)){
             FileUtil.del(pluginTempDir);
             throw new PluginException("插件安装失败:该插件最低需要" + pluginConfig.getPlugin().getMinimalVersion() + "版本的PerfreeBlog");
         }
 
         boolean update = false;
-        PluginBaseConfig installedPluginConfig = PluginUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
+        PluginBaseConfig installedPluginConfig = PluginHandleUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
         if (null != installedPluginConfig) {
-            long oldVersion = PluginUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
-            long newVersion = PluginUtils.versionToLong(pluginConfig.getPlugin().getVersion());
+            long oldVersion = PluginHandleUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
+            long newVersion = PluginHandleUtils.versionToLong(pluginConfig.getPlugin().getVersion());
             if (oldVersion == newVersion) {
                 FileUtil.del(pluginTempDir);
                 throw new PluginException("插件安装失败:该版本插件已经安装,请勿再次安装");
@@ -109,18 +108,18 @@ public class PluginManager{
         if (update && PluginInfoHolder.getPluginInfo(pluginConfig.getPlugin().getId()) != null) {
             stopPlugin(pluginConfig.getPlugin().getId());
         }
-        File pluginDir = PluginUtils.copyPluginTempToPlugin(pluginTempDir, pluginConfig);
+        File pluginDir = PluginHandleUtils.copyPluginTempToPlugin(pluginTempDir, pluginConfig);
         FileUtil.del(pluginTempDir);
         PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
         BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
         if (update) {
-            PluginUtils.execPluginUpdateSql(pluginDir, installedPluginConfig.getPlugin().getVersion(), pluginConfig.getPlugin().getVersion());
+            PluginHandleUtils.execPluginUpdateSql(pluginDir, installedPluginConfig.getPlugin().getVersion(), pluginConfig.getPlugin().getVersion());
             if (null != bean) {
                 bean.onUpdate();
             }
             pluginConfig.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
         } else {
-            PluginUtils.execPluginInstallSql(pluginDir);
+            PluginHandleUtils.execPluginInstallSql(pluginDir);
             if (null != bean) {
                 bean.onInstall();
             }
@@ -141,7 +140,7 @@ public class PluginManager{
             bean.onUnInstall();
         }
         pluginHandle.stopPlugin(pluginInfo.getPluginId());
-        PluginUtils.execPluginUnInstallSql(pluginDirFile);
+        PluginHandleUtils.execPluginUnInstallSql(pluginDirFile);
         FileUtil.del(pluginDirFile);
     }
 }

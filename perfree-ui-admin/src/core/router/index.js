@@ -59,8 +59,8 @@ router.beforeEach((to, from, next) => {
         initMenu().then(() => {
             let allRouter = [];
             getAllRouter(commonStore.menuList, allRouter);
-            console.log(allRouter)
             Promise.all([genRoute(allRouter)]).then(([r]) => {
+                console.log(router.getRoutes())
                 commonStore.setMenuInit(true);
                 next({...to, replace: true});
             })
@@ -83,12 +83,22 @@ function genRoute(routes) {
             if (!moduleName) {
                 continue
             }
-            await _import("", moduleName).then(res => {
-                let moduleRouter = res.router(modules[moduleName], moduleName);
-                moduleRouter.forEach(r => {
-                    router.addRoute("layout", r)
+            let moduleInfo = {
+                moduleName: modules[moduleName][0].moduleName,
+                pluginId: modules[moduleName][0].pluginId,
+                pluginIsDev: modules[moduleName][0].pluginIsDev,
+                pluginFrontDevAddress: modules[moduleName][0].pluginFrontDevAddress,
+            }
+            try{
+                await _import(moduleInfo, moduleName).then(res => {
+                    let moduleRouter = res.router(modules[moduleName], moduleName);
+                    moduleRouter.forEach(r => {
+                        router.addRoute("layout", r)
+                    })
                 })
-            })
+            }catch (e){
+
+            }
         }
         resolve()
     });

@@ -36,7 +36,7 @@ export default defineConfig({
       entry: entry,
       name: `_module_${moduleName}`
     },
-    outDir: `dist/modules/${moduleName}`,
+    outDir: `../perfree-system-web/src/main/resources/static/admin/modules/${moduleName}`,
     modulePreload: false,
     rollupOptions: {
       external: [

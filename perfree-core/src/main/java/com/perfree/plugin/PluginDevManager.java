@@ -1,13 +1,8 @@
 package com.perfree.plugin;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.watch.SimpleWatcher;
-import cn.hutool.core.io.watch.WatchMonitor;
-import cn.hutool.core.io.watch.watchers.DelayWatcher;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.constant.PluginConstant;
-import com.perfree.plugin.commons.PluginUtils;
-import com.perfree.plugin.exception.PluginException;
+import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
@@ -19,8 +14,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.nio.file.Path;
-import java.nio.file.WatchEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +39,7 @@ public class PluginDevManager {
      * 初始化插件
      */
     public PluginBaseConfig initPlugin(String pluginPath, PluginsDTO pluginsDTO) throws Exception {
-        PluginBaseConfig pluginConfig = PluginUtils.getDevPluginConfig(pluginPath);
+        PluginBaseConfig pluginConfig = PluginHandleUtils.getDevPluginConfig(pluginPath);
         if (null == pluginConfig) {
             LOGGER.error("{} plugin.yaml not found", pluginPath);
             return null;
@@ -55,11 +48,11 @@ public class PluginDevManager {
         // 记录是否更新及是否存在标识
         boolean update = false;
         boolean isExist = false;
-        PluginBaseConfig installedPluginConfig = PluginUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
+        PluginBaseConfig installedPluginConfig = PluginHandleUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
         if (null != installedPluginConfig) {
             isExist = true;
-            long oldVersion = PluginUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
-            long newVersion = PluginUtils.versionToLong(pluginConfig.getPlugin().getVersion());
+            long oldVersion = PluginHandleUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
+            long newVersion = PluginHandleUtils.versionToLong(pluginConfig.getPlugin().getVersion());
             if (newVersion > oldVersion) {
                 update = true;
             }
@@ -71,7 +64,7 @@ public class PluginDevManager {
         }
 
         // 拷贝资源文件
-        File pluginDir = PluginUtils.devCopyPluginToPluginDir(pluginPath, SystemConstants.PLUGINS_DIR);
+        File pluginDir = PluginHandleUtils.devCopyPluginToPluginDir(pluginPath, SystemConstants.PLUGINS_DIR);
 
         // 启动插件
         PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDir);
@@ -82,7 +75,7 @@ public class PluginDevManager {
 
         // 如果是更新,执行更新sql, 回调更新事件
         if (update) {
-            PluginUtils.execPluginUpdateSql(pluginDir, installedPluginConfig.getPlugin().getVersion(), pluginConfig.getPlugin().getVersion());
+            PluginHandleUtils.execPluginUpdateSql(pluginDir, installedPluginConfig.getPlugin().getVersion(), pluginConfig.getPlugin().getVersion());
             if (null != bean) {
                 bean.onUpdate();
             }
@@ -92,7 +85,7 @@ public class PluginDevManager {
 
         // 如果不存在,执行安装sql,回调安装事件
         if (!isExist) {
-            PluginUtils.execPluginInstallSql(pluginDir);
+            PluginHandleUtils.execPluginInstallSql(pluginDir);
             if (null != bean) {
                 bean.onInstall();
             }

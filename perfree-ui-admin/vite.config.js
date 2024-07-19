@@ -15,6 +15,7 @@ export default defineConfig({
           { src: './node_modules/vue-router/dist/vue-router.global.prod.js', dest: 'assets/lib/vue-router' },
           { src: './node_modules/pinia/dist/pinia.iife.prod.js', dest: 'assets/lib/pinia' },
           { src: './node_modules/axios/dist/axios.min.js', dest: 'assets/lib/axios' },
+          { src: './node_modules/axios/dist/axios.min.js.map', dest: 'assets/lib/axios' },
           { src: './node_modules/element-plus/dist', dest: 'assets/lib/element-plus' },
           { src: './node_modules/@vueuse/shared/index.iife.min.js', dest: 'assets/lib/vueuse/shared' },
           { src: './node_modules/@vueuse/core/index.iife.min.js', dest: 'assets/lib/vueuse/core' },
@@ -71,6 +72,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, '')
       },
+      "/plugin-dev": {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/plugin-dev/, '')
+      },
       "/attach": {
         target: 'http://127.0.0.1:8080/attach',
         changeOrigin: true,
@@ -90,8 +96,9 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: "dist",
+    outDir: "../perfree-system-web/src/main/resources/static/admin",
     modulePreload: true,
+    emptyOutDir: true,
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
