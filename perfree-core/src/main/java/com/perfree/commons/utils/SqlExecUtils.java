@@ -20,11 +20,11 @@ public class SqlExecUtils {
         }
         DataSource dataSource = SpringBeanUtil.context.getBean(DataSource.class);
         Connection connection = dataSource.getConnection();
-        Statement statement = connection.createStatement();
         String[] split = sqlStr.split(";");
         for (String sql : split) {
-            statement.addBatch(sql);
+            if (StringUtils.isNotBlank(sql)) {
+                connection.prepareStatement(sql).execute();
+            }
         }
-        statement.executeBatch();
     }
 }

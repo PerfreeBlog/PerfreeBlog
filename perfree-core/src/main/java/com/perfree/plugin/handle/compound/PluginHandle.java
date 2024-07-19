@@ -6,6 +6,7 @@ import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.core.PluginClassLoader;
+import com.perfree.plugin.core.PluginClassLoaderHolder;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,7 +40,11 @@ public class PluginHandle implements ApplicationContextAware {
         pluginInfo.setPluginId(pluginInfo.getPluginConfig().getPlugin().getId());
 
         // 加载插件JarClassLoader
-        PluginClassLoader pluginClassLoader = new PluginClassLoader(getClass().getClassLoader());
+        PluginClassLoader pluginClassLoader = PluginClassLoaderHolder.getPluginClassLoader(pluginInfo.getPluginConfig().getPlugin().getId());
+        if (null == pluginClassLoader) {
+            pluginClassLoader = new PluginClassLoader(getClass().getClassLoader());
+        }
+
         pluginClassLoader.addFile(pluginDir);
         pluginInfo.setPluginClassLoader(pluginClassLoader);
         pluginInfo.setClassList(PluginHandleUtils.getClassList(pluginDir, pluginClassLoader));

@@ -1,4 +1,4 @@
-package com.demo.controller.vo;
+package com.demo.controller.demo.vo;
 
 import com.alibaba.excel.annotation.ExcelIgnore;
 import com.alibaba.excel.annotation.ExcelProperty;

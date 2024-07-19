@@ -1,4 +1,4 @@
-package com.demo.controller;
+package com.demo;
 
 import com.perfree.constant.MenuConstant;
 import com.perfree.plugin.BasePluginEvent;
@@ -31,7 +31,14 @@ public class PluginEventService implements BasePluginEvent {
 
     @Override
     public void onInstall() {
+        // ----这里演示安装时增加插件的菜单,当然,你也可以把这一部分放在安装sql里-------------------
+
+        // 获取插件id
         String pluginId = PluginUtils.getPluginConfig(this.getClass()).getPlugin().getId();
+
+        // 先根据插件id清空该插件的菜单,主要是为了防止冗余数据
+        menuApi.deleteMenuByPluginId(pluginId);
+
         // 演示创建一个目录菜单
         MenuDTO parentMenu = MenuDTO.builder()
                 // 菜单类型,管理后台
@@ -87,8 +94,9 @@ public class PluginEventService implements BasePluginEvent {
 
     @Override
     public void onUnInstall() {
+        String pluginId = PluginUtils.getPluginConfig(this.getClass()).getPlugin().getId();
         // 卸载时删除插件菜单
-        menuApi.deleteMenuByPluginId("perfree-demo");
+        menuApi.deleteMenuByPluginId(pluginId);
         System.out.println("---------demo插件卸载了-------------");
     }
 }
