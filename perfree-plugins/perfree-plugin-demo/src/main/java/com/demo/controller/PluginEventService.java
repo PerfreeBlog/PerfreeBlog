@@ -74,8 +74,8 @@ public class PluginEventService implements BasePluginEvent {
                 .componentName(pluginId + "-demo")
                 // 菜单打开方式
                 .target(MenuConstant.MENU_TARGET_SELF)
-                // 菜单地址(前端的真实访问地址, 这里统一以/plugin/插件id作为前缀,对应ViewController)
-                .url("/plugin/" + pluginId + "/demo")
+                // 菜单地址(前端的真实访问地址, 这里统一以/admin/plugin/插件id作为前缀,对应ViewController)
+                .url("/admin/plugin/" + pluginId + "/demo")
                 // 菜单图标
                 .icon("fa-solid fa-feather")
                 // 是否为外链
