@@ -19,6 +19,11 @@ import org.springframework.stereotype.Component;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.List;
 
 @Component
 public class PluginHandle implements ApplicationContextAware {
@@ -40,11 +45,14 @@ public class PluginHandle implements ApplicationContextAware {
         pluginInfo.setPluginId(pluginInfo.getPluginConfig().getPlugin().getId());
 
         // 加载插件JarClassLoader
+        //PluginClassLoader pluginClassLoader = new PluginClassLoader();
         PluginClassLoader pluginClassLoader = PluginClassLoaderHolder.getPluginClassLoader(pluginInfo.getPluginConfig().getPlugin().getId());
         if (null == pluginClassLoader) {
-            pluginClassLoader = new PluginClassLoader(getClass().getClassLoader());
+            pluginClassLoader = new PluginClassLoader();
+            PluginClassLoaderHolder.addPluginClassLoader(pluginInfo.getPluginConfig().getPlugin().getId(), pluginClassLoader);
+        } else {
+            pluginClassLoader.clearAssertionStatus();
         }
-
         pluginClassLoader.addFile(pluginDir);
         pluginInfo.setPluginClassLoader(pluginClassLoader);
         pluginInfo.setClassList(PluginHandleUtils.getClassList(pluginDir, pluginClassLoader));
@@ -61,7 +69,6 @@ public class PluginHandle implements ApplicationContextAware {
         pluginCompoundHandle.registry(pluginInfo);
         PluginInfoHolder.addPluginInfo(pluginInfo.getPluginId(), pluginInfo);
         LOGGER.info("plugin  ----->  start success: {}", pluginInfo);
-
         return pluginInfo;
     }
 
@@ -74,14 +81,8 @@ public class PluginHandle implements ApplicationContextAware {
 
         // 移除插件专属AnnotationConfigApplicationContext
         PluginApplicationContextHolder.removePluginApplicationContext(pluginId);
-        ClassLoader pluginClassLoader = pluginInfo.getPluginClassLoader();
-        if (pluginClassLoader instanceof Closeable) {
-            try {
-                ((Closeable) pluginClassLoader).close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        PluginClassLoader pluginClassLoader = pluginInfo.getPluginClassLoader();
+        pluginClassLoader.close();
         pluginInfo.setPluginClassLoader(null);
         PluginInfoHolder.removePluginInfo(pluginId);
 

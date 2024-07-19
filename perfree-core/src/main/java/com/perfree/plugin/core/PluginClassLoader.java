@@ -16,6 +16,10 @@ public class PluginClassLoader extends URLClassLoader {
     private static final String JAVA_PACKAGE_PREFIX = "java.";
 
 
+    public PluginClassLoader() {
+        super(new URL[0]);
+    }
+
     public PluginClassLoader(ClassLoader parent) {
         super(new URL[0], parent);
     }

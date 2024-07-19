@@ -11,7 +11,7 @@
  Target Server Version : 80100
  File Encoding         : 65001
 
- Date: 05/07/2024 17:46:57
+ Date: 19/07/2024 14:45:27
 */
 
 SET NAMES utf8mb4;
@@ -412,10 +412,11 @@ CREATE TABLE `p_menu`  (
   `createTime` datetime NOT NULL COMMENT '创建时间',
   `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `menuType` int NULL DEFAULT NULL COMMENT '菜单类型（0目录1菜单2按钮）',
-  `pluginId` int NULL DEFAULT NULL COMMENT '插件id',
+  `pluginId` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '插件id',
   `flag` int NULL DEFAULT NULL COMMENT '菜单标识:0:系统自带,1:用户创建,2:插件',
   `component` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '组件路径',
   `componentName` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '组件名称',
+  `moduleName` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '模块名称',
   `perms` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '权限标识',
   `isFrame` int NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
   `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
@@ -428,33 +429,20 @@ CREATE TABLE `p_menu`  (
 -- ----------------------------
 -- Records of p_menu
 -- ----------------------------
-INSERT INTO `p_menu` VALUES ('0266af7c88624be3bfddc6cdfe3cf010', '-1', '动态', '/journal', 'fa-solid fa-grin-stars', 2, 0, 0, 0, '2024-03-19 11:39:26', '2024-05-27 11:14:05', 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('137a52c0b1c34293857d8a52dfca97e7', '6453ca30d9c8407f81e50a78a3adee9d', '代码生成', '/admin/codegen', 'fa-solid fa-pastafarianism', 0, 1, 0, 0, '2024-06-05 15:12:35', NULL, 1, NULL, NULL, '/codegen/CodegenView', 'codegen', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('26583191a63d4970a5d2f6e1b294121c', '-1', '写文章', '/admin/article/create', 'fa-solid fa-pencil-alt', 0, 1, 0, 0, '2024-06-17 14:02:17', NULL, 1, NULL, NULL, '/article/ArticleCreateView', 'articleCreate', '', 1, 1, NULL);
-INSERT INTO `p_menu` VALUES ('26b41a12802541a2bb7054600b114c10', 'a98d36d52c174124a5fdf1884e572a0f', '附件相关', '', 'fa-solid fa-folder-closed', 9, 1, 0, 0, '2024-05-28 15:01:18', '2024-06-20 10:49:40', 0, NULL, NULL, '', '', '', 1, NULL, 1);
-INSERT INTO `p_menu` VALUES ('2c6d9fb51d2e45dbaba4574472d9b252', '-1', '主题管理', NULL, 'fa-solid fa-comment-alt', 4, 1, 0, 0, '2024-03-19 15:40:46', '2024-05-27 11:17:47', 0, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('2da98763a0414d46b40d7ddbe7f9b9ce', '-1', '测试', '/admin/plugin/demo', 'fa-solid fa-3', 0, 1, 0, 0, '2024-07-05 11:35:49', '2024-07-05 14:30:27', 1, NULL, NULL, 'http://127.0.0.1:4201/admin/plugin/demo', 'demo', '', 0, 1, 1);
-INSERT INTO `p_menu` VALUES ('38a64c087da742719c8543b554586529', 'a98d36d52c174124a5fdf1884e572a0f', '友链管理', '/admin/link', 'fa-solid fa-feather', 0, 1, 0, 0, '2024-06-14 14:45:47', NULL, 1, NULL, NULL, '/link/LinkView', 'link', '', 1, 1, NULL);
-INSERT INTO `p_menu` VALUES ('50508321af38403e833f6e4fef896c0e', '-1', '归档', '/archive', 'fa-calendar', 1, 0, 0, 0, '2024-03-19 11:39:26', '2024-05-27 11:13:05', 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('5a86941f652b4c79b25ba6922823f098', '2c6d9fb51d2e45dbaba4574472d9b252', '所有主题', '/admin/theme', 'fa-solid fa-dashboard', 1, 1, 0, 0, '2024-03-19 15:40:46', '2024-06-25 15:36:37', 1, NULL, NULL, '/theme/ThemeView', 'theme', NULL, 1, NULL, 1);
-INSERT INTO `p_menu` VALUES ('6453ca30d9c8407f81e50a78a3adee9d', '-1', '系统管理', '', 'fa-solid fa-shield-blank', 3, 1, 0, 0, '2024-05-27 13:48:37', '2024-05-27 13:48:47', 0, NULL, NULL, '', '', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('7bcb68dcf18f45838d53d019fff1d0ba', 'a98d36d52c174124a5fdf1884e572a0f', '文章管理', '/admin/article', 'fa-solid fa-file-alt', 0, 1, 0, 0, '2024-06-20 10:50:40', NULL, 1, NULL, NULL, '/article/ArticleView', 'article', '', 1, 1, NULL);
-INSERT INTO `p_menu` VALUES ('8a693ffb64a44d6cb9e0bbdf748b907f', '6453ca30d9c8407f81e50a78a3adee9d', '角色管理', '/admin/role', 'fa-solid fa-user-times', 0, 1, 0, 0, '2024-05-27 13:51:17', '2024-05-28 13:47:30', 1, NULL, NULL, '/role/RoleView', 'role', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('9a4370c9862d4a0a8682d179b7f9940b', '-1', '测试2', '/admin/plugin/demo2', 'fa-solid fa-2', 0, 1, 0, 0, '2024-07-05 14:31:13', NULL, 1, NULL, NULL, 'http://127.0.0.1:4201/admin/plugin/demo', 'demo2', '', 0, 1, NULL);
-INSERT INTO `p_menu` VALUES ('a98d36d52c174124a5fdf1884e572a0f', '-1', '内容管理', NULL, 'fa-solid fa-r', 3, 1, 0, 0, '2024-03-19 15:40:41', '2024-05-27 11:18:54', 0, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('b6c7309370be44ec8a925f50699ff157', '-1', '系统工具', '', 'fa-solid fa-briefcase-clock', 99, 1, 0, 0, '2024-07-03 10:31:06', '2024-07-03 10:34:29', 0, NULL, NULL, '', '', '', 1, 1, 1);
-INSERT INTO `p_menu` VALUES ('c1b3c57e13974ff7928f86ca1e58fa57', 'a98d36d52c174124a5fdf1884e572a0f', '分类管理', '/admin/category', 'fa-solid fa-table', 0, 1, 0, 0, '2024-06-13 13:57:48', NULL, 1, NULL, NULL, '/category/CategoryView', 'category', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('c347eae0721040a3b458db78ef34fe05', '6453ca30d9c8407f81e50a78a3adee9d', '系统设置', '/admin/systemConfig', 'fa-solid fa-cloud-sun', 0, 1, 0, 0, '2024-05-28 15:49:10', NULL, 1, NULL, NULL, '/systemConfig/SystemConfigView', 'systemConfig', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('c70427da2c934d7d9ae876360538ee63', 'a98d36d52c174124a5fdf1884e572a0f', '标签管理', '/admin/tag', 'fa-solid fa-bookmark', 0, 1, 0, 0, '2024-06-12 15:07:01', NULL, 1, NULL, NULL, '/tag/TagView', 'tag', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('c8001d41c5264bf485e40b4dd6a55d33', '-1', '友链', '/page/link', 'fa-solid fa-person-cane', 3, 0, 0, 0, '2024-03-19 11:39:26', '2024-05-27 11:14:36', 1, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('c997fdfd98514ae6bb05f47228916aa6', '6453ca30d9c8407f81e50a78a3adee9d', '站点管理', '/admin/site', 'fa-solid fa-fire-flame-simple', 0, 1, 0, 0, '2024-05-30 17:41:53', NULL, 1, NULL, NULL, '/site/SiteView', 'site', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('cc500b721d034730b94d16617e5be0ec', 'b6c7309370be44ec8a925f50699ff157', '表单生成', '/admin/tools/genSetting', 'fa-solid fa-th', 0, 1, 0, 0, '2024-07-03 10:33:00', '2024-07-04 08:30:39', 1, NULL, NULL, '/tools/GenSettingView', 'genSetting', '', 1, 1, 1);
-INSERT INTO `p_menu` VALUES ('d3aefa8f4b94444498770ae31872a5cc', '26b41a12802541a2bb7054600b114c10', '存储策略', '/admin/attachConfig', 'fa-solid fa-skating', 0, 1, 0, 0, '2024-05-28 15:02:19', NULL, 1, NULL, NULL, '/attachConfig/AttachConfigView', 'attachConfig', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('dfefa164cd0946d2808dea537581e5f0', '6453ca30d9c8407f81e50a78a3adee9d', '菜单管理', '/admin/menu', 'fa-solid fa-football', 1, 1, 0, 0, '2024-05-27 13:50:34', '2024-05-28 13:47:44', 1, NULL, NULL, '/menu/MenuView', 'menu', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('e849790fc83e40cd9fe05d5ac61a5ea3', '2c6d9fb51d2e45dbaba4574472d9b252', '主题设置', '/admin/theme/setting', 'fa-solid fa-dice-three', 2, 1, 0, 0, '2024-03-19 15:40:47', '2024-06-25 09:05:10', 1, NULL, NULL, '/theme/ThemeSettingView', 'themeSetting', NULL, 1, NULL, 1);
-INSERT INTO `p_menu` VALUES ('ebc4ce91f4044d00974c4da9a5670cbc', '26b41a12802541a2bb7054600b114c10', '附件列表', '/admin/attach', 'fa-solid fa-file-text', 1, 1, 0, 0, '2024-05-28 15:09:05', NULL, 1, NULL, NULL, '/attach/AttachView', 'attach', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('fc9e3ac152de46559c31b34599045db6', '6453ca30d9c8407f81e50a78a3adee9d', '用户管理', '/admin/user', 'fa-solid fa-male', 0, 1, 0, 0, '2024-05-27 13:50:55', '2024-05-28 13:47:38', 1, NULL, NULL, '/user/UserView', 'user', '', 1, NULL, NULL);
-INSERT INTO `p_menu` VALUES ('fe674a677bce499f8619250850794b16', '6453ca30d9c8407f81e50a78a3adee9d', '插件管理', '/admin/plugin', 'fa-solid fa-server', 0, 1, 0, 0, '2024-07-04 10:09:53', NULL, 1, NULL, NULL, '/plugin/PluginView', 'plugin', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('0266af7c88624be3bfddc6cdfe3cf010', '-1', '动态', '/journal', 'fa-solid fa-grin-stars', 2, 0, 0, 0, '2024-03-19 11:39:26', '2024-05-27 11:14:05', 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('1db423ede3e24ca78829d339e26bf49d', '-1', '系统工具', '', 'fa-solid fa-tools', 3, 1, 0, 0, '2024-07-19 08:19:30', NULL, 0, NULL, NULL, '', '', '', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('4f934ea37a214b36a7b5f6c67ce16e92', '1db423ede3e24ca78829d339e26bf49d', '动态表单', '/admin/genSetting', 'fa-solid fa-cash-register', 0, 1, 0, 0, '2024-07-19 08:20:31', NULL, 1, NULL, NULL, '/view/GenSettingView', 'genSetting', 'tools', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('4fc79e77c46a4f2f91e7958f7bc1b4a4', '-1', '主题管理', '', 'fa-solid fa-tachometer-alt-average', 2, 1, 0, 0, '2024-07-19 08:05:31', NULL, 0, NULL, NULL, '', '', '', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('50508321af38403e833f6e4fef896c0e', '-1', '归档', '/archive', 'fa-calendar', 1, 0, 0, 0, '2024-03-19 11:39:26', '2024-05-27 11:13:05', 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('61a5edcf0ee04e7e96f0e0331526bd13', '761690b8556346c5a12878adb64a0aa6', '插件管理', '/admin/plugin', 'fa-solid fa-swatchbook', 0, 1, 0, 0, '2024-07-19 08:02:56', NULL, 1, NULL, NULL, '/view/PluginView', 'plugin', 'plugin', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('63b7b5c9448c46849006d9a70db7bf44', '761690b8556346c5a12878adb64a0aa6', '用户管理', '/admin/user', 'fa-solid fa-user', 0, 1, 0, 0, '2024-07-18 18:10:32', NULL, 1, NULL, NULL, '/view/UserView', 'user', 'user', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('761690b8556346c5a12878adb64a0aa6', '-1', '系统管理', '', 'fa-solid fa-shield-alt', 0, 1, 0, 0, '2024-07-18 18:03:41', NULL, 0, NULL, NULL, '', '', '', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('8523081cf49d4147bc7915c4a1dcc779', '761690b8556346c5a12878adb64a0aa6', '菜单管理', '/admin/menu', 'fa-solid fa-list-numeric', 0, 1, 0, 0, '2024-07-18 18:04:47', NULL, 1, NULL, NULL, '/view/MenuView', 'menu', 'menu', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('a87829de52a64edd8636b600f2600723', '4fc79e77c46a4f2f91e7958f7bc1b4a4', '主题设置', '/admin/themeSetting', 'fa-solid fa-cog', 0, 1, 0, 0, '2024-07-19 08:15:34', NULL, 1, NULL, NULL, '/view/ThemeSettingView', 'themeSetting', 'theme', '', 1, 1, NULL);
+INSERT INTO `p_menu` VALUES ('ae3ed3795bdf4e32bafa9cf3bbc2ac2c', 'ef799ebb5f48425a9293327951c60f44', '测试菜单', '/admin/plugin/perfree-demo/demo', 'fa-solid fa-feather', 0, 1, 0, 0, '2024-07-19 11:46:36', NULL, 1, 'perfree-demo', NULL, '/view/DemoView', 'perfree-demo-demo', 'demo', NULL, 1, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('c8001d41c5264bf485e40b4dd6a55d33', '-1', '友链', '/page/link', 'fa-solid fa-person-cane', 3, 0, 0, 0, '2024-03-19 11:39:26', '2024-05-27 11:14:36', 1, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('ef799ebb5f48425a9293327951c60f44', '-1', '演示插件', NULL, 'fa-solid fa-feather', 99, 1, 0, 0, '2024-07-19 11:46:36', NULL, 0, 'perfree-demo', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `p_menu` VALUES ('fb719e11f2994a498e4db27ae31f32a7', '4fc79e77c46a4f2f91e7958f7bc1b4a4', '主题管理', '/admin/theme', 'fa-solid fa-hat-wizard', 0, 1, 0, 0, '2024-07-19 08:14:36', NULL, 1, NULL, NULL, '/view/ThemeView', 'theme', 'theme', '', 1, 1, NULL);
 
 -- ----------------------------
 -- Table structure for p_option
@@ -481,11 +469,11 @@ INSERT INTO `p_option` VALUES (2, 'WEB_IS_REGISTER', '1', NULL, NULL, NULL, NULL
 INSERT INTO `p_option` VALUES (3, 'WEB_COMMENT_IS_REVIEW', '0', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `p_option` VALUES (4, 'LOGIN_CAPTCHA_ENABLE', '1', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `p_option` VALUES (5, 'WEB_TITLE', '测试', NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `p_option` VALUES (26, 'Ff0jly5mxxftbjc', '321312', '2024-07-04 08:32:48', NULL, 1, NULL, 'Default');
-INSERT INTO `p_option` VALUES (27, 'Fuhjly5mxy9dbmc', '123123', '2024-07-04 08:32:48', NULL, 1, NULL, 'Default');
-INSERT INTO `p_option` VALUES (28, 'Fsywly5mxz7sbpc', '321312', '2024-07-04 08:32:48', NULL, 1, NULL, 'Default');
-INSERT INTO `p_option` VALUES (29, 'F1kuly5my3yebsc', NULL, '2024-07-04 08:32:48', NULL, 1, NULL, 'Default');
-INSERT INTO `p_option` VALUES (30, 'Fuyyly5my8gmbvc', NULL, '2024-07-04 08:32:48', NULL, 1, NULL, 'Default');
+INSERT INTO `p_option` VALUES (36, 'Ff0jly5mxxftbjc', '321312333', '2024-07-19 08:15:50', NULL, 1, NULL, 'Default');
+INSERT INTO `p_option` VALUES (37, 'Fuhjly5mxy9dbmc', '123123', '2024-07-19 08:15:50', NULL, 1, NULL, 'Default');
+INSERT INTO `p_option` VALUES (38, 'Fsywly5mxz7sbpc', '321312', '2024-07-19 08:15:50', NULL, 1, NULL, 'Default');
+INSERT INTO `p_option` VALUES (39, 'F1kuly5my3yebsc', NULL, '2024-07-19 08:15:50', NULL, 1, NULL, 'Default');
+INSERT INTO `p_option` VALUES (40, 'Fuyyly5my8gmbvc', NULL, '2024-07-19 08:15:50', NULL, 1, NULL, 'Default');
 
 -- ----------------------------
 -- Table structure for p_plugin
@@ -500,18 +488,40 @@ CREATE TABLE `p_plugin`  (
   `author` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '作者',
   `website` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '网址',
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `isDev` bit(1) NULL DEFAULT NULL COMMENT '是否为开发环境',
+  `frontDevAddress` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '开发环境前端地址',
   `status` int NOT NULL DEFAULT 0 COMMENT '插件状态:0禁用,1启用',
   `createTime` datetime NOT NULL COMMENT '创建时间',
   `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 325 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_plugin
 -- ----------------------------
-INSERT INTO `p_plugin` VALUES (56, '示例插件', 'perfree-exam', '描述信息', '2.23.0', 'Perfree', 'http://111111', 'perfree@126.com', 1, '2024-07-05 17:18:50', NULL, NULL, NULL);
+INSERT INTO `p_plugin` VALUES (741, '示例插件', 'perfree-demo', '描述信息', '1.0.2', 'Perfree', 'http://111111', 'perfree@126.com', NULL, NULL, 1, '2024-07-19 14:44:40', NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for p_plugin_demo
+-- ----------------------------
+DROP TABLE IF EXISTS `p_plugin_demo`;
+CREATE TABLE `p_plugin_demo`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '名称',
+  `msg` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '信息',
+  `createTime` datetime NOT NULL COMMENT '创建时间',
+  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of p_plugin_demo
+-- ----------------------------
+INSERT INTO `p_plugin_demo` VALUES (1, '测试数据1', '测试数据1', '2024-07-19 11:40:24', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for p_role
@@ -640,7 +650,6 @@ CREATE TABLE `p_user`  (
 -- Records of p_user
 -- ----------------------------
 INSERT INTO `p_user` VALUES (1, 'perfree', 'perfree', 'dc7009ea8f8e42cc2b307931d05a4398', '8c98de00a1954e3c831afca323111189', 0, '//gravatar.webp.se/avatar/635e66d06c6c1ed34903fc3afca02dfa', 'perfree@126.com', '12321312', '2024-03-19 11:39:40', '2024-05-27 13:45:50', 0, NULL);
-INSERT INTO `p_user` VALUES (2, 'testtest', '测试', 'a065ccab441f73140e878dc0e6151397', '0e569592735b43a4a2c3dc17f414a053', 0, NULL, '', '', '2024-06-14 17:55:24', NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for p_user_role
@@ -662,6 +671,5 @@ CREATE TABLE `p_user_role`  (
 -- ----------------------------
 INSERT INTO `p_user_role` VALUES (1, 60, 2, NULL, NULL, NULL, NULL);
 INSERT INTO `p_user_role` VALUES (4, 1, 1, '2024-06-14 17:55:44', NULL, 1, NULL);
-INSERT INTO `p_user_role` VALUES (5, 2, 2, '2024-06-14 17:55:52', NULL, 1, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

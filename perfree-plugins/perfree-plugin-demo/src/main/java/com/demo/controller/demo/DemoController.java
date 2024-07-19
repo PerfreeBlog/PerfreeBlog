@@ -29,34 +29,34 @@ public class DemoController {
     private DemoService demoService;
 
     @PostMapping("/page")
-    @Operation(summary = "插件demo分页列表")
+    @Operation(summary = "分页列表示例")
     public CommonResult<PageResult<DemoRespVO>> page(@RequestBody DemoPageReqVO pageVO) {
         PageResult<Demo> demoPageResult = demoService.demoPage(pageVO);
         return success(DemoConvert.INSTANCE.convertPageResultVO(demoPageResult));
     }
 
     @PostMapping("/add")
-    @Operation(summary = "插件demo添加")
+    @Operation(summary = "添加示例")
     public CommonResult<DemoRespVO> add(@RequestBody @Valid DemoAddReqVO demoAddReqVO) {
         Demo demo = demoService.addDemo(demoAddReqVO);
         return success(DemoConvert.INSTANCE.convertRespVO(demo));
     }
 
     @PutMapping("/update")
-    @Operation(summary = "更新插件demo")
+    @Operation(summary = "更新示例")
     public CommonResult<DemoRespVO> update(@RequestBody @Valid DemoUpdateReqVO demoUpdateReqVO) {
         Demo demo = demoService.updateLink(demoUpdateReqVO);
         return success(DemoConvert.INSTANCE.convertRespVO(demo));
     }
 
     @GetMapping("/get")
-    @Operation(summary = "获取demo")
+    @Operation(summary = "获取示例")
     public CommonResult<DemoRespVO> get(@RequestParam(value = "id") Integer id) {
         return success(DemoConvert.INSTANCE.convertRespVO(demoService.getById(id)));
     }
 
     @DeleteMapping("/del")
-    @Operation(summary = "删除demo")
+    @Operation(summary = "删除示例")
     public CommonResult<Boolean> del(@RequestParam(value = "id") Integer id) {
         return success(demoService.del(id));
     }
