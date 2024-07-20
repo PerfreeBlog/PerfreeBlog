@@ -33,7 +33,7 @@ public interface PluginsService extends IService<Plugins> {
     /**
      * 监控开发环境插件变更
      */
-    void watchMonitorDevPlugins();
+    void watchMonitorDevPlugins() throws Exception;
 
     /**
      * 初始化插件

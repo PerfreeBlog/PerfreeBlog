@@ -22,6 +22,10 @@ import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
 import jakarta.annotation.Resource;
+import lombok.SneakyThrows;
+import org.apache.commons.io.monitor.FileAlterationListener;
+import org.apache.commons.io.monitor.FileAlterationMonitor;
+import org.apache.commons.io.monitor.FileAlterationObserver;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +53,9 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
 
     @Value("${perfree.autoLoadDevPlugin}")
     private Boolean autoLoadDevPlugin;
+
+    @Value("${perfree.autoLoadDevPluginTime}")
+    private Long autoLoadDevPluginTime;
 
     @Resource
     private PluginsMapper pluginsMapper;
@@ -94,21 +101,61 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
             for (String plugin : pluginsList) {
                 try {
                     initDevPlugin(plugin);
-                } catch (Exception e) {
-                    LOGGER.error("初始化开发环境插件出错", e);
-                }
-                WatchMonitor watchMonitor = WatchMonitor.createAll(plugin,  new DelayWatcher(new SimpleWatcher() {
-                    @Override
-                    public void onModify(WatchEvent<?> event, Path currentPath) {
-                        try {
-                            initDevPlugin(plugin);
-                        } catch (Exception e) {
-                            LOGGER.error("动态更新开发环境插件出错", e);
+                    FileAlterationObserver fileAlterationObserver = new FileAlterationObserver(plugin);
+                    fileAlterationObserver.addListener(new FileAlterationListener() {
+
+                        private Boolean flag = false;
+
+                        @Override
+                        public void onStart(FileAlterationObserver fileAlterationObserver) {
+                            flag = false;
                         }
-                    }
-                },1000));
-                watchMonitor.setMaxDepth(20);
-                watchMonitor.start();
+
+                        @Override
+                        public void onDirectoryCreate(File file) {
+                            flag = true;
+                        }
+
+                        @Override
+                        public void onDirectoryChange(File file) {
+                            flag = true;
+                        }
+
+                        @Override
+                        public void onDirectoryDelete(File file) {
+                            flag = true;
+                        }
+
+                        @Override
+                        public void onFileCreate(File file) {
+                            flag = true;
+                        }
+
+                        @Override
+                        public void onFileChange(File file) {
+                            flag = true;
+                        }
+
+                        @Override
+                        public void onFileDelete(File file) {
+                            flag = true;
+                        }
+
+                        @SneakyThrows
+                        @Override
+                        public void onStop(FileAlterationObserver fileAlterationObserver) {
+                            if (flag) {
+                                LOGGER.info(plugin + ": 插件代码文件发生改变");
+                                initDevPlugin(plugin);
+                            }
+                        }
+                    });
+                    FileAlterationMonitor fileAlterationMonitor = new FileAlterationMonitor(autoLoadDevPluginTime);
+                    fileAlterationMonitor.addObserver(fileAlterationObserver);
+                    fileAlterationMonitor.start();
+                } catch (Exception e) {
+                    LOGGER.error("初始化开发环境插件出错或动态更新开发环境插件出错", e);
+                }
             }
         }
     }
