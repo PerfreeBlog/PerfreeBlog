@@ -315,22 +315,22 @@ window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
 window.Vue.createElementBlock;
-const Z = window.Vue.defineComponent, ee = window.Vue.createElementVNode, ne = window.Vue.openBlock, oe = window.Vue.createElementBlock;
-var we = /* @__PURE__ */ Z({
+const O = window.Vue.defineComponent, Y = window.Vue.createElementVNode, J = window.Vue.openBlock, K = window.Vue.createElementBlock;
+var Q = /* @__PURE__ */ O({
   name: "Delete",
   __name: "delete",
   setup(e) {
-    return (t, c) => (ne(), oe("svg", {
+    return (c, a) => (J(), K("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 1024 1024"
     }, [
-      ee("path", {
+      Y("path", {
         fill: "currentColor",
         d: "M160 256H96a32 32 0 0 1 0-64h256V95.936a32 32 0 0 1 32-32h256a32 32 0 0 1 32 32V192h256a32 32 0 1 1 0 64h-64v672a32 32 0 0 1-32 32H192a32 32 0 0 1-32-32zm448-64v-64H416v64zM224 896h576V256H224zm192-128a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32m192 0a32 32 0 0 1-32-32V416a32 32 0 0 1 64 0v320a32 32 0 0 1-32 32"
       })
     ]));
   }
-}), te = we;
+}), W = Q;
 window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
@@ -383,266 +383,26 @@ window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
 window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-window.Vue.defineComponent;
-window.Vue.createElementVNode;
-window.Vue.openBlock;
-window.Vue.createElementBlock;
-const de = window.Vue.defineComponent, S = window.Vue.createElementVNode, ie = window.Vue.openBlock, le = window.Vue.createElementBlock;
-var Ve = /* @__PURE__ */ de({
-  name: "Lock",
-  __name: "lock",
+const X = window.Vue.defineComponent, S = window.Vue.createElementVNode, Z = window.Vue.openBlock, ee = window.Vue.createElementBlock;
+var oe = /* @__PURE__ */ X({
+  name: "Edit",
+  __name: "edit",
   setup(e) {
-    return (t, c) => (ie(), le("svg", {
+    return (c, a) => (Z(), ee("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 1024 1024"
     }, [
       S("path", {
         fill: "currentColor",
-        d: "M224 448a32 32 0 0 0-32 32v384a32 32 0 0 0 32 32h576a32 32 0 0 0 32-32V480a32 32 0 0 0-32-32zm0-64h576a96 96 0 0 1 96 96v384a96 96 0 0 1-96 96H224a96 96 0 0 1-96-96V480a96 96 0 0 1 96-96"
+        d: "M832 512a32 32 0 1 1 64 0v352a32 32 0 0 1-32 32H160a32 32 0 0 1-32-32V160a32 32 0 0 1 32-32h352a32 32 0 0 1 0 64H192v640h640z"
       }),
       S("path", {
         fill: "currentColor",
-        d: "M512 544a32 32 0 0 1 32 32v192a32 32 0 1 1-64 0V576a32 32 0 0 1 32-32m192-160v-64a192 192 0 1 0-384 0v64zM512 64a256 256 0 0 1 256 256v128H256V320A256 256 0 0 1 512 64"
+        d: "m469.952 554.24 52.8-7.552L847.104 222.4a32 32 0 1 0-45.248-45.248L477.44 501.44l-7.552 52.8zm422.4-422.4a96 96 0 0 1 0 135.808l-331.84 331.84a32 32 0 0 1-18.112 9.088L436.8 623.68a32 32 0 0 1-36.224-36.224l15.104-105.6a32 32 0 0 1 9.024-18.112l331.904-331.84a96 96 0 0 1 135.744 0z"
       })
     ]));
   }
-}), ce = Ve;
+}), ne = oe;
 window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
@@ -827,22 +587,262 @@ window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
 window.Vue.createElementBlock;
-const ue = window.Vue.defineComponent, me = window.Vue.createElementVNode, ae = window.Vue.openBlock, re = window.Vue.createElementBlock;
-var pe = /* @__PURE__ */ ue({
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+const we = window.Vue.defineComponent, te = window.Vue.createElementVNode, de = window.Vue.openBlock, ie = window.Vue.createElementBlock;
+var le = /* @__PURE__ */ we({
   name: "Plus",
   __name: "plus",
   setup(e) {
-    return (t, c) => (ae(), re("svg", {
+    return (c, a) => (de(), ie("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 1024 1024"
     }, [
-      me("path", {
+      te("path", {
         fill: "currentColor",
         d: "M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64z"
       })
     ]));
   }
-}), ke = pe;
+}), Ve = le;
 window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
@@ -903,22 +903,22 @@ window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
 window.Vue.createElementBlock;
-const Be = window.Vue.defineComponent, Ee = window.Vue.createElementVNode, fe = window.Vue.openBlock, se = window.Vue.createElementBlock;
-var Ce = /* @__PURE__ */ Be({
+const ue = window.Vue.defineComponent, ce = window.Vue.createElementVNode, me = window.Vue.openBlock, ae = window.Vue.createElementBlock;
+var re = /* @__PURE__ */ ue({
   name: "Refresh",
   __name: "refresh",
   setup(e) {
-    return (t, c) => (fe(), se("svg", {
+    return (c, a) => (me(), ae("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 1024 1024"
     }, [
-      Ee("path", {
+      ce("path", {
         fill: "currentColor",
         d: "M771.776 794.88A384 384 0 0 1 128 512h64a320 320 0 0 0 555.712 216.448H654.72a32 32 0 1 1 0-64h149.056a32 32 0 0 1 32 32v148.928a32 32 0 1 1-64 0v-50.56zM276.288 295.616h92.992a32 32 0 0 1 0 64H220.16a32 32 0 0 1-32-32V178.56a32 32 0 0 1 64 0v50.56A384 384 0 0 1 896.128 512h-64a320 320 0 0 0-555.776-216.384z"
       })
     ]));
   }
-}), T = Ce;
+}), D = re;
 window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
@@ -947,22 +947,22 @@ window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
 window.Vue.createElementBlock;
-const Ne = window.Vue.defineComponent, _e = window.Vue.createElementVNode, he = window.Vue.openBlock, ge = window.Vue.createElementBlock;
-var ve = /* @__PURE__ */ Ne({
+const pe = window.Vue.defineComponent, ke = window.Vue.createElementVNode, Be = window.Vue.openBlock, Ee = window.Vue.createElementBlock;
+var fe = /* @__PURE__ */ pe({
   name: "Search",
   __name: "search",
   setup(e) {
-    return (t, c) => (he(), ge("svg", {
+    return (c, a) => (Be(), Ee("svg", {
       xmlns: "http://www.w3.org/2000/svg",
       viewBox: "0 0 1024 1024"
     }, [
-      _e("path", {
+      ke("path", {
         fill: "currentColor",
         d: "m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248zM480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704"
       })
     ]));
   }
-}), xe = ve;
+}), Ce = fe;
 window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
@@ -1151,42 +1151,6 @@ window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
 window.Vue.createElementBlock;
-const ye = window.Vue.defineComponent, A = window.Vue.createElementVNode, be = window.Vue.openBlock, ze = window.Vue.createElementBlock;
-var Me = /* @__PURE__ */ ye({
-  name: "Unlock",
-  __name: "unlock",
-  setup(e) {
-    return (t, c) => (be(), ze("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      viewBox: "0 0 1024 1024"
-    }, [
-      A("path", {
-        fill: "currentColor",
-        d: "M224 448a32 32 0 0 0-32 32v384a32 32 0 0 0 32 32h576a32 32 0 0 0 32-32V480a32 32 0 0 0-32-32zm0-64h576a96 96 0 0 1 96 96v384a96 96 0 0 1-96 96H224a96 96 0 0 1-96-96V480a96 96 0 0 1 96-96"
-      }),
-      A("path", {
-        fill: "currentColor",
-        d: "M512 544a32 32 0 0 1 32 32v192a32 32 0 1 1-64 0V576a32 32 0 0 1 32-32m178.304-295.296A192.064 192.064 0 0 0 320 320v64h352l96 38.4V448H256V320a256 256 0 0 1 493.76-95.104z"
-      })
-    ]));
-  }
-}), Se = Me;
-const Te = window.Vue.defineComponent, Ae = window.Vue.createElementVNode, Re = window.Vue.openBlock, Le = window.Vue.createElementBlock;
-var Pe = /* @__PURE__ */ Te({
-  name: "UploadFilled",
-  __name: "upload-filled",
-  setup(e) {
-    return (t, c) => (Re(), Le("svg", {
-      xmlns: "http://www.w3.org/2000/svg",
-      viewBox: "0 0 1024 1024"
-    }, [
-      Ae("path", {
-        fill: "currentColor",
-        d: "M544 864V672h128L512 480 352 672h128v192H320v-1.6c-5.376.32-10.496 1.6-16 1.6A240 240 0 0 1 64 624c0-123.136 93.12-223.488 212.608-237.248A239.808 239.808 0 0 1 512 192a239.872 239.872 0 0 1 235.456 194.752c119.488 13.76 212.48 114.112 212.48 237.248a240 240 0 0 1-240 240c-5.376 0-10.56-1.28-16-1.6v1.6z"
-      })
-    ]));
-  }
-}), He = Pe;
 window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
@@ -1263,7 +1227,16 @@ window.Vue.defineComponent;
 window.Vue.createElementVNode;
 window.Vue.openBlock;
 window.Vue.createElementBlock;
-const Ue = window.Pinia.defineStore, De = Ue({
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+window.Vue.defineComponent;
+window.Vue.createElementVNode;
+window.Vue.openBlock;
+window.Vue.createElementBlock;
+const Ne = window.Pinia.defineStore;
+Ne({
   id: "common",
   state: () => ({
     menuInit: !1,
@@ -1296,197 +1269,146 @@ const Ue = window.Pinia.defineStore, De = Ue({
     enabled: !1
   }
 });
-function Fe() {
-  return axios.get("/api/auth/menuAdminList");
-}
-function Ie(e, t) {
+function se(e, c) {
   if (arguments.length === 0 || !e)
     return null;
-  const c = t || "{y}-{m}-{d} {h}:{i}:{s}";
-  let l;
-  typeof e == "object" ? l = e : (typeof e == "string" && /^[0-9]+$/.test(e) ? e = parseInt(e) : typeof e == "string" && (e = e.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof e == "number" && e.toString().length === 10 && (e = e * 1e3), l = new Date(e));
-  const p = {
-    y: l.getFullYear(),
-    m: l.getMonth() + 1,
-    d: l.getDate(),
-    h: l.getHours(),
-    i: l.getMinutes(),
-    s: l.getSeconds(),
-    a: l.getDay()
+  const a = c || "{y}-{m}-{d} {h}:{i}:{s}";
+  let d;
+  typeof e == "object" ? d = e : (typeof e == "string" && /^[0-9]+$/.test(e) ? e = parseInt(e) : typeof e == "string" && (e = e.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof e == "number" && e.toString().length === 10 && (e = e * 1e3), d = new Date(e));
+  const N = {
+    y: d.getFullYear(),
+    m: d.getMonth() + 1,
+    d: d.getDate(),
+    h: d.getHours(),
+    i: d.getMinutes(),
+    s: d.getSeconds(),
+    a: d.getDay()
   };
-  return c.replace(/{([ymdhisa])+}/g, (v, h) => {
-    let f = p[h];
-    return h === "a" ? ["日", "一", "二", "三", "四", "五", "六"][f] : (v.length > 0 && f < 10 && (f = "0" + f), f || 0);
+  return a.replace(/{([ymdhisa])+}/g, (f, l) => {
+    let i = N[l];
+    return l === "a" ? ["日", "一", "二", "三", "四", "五", "六"][i] : (f.length > 0 && i < 10 && (i = "0" + i), i || 0);
   });
 }
-function R() {
-  return new Promise((e, t) => {
-    const c = De();
-    Fe().then((l) => {
-      if (l.code === 200) {
-        let p = l.data;
-        p.unshift(
-          {
-            name: "首页",
-            url: "/admin",
-            icon: "fa-solid fa-home",
-            seq: 0,
-            type: 1,
-            target: 0,
-            status: 0,
-            pluginId: null,
-            flag: null,
-            component: "/view/Home",
-            componentName: "home",
-            moduleName: "home",
-            menuType: 1,
-            perms: "",
-            isFrame: 1,
-            id: "home",
-            pid: "-1",
-            children: []
-          }
-        ), c.setMenuList(p), e();
-      }
-    });
-  });
+function _e(e) {
+  return axios.post("/api/auth/site/page", e);
 }
-function Oe(e) {
-  return axios.post("/api/auth/plugins/page", e);
+function ve(e) {
+  return axios.post("/api/auth/site/add", e);
 }
-function Ge(e) {
-  return axios.post("/api/auth/plugins/disablePlugin?id=" + e);
+function ge(e) {
+  return axios.get("/api/auth/site/get?id=" + e);
 }
-function je(e) {
-  return axios.post("/api/auth/plugins/enablePlugin?id=" + e);
+function he(e) {
+  return axios.post("/api/auth/site/update", e);
 }
-function $e(e) {
-  return axios.post("/api/auth/plugins/uninstallPlugin?id=" + e);
+function xe(e) {
+  return axios.delete("/api/auth/site/del?id=" + e);
 }
-const Ke = {
-  STORAGE_USER_INFO: "user_info",
-  STORAGE_TOKEN: "token_info",
-  STORAGE_LANGUAGE: "language"
-}, qe = {
-  // 默认请求的接口
-  url: "/",
-  // 服务器地址
-  baseURL: "",
-  // 设置超时时间 ms
-  timeout: 60 * 1e3,
-  // 是否跨站点访问控制请求
-  withCredentials: !1
-  // default
-}, u = window.Vue.resolveComponent, n = window.Vue.createVNode, w = window.Vue.withCtx, V = window.Vue.unref, r = window.Vue.createTextVNode, B = window.Vue.createElementVNode, C = window.Vue.openBlock, _ = window.Vue.createBlock, L = window.Vue.createCommentVNode, P = window.Vue.toDisplayString, Je = window.Vue.resolveDirective, Ye = window.Vue.withDirectives, Qe = window.Vue.isRef, We = window.Vue.createElementBlock, Xe = { class: "page" }, Ze = { class: "search-box" }, en = { class: "right-tool" }, nn = { class: "table-box" }, on = ["href"], wn = /* @__PURE__ */ B("div", { class: "el-upload__text" }, [
-  /* @__PURE__ */ r(" 拖拽插件文件到此或"),
-  /* @__PURE__ */ B("em", null, "点击上传插件文件")
-], -1), tn = /* @__PURE__ */ B("div", { class: "el-upload__tip" }, " 插件文件为zip格式,若插件已存在,则会自动覆盖更新! ", -1), a = window.ElementPlus.ElMessage, y = window.ElementPlus.ElMessageBox, N = window.Vue.ref, dn = {
-  __name: "PluginView",
+const V = window.Vue.resolveComponent, o = window.Vue.createVNode, w = window.Vue.withCtx, u = window.Vue.unref, r = window.Vue.createTextVNode, v = window.Vue.createElementVNode, h = window.Vue.openBlock, y = window.Vue.createBlock;
+window.Vue.createCommentVNode;
+const ye = window.Vue.toDisplayString, be = window.Vue.resolveDirective, ze = window.Vue.withDirectives, M = window.Vue.isRef, Se = window.Vue.createElementBlock, De = { class: "page" }, Me = { class: "search-box" }, Fe = { class: "right-tool" }, Re = { class: "table-box" }, Ae = { class: "dialog-footer" }, C = window.ElementPlus.ElMessage, He = window.ElementPlus.ElMessageBox, Le = window.Vue.reactive, k = window.Vue.ref, Ue = {
+  __name: "SiteView",
   setup(e) {
-    const t = N({
+    let c = k(!1), a = k([]), d = k(!1), N = k("");
+    const x = k(), f = k(), l = k({
       pageNo: 1,
       pageSize: 20,
       total: 0,
       name: ""
-    }), c = N();
-    let l = N([]), p = N(!1), E = N(!1), v = localStorage.getItem(Ke.STORAGE_TOKEN), h = qe.baseURL, f = {
-      Authorization: "Bearer " + JSON.parse(v).accessToken
-    }, x = N();
-    function k() {
-      p.value = !0, Oe(t.value).then((i) => {
-        l.value = i.data.list, t.value.total = i.data.total, p.value = !1;
+    }), i = k({
+      id: "",
+      siteName: "",
+      siteSlug: "",
+      siteDesc: ""
+    }), F = Le({
+      siteName: [{ required: !0, message: "请输入站点名称", trigger: "blur" }],
+      siteSlug: [{ required: !0, message: "请输入站点访问标识", trigger: "blur" }]
+    });
+    function R() {
+      l.value = {
+        name: ""
+      }, x.value.resetFields();
+    }
+    function B() {
+      c.value = !0, _e(l.value).then((m) => {
+        a.value = m.data.list, l.value.total = m.data.total, c.value = !1;
       });
+    }
+    function A() {
+      s(), N.value = "添加站点", d.value = !0;
+    }
+    function s() {
+      i.value = {
+        id: "",
+        siteName: "",
+        siteSlug: "",
+        siteDesc: ""
+      }, f.value && f.value.resetFields();
     }
     function H() {
-      t.value = {
-        name: ""
-      }, c.value.resetFields();
+      f.value.validate((m) => {
+        m && (i.value.id ? he(i.value).then((n) => {
+          n.code === 200 ? (C.success("操作成功"), d.value = !1, s(), B()) : C.error(n.msg);
+        }) : ve(i.value).then((n) => {
+          n.code === 200 ? (C.success("操作成功"), d.value = !1, s(), B()) : C.error(n.msg);
+        }));
+      });
     }
-    function U() {
-      E.value = !0;
+    function L(m) {
+      s(), N.value = "修改站点", d.value = !0, ge(m.id).then((n) => {
+        i.value = n.data;
+      });
     }
-    function D(i, o, g) {
-      i.code === 200 ? (a.success("插件安装成功"), E.value = !1, x.value.clearFiles(), k()) : (a.error(i.msg), x.value.handleRemove(o));
-    }
-    function F(i) {
-      a.error("插件上传失败,请检查网络是否通通畅");
-    }
-    function I(i) {
-      y.confirm("确定要禁用[" + i.name + "]吗？", "提示", {
+    function U(m) {
+      He.confirm("确定要删除[" + m.siteName + "]吗？删除后将造成该站点下所有数据不可访问!", "提示", {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        Ge(i.id).then((o) => {
-          o.code === 200 && o.data ? (R().then((g) => {
-          }), a.success("插件禁用成功"), k()) : a.error(o.msg);
+        xe(m.id).then((n) => {
+          n.code === 200 && n.data ? (C.success("删除成功"), B()) : C.error(n.msg);
         });
       }).catch(() => {
       });
     }
-    function O(i) {
-      y.confirm("确定要启用[" + i.name + "]吗？", "提示", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        je(i.id).then((o) => {
-          o.code === 200 && o.data ? (R().then((g) => {
-          }), a.success("插件启用成功"), k()) : a.error(o.msg);
-        });
-      }).catch(() => {
-      });
-    }
-    function G(i) {
-      y.confirm("确定要卸载[" + i.name + "]吗？", "提示", {
-        confirmButtonText: "确认",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        $e(i.id).then((o) => {
-          o.code === 200 ? o.data ? (a.success("插件卸载成功"), k()) : a.error("插件卸载失败") : a.error(o.msg);
-        });
-      }).catch(() => {
-      });
-    }
-    return k(), (i, o) => {
-      const g = u("el-input"), b = u("el-form-item"), s = u("el-button"), j = u("el-form"), $ = u("el-col"), K = u("el-row"), m = u("el-table-column"), z = u("el-tag"), q = u("el-table"), J = u("el-pagination"), Y = u("el-icon"), Q = u("el-upload"), W = u("el-dialog"), X = Je("loading");
-      return C(), We("div", Xe, [
-        B("div", Ze, [
-          n(j, {
+    return B(), (m, n) => {
+      const g = V("el-input"), _ = V("el-form-item"), p = V("el-button"), b = V("el-form"), T = V("el-col"), I = V("el-row"), E = V("el-table-column"), z = V("el-tag"), P = V("el-table"), j = V("el-pagination"), $ = V("el-dialog"), q = be("loading");
+      return h(), Se("div", De, [
+        v("div", Me, [
+          o(b, {
             inline: !0,
-            model: t.value,
+            model: l.value,
             class: "demo-form-inline",
             ref_key: "searchFormRef",
-            ref: c
+            ref: x
           }, {
             default: w(() => [
-              n(b, { label: "插件名称" }, {
+              o(_, { label: "站点名称" }, {
                 default: w(() => [
-                  n(g, {
-                    modelValue: t.value.name,
-                    "onUpdate:modelValue": o[0] || (o[0] = (d) => t.value.name = d),
-                    placeholder: "请输入插件名称",
+                  o(g, {
+                    modelValue: l.value.name,
+                    "onUpdate:modelValue": n[0] || (n[0] = (t) => l.value.name = t),
+                    placeholder: "请输入站点名称",
                     clearable: ""
                   }, null, 8, ["modelValue"])
                 ]),
                 _: 1
               }),
-              n(b, null, {
+              o(_, null, {
                 default: w(() => [
-                  n(s, {
+                  o(p, {
                     type: "primary",
-                    onClick: k,
-                    icon: V(xe)
+                    onClick: B,
+                    icon: u(Ce)
                   }, {
                     default: w(() => [
                       r("查询")
                     ]),
                     _: 1
                   }, 8, ["icon"]),
-                  n(s, {
-                    icon: V(T),
-                    onClick: H
+                  o(p, {
+                    icon: u(D),
+                    onClick: R
                   }, {
                     default: w(() => [
                       r("重置")
@@ -1500,166 +1422,129 @@ const Ke = {
             _: 1
           }, 8, ["model"])
         ]),
-        n(K, {
+        o(I, {
           gutter: 10,
           class: "mb8"
         }, {
           default: w(() => [
-            n($, { span: 1.5 }, {
+            o(T, { span: 1.5 }, {
               default: w(() => [
-                n(s, {
-                  icon: V(ke),
+                o(p, {
+                  icon: u(Ve),
                   type: "primary",
                   plain: "",
-                  onClick: U
+                  onClick: A
                 }, {
                   default: w(() => [
-                    r("安装插件")
+                    r("新增")
                   ]),
                   _: 1
                 }, 8, ["icon"])
               ]),
               _: 1
             }),
-            B("div", en, [
-              n(s, {
-                icon: V(T),
+            v("div", Fe, [
+              o(p, {
+                icon: u(D),
                 circle: "",
-                onClick: k
+                onClick: B
               }, null, 8, ["icon"])
             ])
           ]),
           _: 1
         }),
-        B("div", nn, [
-          Ye((C(), _(q, {
-            data: V(l),
+        v("div", Re, [
+          ze((h(), y(P, {
+            data: u(a),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
           }, {
             default: w(() => [
-              n(m, {
+              o(E, {
                 label: "序号",
                 "min-width": "80",
                 type: "index"
               }),
-              n(m, {
-                prop: "name",
-                label: "插件名称",
+              o(E, {
+                prop: "siteName",
+                label: "站点名称",
                 "min-width": "150"
               }),
-              n(m, {
-                prop: "desc",
-                label: "描述信息",
-                "min-width": "200"
+              o(E, {
+                prop: "siteSlug",
+                label: "访问标识",
+                "min-width": "240"
               }),
-              n(m, {
-                prop: "version",
-                label: "版本",
-                "min-width": "80"
+              o(E, {
+                prop: "siteDesc",
+                label: "站点描述",
+                "min-width": "150"
               }),
-              n(m, {
+              o(E, {
                 prop: "status",
                 label: "状态",
-                width: "100"
+                width: "80"
               }, {
-                default: w((d) => [
-                  d.row.status === 1 ? (C(), _(z, {
+                default: w((t) => [
+                  t.row.status === 0 ? (h(), y(z, {
                     key: 0,
                     class: "ml-2",
                     type: "success"
                   }, {
                     default: w(() => [
-                      r("已启用")
+                      r("开启")
                     ]),
                     _: 1
-                  })) : (C(), _(z, {
+                  })) : (h(), y(z, {
                     key: 1,
                     class: "ml-2",
                     type: "danger"
                   }, {
                     default: w(() => [
-                      r("已禁用")
+                      r("关闭")
                     ]),
                     _: 1
                   }))
                 ]),
                 _: 1
               }),
-              n(m, {
-                prop: "author",
-                label: "作者",
-                "min-width": "150"
-              }),
-              n(m, {
-                prop: "website",
-                label: "作者网站",
-                "min-width": "150"
-              }, {
-                default: w((d) => [
-                  B("a", {
-                    href: d.row.website,
-                    target: "_blank"
-                  }, P(d.row.website), 9, on)
-                ]),
-                _: 1
-              }),
-              n(m, {
-                prop: "email",
-                label: "联系方式",
-                "min-width": "150"
-              }),
-              n(m, {
+              o(E, {
                 prop: "createTime",
-                label: "安装时间",
-                "min-width": "150"
+                label: "创建时间",
+                "min-width": "120"
               }, {
-                default: w((d) => [
-                  B("span", null, P(V(Ie)(d.row.createTime)), 1)
+                default: w((t) => [
+                  v("span", null, ye(u(se)(t.row.createTime)), 1)
                 ]),
                 _: 1
               }),
-              n(m, {
+              o(E, {
                 label: "操作",
-                width: "140",
+                width: "180",
                 fixed: "right"
               }, {
-                default: w((d) => [
-                  d.row.status === 0 ? (C(), _(s, {
-                    key: 0,
+                default: w((t) => [
+                  o(p, {
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: V(Se),
-                    onClick: (M) => O(d.row)
+                    icon: u(ne),
+                    onClick: (G) => L(t.row)
                   }, {
                     default: w(() => [
-                      r("启用")
+                      r("修改")
                     ]),
                     _: 2
-                  }, 1032, ["icon", "onClick"])) : L("", !0),
-                  d.row.status === 1 ? (C(), _(s, {
-                    key: 1,
+                  }, 1032, ["icon", "onClick"]),
+                  o(p, {
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: V(ce),
-                    onClick: (M) => I(d.row)
+                    icon: u(W),
+                    onClick: (G) => U(t.row)
                   }, {
                     default: w(() => [
-                      r("禁用")
-                    ]),
-                    _: 2
-                  }, 1032, ["icon", "onClick"])) : L("", !0),
-                  n(s, {
-                    size: "small",
-                    type: "primary",
-                    link: "",
-                    icon: V(te),
-                    onClick: (M) => G(d.row)
-                  }, {
-                    default: w(() => [
-                      r("卸载")
+                      r("删除")
                     ]),
                     _: 2
                   }, 1032, ["icon", "onClick"])
@@ -1669,61 +1554,112 @@ const Ke = {
             ]),
             _: 1
           }, 8, ["data"])), [
-            [X, V(p)]
+            [q, u(c)]
           ]),
-          n(J, {
-            "current-page": t.value.pageNo,
-            "onUpdate:currentPage": o[1] || (o[1] = (d) => t.value.pageNo = d),
-            "page-size": t.value.pageSize,
-            "onUpdate:pageSize": o[2] || (o[2] = (d) => t.value.pageSize = d),
+          o(j, {
+            "current-page": l.value.pageNo,
+            "onUpdate:currentPage": n[1] || (n[1] = (t) => l.value.pageNo = t),
+            "page-size": l.value.pageSize,
+            "onUpdate:pageSize": n[2] || (n[2] = (t) => l.value.pageSize = t),
             "page-sizes": [10, 20, 30, 50],
             layout: "total,sizes,prev, pager, next, jumper",
             background: "",
             small: "",
-            onChange: k,
-            total: t.value.total
+            onChange: B,
+            total: l.value.total
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
-        n(W, {
-          modelValue: V(E),
-          "onUpdate:modelValue": o[3] || (o[3] = (d) => Qe(E) ? E.value = d : E = d),
-          title: "安装插件",
-          width: "500px",
+        o($, {
+          modelValue: u(d),
+          "onUpdate:modelValue": n[7] || (n[7] = (t) => M(d) ? d.value = t : d = t),
+          title: u(N),
+          width: "600px",
           draggable: ""
         }, {
+          footer: w(() => [
+            v("span", Ae, [
+              o(p, {
+                type: "primary",
+                onClick: H
+              }, {
+                default: w(() => [
+                  r("确 定")
+                ]),
+                _: 1
+              }),
+              o(p, {
+                onClick: n[6] || (n[6] = (t) => {
+                  M(d) ? d.value = !1 : d = !1, s();
+                })
+              }, {
+                default: w(() => [
+                  r("取 消")
+                ]),
+                _: 1
+              })
+            ])
+          ]),
           default: w(() => [
-            n(Q, {
-              class: "upload-demo",
-              drag: "",
-              ref_key: "uploadRef",
-              ref: x,
-              accept: "application/zip",
-              "on-success": D,
-              "on-error": F,
-              headers: V(f),
-              action: V(h) + "/api/auth/plugins/installPlugin"
+            o(b, {
+              ref_key: "addFormRef",
+              ref: f,
+              model: i.value,
+              "label-width": "80px",
+              "status-icon": "",
+              rules: F
             }, {
-              tip: w(() => [
-                tn
-              ]),
               default: w(() => [
-                n(Y, { class: "el-icon--upload" }, {
+                o(_, {
+                  label: "站点名称",
+                  prop: "siteName"
+                }, {
                   default: w(() => [
-                    n(V(He))
+                    o(g, {
+                      modelValue: i.value.siteName,
+                      "onUpdate:modelValue": n[3] || (n[3] = (t) => i.value.siteName = t),
+                      placeholder: "请输入站点名称"
+                    }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                wn
+                o(_, {
+                  label: "站点标识",
+                  prop: "siteSlug"
+                }, {
+                  default: w(() => [
+                    o(g, {
+                      modelValue: i.value.siteSlug,
+                      "onUpdate:modelValue": n[4] || (n[4] = (t) => i.value.siteSlug = t),
+                      placeholder: "请输入站点访问标识"
+                    }, null, 8, ["modelValue"])
+                  ]),
+                  _: 1
+                }),
+                o(_, {
+                  label: "站点描述",
+                  prop: "siteDesc"
+                }, {
+                  default: w(() => [
+                    o(g, {
+                      modelValue: i.value.siteDesc,
+                      "onUpdate:modelValue": n[5] || (n[5] = (t) => i.value.siteDesc = t),
+                      placeholder: "请输入站点描述",
+                      autosize: { minRows: 3, maxRows: 6 },
+                      type: "textarea"
+                    }, null, 8, ["modelValue"])
+                  ]),
+                  _: 1
+                })
               ]),
               _: 1
-            }, 8, ["headers", "action"])
+            }, 8, ["model", "rules"])
           ]),
           _: 1
-        }, 8, ["modelValue"])
+        }, 8, ["modelValue", "title"])
       ]);
     };
   }
 };
 export {
-  dn as default
+  Ue as default
 };
