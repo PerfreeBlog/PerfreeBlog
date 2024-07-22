@@ -25,6 +25,10 @@ public class DemoServiceImpl extends ServiceImpl<DemoMapper, Demo> implements De
     @Resource
     private DemoMapper demoMapper;
 
+    @Resource
+    private DemoConvert demoConvert;
+
+
     @Override
     public PageResult<Demo> demoPage(DemoPageReqVO pageVO) {
         return demoMapper.selectDemoPage(pageVO);
@@ -32,14 +36,14 @@ public class DemoServiceImpl extends ServiceImpl<DemoMapper, Demo> implements De
 
     @Override
     public Demo addDemo(DemoAddReqVO demoAddReqVO) {
-        Demo demo = DemoConvert.INSTANCE.convertAddReqVOToModel(demoAddReqVO);
+        Demo demo = demoConvert.convertAddReqVOToModel(demoAddReqVO);
         demoMapper.insert(demo);
         return demo;
     }
 
     @Override
     public Demo updateLink(DemoUpdateReqVO demoUpdateReqVO) {
-        Demo demo = DemoConvert.INSTANCE.convertUpdateReqVOToModel(demoUpdateReqVO);
+        Demo demo = demoConvert.convertUpdateReqVOToModel(demoUpdateReqVO);
         demoMapper.updateById(demo);
         return demo;
     }

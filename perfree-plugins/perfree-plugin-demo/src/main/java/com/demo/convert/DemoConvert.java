@@ -7,11 +7,10 @@ import com.demo.controller.demo.vo.DemoUpdateReqVO;
 import com.demo.model.Demo;
 import com.perfree.commons.common.PageResult;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.MappingConstants;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface DemoConvert {
-    DemoConvert INSTANCE = Mappers.getMapper(DemoConvert.class);
 
     PageResult<DemoRespVO> convertPageResultVO(PageResult<Demo> demoPageResult);
 

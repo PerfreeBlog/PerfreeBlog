@@ -1,14 +1,15 @@
 package com.perfree.plugin.handle;
 
-import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
+import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.plugin.PluginApplicationContextHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.annotation.InterceptPath;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.mapper.MapperFactoryBean;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
@@ -69,7 +70,8 @@ public class ClassHandler implements BasePluginRegistryHandler{
     private void registerMapper(PluginInfo pluginInfo) {
         List<Class<?>> mapperClassList = getMapperList(pluginInfo);
         if (mapperClassList.isEmpty()) return;
-
+//        SqlSessionFactory sqlSessionFactory = SpringBeanUtil.context.getBean(SqlSessionFactory.class);
+//        MybatisConfiguration configuration = (MybatisConfiguration) sqlSessionFactory.getConfiguration();
         //注册mapper
         for (Class<?> mapperClass : mapperClassList) {
             GenericBeanDefinition definition = new GenericBeanDefinition();
@@ -77,8 +79,8 @@ public class ClassHandler implements BasePluginRegistryHandler{
             definition.setBeanClass(MapperFactoryBean.class);
             definition.getPropertyValues().add("addToConfig", true);
             definition.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_TYPE);
-
             PluginApplicationContextHolder.getApplicationContext(pluginInfo.getPluginId()).registerBeanDefinition(mapperClass.getName(), definition);
+          //  configuration.addMapper(mapperClass);
         }
 
     }
@@ -102,27 +104,18 @@ public class ClassHandler implements BasePluginRegistryHandler{
 
     @Override
     public void unRegistry(PluginInfo pluginInfo) throws Exception {
-        // 取消注册mapper接口
-        List<Class<?>> mapperClassList = getMapperList(pluginInfo);
-        if (mapperClassList.isEmpty()) return;
-
-        for (Class<?> mapperClass : mapperClassList) {
-            PluginApplicationContextHolder.getApplicationContext(pluginInfo.getPluginId()).removeBeanDefinition(mapperClass.getName());
+        String[] beanDefinitionNames = PluginApplicationContextHolder.getApplicationContext(pluginInfo.getPluginId()).getBeanDefinitionNames();
+        for (String beanDefinitionName : beanDefinitionNames) {
+            PluginApplicationContextHolder.getApplicationContext(pluginInfo.getPluginId()).removeBeanDefinition(beanDefinitionName);
         }
 
-
-        List<Class<?>> pluginClassList = pluginInfo.getClassList().stream().filter(item -> !item.isInterface()).toList();
-        if(!pluginClassList.isEmpty()) {
-            for (Class<?> aClass : pluginClassList) {
-                Annotation[] annotations = aClass.getAnnotations();
-                if (annotations.length > 0 && Collections.disjoint(Arrays.asList(annotations), Arrays.asList(REGISTER_ANNO))) {
-                    AnnotationConfigApplicationContext applicationContext = PluginApplicationContextHolder.getApplicationContext(pluginInfo.getPluginId());
-                    boolean containsBean = applicationContext.containsBean(StrUtil.lowerFirst(aClass.getSimpleName()));
-                    if (containsBean) {
-                        applicationContext.removeBeanDefinition(StrUtil.lowerFirst(aClass.getSimpleName()));
-                    }
-                }
-            }
+        // 把mapper取消注册
+        SqlSessionFactory sqlSessionFactory = SpringBeanUtil.context.getBean(SqlSessionFactory.class);
+        List<Class<?>> mapperList = getMapperList(pluginInfo);
+        MybatisConfiguration configuration = (MybatisConfiguration) sqlSessionFactory.getConfiguration();
+        for (Class<?> aClass : mapperList) {
+            configuration.removeMapper(aClass);
         }
     }
+
 }

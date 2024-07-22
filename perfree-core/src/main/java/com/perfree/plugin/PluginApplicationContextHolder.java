@@ -37,6 +37,7 @@ public abstract class PluginApplicationContextHolder {
 		AnnotationConfigApplicationContext annotationConfigApplicationContext = pluginApplicationMap.get(pluginId);
 		annotationConfigApplicationContext.stop();
 		annotationConfigApplicationContext.close();
+		annotationConfigApplicationContext = null;
 		pluginApplicationMap.remove(pluginId);
 	}
 

@@ -6,7 +6,6 @@ import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.core.PluginClassLoader;
-import com.perfree.plugin.core.PluginClassLoaderHolder;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +15,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
-import java.io.Closeable;
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
 
 @Component
 public class PluginHandle implements ApplicationContextAware {
@@ -45,14 +37,14 @@ public class PluginHandle implements ApplicationContextAware {
         pluginInfo.setPluginId(pluginInfo.getPluginConfig().getPlugin().getId());
 
         // 加载插件JarClassLoader
-        //PluginClassLoader pluginClassLoader = new PluginClassLoader();
-        PluginClassLoader pluginClassLoader = PluginClassLoaderHolder.getPluginClassLoader(pluginInfo.getPluginConfig().getPlugin().getId());
+       PluginClassLoader pluginClassLoader = new PluginClassLoader(pluginInfo.getPluginConfig().getPlugin().getId(), getClass().getClassLoader().getParent(), getClass().getClassLoader());
+        /*PluginClassLoader pluginClassLoader = PluginClassLoaderHolder.getPluginClassLoader(pluginInfo.getPluginConfig().getPlugin().getId());
         if (null == pluginClassLoader) {
             pluginClassLoader = new PluginClassLoader();
             PluginClassLoaderHolder.addPluginClassLoader(pluginInfo.getPluginConfig().getPlugin().getId(), pluginClassLoader);
         } else {
             pluginClassLoader.clearAssertionStatus();
-        }
+        }*/
         pluginClassLoader.addFile(pluginDir);
         pluginInfo.setPluginClassLoader(pluginClassLoader);
         pluginInfo.setClassList(PluginHandleUtils.getClassList(pluginDir, pluginClassLoader));
@@ -82,9 +74,9 @@ public class PluginHandle implements ApplicationContextAware {
         // 移除插件专属AnnotationConfigApplicationContext
         PluginApplicationContextHolder.removePluginApplicationContext(pluginId);
         PluginClassLoader pluginClassLoader = pluginInfo.getPluginClassLoader();
-        pluginClassLoader.close();
-        pluginInfo.setPluginClassLoader(null);
         PluginInfoHolder.removePluginInfo(pluginId);
+        pluginInfo.setPluginClassLoader(null);
+        pluginClassLoader.close();
 
         LOGGER.info("plugin  ----->  stop success: {}", pluginInfo);
         pluginInfo.setPluginConfig(null);
