@@ -88,7 +88,7 @@ export function initMenu(){
                 {
                         "name": "首页",
                         "url": "/admin",
-                        "icon": "fa-solid fa-pencil-alt",
+                        "icon": "fa-solid fa-home",
                         "seq": 0,
                         "type": 1,
                         "target": 0,

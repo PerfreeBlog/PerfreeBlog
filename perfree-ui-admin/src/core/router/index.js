@@ -60,7 +60,6 @@ router.beforeEach((to, from, next) => {
             let allRouter = [];
             getAllRouter(commonStore.menuList, allRouter);
             Promise.all([genRoute(allRouter)]).then(([r]) => {
-                console.log(router.getRoutes())
                 commonStore.setMenuInit(true);
                 next({...to, replace: true});
             })

@@ -42,7 +42,7 @@ function clickMenu(menu) {
 
 <style scoped>
 .menu-icon {
-  font-size: 14px;
+  font-size: 14px!important;
 }
 .menu-item {
   margin-top: 6px;
