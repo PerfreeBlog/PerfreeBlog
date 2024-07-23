@@ -1,4 +1,3 @@
-import router from "@/core/router/index.js";
 import {useAppStore} from "@/core/stores/appStore.js";
 
 export let tabsData = [{ name: '首页', hasClose: false, path: '/admin', currActive: true }]

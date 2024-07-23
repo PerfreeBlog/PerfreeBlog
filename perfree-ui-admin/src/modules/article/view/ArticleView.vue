@@ -123,7 +123,7 @@ import {
 } from "../api/article.js";
 import {categoryListTreeApi} from "../api/category.js";
 import {toPage} from "@/core/utils/tabs.js";
-import {reactive, ref} from "vue";
+import {h, reactive, ref} from "vue";
 
 const searchForm = ref({
   pageNo: 1,

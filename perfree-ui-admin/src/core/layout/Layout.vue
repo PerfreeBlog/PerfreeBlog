@@ -44,7 +44,7 @@
                     :enter-active-class="'animate__animated ' + appStore.routeAnimation"
                 >
                   <keep-alive :include="cachedViews" >
-                    <div :key="route.fullPath" style="height: 100%">
+                    <div :key="route.fullPath">
                       <component :is="Component" :key="route.fullPath"/>
                     </div>
                   </keep-alive>
@@ -347,5 +347,6 @@ initTabs()
   border-top: solid 1px var(--el-border-color-lighter);
   color: var(--el-color-info);
   font-size: 14px;
+  display: none;
 }
 </style>

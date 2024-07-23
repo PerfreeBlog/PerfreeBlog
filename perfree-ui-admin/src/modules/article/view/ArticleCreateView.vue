@@ -21,13 +21,13 @@
                 <div class="content-label-right">
                   切换编辑器:
                   <el-select placeholder="Select" size="small" style="width: 180px" v-model="editorType">
-                    <el-option :key="'MdEditor(markdown)'" :label="'MdEditor(markdown)'" :value="'MdEditor(markdown)'" />
-                    <el-option :key="'Cherry(markdown)'" :label="'Cherry(markdown)'" :value="'Cherry(markdown)'" />
+                    <el-option :key="'Vditor(markdown)'" :label="'Vditor(markdown)'" :value="'Vditor(markdown)'" />
+                    <el-option :key="'WangEditor(富文本)'" :label="'WangEditor(富文本)'" :value="'WangEditor(富文本)'" />
                   </el-select>
                 </div>
               </div>
             </template>
-            <custom-editor :editor-type="editorType"  :init-value="addForm.content" @content-change="contentChange" ref="editorRef"></custom-editor>
+            <custom-editor :editor-type="editorType"  :init-value="addForm.content"  ref="editorRef"></custom-editor>
           </el-form-item>
         </el-col>
 
@@ -93,6 +93,7 @@
   </div>
 </template>
 <script setup>
+import AttachSelectInput from "@/core/components/attach-select-input.vue";
 import 'cherry-markdown/dist/cherry-markdown.css';
 import CustomEditor from "../components/custom-editor.vue";
 import {categoryListTreeApi} from "../api/category.js";
@@ -104,7 +105,7 @@ import pinyin from 'js-pinyin'
 import {closeTab, toPage} from "@/core/utils/tabs.js";
 import {reactive, ref} from "vue";
 
-const editorType = ref('Cherry(markdown)');
+const editorType = ref('Vditor(markdown)');
 const addFormRef = ref();
 const addForm = ref({
   title: '',
@@ -185,14 +186,17 @@ function submitAddForm(status) {
     ElMessage.error("文章标题不能为空");
     return;
   }
-  if(!addForm.value.content) {
-    ElMessage.error("文章内容不能为空");
-    return;
-  }
   if (editorType.value.indexOf("markdown") >= 0) {
     addForm.value.contentModel = 'markdown'
   } else {
     addForm.value.contentModel = 'html'
+  }
+  let articleContent = editorRef.value.getValue();
+  addForm.value.content = articleContent.content;
+  addForm.value.parseContent = articleContent.parseContent;
+  if(!addForm.value.content) {
+    ElMessage.error("文章内容不能为空");
+    return;
   }
   addForm.value.status = status;
 
@@ -223,13 +227,6 @@ function submitAddForm(status) {
   })
 }
 
-/**
- * 内容改变事件
- */
-function contentChange(content, parseContent) {
-  addForm.value.content = content;
-  addForm.value.parseContent = parseContent;
-}
 
 /**
  * 文章标题改变事件

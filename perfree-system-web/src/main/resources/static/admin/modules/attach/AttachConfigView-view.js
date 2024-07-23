@@ -1,5 +1,6 @@
-import { s as Y, r as K, p as Z, a as ee, e as ae, d as le, b as te, c as oe, f as ne, g as ue, h as se, i as re, j as de } from "./lib/perfree.js";
-const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vue.withCtx, d = window.Vue.unref, c = window.Vue.createTextVNode, y = window.Vue.createElementVNode, u = window.Vue.openBlock, D = window.Vue.createElementBlock, g = window.Vue.createCommentVNode, m = window.Vue.createBlock, ie = window.Vue.toDisplayString, ce = window.Vue.resolveDirective, me = window.Vue.withDirectives, E = window.Vue.isRef, pe = { class: "page" }, fe = { class: "search-box" }, ge = { class: "right-tool" }, _e = { class: "table-box" }, ve = { key: 0 }, be = { key: 1 }, Ve = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, T = window.ElementPlus.ElMessageBox, we = window.Vue.reactive, v = window.Vue.ref, he = {
+import { p as Y, a as Z, b as ee, c as ae, d as le, g as te, e as oe } from "./lib/perfree.js";
+import { s as ne, r as K, p as ue, e as se, d as re, a as de } from "./lib/@element-plus.js";
+const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vue.withCtx, d = window.Vue.unref, c = window.Vue.createTextVNode, y = window.Vue.createElementVNode, u = window.Vue.openBlock, D = window.Vue.createElementBlock, g = window.Vue.createCommentVNode, m = window.Vue.createBlock, ie = window.Vue.toDisplayString, ce = window.Vue.resolveDirective, me = window.Vue.withDirectives, E = window.Vue.isRef, pe = { class: "page" }, fe = { class: "search-box" }, ge = { class: "right-tool" }, _e = { class: "table-box" }, ve = { key: 0 }, be = { key: 1 }, Ve = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, T = window.ElementPlus.ElMessageBox, we = window.Vue.reactive, v = window.Vue.ref, Ce = {
   __name: "AttachConfigView",
   setup(ke) {
     let N = v([]), x = v(!1);
@@ -32,7 +33,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
       name: ""
     });
     function b() {
-      x.value = !0, oe(f.value).then((s) => {
+      x.value = !0, Z(f.value).then((s) => {
         N.value = s.data.list, f.value.total = s.data.total, x.value = !1;
       });
     }
@@ -59,7 +60,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
         uploadDir: ""
       }, C.value && C.value.resetFields();
     }
-    function j() {
+    function O() {
       C.value.validate((s) => {
         if (s) {
           let a;
@@ -80,15 +81,15 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             storage: e.value.storage,
             config: JSON.stringify(a)
           };
-          e.value.id ? ne(i).then((n) => {
+          e.value.id ? ee(i).then((n) => {
             n.code === 200 ? (V.success("修改成功"), p.value = !1, k(), b()) : V.error(n.msg);
-          }) : ue(i).then((n) => {
+          }) : ae(i).then((n) => {
             n.code === 200 ? (V.success("添加成功"), p.value = !1, k(), b()) : V.error(n.msg);
           });
         }
       });
     }
-    function O(s) {
+    function $(s) {
       if (s.master) {
         V.error("默认配置不允许删除!");
         return;
@@ -98,14 +99,14 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        se(s.id).then((a) => {
+        le(s.id).then((a) => {
           a.code === 200 && a.data ? (V.success("删除成功"), b()) : V.error(a.msg);
         });
       }).catch(() => {
       });
     }
-    function $(s) {
-      h.value = !0, S.value = "修改配置", k(), p.value = !0, re(s.id).then((a) => {
+    function j(s) {
+      h.value = !0, S.value = "修改配置", k(), p.value = !0, te(s.id).then((a) => {
         e.value = Object.assign(a.data, JSON.parse(a.data.config));
       });
     }
@@ -115,7 +116,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        de({ id: s.id }).then((a) => {
+        oe({ id: s.id }).then((a) => {
           V.success("修改成功"), b();
         });
       }).catch(() => {
@@ -149,7 +150,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
                   t(_, {
                     type: "primary",
                     onClick: b,
-                    icon: d(Y)
+                    icon: d(ne)
                   }, {
                     default: o(() => [
                       c("查询")
@@ -180,7 +181,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             t(L, { span: 1.5 }, {
               default: o(() => [
                 t(_, {
-                  icon: d(Z),
+                  icon: d(ue),
                   type: "primary",
                   plain: "",
                   onClick: M
@@ -268,7 +269,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
                 "min-width": "120"
               }, {
                 default: o((l) => [
-                  y("span", null, ie(d(ee)(l.row.createTime)), 1)
+                  y("span", null, ie(d(Y)(l.row.createTime)), 1)
                 ]),
                 _: 1
               }),
@@ -282,8 +283,8 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: d(ae),
-                    onClick: (F) => $(l.row)
+                    icon: d(se),
+                    onClick: (F) => j(l.row)
                   }, {
                     default: o(() => [
                       c("修改")
@@ -294,7 +295,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: d(le),
+                    icon: d(re),
                     onClick: (F) => J(l.row)
                   }, {
                     default: o(() => [
@@ -306,8 +307,8 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: d(te),
-                    onClick: (F) => O(l.row)
+                    icon: d(de),
+                    onClick: (F) => $(l.row)
                   }, {
                     default: o(() => [
                       c("删除")
@@ -346,7 +347,7 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             y("span", Ve, [
               t(_, {
                 type: "primary",
-                onClick: j
+                onClick: O
               }, {
                 default: o(() => [
                   c("确 定")
@@ -566,5 +567,5 @@ const r = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
   }
 };
 export {
-  he as default
+  Ce as default
 };

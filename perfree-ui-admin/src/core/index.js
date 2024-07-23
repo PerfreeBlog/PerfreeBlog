@@ -25,6 +25,7 @@ import install from '@form-create/element-ui/auto-import'
 const app = createApp(App);
 
 // router
+window.router = router;
 app.use(router)
 
 // ElementPlus
