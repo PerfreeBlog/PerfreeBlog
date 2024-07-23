@@ -2,13 +2,10 @@ package com.perfree.convert.attach;
 
 
 import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.attach.vo.*;
 import com.perfree.system.api.attach.dto.AttachFileDTO;
 import com.perfree.system.api.attach.dto.AttachUploadDTO;
 import com.perfree.model.Attach;
-import com.perfree.controller.auth.attach.vo.AttachGroupRespVO;
-import com.perfree.controller.auth.attach.vo.AttachRespVO;
-import com.perfree.controller.auth.attach.vo.AttachUpdateVO;
-import com.perfree.controller.auth.attach.vo.AttachUploadVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -31,5 +28,7 @@ public interface AttachConvert {
     List<AttachGroupRespVO> convertGroupRespVO(List<Attach> attachList);
 
     Attach convertByUpdateVO(AttachUpdateVO attachUpdateVO);
+
+    AttachByUrlRespVO convertByUrlRespVO(Attach attach);
 
 }

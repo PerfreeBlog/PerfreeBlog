@@ -6,7 +6,7 @@
       </template>
     </el-input>
 
-    <el-dialog v-model="open" :title="title" width="800px" draggable   destroy-on-close>
+    <el-dialog v-model="open" :title="title" width="900px" draggable   destroy-on-close>
       <attach-select-panel @update:selected-attach="selectAttach" :max="1" :attach-type="props.attachType"></attach-select-panel>
       <template #footer>
         <span class="dialog-footer">

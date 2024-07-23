@@ -1,6 +1,6 @@
 <template>
   <div ref="vditor" id="vditor"></div>
-  <el-dialog v-model="open" :title="title" width="800px" draggable   destroy-on-close>
+  <el-dialog v-model="open" :title="title" width="900px" draggable   destroy-on-close>
     <attach-select-panel @update:selected-attach="selectAttach" :max="attachMaxSelect" :attach-type="attachType"></attach-select-panel>
     <template #footer>
         <span class="dialog-footer">
@@ -17,6 +17,7 @@ import {onBeforeUnmount, onMounted, ref} from "vue";
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
 import AttachSelectPanel from "@/core/components/attach-select-panel.vue";
+import {CONSTANTS} from "@/core/utils/constants.js";
 
 let contentEditor = '';
 let open = ref(false)
@@ -78,9 +79,67 @@ onMounted(() => {
           open.value = true;
         },
       },
+      {
+        hotkey: '⇧⌘S',
+        name: 'file',
+        tipPosition: 's',
+        tip: '插入附件',
+        className: 'right',
+        icon: '<svg t="1721726209680" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5092" width="200" height="200"><path d="M923.2 261.4h-45.7c-19.9 0-36 16.1-36 36s16.1 36 36 36h9.7v488.2h-748V217.2h196.7l85.6 103v0.1l0.1 0.1c6.6 7.9 16.6 13 27.7 13h182.4c19.9 0 36-16.1 36-36s-16.1-36-36-36h-81.5c13.4-35.3 44.7-60.1 81.1-60.1 48.6 0 88.1 44.3 88.1 98.7v304.2c0 54.4-39.5 98.7-88.1 98.7s-88.1-44.3-88.1-98.7V479.4c0-17.5 11.8-31.7 26.3-31.7s26.3 14.2 26.3 31.7h0.3c-0.2 1.4-0.3 2.8-0.3 4.2V601c0 19.9 16.1 36 36 36s36-16.1 36-36V483.5c0-1.4-0.1-2.8-0.3-4.2h0.3c0-57.2-44.1-103.7-98.3-103.7-51.9 0-94.6 42.7-98 96.6h-0.2v134.5c0.6 44.1 16.8 85.5 45.9 117 30.3 32.9 70.9 51 114.2 51s83.9-18.1 114.2-51c29-31.5 45.2-73 45.9-117V300c0-45-16.3-87.5-45.9-119.6-30.3-32.9-70.9-51-114.2-51s-83.9 18.1-114.2 51c-21 22.7-35.2 50.7-41.8 81h-9l-85.7-103.2c-6.8-8.2-17-13-27.7-13H103.1c-19.9 0-36 16.1-36 36V857.6c0 19.9 16.1 36 36 36h820c19.9 0 36-16.1 36-36V297.4c0.1-19.9-16-36-35.9-36z" fill="#333333" p-id="5093"></path></svg>',
+        click () {
+          attachType.value = 'other';
+          attachMaxSelect.value = 1;
+          title.value = '选择附件'
+          open.value = true;
+        },
+      },
       "table", "|", "undo", "redo", "|", "fullscreen", "edit-mode",
       {name: "more", toolbar: ["both", "code-theme", "content-theme", "export", "outline", "preview"]},
     ],
+    upload: {
+      headers: {
+        Authorization: "Bearer " + JSON.parse(localStorage.getItem(CONSTANTS.STORAGE_TOKEN)).accessToken,
+      },
+      fieldName: "file",
+      filename: (name) => name.replace(/\W/g, ""),
+      linkToImgUrl: "/api/auth/attach/uploadAttachByUrl",
+      linkToImgFormat(responseText){
+        let result = null;
+        let res = JSON.parse(responseText);
+        if (res.code === 200) {
+          result = JSON.stringify({
+            msg: '',
+            code: 0,
+            data: {
+              originalURL: res.data.originalURL,
+              url: res.data.url
+            }
+          });
+        }
+        return result
+      },
+      multiple: false,
+      url: "/api/auth/attach/upload",
+      format(files, responseText){
+        console.log(responseText)
+        let result = null;
+        let res = JSON.parse(responseText);
+        if (res.code === 200) {
+          result = JSON.stringify({
+            msg: "",
+            code: 0,
+            data: {
+              errFiles: [],
+              succMap: {
+                [res.data.path]: res.data.url,
+              }
+            }
+          });
+        }
+        return result
+      },
+      withCredentials: false,
+    },
     after: () => {
      contentEditor.setValue(props.initValue? props.initValue: '');
     },
@@ -114,6 +173,10 @@ function submitAddForm() {
 
     if (attachType.value === 'video') {
       let insertStr = `\n<video src="${r.url}" controls="controls" width="100%"></video>`;
+      contentEditor.insertValue(insertStr)
+    }
+    if (attachType.value === 'other') {
+      let insertStr = `\n[${r.name}](${r.url})`;
       contentEditor.insertValue(insertStr)
     }
   });

@@ -10,6 +10,7 @@ import com.perfree.service.attach.AttachService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -73,5 +74,14 @@ public class AttachController {
     public CommonResult<List<AttachGroupRespVO>> getAllAttachGroup() {
         List<Attach> attachList = attachService.getAllAttachGroup();
         return success(AttachConvert.INSTANCE.convertGroupRespVO(attachList));
+    }
+
+    @PostMapping("/uploadAttachByUrl")
+    @Operation(summary = "通过url下载并上传附件")
+    public CommonResult<AttachByUrlRespVO> uploadAttachByUrl(@Valid @RequestBody AttachUploadByUrlVO attachUploadByUrlVO) {
+        Attach attach = attachService.uploadAttachByUrl(attachUploadByUrlVO.getUrl());
+        AttachByUrlRespVO attachByUrlRespVO = AttachConvert.INSTANCE.convertByUrlRespVO(attach);
+        attachByUrlRespVO.setOriginalURL(attachUploadByUrlVO.getUrl());
+        return success(attachByUrlRespVO);
     }
 }

@@ -63,4 +63,11 @@ public interface AttachService extends IService<Attach> {
      */
     Boolean updateAttach(AttachUpdateVO attachUpdateVO);
 
+    /**
+     * 通过url下载并上传附件
+     * @param url url
+     * @return Attach
+     */
+    Attach uploadAttachByUrl(String url);
+
 }
