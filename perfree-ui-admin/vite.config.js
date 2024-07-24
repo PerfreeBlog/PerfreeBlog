@@ -35,30 +35,30 @@ export default defineConfig(({mode })=> {
   ]
   return {
     plugins: [
-        vue(),
+      vue(),
       viteStaticCopy({
-          targets: libExternalTargets
-        }),
-        createHtmlPlugin({
-          minify: true,
-          template: 'index.html',
-          inject: {
-            tags: libExternalsLink,
-            data: {
-              title: isProd? 'Perfree' : '#option("WEB_TITLE","Perfree")',
-            },
+        targets: libExternalTargets
+      }),
+      createHtmlPlugin({
+        minify: false,
+        template: 'index.html',
+        inject: {
+          tags: libExternalsLink,
+          data: {
+            title: isProd? 'Perfree' : 'Perfree',
           },
-        }),
-        viteExternalsPlugin({
-          vue: 'Vue',
-          "vue-router": "VueRouter",
-          "element-plus": "ElementPlus",
-          pinia: "Pinia",
-          axios: "axios",
-          "vue-demi": "VueDemi",
-          "@vueuse/core": "VueUse",
-          "@fortawesome/fontawesome-svg-core": "fontawesome-svg-core"
-        }),
+        },
+      }),
+      viteExternalsPlugin({
+        vue: 'Vue',
+        "vue-router": "VueRouter",
+        "element-plus": "ElementPlus",
+        pinia: "Pinia",
+        axios: "axios",
+        "vue-demi": "VueDemi",
+        "@vueuse/core": "VueUse",
+        "@fortawesome/fontawesome-svg-core": "fontawesome-svg-core"
+      }),
       progress()
     ],
     resolve: {

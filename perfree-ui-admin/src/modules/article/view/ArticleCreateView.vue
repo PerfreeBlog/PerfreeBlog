@@ -22,7 +22,7 @@
                   切换编辑器:
                   <el-select placeholder="Select" size="small" style="width: 180px" v-model="editorType">
                     <el-option :key="'Vditor(markdown)'" :label="'Vditor(markdown)'" :value="'Vditor(markdown)'" />
-                    <el-option :key="'WangEditor(富文本)'" :label="'WangEditor(富文本)'" :value="'WangEditor(富文本)'" />
+                    <el-option :key="'aiEditor'" :label="'aiEditor'" :value="'aiEditor'" />
                   </el-select>
                 </div>
               </div>
@@ -94,7 +94,6 @@
 </template>
 <script setup>
 import AttachSelectInput from "@/core/components/attach-select-input.vue";
-import 'cherry-markdown/dist/cherry-markdown.css';
 import CustomEditor from "../components/custom-editor.vue";
 import {categoryListTreeApi} from "../api/category.js";
 import {getAllTag} from "../api/tag.js";

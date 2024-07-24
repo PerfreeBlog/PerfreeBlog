@@ -548,7 +548,7 @@ const dt = { style: { width: "100%" } }, rt = { class: "dialog-footer" }, ct = {
           modelValue: J(p),
           "onUpdate:modelValue": t[2] || (t[2] = (f) => fe(p) ? p.value = f : p = f),
           title: J(l),
-          width: "800px",
+          width: "900px",
           draggable: "",
           "destroy-on-close": ""
         }, {
@@ -588,7 +588,7 @@ const dt = { style: { width: "100%" } }, rt = { class: "dialog-footer" }, ct = {
       ]);
     };
   }
-}, _t = /* @__PURE__ */ Ve(mt, [["__scopeId", "data-v-777a08f0"]]);
+}, _t = /* @__PURE__ */ Ve(mt, [["__scopeId", "data-v-c65d9d19"]]);
 function ft(e) {
   return axios.post("/api/auth/link/page", e);
 }

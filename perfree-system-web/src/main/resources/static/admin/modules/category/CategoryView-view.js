@@ -51,7 +51,7 @@ Me({
 function Te(i, b, c, m, f) {
   b = b || "id", c = c || "parentId", f = f || Math.min.apply(Math, i.map((v) => v[c])) || 0;
   const V = JSON.parse(JSON.stringify(i)), _ = V.filter((v) => {
-    let S = V.filter((o) => v[b] === o[c]);
+    let S = V.filter((a) => v[b] === a[c]);
     return S.length > 0 && (v.children = S), v[c] === f;
   });
   return _ !== "" ? _ : i;
@@ -91,11 +91,11 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
   preload: "none",
   controls: "",
   style: { width: "100%", "max-height": "100%" }
-}, lt = ["src"], at = {
+}, lt = ["src"], ot = {
   key: 2,
   controls: "",
   preload: "none"
-}, ot = ["src"], nt = { key: 3 }, st = { class: "showForm" }, it = { class: "dialog-footer" }, ut = window.Vue.reactive, N = window.Vue.ref, dt = {
+}, at = ["src"], nt = { key: 3 }, st = { class: "showForm" }, it = { class: "dialog-footer" }, ut = window.Vue.reactive, N = window.Vue.ref, dt = {
   __name: "attach-select-panel",
   props: ["attachType", "max"],
   emits: ["update:selectedAttach"],
@@ -109,7 +109,7 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
     });
     let f = N([]), V = N(!1), _ = N(/* @__PURE__ */ new Map());
     const v = b, S = i;
-    let o = N(!1), L = N(""), z = N([]);
+    let a = N(!1), L = N(""), z = N([]);
     const w = N(), e = N({
       name: "",
       type: "",
@@ -160,18 +160,18 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
     }
     function s(r) {
       A(), g(), Oe(r.id).then((t) => {
-        e.value = t.data, L.value = "详情", o.value = !0;
+        e.value = t.data, L.value = "详情", a.value = !0;
       });
     }
     function T() {
       w.value.validate((r) => {
         r && Le(e.value).then((t) => {
-          t.code === 200 ? (ElMessage.success("修改成功"), o.value = !1, A(), M()) : ElMessage.error(t.msg);
+          t.code === 200 ? (ElMessage.success("修改成功"), a.value = !1, A(), M()) : ElMessage.error(t.msg);
         });
       });
     }
     return M(), (r, t) => {
-      const F = h("el-input"), E = h("el-form-item"), O = h("el-button"), x = h("el-form"), ae = h("Loading"), P = h("el-icon"), Y = h("el-image"), oe = h("el-text"), ne = h("InfoFilled"), se = h("SuccessFilled"), u = h("el-col"), j = h("el-row"), xe = h("el-pagination"), ke = h("el-link"), Ce = h("el-option"), $e = h("el-select"), Se = h("el-dialog");
+      const F = h("el-input"), E = h("el-form-item"), O = h("el-button"), x = h("el-form"), oe = h("Loading"), P = h("el-icon"), Y = h("el-image"), ae = h("el-text"), ne = h("InfoFilled"), se = h("SuccessFilled"), u = h("el-col"), j = h("el-row"), xe = h("el-pagination"), ke = h("el-link"), Ce = h("el-option"), $e = h("el-select"), Se = h("el-dialog");
       return k(), I("div", Ke, [
         y("div", qe, [
           n(x, {
@@ -186,7 +186,7 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                 default: p(() => [
                   n(F, {
                     modelValue: m.value.name,
-                    "onUpdate:modelValue": t[0] || (t[0] = (a) => m.value.name = a),
+                    "onUpdate:modelValue": t[0] || (t[0] = (o) => m.value.name = o),
                     placeholder: "请输入附件名称",
                     clearable: ""
                   }, null, 8, ["modelValue"])
@@ -224,19 +224,19 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
         y("div", Je, [
           n(j, { gutter: 15 }, {
             default: p(() => [
-              (k(!0), I(re, null, ce(K(f), (a) => (k(), Z(u, {
+              (k(!0), I(re, null, ce(K(f), (o) => (k(), Z(u, {
                 span: 6,
                 class: "attach-col",
-                onClick: (Ae) => le(a)
+                onClick: (Ae) => le(o)
               }, {
                 default: p(() => [
                   y("div", {
-                    class: me({ "attach-block": !0, selected: a.selected })
+                    class: me({ "attach-block": !0, selected: o.selected })
                   }, [
                     y("div", je, [
-                      a.type && a.type === "img" ? (k(), Z(Y, {
-                        key: a.url,
-                        src: a.url,
+                      o.type && o.type === "img" ? (k(), Z(Y, {
+                        key: o.url,
+                        src: o.url,
                         lazy: "",
                         class: "attach-img",
                         loading: "lazy"
@@ -245,37 +245,37 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                           y("div", He, [
                             n(P, { class: "is-loading" }, {
                               default: p(() => [
-                                n(ae)
+                                n(oe)
                               ]),
                               _: 1
                             })
                           ])
                         ]),
                         _: 2
-                      }, 1032, ["src"])) : a.type && a.type === "video" ? (k(), I("video", Qe, [
+                      }, 1032, ["src"])) : o.type && o.type === "video" ? (k(), I("video", Qe, [
                         y("source", {
-                          src: a.url
+                          src: o.url
                         }, null, 8, We)
-                      ])) : (k(), I("div", Xe, pe(a.path.split(".").pop()), 1))
+                      ])) : (k(), I("div", Xe, pe(o.path.split(".").pop()), 1))
                     ]),
                     y("div", Ye, [
-                      n(oe, {
+                      n(ae, {
                         "line-clamp": "1",
                         style: { width: "100%" }
                       }, {
                         default: p(() => [
-                          G(pe(a.name), 1)
+                          G(pe(o.name), 1)
                         ]),
                         _: 2
                       }, 1024)
                     ]),
                     y("div", {
-                      class: me({ "operate-mask": !0, selected: a.selected })
+                      class: me({ "operate-mask": !0, selected: o.selected })
                     }, null, 2),
                     y("div", Ze, [
                       n(P, {
                         class: "operate-btn",
-                        onClick: Pe((Ae) => s(a), ["stop"])
+                        onClick: Pe((Ae) => s(o), ["stop"])
                       }, {
                         default: p(() => [
                           n(ne)
@@ -298,9 +298,9 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
           }),
           n(xe, {
             "current-page": m.value.pageNo,
-            "onUpdate:currentPage": t[1] || (t[1] = (a) => m.value.pageNo = a),
+            "onUpdate:currentPage": t[1] || (t[1] = (o) => m.value.pageNo = o),
             "page-size": m.value.pageSize,
-            "onUpdate:pageSize": t[2] || (t[2] = (a) => m.value.pageSize = a),
+            "onUpdate:pageSize": t[2] || (t[2] = (o) => m.value.pageSize = o),
             "page-sizes": [8, 16, 24],
             layout: "total,sizes,prev, pager, next, jumper",
             background: "",
@@ -310,8 +310,8 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
         n(Se, {
-          modelValue: K(o),
-          "onUpdate:modelValue": t[10] || (t[10] = (a) => _e(o) ? o.value = a : o = a),
+          modelValue: K(a),
+          "onUpdate:modelValue": t[10] || (t[10] = (o) => _e(a) ? a.value = o : a = o),
           title: K(L),
           width: "800px",
           draggable: ""
@@ -328,8 +328,8 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                 _: 1
               }),
               n(O, {
-                onClick: t[9] || (t[9] = (a) => {
-                  _e(o) ? o.value = !1 : o = !1, A();
+                onClick: t[9] || (t[9] = (o) => {
+                  _e(a) ? a.value = !1 : a = !1, A();
                 })
               }, {
                 default: p(() => [
@@ -365,10 +365,10 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                         y("source", {
                           src: e.value.url
                         }, null, 8, lt)
-                      ])) : e.value.type && e.value.type === "audio" ? (k(), I("audio", at, [
+                      ])) : e.value.type && e.value.type === "audio" ? (k(), I("audio", ot, [
                         y("source", {
                           src: e.value.url
-                        }, null, 8, ot)
+                        }, null, 8, at)
                       ])) : (k(), I("i", nt, [
                         G("无法预览，点击 "),
                         n(ke, {
@@ -413,7 +413,7 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                             default: p(() => [
                               n(F, {
                                 modelValue: e.value.name,
-                                "onUpdate:modelValue": t[3] || (t[3] = (a) => e.value.name = a)
+                                "onUpdate:modelValue": t[3] || (t[3] = (o) => e.value.name = o)
                               }, null, 8, ["modelValue"])
                             ]),
                             _: 1
@@ -422,7 +422,7 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                             default: p(() => [
                               n(F, {
                                 modelValue: e.value.type,
-                                "onUpdate:modelValue": t[4] || (t[4] = (a) => e.value.type = a),
+                                "onUpdate:modelValue": t[4] || (t[4] = (o) => e.value.type = o),
                                 disabled: ""
                               }, null, 8, ["modelValue"])
                             ]),
@@ -432,17 +432,17 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                             default: p(() => [
                               n($e, {
                                 modelValue: e.value.attachGroup,
-                                "onUpdate:modelValue": t[5] || (t[5] = (a) => e.value.attachGroup = a),
+                                "onUpdate:modelValue": t[5] || (t[5] = (o) => e.value.attachGroup = o),
                                 placeholder: "请选择分组",
                                 filterable: "",
                                 style: { width: "100%" },
                                 "allow-create": ""
                               }, {
                                 default: p(() => [
-                                  (k(!0), I(re, null, ce(K(z), (a) => (k(), Z(Ce, {
-                                    key: a.attachGroup,
-                                    label: a.attachGroup,
-                                    value: a.attachGroup
+                                  (k(!0), I(re, null, ce(K(z), (o) => (k(), Z(Ce, {
+                                    key: o.attachGroup,
+                                    label: o.attachGroup,
+                                    value: o.attachGroup
                                   }, null, 8, ["label", "value"]))), 128))
                                 ]),
                                 _: 1
@@ -454,7 +454,7 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                             default: p(() => [
                               n(F, {
                                 modelValue: e.value.path,
-                                "onUpdate:modelValue": t[6] || (t[6] = (a) => e.value.path = a),
+                                "onUpdate:modelValue": t[6] || (t[6] = (o) => e.value.path = o),
                                 disabled: ""
                               }, null, 8, ["modelValue"])
                             ]),
@@ -464,7 +464,7 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                             default: p(() => [
                               n(F, {
                                 modelValue: e.value.url,
-                                "onUpdate:modelValue": t[7] || (t[7] = (a) => e.value.url = a),
+                                "onUpdate:modelValue": t[7] || (t[7] = (o) => e.value.url = o),
                                 disabled: ""
                               }, null, 8, ["modelValue"])
                             ]),
@@ -474,7 +474,7 @@ const Ke = { class: "page" }, qe = { class: "search-box" }, Je = { class: "table
                             default: p(() => [
                               n(F, {
                                 modelValue: e.value.desc,
-                                "onUpdate:modelValue": t[8] || (t[8] = (a) => e.value.desc = a),
+                                "onUpdate:modelValue": t[8] || (t[8] = (o) => e.value.desc = o),
                                 autosize: { minRows: 2, maxRows: 4 },
                                 type: "textarea",
                                 resize: "none",
@@ -516,7 +516,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
     function S() {
       c.value = !0, m.value = "请选择附件";
     }
-    function o() {
+    function a() {
       let w = "";
       f.value.forEach((e, R) => {
         w += e.url;
@@ -551,7 +551,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
           modelValue: H(c),
           "onUpdate:modelValue": e[2] || (e[2] = (D) => he(c) ? c.value = D : c = D),
           title: H(m),
-          width: "800px",
+          width: "900px",
           draggable: "",
           "destroy-on-close": ""
         }, {
@@ -559,7 +559,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
             mt("span", ft, [
               q(R, {
                 type: "primary",
-                onClick: o
+                onClick: a
               }, {
                 default: Q(() => [
                   ve("确 定"),
@@ -591,7 +591,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
       ]);
     };
   }
-}, gt = /* @__PURE__ */ be(ht, [["__scopeId", "data-v-777a08f0"]]), C = window.Vue.resolveComponent, l = window.Vue.createVNode, d = window.Vue.withCtx, $ = window.Vue.unref, U = window.Vue.createTextVNode, ee = window.Vue.createElementVNode, X = window.Vue.openBlock, te = window.Vue.createBlock, Vt = window.Vue.createCommentVNode, yt = window.Vue.resolveDirective, bt = window.Vue.withDirectives, ge = window.Vue.isRef, xt = window.Vue.createElementBlock, kt = { class: "page" }, Ct = { class: "search-box" }, $t = { class: "right-tool" }, St = { class: "table-box" }, At = { class: "dialog-footer" }, J = window.ElementPlus.ElMessage, Ft = window.ElementPlus.ElMessageBox, Ve = window.Vue.reactive, B = window.Vue.ref, Nt = {
+}, gt = /* @__PURE__ */ be(ht, [["__scopeId", "data-v-c65d9d19"]]), C = window.Vue.resolveComponent, l = window.Vue.createVNode, d = window.Vue.withCtx, $ = window.Vue.unref, U = window.Vue.createTextVNode, ee = window.Vue.createElementVNode, X = window.Vue.openBlock, te = window.Vue.createBlock, Vt = window.Vue.createCommentVNode, yt = window.Vue.resolveDirective, bt = window.Vue.withDirectives, ge = window.Vue.isRef, xt = window.Vue.createElementBlock, kt = { class: "page" }, Ct = { class: "search-box" }, $t = { class: "right-tool" }, St = { class: "table-box" }, At = { class: "dialog-footer" }, J = window.ElementPlus.ElMessage, Ft = window.ElementPlus.ElMessageBox, Ve = window.Vue.reactive, B = window.Vue.ref, Nt = {
   __name: "CategoryView",
   setup(i) {
     const b = B(), c = B({
@@ -602,7 +602,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
       children: "children",
       label: "name",
       value: "id"
-    }), o = B({
+    }), a = B({
       pid: -1,
       id: "",
       name: "",
@@ -626,10 +626,10 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
       }, b.value.resetFields();
     }
     function R(g) {
-      A(), g && g.id && (o.value.pid = g.id), v.value = "添加分类", _.value = !0;
+      A(), g && g.id && (a.value.pid = g.id), v.value = "添加分类", _.value = !0;
     }
     function A() {
-      o.value = {
+      a.value = {
         pid: -1,
         id: "",
         name: "",
@@ -642,16 +642,16 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
     }
     function M() {
       z.value.validate((g) => {
-        g && (o.value.id ? Re(o.value).then((s) => {
+        g && (a.value.id ? Re(a.value).then((s) => {
           s.code === 200 ? (J.success("修改成功"), _.value = !1, A(), w()) : J.error(s.msg);
-        }) : ze(o.value).then((s) => {
+        }) : ze(a.value).then((s) => {
           s.code === 200 ? (J.success("添加成功"), _.value = !1, A(), w()) : J.error(s.msg);
         }));
       });
     }
     function D(g) {
       v.value = "修改分类", A(), De(g.id).then((s) => {
-        o.value = s.data, _.value = !0;
+        a.value = s.data, _.value = !0;
       });
     }
     function le(g) {
@@ -667,7 +667,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
       });
     }
     return w(), (g, s) => {
-      const T = C("el-input"), r = C("el-form-item"), t = C("el-button"), F = C("el-form"), E = C("el-col"), O = C("el-row"), x = C("el-table-column"), ae = C("el-image"), P = C("el-tag"), Y = C("el-table"), oe = C("el-tree-select"), ne = C("el-dialog"), se = yt("loading");
+      const T = C("el-input"), r = C("el-form-item"), t = C("el-button"), F = C("el-form"), E = C("el-col"), O = C("el-row"), x = C("el-table-column"), oe = C("el-image"), P = C("el-tag"), Y = C("el-table"), ae = C("el-tree-select"), ne = C("el-dialog"), se = yt("loading");
       return X(), xt("div", kt, [
         ee("div", Ct, [
           l(F, {
@@ -780,7 +780,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                 "min-width": "80"
               }, {
                 default: d((u) => [
-                  u.row.thumbnail ? (X(), te(ae, {
+                  u.row.thumbnail ? (X(), te(oe, {
                     key: 0,
                     style: { width: "100%", "max-height": "100%" },
                     src: u.row.thumbnail,
@@ -919,7 +919,7 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
             l(F, {
               ref_key: "addFormRef",
               ref: z,
-              model: o.value,
+              model: a.value,
               "label-width": "100px",
               "status-icon": "",
               rules: L
@@ -930,9 +930,9 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                   prop: "pid"
                 }, {
                   default: d(() => [
-                    l(oe, {
-                      modelValue: o.value.pid,
-                      "onUpdate:modelValue": s[1] || (s[1] = (u) => o.value.pid = u),
+                    l(ae, {
+                      modelValue: a.value.pid,
+                      "onUpdate:modelValue": s[1] || (s[1] = (u) => a.value.pid = u),
                       data: $(V),
                       props: S,
                       "check-strictly": "",
@@ -949,8 +949,8 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                 }, {
                   default: d(() => [
                     l(T, {
-                      modelValue: o.value.name,
-                      "onUpdate:modelValue": s[2] || (s[2] = (u) => o.value.name = u),
+                      modelValue: a.value.name,
+                      "onUpdate:modelValue": s[2] || (s[2] = (u) => a.value.name = u),
                       placeholder: "请输入分类名称"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -962,8 +962,8 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                 }, {
                   default: d(() => [
                     l(T, {
-                      modelValue: o.value.desc,
-                      "onUpdate:modelValue": s[3] || (s[3] = (u) => o.value.desc = u),
+                      modelValue: a.value.desc,
+                      "onUpdate:modelValue": s[3] || (s[3] = (u) => a.value.desc = u),
                       placeholder: "请输入分类描述",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -977,8 +977,8 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                 }, {
                   default: d(() => [
                     l(T, {
-                      modelValue: o.value.slug,
-                      "onUpdate:modelValue": s[4] || (s[4] = (u) => o.value.slug = u),
+                      modelValue: a.value.slug,
+                      "onUpdate:modelValue": s[4] || (s[4] = (u) => a.value.slug = u),
                       placeholder: "请输入分类slug"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -993,8 +993,8 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                       "attach-type": "img",
                       "enable-input": !0,
                       placeholder: "请选择封面图",
-                      "model-value": o.value.thumbnail,
-                      "onUpdate:modelValue": s[5] || (s[5] = (u) => o.value.thumbnail = u)
+                      "model-value": a.value.thumbnail,
+                      "onUpdate:modelValue": s[5] || (s[5] = (u) => a.value.thumbnail = u)
                     }, null, 8, ["model-value"])
                   ]),
                   _: 1
@@ -1005,8 +1005,8 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                 }, {
                   default: d(() => [
                     l(T, {
-                      modelValue: o.value.metaKeywords,
-                      "onUpdate:modelValue": s[6] || (s[6] = (u) => o.value.metaKeywords = u),
+                      modelValue: a.value.metaKeywords,
+                      "onUpdate:modelValue": s[6] || (s[6] = (u) => a.value.metaKeywords = u),
                       placeholder: "请输入SEO关键字",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -1020,8 +1020,8 @@ const _t = { style: { width: "100%" } }, ft = { class: "dialog-footer" }, wt = {
                 }, {
                   default: d(() => [
                     l(T, {
-                      modelValue: o.value.metaDescription,
-                      "onUpdate:modelValue": s[7] || (s[7] = (u) => o.value.metaDescription = u),
+                      modelValue: a.value.metaDescription,
+                      "onUpdate:modelValue": s[7] || (s[7] = (u) => a.value.metaDescription = u),
                       placeholder: "请输入SEO描述内容",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"

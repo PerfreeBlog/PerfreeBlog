@@ -121,7 +121,6 @@ onMounted(() => {
       multiple: false,
       url: "/api/auth/attach/upload",
       format(files, responseText){
-        console.log(responseText)
         let result = null;
         let res = JSON.parse(responseText);
         if (res.code === 200) {

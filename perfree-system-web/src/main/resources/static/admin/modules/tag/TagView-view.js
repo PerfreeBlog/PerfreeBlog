@@ -563,7 +563,7 @@ const ft = { style: { width: "100%" } }, wt = { class: "dialog-footer" }, vt = {
           modelValue: Y(p),
           "onUpdate:modelValue": t[2] || (t[2] = (f) => ve(p) ? p.value = f : p = f),
           title: Y(l),
-          width: "800px",
+          width: "900px",
           draggable: "",
           "destroy-on-close": ""
         }, {
@@ -603,7 +603,7 @@ const ft = { style: { width: "100%" } }, wt = { class: "dialog-footer" }, vt = {
       ]);
     };
   }
-}, Vt = /* @__PURE__ */ ue(ht, [["__scopeId", "data-v-777a08f0"]]), S = window.Vue.resolveComponent, u = window.Vue.createVNode, r = window.Vue.withCtx, F = window.Vue.unref, M = window.Vue.createTextVNode, Q = window.Vue.createElementVNode, yt = window.Vue.normalizeStyle, ee = window.Vue.openBlock, ge = window.Vue.createElementBlock, he = window.Vue.createCommentVNode, Ve = window.Vue.createBlock, bt = window.Vue.toDisplayString, xt = window.Vue.resolveDirective, kt = window.Vue.withDirectives, ye = window.Vue.isRef;
+}, Vt = /* @__PURE__ */ ue(ht, [["__scopeId", "data-v-c65d9d19"]]), S = window.Vue.resolveComponent, u = window.Vue.createVNode, r = window.Vue.withCtx, F = window.Vue.unref, M = window.Vue.createTextVNode, Q = window.Vue.createElementVNode, yt = window.Vue.normalizeStyle, ee = window.Vue.openBlock, ge = window.Vue.createElementBlock, he = window.Vue.createCommentVNode, Ve = window.Vue.createBlock, bt = window.Vue.toDisplayString, xt = window.Vue.resolveDirective, kt = window.Vue.withDirectives, ye = window.Vue.isRef;
 window.Vue.pushScopeId;
 window.Vue.popScopeId;
 const Ct = { class: "page" }, $t = { class: "search-box" }, St = { class: "right-tool" }, Ft = { class: "table-box" }, zt = { class: "dialog-footer" }, O = window.ElementPlus.ElMessage, At = window.ElementPlus.ElMessageBox, Nt = window.Vue.reactive, R = window.Vue.ref, Et = {
