@@ -44,7 +44,7 @@
               </el-button>
             </div>
             <div class="theme-btn-item" v-if="theme.isActive === 1">
-              <el-button link class="theme-button">
+              <el-button link class="theme-button" @click="toThemeSettingPage()">
                 <font-awesome-icon icon="fa-solid fa-wrench" class="theme-btn-icon" /> 设置
               </el-button>
             </div>
@@ -100,6 +100,7 @@ import {ElMessage} from "element-plus";
 import {CONSTANTS} from "@/core/utils/constants.js";
 import axios_config from "@/core/api/axios_config.js";
 import {ref} from "vue";
+import {toPage} from "@/core/utils/tabs.js";
 
 let themeList = ref([]);
 let themeUploadOpen = ref(false);
@@ -183,6 +184,10 @@ function unInstallTheme(theme) {
       ElMessage.error(res.msg);
     }
   })
+}
+
+function toThemeSettingPage() {
+  toPage('', '/admin/themeSetting', null)
 }
 
 initList();
