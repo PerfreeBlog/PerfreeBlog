@@ -123,24 +123,20 @@ function selectAttach(data) {
  * 确定选择
  */
 function submitAddForm() {
+  let insertStr = ''
   selectData.value.forEach((r, index) => {
     if (attachType.value === 'img') {
-      let insertStr = `\n![${r.name}](${r.url})`;
-      aiEditor.insert(insertStr)
-      if (index === selectData.value.length -1 )  {
-        aiEditor.insert('\n')
-      }
+      insertStr += `![${r.name}](${r.url})`;
     }
 
     if (attachType.value === 'video') {
-      let insertStr = `\n<video src="${r.url}" controls="controls" width="100%"></video>`;
-      aiEditor.insert(insertStr)
+      insertStr += `<video src="${r.url}" controls="controls" width="100%"></video>`;
     }
     if (attachType.value === 'other') {
-      let insertStr = `\n[${r.name}](${r.url})`;
-      aiEditor.insert(insertStr)
+      insertStr += `[${r.name}](${r.url})`;
     }
   });
+  aiEditor.insert(insertStr)
   open.value = false
   selectData.value = []
 }
