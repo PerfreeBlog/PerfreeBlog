@@ -1,9 +1,10 @@
 package com.perfree.service.option;
 
 import com.perfree.cache.OptionCacheService;
+import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.controller.auth.option.vo.OptionAddReqVO;
-import com.perfree.controller.auth.option.vo.OptionThemeAddReqVO;
+import com.perfree.controller.auth.option.vo.OptionAddListReqVO;
 import com.perfree.convert.option.OptionConvert;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
@@ -55,19 +56,19 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
 
     @Override
     @Transactional
-    public Boolean saveCurrentThemeSetting(OptionThemeAddReqVO optionThemeAddReqVO) {
+    public Boolean saveCurrentThemeSetting(OptionAddListReqVO optionAddListReqVO) {
         String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), "");
         if (StringUtils.isBlank(webTheme)) {
             throw new ServiceException(ErrorCode.GET_CURRENT_THEME_ERROR);
         }
 
         List<Option> optionList = new ArrayList<>();
-        for (OptionAddReqVO optionAddReqVO : optionThemeAddReqVO.getOptions()) {
+        for (OptionAddReqVO optionAddReqVO : optionAddListReqVO.getOptions()) {
             Option option = OptionConvert.INSTANCE.convertByAddReqVO(optionAddReqVO);
-            option.setTheme(webTheme);
+            option.setIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + webTheme);
             optionList.add(option);
         }
-        optionMapper.delByTheme(webTheme);
+        optionMapper.delByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + webTheme);
         optionMapper.insertBatch(optionList);
         for (Option option : optionList) {
             optionCacheService.putOption(option.getKey(), OptionConvert.INSTANCE.convertModelToDTO(option));
@@ -81,6 +82,23 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
         if (StringUtils.isBlank(webTheme)) {
             throw new ServiceException(ErrorCode.GET_CURRENT_THEME_ERROR);
         }
-        return optionMapper.getCurrentThemeSettingValue(webTheme);
+        return optionMapper.getSettingValueByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + webTheme);
+    }
+
+    @Override
+    @Transactional
+    public Boolean saveOptionList(OptionAddListReqVO optionAddListReqVO) {
+        if (optionAddListReqVO.getOptions().isEmpty()) {
+            return true;
+        }
+        List<Option> optionList = OptionConvert.INSTANCE.convertModelListByAddList(optionAddListReqVO.getOptions());
+        optionMapper.delByIdentification(optionList.get(0).getIdentification());
+        optionMapper.insertBatch(optionList);
+        return true;
+    }
+
+    @Override
+    public List<Option> getOptionByIdentification(String identification) {
+        return optionMapper.getSettingValueByIdentification(identification);
     }
 }

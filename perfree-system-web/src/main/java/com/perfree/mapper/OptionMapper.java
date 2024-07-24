@@ -25,12 +25,12 @@ public interface OptionMapper extends BaseMapperX<Option> {
         );
     }
 
-    default void delByTheme(String webTheme){
-        delete(new LambdaQueryWrapper<Option>().eq(Option::getTheme, webTheme));
+    default void delByIdentification(String identification){
+        delete(new LambdaQueryWrapper<Option>().eq(Option::getIdentification, identification));
     }
 
-    default List<Option> getCurrentThemeSettingValue(String webTheme){
-        return selectList(new LambdaQueryWrapper<Option>().eq(Option::getTheme, webTheme));
+    default List<Option> getSettingValueByIdentification(String identification){
+        return selectList(new LambdaQueryWrapper<Option>().eq(Option::getIdentification, identification));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.perfree.service.option;
 
-import com.perfree.controller.auth.option.vo.OptionThemeAddReqVO;
+import com.perfree.controller.auth.option.vo.OptionAddListReqVO;
 import com.perfree.model.Option;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -32,15 +32,29 @@ public interface OptionService extends IService<Option> {
 
     /**
      * 保存主题设置
-     * @param optionThemeAddReqVO optionThemeAddReqVO
+     * @param optionAddListReqVO optionThemeAddReqVO
      * @return Boolean
      */
-    Boolean saveCurrentThemeSetting(OptionThemeAddReqVO optionThemeAddReqVO);
+    Boolean saveCurrentThemeSetting(OptionAddListReqVO optionAddListReqVO);
 
     /**
      * 获取当前启用主题的设置项的所有值
      * @return List<Option>
      */
     List<Option> getCurrentThemeSettingValue();
+
+    /**
+     * 保存配置项
+     * @param optionAddListReqVO optionAddListReqVO
+     * @return Boolean
+     */
+    Boolean saveOptionList(OptionAddListReqVO optionAddListReqVO);
+
+    /**
+     * 根据标识获取所有配置信息
+     * @param identification identification
+     * @return List<Option>
+     */
+    List<Option> getOptionByIdentification(String identification);
 
 }

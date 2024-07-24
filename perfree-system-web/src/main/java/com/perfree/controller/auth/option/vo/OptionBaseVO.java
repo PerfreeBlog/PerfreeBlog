@@ -11,4 +11,7 @@ public class OptionBaseVO {
 
     @Schema(description = "value" )
     private String value;
+
+    @Schema(description = "标识" )
+    private String identification;
 }

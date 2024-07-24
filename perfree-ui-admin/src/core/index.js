@@ -21,6 +21,7 @@ import AttachSelectInput from "@/core/components/attach-select-input.vue";
 import FcDesigner from '@form-create/designer'
 import formCreate from '@form-create/element-ui'
 import install from '@form-create/element-ui/auto-import'
+import {CONSTANTS} from "@/core/utils/constants.js";
 
 const app = createApp(App);
 
@@ -52,6 +53,22 @@ window.axios = axios;
 // form-create
 FcDesigner.component('AttachSelectInput', AttachSelectInput);
 formCreate.use(install)
+formCreate.fetch = (options) => {
+    if (!options.headers) {
+        options.headers = [];
+    }
+    options.headers.push({ Authorization: "Bearer " + JSON.parse(localStorage.getItem(CONSTANTS.STORAGE_TOKEN)).accessToken})
+    fetch(options.action, {
+        headers: options.headers,
+        method: options.method,
+    }).then(res=>{
+        res.json(data=>{
+            options.onSuccess(data);
+        })
+    }).catch(e=>{
+        options.onError(e);
+    })
+}
 app.use(formCreate)
 app.use(FcDesigner)
 

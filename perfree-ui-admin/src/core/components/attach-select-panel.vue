@@ -130,6 +130,7 @@
 import {Refresh, Search} from "@element-plus/icons-vue";
 import {attachPageApi, getAttachApi, attachUpdateApi, getAllAttachGroupApi} from "@/core/api/attach.js";
 import {reactive, ref} from "vue";
+import {ElMessage} from "element-plus";
 
 const searchFormRef = ref();
 const searchForm = ref({

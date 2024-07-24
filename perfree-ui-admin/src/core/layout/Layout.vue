@@ -44,7 +44,7 @@
                     :enter-active-class="'animate__animated ' + appStore.routeAnimation"
                 >
                   <keep-alive :include="cachedViews" >
-                    <div :key="route.fullPath">
+                    <div :key="route.fullPath" class="p-route-page">
                       <component :is="Component" :key="route.fullPath"/>
                     </div>
                   </keep-alive>
@@ -205,24 +205,29 @@ initTabs()
 }
 
 .p-page {
-  padding: 15px;
-  height: calc(100% - 70px);
+  height: calc(100% - 40px);
   overflow: auto;
   background-color: var(--el-bg-color);
 }
+.p-route-page{
+  height: calc(100% - 30px);
+  padding: 15px;
+  background-color: var(--el-bg-color);
+  overflow: auto;
+}
 
-.p-page::-webkit-scrollbar {
+.p-route-page::-webkit-scrollbar {
   width: 8px;
 }
 
-.p-page::-webkit-scrollbar-thumb {
+.p-route-page::-webkit-scrollbar-thumb {
   background-color: var(--el-color-info-light-3);
   border-radius: 10px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
-.p-page::-webkit-scrollbar-track {
+.p-route-page::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: var(--el-color-info-light-7);
 }

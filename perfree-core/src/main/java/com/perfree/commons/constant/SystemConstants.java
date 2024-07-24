@@ -56,5 +56,5 @@ public class SystemConstants {
     /** 临时目录 */
     public static final String UPLOAD_TEMP_PATH = "resources/temp";
 
-
+    public static final String THEME_OPTION_IDENT_PRE = "theme_";
 }

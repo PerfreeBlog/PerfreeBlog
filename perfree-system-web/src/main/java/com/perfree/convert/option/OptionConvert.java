@@ -24,4 +24,6 @@ public interface OptionConvert {
 
     List<OptionRespVO> convertToRespVOList(List<Option> optionList);
 
+    List<Option> convertModelListByAddList(List<OptionAddReqVO> options);
+
 }

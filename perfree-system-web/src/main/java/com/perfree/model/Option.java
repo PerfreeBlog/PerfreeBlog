@@ -47,7 +47,7 @@ public class Option extends BaseModel implements Serializable {
     private String value;
 
     /**
-     * theme
+     * 标识
      */
-    private String theme;
+    private String identification;
 }
