@@ -39,7 +39,7 @@ function initSettingFrom() {
 }
 
 function initValue() {
-  getOptionByIdentificationApi('system').then(res => {
+  getOptionByIdentificationApi('system_setting').then(res => {
     if (res.code === 200) {
       formData.value = res.data.reduce((acc, { key, value }) => {
         acc[key] = value;
@@ -66,7 +66,7 @@ function submitSetting(formData) {
     let option = {
       key,
       value: formData[key],
-      identification: 'system'
+      identification: 'system_setting'
     }
     param.options.push(option);
   })
