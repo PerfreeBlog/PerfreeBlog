@@ -162,7 +162,7 @@ import {reactive, ref} from "vue";
 
 const searchForm = ref({
   pageNo: 1,
-  pageSize: 20,
+  pageSize: 10,
   total: 0,
   userName: '',
   account: ''

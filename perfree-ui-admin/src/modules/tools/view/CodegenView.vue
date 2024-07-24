@@ -97,7 +97,7 @@ import {useRouter} from "vue-router";
 
 const searchForm = ref({
   pageNo: 1,
-  pageSize: 20,
+  pageSize: 10,
   total: 0,
   tableName: ''
 })
