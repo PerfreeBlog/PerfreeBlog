@@ -5,6 +5,12 @@
         <el-form-item label="附件名称">
           <el-input v-model="searchForm.name" placeholder="请输入附件名称" clearable/>
         </el-form-item>
+        <el-form-item label="分组">
+          <el-select v-model="searchForm.attachGroup" placeholder="请选择分组" filterable
+                     allow-create clearable style="width: 200px">
+            <el-option v-for="item in attachGroups" :key="item.attachGroup" :label="item.attachGroup" :value="item.attachGroup" />
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="initList" :icon="Search">查询</el-button>
           <el-button :icon="Refresh" @click="resetSearchForm">重置</el-button>
@@ -203,12 +209,14 @@ function initList() {
  */
 function resetSearchForm() {
   searchForm.value = {
-    attachConfigId: undefined,
-    attachGroup: undefined,
-    storage: undefined,
-    name: ''
+    pageNo: 1,
+    pageSize: 8,
+    total: 0,
+    name: '',
+    type: ''
   }
   searchFormRef.value.resetFields();
+  initList();
 }
 
 function selectAttach(item){
@@ -261,6 +269,7 @@ function submitUpdateForm () {
     }
   })
 }
+initAttachGroups();
 initList();
 </script>
 

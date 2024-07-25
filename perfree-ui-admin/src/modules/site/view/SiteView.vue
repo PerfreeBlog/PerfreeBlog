@@ -126,9 +126,13 @@ const addRule = reactive({
  */
 function resetSearchForm() {
   searchForm.value = {
+    pageNo: 1,
+    pageSize: 10,
+    total: 0,
     name: ''
   }
   searchFormRef.value.resetFields();
+  initList();
 }
 
 /**

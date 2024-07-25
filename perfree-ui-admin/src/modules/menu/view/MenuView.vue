@@ -270,6 +270,7 @@ function resetSearchForm() {
     type: 0
   }
   searchFormRef.value.resetFields();
+  initList();
 }
 
 

@@ -182,6 +182,9 @@ function initTag() {
  */
 function resetSearchForm() {
   searchForm.value = {
+    pageNo: 1,
+    pageSize: 10,
+    total: 0,
     title: '',
     type: 'article',
     status: null,
@@ -189,6 +192,7 @@ function resetSearchForm() {
     tagId: null
   }
   searchFormRef.value.resetFields();
+  initList();
 }
 
 /**

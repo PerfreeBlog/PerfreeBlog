@@ -46,8 +46,8 @@
     <div class="table-box">
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading"  :show-overflow-tooltip="true">
         <el-table-column label="序号" min-width="50" type="index" />
-        <el-table-column prop="name" label="附件名称" min-width="150" />
-        <el-table-column prop="attachGroup" label="预览" min-width="100">
+        <el-table-column prop="name" label="附件名称" min-width="130" />
+        <el-table-column prop="attachGroup" label="预览" min-width="80">
           <template v-slot="scope">
             <div class="block">
             <el-image style="width: 100%; max-height: 100%" :src="scope.row.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
@@ -64,13 +64,20 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="url" label="访问地址" min-width="240">
+        <el-table-column prop="url" label="访问地址" min-width="280">
           <template v-slot="scope">
             <el-link :href="scope.row.url" target="_blank" :underline="false">{{ scope.row.url }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="附件类型" min-width="100" />
-        <el-table-column prop="attachGroup" label="分组" min-width="100">
+        <el-table-column prop="type" label="附件类型" min-width="60" >
+          <template v-slot="scope">
+            <span v-if="scope.row.type === 'img'">图片</span>
+            <span v-if="scope.row.type === 'video'">视频</span>
+            <span v-if="scope.row.type === 'audio'">音频</span>
+            <span v-if="scope.row.type === 'other'">其他</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="attachGroup" label="分组" min-width="80">
           <template v-slot="scope">
             <span>{{scope.row.attachGroup }}</span>
           </template>
@@ -133,8 +140,11 @@
               :action="serverBaseUrl + '/api/auth/attach/upload'"
               multiple
               style="width: 100%"
+              ref="uploadRef"
               v-model:file-list="addForm.fileList"
               :data="{attachConfigId: addForm.attachConfigId, attachGroup: addForm.attachGroup}"
+              :on-success="uploadSuccess"
+              :on-error="uploadError"
           >
             <el-icon class="el-icon--upload"><upload-filled /></el-icon>
             <div class="el-upload__text">
@@ -246,6 +256,7 @@ let  headers = {
 };
 const addFormRef = ref();
 const showFormRef = ref();
+let uploadRef = ref();
 
 const addForm = ref({
   attachConfigId: defaultAttachConfig.value,
@@ -305,12 +316,16 @@ function closeAdd() {
  */
 function resetSearchForm() {
   searchForm.value = {
+    pageNo: 1,
+    pageSize: 10,
+    total: 0,
+    name: '',
     attachConfigId: undefined,
-    attachGroup: undefined,
     storage: undefined,
-    name: ''
+    attachGroup: undefined
   }
   searchFormRef.value.resetFields();
+  initList();
 }
 
 /**
@@ -420,6 +435,30 @@ function handleDelete(row) {
       }
     });
   }).catch(() => {})
+}
+
+/**
+ * 上传成功回调
+ * @param response
+ * @param uploadFile
+ * @param uploadFiles
+ */
+function uploadSuccess(response, uploadFile, uploadFiles) {
+  if (response.code === 200) {
+    ElMessage.success(`[${uploadFile.name}]上传成功`);
+  }else {
+    ElMessage.error(response.msg);
+    uploadRef.value.handleRemove(uploadFile);
+  }
+}
+
+
+/**
+ * 上传失败回调
+ * @param error
+ */
+function uploadError(error) {
+  ElMessage.error('上传失败,请检查网络是否通通畅');
 }
 
 initAttachGroups();

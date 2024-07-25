@@ -177,6 +177,7 @@ function resetSearchForm() {
     name: ''
   }
   searchFormRef.value.resetFields();
+  initList();
 }
 
 /**
