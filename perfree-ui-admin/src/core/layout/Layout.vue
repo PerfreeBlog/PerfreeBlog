@@ -20,17 +20,19 @@
                       v-for="tab in tabs"
                       :key="tab.path"
                       @click="clickTabHandle(tab)"
+                      @contextmenu="showRightMenu($event, tab)"
                   >
                     <span class="tab-item-name">{{ tab.name }}</span>
                     <span
                         class="tab-item-btn"
                         v-if="tab.hasClose"
-                        @click="closeTabHandle(tab.path, $event)"
+                        @click="closeTab(tab.path, $event)"
                     >
                       <font-awesome-icon icon="fa-solid fa-xmark "/>
                     </span>
                   </li>
                 </ul>
+
               </div>
               <span class="tab-right-btn" @click="scrollToRight">
                 <font-awesome-icon icon="fa-solid fa-angle-right "/>
@@ -57,6 +59,16 @@
           </el-footer>
         </el-container>
       </el-container>
+
+      <div v-show="rightMenuIsShow" class="rightMenuBox" ref="rightMenuBoxRef">
+        <ul>
+          <li @click="refreshRoute"><font-awesome-icon icon="fa-solid fa-arrows-rotate " /> 刷新页面</li>
+          <li @click="closeCurrTab"><font-awesome-icon icon="fa-solid fa-times-circle " /> 关闭当前</li>
+          <li @click="closeOtherTab"><font-awesome-icon icon="fa-solid fa-rectangle-xmark " /> 关闭其他</li>
+          <li @click="closeAllTab"><font-awesome-icon icon="fa-solid fa-remove " /> 全部关闭</li>
+        </ul>
+      </div>
+
     </div>
   </el-config-provider>
 </template>
@@ -68,10 +80,12 @@ import {useAppStore} from '@/core/stores/appStore'
 import {ElConfigProvider} from 'element-plus'
 import {useCssVar} from '@vueuse/core'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-import {tabsData} from "@/core/utils/tabs.js";
+import {clearTabs, tabsData} from "@/core/utils/tabs.js";
 import {useCommonStore} from "@/core/stores/commonStore.js";
 import {useRoute, useRouter} from "vue-router";
-import {reactive, ref, watch} from "vue";
+import {nextTick, reactive, ref, watch} from "vue";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+
 
 const appStore = useAppStore()
 const commonStore = useCommonStore()
@@ -92,14 +106,15 @@ let locale = ref(zhCn)
 let menuIsCollapse = ref(false)
 let tabs = reactive(tabsData)
 
-console.log(appStore.routeAnimation)
+let rightMenuIsShow = ref(false)
+const rightMenuBoxRef = ref();
+
 const classObject = ref({
   commonLayout: true,
   fullMaxHeight: true,
 })
 
 watch(route, () => {
-  console.log('route变化', route)
   handleAddTab(route)
 })
 
@@ -151,8 +166,12 @@ const clickTabHandle = (val) => {
   router.push(val.path)
 }
 
+function closeTab(path, event) {
+  event.stopPropagation();
+  closeTabHandle(path);
+}
 // 关闭tab
-const closeTabHandle = (path, event) => {
+const closeTabHandle = (path) => {
   let indexToDelete = tabs.findIndex((tab) => tab.path === path)
   if (tabs[indexToDelete].currActive) {
     tabs.splice(indexToDelete, 1)
@@ -161,7 +180,6 @@ const closeTabHandle = (path, event) => {
   } else {
     tabs.splice(indexToDelete, 1)
   }
-  event.stopPropagation()
 }
 
 // 初始化主题
@@ -189,6 +207,78 @@ function initTabs() {
     tabs.push(appStore.activeTab)
   }
   handleAddTab(route)
+}
+
+let currRightMenuTab = null;
+/**
+ * 右键菜单
+ * @param e
+ * @param tab
+ */
+function showRightMenu(e, tab) {
+  currRightMenuTab = tab;
+  e.preventDefault();
+  rightMenuIsShow.value = true;
+  rightMenuBoxRef.value.style.left= e.x + 'px'
+  rightMenuBoxRef.value.style.top= e.y + 'px'
+  document.addEventListener('click', handleClickOutside);
+}
+
+function handleClickOutside(e) {
+  if (rightMenuBoxRef.value && !rightMenuBoxRef.value.contains(e.target)) {
+    closeRightMenu();
+  }
+}
+
+function closeRightMenu() {
+  rightMenuIsShow.value = false;
+  document.removeEventListener('click', handleClickOutside);
+}
+
+// 刷新当前路由
+function refreshRoute () {
+  appStore.setRefreshRouteflag(true)
+  nextTick(() => {
+    setTimeout(() => {
+      appStore.setRefreshRouteflag(false)
+    }, 200)
+  })
+  closeRightMenu();
+}
+
+// 关闭当前tab
+function closeCurrTab() {
+  if (currRightMenuTab.hasClose) {
+    closeTabHandle(currRightMenuTab.path);
+  }
+  closeRightMenu();
+}
+
+// 关闭其他tab
+function closeOtherTab() {
+  for (let i = (tabs.length -1); i >=0; i--) {
+    if (tabs[i].hasClose && tabs[i].path !== currRightMenuTab.path) {
+      let indexToDelete = tabs.findIndex((tab) => tab.path === tabs[i].path)
+      tabs.splice(indexToDelete, 1)
+    }
+  }
+
+  if (!currRightMenuTab.currActive) {
+    router.push(currRightMenuTab.path)
+  }
+  closeRightMenu();
+}
+
+// 关闭全部tab
+function closeAllTab() {
+  for (let i = (tabs.length -1); i >=0; i--) {
+    if (tabs[i].hasClose) {
+      let indexToDelete = tabs.findIndex((tab) => tab.path === tabs[i].path)
+      tabs.splice(indexToDelete, 1)
+    }
+  }
+  router.push('/admin')
+  closeRightMenu();
 }
 
 initPrimaryColor()
@@ -353,5 +443,31 @@ initTabs()
   color: var(--el-color-info);
   font-size: 14px;
   display: none;
+}
+.rightMenuBox{
+  position: fixed;
+  z-index: 9999;
+  background: var(--el-bg-color);
+  box-shadow: 2px 2px 3px 0 rgba(0,0,0,.3);
+  border-radius: 5px;
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  ul{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    li{
+      padding-left: 15px;
+      padding-right: 15px;
+      line-height: 30px;
+      font-size: 14px;
+      font-family: var(--el-font-family);
+      cursor: pointer;
+    }
+    li:hover{
+      background-color: var(--el-bg-color-page);
+    }
+  }
 }
 </style>

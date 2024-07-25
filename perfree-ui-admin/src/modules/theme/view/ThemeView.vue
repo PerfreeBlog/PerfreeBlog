@@ -49,7 +49,7 @@
               </el-button>
             </div>
             <div class="theme-btn-item">
-              <el-button link class="theme-button">
+              <el-button link class="theme-button" @click="toThemeEditPage(theme)">
                 <font-awesome-icon icon="fa-solid fa-pencil-alt" class="theme-btn-icon" /> 编辑
               </el-button>
             </div>
@@ -190,6 +190,9 @@ function toThemeSettingPage() {
   toPage('', '/admin/themeSetting', null)
 }
 
+function toThemeEditPage(theme) {
+  toPage(`主题编辑-[${theme.name}]`, '/admin/theme/edit/' + theme.name, '')
+}
 initList();
 </script>
 

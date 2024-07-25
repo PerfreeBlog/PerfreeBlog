@@ -4,12 +4,12 @@ export default module => {
         router: (menusRouter, moduleName) => {
             let router = [
                 {
-                    path: '/admin/theme/edit/:name',
-                    name: 'themeEdit',
-                    component: modules[`./view/ThemeEditView.vue`],
+                    path: '/admin/page/edit/:id',
+                    name: 'updateArticle',
+                    component: modules[`./view/PageCreateView.vue`],
                     meta: {
                         moduleName: moduleName,
-                        title: "编辑主题",
+                        title: "修改页面",
                         keepAlive: false
                     }
                 },
