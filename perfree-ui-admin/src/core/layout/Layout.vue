@@ -204,7 +204,10 @@ const initPrimaryColor = () => {
  */
 function initTabs() {
   if (appStore.activeTab && appStore.activeTab.path !== '/admin') {
-    tabs.push(appStore.activeTab)
+    let findIndex = tabs.findIndex((tab) => tab.path === appStore.activeTab.path)
+    if (findIndex < 0) {
+      tabs.push(appStore.activeTab)
+    }
   }
   handleAddTab(route)
 }
