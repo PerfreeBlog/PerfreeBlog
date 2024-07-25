@@ -1,57 +1,57 @@
 <template>
-  <div>
+  <div v-loading="loading">
     <div class="theme-header-box">
       <h2 class="theme-editor-title">主题编辑: {{currThemeName}}</h2>
       <el-button type="primary" style="margin-left: auto;" @click="saveFile">保存</el-button>
     </div>
     <el-divider />
+    <el-row :gutter="20">
+      <el-col :span="4">
+        <el-tree
+            style="width: 100%;max-height: 700px;overflow: auto;"
+            :data="fileList"
+            :props="defaultProps"
+            @node-click="handleNodeClick"
+            node-key="id"
+            :default-checked-keys="activeFileId"
+            ref="treeRef"
+        >
+          <template #default="{ node, data }">
+          <span class="custom-tree-node">
+            <font-awesome-icon  icon="fa-regular fa-folder-open " v-if="data.fileType === 'dir'" class="file-list-icon folder"></font-awesome-icon>
+            <font-awesome-icon  icon="fa-brands fa-js-square" v-else-if="data.fileType === 'js'" class="file-list-icon js"></font-awesome-icon>
+            <font-awesome-icon  icon="fa-brands fa-html5 " v-else-if="data.fileType === 'html'" class="file-list-icon html"></font-awesome-icon>
+            <font-awesome-icon  icon="fa-brands fa-css3 "
+                                v-else-if="data.fileType === 'css' || data.fileType === 'less' || data.fileType === 'scss'" class="file-list-icon css"
+            ></font-awesome-icon>
+             <font-awesome-icon  icon="fa-solid fa-text-height " v-else-if="data.fileType === 'txt'" class="file-list-icon txt"></font-awesome-icon>
+            <font-awesome-icon  icon="fa-regular fa-file " v-else class="file-list-icon"></font-awesome-icon>
+            <span>{{ node.label }}</span>
+          </span>
+          </template>
+        </el-tree>
+      </el-col>
+      <el-col :span="20">
+        <codemirror
+            v-model="code"
+            placeholder="请选择左侧要编辑的文件..."
+            :style="{ height: '700px' }"
+            :autofocus="true"
+            :indent-with-tab="true"
+            :tab-size="2"
+            :extensions="extensions"
+        />
+      </el-col>
+    </el-row>
+
+
+    <el-image-viewer
+        v-if="showViewer"
+        :url-list="srcList"
+        hide-on-click-modal
+        @close="closeViewer">
+    </el-image-viewer>
   </div>
-  <el-row :gutter="20">
-    <el-col :span="4">
-      <el-tree
-          style="width: 100%;max-height: 700px;overflow: auto;"
-          :data="fileList"
-          :props="defaultProps"
-          @node-click="handleNodeClick"
-          node-key="id"
-          :default-checked-keys="activeFileId"
-          ref="treeRef"
-      >
-        <template #default="{ node, data }">
-        <span class="custom-tree-node">
-          <font-awesome-icon  icon="fa-regular fa-folder-open " v-if="data.fileType === 'dir'" class="file-list-icon folder"></font-awesome-icon>
-          <font-awesome-icon  icon="fa-brands fa-js-square" v-else-if="data.fileType === 'js'" class="file-list-icon js"></font-awesome-icon>
-          <font-awesome-icon  icon="fa-brands fa-html5 " v-else-if="data.fileType === 'html'" class="file-list-icon html"></font-awesome-icon>
-          <font-awesome-icon  icon="fa-brands fa-css3 "
-                              v-else-if="data.fileType === 'css' || data.fileType === 'less' || data.fileType === 'scss'" class="file-list-icon css"
-          ></font-awesome-icon>
-           <font-awesome-icon  icon="fa-solid fa-text-height " v-else-if="data.fileType === 'txt'" class="file-list-icon txt"></font-awesome-icon>
-          <font-awesome-icon  icon="fa-regular fa-file " v-else class="file-list-icon"></font-awesome-icon>
-          <span>{{ node.label }}</span>
-        </span>
-        </template>
-      </el-tree>
-    </el-col>
-    <el-col :span="20">
-      <codemirror
-          v-model="code"
-          placeholder="请选择左侧要编辑的文件..."
-          :style="{ height: '700px' }"
-          :autofocus="true"
-          :indent-with-tab="true"
-          :tab-size="2"
-          :extensions="extensions"
-      />
-    </el-col>
-  </el-row>
-
-
-  <el-image-viewer
-      v-if="showViewer"
-      :url-list="srcList"
-      hide-on-click-modal
-      @close="closeViewer">
-  </el-image-viewer>
 </template>
 <script setup>
 
@@ -66,6 +66,7 @@ import {oneDark} from '@codemirror/theme-one-dark'
 
 const currThemeName = router.currentRoute.value.params.name;
 let fileList = ref([]);
+let loading = ref(true)
 const defaultProps = {
   children: 'children',
   label: 'fileName',
@@ -83,12 +84,14 @@ const code = ref(``)
 const extensions = [javascript(), oneDark]
 const supportEditFileType = ['java', 'js', 'css', 'html', 'json', 'yaml', 'less', 'scss', 'txt', 'md']
 function initFileList() {
+  loading.value = true;
   getThemeFilesByName(currThemeName).then(res => {
     if (res.code === 200) {
       fileList.value = handleTree(res.data, "id", "pid",'children', '-1');
     } else {
       ElMessage.error(res.msg);
     }
+    loading.value = false;
   })
 }
 
@@ -110,6 +113,7 @@ function handleNodeClick(data) {
     themeName: currThemeName,
     path:  data.filePath
   }
+  loading.value = true;
   getThemeFileContent(param).then(res => {
     if (res.code === 200) {
       activeFileId.value = [data.id];
@@ -119,6 +123,7 @@ function handleNodeClick(data) {
     } else {
       ElMessage.error(res.msg);
     }
+    loading.value = false;
   })
 }
 
@@ -136,12 +141,14 @@ function saveFile() {
   if (!activeFile.value.filePath) {
     return
   }
+  loading.value = true;
   saveThemeFileContent({themeName: currThemeName, content: code.value, path: activeFile.value.filePath}).then(res => {
     if (res.code === 200 && res.data) {
       ElMessage.success('保存成功');
     } else {
       ElMessage.error(res.msg);
     }
+    loading.value = false;
   })
 }
 
