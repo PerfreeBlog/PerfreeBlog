@@ -46,7 +46,7 @@ import 'highlight.js/styles/atom-one-light.css'
 import json from 'highlight.js/lib/languages/json'
 import {useClipboard} from "@vueuse/core";
 import {ElMessage} from "element-plus";
-import {AttachSelectInputRule} from "@/core/components/fc-components/AttachSelectInput.js";
+import {AttachSelectInputRule} from "@/core/components/attach/AttachSelectInput.js";
 import {onMounted, ref} from "vue";
 
 const { copy, isSupported } = useClipboard({ legacy: true })

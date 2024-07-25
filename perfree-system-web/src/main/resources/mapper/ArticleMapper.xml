@@ -88,4 +88,8 @@
         where t1.type = #{articleType} and t1.status = #{status} and t1.id <![CDATA[ < ]]> #{id}
         ORDER BY t1.id desc LIMIT 0,1
     </select>
+    <select id="getArticleById" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.id = #{id}
+    </select>
 </mapper>

@@ -121,7 +121,7 @@ import {
   categoryUpdateApi
 } from "../api/category.js";
 import {handleTree} from "@/core/utils/perfree.js";
-import AttachSelectInput from "@/core/components/attach-select-input.vue";
+import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {reactive, ref} from "vue";
 

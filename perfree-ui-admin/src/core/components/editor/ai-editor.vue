@@ -14,8 +14,8 @@
 <script setup>
 import {AiEditor} from "aieditor";
 import "aieditor/dist/style.css"
-import {onMounted, onUnmounted, ref} from "vue";
-import AttachSelectPanel from "@/core/components/attach-select-panel.vue";
+import {onMounted, onUnmounted, ref, watch} from "vue";
+import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {CONSTANTS} from "@/core/utils/constants.js";
 import {ElMessage} from "element-plus";
 
@@ -28,6 +28,11 @@ let attachType = ref('')
 let attachMaxSelect = ref(0)
 const props = defineProps(['initValue'])
 
+watch(() => props.initValue, (val) => {
+  if (aiEditor) {
+    aiEditor.setContent(val)
+  }
+})
 onMounted(() => {
   aiEditor = new AiEditor({
     element: divRef.value,

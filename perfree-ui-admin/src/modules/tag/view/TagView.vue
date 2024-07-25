@@ -103,7 +103,7 @@
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {parseTime} from "@/core/utils/perfree.js";
 import {tagAddApi, tagDelApi, tagGetApi, tagPageApi, tagUpdateApi} from "../api/tag.js";
-import AttachSelectInput from "@/core/components/attach-select-input.vue";
+import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {reactive, ref} from "vue";
 

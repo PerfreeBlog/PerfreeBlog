@@ -96,4 +96,19 @@ public interface ArticleService extends IService<Article> {
      * @return ArticleRespVO ArticleRespVO
      */
     ArticleRespVO getNextArticle(Integer id, String articleType, Integer status);
+
+    /**
+     * 根据id获取文章
+     * @param id id
+     * @return Article
+     */
+    ArticleRespVO getArticleById(Integer id);
+
+    /**
+     * 修改文章
+     * @param articleUpdateReqVO articleUpdateReqVO
+     * @return Article
+     */
+    Article updateArticle(ArticleUpdateReqVO articleUpdateReqVO);
+
 }

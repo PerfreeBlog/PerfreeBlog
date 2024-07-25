@@ -199,7 +199,7 @@ import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {menuAddApi, menuDelApi, menuGetApi, menuPageApi, menuUpdateApi} from "../api/menu.js";
 import {handleTree} from "/src/core/utils/perfree.js";
 import {ElMessage, ElMessageBox} from "element-plus";
-import ElIconPicker from "/src/core/components/el-icon-picker.vue";
+import ElIconPicker from "@/core/components/icon/el-icon-picker.vue";
 import {reactive, ref} from "vue";
 
 const searchFormRef = ref();

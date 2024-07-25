@@ -203,6 +203,7 @@ function handleAdd() {
  * 修改
  */
 function handleUpdate(row) {
+  toPage(`修改文章[${row.title}]`, '/admin/article/edit/' + row.id, '')
 }
 
 

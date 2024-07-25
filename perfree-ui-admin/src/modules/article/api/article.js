@@ -21,3 +21,11 @@ export function articleUpdateStatusApi(data) {
 export function articleDelApi(id) {
     return axios.delete('/api/auth/article/del?id=' + id);
 }
+
+export function articleGetApi(id) {
+    return axios.get('/api/auth/article/get?id=' + id);
+}
+
+export function updateArticleApi(data) {
+    return axios.put('/api/auth/article/updateArticle', data);
+}

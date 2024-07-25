@@ -20,14 +20,14 @@
                 </div>
                 <div class="content-label-right">
                   切换编辑器:
-                  <el-select placeholder="Select" size="small" style="width: 180px" v-model="editorType">
-                    <el-option :key="'Vditor(markdown)'" :label="'Vditor(markdown)'" :value="'Vditor(markdown)'" />
-                    <el-option :key="'aiEditor'" :label="'aiEditor'" :value="'aiEditor'" />
+                  <el-select placeholder="Select" size="small" style="width: 180px" v-model="addForm.contentModel">
+                    <el-option :key="'Vditor'" :label="'Vditor'" :value="'Vditor'" />
+                    <el-option :key="'AiEditor'" :label="'AiEditor'" :value="'AiEditor'" />
                   </el-select>
                 </div>
               </div>
             </template>
-            <custom-editor :editor-type="editorType"  :init-value="addForm.content"  ref="editorRef"></custom-editor>
+            <custom-editor :editor-type="addForm.contentModel"  :init-value="addForm.content"  ref="editorRef"></custom-editor>
           </el-form-item>
         </el-col>
 
@@ -93,20 +93,20 @@
   </div>
 </template>
 <script setup>
-import AttachSelectInput from "@/core/components/attach-select-input.vue";
-import CustomEditor from "../components/custom-editor.vue";
+import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
+import CustomEditor from "@/core/components/editor/custom-editor.vue";
 import {categoryListTreeApi} from "../api/category.js";
 import {getAllTag} from "../api/tag.js";
-import {articleAddApi} from "../api/article.js";
+import {articleAddApi, articleGetApi, updateArticleApi} from "../api/article.js";
 import {handleTree} from "@/core/utils/perfree.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import pinyin from 'js-pinyin'
 import {closeTab, toPage} from "@/core/utils/tabs.js";
 import {reactive, ref} from "vue";
 
-const editorType = ref('Vditor(markdown)');
 const addFormRef = ref();
 const addForm = ref({
+  id: null,
   title: '',
   content: '',
   parseContent: '',
@@ -121,7 +121,7 @@ const addForm = ref({
   isComment: 1,
   flag: '',
   type: 'article',
-  contentModel: ''
+  contentModel: 'Vditor'
 
 });
 
@@ -157,6 +157,7 @@ function initTag() {
  */
 function resetAddForm() {
   addForm.value = {
+    id: null,
     title: '',
     content: '',
     parseContent: '',
@@ -171,7 +172,7 @@ function resetAddForm() {
     isComment: 1,
     flag: '',
     type: 'article',
-    contentModel: ''
+    contentModel: 'Vditor'
   }
   editorRef.value.resetContent();
   addFormRef.value.resetFields();
@@ -184,11 +185,6 @@ function submitAddForm(status) {
   if(!addForm.value.title) {
     ElMessage.error("文章标题不能为空");
     return;
-  }
-  if (editorType.value.indexOf("markdown") >= 0) {
-    addForm.value.contentModel = 'markdown'
-  } else {
-    addForm.value.contentModel = 'html'
   }
   let articleContent = editorRef.value.getValue();
   addForm.value.content = articleContent.content;
@@ -209,21 +205,38 @@ function submitAddForm(status) {
       addForm.value.addTags.push(tag);
     }
   })
-  articleAddApi(addForm.value).then(res => {
-    if (res.code === 200) {
-      resetAddForm();
-      ElMessageBox.confirm('文章发表成功!', '提示', {
-        confirmButtonText: '前往文章列表',
-        cancelButtonText: '再写一篇',
-        type: 'success',
-      }).then(() => {
-        toPage('', '/admin/article', '')
-        closeTab('/admin/article/create')
-      }).catch(() => {})
-    } else {
-      ElMessage.error(res.msg);
-    }
-  })
+  if (addForm.value.id) {
+    updateArticleApi(addForm.value).then(res => {
+      if (res.code === 200) {
+        ElMessageBox.confirm('文章修改成功!', '提示', {
+          confirmButtonText: '前往文章列表',
+          cancelButtonText: '继续修改',
+          type: 'success',
+        }).then(() => {
+          toPage('', '/admin/article', '')
+          closeTab(router.currentRoute.value.fullPath)
+        }).catch(() => {})
+      } else {
+        ElMessage.error(res.msg);
+      }
+    })
+  } else {
+    articleAddApi(addForm.value).then(res => {
+      if (res.code === 200) {
+        resetAddForm();
+        ElMessageBox.confirm('文章发表成功!', '提示', {
+          confirmButtonText: '前往文章列表',
+          cancelButtonText: '再写一篇',
+          type: 'success',
+        }).then(() => {
+          toPage('', '/admin/article', '')
+          closeTab(router.currentRoute.value.fullPath)
+        }).catch(() => {})
+      } else {
+        ElMessage.error(res.msg);
+      }
+    })
+  }
 }
 
 
@@ -234,6 +247,26 @@ function titleChange() {
   addForm.value.slug = pinyin.getCamelChars(addForm.value.title);
 }
 
+/**
+ * 初始化加载文章
+ */
+function initArticle() {
+  if (!router.currentRoute.value.params.id) {
+    return;
+  }
+  articleGetApi(router.currentRoute.value.params.id).then(res => {
+    if (res.code === 200) {
+      addForm.value = res.data;
+      addForm.value.categoryIds = [];
+      res.data.categoryList.forEach(r => {
+        addForm.value.categoryIds.push(r.id)
+      })
+      addForm.value.selectTags = res.data.tagList;
+    }
+  })
+}
+
+initArticle();
 initCategory();
 initTag();
 </script>

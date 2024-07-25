@@ -14,6 +14,7 @@ import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.*;
 import com.perfree.convert.article.ArticleConvert;
+import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.mapper.ArticleCategoryMapper;
 import com.perfree.mapper.ArticleMapper;
@@ -173,6 +174,57 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.getNextArticle(id, articleType, status);
     }
 
+    @Override
+    public ArticleRespVO getArticleById(Integer id) {
+        return articleMapper.getArticleById(id);
+    }
+
+    @Override
+    @Transactional
+    public Article updateArticle(ArticleUpdateReqVO articleUpdateReqVO) {
+        ArticleRespVO articleById = articleMapper.getArticleById(articleUpdateReqVO.getId());
+        if (null == articleById) {
+            throw new ServiceException(ErrorCode.ARTICLE_NOT_EXIST);
+        }
+        // 验证slug是否重复
+        Article queryBySlug = articleMapper.getBySlug(articleUpdateReqVO.getSlug());
+        if (null != queryBySlug && !articleById.getId().equals(queryBySlug.getId())) {
+            throw new ServiceException(ARTICLE_SLUG_EXIST);
+        }
+        // 获取新增的标签,将新增的标签入库
+        List<Tag> tagList = tagService.batchAddTagByName(articleUpdateReqVO.getAddTags());
+        for (Tag tag : tagList) {
+            articleUpdateReqVO.getTagIds().add(tag.getId());
+        }
+
+        Article article = ArticleConvert.INSTANCE.convertModelByUpdateArticleVO(articleUpdateReqVO);
+        article.setSummary(genSummary(article.getSummary(), article.getParseContent()));
+        articleMapper.updateById(article);
+
+        // 处理标签关联关系
+        List<ArticleTag> articleTagList = new ArrayList<>();
+        for (Integer tagId : articleUpdateReqVO.getTagIds()) {
+            ArticleTag articleTag = new ArticleTag();
+            articleTag.setArticleId(article.getId());
+            articleTag.setTagId(tagId);
+            articleTagList.add(articleTag);
+        }
+        articleTagMapper.delByArticleId(articleUpdateReqVO.getId());
+        articleTagMapper.insertBatch(articleTagList);
+
+        // 处理分类关联关系
+        List<ArticleCategory> articleCategoryList = new ArrayList<>();
+        for (Integer categoryId : articleUpdateReqVO.getCategoryIds()) {
+            ArticleCategory articleCategory = new ArticleCategory();
+            articleCategory.setArticleId(article.getId());
+            articleCategory.setCategoryId(categoryId);
+            articleCategoryList.add(articleCategory);
+        }
+        articleCategoryMapper.delByArticleId(articleUpdateReqVO.getId());
+        articleCategoryMapper.insertBatch(articleCategoryList);
+        return article;
+    }
+
     /**
      * 生成文章摘要
      * @param summary summary
@@ -184,7 +236,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             return summary;
         }
         OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_AUTO_GEN_SUMMARY.getKey());
-        if (null != option && !option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
+        if (null != option && null != option.getValue() && !option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             return summary;
         }
         String cleanHtmlTag = HtmlUtil.cleanHtmlTag(parseContent);

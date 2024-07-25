@@ -20,4 +20,6 @@ public interface ArticleConvert {
 
     Article convertModelByStatusVO(ArticleUpdateStatusReqVO articleUpdateStatusReqVO);
 
+    Article convertModelByUpdateArticleVO(ArticleUpdateReqVO articleUpdateReqVO);
+
 }

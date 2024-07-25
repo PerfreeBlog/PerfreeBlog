@@ -13,10 +13,10 @@
 
 <script setup>
 
-import {onBeforeUnmount, onMounted, ref} from "vue";
+import {onBeforeUnmount, onMounted, ref, watch} from "vue";
 import Vditor from "vditor";
 import 'vditor/dist/index.css';
-import AttachSelectPanel from "@/core/components/attach-select-panel.vue";
+import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {CONSTANTS} from "@/core/utils/constants.js";
 
 let contentEditor = '';
@@ -27,6 +27,11 @@ let attachType = ref('')
 let attachMaxSelect = ref(0)
 const props = defineProps(['initValue'])
 
+watch(() => props.initValue, (val) => {
+  if (contentEditor) {
+    contentEditor.setValue(val);
+  }
+})
 onMounted(() => {
   contentEditor = new Vditor('vditor', {
     height: 666,
@@ -192,10 +197,9 @@ function resetAddForm() {
 }
 
 function resetContent() {
-  contentEditor.deleteValue()
-  contentEditor.clearCache()
-  contentEditor.clearStack()
-  contentEditor.destroy()
+  contentEditor.setValue('');
+  contentEditor.clearCache();
+  contentEditor.clearStack();
 }
 
 function getValue() {

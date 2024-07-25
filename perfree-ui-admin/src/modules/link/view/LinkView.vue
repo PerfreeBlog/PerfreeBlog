@@ -103,7 +103,7 @@
 <script setup>
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {parseTime} from "@/core/utils/perfree.js";
-import AttachSelectInput from "@/core/components/attach-select-input.vue";
+import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {getLinkApi, linkAddApi, linkDelApi, linkPageApi, linkUpdateApi} from "../api/link.js";
 import {reactive, ref} from "vue";

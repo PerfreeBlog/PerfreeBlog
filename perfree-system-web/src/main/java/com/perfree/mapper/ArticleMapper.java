@@ -103,4 +103,12 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @return ArticleRespVO
      */
     ArticleRespVO getNextArticle(@Param("id") Integer id,@Param("articleType")  String articleType,@Param("status")  Integer status);
+
+    /**
+     * 根据文章id获取文章
+     * @param id id
+     * @return ArticleRespVO ArticleRespVO
+     */
+    ArticleRespVO getArticleById(@Param("id") Integer id);
+
 }
