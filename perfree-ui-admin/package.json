@@ -9,6 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/theme-one-dark": "^6.1.2",
     "@element-plus/icons-vue": "^2.3.1",
     "@form-create/designer": "^3.2.2",
     "@form-create/element-ui": "^3.2.0",
@@ -21,6 +25,7 @@
     "aieditor": "^1.0.13",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
+    "codemirror": "^6.0.1",
     "element-plus": "^2.7.7",
     "highlight.js": "^11.9.0",
     "js-pinyin": "^0.2.5",
@@ -29,6 +34,7 @@
     "pinia-plugin-persist": "^1.0.0",
     "vditor": "^3.10.4",
     "vue": "^3.4.29",
+    "vue-codemirror": "^6.1.1",
     "vue-dompurify-html": "^5.1.0",
     "vue-i18n": "9",
     "vue-router": "^4.4.0"

@@ -1,7 +1,11 @@
 package com.perfree.theme;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileReader;
+import cn.hutool.core.io.file.FileWriter;
+import cn.hutool.core.io.file.PathUtil;
 import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ZipUtil;
 import cn.hutool.json.JSONUtil;
 import com.perfree.cache.OptionCacheService;
@@ -10,6 +14,7 @@ import com.perfree.commons.exception.ServiceException;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.system.api.option.OptionApi;
+import com.perfree.theme.commons.ThemeFile;
 import com.perfree.theme.commons.ThemeInfo;
 import com.perfree.theme.commons.ThemeSetting;
 import jakarta.annotation.Resource;
@@ -22,10 +27,12 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class ThemeManager {
@@ -173,6 +180,7 @@ public class ThemeManager {
 
     /**
      * 获取主题配置信息
+     *
      * @param themeName themeName 可为空,为空获取当前默认主题
      * @return ThemeInfo
      */
@@ -186,6 +194,7 @@ public class ThemeManager {
 
     /**
      * 获取当前主题的设置项
+     *
      * @return ThemeSetting
      */
     public ThemeSetting getCurrentThemeSetting() {
@@ -203,6 +212,7 @@ public class ThemeManager {
 
     /**
      * 获取主题所在目录的File对象,如果themeName为空则获取当前启用主题
+     *
      * @param themeName themeName
      * @return File
      */
@@ -219,5 +229,94 @@ public class ThemeManager {
             return file;
         }
         return null;
+    }
+
+    public List<ThemeFile> getThemeFilesByName(String themeName) {
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        if (!file.exists()) {
+            file = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        }
+        if (null == file || !file.exists()) {
+            return null;
+        }
+        List<ThemeFile> result = new ArrayList<>();
+        getThemeFilesByNameHandle(file, result, "-1", themeName);
+        return result.stream()
+                .sorted(Comparator.comparing(ThemeFile::getFileType, Comparator.comparing(s -> !s.equals("dir"))))
+                .collect(Collectors.toList());
+    }
+
+    private void getThemeFilesByNameHandle(File dir, List<ThemeFile> result, String pid, String staticPath) {
+        File[] files = dir.listFiles();
+        if (files == null) {
+            return;
+        }
+        for (File file : files) {
+            ThemeFile themeFile = new ThemeFile();
+            themeFile.setFilePath(file.getAbsolutePath());
+            themeFile.setFileName(file.getName());
+            themeFile.setId(IdUtil.simpleUUID());
+            themeFile.setPid(pid);
+            themeFile.setStaticPath(staticPath + SystemConstants.FILE_SEPARATOR + file.getName());
+            if (file.isDirectory()) {
+                themeFile.setFileType("dir");
+                getThemeFilesByNameHandle(file, result, themeFile.getId(), staticPath + SystemConstants.FILE_SEPARATOR + file.getName());
+            } else {
+                if (file.getName().contains(".")) {
+                    themeFile.setFileType(file.getName().substring(file.getName().lastIndexOf(".")).replace(".", ""));
+                } else {
+                    themeFile.setFileType("other");
+                }
+            }
+            result.add(themeFile);
+        }
+    }
+
+    public String getThemeFileContent(String path, String themeName) {
+        boolean validResult = validThemeFilePath(themeName, path);
+        if (!validResult) {
+            throw new ServiceException(ErrorCode.ACCESS_VIOLATION);
+        }
+        File findFile = new File(path);
+        if (!findFile.exists()) {
+            return null;
+        }
+        FileReader fileReader = new FileReader(findFile);
+        return fileReader.readString();
+    }
+
+    /**
+     * 保存主题某个文件内容
+     * @param path path
+     * @param themeName themeName
+     * @param content content
+     * @return Boolean
+     */
+    public Boolean saveThemeFileContent(String path, String themeName, String content) {
+        boolean validResult = validThemeFilePath(themeName, path);
+        if (!validResult) {
+            throw new ServiceException(ErrorCode.ACCESS_VIOLATION);
+        }
+        File file = new File(path);
+        FileWriter writer = new FileWriter(file);
+        writer.write(content);
+        return true;
+    }
+
+    private boolean validThemeFilePath (String themeName, String path){
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        if (!file.exists()) {
+            file = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        }
+        if (null == file || !file.exists()) {
+            return false;
+        }
+        boolean sub = PathUtil.isSub(Path.of(file.getAbsolutePath()), Path.of(path));
+        if (!sub) {
+            LOGGER.error("违规访问!{}", path);
+            return false;
+        }
+
+        return true;
     }
 }

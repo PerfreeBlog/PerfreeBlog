@@ -1,16 +1,20 @@
 package com.perfree.controller.auth.theme;
 
 
+import cn.hutool.core.io.file.FileReader;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.controller.auth.attach.vo.AttachRespVO;
 import com.perfree.controller.auth.attach.vo.AttachUploadVO;
 import com.perfree.controller.auth.theme.vo.InstallThemeReqVO;
+import com.perfree.controller.auth.theme.vo.ThemeFileContentReqVO;
+import com.perfree.controller.auth.theme.vo.ThemeSaveFileContentReqVO;
 import com.perfree.convert.attach.AttachConvert;
 import com.perfree.enums.ErrorCode;
 import com.perfree.model.Attach;
 import com.perfree.service.theme.ThemeService;
+import com.perfree.theme.commons.ThemeFile;
 import com.perfree.theme.commons.ThemeInfo;
 import com.perfree.theme.ThemeManager;
 import com.perfree.theme.commons.ThemeSetting;
@@ -38,7 +42,7 @@ public class ThemeController {
 
     @GetMapping("allTheme")
     @Operation(summary = "获取所有主题")
-    public CommonResult<List<ThemeInfo>> allTheme(){
+    public CommonResult<List<ThemeInfo>> allTheme() {
         return CommonResult.success(themeManager.getAllTheme());
     }
 
@@ -47,7 +51,7 @@ public class ThemeController {
     public CommonResult<ThemeInfo> installTheme(InstallThemeReqVO installThemeReqVO) throws IOException {
         String multiFileName = installThemeReqVO.getFile().getOriginalFilename();
         File dir = new File(SystemConstants.UPLOAD_TEMP_PATH);
-        if (!dir.exists()){
+        if (!dir.exists()) {
             boolean mkdirs = dir.mkdirs();
             if (!mkdirs) {
                 throw new ServiceException(ErrorCode.SAVE_THEME_ERROR);
@@ -76,6 +80,27 @@ public class ThemeController {
     @Operation(summary = "获取当前启用主题的配置信息")
     public CommonResult<ThemeSetting> getCurrentThemeSetting() {
         return success(themeManager.getCurrentThemeSetting());
+    }
+
+    @GetMapping("getThemeFilesByName")
+    @Operation(summary = "获取主题文件列表")
+    public CommonResult<List<ThemeFile>> getThemeFilesByName(@RequestParam(value = "themeName") String themeName) {
+        return success(themeManager.getThemeFilesByName(themeName));
+    }
+
+    @PostMapping("getThemeFileContent")
+    @Operation(summary = "获取主题文件内容")
+    @ResponseBody
+    public CommonResult<String> getThemeFileContent(@RequestBody ThemeFileContentReqVO themeFileContentReqVO) {
+        return success(themeManager.getThemeFileContent(themeFileContentReqVO.getPath(), themeFileContentReqVO.getThemeName()));
+    }
+
+    @PostMapping("saveThemeFileContent")
+    @Operation(summary = "保存主题文件内容")
+    @ResponseBody
+    public CommonResult<Boolean> saveThemeFileContent(@RequestBody ThemeSaveFileContentReqVO themeSaveFileContentReqVO) {
+        return success(themeManager.saveThemeFileContent(themeSaveFileContentReqVO.getPath(),
+                themeSaveFileContentReqVO.getThemeName(), themeSaveFileContentReqVO.getContent()));
     }
 
 }

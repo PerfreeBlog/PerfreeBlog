@@ -36,7 +36,8 @@ public enum ErrorCode {
     PLUGIN_FILE_NOT_EXIST(100000026,"插件文件不存在,该数据可能为冗余数据,已删除!"),
     PLUGIN_IS_RUN(100000027,"该插件已启用,正在运行,请禁用后再卸载!"),
     PLUGIN_NOT_FOUND(100000028,"未查询到插件信息!"),
-    ARTICLE_NOT_EXIST(100000029, "文章不存在!");
+    ARTICLE_NOT_EXIST(100000029, "文章不存在!"),
+    ACCESS_VIOLATION(100000030, "违规访问!");
 
     private final Integer code;
 
