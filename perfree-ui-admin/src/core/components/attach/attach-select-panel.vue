@@ -15,6 +15,9 @@
           <el-button type="primary" @click="initList" :icon="Search">查询</el-button>
           <el-button :icon="Refresh" @click="resetSearchForm">重置</el-button>
         </el-form-item>
+        <el-form-item>
+          <el-button :icon="UploadFilled" type="primary" plain @click="handleAdd">上传附件</el-button>
+        </el-form-item>
       </el-form>
     </div>
     <div class="table-box">
@@ -129,14 +132,68 @@
         </span>
       </template>
     </el-dialog>
+
+    <!---添加附件-->
+    <el-dialog v-model="uploadOpen" :title="title" width="600px" draggable  @close="closeAdd">
+      <el-form
+          ref="addFormRef"
+          :model="addForm"
+          label-width="80px"
+          status-icon
+      >
+        <el-form-item label="存储策略" prop="name">
+          <el-select v-model="addForm.attachConfigId" placeholder="请选择存储策略" clearable >
+            <el-option  v-for="item in attachConfigs" :key="item.id" :label="item.name" :value="item.id" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="分组" prop="attachGroup">
+          <el-select v-model="addForm.attachGroup" placeholder="请选择分组" filterable
+                     allow-create>
+            <el-option v-for="item in attachGroups" :key="item.attachGroup" :label="item.attachGroup" :value="item.attachGroup" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item label="附件描述" prop="name">
+          <el-upload
+              class="upload-demo"
+              drag
+              :headers="headers"
+              :action="serverBaseUrl + '/api/auth/attach/upload'"
+              multiple
+              style="width: 100%"
+              ref="uploadRef"
+              v-model:file-list="addForm.fileList"
+              :data="{attachConfigId: addForm.attachConfigId, attachGroup: addForm.attachGroup}"
+              :on-success="uploadSuccess"
+              :on-error="uploadError"
+              :accept="accept"
+          >
+            <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+            <div class="el-upload__text">
+              拖拽文件到此处或者<em>点击上传</em>
+            </div>
+            <template #tip>
+              <div class="el-upload__tip">
+                请先选择存储策略及分组,如不选择将使用默认存储策略及分组
+              </div>
+            </template>
+          </el-upload>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
+
   </div>
 </template>
 
 <script setup>
-import {Refresh, Search} from "@element-plus/icons-vue";
-import {attachPageApi, getAttachApi, attachUpdateApi, getAllAttachGroupApi} from "@/core/api/attach.js";
-import {reactive, ref} from "vue";
+import {Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
+import {attachPageApi, attachUpdateApi, getAllAttachGroupApi, getAttachApi} from "@/core/api/attach.js";
+import {computed, reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
+import {CONSTANTS} from "@/core/utils/constants.js";
+import axios_config from "@/core/api/axios_config.js";
+import {getAllAttachConfigApi} from "@/core/api/attachConfig.js";
 
 const searchFormRef = ref();
 const searchForm = ref({
@@ -144,7 +201,8 @@ const searchForm = ref({
   pageSize: 8,
   total: 0,
   name: '',
-  type: ''
+  type: '',
+  attachGroup: ''
 })
 let tableData = ref([]);
 let loading = ref(false);
@@ -167,6 +225,33 @@ const showForm = ref({
 const showRule = reactive({
   name: [{ required: true, message: '请输入附件名称', trigger: 'blur' }],
 });
+
+const addFormRef = ref();
+let uploadRef = ref();
+let uploadOpen = ref(false);
+let attachConfigs = ref([]);
+const addForm = ref({
+  attachConfigId: '',
+  attachGroup: 'default',
+  fileList: []
+});
+let token_info = localStorage.getItem(CONSTANTS.STORAGE_TOKEN);
+let serverBaseUrl = axios_config.baseURL;
+let  headers = {
+  Authorization: "Bearer " + JSON.parse(token_info).accessToken,
+};
+const accept = computed(() => {
+  switch (props.attachType) {
+    case 'img':
+      return 'image/*';
+    case 'video':
+      return 'video/*';
+    case 'audio':
+      return 'audio/*';
+    default:
+      return '*';
+  }
+})
 
 /**
  * 重置详情表单
@@ -195,8 +280,7 @@ function initList() {
   loading.value = true;
   attachPageApi(searchForm.value).then((res) => {
     res.data.list.forEach(r => {
-      const selected = selectedAttach.value.has(r.id);
-      r.selected = selected;
+      r.selected = selectedAttach.value.has(r.id);
     })
     tableData.value = res.data.list;
     searchForm.value.total = res.data.total;
@@ -213,7 +297,8 @@ function resetSearchForm() {
     pageSize: 8,
     total: 0,
     name: '',
-    type: ''
+    type: '',
+    attachGroup: ''
   }
   searchFormRef.value.resetFields();
   initList();
@@ -233,6 +318,9 @@ function selectAttach(item){
   emits('update:selectedAttach', Array.from(selectedAttach.value.values()));
 }
 
+/**
+ * 初始化附件分组
+ */
 function initAttachGroups() {
   getAllAttachGroupApi().then(res => {
     attachGroups.value = res.data;
@@ -269,6 +357,77 @@ function submitUpdateForm () {
     }
   })
 }
+
+/**
+ * 关闭新增
+ */
+function closeAdd() {
+  initAttachGroups();
+  initList();
+}
+
+/**
+ * 上传成功回调
+ * @param response
+ * @param uploadFile
+ * @param uploadFiles
+ */
+function uploadSuccess(response, uploadFile, uploadFiles) {
+  if (response.code === 200) {
+    ElMessage.success(`[${uploadFile.name}]上传成功`);
+  }else {
+    ElMessage.error(response.msg);
+    uploadRef.value.handleRemove(uploadFile);
+  }
+}
+
+/**
+ * 新增
+ */
+function handleAdd() {
+  resetAddForm();
+  title.value = '上传附件';
+  initAttachConfigs();
+  initAttachGroups();
+  uploadOpen.value = true;
+}
+
+/**
+ * 重置新增表单
+ */
+function resetAddForm() {
+  addForm.value = {
+    attachConfigId: '',
+    attachGroup: 'default',
+    fileList: []
+  }
+  if (addFormRef.value) {
+    addFormRef.value.resetFields();
+  }
+}
+
+/**
+ * 初始化存储策略列表
+ */
+function initAttachConfigs() {
+  getAllAttachConfigApi().then(res => {
+    attachConfigs.value = res.data;
+    res.data.forEach(item => {
+      if (item.master) {
+        addForm.value.attachConfigId = item.id;
+      }
+    })
+  })
+}
+
+/**
+ * 上传失败回调
+ * @param error
+ */
+function uploadError(error) {
+  ElMessage.error('上传失败,请检查网络是否通通畅');
+}
+
 initAttachGroups();
 initList();
 </script>
