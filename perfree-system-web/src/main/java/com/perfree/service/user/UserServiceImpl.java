@@ -75,7 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public LoginUserRespVO login(LoginUserReqVO loginUserVO) {
-        OptionDTO option = optionCacheService.getOption(OptionEnum.LOGIN_CAPTCHA_ENABLE.getKey());
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_OPEN_CAPTCHA.getKey());
         if (null == option || option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             if (StringUtils.isBlank(loginUserVO.getUuid()) || StringUtils.isBlank(loginUserVO.getCode())) {
                 throw new ServiceException(ErrorCode.CAPTCHA_IS_NOT_EMPTY);

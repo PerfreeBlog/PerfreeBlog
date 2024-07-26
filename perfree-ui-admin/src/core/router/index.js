@@ -9,6 +9,7 @@ import {useCommonStore} from "@/core/stores/commonStore.js";
 import {menus} from "@/core/data/menuData.js";
 import _import from "@/core/utils/_import.js";
 import {getAllRouter, initMenu} from "@/core/utils/perfree.js";
+import RegisterView from "@/core/views/register/RegisterView.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -25,6 +26,11 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             component: LoginView,
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: RegisterView,
         }
     ],
 });
@@ -45,26 +51,26 @@ router.beforeEach((to, from, next) => {
         token_info = JSON.parse(token_info);
     }
     if (!token_info || !token_info.accessToken || token_info.accessToken === '') {
-        if (to.path === '/login') {
+        if (to.path === '/login' || to.path === '/register' ) {
             next();
             return;
         }
         next('/login');
-    } else {
-        // 如果已存在token,那么进行菜单的初始化及模块加载/路由添加操作
-        if (commonStore.menuInit) {
-            next();
-            return;
-        }
-        initMenu().then(() => {
-            let allRouter = [];
-            getAllRouter(commonStore.menuList, allRouter);
-            Promise.all([genRoute(allRouter)]).then(([r]) => {
-                commonStore.setMenuInit(true);
-                next({...to, replace: true});
-            })
-        });
+        return;
     }
+    // 如果已存在token,判断菜单是否已经初始化,如已初始化,进行路由跳转,反之初始化菜单
+    if (commonStore.menuInit) {
+        next();
+        return;
+    }
+    initMenu().then(() => {
+        let allRouter = [];
+        getAllRouter(commonStore.menuList, allRouter);
+        Promise.all([genRoute(allRouter)]).then(([r]) => {
+            commonStore.setMenuInit(true);
+            next({...to, replace: true});
+        })
+    });
 });
 
 // 生成路由

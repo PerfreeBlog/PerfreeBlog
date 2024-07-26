@@ -14,7 +14,7 @@ export function userInfo() {
     return axios.get('/api/auth/userInfo');
 }
 
-export function getAllOption() {
-    return axios.get('/api/auth/getAllOption');
+export function getOptionByNoAuth() {
+    return axios.get('/api/getOptionByNoAuth');
 }
 

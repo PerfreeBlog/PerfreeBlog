@@ -10,10 +10,10 @@ import lombok.Getter;
 @Getter
 public enum OptionEnum {
     WEB_THEME("WEB_THEME","当前使用的主题"),
-    LOGIN_CAPTCHA_ENABLE("LOGIN_CAPTCHA_ENABLE","是否开启登录验证码"),
-    DEFAULT_ADMIN_FRAME("DEFAULT_ADMIN_FRAME","默认的管理后台基础界面"),
+    WEB_NAME("WEB_NAME", "网站名称"),
+    WEB_OPEN_CAPTCHA("WEB_OPEN_CAPTCHA","是否开启登录验证码"),
     WEB_AUTO_GEN_SUMMARY("WEB_AUTO_GEN_SUMMARY","是否自动生成文章摘要"),
-    OPTION_WEB_SITE("OPTION_WEB_SITE","网站地址"),
+    WEB_IS_REGISTER("WEB_IS_REGISTER", "是否允许注册新用户")
     ;
     private final String key;
 

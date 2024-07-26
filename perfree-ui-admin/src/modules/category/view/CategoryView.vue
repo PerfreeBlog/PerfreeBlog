@@ -31,7 +31,7 @@
         <el-table-column prop="slug" label="slug" min-width="150"/>
         <el-table-column prop="thumbnail" label="封面图" min-width="80">
           <template v-slot="scope">
-            <el-image style="width: 100%; max-height: 100%" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
+            <el-image style="height: 50px" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
                       :preview-src-list="[scope.row.thumbnail]" :initial-index="4" v-if="scope.row.thumbnail"
                       append-to-body fit="cover" preview-teleported></el-image>
           </template>

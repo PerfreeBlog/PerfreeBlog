@@ -50,10 +50,10 @@
         <el-table-column prop="attachGroup" label="预览" min-width="80">
           <template v-slot="scope">
             <div class="block">
-            <el-image style="width: 100%; max-height: 100%" :src="scope.row.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
+            <el-image style="height: 50px" :src="scope.row.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
                       :preview-src-list="[scope.row.url]" :initial-index="4" v-if="scope.row.type&&scope.row.type === 'img'"
                       append-to-body fit="cover" preview-teleported></el-image>
-            <video v-else-if="scope.row.type&&scope.row.type === 'video'" controls preload="none"  style="width: 100%; max-height: 100%">
+            <video v-else-if="scope.row.type&&scope.row.type === 'video'" controls preload="none"  style="height: 50px">
               <source :src="scope.row.url"/>
             </video>
             <i v-else>无法预览，点击

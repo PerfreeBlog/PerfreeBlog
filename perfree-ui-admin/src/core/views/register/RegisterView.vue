@@ -9,10 +9,24 @@
               type="text"
               size="large"
               auto-complete="off"
+              placeholder="请输入昵称"
+          >
+            <template #prefix>
+              <font-awesome-icon icon="fa-solid fa-chalkboard-user "/>
+            </template>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item prop="username">
+          <el-input
+              v-model="loginForm.username"
+              type="text"
+              size="large"
+              auto-complete="off"
               placeholder="请输入账户"
           >
             <template #prefix>
-              <font-awesome-icon icon="fa-regular fa-user "/>
+              <font-awesome-icon icon="fa-solid fa-user "/>
             </template>
           </el-input>
         </el-form-item>
@@ -27,6 +41,20 @@
           >
             <template #prefix>
               <font-awesome-icon icon="fa-solid fa-lock "/>
+            </template>
+          </el-input>
+        </el-form-item>
+
+        <el-form-item prop="username">
+          <el-input
+              v-model="loginForm.username"
+              type="text"
+              size="large"
+              auto-complete="off"
+              placeholder="请输入邮箱地址"
+          >
+            <template #prefix>
+              <font-awesome-icon icon="fa-solid fa-mail-bulk"/>
             </template>
           </el-input>
         </el-form-item>
@@ -57,13 +85,13 @@
               style="width:100%;"
               @click.prevent="handleLogin"
           >
-            <span>登  录</span>
+            <span>注  册</span>
           </el-button>
 
           <div class="login-bottom-box">
             <div class="register-box" v-if="isOpenRegister">
-              没有账号?
-              <router-link class="link-type" to="/register">立即注册</router-link>
+              已有账号?
+              <router-link class="link-type" :to="'/login'" v-if="register">前往登录</router-link>
             </div>
             <div class="forget-password-box">
               <a href="javascript:;">忘记密码?</a>
@@ -113,6 +141,8 @@ const loginRules = computed(() => ({
 
 let codeUrl = ref("");
 const loading = ref(false);
+// 注册开关
+const register = ref(true);
 
 /**
  * 处理登录逻辑

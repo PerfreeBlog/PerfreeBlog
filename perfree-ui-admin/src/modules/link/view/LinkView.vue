@@ -28,7 +28,7 @@
         <el-table-column prop="name" label="网站名称" min-width="150"/>
         <el-table-column prop="logo" label="网站logo" min-width="60">
           <template v-slot="scope">
-            <el-image style="width: 100%; max-height: 100%" :src="scope.row.logo" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
+            <el-image style="height: 50px" :src="scope.row.logo" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
                       :preview-src-list="[scope.row.logo]" :initial-index="4" v-if="scope.row.logo"
                       append-to-body fit="cover" preview-teleported></el-image>
           </template>

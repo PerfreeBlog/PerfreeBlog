@@ -94,6 +94,9 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
         List<Option> optionList = OptionConvert.INSTANCE.convertModelListByAddList(optionAddListReqVO.getOptions());
         optionMapper.delByIdentification(optionList.get(0).getIdentification());
         optionMapper.insertBatch(optionList);
+        for (Option option : optionList) {
+            optionCacheService.putOption(option.getKey(), OptionConvert.INSTANCE.convertModelToDTO(option));
+        }
         return true;
     }
 
