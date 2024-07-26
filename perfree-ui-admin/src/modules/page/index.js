@@ -5,7 +5,7 @@ export default module => {
             let router = [
                 {
                     path: '/admin/page/edit/:id',
-                    name: 'updateArticle',
+                    name: 'updatePage',
                     component: modules[`./view/PageCreateView.vue`],
                     meta: {
                         moduleName: moduleName,

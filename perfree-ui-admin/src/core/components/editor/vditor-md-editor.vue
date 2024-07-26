@@ -19,7 +19,7 @@ import 'vditor/dist/index.css';
 import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {CONSTANTS} from "@/core/utils/constants.js";
 
-let contentEditor = '';
+let contentEditor = null;
 let open = ref(false)
 let title = ref('')
 let selectData = ref([])
@@ -45,6 +45,7 @@ onMounted(() => {
     outline: {
       enable: true
     },
+    mode: "ir",
     preview: {
       hljs: {
         lineNumber: true
@@ -151,7 +152,11 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  resetContent();
+  if (contentEditor) {
+    contentEditor.setValue('');
+    contentEditor.clearCache();
+    contentEditor.clearStack();
+  }
 })
 
 /**
@@ -197,9 +202,11 @@ function resetAddForm() {
 }
 
 function resetContent() {
-  contentEditor.setValue('');
-  contentEditor.clearCache();
-  contentEditor.clearStack();
+  if (contentEditor) {
+    contentEditor.setValue('');
+    contentEditor.clearCache();
+    contentEditor.clearStack();
+  }
 }
 
 function getValue() {
