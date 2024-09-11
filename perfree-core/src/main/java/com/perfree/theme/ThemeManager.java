@@ -1,13 +1,5 @@
 package com.perfree.theme;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.file.FileReader;
-import cn.hutool.core.io.file.FileWriter;
-import cn.hutool.core.io.file.PathUtil;
-import cn.hutool.core.io.resource.ClassPathResource;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.ZipUtil;
-import cn.hutool.json.JSONUtil;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
@@ -20,6 +12,14 @@ import com.perfree.theme.commons.ThemeSetting;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.hutool.core.compress.ZipUtil;
+import org.dromara.hutool.core.data.id.IdUtil;
+import org.dromara.hutool.core.io.file.FileReader;
+import org.dromara.hutool.core.io.file.FileUtil;
+import org.dromara.hutool.core.io.file.FileWriter;
+import org.dromara.hutool.core.io.file.PathUtil;
+import org.dromara.hutool.core.io.resource.ClassPathResource;
+import org.dromara.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -28,6 +28,7 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -140,7 +141,7 @@ public class ThemeManager {
             throw new ServiceException(ErrorCode.THEME_CONFIG_YAML_ERROR);
         }
         File themeDir = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeInfo.getName());
-        FileUtil.copyFilesFromDir(unzip.getAbsoluteFile(), themeDir.getAbsoluteFile(), true);
+        FileUtil.copy(unzip.getAbsoluteFile(), themeDir.getAbsoluteFile(), true);
         FileUtil.del(unzip);
         return themeInfo;
     }
@@ -281,7 +282,7 @@ public class ThemeManager {
         if (!findFile.exists()) {
             return null;
         }
-        FileReader fileReader = new FileReader(findFile);
+        FileReader fileReader = new FileReader(findFile, StandardCharsets.UTF_8);
         return fileReader.readString();
     }
 

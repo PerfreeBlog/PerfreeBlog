@@ -1,18 +1,19 @@
 package com.perfree.plugin.commons;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.file.FileReader;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.ZipUtil;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.SqlExecUtils;
 import com.perfree.plugin.pojo.PluginBaseConfig;
+import org.dromara.hutool.core.compress.ZipUtil;
+import org.dromara.hutool.core.data.id.IdUtil;
+import org.dromara.hutool.core.io.file.FileReader;
+import org.dromara.hutool.core.io.file.FileUtil;
+import org.dromara.hutool.core.text.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -32,6 +33,8 @@ public class PluginHandleUtils {
 
     public static final String TARGET_CLASS_DIR = "classes";
 
+    public static final String PLUGIN_UI_DIR = "ui";
+
     public static final String SQL_DIR = "sql";
 
     /**
@@ -47,10 +50,11 @@ public class PluginHandleUtils {
             return null;
         }
         PluginBaseConfig pluginBaseConfig = null;
-        try (InputStream input = new FileInputStream(file)) {
+        try (InputStream input = new FileInputStream(file.getAbsoluteFile())) {
             Yaml yaml = new Yaml();
             pluginBaseConfig = yaml.loadAs(input, PluginBaseConfig.class);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOGGER.error("plugin.yaml parse error", e);
         }
         return pluginBaseConfig;
     }
@@ -79,6 +83,10 @@ public class PluginHandleUtils {
 
         File pluginDir = new File(pluginBaseDir + File.separator + pluginConfig.getPlugin().getId());
 
+        if (pluginDir.exists()) {
+            FileUtil.clean(pluginDir.getAbsoluteFile());
+        }
+
         File[] codeFiles = codeDirFile.listFiles();
         if (null == codeFiles) {
             return null;
@@ -90,14 +98,10 @@ public class PluginHandleUtils {
             FileUtil.mkdir(codeDestDirFile);
         }
         for (File pluginSource : codeFiles) {
-            if (pluginSource.getName().equals(PLUGIN_CONFIG_NAME)) {
-                FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
-            } else if (pluginSource.getName().equals(SQL_DIR)) {
-                FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
-            }  else if (pluginSource.getName().equals("ui")) {
-                FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
-            } else {
-                FileUtil.copy(pluginSource, codeDestDirFile, true);
+            switch (pluginSource.getName()) {
+                case PLUGIN_CONFIG_NAME, PLUGIN_UI_DIR, SQL_DIR ->
+                        FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
+                default -> FileUtil.copy(pluginSource, codeDestDirFile, true);
             }
         }
 
@@ -298,29 +302,39 @@ public class PluginHandleUtils {
      * @param pluginDir pluginDir
      */
     public static void execPluginInstallSql(File pluginDir) throws SQLException {
-        if (null == pluginDir || !pluginDir.exists()){
+        if (null == pluginDir || !pluginDir.exists()) {
             return;
         }
-        File installSqlFile = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR + File.separator + "install.sql");
-        if (installSqlFile.exists()) {
-            FileReader fileReader = new FileReader(installSqlFile);
-            String sqlStr = fileReader.readString();
-            SqlExecUtils.execSql(sqlStr);
-            LOGGER.info("执行插件安装sql: {}", sqlStr);
+        File sqlDirFile = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR);
+        if (!sqlDirFile.exists()) {
+            return;
+        }
+        File[] files = sqlDirFile.listFiles();
+        if (null == files) {
+            return;
+        }
+        for (File file : files) {
+            if (file.getName().endsWith(".sql") && file.getName().startsWith("install")) {
+                FileReader fileReader = new FileReader(file.getAbsoluteFile(), StandardCharsets.UTF_8);
+                String sqlStr = fileReader.readString();
+                SqlExecUtils.execSql(sqlStr);
+                LOGGER.info("执行插件安装sql: {}", sqlStr);
+            }
         }
     }
 
     /**
      * 执行更新sql
-     * @param pluginDir pluginDir
+     *
+     * @param pluginDir  pluginDir
      * @param oldVersion oldVersion
      * @param newVersion newVersion
      */
     public static void execPluginUpdateSql(File pluginDir, String oldVersion, String newVersion) throws SQLException {
-        if (null == pluginDir || !pluginDir.exists()){
+        if (null == pluginDir || !pluginDir.exists()) {
             return;
         }
-        File sqlDir = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR );
+        File sqlDir = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR);
         if (!sqlDir.exists()) {
             return;
         }
@@ -332,7 +346,7 @@ public class PluginHandleUtils {
                         && isWithinVersionRange(file, oldVersion, newVersion))
                 .toList();
         for (File updateSqlFile : updateSqlFiles) {
-            FileReader fileReader = new FileReader(updateSqlFile);
+            FileReader fileReader = new FileReader(updateSqlFile, StandardCharsets.UTF_8);
             String sqlStr = fileReader.readString();
             SqlExecUtils.execSql(sqlStr);
             LOGGER.info("执行插件更新sql: {}", sqlStr);
@@ -341,7 +355,8 @@ public class PluginHandleUtils {
 
     /**
      * 判断更新文件是否在版本范围内
-     * @param file file
+     *
+     * @param file       file
      * @param oldVersion oldVersion
      * @param newVersion newVersion
      * @return boolean
@@ -357,15 +372,16 @@ public class PluginHandleUtils {
 
     /**
      * 执行卸载插件sql
+     *
      * @param pluginDir pluginDirFile
      */
     public static void execPluginUnInstallSql(File pluginDir) throws SQLException {
-        if (null == pluginDir || !pluginDir.exists()){
+        if (null == pluginDir || !pluginDir.exists()) {
             return;
         }
         File installSqlFile = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR + File.separator + "uninstall.sql");
         if (installSqlFile.exists()) {
-            FileReader fileReader = new FileReader(installSqlFile);
+            FileReader fileReader = new FileReader(installSqlFile, StandardCharsets.UTF_8);
             String sqlStr = fileReader.readString();
             SqlExecUtils.execSql(sqlStr);
             LOGGER.info("执行插件卸载sql: {}", sqlStr);

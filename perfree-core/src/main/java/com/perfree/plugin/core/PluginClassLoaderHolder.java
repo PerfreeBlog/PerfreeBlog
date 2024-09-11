@@ -1,7 +1,5 @@
 package com.perfree.plugin.core;
 
-import com.perfree.plugin.PluginInfo;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 

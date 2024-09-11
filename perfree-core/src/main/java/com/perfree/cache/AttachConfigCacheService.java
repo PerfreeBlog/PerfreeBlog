@@ -2,8 +2,8 @@ package com.perfree.cache;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.springframework.stereotype.Service;
 import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
+import org.springframework.stereotype.Service;
 
 /**
  * @author Perfree
@@ -29,8 +29,7 @@ public class AttachConfigCacheService {
     public AttachConfigCacheDTO getMasterAttachConfig() {
         for (Integer i : attachConfingCache.asMap().keySet()) {
             AttachConfigCacheDTO attachConfigCacheDTO = attachConfingCache.getIfPresent(i);
-            assert attachConfigCacheDTO != null;
-            if (attachConfigCacheDTO.getMaster()) {
+            if (attachConfigCacheDTO != null && attachConfigCacheDTO.getMaster()) {
                 return attachConfigCacheDTO;
             }
         }

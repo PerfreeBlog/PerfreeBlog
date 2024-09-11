@@ -1,1 +1,0 @@
-import{_}from"../../index-CfvXc9rn.js";const p=(i,r)=>i.pluginId&&i.pluginIsDev?_(()=>import(`${i.pluginFrontDevAddress}/plugin/${i.pluginId}/src/modules/${r}/index.js`),[]):i.pluginId?_(()=>import(`/plugin-static/${i.pluginId}/modules/${r}/index.js`),[]):_(()=>import(`/modules/${r}/index.js`),[]);export{p as default};

@@ -5,8 +5,6 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.tika.Tika;
 
-import java.util.Arrays;
-
 /**
  * 文件类型 Utils
  *
@@ -62,5 +60,12 @@ public class FileTypeUtils {
             return "audio";
         }
         return "other";
+    }
+
+    public static boolean isImage(String contentType) {
+        if (StringUtils.isBlank(contentType)) {
+            return false;
+        }
+        return contentType.startsWith("image/");
     }
 }

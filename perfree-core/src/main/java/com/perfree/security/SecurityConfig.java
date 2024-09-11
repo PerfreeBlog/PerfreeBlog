@@ -20,10 +20,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.filter.CorsFilter;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.IF_REQUIRED;
-import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 /**
  * @author Perfree
@@ -42,9 +43,16 @@ public class SecurityConfig {
     @Resource
     private final JwtAuthorizationFilter jwtAuthorizationFilter;
 
-    @Bean("ss") // 使用 Spring Security 的缩写，方便使用
+    @Bean("ss")
     public SecurityFrameworkService securityFrameworkService(PermissionApi permissionApi) {
         return new SecurityFrameworkServiceImpl(permissionApi);
+    }
+
+    @Bean
+    public HttpFirewall httpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowUrlEncodedDoubleSlash(true);
+        return firewall;
     }
 
     @Bean

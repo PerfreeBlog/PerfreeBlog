@@ -15,14 +15,11 @@ import org.apache.ibatis.annotations.Param;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * 在 MyBatis Plus 的 BaseMapper 的基础上拓展，提供更多的能力
- */
 public interface BaseMapperX<T> extends BaseMapper<T> {
 
     default PageResult<T> selectPage(PageParam pageParam, @Param("ew") Wrapper<T> queryWrapper) {
         // MyBatis Plus 查询
-        IPage<T> mpPage = MyBatisUtils.buildPage(pageParam, pageParam.getSortingFields());
+        IPage<T> mpPage = MyBatisUtils.buildPage(pageParam);
         selectPage(mpPage, queryWrapper);
         // 转换返回
         return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());
@@ -80,21 +77,10 @@ public interface BaseMapperX<T> extends BaseMapper<T> {
         return selectList(new LambdaQueryWrapper<T>().le(leField, value).ge(geField, value));
     }
 
-    /**
-     * 批量插入，适合大量数据插入
-     *
-     * @param entities 实体们
-     */
     default void insertBatch(Collection<T> entities) {
         Db.saveBatch(entities);
     }
 
-    /**
-     * 批量插入，适合大量数据插入
-     *
-     * @param entities 实体们
-     * @param size     插入数量 Db.saveBatch 默认为 1000
-     */
     default void insertBatch(Collection<T> entities, int size) {
         Db.saveBatch(entities, size);
     }

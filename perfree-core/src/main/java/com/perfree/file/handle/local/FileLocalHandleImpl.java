@@ -1,10 +1,10 @@
 package com.perfree.file.handle.local;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.io.file.FileNameUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.json.JSONUtil;
+import org.dromara.hutool.core.data.id.IdUtil;
+import org.dromara.hutool.core.date.DateUtil;
+import org.dromara.hutool.core.io.file.FileNameUtil;
+import org.dromara.hutool.core.io.file.FileUtil;
+import org.dromara.hutool.json.JSONUtil;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.FileTypeUtils;
 import com.perfree.file.handle.BaseFileHandle;
@@ -22,7 +22,7 @@ import java.util.Date;
 @Service
 public class FileLocalHandleImpl extends BaseFileHandle {
 
-    private final String DEFAULT_ATTACH_URL_PREFIX = "/attach/";
+    private final String DEFAULT_ATTACH_URL_PREFIX = "/api/attach/";
 
 
     @Override
@@ -36,8 +36,9 @@ public class FileLocalHandleImpl extends BaseFileHandle {
 
         String datePath = DateUtil.format(new Date(), "yyyy-MM-dd") + SystemConstants.FILE_SEPARATOR;
         fileLocalConfig.setBasePath(fileLocalConfig.getBasePath() + datePath);
-        if (!FileUtil.exist(fileLocalConfig.getBasePath())) {
-            FileUtil.mkdir(fileLocalConfig.getBasePath());
+        File baseDir = new File(fileLocalConfig.getBasePath());
+        if (!FileUtil.exists(baseDir.getAbsoluteFile())) {
+            FileUtil.mkdir(baseDir.getAbsoluteFile());
         }
 
         String fileName = IdUtil.fastSimpleUUID() + "." + FileNameUtil.extName(attachUploadDTO.getFile().getOriginalFilename());
@@ -46,7 +47,7 @@ public class FileLocalHandleImpl extends BaseFileHandle {
         String originalFilename = attachUploadDTO.getFile().getOriginalFilename();
         attachFileDTO.setMineType(mineType);
         attachFileDTO.setType(FileTypeUtils.getFileTypeByMineType(mineType));
-        attachUploadDTO.getFile().transferTo(new File(fileLocalConfig.getBasePath() + fileName));
+        attachUploadDTO.getFile().transferTo(new File(baseDir.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + fileName));
         attachFileDTO.setName(originalFilename);
         attachFileDTO.setPath( datePath  + fileName);
         attachFileDTO.setDesc(attachUploadDTO.getDesc());
@@ -62,11 +63,11 @@ public class FileLocalHandleImpl extends BaseFileHandle {
         FileLocalConfig fileLocalConfig = JSONUtil.toBean(getAttachConfig().getConfig(), FileLocalConfig.class);
         // 统一使用/
         fileLocalConfig.setBasePath(fileLocalConfig.getBasePath().replaceAll("\\\\", SystemConstants.FILE_SEPARATOR));
-        if (FileUtil.exist(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR + attachFileDTO.getPath())) {
-            FileUtil.del(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR + attachFileDTO.getPath());
-            return true;
+        File file = new File(fileLocalConfig.getBasePath());
+        if (FileUtil.exists(file.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + attachFileDTO.getPath())) {
+            FileUtil.del(file.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + attachFileDTO.getPath());
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -74,6 +75,7 @@ public class FileLocalHandleImpl extends BaseFileHandle {
         FileLocalConfig fileLocalConfig = JSONUtil.toBean(getAttachConfig().getConfig(), FileLocalConfig.class);
         // 统一使用/
         fileLocalConfig.setBasePath(fileLocalConfig.getBasePath().replaceAll("\\\\", SystemConstants.FILE_SEPARATOR));
-        return FileUtil.readBytes(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR + path);
+        File file = new File(fileLocalConfig.getBasePath());
+        return FileUtil.readBytes(file.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + path);
     }
 }

@@ -1,15 +1,14 @@
 package com.perfree.commons.directive;
 
-import cn.hutool.core.util.StrUtil;
 import com.perfree.commons.constant.SystemConstants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
+import org.dromara.hutool.core.text.StrUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,7 +58,7 @@ public final class DirectivePageResult<T> implements Serializable {
         String requestURI = request.getRequestURI();
 
         // 如果url里包含了页码,那么先去除
-        requestURI = StrUtil.replaceLast(requestURI, this.pageNo.toString(), "");
+        requestURI = StrUtil.replaceLast(requestURI, this.pageNo.toString(), "", false);
 
         if (requestURI.equals(SystemConstants.URL_SEPARATOR)) {
             // 如果是首页,则直接跳转至/articleList/
@@ -68,7 +67,7 @@ public final class DirectivePageResult<T> implements Serializable {
         } else {
             // 如果非首页,则使用当前url+页码
             if (requestURI.endsWith(SystemConstants.URL_SEPARATOR)) {
-                requestURI = StrUtil.replaceLast(requestURI, SystemConstants.URL_SEPARATOR, "");
+                requestURI = StrUtil.replaceLast(requestURI, SystemConstants.URL_SEPARATOR, "", false);
             }
             requestURI += SystemConstants.URL_SEPARATOR;
             this.previousUrl =  this.hasPrevious ? requestURI + (this.pageNo - 1) : "";
