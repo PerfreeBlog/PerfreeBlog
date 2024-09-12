@@ -8,6 +8,8 @@ import com.perfree.model.Comment;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface CommentConvert {
     CommentConvert INSTANCE = Mappers.getMapper(CommentConvert.class);
@@ -16,5 +18,7 @@ public interface CommentConvert {
     PageResult<CommentRespVO> convertPageResultVO(PageResult<Comment> commentPageResult);
 
     Comment convertByUpdateStatusReqVO(CommentUpdateStatusReqVO commentUpdateStatusReqVO);
+
+    List<CommentRespVO> convertToRespVO(List<Comment> comments);
 
 }

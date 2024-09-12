@@ -5,6 +5,7 @@ import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
+import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
 import com.perfree.model.Comment;
 
 import java.util.List;
@@ -53,4 +54,18 @@ public interface CommentService extends IService<Comment> {
      * @return Boolean
      */
     Boolean commentService(CommentUpdateStatusReqVO commentUpdateStatusReqVO);
+
+    /**
+     * 根据文章id获取评论分页列表
+     * @param pageVo pageVo
+     * @return PageResult<CommentRespVO>
+     */
+    PageResult<CommentRespVO> pageByArticleId(CommentPageByArticleIdReqVO pageVo);
+
+    /**
+     * 根据topPid加载所有子级评论
+     * @param topPid topPid
+     * @return List<CommentRespVO>
+     */
+    List<CommentRespVO> queryChildByTopPid(Integer topPid);
 }

@@ -8,6 +8,7 @@ import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
+import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
 import com.perfree.convert.comment.CommentConvert;
 import com.perfree.mapper.CommentMapper;
 import com.perfree.model.Comment;
@@ -62,5 +63,17 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         Comment comment = CommentConvert.INSTANCE.convertByUpdateStatusReqVO(commentUpdateStatusReqVO);
         commentMapper.updateById(comment);
         return true;
+    }
+
+    @Override
+    public PageResult<CommentRespVO> pageByArticleId(CommentPageByArticleIdReqVO pageVO) {
+        IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<CommentRespVO> commentPage = commentMapper.pageByArticleId(page, pageVO);
+        return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
+    }
+
+    @Override
+    public List<CommentRespVO> queryChildByTopPid(Integer topPid) {
+        return commentMapper.queryChildByTopPid(topPid);
     }
 }

@@ -1,0 +1,38 @@
+package com.perfree.controller.common.comment;
+
+import com.perfree.commons.common.CommonResult;
+import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.comment.vo.CommentRespVO;
+import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
+import com.perfree.service.comment.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static com.perfree.commons.common.CommonResult.success;
+
+@RestController
+@Tag(name = "评论相关接口")
+@RequestMapping("api/comment")
+public class CommentController {
+
+    @Resource
+    private CommentService commentService;
+
+    @PostMapping("/pageByArticleId")
+    @Operation(summary = "根据文章id获取评论分页列表(顶级)")
+    public CommonResult<PageResult<CommentRespVO>> pageByArticleId(@Valid @RequestBody CommentPageByArticleIdReqVO pageVo) {
+        PageResult<CommentRespVO> commentPageResult = commentService.pageByArticleId(pageVo);
+        return success(commentPageResult);
+    }
+
+    @GetMapping("/queryChildByTopPid")
+    @Operation(summary = "根据topPid获取所有子级评论信息")
+    public CommonResult<List<CommentRespVO>> queryChildByTopPid(@RequestParam(value = "topPid") Integer topPid) {
+        return CommonResult.success(commentService.queryChildByTopPid(topPid));
+    }
+}

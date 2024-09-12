@@ -32,4 +32,14 @@
         where t1.topPid = #{topPid} or t1.id = #{topPid}
         order by t1.createTime desc
     </select>
+    <select id="pageByArticleId" resultType="com.perfree.controller.auth.comment.vo.CommentRespVO">
+        select t1.*,(select count(1) from p_comment where topPid = t1.id) childNum from p_comment t1
+        where t1.status = 0 and t1.topPid = -1 and t1.articleId = #{pageVO.articleId}
+        order by t1.createTime asc
+    </select>
+    <select id="queryChildByTopPid" resultType="com.perfree.controller.auth.comment.vo.CommentRespVO">
+        select t1.* from p_comment t1
+        where t1.status = 0 and t1.topPid = #{topPid}
+        order by t1.createTime asc
+    </select>
 </mapper>

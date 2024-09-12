@@ -31,4 +31,7 @@ public class CommentRespVO extends CommentBaseVO {
 
     @Schema(description = "文章类型")
     private String articleType;
+
+    @Schema(description = "子评论数量")
+    private Integer childNum;
 }
