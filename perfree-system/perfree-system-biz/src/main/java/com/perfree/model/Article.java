@@ -89,10 +89,6 @@ public class Article extends BaseModel implements Serializable {
      */
     private Integer status;
 
-    /**
-     * 评论数
-     */
-    private Integer commentCount;
 
     /**
      * 访问量

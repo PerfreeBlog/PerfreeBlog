@@ -22,4 +22,13 @@ public class CommentRespVO extends CommentBaseVO {
 
     @Schema(description = "更新时间")
     private Date updateTime;
+
+    @Schema(description = "文章标题")
+    private String articleTitle;
+
+    @Schema(description = "文章slug")
+    private String articleSlug;
+
+    @Schema(description = "文章类型")
+    private String articleType;
 }

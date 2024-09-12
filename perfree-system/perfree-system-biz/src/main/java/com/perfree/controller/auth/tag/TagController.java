@@ -53,7 +53,7 @@ public class TagController {
 
     @GetMapping("/get")
     @Operation(summary = "获取标签信息")
-    public CommonResult<TagRespVO> add(Integer id) {
+    public CommonResult<TagRespVO> add(@RequestParam(value = "id") Integer id) {
         com.perfree.model.Tag tag = tagService.getById(id);
         return CommonResult.success(TagConvert.INSTANCE.convertRespVO(tag));
     }

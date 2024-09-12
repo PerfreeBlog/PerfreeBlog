@@ -47,14 +47,5 @@ public interface CategoryMapper extends BaseMapperX<Category> {
         );
     }
 
-    /**
-     * 获取分类数量
-     * @return Long
-     */
-    default Long getCategoryCount(){
-        return selectCount(new LambdaQueryWrapper<Category>()
-                .eq(Category::getStatus, CategoryConstant.STATUS_NORMAL)
-        );
-    }
 }
 

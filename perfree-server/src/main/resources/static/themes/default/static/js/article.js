@@ -126,7 +126,7 @@ function like(){
                 return;
             }
         }
-        $.get('/article/like?id='+that.attr("data-id"), function (res) {
+        $.get('/api/article/like?id='+that.attr("data-id"), function (res) {
             if (res.code === 200) {
                 let count = Number(that.text()) + 1;
                 that.html('<i class="fa fa-heart"></i> ' + count);

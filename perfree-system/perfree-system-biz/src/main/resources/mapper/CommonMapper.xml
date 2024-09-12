@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.perfree.mapper.CommonMapper">
+    <select id="queryStatistics" resultType="com.perfree.enjoy.directive.commons.vo.DirectiveStatisticVO">
+            SELECT
+                (SELECT COUNT(1) FROM p_article WHERE type = 'article' AND status = 0) AS articleCount,
+                (SELECT COUNT(1) FROM p_comment WHERE status = 0) AS commentCount,
+                (SELECT COUNT(1) FROM p_tag) AS tagCount,
+                (SELECT COUNT(1) FROM p_category WHERE status = 0) AS categoryCount,
+                (SELECT COUNT(1) FROM p_article WHERE type = 'journal' AND status = 0) AS journalCount
+    </select>
+</mapper>

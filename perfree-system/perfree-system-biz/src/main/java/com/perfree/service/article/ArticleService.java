@@ -57,19 +57,6 @@ public interface ArticleService extends IService<Article> {
      */
     Boolean del(Integer id);
 
-
-    /**
-     * 获取文章数量
-     * @return Long
-     */
-    Long getArticleCount();
-
-    /**
-     * 获取动态数量
-     * @return Long
-     */
-    Long getJournalCount();
-
     /**
      * 根据slug/articleType/status获取文章
      * @param slug slug
@@ -110,5 +97,12 @@ public interface ArticleService extends IService<Article> {
      * @return Article
      */
     Article updateArticle(ArticleUpdateReqVO articleUpdateReqVO);
+
+    /**
+     * 文章点赞
+     * @param id id
+     * @return Boolean
+     */
+    Boolean updateGreatCount(Integer id);
 
 }

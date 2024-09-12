@@ -55,12 +55,6 @@ public interface TagService extends IService<Tag> {
     List<Tag> batchAddTagByName(List<String> addTags);
 
     /**
-     * 获取标签数量
-     * @return Long
-     */
-    Long getTagCount();
-
-    /**
      * 获取热门标签
      * @param count 获取的数量
      * @return List<Tag>

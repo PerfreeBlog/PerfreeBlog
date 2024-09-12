@@ -60,28 +60,6 @@ public interface ArticleMapper extends BaseMapperX<Article> {
     List<ArticleCategoryRespVO> getArticleCategoryById(Integer id);
 
     /**
-     * 获取动态数量
-     * @return Long
-     */
-    default Long getJournalCount(){
-        return selectCount(new LambdaQueryWrapper<Article>()
-                .eq(Article::getType, ArticleConstant.ARTICLE_TYPE_JOURNAL)
-                .eq(Article::getStatus, ArticleConstant.ARTICLE_STATUS_PUBLISHED)
-        );
-    }
-
-    /**
-     * 获取文章数量
-     * @return Long
-     */
-    default Long getArticleCount(){
-        return selectCount(new LambdaQueryWrapper<Article>()
-                .eq(Article::getType, ArticleConstant.ARTICLE_TYPE_ARTICLE)
-                .eq(Article::getStatus, ArticleConstant.ARTICLE_STATUS_PUBLISHED)
-        );
-    }
-
-    /**
      * 根据slug/articleType/status获取文章信息
      * @param slug slug
      * @param articleType articleType
@@ -110,5 +88,12 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @return ArticleRespVO ArticleRespVO
      */
     ArticleRespVO getArticleById(@Param("id") Integer id);
+
+    /**
+     * 更新文章点赞数
+     * @param id id
+     * @return Boolean
+     */
+    Boolean updateGreatCount(@Param("id") Integer id);
 
 }

@@ -1,10 +1,21 @@
 package com.perfree.controller.auth.comment;
 
+import com.perfree.commons.common.CommonResult;
+import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
+import com.perfree.controller.auth.comment.vo.CommentRespVO;
+import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
+import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
 import com.perfree.service.comment.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+import static com.perfree.commons.common.CommonResult.success;
 
 @RestController
 @Tag(name = "评论相关接口")
@@ -13,5 +24,36 @@ public class CommentController {
 
     @Resource
     private CommentService commentService;
+
+    @PostMapping("/page")
+    @Operation(summary = "评论分页列表")
+    public CommonResult<PageResult<CommentRespVO>> page(@RequestBody CommentPageReqVO commentPageReqVO) {
+        PageResult<CommentRespVO> commentPageResult = commentService.commentPage(commentPageReqVO);
+        return success(commentPageResult);
+    }
+
+    @GetMapping("/get")
+    @Operation(summary = "获取评论信息")
+    public CommonResult<CommentRespVO> get(@RequestParam(value = "id") Integer id) {
+        return CommonResult.success(commentService.queryById(id));
+    }
+
+    @GetMapping("/queryByTopPid")
+    @Operation(summary = "根据topPid获取所有评论信息")
+    public CommonResult<List<CommentRespVO>> queryByTopPid(@RequestParam(value = "topPid") Integer topPid) {
+        return CommonResult.success(commentService.queryByTopPid(topPid));
+    }
+
+    @DeleteMapping("/del")
+    @Operation(summary = "根据id删除评论")
+    public CommonResult<Boolean> del(@RequestParam(value = "id") Integer id) {
+        return CommonResult.success(commentService.del(id));
+    }
+
+    @PostMapping("/updateStatus")
+    @Operation(summary = "修改评论状态")
+    public CommonResult<Boolean> updateStatus(@RequestBody @Valid CommentUpdateStatusReqVO commentUpdateStatusReqVO) {
+        return CommonResult.success(commentService.commentService(commentUpdateStatusReqVO));
+    }
 
 }

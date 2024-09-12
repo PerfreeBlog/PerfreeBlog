@@ -1,8 +1,15 @@
 package com.perfree.mapper;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.perfree.commons.mapper.BaseMapperX;
+import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
+import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.model.Comment;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +21,15 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface CommentMapper extends BaseMapperX<Comment> {
+
+    IPage<CommentRespVO> commentPage(IPage<CommentRespVO> page, @Param("pageVO") CommentPageReqVO pageVO);
+
+    CommentRespVO queryById(@Param("id") Integer id);
+
+    List<CommentRespVO> queryByTopPid(@Param("topPid") Integer topPid);
+
+    default void del(Integer id){
+        delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId, id).or().eq(Comment::getPid, id));
+    }
 
 }

@@ -21,6 +21,8 @@ import com.perfree.model.Article;
 import com.perfree.model.ArticleCategory;
 import com.perfree.model.ArticleTag;
 import com.perfree.model.Tag;
+import com.perfree.service.articleCategory.ArticleCategoryService;
+import com.perfree.service.articleTag.ArticleTagService;
 import com.perfree.service.tag.TagService;
 import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
@@ -50,10 +52,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleMapper articleMapper;
 
     @Resource
-    private ArticleTagMapper articleTagMapper;
+    private ArticleTagService articleTagService;
 
     @Resource
-    private ArticleCategoryMapper articleCategoryMapper;
+    private ArticleCategoryService articleCategoryService;
 
     @Resource
     private TagService tagService;
@@ -88,31 +90,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         Article article = ArticleConvert.INSTANCE.convertModelByCreateArticleVO(articleAddReqVO);
         article.setViewCount(SystemConstants.DEFAULT_COUNT);
-        article.setCommentCount(SystemConstants.DEFAULT_COUNT);
         article.setGreatCount(SystemConstants.DEFAULT_COUNT);
         article.setSummary(genSummary(article.getSummary(), article.getParseContent()));
         articleMapper.insert(article);
 
         // 处理标签关联关系
-        List<ArticleTag> articleTagList = new ArrayList<>();
-        for (Integer tagId : articleAddReqVO.getTagIds()) {
-            ArticleTag articleTag = new ArticleTag();
-            articleTag.setArticleId(article.getId());
-            articleTag.setTagId(tagId);
-            articleTagList.add(articleTag);
-        }
-        articleTagMapper.insertBatch(articleTagList);
+        articleTagService.handleArticleTag(articleAddReqVO.getTagIds(), article.getId());
 
         // 处理分类关联关系
-        List<ArticleCategory> articleCategoryList = new ArrayList<>();
-        for (Integer categoryId : articleAddReqVO.getCategoryIds()) {
-            ArticleCategory articleCategory = new ArticleCategory();
-            articleCategory.setArticleId(article.getId());
-            articleCategory.setCategoryId(categoryId);
-            articleCategoryList.add(articleCategory);
-        }
-        articleCategoryMapper.insertBatch(articleCategoryList);
-
+        articleCategoryService.handleArticleCategory(articleAddReqVO.getCategoryIds(), article.getId());
         return article;
     }
 
@@ -143,20 +129,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     @Transactional
     public Boolean del(Integer id) {
-        articleCategoryMapper.delByArticleId(id);
-        articleTagMapper.delByArticleId(id);
+        articleCategoryService.delByArticleId(id);
+        articleTagService.delByArticleId(id);
         articleMapper.deleteById(id);
         return true;
-    }
-
-    @Override
-    public Long getArticleCount() {
-        return articleMapper.getArticleCount();
-    }
-
-    @Override
-    public Long getJournalCount() {
-        return articleMapper.getJournalCount();
     }
 
     @Override
@@ -202,27 +178,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleMapper.updateById(article);
 
         // 处理标签关联关系
-        List<ArticleTag> articleTagList = new ArrayList<>();
-        for (Integer tagId : articleUpdateReqVO.getTagIds()) {
-            ArticleTag articleTag = new ArticleTag();
-            articleTag.setArticleId(article.getId());
-            articleTag.setTagId(tagId);
-            articleTagList.add(articleTag);
-        }
-        articleTagMapper.delByArticleId(articleUpdateReqVO.getId());
-        articleTagMapper.insertBatch(articleTagList);
+        articleTagService.handleArticleTag(articleUpdateReqVO.getTagIds(), article.getId());
 
         // 处理分类关联关系
-        List<ArticleCategory> articleCategoryList = new ArrayList<>();
-        for (Integer categoryId : articleUpdateReqVO.getCategoryIds()) {
-            ArticleCategory articleCategory = new ArticleCategory();
-            articleCategory.setArticleId(article.getId());
-            articleCategory.setCategoryId(categoryId);
-            articleCategoryList.add(articleCategory);
-        }
-        articleCategoryMapper.delByArticleId(articleUpdateReqVO.getId());
-        articleCategoryMapper.insertBatch(articleCategoryList);
+        articleCategoryService.handleArticleCategory(articleUpdateReqVO.getCategoryIds(), article.getId());
         return article;
+    }
+
+    @Override
+    @Transactional
+    public Boolean updateGreatCount(Integer id) {
+        return articleMapper.updateGreatCount(id);
     }
 
     /**

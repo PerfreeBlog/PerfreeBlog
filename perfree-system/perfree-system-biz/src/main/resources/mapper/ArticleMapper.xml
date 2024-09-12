@@ -35,11 +35,14 @@
         <collection property="categoryList" select="getArticleCategoryById" column="id"/>
         <collection property="tagList" select="getArticleTagById" column="id"/>
     </resultMap>
+    <update id="updateGreatCount">
+        update p_article set greatCount = greatCount+1 where id = #{id}
+    </update>
 
     <!-- 文章分页列表 -->
     <select id="articlePage" resultMap="ARTICLE_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
-        where 1 =1
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where 1 =1
         <if test="pageVO.categoryId != null">
            and t1.id IN (SELECT articleId FROM p_article_category WHERE categoryId = #{pageVO.categoryId})
         </if>
@@ -73,23 +76,27 @@
     </select>
 
     <select id="getBySlugAndTypeAndStatus" resultMap="ARTICLE_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
         where t1.slug = #{slug} and t1.type = #{articleType} and t1.status = #{status}
     </select>
 
     <select id="getPreArticle" resultMap="ARTICLE_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
         where t1.type = #{articleType} and t1.status = #{status} and t1.id <![CDATA[ > ]]> #{id}
         ORDER BY t1.id asc LIMIT 0,1
     </select>
 
     <select id="getNextArticle" resultMap="ARTICLE_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
         where t1.type = #{articleType} and t1.status = #{status} and t1.id <![CDATA[ < ]]> #{id}
         ORDER BY t1.id desc LIMIT 0,1
     </select>
     <select id="getArticleById" resultMap="ARTICLE_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
         where t1.id = #{id}
     </select>
 </mapper>

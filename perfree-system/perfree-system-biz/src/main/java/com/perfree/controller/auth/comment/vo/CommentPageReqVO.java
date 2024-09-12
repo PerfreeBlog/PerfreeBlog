@@ -19,4 +19,7 @@ public class CommentPageReqVO extends PageParam {
 
     @Schema(description = "文章id")
     private Integer articleId;
+
+    @Schema(description = "状态:0正常,1:待审核")
+    private Integer status;
 }
