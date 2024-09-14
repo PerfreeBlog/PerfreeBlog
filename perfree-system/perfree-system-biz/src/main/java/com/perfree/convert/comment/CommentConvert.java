@@ -2,6 +2,7 @@ package com.perfree.convert.comment;
 
 
 import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.comment.vo.CommentAddReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
 import com.perfree.model.Comment;
@@ -19,6 +20,8 @@ public interface CommentConvert {
 
     Comment convertByUpdateStatusReqVO(CommentUpdateStatusReqVO commentUpdateStatusReqVO);
 
-    List<CommentRespVO> convertToRespVO(List<Comment> comments);
+    CommentRespVO convertToRespVO(Comment comments);
+
+    Comment convertByAddReqVO(CommentAddReqVO reqVO);
 
 }

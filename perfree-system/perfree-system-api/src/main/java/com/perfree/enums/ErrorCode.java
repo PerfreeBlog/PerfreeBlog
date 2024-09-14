@@ -47,7 +47,9 @@ public enum ErrorCode {
     OLD_PASSWORD_ERROR(100000037, "旧密码校验失败!"),
     MAIL_TEMPLATE_NOT_EXIST(100000038, "邮件模板不存在!"),
     MAIL_SERVER_NOT_EXIST(100000040, "邮件服务不存在!"),
-    REFRESH_TOKEN_VALID_FAIL(100000041, "refreshToken不合法!")
+    REFRESH_TOKEN_VALID_FAIL(100000041, "refreshToken不合法!"),
+    COMMENT_USER_NAME_NOT_EMPTY(100000042, "姓名或昵称不能为空!"),
+    COMMENT_EMAIL_NOT_EMPTY(100000043, "邮箱不能为空!")
     ;
 
     private final Integer code;

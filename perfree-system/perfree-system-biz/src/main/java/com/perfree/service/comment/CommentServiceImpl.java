@@ -3,16 +3,27 @@ package com.perfree.service.comment;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
+import com.perfree.commons.utils.WebUtils;
+import com.perfree.constant.UserConstant;
+import com.perfree.controller.auth.comment.vo.CommentAddReqVO;
 import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
+import com.perfree.controller.common.comment.vo.CommentPageByTopPidReqVO;
 import com.perfree.convert.comment.CommentConvert;
+import com.perfree.enums.ErrorCode;
 import com.perfree.mapper.CommentMapper;
+import com.perfree.mapper.UserMapper;
 import com.perfree.model.Comment;
+import com.perfree.model.User;
+import com.perfree.security.SecurityFrameworkUtils;
+import com.perfree.security.vo.LoginUserVO;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +42,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Resource
     private CommentMapper commentMapper;
+
+    @Resource
+    private UserMapper userMapper;
 
     @Override
     public PageResult<CommentRespVO> commentPage(CommentPageReqVO pageVO) {
@@ -73,7 +87,30 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentRespVO> queryChildByTopPid(Integer topPid) {
-        return commentMapper.queryChildByTopPid(topPid);
+    public PageResult<CommentRespVO> pageByTopPid(CommentPageByTopPidReqVO pageVO) {
+        IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<CommentRespVO> commentPage = commentMapper.pageByTopPid(page, pageVO);
+        return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
+    }
+
+    @Override
+    public Comment addComment(CommentAddReqVO reqVO) {
+        LoginUserVO loginUser = SecurityFrameworkUtils.getLoginUser();
+        if(null == loginUser && StringUtils.isBlank(reqVO.getUserName())) {
+            throw new ServiceException(ErrorCode.COMMENT_USER_NAME_NOT_EMPTY);
+        }
+        if(null == loginUser && StringUtils.isBlank(reqVO.getEmail())) {
+            throw new ServiceException(ErrorCode.COMMENT_EMAIL_NOT_EMPTY);
+        }
+        if (null != loginUser) {
+            User user = userMapper.selectById(loginUser.getId());
+            reqVO.setUserId(user.getId());
+        }
+        reqVO.setIp(WebUtils.getClientIP());
+        reqVO.setDevice(WebUtils.getDevice());
+
+        Comment comment = CommentConvert.INSTANCE.convertByAddReqVO(reqVO);
+        commentMapper.insert(comment);
+        return comment;
     }
 }

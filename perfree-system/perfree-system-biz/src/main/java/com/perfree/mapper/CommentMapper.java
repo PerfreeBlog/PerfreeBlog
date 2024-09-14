@@ -1,14 +1,12 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
-import com.perfree.constant.CommentConstant;
 import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
+import com.perfree.controller.common.comment.vo.CommentPageByTopPidReqVO;
 import com.perfree.model.Comment;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -38,6 +36,5 @@ public interface CommentMapper extends BaseMapperX<Comment> {
 
     IPage<CommentRespVO> pageByArticleId(IPage<CommentRespVO> page, @Param("pageVO") CommentPageByArticleIdReqVO pageVO);
 
-    List<CommentRespVO> queryChildByTopPid(@Param("topPid") Integer topPid);
-
+    IPage<CommentRespVO> pageByTopPid(IPage<CommentRespVO> page, @Param("pageVO") CommentPageByTopPidReqVO pageVO);
 }

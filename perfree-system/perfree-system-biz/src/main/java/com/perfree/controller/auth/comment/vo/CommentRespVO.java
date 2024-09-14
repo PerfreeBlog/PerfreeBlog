@@ -34,4 +34,7 @@ public class CommentRespVO extends CommentBaseVO {
 
     @Schema(description = "子评论数量")
     private Integer childNum;
+
+    @Schema(description = "用户信息(当userId不为空时)")
+    private CommentUserRespVO userInfo;
 }

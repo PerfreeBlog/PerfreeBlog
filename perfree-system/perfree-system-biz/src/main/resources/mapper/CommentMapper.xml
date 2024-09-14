@@ -1,10 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.perfree.mapper.CommentMapper">
+    <resultMap id="COMMENT_RESULT" type="com.perfree.controller.auth.comment.vo.CommentRespVO">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="articleId" column="articleId"/>
+        <result property="pid" column="pid"/>
+        <result property="topPid" column="topPid"/>
+        <result property="userId" column="userId"/>
+        <result property="avatar" column="avatar"/>
+        <result property="website" column="website"/>
+        <result property="email" column="email"/>
+        <result property="userName" column="userName"/>
+        <result property="device" column="device"/>
+        <result property="ip" column="ip"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="childNum" column="childNum"/>
+        <result property="articleTitle" column="articleTitle"/>
+        <result property="articleSlug" column="articleSlug"/>
+        <result property="articleType" column="articleType"/>
+        <association property="userInfo" javaType="com.perfree.controller.auth.comment.vo.CommentUserRespVO">
+            <result property="userName" column="tUserName"/>
+            <result property="avatar" column="tAvatar"/>
+            <result property="email" column="tEmail"/>
+            <result property="website" column="tWebsite"/>
+        </association>
+    </resultMap>
 
-    <select id="commentPage" resultType="com.perfree.controller.auth.comment.vo.CommentRespVO">
-        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType from p_comment t1
-        LEFT JOIN p_article t2 on t1.articleId = t2.id
+    <select id="commentPage" resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
         where 1 = 1
         <if test="pageVO.content != null and pageVO.content != ''">
             <bind name="content" value="'%' + _parameter.pageVO.content + '%'" />
@@ -21,25 +48,31 @@
             and t1.status = #{pageVO.status}
         </if>
     </select>
-    <select id="queryById" resultType="com.perfree.controller.auth.comment.vo.CommentRespVO">
-        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType from p_comment t1
-        LEFT JOIN p_article t2 on t1.articleId = t2.id
+    <select id="queryById" resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
         where t1.id = #{id}
     </select>
-    <select id="queryByTopPid" resultType="com.perfree.controller.auth.comment.vo.CommentRespVO">
-        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType from p_comment t1
-        LEFT JOIN p_article t2 on t1.articleId = t2.id
+    <select id="queryByTopPid"  resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
         where t1.topPid = #{topPid} or t1.id = #{topPid}
         order by t1.createTime desc
     </select>
-    <select id="pageByArticleId" resultType="com.perfree.controller.auth.comment.vo.CommentRespVO">
-        select t1.*,(select count(1) from p_comment where topPid = t1.id) childNum from p_comment t1
+
+    <select id="pageByArticleId" resultMap="COMMENT_RESULT">
+        select t1.*,(select count(1) from p_comment where topPid = t1.id) childNum,
+        t2.avatar as tAvatar, t2.email as tEmail, t2.userName as tUserName, t2.website as tWebsite
+        from p_comment t1 LEFT JOIN p_user t2 on t1.userId = t2.id
         where t1.status = 0 and t1.topPid = -1 and t1.articleId = #{pageVO.articleId}
-        order by t1.createTime asc
+        order by t1.createTime desc
     </select>
-    <select id="queryChildByTopPid" resultType="com.perfree.controller.auth.comment.vo.CommentRespVO">
-        select t1.* from p_comment t1
-        where t1.status = 0 and t1.topPid = #{topPid}
-        order by t1.createTime asc
+    <select id="pageByTopPid" resultMap="COMMENT_RESULT">
+        select t1.*, t2.avatar as tAvatar, t2.email as tEmail, t2.userName as tUserName, t2.website as tWebsite
+        from p_comment t1 LEFT JOIN p_user t2 on t1.userId = t2.id
+        where t1.status = 0 and t1.topPid = #{pageVO.topPid}
+        order by t1.createTime desc
     </select>
 </mapper>

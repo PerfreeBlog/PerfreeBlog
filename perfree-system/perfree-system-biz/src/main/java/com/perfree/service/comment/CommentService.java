@@ -2,10 +2,12 @@ package com.perfree.service.comment;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.comment.vo.CommentAddReqVO;
 import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
+import com.perfree.controller.common.comment.vo.CommentPageByTopPidReqVO;
 import com.perfree.model.Comment;
 
 import java.util.List;
@@ -64,8 +66,15 @@ public interface CommentService extends IService<Comment> {
 
     /**
      * 根据topPid加载所有子级评论
-     * @param topPid topPid
-     * @return List<CommentRespVO>
+     * @param pageVO CommentPageByTopPidReqVO
+     * @return PageResult<CommentRespVO>
      */
-    List<CommentRespVO> queryChildByTopPid(Integer topPid);
+    PageResult<CommentRespVO> pageByTopPid(CommentPageByTopPidReqVO pageVO);
+
+    /**
+     * 新增评论
+     * @param reqVO reqVO
+     * @return Comment
+     */
+    Comment addComment(CommentAddReqVO reqVO);
 }

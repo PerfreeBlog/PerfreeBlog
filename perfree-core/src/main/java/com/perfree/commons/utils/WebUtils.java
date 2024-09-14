@@ -62,4 +62,12 @@ public class WebUtils {
         }
         return ServletUtil.getClientIP(request);
     }
+
+    public static String getDevice() {
+        HttpServletRequest request = getRequest();
+        if (request == null) {
+            return null;
+        }
+        return request.getHeader("User-Agent");
+    }
 }
