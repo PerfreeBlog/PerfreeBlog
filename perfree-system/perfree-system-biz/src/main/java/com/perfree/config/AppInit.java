@@ -11,6 +11,7 @@ import com.perfree.service.attachConfig.AttachConfigService;
 import com.perfree.service.dictData.DictDataService;
 import com.perfree.service.option.OptionService;
 import com.perfree.service.plugins.PluginsService;
+import org.dromara.hutool.http.HttpUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,6 +77,11 @@ public class AppInit implements ApplicationRunner {
         pluginsService.watchMonitorDevPlugins();
         pluginsService.initPlugins();
         LOGGER.info("-> 初始化插件完成");
+
+        LOGGER.info("-> 预热系统....");
+        HttpUtil.get("http://localhost:" + port + "/");
+        LOGGER.info("-> 预热系统完成....");
+
         String banner = """
                 ----------------------------------------------------------------------------------
                                          __                     \s

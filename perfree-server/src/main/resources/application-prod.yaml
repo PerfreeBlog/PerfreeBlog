@@ -8,11 +8,11 @@ server:
     enabled: true
     mime-types: application/json,application/xml,text/html,text/xml,text/plain,application/javascript,text/javascript,text/css
     min-response-size: 2048
-  tomcat:
-    uri-encoding: UTF-8
-    accept-count: 1000
-    max-connections: 6500
-    connection-timeout: 12000
+#  tomcat:
+#    uri-encoding: UTF-8
+#    accept-count: 1000
+#    max-connections: 6500
+#    connection-timeout: 12000
 logging:
   level:
     root: info
