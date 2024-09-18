@@ -8,10 +8,7 @@ import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.commons.utils.WebUtils;
 import com.perfree.constant.UserConstant;
-import com.perfree.controller.auth.comment.vo.CommentAddReqVO;
-import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
-import com.perfree.controller.auth.comment.vo.CommentRespVO;
-import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
+import com.perfree.controller.auth.comment.vo.*;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
 import com.perfree.controller.common.comment.vo.CommentPageByTopPidReqVO;
 import com.perfree.convert.comment.CommentConvert;
@@ -48,7 +45,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public PageResult<CommentRespVO> commentPage(CommentPageReqVO pageVO) {
-        SortingFieldUtils.handleDefaultSortingField(pageVO);
         IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
         IPage<CommentRespVO> commentPage = commentMapper.commentPage(page, pageVO);
         return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
@@ -60,8 +56,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public List<CommentRespVO> queryByTopPid(Integer topPid) {
-        return commentMapper.queryByTopPid(topPid);
+    public PageResult<CommentRespVO> queryChildCommentPage(CommentChildPageReqVO pageVO) {
+        IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<CommentRespVO> commentPage = commentMapper.queryChildCommentPage(page, pageVO);
+        return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
     }
 
     @Override

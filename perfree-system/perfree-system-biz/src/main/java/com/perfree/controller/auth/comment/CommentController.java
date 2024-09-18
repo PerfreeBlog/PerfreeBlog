@@ -2,10 +2,12 @@ package com.perfree.controller.auth.comment;
 
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.comment.vo.CommentChildPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.auth.comment.vo.CommentUpdateStatusReqVO;
 import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
+import com.perfree.controller.common.comment.vo.CommentPageByTopPidReqVO;
 import com.perfree.service.comment.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,10 +40,10 @@ public class CommentController {
         return CommonResult.success(commentService.queryById(id));
     }
 
-    @GetMapping("/queryByTopPid")
-    @Operation(summary = "根据topPid获取所有评论信息")
-    public CommonResult<List<CommentRespVO>> queryByTopPid(@RequestParam(value = "topPid") Integer topPid) {
-        return CommonResult.success(commentService.queryByTopPid(topPid));
+    @PostMapping("/queryChildCommentPage")
+    @Operation(summary = "获取子评论分页列表")
+    public CommonResult<PageResult<CommentRespVO>> queryChildCommentPage(@RequestBody CommentChildPageReqVO pageReqVO) {
+        return CommonResult.success(commentService.queryChildCommentPage(pageReqVO));
     }
 
     @DeleteMapping("/del")

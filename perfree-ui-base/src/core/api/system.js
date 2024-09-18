@@ -30,3 +30,6 @@ export function refreshTokenApi(data) {
     return axios.post('/api/refreshToken', data);
 }
 
+export function logoutApi() {
+    return axios.get('/api/logout');
+}

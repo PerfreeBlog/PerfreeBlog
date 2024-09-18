@@ -35,7 +35,13 @@ export default defineConfig(({mode })=> {
   ]
   return {
     plugins: [
-      vue(),
+      vue({
+        template: {
+          compilerOptions: {
+            isCustomElement: tag => tag === 'emoji-picker'
+          }
+        }
+      }),
       viteStaticCopy({
         targets: libExternalTargets
       }),

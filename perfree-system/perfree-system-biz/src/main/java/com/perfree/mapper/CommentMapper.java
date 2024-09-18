@@ -3,6 +3,7 @@ package com.perfree.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.perfree.commons.mapper.BaseMapperX;
+import com.perfree.controller.auth.comment.vo.CommentChildPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentPageReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
@@ -28,10 +29,10 @@ public interface CommentMapper extends BaseMapperX<Comment> {
 
     CommentRespVO queryById(@Param("id") Integer id);
 
-    List<CommentRespVO> queryByTopPid(@Param("topPid") Integer topPid);
+    IPage<CommentRespVO> queryChildCommentPage(IPage<CommentRespVO> page, @Param("pageVO") CommentChildPageReqVO pageVO);
 
     default void del(Integer id){
-        delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId, id).or().eq(Comment::getPid, id));
+        delete(new LambdaQueryWrapper<Comment>().eq(Comment::getId, id).or().eq(Comment::getPid, id).or().eq(Comment::getTopPid, id));
     }
 
     IPage<CommentRespVO> pageByArticleId(IPage<CommentRespVO> page, @Param("pageVO") CommentPageByArticleIdReqVO pageVO);

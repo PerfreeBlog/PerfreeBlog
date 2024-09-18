@@ -14,6 +14,7 @@
         <result property="userName" column="userName"/>
         <result property="device" column="device"/>
         <result property="ip" column="ip"/>
+        <result property="status" column="status"/>
         <result property="createTime" column="createTime"/>
         <result property="updateTime" column="updateTime"/>
         <result property="childNum" column="childNum"/>
@@ -30,7 +31,9 @@
 
     <select id="commentPage" resultMap="COMMENT_RESULT">
         select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
-       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite ,
+       (select count(1) from p_comment where topPid = t1.id or pid = t1.id) childNum
+        from p_comment t1
         LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
         where 1 = 1
         <if test="pageVO.content != null and pageVO.content != ''">
@@ -39,14 +42,23 @@
         </if>
         <if test="pageVO.userName != null and pageVO.userName != ''">
             <bind name="userName" value="'%' + _parameter.pageVO.userName + '%'" />
-            and t1.userName like #{userName}
+            and (t1.userName like #{userName} or t3.userName like #{userName})
         </if>
         <if test="pageVO.articleId != null and pageVO.articleId != ''">
             and t1.articleId = #{pageVO.articleId}
         </if>
+        <if test="pageVO.articleTitle != null and pageVO.articleTitle != ''">
+            <bind name="articleTitle" value="'%' + _parameter.pageVO.articleTitle + '%'" />
+            and t2.title like #{articleTitle}
+        </if>
+
         <if test="pageVO.status != null and pageVO.status != ''">
             and t1.status = #{pageVO.status}
         </if>
+        <if test="pageVO.articleType != null and pageVO.articleType != ''">
+            and t2.type = #{pageVO.articleType}
+        </if>
+        order by t1.createTime desc
     </select>
     <select id="queryById" resultMap="COMMENT_RESULT">
         select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
@@ -54,11 +66,11 @@
         LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
         where t1.id = #{id}
     </select>
-    <select id="queryByTopPid"  resultMap="COMMENT_RESULT">
+    <select id="queryChildCommentPage"  resultMap="COMMENT_RESULT">
         select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
        t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
         LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
-        where t1.topPid = #{topPid} or t1.id = #{topPid}
+        where t1.topPid = #{pageVO.id} or t1.pid = #{pageVO.id}
         order by t1.createTime desc
     </select>
 

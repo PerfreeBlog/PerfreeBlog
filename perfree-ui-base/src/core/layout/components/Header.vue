@@ -72,6 +72,7 @@ import { useAppStore } from '@/core/stores/appStore'
 import {CONSTANTS} from "@/core/utils/constants.js";
 import {useRoute, useRouter} from "vue-router";
 import {computed, nextTick, ref, watch} from "vue";
+import {logoutApi} from "@/core/api/system.js";
 
 const router = useRouter()
 const route = useRoute()
@@ -121,8 +122,11 @@ const refreshRoute = () => {
  * 退出登录
  */
 const logout = () => {
-  localStorage.removeItem(CONSTANTS.STORAGE_TOKEN);
-  router.replace("/login")
+  logoutApi().then(res => {
+    localStorage.removeItem(CONSTANTS.STORAGE_TOKEN);
+    router.replace("/login")
+  })
+
 }
 
 const toUserProfile = () => {

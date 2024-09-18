@@ -23,6 +23,8 @@ import com.perfree.system.api.option.dto.OptionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.hutool.core.codec.binary.Base64;
@@ -31,6 +33,7 @@ import org.dromara.hutool.swing.captcha.CaptchaUtil;
 import org.dromara.hutool.swing.captcha.LineCaptcha;
 import org.dromara.hutool.swing.captcha.generator.RandomGenerator;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.*;
 
@@ -130,6 +133,17 @@ public class SystemController {
         }
         User byId = userService.getById(loginUser.getId());
         return CommonResult.success(UserConvert.INSTANCE.convertRespVO(byId));
+    }
+
+    @GetMapping("/logout")
+    @Operation(summary = "退出登录")
+    public CommonResult<Boolean> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        SecurityContextHolder.clearContext();
+        return CommonResult.success(true);
     }
 
     @PostMapping("refreshToken")

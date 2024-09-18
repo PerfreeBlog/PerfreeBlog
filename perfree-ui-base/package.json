@@ -28,17 +28,18 @@
     "codemirror": "^6.0.1",
     "echarts": "^5.5.1",
     "element-plus": "^2.7.7",
+    "emoji-picker-element": "^1.22.7",
     "highlight.js": "^11.9.0",
     "js-pinyin": "^0.2.5",
     "loadjs": "^4.2.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persist": "^1.0.0",
+    "vditor": "^3.10.4",
     "vue": "^3.4.29",
     "vue-codemirror": "^6.1.1",
     "vue-dompurify-html": "^5.1.0",
     "vue-i18n": "9",
-    "vue-router": "^4.4.0",
-    "vditor": "^3.10.4"
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
