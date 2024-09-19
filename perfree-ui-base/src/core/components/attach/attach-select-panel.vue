@@ -21,47 +21,45 @@
       </el-form>
     </div>
     <div class="table-box">
-      <el-row :gutter="15">
-        <el-col :span="6" v-for="item in tableData" class="attach-col"  @click="selectAttach(item)">
-          <div :class="{'attach-block': true, 'selected': item.selected}">
-            <div class="attach-preview">
-              <el-image  :key="item.url" :src="item.url" lazy class="attach-img" loading="lazy"  v-if="item.type&&item.type === 'img'">
-                <template #placeholder>
-                  <div class="image-slot">
-                    <el-icon class="is-loading">
-                      <Loading />
-                    </el-icon>
-                  </div>
-                </template>
-              </el-image>
+      <div class="attach-list-box">
+        <div :class="{'attach-block': true, 'selected': item.selected}"  v-for="item in tableData"  @click="selectAttach(item)">
+          <div class="attach-preview">
+            <el-image  :key="item.url" :src="item.url" lazy class="attach-img" loading="lazy"  v-if="item.type&&item.type === 'img'">
+              <template #placeholder>
+                <div class="image-slot">
+                  <el-icon class="is-loading">
+                    <Loading />
+                  </el-icon>
+                </div>
+              </template>
+            </el-image>
 
-              <video v-else-if="item.type&&item.type === 'video'" preload="none" controls style="width: 100%; max-height: 100%">
-                <source :src="item.url"/>
-              </video>
-              <div v-else class="attach-other">
-                {{item.path.split('.').pop()}}
-              </div>
-            </div>
-            <div class="attach-name">
-              <el-text line-clamp="1" style="width: 100%;">
-                {{item.name}}
-              </el-text>
-            </div>
-
-            <div :class="{'operate-mask': true, 'selected': item.selected}">
-            </div>
-            <div class="operate-btn-box">
-              <el-icon class="operate-btn" @click.stop="handleShow(item)"><InfoFilled /></el-icon>
-              <el-icon class="operate-btn select-btn"><SuccessFilled /></el-icon>
+            <video v-else-if="item.type&&item.type === 'video'" preload="none" controls style="width: 100%; height: 100%">
+              <source :src="item.url"/>
+            </video>
+            <div v-else class="attach-other">
+              {{item.path.split('.').pop()}}
             </div>
           </div>
-        </el-col>
-      </el-row>
+          <div class="attach-name">
+            <el-text line-clamp="1" style="width: 100%;">
+              {{item.name}}
+            </el-text>
+          </div>
+
+          <div :class="{'operate-mask': true, 'selected': item.selected}">
+          </div>
+          <div class="operate-btn-box">
+            <el-icon class="operate-btn" @click.stop="handleShow(item)"><InfoFilled /></el-icon>
+            <el-icon class="operate-btn select-btn"><SuccessFilled /></el-icon>
+          </div>
+        </div>
+      </div>
 
       <el-pagination
           v-model:current-page="searchForm.pageNo"
           v-model:page-size="searchForm.pageSize"
-          :page-sizes="[8,16,24]"
+          :page-sizes="[18,24,48]"
           layout="total,sizes,prev, pager, next, jumper"
           background
           small
@@ -198,7 +196,7 @@ import {getAllAttachConfigApi} from "@/core/api/attachConfig.js";
 const searchFormRef = ref();
 const searchForm = ref({
   pageNo: 1,
-  pageSize: 8,
+  pageSize: 18,
   total: 0,
   name: '',
   type: '',
@@ -436,13 +434,17 @@ initList();
 .table-box{
   margin-top: 20px;
 }
+.attach-list-box{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 .attach-block{
   position: relative;
-  height: 150px;
-  width: 100%;
+  height: 130px;
+  width: 125px;
   cursor: pointer;
   background-color: var(--el-color-info-light-9);
-  margin-bottom: 15px;
   overflow: hidden;
   border-radius: 5px;
   border: 2px solid var(--el-bg-color);
@@ -455,8 +457,8 @@ initList();
   top: 0;
   left: 0;
   width: 100%;
-  height: 50px;
-  background-image: linear-gradient(to bottom, var(--el-overlay-color-light), rgb(255 255 255 / 0%));
+  height: 30px;
+  background-image: linear-gradient(to bottom, var(--el-overlay-color-lighter), rgb(255 255 255 / 0%));
   border: none;
 }
 .attach-preview{
@@ -487,14 +489,14 @@ initList();
 }
 .operate-btn-box{
   position: absolute;
-  right: 12px;
+  right: 4px;
   top: 3px;
 }
 .operate-btn{
   font-weight: bold;
-  font-size: 22px;
+  font-size: 18px;
   color: white;
-  margin-left: 5px;
+  margin-left: 3px;
 }
 .selected .select-btn{
   color: var(--el-color-primary);

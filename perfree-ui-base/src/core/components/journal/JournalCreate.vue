@@ -13,7 +13,7 @@
             <div v-for="item in addForm.attachList" class="attach-box">
               <el-image class="attach-img" :src="item.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
                         :preview-src-list="[item.url]" :initial-index="4" v-if="item.type && item.type === 'img'"
-                        append-to-body fit="cover" preview-teleported></el-image>
+                        append-to-body preview-teleported></el-image>
               <video class="attach-video"  v-else-if="item.type&& item.type === 'video'" controls preload="none">
                 <source :src="item.url"/>
               </video>
@@ -111,8 +111,8 @@ function resetAddForm() {
   }
 }
 
-function removeAttach(img) {
-  addForm.value.attachList = addForm.value.attachList.filter(item => item.id !== img.id);
+function removeAttach(attach) {
+  addForm.value.attachList = addForm.value.attachList.filter(item => item.attachId !== attach.attachId);
 }
 
 /**
