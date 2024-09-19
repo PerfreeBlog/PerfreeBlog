@@ -79,7 +79,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="userName" label="创建人" min-width="100"/>
+        <el-table-column prop="user.userName" label="创建人" min-width="100"/>
         <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
