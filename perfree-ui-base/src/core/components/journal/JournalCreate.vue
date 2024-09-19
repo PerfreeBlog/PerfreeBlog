@@ -5,6 +5,7 @@
         :model="addForm"
         status-icon
         :rules="addRule"
+        v-loading="loading"
     >
       <el-form-item prop="content">
         <div class="content-box">
@@ -41,7 +42,7 @@
       </div>
       <el-switch v-model="addForm.status" :active-value="0" :inactive-value="2" inline-prompt style="--el-switch-on-color: var(--el-color-success); --el-switch-off-color: var(--el-color-warning); margin-right: 10px" active-text="所有人可见" inactive-text="仅自己可见"/>
       <el-button type="primary" @click="submitAddForm">发 布</el-button>
-      <el-button @click="resetAddForm()">取 消</el-button>
+      <el-button @click="cancelHandle">取 消</el-button>
     </div>
     <el-dialog v-model="attachShow" :title="title" width="900px" draggable destroy-on-close>
       <attach-select-panel @update:selected-attach="selectAttach" :max="9" :attach-type="''"></attach-select-panel>
@@ -60,8 +61,10 @@ import 'emoji-picker-element';
 import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {ElMessage} from "element-plus";
 import {FolderOpened} from "@element-plus/icons-vue";
-import {createJournalApi} from "@/core/api/journal.js";
+import {createJournalApi, getJournalApi, updateJournalApi} from "@/core/api/journal.js";
 
+const emits = defineEmits(['submitSuccess', 'close'])
+const props = defineProps(['updateId'])
 let showEmojiPanel = ref(false);
 const addForm = ref({
   id: '',
@@ -80,19 +83,40 @@ const emojiPicker = ref();
 let attachShow = ref(false);
 let title = ref(null);
 let selectData = ref([])
+let loading = ref(false);
 
+function cancelHandle() {
+  resetAddForm();
+  emits('close')
+}
 function submitAddForm() {
   addFormRef.value.validate(valid => {
     if (valid) {
       addForm.value.parseContent = addForm.value.content;
-      createJournalApi(addForm.value).then(res => {
-        if (res.code === 200) {
-          ElMessage.success('发布成功');
-          resetAddForm();
-        } else {
-          ElMessage.error(res.msg);
-        }
-      })
+      loading.value = true;
+      if (addForm.value.id) {
+        updateJournalApi(addForm.value).then(res => {
+          loading.value = false;
+          if (res.code === 200) {
+            ElMessage.success('修改成功');
+            resetAddForm();
+            emits('submitSuccess')
+          } else {
+            ElMessage.error(res.msg);
+          }
+        })
+      } else {
+        createJournalApi(addForm.value).then(res => {
+          loading.value = false;
+          if (res.code === 200) {
+            ElMessage.success('发布成功');
+            resetAddForm();
+            emits('submitSuccess')
+          } else {
+            ElMessage.error(res.msg);
+          }
+        })
+      }
     }
   })
 }
@@ -187,6 +211,18 @@ function handleCloseEmojiPicker(event) {
     showEmojiPanel.value = false;
   }
 }
+
+function init() {
+  if (props.updateId) {
+    loading.value = true;
+    getJournalApi(props.updateId).then(res => {
+      loading.value = false;
+      addForm.value = res.data;
+    })
+  }
+}
+
+init();
 </script>
 
 <style scoped>

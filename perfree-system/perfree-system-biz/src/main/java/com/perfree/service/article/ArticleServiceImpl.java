@@ -13,7 +13,9 @@ import com.perfree.constant.ArticleConstant;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.*;
 import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
+import com.perfree.controller.auth.journal.vo.JournalPageReqVO;
 import com.perfree.controller.auth.journal.vo.JournalRespVO;
+import com.perfree.controller.auth.journal.vo.JournalUpdateReqVO;
 import com.perfree.convert.article.ArticleConvert;
 import com.perfree.convert.journalAttach.JournalAttachConvert;
 import com.perfree.enums.ErrorCode;
@@ -202,15 +204,36 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Article article = ArticleConvert.INSTANCE.convertByJournalAddReqVO(journalAddReqVO);
         article.setType(ArticleConstant.ARTICLE_TYPE_JOURNAL);
         articleMapper.insert(article);
-        List<JournalAttach> journalAttachList = JournalAttachConvert.INSTANCE.convertAddReqList(journalAddReqVO.getAttachList());
+        List<JournalAttach> journalAttachList = journalAttachService.handleJournalAttach(journalAddReqVO.getAttachList(), article.getId());
         JournalRespVO journalRespVO = ArticleConvert.INSTANCE.convertToJournalResp(article);
-        if (!journalAttachList.isEmpty()) {
-            for (JournalAttach journalAttach : journalAttachList) {
-                journalAttach.setArticleId(article.getId());
-            }
-            journalAttachService.saveBatch(journalAttachList);
-            journalRespVO.setAttachList(JournalAttachConvert.INSTANCE.convertToRespVOList(journalAttachList));
-        }
+        journalRespVO.setAttachList(JournalAttachConvert.INSTANCE.convertToRespVOList(journalAttachList));
+        return journalRespVO;
+    }
+
+    @Override
+    public PageResult<JournalRespVO> journalPage(JournalPageReqVO pageVO) {
+        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
+                new SortingField("isTop", SortingField.ORDER_DESC),
+                new SortingField("createTime", SortingField.ORDER_DESC)
+        ));
+        IPage<JournalRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<JournalRespVO> journalPage = articleMapper.journalPage(page, pageVO);
+        return new PageResult<>(journalPage.getRecords(), journalPage.getTotal());
+    }
+
+    @Override
+    public JournalRespVO getJournalById(Integer id) {
+        return articleMapper.getJournalById(id);
+    }
+
+    @Override
+    public JournalRespVO updateJournal(JournalUpdateReqVO updateReqVO) {
+        Article article = ArticleConvert.INSTANCE.convertByJournalUpdateReqVO(updateReqVO);
+        articleMapper.updateById(article);
+        journalAttachService.delByArticleId(article.getId());
+        List<JournalAttach> journalAttachList = journalAttachService.handleJournalAttach(updateReqVO.getAttachList(), article.getId());
+        JournalRespVO journalRespVO = ArticleConvert.INSTANCE.convertToJournalResp(article);
+        journalRespVO.setAttachList(JournalAttachConvert.INSTANCE.convertToRespVOList(journalAttachList));
         return journalRespVO;
     }
 

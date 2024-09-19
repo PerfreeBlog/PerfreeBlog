@@ -99,4 +99,50 @@
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
         where t1.id = #{id}
     </select>
+
+
+    <resultMap id="JOURNAL_RESULT" type="com.perfree.controller.auth.journal.vo.JournalRespVO">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="parseContent" column="parseContent"/>
+        <result property="isTop" column="isTop"/>
+        <result property="status" column="status"/>
+        <result property="commentCount" column="commentCount"/>
+        <result property="isComment" column="isComment"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="contentModel" column="contentModel"/>
+        <result property="greatCount" column="greatCount"/>
+        <association property="user" javaType="com.perfree.controller.auth.article.vo.ArticleUserRespVO">
+            <id property="id" column="createUserId" />
+            <result property="userName" column="userName"/>
+            <result property="avatar" column="avatar"/>
+            <result property="email" column="email"/>
+            <result property="website" column="website"/>
+        </association>
+        <collection property="attachList" select="getJournalAttachList" column="id"/>
+    </resultMap>
+
+    <select id="journalPage" resultMap="JOURNAL_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'journal'
+        <if test="pageVO.status != null">
+            and t1.status = #{pageVO.status}
+        </if>
+
+        <if test="pageVO.content != null and pageVO.content != ''">
+            <bind name="content" value="'%' + _parameter.pageVO.content + '%'" />
+            and t1.content like #{content}
+        </if>
+    </select>
+
+    <!-- 获取文章的标签 -->
+    <select id="getJournalAttachList" resultType="com.perfree.controller.auth.journal.vo.JournalAttachRespVO">
+        select * from p_journal_attach  WHERE articleId = #{id} ORDER BY createTime asc
+    </select>
+
+    <select id="getJournalById" resultMap="JOURNAL_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.id= #{id}
+    </select>
 </mapper>

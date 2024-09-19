@@ -37,5 +37,14 @@ public class JournalRespVO {
     @Schema(description = "解析后的文章内容")
     private String parseContent;
 
+    @Schema(description = "状态0:已发布,1:草稿")
+    private Integer status;
+
+    @Schema(description = "是否置顶0:否,1:是")
+    private Integer isTop;
+
+    @Schema(description = "是否允许评论0:否,1是")
+    private Integer isComment;
+
     private List<JournalAttachRespVO> attachList;
 }

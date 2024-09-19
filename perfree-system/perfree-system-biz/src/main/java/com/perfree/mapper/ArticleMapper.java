@@ -8,6 +8,8 @@ import com.perfree.controller.auth.article.vo.ArticleCategoryRespVO;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.controller.auth.article.vo.ArticleTagRespVO;
+import com.perfree.controller.auth.journal.vo.JournalPageReqVO;
+import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.model.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -95,5 +97,20 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @return Boolean
      */
     Boolean updateGreatCount(@Param("id") Integer id);
+
+    /**
+     * 动态分页列表
+     * @param page page
+     * @param pageVO pageVO
+     * @return IPage<JournalRespVO>
+     */
+    IPage<JournalRespVO> journalPage(IPage<JournalRespVO> page, @Param("pageVO") JournalPageReqVO pageVO);
+
+    /**
+     * 根据id获取动态
+     * @param id id
+     * @return JournalRespVO
+     */
+    JournalRespVO getJournalById(@Param("id") Integer id);
 
 }

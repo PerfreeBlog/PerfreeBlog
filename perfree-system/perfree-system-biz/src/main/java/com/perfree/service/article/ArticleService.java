@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.article.vo.*;
 import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
+import com.perfree.controller.auth.journal.vo.JournalPageReqVO;
 import com.perfree.controller.auth.journal.vo.JournalRespVO;
+import com.perfree.controller.auth.journal.vo.JournalUpdateReqVO;
 import com.perfree.model.Article;
 
 /**
@@ -113,5 +115,26 @@ public interface ArticleService extends IService<Article> {
      * @return JournalRespVO
      */
     JournalRespVO createJournal(JournalAddReqVO journalAddReqVO);
+
+    /**
+     * 动态分页列表
+     * @param pageVO pageVO
+     * @return PageResult<JournalRespVO>
+     */
+    PageResult<JournalRespVO> journalPage(JournalPageReqVO pageVO);
+
+    /**
+     * 根据id获取动态
+     * @param id id
+     * @return JournalRespVO
+     */
+    JournalRespVO getJournalById(Integer id);
+
+    /**
+     * 修改动态
+     * @param updateReqVO updateReqVO
+     * @return JournalRespVO
+     */
+    JournalRespVO updateJournal(JournalUpdateReqVO updateReqVO);
 
 }
