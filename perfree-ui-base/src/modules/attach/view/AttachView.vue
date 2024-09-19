@@ -45,7 +45,7 @@
     <div class="table-box">
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading"  :show-overflow-tooltip="true">
         <el-table-column label="序号" min-width="50" type="index" />
-        <el-table-column prop="name" label="附件名称" min-width="130" />
+        <el-table-column prop="name" label="附件名称" min-width="200" show-overflow-tooltip/>
         <el-table-column prop="attachGroup" label="预览" min-width="80">
           <template v-slot="scope">
             <div class="block">
@@ -63,12 +63,12 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="url" label="访问地址" min-width="280">
+        <el-table-column prop="url" label="访问地址" min-width="350" show-overflow-tooltip>
           <template v-slot="scope">
             <el-link :href="scope.row.url" target="_blank" :underline="false">{{ scope.row.url }}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="type" label="附件类型" min-width="60" >
+        <el-table-column prop="type" label="附件类型" min-width="100" >
           <template v-slot="scope">
             <span v-if="scope.row.type === 'img'">图片</span>
             <span v-if="scope.row.type === 'video'">视频</span>
@@ -76,12 +76,12 @@
             <span v-if="scope.row.type === 'other'">其他</span>
           </template>
         </el-table-column>
-        <el-table-column prop="attachGroup" label="分组" min-width="80">
+        <el-table-column prop="attachGroup" label="分组" min-width="120" show-overflow-tooltip>
           <template v-slot="scope">
             <span>{{scope.row.attachGroup }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="上传时间" min-width="100" >
+        <el-table-column prop="createTime" label="上传时间" min-width="180" >
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

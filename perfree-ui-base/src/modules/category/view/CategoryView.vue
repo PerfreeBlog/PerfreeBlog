@@ -25,10 +25,10 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column prop="name" label="分类名称" width="240" />
-        <el-table-column prop="desc" label="描述"  width="150"/>
+        <el-table-column prop="name" label="分类名称" width="240" show-overflow-tooltip/>
+        <el-table-column prop="desc" label="描述"  width="150" show-overflow-tooltip/>
         <el-table-column prop="count" label="文章数量" min-width="150"/>
-        <el-table-column prop="slug" label="slug" min-width="150"/>
+        <el-table-column prop="slug" label="slug" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="thumbnail" label="封面图" min-width="80">
           <template v-slot="scope">
             <el-image style="height: 50px" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
@@ -36,8 +36,8 @@
                       append-to-body fit="cover" preview-teleported></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="metaKeywords" label="SEO关键字" min-width="150"/>
-        <el-table-column prop="metaDescription" label="SEO描述" min-width="150"/>
+        <el-table-column prop="metaKeywords" label="SEO关键字" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="metaDescription" label="SEO描述" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" width="80">
           <template #default="scope">
             <el-tag class="ml-2" type="success" v-if="scope.row.status === 0">正常</el-tag>

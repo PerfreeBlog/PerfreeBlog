@@ -62,10 +62,10 @@
           <div class="table-box">
 
             <el-table :data="dictDataTableData" style="width: 100%;height:100%;" row-key="id" v-loading="dictDataLoading" >
-              <el-table-column prop="dictType" label="字典类型" min-width="150"/>
-              <el-table-column prop="dictLabel" label="字典展示值" min-width="120"/>
-              <el-table-column prop="dictValue" label="字典值" min-width="120"/>
-              <el-table-column prop="dictExtendValue" label="扩展值" min-width="120"/>
+              <el-table-column prop="dictType" label="字典类型" min-width="150" show-overflow-tooltip/>
+              <el-table-column prop="dictLabel" label="字典展示值" min-width="120" show-overflow-tooltip/>
+              <el-table-column prop="dictValue" label="字典值" min-width="120" show-overflow-tooltip/>
+              <el-table-column prop="dictExtendValue" label="扩展值" min-width="120" show-overflow-tooltip/>
               <el-table-column prop="status" label="状态" min-width="80">
                 <template #default="scope">
                   <el-tag class="ml-2" type="success" v-if="scope.row.status === 0">启用</el-tag>
@@ -73,7 +73,7 @@
                 </template>
               </el-table-column>
               <el-table-column prop="seq" label="排序" min-width="80"/>
-              <el-table-column prop="createTime" label="创建时间" min-width="120">
+              <el-table-column prop="createTime" label="创建时间" min-width="180">
                 <template v-slot="scope">
                   <span>{{ parseTime(scope.row.createTime) }}</span>
                 </template>

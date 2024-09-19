@@ -48,14 +48,14 @@
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="50" type="index" fixed />
-        <el-table-column prop="title" label="文章标题" min-width="150" fixed/>
+        <el-table-column prop="title" label="文章标题" min-width="150" fixed show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" min-width="80">
           <template v-slot="scope">
             <el-tag type="success" v-if="scope.row.status === 0">已发布</el-tag>
             <el-tag type="danger" v-else>草稿箱</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="slug" label="访问地址别名" min-width="100"/>
+        <el-table-column prop="slug" label="访问地址别名" min-width="100" show-overflow-tooltip/>
         <el-table-column prop="thumbnail" label="封面图" min-width="80">
           <template v-slot="scope">
             <el-image style="width: 100%; max-height: 100%" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
@@ -80,7 +80,7 @@
         </el-table-column>
 
         <el-table-column prop="userName" label="创建人" min-width="100"/>
-        <el-table-column prop="createTime" label="创建时间" min-width="120">
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

@@ -25,13 +25,13 @@
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="80" type="index" />
-        <el-table-column prop="name" label="标签名称" min-width="150"/>
+        <el-table-column prop="name" label="标签名称" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="color" label="颜色" min-width="150">
           <template v-slot="scope">
             <div v-if="scope.row.color" class="tableColor" :style="{'background-color': scope.row.color}"></div>
           </template>
         </el-table-column>
-        <el-table-column prop="slug" label="slug" min-width="150"/>
+        <el-table-column prop="slug" label="slug" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="thumbnail" label="封面图" min-width="80">
           <template v-slot="scope">
             <el-image style="height: 50px" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
@@ -39,7 +39,7 @@
                       append-to-body fit="cover" preview-teleported></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" min-width="120">
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

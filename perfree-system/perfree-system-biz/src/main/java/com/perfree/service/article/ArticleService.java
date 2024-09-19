@@ -3,6 +3,8 @@ package com.perfree.service.article;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.article.vo.*;
+import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
+import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.model.Article;
 
 /**
@@ -104,5 +106,12 @@ public interface ArticleService extends IService<Article> {
      * @return Boolean
      */
     Boolean updateGreatCount(Integer id);
+
+    /**
+     * 发表动态
+     * @param journalAddReqVO journalAddReqVO
+     * @return JournalRespVO
+     */
+    JournalRespVO createJournal(JournalAddReqVO journalAddReqVO);
 
 }

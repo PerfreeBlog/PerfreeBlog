@@ -25,23 +25,23 @@
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="80" type="index" />
-        <el-table-column prop="name" label="插件名称" min-width="150"/>
-        <el-table-column prop="desc" label="描述信息" min-width="200"/>
-        <el-table-column prop="version" label="版本" min-width="80"/>
+        <el-table-column prop="name" label="插件名称" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="desc" label="描述信息" min-width="200" show-overflow-tooltip/>
+        <el-table-column prop="version" label="版本" min-width="80" show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" width="100">
           <template #default="scope">
             <el-tag class="ml-2" type="success" v-if="scope.row.status === 1">已启用</el-tag>
             <el-tag class="ml-2" type="danger" v-else>已禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="author" label="作者" min-width="150"/>
-        <el-table-column prop="website" label="作者网站" min-width="150">
+        <el-table-column prop="author" label="作者" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="website" label="作者网站" min-width="150" show-overflow-tooltip>
           <template v-slot="scope">
             <a :href="scope.row.website" target="_blank">{{scope.row.website}}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="email" label="联系方式" min-width="150"/>
-        <el-table-column prop="createTime" label="安装时间" min-width="150">
+        <el-table-column prop="email" label="联系方式" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="createTime" label="安装时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

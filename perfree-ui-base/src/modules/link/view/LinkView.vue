@@ -25,7 +25,7 @@
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="80" type="index" />
-        <el-table-column prop="name" label="网站名称" min-width="150"/>
+        <el-table-column prop="name" label="网站名称" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="logo" label="网站logo" min-width="60">
           <template v-slot="scope">
             <el-image style="height: 50px" :src="scope.row.logo" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
@@ -33,13 +33,13 @@
                       append-to-body fit="cover" preview-teleported></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="desc" label="网站描述" min-width="150"/>
-        <el-table-column prop="address" label="网站地址" min-width="150">
+        <el-table-column prop="desc" label="网站描述" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="address" label="网站地址" min-width="150" show-overflow-tooltip>
           <template v-slot="scope">
             <a :href="scope.row.address" target="_blank">{{scope.row.address}}</a>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" min-width="120">
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

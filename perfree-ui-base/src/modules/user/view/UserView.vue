@@ -28,8 +28,8 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading">
-        <el-table-column prop="userName" label="用户名称" min-width="100" />
-        <el-table-column prop="account" label="账号" min-width="100" />
+        <el-table-column prop="userName" label="用户名称" min-width="100" show-overflow-tooltip/>
+        <el-table-column prop="account" label="账号" min-width="100" show-overflow-tooltip/>
         <el-table-column prop="sex" label="性别" min-width="60">
           <template v-slot="scope">
             {{getDictByParentDictTypeAndValue(DICT_TYPE.SEX, scope.row.sex)?.dictLabel}}
@@ -37,8 +37,8 @@
         </el-table-column>
         <el-table-column prop="email" label="邮箱" min-width="120"  show-overflow-tooltip/>
         <el-table-column prop="website" label="网站" min-width="150"  show-overflow-tooltip/>
-        <el-table-column prop="loginIp" label="最后登录ip" min-width="120" />
-        <el-table-column prop="loginDate" label="最后登录时间" min-width="120" >
+        <el-table-column prop="loginIp" label="最后登录ip" min-width="120" show-overflow-tooltip/>
+        <el-table-column prop="loginDate" label="最后登录时间" min-width="180" >
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.loginDate) }}</span>
           </template>
@@ -49,7 +49,7 @@
                        @click.native.prevent="changeStatus(scope.row)"/>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" min-width="120" >
+        <el-table-column prop="createTime" label="创建时间" min-width="180" >
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

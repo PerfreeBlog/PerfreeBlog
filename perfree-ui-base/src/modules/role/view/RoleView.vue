@@ -24,10 +24,10 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column prop="name" label="角色名称" min-width="150"/>
-        <el-table-column prop="code" label="角色编码" min-width="150"/>
-        <el-table-column prop="description" label="描述" min-width="240"/>
-        <el-table-column prop="createTime" label="创建时间" min-width="120">
+        <el-table-column prop="name" label="角色名称" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="code" label="角色编码" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="description" label="描述" min-width="240" show-overflow-tooltip/>
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

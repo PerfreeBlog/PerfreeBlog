@@ -9,20 +9,22 @@ import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
+import com.perfree.constant.ArticleConstant;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.*;
+import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
+import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.convert.article.ArticleConvert;
+import com.perfree.convert.journalAttach.JournalAttachConvert;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.mapper.ArticleCategoryMapper;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.mapper.ArticleTagMapper;
-import com.perfree.model.Article;
-import com.perfree.model.ArticleCategory;
-import com.perfree.model.ArticleTag;
-import com.perfree.model.Tag;
+import com.perfree.model.*;
 import com.perfree.service.articleCategory.ArticleCategoryService;
 import com.perfree.service.articleTag.ArticleTagService;
+import com.perfree.service.journal.JournalAttachService;
 import com.perfree.service.tag.TagService;
 import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
@@ -62,6 +64,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Resource
     private OptionCacheService optionCacheService;
+
+    @Resource
+    private JournalAttachService journalAttachService;
 
     @Override
     public PageResult<ArticleRespVO> articlePage(ArticlePageReqVO pageVO) {
@@ -189,6 +194,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Transactional
     public Boolean updateGreatCount(Integer id) {
         return articleMapper.updateGreatCount(id);
+    }
+
+    @Override
+    @Transactional
+    public JournalRespVO createJournal(JournalAddReqVO journalAddReqVO) {
+        Article article = ArticleConvert.INSTANCE.convertByJournalAddReqVO(journalAddReqVO);
+        article.setType(ArticleConstant.ARTICLE_TYPE_JOURNAL);
+        articleMapper.insert(article);
+        List<JournalAttach> journalAttachList = JournalAttachConvert.INSTANCE.convertAddReqList(journalAddReqVO.getAttachList());
+        JournalRespVO journalRespVO = ArticleConvert.INSTANCE.convertToJournalResp(article);
+        if (!journalAttachList.isEmpty()) {
+            for (JournalAttach journalAttach : journalAttachList) {
+                journalAttach.setArticleId(article.getId());
+            }
+            journalAttachService.saveBatch(journalAttachList);
+            journalRespVO.setAttachList(JournalAttachConvert.INSTANCE.convertToRespVOList(journalAttachList));
+        }
+        return journalRespVO;
     }
 
     /**

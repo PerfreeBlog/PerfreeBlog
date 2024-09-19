@@ -30,16 +30,16 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column prop="name" label="菜单名称" width="240" />
+        <el-table-column prop="name" label="菜单名称" width="240" show-overflow-tooltip/>
         <el-table-column prop="icon" label="图标" width="100">
           <template #default="scope">
             <font-awesome-icon :icon="scope.row.icon" v-if="scope.row.icon"/>
           </template>
         </el-table-column>
         <el-table-column prop="seq" label="排序"  width="80"/>
-        <el-table-column prop="url" label="菜单地址" min-width="150"/>
-        <el-table-column prop="component" label="组件路径" min-width="150"/>
-        <el-table-column prop="perms" label="权限标识" min-width="150"/>
+        <el-table-column prop="url" label="菜单地址" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="component" label="组件路径" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="perms" label="权限标识" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" width="80">
           <template #default="scope">
             <el-tag class="ml-2" type="success" v-if="scope.row.status === 0">开启</el-tag>

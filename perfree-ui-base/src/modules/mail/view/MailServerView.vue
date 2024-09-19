@@ -28,11 +28,11 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column prop="name" label="名称" min-width="150"/>
-        <el-table-column prop="account" label="账号" min-width="150"/>
-        <el-table-column prop="userName" label="用户名" min-width="150"/>
-        <el-table-column prop="address" label="SMTP域名" min-width="150"/>
-        <el-table-column prop="port" label="SMTP端口" min-width="80"/>
+        <el-table-column prop="name" label="名称" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="account" label="账号" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="userName" label="用户名" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="address" label="SMTP域名" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="port" label="SMTP端口" min-width="80" show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" min-width="80">
           <template #default="scope">
             <el-tag class="ml-2" type="success" v-if="scope.row.status === 0">启用</el-tag>
@@ -45,7 +45,7 @@
             <el-tag class="ml-2" type="danger" v-else>禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" min-width="120">
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

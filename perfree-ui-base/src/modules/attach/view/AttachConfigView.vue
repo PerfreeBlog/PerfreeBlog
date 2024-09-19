@@ -25,21 +25,21 @@
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="80" type="index" />
-        <el-table-column prop="name" label="配置名称" min-width="240" />
+        <el-table-column prop="name" label="配置名称" min-width="240" show-overflow-tooltip/>
         <el-table-column prop="storage" label="存储器类型" min-width="240">
           <template v-slot="scope">
             <span v-if="scope.row.storage === 0">本地磁盘</span>
             <span v-if="scope.row.storage === 1">S3对象存储</span>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" min-width="240" />
+        <el-table-column prop="remark" label="备注" min-width="240" show-overflow-tooltip />
         <el-table-column prop="master" label="默认配置" min-width="100">
           <template v-slot="scope">
             <el-tag type="success" v-if="scope.row.master">是</el-tag>
             <el-tag type="danger" v-else>否</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" min-width="120" >
+        <el-table-column prop="createTime" label="创建时间" min-width="180" >
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

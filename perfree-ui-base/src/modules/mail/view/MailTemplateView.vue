@@ -33,9 +33,9 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column prop="name" label="模板名称" min-width="120"/>
-        <el-table-column prop="code" label="模板编码" min-width="120"/>
-        <el-table-column prop="nickname" label="发送人名称" min-width="120"/>
+        <el-table-column prop="name" label="模板名称" min-width="120" show-overflow-tooltip/>
+        <el-table-column prop="code" label="模板编码" min-width="120" show-overflow-tooltip/>
+        <el-table-column prop="nickname" label="发送人名称" min-width="120" show-overflow-tooltip/>
         <el-table-column prop="mailTitle" label="邮件标题" min-width="120"  show-overflow-tooltip/>
         <el-table-column prop="mailContent" label="邮件内容" min-width="150"  show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" min-width="80">
@@ -44,8 +44,8 @@
             <el-tag class="ml-2" type="danger" v-else>禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="remark" label="备注" min-width="150"/>
-        <el-table-column prop="createTime" label="创建时间" min-width="120">
+        <el-table-column prop="remark" label="备注" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>

@@ -2,6 +2,8 @@ package com.perfree.convert.article;
 
 
 import com.perfree.controller.auth.article.vo.*;
+import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
+import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.model.Article;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -22,4 +24,7 @@ public interface ArticleConvert {
 
     Article convertModelByUpdateArticleVO(ArticleUpdateReqVO articleUpdateReqVO);
 
+    Article convertByJournalAddReqVO(JournalAddReqVO journalAddReqVO);
+
+    JournalRespVO convertToJournalResp(Article article);
 }
