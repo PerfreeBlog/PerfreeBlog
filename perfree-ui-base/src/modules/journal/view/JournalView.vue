@@ -150,7 +150,7 @@ function resetSearchForm() {
  */
 function handleAdd() {
   updateId.value = null;
-  title.value = '添加标签';
+  title.value = '发表动态';
   open.value = true;
 }
 
