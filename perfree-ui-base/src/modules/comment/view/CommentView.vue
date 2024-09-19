@@ -126,7 +126,7 @@
 
     <el-dialog v-model="replyListShow" :title="title" width="600px" draggable >
       <el-empty description="暂无回复" v-if="childCommentList.length <= 0 && !childLoading"/>
-      <div style="height: 100px"  v-loading="childLoading" v-if="childLoading"></div>
+      <div style="height: 100px"  v-loading="childLoading" v-if="childLoading && childCommentParam.pageNo === 1"></div>
       <div class='comment-detail-box' v-for="item in childCommentList">
         <div class='comment-detail-avatar-box'>
           <img :src='item.userInfo ? item.userInfo.avatar : item.avatar' width='35px' height="35px" v-if="item.avatar || (item.userInfo &&  item.userInfo.avatar)">
@@ -140,6 +140,15 @@
           <div class='comment-detail-content'>{{ item.content }}</div>
         </div>
       </div>
+      <el-divider v-if="childCommentParam.pageNo >= 1 && childCommentParam.pageNo < Math.ceil(childCommentTotal / childCommentParam.pageSize) && !childLoading">
+        <el-button  text @click="nextChildCommentPage">
+          <el-icon><CaretBottom /></el-icon>
+          加载更多
+        </el-button>
+      </el-divider>
+      <el-divider v-if="childCommentParam.pageNo > 1 && childLoading">
+        <el-icon class="is-loading"><Loading /></el-icon> 正在加载...
+      </el-divider>
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="replyListShow = false">关 闭</el-button>
@@ -155,7 +164,7 @@ import 'emoji-picker-element';
 import {
   commentPageApi,updateStatusApi, commentDelApi, queryChildCommentPageApi, submitCommentApi
 } from "../api/comment.js";
-import {Check, Delete, ChatDotSquare, ChatLineSquare, Refresh, Search} from "@element-plus/icons-vue";
+import {Check, Delete, ChatDotSquare, ChatLineSquare, Refresh, Search, CaretBottom} from "@element-plus/icons-vue";
 import {nextTick, onMounted, onUnmounted, reactive, ref} from "vue";
 
 const editor = ref();
@@ -195,6 +204,11 @@ let childCommentParam = ref({
 let childCommentList = ref([]);
 let childCommentTotal = ref(0);
 let childLoading = ref(false);
+
+function nextChildCommentPage() {
+  childCommentParam.value.pageNo += 1;
+  loadChildCommentPage();
+}
 
 /**
  * 查看所有回复
