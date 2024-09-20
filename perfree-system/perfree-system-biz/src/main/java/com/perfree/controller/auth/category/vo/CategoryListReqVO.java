@@ -4,9 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 
-@Schema(description = "分类树形列表ReqVO")
+@Schema(description = "分类列表ReqVO")
 @Data
-public class CategoryListTreeReqVO {
+public class CategoryListReqVO {
 
     @Schema(description = "分类名")
     private String name;

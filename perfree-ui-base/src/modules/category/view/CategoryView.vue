@@ -25,9 +25,9 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column prop="name" label="分类名称" width="240" show-overflow-tooltip/>
+        <el-table-column prop="name" label="分类名称" width="200" show-overflow-tooltip/>
         <el-table-column prop="desc" label="描述"  width="150" show-overflow-tooltip/>
-        <el-table-column prop="count" label="文章数量" min-width="150"/>
+        <el-table-column prop="count" label="文章数量" min-width="80"/>
         <el-table-column prop="slug" label="slug" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="thumbnail" label="封面图" min-width="80">
           <template v-slot="scope">
@@ -44,7 +44,13 @@
             <el-tag class="ml-2" type="danger" v-else>禁用</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="240" fixed="right">
+        <el-table-column prop="userInfo.userName" label="创建人" min-width="120" show-overflow-tooltip/>
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
+          <template v-slot="scope">
+            <span>{{ parseTime(scope.row.createTime) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="220" fixed="right">
           <template v-slot="scope">
             <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">修改</el-button>
             <el-button size="small" type="primary" link :icon="Plus" @click="handleAdd(scope.row)">新增</el-button>
@@ -62,15 +68,18 @@
           label-width="100px"
           status-icon
           :rules="addRule"
+          v-loading="addLoading"
       >
         <el-form-item label="父级分类" prop="pid">
           <el-tree-select
               v-model="addForm.pid"
-              :data="treeData"
+              :data="addTreeData"
               :props="treeSelectProps"
               check-strictly
               :render-after-expand="false"
               style="width: 100%"
+              node-key="id"
+              ref="addTreeRef"
               clearable
           />
         </el-form-item>
@@ -113,14 +122,8 @@
 </template>
 <script setup>
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
-import {
-  categoryAddApi,
-  categoryDelApi,
-  categoryGetApi,
-  categoryListTreeApi,
-  categoryUpdateApi
-} from "../api/category.js";
-import {handleTree} from "@/core/utils/perfree.js";
+import {categoryAddApi, categoryDelApi, categoryGetApi, categoryPageApi, categoryUpdateApi} from "../api/category.js";
+import {handleTree, parseTime} from "@/core/utils/perfree.js";
 import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {reactive, ref} from "vue";
@@ -133,8 +136,11 @@ const searchForm = ref({
 let loading = ref(false);
 let tableData = ref([]);
 let treeData = ref([]);
+let addTreeData = ref([]);
 let open = ref(false);
 let title = ref("");
+const addTreeRef = ref();
+let addLoading = ref(false);
 const treeSelectProps = reactive({
   children: 'children',
   label: 'name',
@@ -162,9 +168,8 @@ const addFormRef = ref();
  */
 function initList() {
   loading.value = true;
-  categoryListTreeApi(searchForm.value).then((res) => {
+  categoryPageApi(searchForm.value).then((res) => {
     tableData.value = handleTree(res.data, "id", "pid",'children', -1);
-    treeData.value = [{id: -1, name: '主类目', children: tableData.value}];
     loading.value = false;
   });
 }
@@ -190,6 +195,11 @@ function handleAdd(row) {
   }
   title.value = '添加分类';
   open.value = true;
+  addLoading.value = true;
+  categoryPageApi({}).then((res) => {
+    addTreeData.value = [{id: -1, name: '主类目', children: handleTree(res.data, "id", "pid",'children', -1)}];
+    addLoading.value = false;
+  });
 }
 
 /**
@@ -251,10 +261,16 @@ function submitAddForm() {
 function handleUpdate(row) {
   title.value = '修改分类';
   resetAddForm();
-  categoryGetApi(row.id).then((res) => {
-    addForm.value = res.data;
-    open.value = true;
-  })
+  open.value = true;
+  addLoading.value = true;
+  categoryPageApi({}).then((res) => {
+    addTreeData.value = [{id: -1, name: '主类目', children: handleTree(res.data, "id", "pid",'children', -1)}];
+    categoryGetApi(row.id).then((res) => {
+      addForm.value = res.data;
+      addTreeRef.value.setCurrentKey(res.data.pid);
+      addLoading.value = false;
+    })
+  });
 }
 
 /**

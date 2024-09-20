@@ -1,14 +1,12 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
-import com.perfree.constant.CategoryConstant;
-import com.perfree.controller.auth.category.vo.CategoryListTreeReqVO;
-import com.perfree.controller.auth.category.vo.CategoryPageReqVO;
+import com.perfree.controller.auth.category.vo.CategoryListReqVO;
+import com.perfree.controller.auth.category.vo.CategoryRespVO;
 import com.perfree.model.Category;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,29 +21,16 @@ import java.util.List;
 @Mapper
 public interface CategoryMapper extends BaseMapperX<Category> {
 
-    default PageResult<Category> categoryPage(CategoryPageReqVO pageVO) {
-        return selectPage(pageVO, new LambdaQueryWrapper<Category>()
-                .eq(StringUtils.isNotBlank(pageVO.getName()), Category::getName, pageVO.getName())
-        );
-    }
-
-    default Category selectBySlug(String slug) {
-        return selectOne(new LambdaQueryWrapper<Category>()
-                .eq(Category::getSlug, slug));
-    }
+    CategoryRespVO selectBySlug(@Param("slug") String slug);
 
     default List<Category> selectByPid(Integer id) {
         return selectList(new LambdaQueryWrapper<Category>()
                 .eq(Category::getPid, id));
     }
 
-    default List<Category> getAllCategory(CategoryListTreeReqVO categoryListTreeReqVO) {
-        return selectList(new LambdaQueryWrapper<Category>()
-                .like(StringUtils.isNotBlank(categoryListTreeReqVO.getName()), Category::getName, categoryListTreeReqVO.getName())
-                .eq(null != categoryListTreeReqVO.getStatus(), Category::getStatus, categoryListTreeReqVO.getStatus())
-                .orderByDesc(Category::getCreateTime)
-        );
-    }
+    List<CategoryRespVO> getAllCategory(@Param("reqVo") CategoryListReqVO reqVO);
+
+    CategoryRespVO getCategoryById(@Param("id") Integer id);
 
 }
 

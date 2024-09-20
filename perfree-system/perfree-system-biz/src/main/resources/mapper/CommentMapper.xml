@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.perfree.mapper.CommentMapper">
-    <resultMap id="COMMENT_RESULT" type="com.perfree.controller.auth.comment.vo.CommentRespVO">
+    <resultMap id="COMMENT_RESULT" type="com.perfree.controller.auth.comment.vo.CommentRespVO" autoMapping="true">
         <id property="id" column="id"/>
-        <result property="content" column="content"/>
-        <result property="articleId" column="articleId"/>
-        <result property="pid" column="pid"/>
-        <result property="topPid" column="topPid"/>
-        <result property="userId" column="userId"/>
-        <result property="avatar" column="avatar"/>
-        <result property="website" column="website"/>
-        <result property="email" column="email"/>
-        <result property="userName" column="userName"/>
-        <result property="device" column="device"/>
-        <result property="ip" column="ip"/>
-        <result property="status" column="status"/>
-        <result property="createTime" column="createTime"/>
-        <result property="updateTime" column="updateTime"/>
-        <result property="childNum" column="childNum"/>
-        <result property="articleTitle" column="articleTitle"/>
-        <result property="articleSlug" column="articleSlug"/>
-        <result property="articleType" column="articleType"/>
-        <association property="userInfo" javaType="com.perfree.controller.auth.comment.vo.CommentUserRespVO">
+        <association property="userInfo" javaType="com.perfree.commons.common.CommonUserMsg">
             <result property="userName" column="tUserName"/>
             <result property="avatar" column="tAvatar"/>
             <result property="email" column="tEmail"/>

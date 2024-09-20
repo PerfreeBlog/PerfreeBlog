@@ -1,10 +1,13 @@
 package com.perfree.service.category;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.CategoryConstant;
+import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.controller.auth.category.vo.*;
 import com.perfree.convert.category.CategoryConvert;
 import com.perfree.mapper.ArticleCategoryMapper;
@@ -39,16 +42,15 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private ArticleCategoryMapper articleCategoryMapper;
 
     @Override
-    public PageResult<Category> categoryPage(CategoryPageReqVO pageVO) {
-        SortingFieldUtils.handleDefaultSortingField(pageVO);
-        return categoryMapper.categoryPage(pageVO);
+    public List<CategoryRespVO> categoryPage(CategoryListReqVO reqVO) {
+        return categoryMapper.getAllCategory(reqVO);
     }
 
     @Override
     @Transactional
     public Category addCategory(CategoryAddReqVO categoryAddReqVO) {
         if (StringUtils.isNotBlank(categoryAddReqVO.getSlug())) {
-            Category queryCategory = categoryMapper.selectBySlug(categoryAddReqVO.getSlug());
+            CategoryRespVO queryCategory = categoryMapper.selectBySlug(categoryAddReqVO.getSlug());
             if (null != queryCategory) {
                 throw new ServiceException(CATEGORY_SLUG_EXIST);
             }
@@ -66,8 +68,8 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Transactional
     public Category updateCategory(CategoryUpdateReqVO categoryUpdateReqVO) {
         if (StringUtils.isNotBlank(categoryUpdateReqVO.getSlug())) {
-            Category queryCategory = categoryMapper.selectBySlug(categoryUpdateReqVO.getSlug());
-            if (null != queryCategory && !queryCategory.getId().equals(categoryUpdateReqVO.getId())) {
+            CategoryRespVO categoryRespVO = categoryMapper.selectBySlug(categoryUpdateReqVO.getSlug());
+            if (null != categoryRespVO && !categoryRespVO.getId().equals(categoryUpdateReqVO.getId())) {
                 throw new ServiceException(CATEGORY_SLUG_EXIST);
             }
         } else {
@@ -91,9 +93,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
-    public List<CategoryTreeRespVO> listTree(CategoryListTreeReqVO categoryListTreeReqVO) {
-        List<Category> categories = categoryMapper.getAllCategory(categoryListTreeReqVO);
-        List<CategoryTreeRespVO> categoryTreeRespVOList = CategoryConvert.INSTANCE.convertToTreeListRespVO(categories);
+    public List<CategoryTreeRespVO> listTree(CategoryListReqVO reqVO) {
+        List<CategoryRespVO> categories = categoryMapper.getAllCategory(reqVO);
+        List<CategoryTreeRespVO> categoryTreeRespVOList = CategoryConvert.INSTANCE.convertRespVoToTreeListRespVO(categories);
         // 获取所有跟节点
         List<CategoryTreeRespVO> result = categoryTreeRespVOList.stream().filter(category -> category.getPid().equals(CategoryConstant.ROOT_CATEGORY_CODE)).toList();
         // 将原数组中所有根节点移除
@@ -102,6 +104,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             buildChildCategory(category, categoryTreeRespVOList);
         }
         return result;
+    }
+
+    @Override
+    public CategoryRespVO getBySlug(String slug) {
+        return categoryMapper.selectBySlug(slug);
+    }
+
+    @Override
+    public CategoryRespVO getCategoryById(Integer id) {
+        return categoryMapper.getCategoryById(id);
     }
 
 

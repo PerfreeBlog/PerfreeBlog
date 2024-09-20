@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.comment.vo;
 
+import com.perfree.commons.common.CommonUserMsg;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,5 +37,5 @@ public class CommentRespVO extends CommentBaseVO {
     private Integer childNum;
 
     @Schema(description = "用户信息(当userId不为空时)")
-    private CommentUserRespVO userInfo;
+    private CommonUserMsg userInfo;
 }

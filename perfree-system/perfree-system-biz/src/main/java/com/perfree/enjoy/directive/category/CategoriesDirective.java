@@ -7,7 +7,7 @@ import com.jfinal.template.stat.Scope;
 import com.perfree.commons.directive.BaseDirective;
 import com.perfree.commons.directive.TemplateDirective;
 import com.perfree.constant.CategoryConstant;
-import com.perfree.controller.auth.category.vo.CategoryListTreeReqVO;
+import com.perfree.controller.auth.category.vo.CategoryListReqVO;
 import com.perfree.controller.auth.category.vo.CategoryTreeRespVO;
 import com.perfree.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +35,9 @@ public class CategoriesDirective extends BaseDirective {
 
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
-        CategoryListTreeReqVO categoryListTreeReqVO = new CategoryListTreeReqVO();
-        categoryListTreeReqVO.setStatus(CategoryConstant.STATUS_NORMAL);
-        List<CategoryTreeRespVO> categoryTreeRespVOList = categoryService.listTree(categoryListTreeReqVO);
+        CategoryListReqVO reqVO = new CategoryListReqVO();
+        reqVO.setStatus(CategoryConstant.STATUS_NORMAL);
+        List<CategoryTreeRespVO> categoryTreeRespVOList = categoryService.listTree(reqVO);
         scope.set("categories", categoryTreeRespVOList);
         stat.exec(env, scope, writer);
     }

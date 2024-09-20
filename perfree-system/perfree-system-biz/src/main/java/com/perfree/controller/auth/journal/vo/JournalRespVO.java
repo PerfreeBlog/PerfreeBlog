@@ -1,6 +1,6 @@
 package com.perfree.controller.auth.journal.vo;
 
-import com.perfree.controller.auth.article.vo.ArticleUserRespVO;
+import com.perfree.commons.common.CommonUserMsg;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -26,7 +26,7 @@ public class JournalRespVO {
     private Date updateTime;
 
     @Schema(description = "用户信息")
-    private ArticleUserRespVO user;
+    private CommonUserMsg user;
 
     @Schema(description = "文章内容")
     private String content;

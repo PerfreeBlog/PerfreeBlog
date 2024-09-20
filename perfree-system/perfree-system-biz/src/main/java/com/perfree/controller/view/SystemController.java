@@ -13,37 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@Tag(name = "页面视图相关")
+@Tag(name = "系统页面视图相关")
 @Controller
 public class SystemController extends BaseViewController {
-
-    @Resource
-    private ArticleService articleService;
 
     @GetMapping("/")
     @Operation(summary = "首页")
     public String index() {
         return themeView("index.html");
-    }
-
-    @GetMapping(value = {"/articleList/{pageIndex}", "/articleList", "article"})
-    @Operation(summary = "文章列表页")
-    public String articleListPage(@PathVariable(value = "pageIndex", required = false) String pageIndex, Model model) {
-        if (StringUtils.isBlank(pageIndex)) {
-            pageIndex = "1";
-        }
-        model.addAttribute("pageIndex", Integer.parseInt(pageIndex));
-        return themeView("articleList.html");
-    }
-
-    @GetMapping(value = {"/article/{slug}"})
-    @Operation(summary = "文章页")
-    public String articlePage(@PathVariable(value = "slug", required = false) String slug, Model model) {
-        ArticleRespVO articleRespVO = articleService.getBySlugAndTypeAndStatus(slug,
-                ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED);
-        if (articleRespVO != null) {
-            model.addAttribute("article", articleRespVO);
-        }
-        return themeView("article.html");
     }
 }

@@ -74,14 +74,18 @@
           label-width="100px"
           class="demo-ruleForm"
           status-icon
+          v-loading="addLoading"
       >
         <el-form-item label="父级菜单" prop="pid">
           <el-tree-select
               v-model="addForm.pid"
-              :data="treeData"
+              :data="addTreeData"
               :props="treeSelectProps"
               check-strictly
+              auto-expand-parent
               :render-after-expand="false"
+              node-key="id"
+              ref="addTreeRef"
               style="width: 100%"
               clearable
           />
@@ -207,12 +211,14 @@ const searchForm = ref({
   name: '',
   type: 0
 });
-
+const addTreeRef = ref();
 let loading = ref(false);
 let tableData = ref([]);
 let treeData = ref([]);
+let addTreeData = ref([]);
 let open = ref(false);
 let title = ref("");
+let addLoading = ref(false);
 
 const treeSelectProps = reactive({
   children: 'children',
@@ -255,7 +261,6 @@ function initList() {
   loading.value = true;
   menuPageApi(searchForm.value).then((res) => {
     tableData.value = handleTree(res.data, "id", "pid",'children', '-1');
-    treeData.value = [{id: '-1', name: '主类目', children: tableData.value}];
     loading.value = false;
   });
 }
@@ -301,6 +306,11 @@ function handleAdd(row) {
   title.value = "添加菜单";
   resetForm();
   open.value = true;
+  addLoading.value = true;
+  menuPageApi({}).then((res) => {
+    addTreeData.value = [{id: '-1', name: '主类目', children:  handleTree(res.data, "id", "pid",'children', '-1')}];
+    addLoading.value = false;
+  });
   if (row && row.id) {
     addForm.value.pid = row.id;
     addForm.value.type = row.type;
@@ -322,11 +332,17 @@ function cancelAdd() {
  */
 function handleUpdate(row) {
   resetForm();
-  menuGetApi(row.id).then((res) => {
-    addForm.value = res.data;
-    title.value = "修改菜单";
-    open.value = true;
-  })
+  title.value = "修改菜单";
+  open.value = true;
+  addLoading.value = true;
+  menuPageApi({}).then((res) => {
+    addTreeData.value = [{id: '-1', name: '主类目', children:  handleTree(res.data, "id", "pid",'children', '-1')}];
+    menuGetApi(row.id).then((res) => {
+      addLoading.value = false;
+      addForm.value = res.data;
+      addTreeRef.value.setCurrentKey(res.data.pid);
+    })
+  });
 }
 
 

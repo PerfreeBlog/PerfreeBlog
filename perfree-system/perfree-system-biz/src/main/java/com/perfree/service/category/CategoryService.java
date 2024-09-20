@@ -19,10 +19,10 @@ public interface CategoryService extends IService<Category> {
 
     /**
      * 分类分页列表
-     * @param pageVO pageVO
-     * @return PageResult<Category>
+     * @param reqVO CategoryListReqVO
+     * @return List<CategoryRespVO>
      */
-    PageResult<Category> categoryPage(CategoryPageReqVO pageVO);
+    List<CategoryRespVO> categoryPage(CategoryListReqVO reqVO);
 
     /**
      * 添加分类
@@ -47,8 +47,22 @@ public interface CategoryService extends IService<Category> {
 
     /**
      * 分类树形结构列表
-     * @param categoryListTreeReqVO categoryListTreeReqVO
+     * @param reqVO CategoryListReqVO
      * @return List<CategoryTreeRespVO>
      */
-    List<CategoryTreeRespVO> listTree(CategoryListTreeReqVO categoryListTreeReqVO);
+    List<CategoryTreeRespVO> listTree(CategoryListReqVO reqVO);
+
+    /**
+     * 根据slug获取分类
+     * @param slug slug
+     * @return Category
+     */
+    CategoryRespVO getBySlug(String slug);
+
+    /**
+     * 根据id获取分类
+     * @param id id
+     * @return CategoryRespVO
+     */
+    CategoryRespVO getCategoryById(Integer id);
 }

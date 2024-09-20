@@ -1,10 +1,16 @@
-package com.perfree.controller.auth.comment.vo;
+package com.perfree.commons.common;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+/**
+ * 通用的用户关联信息类
+ */
 @Data
-public class CommentUserRespVO {
+public class CommonUserMsg {
+
+    @Schema(description = "id")
+    private Integer id;
 
     @Schema(description = "昵称")
     private String userName;

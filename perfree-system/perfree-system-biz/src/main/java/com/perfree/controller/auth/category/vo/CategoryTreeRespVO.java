@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.category.vo;
 
+import com.perfree.commons.common.CommonUserMsg;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,5 +30,8 @@ public class CategoryTreeRespVO extends CategoryBaseVO{
 
     @Schema(description = "子分类")
     private List<CategoryTreeRespVO> children;
+
+    @Schema(description = "用户信息")
+    private CommonUserMsg userInfo;
 
 }

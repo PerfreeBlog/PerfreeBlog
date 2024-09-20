@@ -1,5 +1,5 @@
-export function categoryListTreeApi(data) {
-    return axios.post('/api/auth/category/listTree', data);
+export function categoryPageApi(data) {
+    return axios.post('/api/auth/category/page', data);
 }
 
 export function categoryAddApi(data) {

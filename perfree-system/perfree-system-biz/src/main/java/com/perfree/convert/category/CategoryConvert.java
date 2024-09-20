@@ -24,6 +24,6 @@ public interface CategoryConvert {
 
     Category convertUpdateReqVOToModel(CategoryUpdateReqVO categoryUpdateReqVO);
 
-    List<CategoryTreeRespVO> convertToTreeListRespVO(List<Category> categories);
+    List<CategoryTreeRespVO> convertRespVoToTreeListRespVO(List<CategoryRespVO> categories);
 
 }

@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.article.vo;
 
+import com.perfree.commons.common.CommonUserMsg;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,6 +37,6 @@ public class ArticleRespVO extends ArticleBaseVO{
     private List<ArticleCategoryRespVO> categoryList;
 
     @Schema(description = "用户信息")
-    private ArticleUserRespVO user;
+    private CommonUserMsg user;
 
 }

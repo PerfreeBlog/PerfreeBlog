@@ -50,11 +50,6 @@ public class Category extends BaseModel implements Serializable {
     private String desc;
 
     /**
-     * 文章数量
-     */
-    private Integer count;
-
-    /**
      * SEO关键字
      */
     private String metaKeywords;

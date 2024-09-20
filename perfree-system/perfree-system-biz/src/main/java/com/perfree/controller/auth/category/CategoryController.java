@@ -26,16 +26,15 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/page")
-    @Operation(summary = "分类分页列表")
-    public CommonResult<PageResult<CategoryRespVO>> page(@RequestBody CategoryPageReqVO pageReqVO) {
-        PageResult<Category> categoryPageResult = categoryService.categoryPage(pageReqVO);
-        return success(CategoryConvert.INSTANCE.convertPageResultVO(categoryPageResult));
+    @Operation(summary = "分类页面列表")
+    public CommonResult<List<CategoryRespVO>> page(@RequestBody CategoryListReqVO reqVO) {
+        return success(categoryService.categoryPage(reqVO));
     }
 
     @PostMapping("/listTree")
     @Operation(summary = "分类树形结构列表")
-    public CommonResult<List<CategoryTreeRespVO>> listTree(@RequestBody CategoryListTreeReqVO categoryListTreeReqVO) {
-        return success(categoryService.listTree(categoryListTreeReqVO));
+    public CommonResult<List<CategoryTreeRespVO>> listTree(@RequestBody CategoryListReqVO reqVO) {
+        return success(categoryService.listTree(reqVO));
     }
 
     @PostMapping("/add")
@@ -55,7 +54,7 @@ public class CategoryController {
     @GetMapping("/get")
     @Operation(summary = "获取分类")
     public CommonResult<CategoryRespVO> get(@RequestParam(value = "id") Integer id) {
-        return success(CategoryConvert.INSTANCE.convertRespVO(categoryService.getById(id)));
+        return success(categoryService.getCategoryById(id));
     }
 
     @DeleteMapping("/del")

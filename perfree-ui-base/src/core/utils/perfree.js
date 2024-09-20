@@ -55,26 +55,35 @@ export function parseTime(time, pattern) {
  * @param {*} rootId 根Id 默认 0
  */
 export function handleTree(data, id, parentId, children, rootId) {
-    id = id || 'id'
-    parentId = parentId || 'parentId'
-    children = children || 'children'
+    id = id || 'id';
+    parentId = parentId || 'parentId';
+    children = children || 'children';
     rootId = rootId || Math.min.apply(Math, data.map(item => {
-        return item[parentId]
-    })) || 0
-    //对源数据深度克隆
-    const cloneData = JSON.parse(JSON.stringify(data))
-    //循环所有项
+        return item[parentId];
+    })) || 0;
+
+    // 深度克隆源数据
+    const cloneData = JSON.parse(JSON.stringify(data));
+
+    // 查找根节点，如果不存在根节点，则直接返回数据
     const treeData = cloneData.filter(father => {
         let branchArr = cloneData.filter(child => {
-            //返回每一项的子级数组
-            return father[id] === child[parentId]
+            // 返回每一项的子级数组
+            return father[id] === child[parentId];
         });
         branchArr.length > 0 ? father.children = branchArr : '';
-        //返回第一层
+        // 返回第一层
         return father[parentId] === rootId;
     });
-    return treeData !== '' ? treeData : data;
+
+    // 如果没有找到根节点，并且数据不是空的，直接返回原始数据
+    if (treeData.length === 0 && data.length > 0) {
+        return data;  // 返回没有根节点的数据（如搜索结果只包含子节点）
+    }
+
+    return treeData.length > 0 ? treeData : data;
 }
+
 
 
 // 初始化菜单
