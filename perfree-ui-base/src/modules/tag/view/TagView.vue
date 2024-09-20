@@ -32,8 +32,6 @@
           </template>
         </el-table-column>
         <el-table-column prop="slug" label="slug" min-width="150" show-overflow-tooltip/>
-        <el-table-column prop="articleCount" label="文章数量" min-width="80"/>
-        <el-table-column prop="userInfo.userName" label="创建人" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="thumbnail" label="封面图" min-width="120">
           <template v-slot="scope">
             <el-image style="height: 50px" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
@@ -41,11 +39,13 @@
                       append-to-body fit="cover" preview-teleported></el-image>
           </template>
         </el-table-column>
+        <el-table-column prop="articleCount" label="文章数量" min-width="80"/>
         <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
+        <el-table-column prop="userInfo.userName" label="创建人" min-width="150" show-overflow-tooltip/>
         <el-table-column label="操作" width="140" fixed="right">
           <template v-slot="scope">
             <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">修改</el-button>
