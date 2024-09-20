@@ -320,4 +320,24 @@ public class ThemeManager {
 
         return true;
     }
+
+    public List<String> getThemePageTpl() {
+        File themeDirFile = getThemeDirFile(null);
+        if (null == themeDirFile || !themeDirFile.exists()) {
+            throw new ServiceException(ErrorCode.OPTION_WEB_THEME_NOT_EXIST);
+        }
+        List<String> pageTemplates = new ArrayList<>();
+        File pageDirFile = new File(themeDirFile.getAbsolutePath() + SystemConstants.FILE_SEPARATOR + "page");
+        if (!pageDirFile.exists()) {
+            return pageTemplates;
+        }
+        File[] files = pageDirFile.listFiles();
+        if (null == files) {
+            return pageTemplates;
+        }
+        for (File file : files) {
+            pageTemplates.add("page/" + file.getName());
+        }
+        return pageTemplates;
+    }
 }

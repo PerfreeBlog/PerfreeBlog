@@ -25,6 +25,9 @@ public class ArticleCategoryServiceImpl extends ServiceImpl<ArticleCategoryMappe
 
     @Override
     public void handleArticleCategory(List<Integer> categoryIds, Integer articleId) {
+        if (null == categoryIds || categoryIds.isEmpty()) {
+            return;
+        }
         List<ArticleCategory> articleCategoryList = new ArrayList<>();
         for (Integer categoryId : categoryIds) {
             ArticleCategory articleCategory = new ArticleCategory();

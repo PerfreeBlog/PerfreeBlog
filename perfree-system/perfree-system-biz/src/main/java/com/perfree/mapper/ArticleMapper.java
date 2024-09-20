@@ -40,9 +40,10 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @param slug slug
      * @return Article
      */
-    default Article getBySlug(String slug){
+    default Article getBySlugAndType(String slug, String type){
         return selectOne(new LambdaQueryWrapper<Article>()
                 .eq(Article::getSlug, slug)
+                .eq(Article::getType, type)
         );
     }
 

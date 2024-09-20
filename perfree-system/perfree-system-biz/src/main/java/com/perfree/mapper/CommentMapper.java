@@ -38,4 +38,9 @@ public interface CommentMapper extends BaseMapperX<Comment> {
     IPage<CommentRespVO> pageByArticleId(IPage<CommentRespVO> page, @Param("pageVO") CommentPageByArticleIdReqVO pageVO);
 
     IPage<CommentRespVO> pageByTopPid(IPage<CommentRespVO> page, @Param("pageVO") CommentPageByTopPidReqVO pageVO);
+
+    default void delByArticleId(Integer articleId){
+        delete(new LambdaQueryWrapper<Comment>().eq(Comment::getArticleId, articleId));
+    }
+
 }

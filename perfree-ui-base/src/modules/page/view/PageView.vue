@@ -2,30 +2,13 @@
   <div class="page">
     <div class="search-box">
       <el-form :inline="true" :model="searchForm" class="demo-form-inline" ref="searchFormRef">
-        <el-form-item label="文章标题">
+        <el-form-item label="页面标题">
           <el-input v-model="searchForm.title" placeholder="请输入文章标题" clearable/>
         </el-form-item>
-        <el-form-item label="文章状态">
+        <el-form-item label="页面状态">
           <el-select v-model="searchForm.status" placeholder="请选择文章状态" style="width: 200px" clearable>
             <el-option :key="0" :label="'已发布'" :value="0" />
             <el-option :key="1" :label="'草稿箱'" :value="1" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="所属分类">
-          <el-tree-select
-              v-model="searchForm.categoryId"
-              :data="categoryData"
-              :props="treeSelectProps"
-              check-strictly
-              :render-after-expand="false"
-              style="width: 200px"
-              clearable
-              placeholder="请选择所属分类"
-          />
-        </el-form-item>
-        <el-form-item label="所属标签">
-          <el-select v-model="searchForm.tagId" placeholder="请选择或新增标签" style="width: 200px" clearable>
-            <el-option v-for="item in tagData" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -37,7 +20,7 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button :icon="Plus" type="primary" plain @click="handleAdd">写文章</el-button>
+        <el-button :icon="Plus" type="primary" plain @click="handleAdd">添加页面</el-button>
       </el-col>
       <div class="right-tool">
         <el-button :icon="Refresh" circle @click="initList"/>
@@ -48,7 +31,7 @@
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="50" type="index" fixed />
-        <el-table-column prop="title" label="文章标题" min-width="150" fixed show-overflow-tooltip/>
+        <el-table-column prop="title" label="页面标题" min-width="150" fixed show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" min-width="80">
           <template v-slot="scope">
             <el-tag type="success" v-if="scope.row.status === 0">已发布</el-tag>
@@ -57,16 +40,10 @@
         </el-table-column>
         <el-table-column prop="slug" label="访问地址" min-width="150" show-overflow-tooltip>
           <template v-slot="scope">
-            <el-link :href="'/article/' + scope.row.slug" target="_blank">/article/{{scope.row.slug}}</el-link>
+            <el-link :href="'/page/' + scope.row.slug" target="_blank">/page/{{scope.row.slug}}</el-link>
           </template>
         </el-table-column>
-        <el-table-column prop="thumbnail" label="封面图" min-width="80">
-          <template v-slot="scope">
-            <el-image style="width: 100%; max-height: 100%" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
-                      :preview-src-list="[scope.row.thumbnail]" :initial-index="4" v-if="scope.row.thumbnail"
-                      append-to-body fit="cover" preview-teleported></el-image>
-          </template>
-        </el-table-column>
+        <el-table-column prop="template" label="主题模板" min-width="120" show-overflow-tooltip/>
         <el-table-column prop="viewCount" label="阅读数量" min-width="70" align="center"/>
         <el-table-column prop="greatCount" label="点赞数量" min-width="70" align="center"/>
         <el-table-column prop="commentCount" label="评论数量" min-width="70" align="center"/>
@@ -115,8 +92,7 @@
 </template>
 <script setup>
 import {Check, Close, Delete, Edit, Finished, Plus, Refresh, Search, ToiletPaper} from "@element-plus/icons-vue";
-import {handleTree, parseTime} from "@/core/utils/perfree.js";
-import {getAllTag} from "../api/tag.js";
+import {parseTime} from "@/core/utils/perfree.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {
   articleDelApi,
@@ -125,31 +101,21 @@ import {
   articleUpdateIsTopApi,
   articleUpdateStatusApi
 } from "../api/article.js";
-import {categoryListTreeApi} from "../api/category.js";
 import {toPage} from "@/core/utils/tabs.js";
-import {h, reactive, ref} from "vue";
+import {h, ref} from "vue";
 
 const searchForm = ref({
   pageNo: 1,
   pageSize: 10,
   total: 0,
   title: '',
-  type: 'article',
+  type: 'page',
   status: null,
-  categoryId: null,
-  tagId: null
 })
 
 const searchFormRef = ref();
 let tableData = ref([]);
 let loading = ref(false);
-const treeSelectProps = reactive({
-  children: 'children',
-  label: 'name',
-  value: 'id',
-});
-let categoryData = ref([]);
-let tagData = ref([]);
 
 /**
  * 加载列表
@@ -163,23 +129,6 @@ function initList() {
   })
 }
 
-/**
- * 初始化分类列表
- */
-function initCategory() {
-  categoryListTreeApi({}).then((res) => {
-    categoryData.value = handleTree(res.data, "id", "pid",'children', -1);
-  });
-}
-
-/**
- * 初始化标签
- */
-function initTag() {
-  getAllTag().then((res) => {
-    tagData.value = res.data;
-  });
-}
 
 /**
  * 重置搜索表单
@@ -192,8 +141,6 @@ function resetSearchForm() {
     title: '',
     type: 'article',
     status: null,
-    categoryId: null,
-    tagId: null
   }
   searchFormRef.value.resetFields();
   initList();
@@ -203,7 +150,7 @@ function resetSearchForm() {
  * 新增
  */
 function handleAdd() {
-  toPage('', '/admin/article/create', '')
+  toPage('', '/admin/page/create', '')
 }
 
 
@@ -211,7 +158,7 @@ function handleAdd() {
  * 修改
  */
 function handleUpdate(row) {
-  toPage(`修改文章[${row.title}]`, '/admin/article/edit/' + row.id, '')
+  toPage(`修改页面[${row.title}]`, '/admin/page/edit/' + row.id, '')
 }
 
 
@@ -220,7 +167,7 @@ function handleUpdate(row) {
  * @param row
  */
 function handleDelete(row) {
-  ElMessageBox.confirm('确定要删除文章[' + row.title + ']吗？', '提示', {
+  ElMessageBox.confirm('确定要删除页面[' + row.title + ']吗？', '提示', {
     confirmButtonText: '确认',
     cancelButtonText: '取消',
     type: 'warning',
@@ -245,7 +192,7 @@ function changeIsComment(row) {
   ElMessageBox({
     title: '提示',
     message: h('p', null, [
-      `确定要修改文章[${row.title}]为`,
+      `确定要修改页面[${row.title}]为`,
       h('font', { style: 'color: var(--el-color-warning)' }, msg), '吗?'
     ]),
     showCancelButton: true,
@@ -277,7 +224,7 @@ function changeIsTop(row) {
   ElMessageBox({
     title: '提示',
     message: h('p', null, [
-      `确定要修改文章[${row.title}]为`,
+      `确定要修改页面[${row.title}]为`,
       h('font', { style: 'color: var(--el-color-warning)' }, msg), '吗?'
     ]),
     showCancelButton: true,
@@ -305,7 +252,7 @@ function handleUpdateStatus(row) {
   ElMessageBox({
     title: '提示',
     message: h('p', null, [
-      `确定要将文章[${row.title}]修改为`,
+      `确定要将页面[${row.title}]修改为`,
       h('font', { style: 'color: var(--el-color-warning)' }, msg), '吗?'
     ]),
     showCancelButton: true,
@@ -329,8 +276,6 @@ function handleUpdateStatus(row) {
 }
 
 initList()
-initCategory();
-initTag();
 </script>
 
 <style scoped>

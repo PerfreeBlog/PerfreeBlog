@@ -170,3 +170,8 @@ defineExpose({
   getValue
 })
 </script>
+<style scoped>
+:deep(.aie-content p) {
+  margin: 0;
+}
+</style>

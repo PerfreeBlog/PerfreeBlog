@@ -73,4 +73,11 @@ public interface CommentService extends IService<Comment> {
      * @return Comment
      */
     Comment addComment(CommentAddReqVO reqVO);
+
+    /**
+     * 根据文章id删除评论
+     * @param articleId articleId
+     */
+    void delByArticleId(Integer articleId);
+
 }

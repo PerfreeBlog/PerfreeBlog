@@ -26,6 +26,7 @@ import com.perfree.mapper.ArticleTagMapper;
 import com.perfree.model.*;
 import com.perfree.service.articleCategory.ArticleCategoryService;
 import com.perfree.service.articleTag.ArticleTagService;
+import com.perfree.service.comment.CommentService;
 import com.perfree.service.journal.JournalAttachService;
 import com.perfree.service.tag.TagService;
 import com.perfree.system.api.option.dto.OptionDTO;
@@ -70,6 +71,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Resource
     private JournalAttachService journalAttachService;
 
+    @Resource
+    private CommentService commentService;
+
     @Override
     public PageResult<ArticleRespVO> articlePage(ArticlePageReqVO pageVO) {
         SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
@@ -85,7 +89,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Transactional
     public Article createArticle(ArticleAddReqVO articleAddReqVO) {
         // 验证slug是否重复
-        Article queryBySlug = articleMapper.getBySlug(articleAddReqVO.getSlug());
+        Article queryBySlug = articleMapper.getBySlugAndType(articleAddReqVO.getSlug(), articleAddReqVO.getType());
         if (null != queryBySlug) {
             throw new ServiceException(ARTICLE_SLUG_EXIST);
         }
@@ -139,6 +143,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleCategoryService.delByArticleId(id);
         articleTagService.delByArticleId(id);
         articleMapper.deleteById(id);
+        commentService.delByArticleId(id);
         return true;
     }
 
@@ -170,7 +175,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             throw new ServiceException(ErrorCode.ARTICLE_NOT_EXIST);
         }
         // 验证slug是否重复
-        Article queryBySlug = articleMapper.getBySlug(articleUpdateReqVO.getSlug());
+        Article queryBySlug = articleMapper.getBySlugAndType(articleUpdateReqVO.getSlug(), articleUpdateReqVO.getType());
         if (null != queryBySlug && !articleById.getId().equals(queryBySlug.getId())) {
             throw new ServiceException(ARTICLE_SLUG_EXIST);
         }

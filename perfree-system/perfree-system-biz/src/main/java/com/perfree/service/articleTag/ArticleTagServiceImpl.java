@@ -26,6 +26,9 @@ public class ArticleTagServiceImpl extends ServiceImpl<ArticleTagMapper, Article
 
     @Override
     public void handleArticleTag(List<Integer> tagIds, Integer articleId) {
+        if (null == tagIds || tagIds.isEmpty()) {
+            return;
+        }
         List<ArticleTag> articleTagList = new ArrayList<>();
         for (Integer tagId : tagIds) {
             ArticleTag articleTag = new ArticleTag();

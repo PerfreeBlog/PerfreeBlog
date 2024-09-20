@@ -22,4 +22,8 @@ public class JournalAttachAddReqVO {
 
     @Schema(description = "文件类型mineType")
     private String mineType;
+
+
+    @Schema(description = "文件名称")
+    private String name;
 }

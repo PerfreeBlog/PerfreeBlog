@@ -95,4 +95,10 @@ public class ThemeController {
                 themeSaveFileContentReqVO.getThemeName(), themeSaveFileContentReqVO.getContent()));
     }
 
+    @GetMapping("getThemePageTpl")
+    @Operation(summary = "获取当前启用主题中的模板列表")
+    public CommonResult<List<String>> getThemePageTpl() {
+        return success(themeManager.getThemePageTpl());
+    }
+
 }

@@ -90,7 +90,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     @Override
     @Transactional
     public List<Tag> batchAddTagByName(List<String> addTags) {
-        if (addTags.isEmpty()) {
+        if (null == addTags || addTags.isEmpty()) {
             return new ArrayList<>();
         }
         List<Tag> tagList = new ArrayList<>();

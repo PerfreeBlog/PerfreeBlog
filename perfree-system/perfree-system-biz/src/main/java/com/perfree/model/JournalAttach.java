@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.perfree.base.BaseModel;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -45,4 +44,6 @@ public class JournalAttach extends BaseModel implements Serializable {
     private String type;
 
     private String mineType;
+
+    private String name;
 }

@@ -19,6 +19,7 @@ import 'vditor/dist/index.css';
 import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {CONSTANTS} from "@/core/utils/constants.js";
 
+const vditor = ref();
 let contentEditor = null;
 let open = ref(false)
 let title = ref('')
@@ -33,7 +34,7 @@ watch(() => props.initValue, (val) => {
   }
 })
 onMounted(() => {
-  contentEditor = new Vditor('vditor', {
+  contentEditor = new Vditor(vditor.value, {
     height: props.height,
     width: '100%',
     cdn: '/api/static/public/libs/vditor',
@@ -222,3 +223,9 @@ defineExpose({
 })
 
 </script>
+<style scoped>
+:deep(.vditor-reset){
+  font-size: 14px;
+  line-height: 1;
+}
+</style>

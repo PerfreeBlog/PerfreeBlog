@@ -6,17 +6,17 @@
           <el-form-item prop="title">
             <template #label>
               <div class="content-label">
-                <span class="required">*</span>文章标题
+                <span class="required">*</span>页面标题
               </div>
             </template>
-            <el-input v-model="addForm.title" placeholder="请输入文章标题" clearable @change="titleChange"/>
+            <el-input v-model="addForm.title" placeholder="请输入页面标题" clearable @change="titleChange"/>
           </el-form-item>
 
           <el-form-item prop="content" class="article-content-item">
             <template #label>
               <div class="content-label">
                 <div class="content-label-left">
-                  <span class="required">*</span>文章内容
+                  <span class="required">*</span>页面内容
                 </div>
                 <div class="content-label-right">
                   切换编辑器:
@@ -39,31 +39,17 @@
           <el-form-item label="访问地址别名" prop="slug">
             <el-input v-model="addForm.slug" placeholder="请输入访问地址别名" clearable/>
           </el-form-item>
-          <el-form-item label="分类" prop="categoryIds">
-            <el-tree-select
-                v-model="addForm.categoryIds"
-                :data="categoryData"
-                :props="treeSelectProps"
-                check-strictly
-                :render-after-expand="false"
-                style="width: 100%"
-                clearable
-                multiple
-                placeholder="请选择分类"
-            />
-          </el-form-item>
-          <el-form-item label="标签" prop="selectTags">
-            <el-select v-model="addForm.selectTags" multiple filterable allow-create default-first-option
-              :reserve-keyword="false" placeholder="请选择或新增标签" value-key="id">
-              <el-option v-for="item in tagData" :key="item.id" :label="item.name" :value="item" />
+          <el-form-item label="主题模板" prop="template">
+            <el-select v-model="addForm.template" placeholder="请选择主题模板">
+              <el-option :key="'default'" :label="'默认匹配'" :value="'default'" />
+              <el-option v-for="item in templates" :key="item" :label="item" :value="item" />
             </el-select>
           </el-form-item>
-
-
-          <el-form-item label="文章摘要" prop="summary">
-            <el-input v-model="addForm.summary" placeholder="请输入文章摘要" :autosize="{ minRows: 3, maxRows: 6 }"
-                    type="textarea"/>
+          <el-form-item label="页面摘要" prop="summary">
+            <el-input v-model="addForm.summary" placeholder="请输入页面摘要" :autosize="{ minRows: 3, maxRows: 6 }"
+                      type="textarea"/>
           </el-form-item>
+
           <el-form-item label="SEO关键字" prop="metaKeywords">
             <el-input v-model="addForm.metaKeywords" placeholder="请输入SEO关键字" clearable/>
           </el-form-item>
@@ -71,8 +57,8 @@
             <el-input v-model="addForm.metaDescription" placeholder="请输入SEO描述" :autosize="{ minRows: 3, maxRows: 6 }"
                     type="textarea"/>
           </el-form-item>
-          <el-form-item label="文章标识" prop="flag">
-            <el-input v-model="addForm.flag" placeholder="请输入文章标识" clearable/>
+          <el-form-item label="页面标识" prop="flag">
+            <el-input v-model="addForm.flag" placeholder="请输入页面标识" clearable/>
           </el-form-item>
           <el-form-item>
             <div style="display: flex;">
@@ -84,57 +70,44 @@
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="封面图" prop="thumbnail">
-            <attach-select-input :attach-type="'img'" :enable-input="true" :placeholder="'请选择或输入封面图地址'" v-model:model-value="addForm.thumbnail"></attach-select-input>
-          </el-form-item>
         </el-col>
       </el-row>
     </el-form>
   </div>
 </template>
 <script setup>
-import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import CustomEditor from "@/core/components/editor/custom-editor.vue";
-import {categoryListTreeApi} from "../api/category.js";
-import {getAllTag} from "../api/tag.js";
 import {articleAddApi, articleGetApi, updateArticleApi} from "../api/article.js";
-import {handleTree} from "@/core/utils/perfree.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import pinyin from 'js-pinyin'
 import {closeTab, toPage} from "@/core/utils/tabs.js";
-import {reactive, ref} from "vue";
+import {ref} from "vue";
+import {getThemePageTplApi} from "@/modules/page/api/theme.js";
 
 const addFormRef = ref();
-let initLoading = ref(true);
 const addForm = ref({
   id: null,
   title: '',
   content: '',
   parseContent: '',
-  selectTags: [],
-  categoryIds: [],
   summary: '',
   metaKeywords: '',
   metaDescription: '',
   thumbnail: '',
   slug: '',
-  isTop: 0,
   isComment: 1,
+  isTop: 0,
   flag: '',
-  type: 'article',
-  contentModel: 'Vditor'
+  type: 'page',
+  contentModel: 'Vditor',
+  template: 'default'
 
 });
 
-const treeSelectProps = reactive({
-  children: 'children',
-  label: 'name',
-  value: 'id',
-});
-let categoryData = ref([]);
-let tagData = ref([]);
 const editorRef = ref();
 let loading = ref(false);
+let initLoading = ref(true);
+let templates = ref([]);
 
 /**
  * 切换编辑器事件
@@ -156,24 +129,6 @@ function editorChange(val) {
 }
 
 /**
- * 初始化分类列表
- */
-function initCategory() {
-  categoryListTreeApi({}).then((res) => {
-    categoryData.value = handleTree(res.data, "id", "pid",'children', -1);
-  });
-}
-
-/**
- * 初始化标签
- */
-function initTag() {
-  getAllTag().then((res) => {
-    tagData.value = res.data;
-  });
-}
-
-/**
  * 重置表单
  */
 function resetAddForm() {
@@ -182,18 +137,17 @@ function resetAddForm() {
     title: '',
     content: '',
     parseContent: '',
-    selectTags: [],
-    categoryIds: [],
     summary: '',
     metaKeywords: '',
     metaDescription: '',
     thumbnail: '',
     slug: '',
-    isTop: 0,
     isComment: 1,
+    isTop: 0,
     flag: '',
-    type: 'article',
-    contentModel: 'Vditor'
+    type: 'page',
+    contentModel: 'Vditor',
+    template: 'default'
   }
   editorRef.value.resetContent();
   addFormRef.value.resetFields();
@@ -204,39 +158,29 @@ function resetAddForm() {
  */
 function submitAddForm(status) {
   if(!addForm.value.title) {
-    ElMessage.error("文章标题不能为空");
+    ElMessage.error("页面标题不能为空");
     return;
   }
   let articleContent = editorRef.value.getValue();
   addForm.value.content = articleContent.content;
   addForm.value.parseContent = articleContent.parseContent;
   if(!addForm.value.content) {
-    ElMessage.error("文章内容不能为空");
+    ElMessage.error("页面内容不能为空");
     return;
   }
   addForm.value.status = status;
 
-  // 处理标签
-  addForm.value.tagIds = [];
-  addForm.value.addTags = [];
-  addForm.value.selectTags.forEach(tag => {
-    if(tag.id) {
-      addForm.value.tagIds.push(tag.id);
-    } else {
-      addForm.value.addTags.push(tag);
-    }
-  })
   loading.value = true;
   if (addForm.value.id) {
     updateArticleApi(addForm.value).then(res => {
       loading.value = false;
       if (res.code === 200) {
-        ElMessageBox.confirm('文章修改成功!', '提示', {
-          confirmButtonText: '前往文章列表',
+        ElMessageBox.confirm('页面修改成功!', '提示', {
+          confirmButtonText: '前往页面列表',
           cancelButtonText: '继续修改',
           type: 'success',
         }).then(() => {
-          toPage('', '/admin/article', '')
+          toPage('', '/admin/page', '')
           closeTab(router.currentRoute.value.fullPath)
         }).catch(() => {})
       } else {
@@ -248,12 +192,12 @@ function submitAddForm(status) {
       loading.value = false;
       if (res.code === 200) {
         resetAddForm();
-        ElMessageBox.confirm('文章发表成功!', '提示', {
-          confirmButtonText: '前往文章列表',
-          cancelButtonText: '再写一篇',
+        ElMessageBox.confirm('页面添加成功!', '提示', {
+          confirmButtonText: '前往页面列表',
+          cancelButtonText: '再添加一个页面',
           type: 'success',
         }).then(() => {
-          toPage('', '/admin/article', '')
+          toPage('', '/admin/page', '')
           closeTab(router.currentRoute.value.fullPath)
         }).catch(() => {})
       } else {
@@ -284,19 +228,19 @@ function initArticle() {
   articleGetApi(router.currentRoute.value.params.id).then(res => {
     if (res.code === 200) {
       addForm.value = res.data;
-      addForm.value.categoryIds = [];
-      res.data.categoryList.forEach(r => {
-        addForm.value.categoryIds.push(r.id)
-      })
-      addForm.value.selectTags = res.data.tagList;
     }
     initLoading.value = false;
   })
 }
 
+function initThemePageTpl() {
+  getThemePageTplApi().then(res => {
+    templates.value = res.data;
+  })
+}
+
 initArticle();
-initCategory();
-initTag();
+initThemePageTpl();
 </script>
 
 <style scoped>

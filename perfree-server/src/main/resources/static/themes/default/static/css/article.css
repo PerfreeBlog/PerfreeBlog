@@ -289,7 +289,7 @@
     border: 1px solid var(--comment-border-color);
     color: var(--font-color);
 }
-.comment-box .comment-submit-box .comment-submit-btn{
+.comment-submit-box .comment-submit-btn{
     background: var(--primary-color);
 }
 .comment-box .comment-emjoi-btn{

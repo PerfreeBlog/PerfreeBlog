@@ -111,4 +111,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         commentMapper.insert(comment);
         return comment;
     }
+
+    @Override
+    @Transactional
+    public void delByArticleId(Integer articleId) {
+        commentMapper.delByArticleId(articleId);
+    }
 }
