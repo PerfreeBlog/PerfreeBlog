@@ -46,13 +46,13 @@
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading"  :show-overflow-tooltip="true">
         <el-table-column label="序号" min-width="50" type="index" />
         <el-table-column prop="name" label="附件名称" min-width="200" show-overflow-tooltip/>
-        <el-table-column prop="attachGroup" label="预览" min-width="80">
+        <el-table-column prop="attachGroup" label="预览" min-width="140">
           <template v-slot="scope">
             <div class="block">
-            <el-image style="height: 50px" :src="scope.row.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
+            <el-image style="height: 80px;" :src="scope.row.url" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
                       :preview-src-list="[scope.row.url]" :initial-index="4" v-if="scope.row.type&&scope.row.type === 'img'"
                       append-to-body fit="cover" preview-teleported></el-image>
-            <video v-else-if="scope.row.type&&scope.row.type === 'video'" controls preload="none"  style="height: 50px">
+            <video v-else-if="scope.row.type&&scope.row.type === 'video'" controls preload="none"  style="height: 80px;width: 100%">
               <source :src="scope.row.url"/>
             </video>
             <i v-else>无法预览，点击
