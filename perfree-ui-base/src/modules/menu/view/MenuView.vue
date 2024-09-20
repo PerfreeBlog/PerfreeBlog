@@ -6,7 +6,7 @@
           <el-input v-model="searchForm.name" placeholder="请输入菜单名称" clearable/>
         </el-form-item>
         <el-form-item label="菜单分类">
-          <el-select v-model="searchForm.type"  placeholder="请选择菜单分类" clearable style="width: 200px">
+          <el-select v-model="searchForm.type"  placeholder="请选择菜单分类" style="width: 200px">
             <el-option :key="0" label="前台" :value="0" />
             <el-option :key="1" label="后台" :value="1" />
           </el-select>
@@ -271,7 +271,7 @@ function initList() {
 function resetSearchForm() {
   searchForm.value = {
     name: '',
-    type: 0
+    type: searchForm.value.type
   }
   searchFormRef.value.resetFields();
   initList();
@@ -303,11 +303,11 @@ function handleDelete(row) {
  * 新增
  */
 function handleAdd(row) {
-  title.value = "添加菜单";
+  title.value = `添加${searchForm.value.type === 0 ? '前台' : '后台'}菜单`;
   resetForm();
   open.value = true;
   addLoading.value = true;
-  menuPageApi({}).then((res) => {
+  menuPageApi({type: searchForm.value.type}).then((res) => {
     addTreeData.value = [{id: '-1', name: '主类目', children:  handleTree(res.data, "id", "pid",'children', '-1')}];
     addLoading.value = false;
   });
@@ -332,10 +332,10 @@ function cancelAdd() {
  */
 function handleUpdate(row) {
   resetForm();
-  title.value = "修改菜单";
+  title.value = `修改${searchForm.value.type === 0 ? '前台' : '后台'}菜单`;
   open.value = true;
   addLoading.value = true;
-  menuPageApi({}).then((res) => {
+  menuPageApi({type: searchForm.value.type}).then((res) => {
     addTreeData.value = [{id: '-1', name: '主类目', children:  handleTree(res.data, "id", "pid",'children', '-1')}];
     menuGetApi(row.id).then((res) => {
       addLoading.value = false;
