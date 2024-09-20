@@ -1,11 +1,13 @@
 package com.perfree.service.tag;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
-import com.perfree.commons.utils.SortingFieldUtils;
+import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.controller.auth.tag.vo.TagCreateReqVO;
 import com.perfree.controller.auth.tag.vo.TagPageReqVO;
+import com.perfree.controller.auth.tag.vo.TagRespVO;
 import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
 import com.perfree.convert.tag.TagConvert;
 import com.perfree.mapper.ArticleTagMapper;
@@ -39,16 +41,17 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     private ArticleTagMapper articleTagMapper;
 
     @Override
-    public PageResult<Tag> tagPage(TagPageReqVO pageVO) {
-        SortingFieldUtils.handleDefaultSortingField(pageVO);
-        return tagMapper.tagPage(pageVO);
+    public PageResult<TagRespVO> tagPage(TagPageReqVO pageVO) {
+        IPage<TagRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<TagRespVO> tagPage = tagMapper.tagPage(page, pageVO);
+        return new PageResult<>(tagPage.getRecords(), tagPage.getTotal());
     }
 
     @Override
     @Transactional
     public Tag add(TagCreateReqVO tagCreateReqVO) {
         if (StringUtils.isNotBlank(tagCreateReqVO.getSlug())) {
-            Tag queryTag = tagMapper.selectBySlug(tagCreateReqVO.getSlug());
+            TagRespVO queryTag = tagMapper.getBySlug(tagCreateReqVO.getSlug());
             if (null != queryTag) {
                 throw new ServiceException(TAG_SLUG_EXIST);
             }
@@ -66,7 +69,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     @Transactional
     public Boolean updateTag(TagUpdateReqVO tagUpdateReqVO) {
         if (StringUtils.isNotBlank(tagUpdateReqVO.getSlug())) {
-            Tag queryTag = tagMapper.selectBySlug(tagUpdateReqVO.getSlug());
+            TagRespVO queryTag = tagMapper.getBySlug(tagUpdateReqVO.getSlug());
             if (null != queryTag && !queryTag.getId().equals(tagUpdateReqVO.getId())) {
                 throw new ServiceException(TAG_SLUG_EXIST);
             }
@@ -110,7 +113,17 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     }
 
     @Override
-    public List<Tag> getHotTag(int count) {
+    public List<TagRespVO> getHotTag(int count) {
         return tagMapper.getHotTag(count);
+    }
+
+    @Override
+    public TagRespVO getBySlug(String slug) {
+        return tagMapper.getBySlug(slug);
+    }
+
+    @Override
+    public TagRespVO getTagById(Integer id) {
+        return tagMapper.getTagById(id);
     }
 }

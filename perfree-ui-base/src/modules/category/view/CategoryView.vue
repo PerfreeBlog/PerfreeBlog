@@ -83,7 +83,7 @@
               clearable
           />
         </el-form-item>
-        <el-form-item label="分类名称" prop="name">
+        <el-form-item label="分类名称" prop="name" @change="nameChange">
           <el-input v-model="addForm.name" placeholder="请输入分类名称"/>
         </el-form-item>
 
@@ -127,6 +127,7 @@ import {handleTree, parseTime} from "@/core/utils/perfree.js";
 import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {reactive, ref} from "vue";
+import pinyin from "js-pinyin";
 
 const searchFormRef = ref();
 const searchForm = ref({
@@ -293,6 +294,15 @@ function handleDelete(row) {
     });
   }).catch(() => {})
 }
+
+function nameChange() {
+  if (addForm.value.id){
+    return;
+  }
+  pinyin.setOptions({charCase: 1,checkPolyphone: false})
+  addForm.value.slug = pinyin.getCamelChars(addForm.value.name);
+}
+
 
 initList();
 </script>

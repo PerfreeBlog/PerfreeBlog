@@ -67,4 +67,7 @@ public class SystemConstants {
     public static final String THEME_BASE_DIR = "static/themes/";
     /** url - category(分类) */
     public static final String URL_ARTICLE_CATEGORY = "/category/";
+
+    /** url - tag(标签) */
+    public static final String URL_ARTICLE_TAG = "/tag/";
 }

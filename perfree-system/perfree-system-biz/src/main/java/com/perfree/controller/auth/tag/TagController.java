@@ -12,8 +12,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,16 +23,14 @@ import static com.perfree.commons.common.CommonResult.success;
 @RequestMapping("api/auth/tag")
 public class TagController {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(TagController.class);
-
     @Resource
     private TagService tagService;
 
     @PostMapping("/page")
     @Operation(summary = "标签分页列表")
     public CommonResult<PageResult<TagRespVO>> page(@RequestBody TagPageReqVO pageVO) {
-        PageResult<com.perfree.model.Tag> tagPageResult = tagService.tagPage(pageVO);
-        return success(TagConvert.INSTANCE.convertPageResultVO(tagPageResult));
+        PageResult<TagRespVO> tagPageResult = tagService.tagPage(pageVO);
+        return success(tagPageResult);
     }
 
     @GetMapping("/getAllTag")
@@ -54,8 +50,7 @@ public class TagController {
     @GetMapping("/get")
     @Operation(summary = "获取标签信息")
     public CommonResult<TagRespVO> add(@RequestParam(value = "id") Integer id) {
-        com.perfree.model.Tag tag = tagService.getById(id);
-        return CommonResult.success(TagConvert.INSTANCE.convertRespVO(tag));
+        return CommonResult.success(tagService.getTagById(id));
     }
 
     @PutMapping("/update")

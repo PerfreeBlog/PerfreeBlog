@@ -32,7 +32,9 @@
           </template>
         </el-table-column>
         <el-table-column prop="slug" label="slug" min-width="150" show-overflow-tooltip/>
-        <el-table-column prop="thumbnail" label="封面图" min-width="80">
+        <el-table-column prop="articleCount" label="文章数量" min-width="80"/>
+        <el-table-column prop="userInfo.userName" label="创建人" min-width="150" show-overflow-tooltip/>
+        <el-table-column prop="thumbnail" label="封面图" min-width="120">
           <template v-slot="scope">
             <el-image style="height: 50px" :src="scope.row.thumbnail" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
                       :preview-src-list="[scope.row.thumbnail]" :initial-index="4" v-if="scope.row.thumbnail"
@@ -74,7 +76,7 @@
           :rules="addRule"
       >
         <el-form-item label="标签名称" prop="name">
-          <el-input v-model="addForm.name" placeholder="请输入标签名称"/>
+          <el-input v-model="addForm.name" placeholder="请输入标签名称" @change="nameChange"/>
         </el-form-item>
 
         <el-form-item label="标签颜色" prop="color">
@@ -106,6 +108,7 @@ import {tagAddApi, tagDelApi, tagGetApi, tagPageApi, tagUpdateApi} from "../api/
 import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {reactive, ref} from "vue";
+import pinyin from "js-pinyin";
 
 const searchForm = ref({
   pageNo: 1,
@@ -249,6 +252,14 @@ function handleDelete(row) {
       }
     });
   }).catch(() => {})
+}
+
+function nameChange() {
+  if (addForm.value.id){
+    return;
+  }
+  pinyin.setOptions({charCase: 1,checkPolyphone: false})
+  addForm.value.slug = pinyin.getCamelChars(addForm.value.name);
 }
 
 initList()

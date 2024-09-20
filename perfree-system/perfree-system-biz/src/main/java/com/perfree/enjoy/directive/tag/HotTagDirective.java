@@ -7,6 +7,7 @@ import com.jfinal.template.stat.Scope;
 import com.perfree.commons.directive.BaseDirective;
 import com.perfree.commons.directive.TemplateDirective;
 import com.perfree.constant.ViewConstant;
+import com.perfree.controller.auth.tag.vo.TagRespVO;
 import com.perfree.model.Tag;
 import com.perfree.service.tag.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class HotTagDirective extends BaseDirective {
     public void exec(Env env, Scope scope, Writer writer) {
         HashMap<String, String> para = exprListToMap();
         int count = Integer.parseInt(para.get(ViewConstant.COUNT));
-        List<Tag> tags = tagService.getHotTag(count);
+        List<TagRespVO> tags = tagService.getHotTag(count);
         scope.set("tags", tags);
         stat.exec(env, scope, writer);
     }

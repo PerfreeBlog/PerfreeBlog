@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.tag.vo.TagCreateReqVO;
 import com.perfree.controller.auth.tag.vo.TagPageReqVO;
+import com.perfree.controller.auth.tag.vo.TagRespVO;
 import com.perfree.controller.auth.tag.vo.TagUpdateReqVO;
 import com.perfree.model.Tag;
 
@@ -22,9 +23,9 @@ public interface TagService extends IService<Tag> {
     /**
      * 标签分页列表
      * @param pageVO pageVO
-     * @return PageResult<Tag>
+     * @return PageResult<TagRespVO>
      */
-    PageResult<Tag> tagPage(TagPageReqVO pageVO);
+    PageResult<TagRespVO> tagPage(TagPageReqVO pageVO);
 
     /**
      * 添加标签
@@ -57,8 +58,22 @@ public interface TagService extends IService<Tag> {
     /**
      * 获取热门标签
      * @param count 获取的数量
-     * @return List<Tag>
+     * @return List<TagRespVO>
      */
-    List<Tag> getHotTag(int count);
+    List<TagRespVO> getHotTag(int count);
+
+    /**
+     * 根据slug获取标签
+     * @param slug slug
+     * @return TagRespVO
+     */
+    TagRespVO getBySlug(String slug);
+
+    /**
+     * 根据id获取tag
+     * @param id id
+     * @return TagRespVO
+     */
+    TagRespVO getTagById(Integer id);
 
 }

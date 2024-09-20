@@ -21,6 +21,7 @@
                     #else
                         <span class="d-no-content">暂无文章</span>
                     #end
+                    #if(articlePage.pageTotal > 1)
                     <nav class="m-pager-box wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
                         #if(articlePage.hasPrevious)
                         <a class="m-pager previous-page-btn" href="#(articlePage.previousUrl)">上一页</a>
@@ -30,6 +31,7 @@
                         <a class="m-pager next-page-btn" href="#(articlePage.nextUrl)">下一页</a>
                         #end
                     </nav>
+                    #end
                 #end
             </div>
         </section>

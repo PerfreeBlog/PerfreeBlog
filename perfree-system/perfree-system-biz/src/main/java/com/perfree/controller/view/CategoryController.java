@@ -22,7 +22,7 @@ public class CategoryController extends BaseViewController {
 
     @GetMapping(value = {"/category/{slug}", "/category/{slug}/{pageIndex}"})
     @Operation(summary = "分类文章列表页")
-    public String articleListPage(@PathVariable("slug") String slug, @PathVariable(value = "pageIndex", required = false) Integer pageIndex, Model model) {
+    public String categoryArticlePage(@PathVariable("slug") String slug, @PathVariable(value = "pageIndex", required = false) Integer pageIndex, Model model) {
         CategoryRespVO category = categoryService.getBySlug(slug);
         model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
         model.addAttribute("categoryId", category.getId());

@@ -212,6 +212,9 @@ function submitAddForm(status) {
  * 文章标题改变事件
  */
 function titleChange() {
+  if (addForm.value.id){
+    return;
+  }
   pinyin.setOptions({charCase: 1,checkPolyphone: false})
   addForm.value.slug = pinyin.getCamelChars(addForm.value.title);
 }
