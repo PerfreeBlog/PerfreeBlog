@@ -2,6 +2,7 @@ package com.perfree.controller.view;
 
 import com.perfree.base.BaseViewController;
 import com.perfree.commons.annotation.FrontViewNodeRender;
+import com.perfree.commons.constant.SystemConstants;
 import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.service.article.ArticleService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Tag(name = "文章页相关")
 @Controller
@@ -33,11 +35,19 @@ public class ArticleController  extends BaseViewController {
     @Operation(summary = "文章页")
     @FrontViewNodeRender
     public String articlePage(@PathVariable(value = "slug", required = false) String slug, Model model) {
-        ArticleRespVO articleRespVO = articleService.getBySlugAndTypeAndStatus(slug,
-                ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED);
+        ArticleRespVO articleRespVO = articleService.getBySlugAndTypeAndStatus(slug, ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED);
         if (articleRespVO != null) {
             model.addAttribute("article", articleRespVO);
         }
         return themeView("article.html");
+    }
+
+    @GetMapping(value = {"/archive", "/archive/{pageIndex}"})
+    @FrontViewNodeRender
+    @Operation(summary = "文章归档页")
+    public String index( @PathVariable(value = "pageIndex", required = false) Integer pageIndex, Model model) {
+        model.addAttribute("url",  SystemConstants.URL_ARCHIVE);
+        model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
+        return themeView("archive.html");
     }
 }

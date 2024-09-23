@@ -77,4 +77,18 @@ public class SystemConstants {
     public static final String URL_TAGS = "/tags/";
     /** url - journalList(动态列表) */
     public static final String URL_JOURNAL_LIST = "/journalList/";
+    /** url - archive(文章归档) */
+    public static final String URL_ARCHIVE = "/archive/";
+
+    /** url - page(通用页面) */
+    public static final String URL_PAGE = "/page/";
+
+    /** 页面渲染SEO_TITLE */
+    public static final String RENDER_PAGE_SEO_TITLE = "SEO_TITLE";
+
+    /** 页面渲染SEO_KEYWORD */
+    public static final String RENDER_PAGE_SEO_KEYWORD = "SEO_KEYWORD";
+
+    /** 页面渲染SEO_DESC*/
+    public static final String RENDER_PAGE_SEO_DESC = "SEO_DESC";
 }
