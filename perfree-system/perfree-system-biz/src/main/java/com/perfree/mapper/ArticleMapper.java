@@ -114,4 +114,11 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      */
     JournalRespVO getJournalById(@Param("id") Integer id);
 
+    default List<Article> getAllPage(){
+        return selectList(new LambdaQueryWrapper<Article>()
+                .eq(Article::getType, ArticleConstant.ARTICLE_TYPE_PAGE)
+                .orderByDesc(Article::getCreateTime)
+        );
+    }
+
 }

@@ -242,6 +242,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return journalRespVO;
     }
 
+    @Override
+    public List<Article> getAllPage() {
+        return articleMapper.getAllPage();
+    }
+
     /**
      * 生成文章摘要
      * @param summary summary

@@ -9,6 +9,8 @@ import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.controller.auth.journal.vo.JournalUpdateReqVO;
 import com.perfree.model.Article;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -136,5 +138,11 @@ public interface ArticleService extends IService<Article> {
      * @return JournalRespVO
      */
     JournalRespVO updateJournal(JournalUpdateReqVO updateReqVO);
+
+    /**
+     * 获取所有页面
+     * @return List<Article>
+     */
+    List<Article> getAllPage();
 
 }

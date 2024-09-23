@@ -133,12 +133,16 @@
               <el-input v-model="addForm.url"  placeholder="请输入菜单地址">
                 <template #append v-if="addForm.type === 0">
                   <el-select v-model="addForm.url" placeholder="选择地址" style="width: 240px">
-                    <el-option label="/ [首页]" value="/" />
-                    <el-option label="/categories [分类页]" value="/categories" />
-                    <el-option label="/tags [标签页]" value="/tags" />
-                    <el-option label="/journal [动态页]" value="/journal" />
-                    <el-option label="/archive [归档页]" value="/archive" />
-                    <el-option label="/page/link [友链页面]" value="/page/link" />
+                    <el-option-group key="系统自带" label="系统自带">
+                      <el-option label="/ [首页]" value="/" />
+                      <el-option label="/categories [分类页]" value="/categories" />
+                      <el-option label="/tags [标签页]" value="/tags" />
+                      <el-option label="/journal [动态页]" value="/journal" />
+                      <el-option label="/archive [归档页]" value="/archive" />
+                    </el-option-group>
+                    <el-option-group key="自定义页面" label="自定义页面">
+                      <el-option :label="'/page/' + page.slug + ' [' + page.title + ']'" :value="'/page/' + page.slug" v-for="page in pageList" />
+                    </el-option-group>
                   </el-select>
                 </template>
               </el-input>
@@ -215,6 +219,7 @@ import {handleTree} from "/src/core/utils/perfree.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import ElIconPicker from "@/core/components/icon/el-icon-picker.vue";
 import {reactive, ref} from "vue";
+import {getAllPageApi} from "@/modules/menu/api/article.js";
 
 const searchFormRef = ref();
 const ruleFormRef = ref();
@@ -223,6 +228,7 @@ const searchForm = ref({
   type: 0
 });
 const addTreeRef = ref();
+let pageList = ref([]);
 let loading = ref(false);
 let tableData = ref([]);
 let treeData = ref([]);
@@ -418,6 +424,13 @@ function resetForm() {
   }
 }
 
+function initPageList() {
+  getAllPageApi().then(res => {
+    pageList.value = res.data;
+  })
+}
+
+initPageList();
 initList();
 </script>
 

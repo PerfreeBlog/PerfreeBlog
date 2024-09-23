@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.perfree.commons.common.CommonResult.success;
 
 @RestController
@@ -77,5 +79,12 @@ public class ArticleController {
     @Operation(summary = "根据id获取文章")
     public CommonResult<ArticleRespVO> get(@RequestParam(value = "id") Integer id) {
         return CommonResult.success(articleService.getArticleById(id));
+    }
+
+    @GetMapping("/getAllPage")
+    @Operation(summary = "获取所有页面")
+    public CommonResult<List<ArticleRespVO>> getAllPage() {
+        List<Article> articleList = articleService.getAllPage();
+        return CommonResult.success(ArticleConvert.INSTANCE.convertToRespList(articleList));
     }
 }

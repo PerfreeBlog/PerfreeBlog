@@ -9,6 +9,8 @@ import com.perfree.model.Article;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ArticleConvert {
     ArticleConvert INSTANCE = Mappers.getMapper(ArticleConvert.class);
@@ -30,5 +32,7 @@ public interface ArticleConvert {
     JournalRespVO convertToJournalResp(Article article);
 
     Article convertByJournalUpdateReqVO(JournalUpdateReqVO updateReqVO);
+
+    List<ArticleRespVO> convertToRespList(List<Article> articleList);
 
 }
