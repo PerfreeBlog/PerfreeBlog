@@ -1,6 +1,7 @@
 package com.perfree.controller.view;
 
 import com.perfree.base.BaseViewController;
+import com.perfree.commons.annotation.FrontViewNodeRender;
 import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.service.article.ArticleService;
@@ -22,6 +23,7 @@ public class ArticleController  extends BaseViewController {
 
     @GetMapping(value = {"/articleList/{pageIndex}", "/articleList", "article"})
     @Operation(summary = "文章列表页")
+    @FrontViewNodeRender
     public String articleListPage(@PathVariable(value = "pageIndex", required = false) Integer pageIndex, Model model) {
         model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
         return themeView("articleList.html");
@@ -29,6 +31,7 @@ public class ArticleController  extends BaseViewController {
 
     @GetMapping(value = {"/article/{slug}"})
     @Operation(summary = "文章页")
+    @FrontViewNodeRender
     public String articlePage(@PathVariable(value = "slug", required = false) String slug, Model model) {
         ArticleRespVO articleRespVO = articleService.getBySlugAndTypeAndStatus(slug,
                 ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED);

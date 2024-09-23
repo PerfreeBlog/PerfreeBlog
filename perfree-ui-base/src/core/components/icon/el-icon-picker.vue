@@ -157,7 +157,6 @@ function closeIconPanel() {
 
 <style scoped>
 .el-icon-picker {
-  height: 300px;
   overflow: hidden;
 }
 .icon-panel {

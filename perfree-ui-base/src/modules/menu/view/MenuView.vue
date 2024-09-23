@@ -128,9 +128,20 @@
             </el-form-item>
           </el-col>
 
-          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" v-if="addForm.menuType === 1">
+          <el-col :xs="24" :sm="24" :md="addForm.type === 0 ? 24 : 12" :lg="addForm.type === 0 ? 24 : 12" :xl="addForm.type === 0 ? 24 : 12" v-if="addForm.menuType === 1">
             <el-form-item label="菜单地址" prop="url">
-              <el-input v-model="addForm.url"  placeholder="请输入菜单地址"/>
+              <el-input v-model="addForm.url"  placeholder="请输入菜单地址">
+                <template #append v-if="addForm.type === 0">
+                  <el-select v-model="addForm.url" placeholder="选择地址" style="width: 240px">
+                    <el-option label="/ [首页]" value="/" />
+                    <el-option label="/categories [分类页]" value="/categories" />
+                    <el-option label="/tags [标签页]" value="/tags" />
+                    <el-option label="/journal [动态页]" value="/journal" />
+                    <el-option label="/archive [归档页]" value="/archive" />
+                    <el-option label="/page/link [友链页面]" value="/page/link" />
+                  </el-select>
+                </template>
+              </el-input>
             </el-form-item>
           </el-col>
 

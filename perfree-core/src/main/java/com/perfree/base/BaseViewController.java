@@ -54,7 +54,7 @@ public class BaseViewController {
      * @return String
      */
     public String themeView(String view) {
-        return currentThemePage() + SystemConstants.FILE_SEPARATOR + view;
+        return themeView(view, "/static/public/exception/page.html");
     }
 
     /**
@@ -67,7 +67,7 @@ public class BaseViewController {
         File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
                 currentTheme() + SystemConstants.FILE_SEPARATOR + view);
         if (file.exists() || (devFile != null && devFile.exists())) {
-            return themeView(view);
+            return currentThemePage() + SystemConstants.FILE_SEPARATOR + view;
         } else {
             return defaultView;
         }

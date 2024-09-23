@@ -36,9 +36,8 @@ public class GlobalExceptionHandler{
 
 
     @ExceptionHandler(NoResourceFoundException.class)
-    @ResponseBody
-    public void handleNoResourceFoundException(NoResourceFoundException exception) {
-        LOGGER.error(exception.getMessage());
+    public String handleNoResourceFoundException(NoResourceFoundException exception) {
+        return "redirect:/404";
     }
     /**
      * @author Perfree
@@ -81,7 +80,7 @@ public class GlobalExceptionHandler{
     @ResponseBody
     public CommonResult<?> handleBindException(Exception e) {
         List<ObjectError> list = ((BindException) e).getAllErrors();
-        if (list.size() > 0) {
+        if (!list.isEmpty()) {
             LOGGER.error(list.get(0).getDefaultMessage());
             return CommonResult.error(ResultCodeEnum.FAIL.getCode(), list.get(0).getDefaultMessage());
         }

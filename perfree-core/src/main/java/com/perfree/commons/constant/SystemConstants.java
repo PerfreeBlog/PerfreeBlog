@@ -70,4 +70,11 @@ public class SystemConstants {
 
     /** url - tag(标签) */
     public static final String URL_ARTICLE_TAG = "/tag/";
+
+    /** url - categories(分类) */
+    public static final String URL_CATEGORIES = "/categories/";
+    /** url - tags(标签) */
+    public static final String URL_TAGS = "/tags/";
+    /** url - journalList(动态列表) */
+    public static final String URL_JOURNAL_LIST = "/journalList/";
 }

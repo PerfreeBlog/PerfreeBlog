@@ -149,7 +149,7 @@ body{
 .d-header-nav .layui-nav .layui-nav-item a:hover, .d-header-nav .layui-nav .layui-this .d-nav-item{
     color: var(--primary-color);
 }
-.d-nav-item .fa{
+.d-nav-item i{
     margin-right: 5px;
 }
 .d-header-nav .layui-nav .layui-nav-item .d-nav-item:hover::after{
