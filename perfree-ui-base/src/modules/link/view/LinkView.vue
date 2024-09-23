@@ -39,6 +39,7 @@
             <a :href="scope.row.address" target="_blank">{{scope.row.address}}</a>
           </template>
         </el-table-column>
+        <el-table-column prop="userInfo.userName" label="创建人" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>

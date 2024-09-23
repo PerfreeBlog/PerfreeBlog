@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.link.vo.LinkAddReqVO;
 import com.perfree.controller.auth.link.vo.LinkPageReqVO;
+import com.perfree.controller.auth.link.vo.LinkRespVO;
 import com.perfree.controller.auth.link.vo.LinkUpdateReqVO;
 import com.perfree.model.Link;
 
@@ -20,9 +21,9 @@ public interface LinkService extends IService<Link> {
     /**
      * 友链分页
      * @param pageVO pageVO
-     * @return PageResult<Link>
+     * @return PageResult<LinkRespVO>
      */
-    PageResult<Link> linkPage(LinkPageReqVO pageVO);
+    PageResult<LinkRespVO> linkPage(LinkPageReqVO pageVO);
 
     /**
      * 添加友链
@@ -44,4 +45,12 @@ public interface LinkService extends IService<Link> {
      * @return Boolean
      */
     Boolean del(Integer id);
+
+    /**
+     * 根据id获取友链信息
+     * @param id id
+     * @return LinkRespVO
+     */
+    LinkRespVO getLinkById(Integer id);
+
 }

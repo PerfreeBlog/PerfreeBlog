@@ -29,8 +29,8 @@ public class LinkController {
     @PostMapping("/page")
     @Operation(summary = "友链分页列表")
     public CommonResult<PageResult<LinkRespVO>> page(@RequestBody LinkPageReqVO pageVO) {
-        PageResult<Link> linkPageResult = linkService.linkPage(pageVO);
-        return success(LinkConvert.INSTANCE.convertPageResultVO(linkPageResult));
+        PageResult<LinkRespVO> linkPageResult = linkService.linkPage(pageVO);
+        return success(linkPageResult);
     }
 
     @PostMapping("/add")
@@ -50,7 +50,7 @@ public class LinkController {
     @GetMapping("/get")
     @Operation(summary = "获取友链")
     public CommonResult<LinkRespVO> get(@RequestParam(value = "id") Integer id) {
-        return success(LinkConvert.INSTANCE.convertRespVO(linkService.getById(id)));
+        return success(linkService.getLinkById(id));
     }
 
     @DeleteMapping("/del")

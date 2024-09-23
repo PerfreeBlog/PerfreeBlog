@@ -6,7 +6,7 @@
 <link href="/static/themes/default/static/libs/notyf/notyf.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/themes/default/static/css/article.css?v=#(version)">
 <link href="/static/public/css/ckEditor.css?v=#(version)" rel="stylesheet">
-<link href="/static/public/libs/perfree-comment/perfree-comment.css?v=#(version)" rel="stylesheet">
+<link href="/static/themes/default/static/libs/perfree-comment/perfree-comment.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/themes/default/static/css/link.css?v=#(version)">
 #include("/static/themes/default/inc/custom_bg.html")
 #end
@@ -14,21 +14,23 @@
 <div class="d-wrapper">
     <div class="d-banner">
         <div class="d-hero-box">
-            <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#(article.title ??)</h1>
-            <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">
-                <span>
-                    <i class="fa fa-user-o"></i> #(article.user.userName ??)
-                </span>
-                <span>
-                    <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
-                </span>
-                <span>
-                    <i class="fa fa-eye"></i> #(article.viewCount ??)
-                </span>
-                <span>
-                    <i class="fa fa-comment-o"></i> #(article.commentCount ??)
-                </span>
-            </p>
+            <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#(article.title ??, "友链")</h1>
+            #if(article != null)
+                <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">
+                    <span>
+                        <i class="fa fa-user-o"></i> #(article.user.userName ??)
+                    </span>
+                    <span>
+                        <i class="fa fa-clock-o"></i> #date(article.createTime ??, "yyyy年MM月dd日")
+                    </span>
+                    <span>
+                        <i class="fa fa-eye"></i> #(article.viewCount ??)
+                    </span>
+                    <span>
+                        <i class="fa fa-comment-o"></i> #(article.commentCount ??)
+                    </span>
+                </p>
+            #end
         </div>
     </div>
 </div>
@@ -52,28 +54,26 @@
                 #end
             </ul>
 
-            <article class='d-article-content #if(article.contentModel == "html") ck-content #end' id="d-article-content">
-                #if(article.contentModel == "html")
-                    #(article.content ??)
-                #else
-                    #mdToHtml(article.content ??)
-                #end
-            </article>
+            #if(article != null)
+                <article class='d-article-content' id="d-article-content">
+                    #(article.parseContent ??)
+                </article>
 
-            <div class="d-article-bottom">
-                <span>Last Updated: </span>
-                <span>
-                    #if(article.updateTime != null)
-                        #date(article.updateTime, "yyyy/MM/dd HH:mm:ss")
-                    #else
-                        #date(article.createTime, "yyyy/MM/dd HH:mm:ss")
-                    #end
-                </span>
-            </div>
+                <div class="d-article-bottom">
+                    <span>Last Updated: </span>
+                    <span>
+                        #if(article.updateTime != null)
+                            #date(article.updateTime ??, "yyyy/MM/dd HH:mm:ss")
+                        #else
+                            #date(article.createTime ??, "yyyy/MM/dd HH:mm:ss")
+                        #end
+                    </span>
+                </div>
 
-            <div class="d-comments">
-                <div class="perfree-comment" data-article-id="#(article.id)"></div>
-            </div>
+                <div class="d-comments">
+                    <perfree-comment article-id="#(article.id ??)" show-comment-list="true" class="perfree-comment"></perfree-comment>
+                </div>
+            #end
         #end
     </section>
 </section>
@@ -85,6 +85,6 @@
 <script src="/static/themes/default/static/libs/viewerjs/viewer.min.js"></script>
 <script src="/static/public/libs/highlight/highlight.pack.js"></script>
 <script src="/static/themes/default/static/libs/notyf/notyf.min.js"></script>
-<script src="/static/public/libs/perfree-comment/perfree-comment.js?v=#(version)"></script>
+<script src="/static/themes/default/static/libs/perfree-comment/perfree-comment.js"></script>
 <script src="/static/themes/default/static/js/article.js"></script>
 #end

@@ -8,6 +8,9 @@ public class ViewConstant {
 
     public final static String TAG_ID = "tagId";
 
+    public final static String NAME = "name";
+
+
     public final static String CATEGORY_ID = "categoryId";
 
     public final static String TITLE = "title";

@@ -1,11 +1,15 @@
 package com.perfree.service.link;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.link.vo.LinkAddReqVO;
 import com.perfree.controller.auth.link.vo.LinkPageReqVO;
+import com.perfree.controller.auth.link.vo.LinkRespVO;
 import com.perfree.controller.auth.link.vo.LinkUpdateReqVO;
+import com.perfree.controller.auth.tag.vo.TagRespVO;
 import com.perfree.convert.link.LinkConvert;
 import com.perfree.mapper.LinkMapper;
 import com.perfree.model.Link;
@@ -28,9 +32,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     private LinkMapper linkMapper;
 
     @Override
-    public PageResult<Link> linkPage(LinkPageReqVO pageVO) {
+    public PageResult<LinkRespVO> linkPage(LinkPageReqVO pageVO) {
         SortingFieldUtils.handleDefaultSortingField(pageVO);
-        return linkMapper.linkPage(pageVO);
+        IPage<LinkRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<LinkRespVO> linkPage = linkMapper.linkPage(page, pageVO);
+        return new PageResult<>(linkPage.getRecords(), linkPage.getTotal());
     }
 
     @Override
@@ -54,5 +60,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     public Boolean del(Integer id) {
         linkMapper.deleteById(id);
         return true;
+    }
+
+    @Override
+    public LinkRespVO getLinkById(Integer id) {
+        return linkMapper.getLinkById(id);
     }
 }
