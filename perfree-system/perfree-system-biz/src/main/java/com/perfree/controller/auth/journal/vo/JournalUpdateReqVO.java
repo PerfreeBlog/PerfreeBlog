@@ -15,16 +15,13 @@ public class JournalUpdateReqVO {
     @NotNull(message = "动态id不能为空")
     private Integer id;
 
-    @Schema(description = "动态内容", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "动态内容不能为空")
+    @Schema(description = "动态内容")
     private String content;
 
-    @Schema(description = "动态内容类型:html/markdown/journal", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "动态内容类型不能为空")
+    @Schema(description = "动态内容类型:html/markdown/journal")
     private String contentModel;
 
-    @Schema(description = "解析后的动态内容", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotBlank(message = "解析后的动态内容不能为空")
+    @Schema(description = "解析后的动态内容")
     private String parseContent;
 
     @Schema(description = "状态0:已发布,1:草稿, 2 仅自己可见", requiredMode = Schema.RequiredMode.REQUIRED)

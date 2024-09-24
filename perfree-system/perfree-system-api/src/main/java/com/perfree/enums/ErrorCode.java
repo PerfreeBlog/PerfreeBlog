@@ -49,7 +49,8 @@ public enum ErrorCode {
     MAIL_SERVER_NOT_EXIST(100000040, "邮件服务不存在!"),
     REFRESH_TOKEN_VALID_FAIL(100000041, "refreshToken不合法!"),
     COMMENT_USER_NAME_NOT_EMPTY(100000042, "姓名或昵称不能为空!"),
-    COMMENT_EMAIL_NOT_EMPTY(100000043, "邮箱不能为空!")
+    COMMENT_EMAIL_NOT_EMPTY(100000043, "邮箱不能为空!"),
+    JOURNAL_NOT_EMPTY(100000044, "内容或附件不能全部为空!")
     ;
 
     private final Integer code;

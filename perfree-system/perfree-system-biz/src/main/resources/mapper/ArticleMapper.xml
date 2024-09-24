@@ -108,7 +108,8 @@
 
     <!-- 获取文章的标签 -->
     <select id="getJournalAttachList" resultType="com.perfree.controller.auth.journal.vo.JournalAttachRespVO">
-        select * from p_journal_attach  WHERE articleId = #{id} ORDER BY createTime asc
+        select * from p_journal_attach  WHERE articleId = #{id}
+        ORDER BY CASE type WHEN 'img' THEN 4 WHEN 'video' THEN 3 WHEN 'audio' THEN 2 WHEN 'other' THEN 1 ELSE 0 END ASC,createTime asc
     </select>
 
     <select id="getJournalById" resultMap="JOURNAL_RESULT">

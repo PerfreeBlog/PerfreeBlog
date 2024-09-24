@@ -4,10 +4,9 @@
         ref="addFormRef"
         :model="addForm"
         status-icon
-        :rules="addRule"
         v-loading="loading"
     >
-      <el-form-item prop="content">
+      <el-form-item >
         <div class="content-box">
           <textarea placeholder='写点什么?' class='comment-editor' ref="editor" v-model="addForm.content" required></textarea>
           <div class="attach-list-box">
@@ -74,9 +73,6 @@ const addForm = ref({
   status: 0,
   attachList: [],
 });
-const addRule = reactive({
-  content: [{required: true, message: '内容不能为空', trigger: 'blur'}],
-});
 const addFormRef = ref();
 const editor = ref();
 const emojiPicker = ref();
@@ -92,6 +88,10 @@ function cancelHandle() {
 function submitAddForm() {
   addFormRef.value.validate(valid => {
     if (valid) {
+      if (!addForm.value.content && addForm.value.attachList.length <= 0) {
+        ElMessage.error('内容和附件不能全部为空');
+        return
+      }
       addForm.value.parseContent = addForm.value.content;
       loading.value = true;
       if (addForm.value.id) {

@@ -46,9 +46,9 @@ function comment() {
        if ($(this).parent('.p-post-info').children('.journal-comment').length > 0) {
            $(this).parent('.p-post-info').children('.journal-comment').remove()
        } else {
-           $(this).parent('.p-post-info').append(`<div class="journal-comment" data-article-id="${$(this).attr('data-article-id')}"></div>`);
-           let comment = new perfreeComment();
-           comment.customInit( $(this).parent('.p-post-info').children('.journal-comment'));
+           $(this).parent('.p-post-info').append(`<perfree-comment class="journal-comment" show-comment-list="true" article-id="${$(this).attr('data-article-id')}"></perfree-comment>`);
+          /* let comment = new perfreeComment();
+           comment.customInit( $(this).parent('.p-post-info').children('.journal-comment'));*/
        }
     });
 }
@@ -63,7 +63,7 @@ function like(){
                 return;
             }
         }
-        $.get('/article/like?id='+that.attr("data-id"), function (res) {
+        $.get('/api/article/like?id='+that.attr("data-id"), function (res) {
             if (res.code === 200) {
                 let count = Number(that.text()) + 1;
                 that.html('<i class="fa fa-heart"></i> ' + count);

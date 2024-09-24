@@ -62,7 +62,12 @@
         </el-table-column>
         <el-table-column prop="description" label="所属标题"   show-overflow-tooltip min-width="240">
           <template v-slot="scope">
-            <el-link :href="'/article/' + scope.row.articleSlug" target="_blank">{{scope.row.articleTitle}}</el-link>
+            <el-link :href="'/article/' + scope.row.articleSlug" target="_blank" v-if="scope.row.articleType === 'article'">{{scope.row.articleTitle}}</el-link>
+            <el-link :href="'/page/' + scope.row.articleSlug" target="_blank" v-if="scope.row.articleType === 'page'">{{scope.row.articleTitle}}</el-link>
+            <el-link :href="'/admin/journal'" target="_self" v-if="scope.row.articleType === 'journal'">
+              <span v-if="scope.row.articleTitle"> {{scope.row.articleTitle}}</span>
+              <span v-else>无标题,所属标识为[{{scope.row.articleId}}]</span>
+            </el-link>
           </template>
         </el-table-column>
 

@@ -208,8 +208,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     @Transactional
     public JournalRespVO createJournal(JournalAddReqVO journalAddReqVO) {
+        if (StringUtils.isBlank(journalAddReqVO.getContent()) && (null == journalAddReqVO.getAttachList() || journalAddReqVO.getAttachList().isEmpty())){
+            throw new ServiceException(ErrorCode.JOURNAL_NOT_EMPTY);
+        }
         Article article = ArticleConvert.INSTANCE.convertByJournalAddReqVO(journalAddReqVO);
         article.setType(ArticleConstant.ARTICLE_TYPE_JOURNAL);
+        article.setTitle(genSummary("", article.getParseContent()));
         articleMapper.insert(article);
         List<JournalAttach> journalAttachList = journalAttachService.handleJournalAttach(journalAddReqVO.getAttachList(), article.getId());
         JournalRespVO journalRespVO = ArticleConvert.INSTANCE.convertToJournalResp(article);
@@ -235,7 +239,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public JournalRespVO updateJournal(JournalUpdateReqVO updateReqVO) {
+        if (StringUtils.isBlank(updateReqVO.getContent()) && (null == updateReqVO.getAttachList() || updateReqVO.getAttachList().isEmpty())){
+            throw new ServiceException(ErrorCode.JOURNAL_NOT_EMPTY);
+        }
         Article article = ArticleConvert.INSTANCE.convertByJournalUpdateReqVO(updateReqVO);
+        article.setTitle(genSummary("", article.getParseContent()));
         articleMapper.updateById(article);
         journalAttachService.delByArticleId(article.getId());
         List<JournalAttach> journalAttachList = journalAttachService.handleJournalAttach(updateReqVO.getAttachList(), article.getId());
