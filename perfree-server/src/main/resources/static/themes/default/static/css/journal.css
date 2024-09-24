@@ -50,6 +50,8 @@
 .d-post-msg-left img{
     width: 45px;
     border-radius: 50%;
+    height: 45px;
+    object-fit: cover;
 }
 .d-post-msg-right{
     margin-left: 10px;

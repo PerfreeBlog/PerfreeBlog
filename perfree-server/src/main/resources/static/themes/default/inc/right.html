@@ -21,7 +21,7 @@
         #categories()
             #if(categories != null && !isEmpty(categories))
                 <div class="d-category-list">
-                    <h4 class="d-right-box-title"><i class="fa fa-th-large"></i>分类</h4>
+                    <h4 class="d-right-box-title"><i class="fa-solid fa-rectangle-list"></i>分类</h4>
                         <ul>
                             #for(category: categories)
                                 <li class="d-category-item wow fadeInUp" data-wow-duration="#(for.count * 0.1)s">
@@ -36,7 +36,7 @@
         #hotTag(count=36)
             #if(tags != null && !isEmpty(tags))
                 <div class="d-tag-list">
-                    <h4 class="d-right-box-title"><i class="fa fa-tags"></i>标签</h4>
+                    <h4 class="d-right-box-title"><i class="fa-solid fa-tags"></i>标签</h4>
                     <ul class="wow fadeInUp" data-wow-duration="0.4s">
                         #for(tag : tags)
                             <li class="d-tag-item" tagColor="#(tag.color??)">

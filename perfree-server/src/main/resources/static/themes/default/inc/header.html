@@ -11,7 +11,7 @@
             <div class="d-search-box">
                 <form action="/article/search" method="get">
                     <a href="javascript:;" class="d-search-icon">
-                        <i class="fa fa-search" aria-hidden="true"></i>
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
                     </a>
                     <input type="text" placeholder="搜索文章" name="title" class="d-search-input">
                 </form>
@@ -41,13 +41,13 @@
                                 <img src=" #(isBlank(loginUser.avatar) ? '/static/public/images/user.png': loginUser.avatar)?s=32" alt="" class="user-img"> #(loginUser.userName ??)
                             </a>
                             <dl class="layui-nav-child">
-                                <dd><a href="/admin"><i class="fa fa-briefcase"></i> 后台管理</a></dd>
-                                <dd><a href="/logout" data-pjax="no"><i class="fa fa-sign-out"></i> 退出登录</a></dd>
+                                <dd><a href="/admin"><i class="fa-solid fa-briefcase"></i> 后台管理</a></dd>
+                                <dd><a href="/logout" data-pjax="no"><i class="fa-solid fa-sign-out"></i> 退出登录</a></dd>
                             </dl>
                         </li>
                     #else
                         <li class="layui-nav-item">
-                            <a href="/login" class="d-nav-item"><i class="fa fa-sign-in"></i>登录</a>
+                            <a href="/login" class="d-nav-item"><i class="fa-solid fa-sign-in-alt"></i>登录</a>
                         </li>
                     #end
                 #end
@@ -98,7 +98,7 @@
                 #if(loginUser)
                     <li class="layui-nav-item">
                         <a href="javascript:;" class="d-nav-item">
-                            <i class="fa fa-user-o"></i>#(loginUser.userName ??)
+                            <i class="fa-regular fa-user"></i>#(loginUser.userName ??)
                         </a>
                         <dl class="layui-nav-child">
 

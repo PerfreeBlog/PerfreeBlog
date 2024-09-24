@@ -15,13 +15,13 @@
             <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#(article.title ??)</h1>
             <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">
                 <span>
-                    <i class="fa fa-user-o"></i> #(article.user.userName ??)
+                    <i class="fa-regular fa-user"></i> #(article.user.userName ??)
                 </span>
                 <span>
-                    <i class="fa fa-clock-o"></i> #date(article.createTime, "yyyy年MM月dd日")
+                    <i class="fa-regular fa-clock-four"></i> #date(article.createTime, "yyyy年MM月dd日")
                 </span>
                 <span>
-                    <i class="fa fa-eye"></i> #(article.viewCount ??)
+                    <i class="fa-regular fa-eye"></i> #(article.viewCount ??)
                 </span>
                 <span>
                     <i class="fa-regular fa-comment"></i> #(article.commentCount ??)
@@ -57,14 +57,14 @@
             #preArticle()
                 #if(preArticle)
                     <a class="d-pre-article" href="/article/#(preArticle.slug)" title="#(preArticle.title)">
-                        <i class="fa fa-long-arrow-left"></i> #(preArticle.title)
+                        <i class="fa-solid fa-arrow-left"></i> #(preArticle.title)
                     </a>
                 #end
             #end
             #nextArticle()
                 #if(nextArticle)
                     <a class="d-next-article" href="/article/#(nextArticle.slug)" title="#(nextArticle.title)">
-                        #(nextArticle.title) <i class="fa fa-long-arrow-right"></i>
+                        #(nextArticle.title) <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 #end
             #end

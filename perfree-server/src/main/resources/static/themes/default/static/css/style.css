@@ -204,7 +204,7 @@ body{
 .d-search-box form input:focus{
     border: 1px solid var(--primary-color);
 }
-.d-search-box form .fa{
+.d-search-box form i{
     position: absolute;
     left: 10px;
     top: 23px;
@@ -304,7 +304,7 @@ body{
     font-size: 15px;
     padding-bottom: 8px;
 }
-.d-right-box-title .fa{
+.d-right-box-title i{
     margin-right: 5px;
     color: var(--font-color);
     opacity: .7;
@@ -469,7 +469,7 @@ body{
 .d-web-color-switch-btn:hover{
     color: var(--primary-color);
 }
-.d-web-color-switch-btn .fa{
+.d-web-color-switch-btn i{
     font-weight: 800;
 }
 .d-mobile-side{
