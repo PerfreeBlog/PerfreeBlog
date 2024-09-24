@@ -2,6 +2,7 @@
 #@layout()
 #define css()
     <link rel="stylesheet" href="/static/themes/default/static/css/index.css?v=#(version)">
+#include("/static/themes/default/inc/custom_bg.html")
 <style>
     .d-hero-title{
         font-size: 30px;
@@ -30,7 +31,17 @@
                         <span class="d-no-content">暂无文章</span>
                     #end
                 #end
-                #pageRender(articlePage, preText="上一页",nextText="下一页", pagerBoxClass="m-pager-box wow fadeInUp")
+                #if(articlePage.pageTotal > 1)
+                <nav class="m-pager-box wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                    #if(articlePage.hasPrevious)
+                    <a class="m-pager previous-page-btn" href="#(articlePage.previousUrl)">上一页</a>
+                    #end
+                    <span>#(articlePage.pageNo) / #(articlePage.pageTotal)</span>
+                    #if(articlePage.hasNext)
+                    <a class="m-pager next-page-btn" href="#(articlePage.nextUrl)">下一页</a>
+                    #end
+                </nav>
+                #end
             </div>
         </section>
         #include("/static/themes/default/inc/right.html")

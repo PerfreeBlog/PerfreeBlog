@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "文章页相关")
 @Controller
@@ -49,5 +50,14 @@ public class ArticleController  extends BaseViewController {
         model.addAttribute("url",  SystemConstants.URL_ARCHIVE);
         model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
         return themeView("archive.html");
+    }
+
+    @GetMapping(value = {"/article/search", "/article/search/{pageIndex}"})
+    @FrontViewNodeRender
+    public String searchListPage(@PathVariable(value = "pageIndex", required = false) Integer pageIndex, @RequestParam("title") String title, Model model) {
+        model.addAttribute("url", SystemConstants.URL_ARTICLE_SEARCH);
+        model.addAttribute("title", title);
+        model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
+        return themeView("search.html");
     }
 }
