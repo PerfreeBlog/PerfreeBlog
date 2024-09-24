@@ -18,148 +18,156 @@
   },
   "rule": [
     {
-      "type": "elTabs",
-      "style": {
-        "width": "100%"
+      "type": "input",
+      "field": "PERFREE_WEB_NAME",
+      "title": "网站所属人名称",
+      "info": "网站右侧头像下边的名称",
+      "$required": false,
+      "props": {
+        "placeholder": "网站右侧头像下边的名称"
       },
-      "children": [
-        {
-          "type": "elTabPane",
-          "props": {
-            "label": "选项卡"
-          },
-          "children": [
-            {
-              "type": "input",
-              "field": "Ff0jly5mxxftbjc",
-              "title": "输入框",
-              "info": "",
-              "$required": false,
-              "_fc_id": "id_F1vdly5mxxftbkc",
-              "name": "ref_Ficzly5mxxftblc",
-              "display": true,
-              "hidden": false,
-              "_fc_drag_tag": "input"
-            },
-            {
-              "type": "input",
-              "field": "Fuhjly5mxy9dbmc",
-              "title": "多行输入框",
-              "info": "",
-              "$required": false,
-              "props": {
-                "type": "textarea"
-              },
-              "_fc_id": "id_Fapvly5mxy9dbnc",
-              "name": "ref_Faxmly5mxy9dboc",
-              "display": true,
-              "hidden": false,
-              "_fc_drag_tag": "textarea"
-            },
-            {
-              "type": "input",
-              "field": "Fsywly5mxz7sbpc",
-              "title": "密码输入框",
-              "info": "",
-              "$required": false,
-              "props": {
-                "type": "password"
-              },
-              "_fc_id": "id_Fejtly5mxz7sbqc",
-              "name": "ref_Fqfdly5mxz7sbrc",
-              "display": true,
-              "hidden": false,
-              "_fc_drag_tag": "password"
-            }
-          ],
-          "_fc_id": "id_Fo4yly5mxqpfbbc",
-          "name": "ref_Fo6dly5mxqpfbcc",
-          "display": true,
-          "hidden": false,
-          "_fc_drag_tag": "elTabPane"
-        },
-        {
-          "type": "elTabPane",
-          "props": {
-            "label": "选项卡"
-          },
-          "children": [
-            {
-              "type": "select",
-              "field": "F1kuly5my3yebsc",
-              "title": "选择器",
-              "info": "",
-              "effect": {
-                "fetch": ""
-              },
-              "$required": false,
-              "options": [
-                {
-                  "label": "选项00",
-                  "value": 1
-                },
-                {
-                  "label": "选项01",
-                  "value": 2
-                },
-                {
-                  "label": "选项02",
-                  "value": 3
-                }
-              ],
-              "_fc_id": "id_Fiaoly5my3yebtc",
-              "name": "ref_F053ly5my3yebuc",
-              "display": true,
-              "hidden": false,
-              "_fc_drag_tag": "select"
-            },
-            {
-              "type": "fcEditor",
-              "field": "Fuyyly5my8gmbvc",
-              "title": "富文本框",
-              "info": "",
-              "$required": false,
-              "_fc_id": "id_F149ly5my8gmbwc",
-              "name": "ref_Fdg1ly5my8gmbxc",
-              "display": true,
-              "hidden": false,
-              "_fc_drag_tag": "fcEditor"
-            }
-          ],
-          "_fc_id": "id_F2fdly5mxuidbdc",
-          "name": "ref_Fzq6ly5mxuidbec",
-          "display": true,
-          "hidden": false,
-          "_fc_drag_tag": "elTabPane"
-        },
-        {
-          "type": "elTabPane",
-          "props": {
-            "label": "选项卡"
-          },
-          "_fc_id": "id_Fubgly5mxutubfc",
-          "name": "ref_Fg4tly5mxutubgc",
-          "display": true,
-          "hidden": false,
-          "_fc_drag_tag": "elTabPane"
-        },
-        {
-          "type": "elTabPane",
-          "props": {
-            "label": "选项卡"
-          },
-          "_fc_id": "id_Fugtly5mxv1ibhc",
-          "name": "ref_Fb20ly5mxv1ibic",
-          "display": true,
-          "hidden": false,
-          "_fc_drag_tag": "elTabPane"
-        }
-      ],
-      "_fc_id": "id_F491ly5mxqpeb9c",
-      "name": "ref_F40sly5mxqpebac",
+      "_fc_id": "id_Fwr5m1g3r4zlacc",
+      "name": "ref_Fw0zm1g3r4zladc",
       "display": true,
       "hidden": false,
-      "_fc_drag_tag": "elTabs"
+      "_fc_drag_tag": "input"
+    },
+    {
+      "type": "AttachSelectInput",
+      "field": "PERFREE_WEB_RIGHT_LOGO",
+      "title": "网站所属人头像",
+      "info": "网站所属人头像",
+      "$required": false,
+      "props": {
+        "placeholder": "网站所属人头像",
+        "attachType": "img",
+        "enableInput": true
+      },
+      "_fc_id": "id_Fxtrm1g3spkgaec",
+      "name": "ref_Far1m1g3spkgafc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "AttachSelectInput"
+    },
+    {
+      "type": "input",
+      "field": "DEFAULT_HERO_TITLE",
+      "title": "首页展示标题",
+      "info": "首页展示标题",
+      "$required": false,
+      "props": {
+        "placeholder": "首页展示标题"
+      },
+      "_fc_id": "id_F28fm1g3tmw5ahc",
+      "name": "ref_Fr8sm1g3tmw5aic",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "input"
+    },
+    {
+      "type": "input",
+      "field": "DEFAULT_HERO_SUB_TITLE",
+      "title": "首页展示副标题",
+      "info": "首页展示副标题",
+      "$required": false,
+      "props": {
+        "placeholder": "首页展示副标题"
+      },
+      "_fc_id": "id_Ft8ym1g446zzakc",
+      "name": "ref_F8qfm1g446zzalc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "input"
+    },
+    {
+      "type": "select",
+      "field": "HOME_BANNER",
+      "title": "首页背景方式",
+      "info": "首页背景方式",
+      "effect": {
+        "fetch": ""
+      },
+      "$required": false,
+      "options": [
+        {
+          "label": "背景图",
+          "value": "0"
+        },
+        {
+          "label": "自定义颜色",
+          "value": "1"
+        }
+      ],
+      "_fc_id": "id_Fk4fm1g45gl7anc",
+      "name": "ref_Ft1fm1g45gl7aoc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "select"
+    },
+    {
+      "type": "AttachSelectInput",
+      "field": "HOME_BANNER_IMG",
+      "title": "首页背景图",
+      "info": "首页背景图",
+      "$required": false,
+      "props": {
+        "attachType": "img",
+        "enableInput": true,
+        "placeholder": "首页背景图"
+      },
+      "_fc_id": "id_Fnqwm1g46pjcapc",
+      "name": "ref_Fa3om1g46pjcaqc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "AttachSelectInput"
+    },
+    {
+      "type": "colorPicker",
+      "field": "HOME_BANNER_COLOR",
+      "title": "首页背景颜色",
+      "info": "首页背景颜色",
+      "$required": false,
+      "_fc_id": "id_Fc62m1g47iqkasc",
+      "name": "ref_F843m1g47iqkatc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "colorPicker"
+    },
+    {
+      "type": "colorPicker",
+      "field": "HOME_TITLE_COLOR",
+      "title": "首页标题颜色",
+      "info": "首页标题颜色",
+      "$required": false,
+      "_fc_id": "id_Fjv3m1g48h9bavc",
+      "name": "ref_F7q6m1g48h9bawc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "colorPicker"
+    },
+    {
+      "type": "colorPicker",
+      "field": "HOME_SUB_TITLE_COLOR",
+      "title": "首页副标题颜色",
+      "info": "首页副标题颜色",
+      "$required": false,
+      "_fc_id": "id_Fxyhm1g491qzayc",
+      "name": "ref_Fjxxm1g491qzazc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "colorPicker"
+    },
+    {
+      "type": "colorPicker",
+      "field": "PERFREE_PRIMARY_COLOR",
+      "title": "网站主题色",
+      "info": "网站主题色",
+      "$required": false,
+      "_fc_id": "id_Fuium1g49gkyb1c",
+      "name": "ref_Faeom1g49gkyb2c",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "colorPicker"
     }
   ]
 }

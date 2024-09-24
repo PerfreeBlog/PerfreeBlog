@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <el-input v-model="modelValue" :placeholder="props.placeholder" style="width: 100%"  :disabled="!props.enableInput" >
+    <el-input v-model="modelValue" :placeholder="props.placeholder" style="width: 100%"  :disabled="!props.enableInput" @change="changeInput">
       <template #append>
         <el-button :icon="FolderOpened"  type="info" @click="openSelectImage"/>
       </template>
@@ -40,6 +40,10 @@ const modelValue = ref(props.modelValue)
 watch(() => props.modelValue, (newValue, oldValue) => {
   modelValue.value = newValue;
 });
+
+function changeInput() {
+  emits('update:modelValue', modelValue.value)
+}
 /**
  * 打开选择附件面板
  */
@@ -75,7 +79,7 @@ function resetAddForm() {
  */
 function selectAttach(data) {
   selectData.value = data
- 
+
 }
 </script>
 
