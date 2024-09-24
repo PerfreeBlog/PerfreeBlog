@@ -134,4 +134,10 @@
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0 and DATE_FORMAT(t1.createTime,'%Y年%m月') = #{date}
         ORDER BY t1.createTime desc
     </select>
+
+    <select id="getLatestArticle" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by t1.createTime desc LIMIT 0,#{num}
+    </select>
 </mapper>

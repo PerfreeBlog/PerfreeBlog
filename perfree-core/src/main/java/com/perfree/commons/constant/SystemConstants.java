@@ -93,4 +93,7 @@ public class SystemConstants {
     public static final String RENDER_PAGE_SEO_DESC = "SEO_DESC";
     /** url - article/search(搜索) */
     public static final String URL_ARTICLE_SEARCH = "/article/search/";
+    /** url - article(文章) */
+    public static final String URL_ARTICLE = "/article/";
+
 }

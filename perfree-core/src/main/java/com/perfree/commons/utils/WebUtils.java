@@ -10,7 +10,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.URLEncoder;
+import java.net.UnknownHostException;
 
 /**
  * @author Perfree
@@ -69,5 +71,17 @@ public class WebUtils {
             return null;
         }
         return request.getHeader("User-Agent");
+    }
+
+    /**
+     * 获取当前服务的ip和端口
+     */
+    public static String getUrl(int serverPort) {
+        InetAddress address;
+        try {
+            address = InetAddress.getLocalHost();
+            return "http://" + address.getHostAddress() + ":" + serverPort;
+        } catch (UnknownHostException ignored) { }
+        return null;
     }
 }

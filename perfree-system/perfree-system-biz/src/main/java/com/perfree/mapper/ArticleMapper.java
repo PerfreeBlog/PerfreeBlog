@@ -131,4 +131,10 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      */
     IPage<ArchiveRespVO> archivePage(IPage<ArchiveRespVO> page, @Param("pageVO") ArchivePageReqVO pageVO);
 
+    /**
+     * 获取最近发布的文章
+     * @param num num
+     * @return List<ArticleRespVO>
+     */
+    List<ArticleRespVO> getLatestArticle(@Param("num") Integer num);
 }

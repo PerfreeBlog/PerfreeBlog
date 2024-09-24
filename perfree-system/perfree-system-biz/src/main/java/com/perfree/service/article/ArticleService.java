@@ -154,4 +154,11 @@ public interface ArticleService extends IService<Article> {
      */
     PageResult<ArchiveRespVO> archivePage(ArchivePageReqVO pageVO);
 
+    /**
+     * 获取最近发布的文章
+     * @param num num
+     * @return List<ArticleRespVO>
+     */
+    List<ArticleRespVO> getLatestArticle(Integer num);
+
 }

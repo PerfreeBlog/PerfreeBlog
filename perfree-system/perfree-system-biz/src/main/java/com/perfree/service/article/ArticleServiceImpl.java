@@ -264,6 +264,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
     }
 
+    @Override
+    public List<ArticleRespVO> getLatestArticle(Integer num) {
+        return articleMapper.getLatestArticle(num);
+    }
+
     /**
      * 生成文章摘要
      * @param summary summary
