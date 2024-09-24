@@ -1,6 +1,11 @@
 package com.perfree.controller.common.article;
 
 import com.perfree.commons.common.CommonResult;
+import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
+import com.perfree.controller.auth.article.vo.ArticleRespVO;
+import com.perfree.controller.common.article.vo.ArchivePageReqVO;
+import com.perfree.controller.common.article.vo.ArchiveRespVO;
 import com.perfree.service.article.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,5 +26,11 @@ public class ArticleController {
     @Operation(summary = "文章/动态点赞")
     public CommonResult<Boolean> like(@RequestParam("id") Integer id){
         return success(articleService.updateGreatCount(id));
+    }
+
+    @PostMapping("archivePage")
+    @Operation(summary = "文章归档列表分页")
+    public CommonResult<PageResult<ArchiveRespVO>> archivePage(@RequestBody ArchivePageReqVO pageVO){
+        return success(articleService.archivePage(pageVO));
     }
 }

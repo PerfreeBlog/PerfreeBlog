@@ -16,6 +16,8 @@ import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
 import com.perfree.controller.auth.journal.vo.JournalPageReqVO;
 import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.controller.auth.journal.vo.JournalUpdateReqVO;
+import com.perfree.controller.common.article.vo.ArchivePageReqVO;
+import com.perfree.controller.common.article.vo.ArchiveRespVO;
 import com.perfree.convert.article.ArticleConvert;
 import com.perfree.convert.journalAttach.JournalAttachConvert;
 import com.perfree.enums.ErrorCode;
@@ -245,6 +247,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<Article> getAllPage() {
         return articleMapper.getAllPage();
+    }
+
+    @Override
+    public PageResult<ArchiveRespVO> archivePage(ArchivePageReqVO pageVO) {
+        IPage<ArchiveRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<ArchiveRespVO> articlePage = articleMapper.archivePage(page, pageVO);
+        return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
     }
 
     /**

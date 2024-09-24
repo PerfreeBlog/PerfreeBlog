@@ -21,14 +21,24 @@
                         <ul>
                             #for(archiveArticle: archive.articles??)
                                 <li class="d-timeline-title wow fadeInUp" data-wow-duration="#(for.count * 0.2)s">
-                                    <a href="#(archiveArticle.url)"><span class="d-timeline-time">#date(archiveArticle.createTime, "MM/dd")</span>#(archiveArticle.title)</a>
+                                    <a href="/article/#(archiveArticle.slug)"><span class="d-timeline-time">#date(archiveArticle.createTime, "MM/dd")</span>#(archiveArticle.title)</a>
                                 </li>
                             #end
                         </ul>
                     </div>
                 #end
 
-                #pageRender(archivePage, preText="上一页",nextText="下一页")
+                #if(archivePage.pageTotal > 1)
+                <nav class="m-pager-box wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+                    #if(archivePage.hasPrevious)
+                    <a class="m-pager previous-page-btn" href="#(archivePage.previousUrl)">上一页</a>
+                    #end
+                    <span>#(archivePage.pageNo) / #(archivePage.pageTotal)</span>
+                    #if(archivePage.hasNext)
+                    <a class="m-pager next-page-btn" href="#(archivePage.nextUrl)">下一页</a>
+                    #end
+                </nav>
+                #end
             </div>
         #end
     </section>

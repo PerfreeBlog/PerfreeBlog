@@ -7,6 +7,8 @@ import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
 import com.perfree.controller.auth.journal.vo.JournalPageReqVO;
 import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.controller.auth.journal.vo.JournalUpdateReqVO;
+import com.perfree.controller.common.article.vo.ArchivePageReqVO;
+import com.perfree.controller.common.article.vo.ArchiveRespVO;
 import com.perfree.model.Article;
 
 import java.util.List;
@@ -144,5 +146,12 @@ public interface ArticleService extends IService<Article> {
      * @return List<Article>
      */
     List<Article> getAllPage();
+
+    /**
+     * 归档分页
+     * @param pageVO pageVO
+     * @return PageResult<ArchiveRespVO>
+     */
+    PageResult<ArchiveRespVO> archivePage(ArchivePageReqVO pageVO);
 
 }

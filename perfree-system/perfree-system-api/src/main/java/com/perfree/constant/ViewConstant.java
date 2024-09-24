@@ -21,5 +21,7 @@ public class ViewConstant {
 
 
     public static final String COUNT = "count";
+
+    public static final String URL = "url";
 }
 

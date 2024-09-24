@@ -10,6 +10,8 @@ import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.controller.auth.article.vo.ArticleTagRespVO;
 import com.perfree.controller.auth.journal.vo.JournalPageReqVO;
 import com.perfree.controller.auth.journal.vo.JournalRespVO;
+import com.perfree.controller.common.article.vo.ArchivePageReqVO;
+import com.perfree.controller.common.article.vo.ArchiveRespVO;
 import com.perfree.model.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -120,5 +122,13 @@ public interface ArticleMapper extends BaseMapperX<Article> {
                 .orderByDesc(Article::getCreateTime)
         );
     }
+
+    /**
+     * 归档分页
+     * @param page page
+     * @param pageVO pageVO
+     * @return IPage<ArchiveRespVO>
+     */
+    IPage<ArchiveRespVO> archivePage(IPage<ArchiveRespVO> page, @Param("pageVO") ArchivePageReqVO pageVO);
 
 }
