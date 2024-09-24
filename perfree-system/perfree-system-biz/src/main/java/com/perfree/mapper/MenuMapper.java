@@ -26,7 +26,7 @@ public interface MenuMapper extends BaseMapperX<Menu> {
      * @param userId 用户id
      * @return List<Menu>
      */
-    List<Menu> menuListByUserId(@Param("userId") Integer userId, @Param("type") Integer type);
+    List<Menu> menuListByUserIdAndType(@Param("userId") Integer userId, @Param("type") Integer type);
 
     /**
      * 菜单列表
@@ -62,7 +62,7 @@ public interface MenuMapper extends BaseMapperX<Menu> {
      * 获取管理员菜单
      * @return List<Menu>
      */
-    List<Menu> menuListByAdmin(@Param("type") Integer type);
+    List<Menu> menuListByType(@Param("type") Integer type);
 
     default void deleteMenuByPluginId(String pluginId){
         delete(new LambdaQueryWrapper<Menu>().eq(Menu::getPluginId, pluginId));

@@ -62,16 +62,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
         List<Menu> menuList;
         if (isAdmin) {
-            menuList = menuMapper.menuListByAdmin(MenuConstant.MENU_TYPE_ADMIN);
+            menuList = menuMapper.menuListByType(MenuConstant.MENU_TYPE_ADMIN);
         } else {
-            menuList = menuMapper.menuListByUserId(loginUser.getId(), MenuConstant.MENU_TYPE_ADMIN);
+            menuList = menuMapper.menuListByUserIdAndType(loginUser.getId(), MenuConstant.MENU_TYPE_ADMIN);
         }
         return handleMenuTree(menuList);
     }
 
     @Override
     public List<MenuTreeListRespVO> menuFrontList() {
-        List<Menu> menuList = menuMapper.menuListByAdmin(MenuConstant.MENU_TYPE_FRONT);
+        List<Menu> menuList = menuMapper.menuListByType(MenuConstant.MENU_TYPE_FRONT);
         return handleMenuTree(menuList);
     }
 

@@ -352,7 +352,7 @@ function handleRoleMenu(row) {
   menuForm.value.id = row.id;
   title.value = '菜单权限';
   menuTreeLoading.value = true;
-  menuListApi({}).then((res) => {
+  menuListApi({type: 1}).then((res) => {
     menuData.value = handleTree(res.data, "id", "pid", 'children', '-1');
     getRoleMenusApi(row.id).then((d) => {
       menuTree.value.setCheckedKeys(d.data);
