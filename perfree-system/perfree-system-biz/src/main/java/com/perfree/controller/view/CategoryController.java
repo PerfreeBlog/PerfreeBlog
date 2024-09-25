@@ -28,6 +28,7 @@ public class CategoryController extends BaseViewController {
         CategoryRespVO category = categoryService.getBySlug(slug);
         model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
         model.addAttribute("categoryId", category.getId());
+        model.addAttribute("category", category);
         model.addAttribute("url", SystemConstants.URL_ARTICLE_CATEGORY + category.getSlug()  + "/");
         return themeView("articleList.html");
     }

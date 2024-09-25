@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class JournalController extends BaseViewController {
 
-    @RequestMapping(value = {"/journalList/{pageIndex}", "/journalList", "journal"})
+    @RequestMapping(value = {"/journal/{pageIndex}",  "journal"})
     @FrontViewNodeRender
     @Operation(summary = "动态列表页")
-    public String articleListPage(@PathVariable(value = "pageIndex", required = false) String pageIndex, Model model) {
+    public String journalPage(@PathVariable(value = "pageIndex", required = false) String pageIndex, Model model) {
         model.addAttribute("url", SystemConstants.URL_JOURNAL_LIST);
         model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
         return themeView("journalList.html");

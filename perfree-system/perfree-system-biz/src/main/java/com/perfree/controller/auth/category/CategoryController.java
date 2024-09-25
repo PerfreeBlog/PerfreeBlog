@@ -25,10 +25,10 @@ public class CategoryController {
     @Resource
     private CategoryService categoryService;
 
-    @PostMapping("/page")
+    @PostMapping("/pageList")
     @Operation(summary = "分类页面列表")
-    public CommonResult<List<CategoryRespVO>> page(@RequestBody CategoryListReqVO reqVO) {
-        return success(categoryService.categoryPage(reqVO));
+    public CommonResult<List<CategoryRespVO>> pageList(@RequestBody CategoryListReqVO reqVO) {
+        return success(categoryService.categoryPageList(reqVO));
     }
 
     @PostMapping("/listTree")

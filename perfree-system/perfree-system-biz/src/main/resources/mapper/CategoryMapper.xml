@@ -40,4 +40,15 @@
         select t1.*, (select count(1) from p_article_category WHERE categoryId = t1.id) as `count`,t2.userName,t2.avatar,t2.email,t2.website
         from p_category t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.slug = #{slug}
     </select>
+
+    <select id="categoryPage" resultMap="CATEGORY_RESULT_MAP">
+        select t1.*, (select count(1) from p_article_category WHERE categoryId = t1.id) as `count`,t2.userName,t2.avatar,t2.email,t2.website
+        from p_category t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        <where>
+            <if test="pageVO.name != null and pageVO.name != ''">
+                <bind name="name" value="'%' + _parameter.pageVO.name + '%'" />
+                and t1.name like #{name}
+            </if>
+        </where>
+    </select>
 </mapper>

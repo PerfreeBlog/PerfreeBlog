@@ -1,5 +1,5 @@
 export function categoryPageApi(data) {
-    return axios.post('/api/auth/category/page', data);
+    return axios.post('/api/auth/category/pageList', data);
 }
 
 export function categoryAddApi(data) {

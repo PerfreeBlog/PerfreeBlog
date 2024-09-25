@@ -8,10 +8,14 @@
     width: 60%;
     margin: auto;
     text-align: center;
-    padding-top: 130px;
+    padding-top: 175px;
 }
 .d-hero-title{
     font-size: 45px;
+    font-weight: 600;
+}
+.d-hero-title.desc-title{
+    font-size: 30px;
     font-weight: 600;
 }
 .d-hero-desc{
@@ -142,6 +146,7 @@
     filter: blur(6px);
     animation: move 2s alternate ease-out;
 }
+
 
 @keyframes move {
     0% {

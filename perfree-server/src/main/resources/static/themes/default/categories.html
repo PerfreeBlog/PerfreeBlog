@@ -13,6 +13,40 @@
         </div>
     </div>
     <section class="d-container">
-        123
+        <div class="d-c-category-list">
+            #categoriesPage(pageSize=10)
+                #for(category: categoriesPage.data)
+                    <a class="d-c-category" href="/category/#(category.slug)">
+                        <div class="d-c-category-msg">
+                            <span class="d-c-category-name">
+                                <i class="fa-regular fa-folder-open"></i>
+                                #(category.name)
+                            </span>
+                            <span class="d-c-category-count">共 #(category.count) 篇文章</span>
+                        </div>
+                        #if(category.desc != "")
+                        <div class="d-c-category-desc">
+                            #(category.desc)
+                        </div>
+                        #end
+                    </a>
+                #else
+                    <span class="d-no-content">暂无分类</span>
+                #end
+
+                #if(categoriesPage.pageTotal > 1)
+                    <nav class="m-pager-box wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;margin-top: 15px">
+                        #if(categoriesPage.hasPrevious)
+                        <a class="m-pager previous-page-btn" href="#(categoriesPage.previousUrl)">上一页</a>
+                        #end
+                        <span>#(categoriesPage.pageNo) / #(categoriesPage.pageTotal)</span>
+                        #if(categoriesPage.hasNext)
+                        <a class="m-pager next-page-btn" href="#(categoriesPage.nextUrl)">下一页</a>
+                        #end
+                    </nav>
+                #end
+            #end
+        </div>
+
     </section>
 #end

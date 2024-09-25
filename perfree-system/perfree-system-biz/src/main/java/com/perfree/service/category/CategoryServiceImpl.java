@@ -3,6 +3,7 @@ package com.perfree.service.category;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.common.SortingField;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
@@ -15,6 +16,7 @@ import com.perfree.mapper.CategoryMapper;
 import com.perfree.model.Category;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.hutool.core.collection.ListUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +44,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     private ArticleCategoryMapper articleCategoryMapper;
 
     @Override
-    public List<CategoryRespVO> categoryPage(CategoryListReqVO reqVO) {
+    public List<CategoryRespVO> categoryPageList(CategoryListReqVO reqVO) {
         return categoryMapper.getAllCategory(reqVO);
     }
 
@@ -114,6 +116,16 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     @Override
     public CategoryRespVO getCategoryById(Integer id) {
         return categoryMapper.getCategoryById(id);
+    }
+
+    @Override
+    public PageResult<CategoryRespVO> categoryPage(CategoryPageReqVO pageVO) {
+        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
+                new SortingField("createTime", SortingField.ORDER_DESC)
+        ));
+        IPage<CategoryRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        IPage<CategoryRespVO> articlePage = categoryMapper.categoryPage(page, pageVO);
+        return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
     }
 
 

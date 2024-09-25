@@ -22,7 +22,7 @@ public interface CategoryService extends IService<Category> {
      * @param reqVO CategoryListReqVO
      * @return List<CategoryRespVO>
      */
-    List<CategoryRespVO> categoryPage(CategoryListReqVO reqVO);
+    List<CategoryRespVO> categoryPageList(CategoryListReqVO reqVO);
 
     /**
      * 添加分类
@@ -65,4 +65,12 @@ public interface CategoryService extends IService<Category> {
      * @return CategoryRespVO
      */
     CategoryRespVO getCategoryById(Integer id);
+
+    /**
+     * 分类分页
+     * @param reqVO reqVO
+     * @return PageResult<CategoryRespVO>
+     */
+    PageResult<CategoryRespVO> categoryPage(CategoryPageReqVO reqVO);
+
 }

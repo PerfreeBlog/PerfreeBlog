@@ -8,8 +8,13 @@
 <div class="d-wrapper">
     <div class="d-banner">
         <div class="d-hero-box">
-            <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#option('DEFAULT_HERO_TITLE', 'Perfree')</h1>
-            <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">#option('DEFAULT_HERO_SUB_TITLE', '简简单单的生活,安安静静的写博客')</p>
+            #if(null != category)
+                <h1 class="d-hero-title wow fadeInUp desc-title" data-wow-duration="0.2s">#(category.name)</h1>
+                <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">共 #(category.count) 篇文章</p>
+            #else
+                <h1 class="d-hero-title wow fadeInUp" data-wow-duration="0.2s">#option('DEFAULT_HERO_TITLE', 'Perfree')</h1>
+                <p class="d-hero-desc wow fadeInUp" data-wow-duration="0.4s">#option('DEFAULT_HERO_SUB_TITLE', '简简单单的生活,安安静静的写博客')</p>
+            #end
         </div>
     </div>
 </div>
