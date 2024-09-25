@@ -43,10 +43,7 @@ public class OptionCacheService {
     public String getDefaultValue(String key, String defaultValue) {
         OptionDTO option = getOption(key);
         if (null == option || StringUtils.isBlank(option.getValue())) {
-            if (StringUtils.isNotBlank(defaultValue)) {
-                return defaultValue;
-            }
-            return "";
+            return defaultValue;
         }
 
         return option.getValue();

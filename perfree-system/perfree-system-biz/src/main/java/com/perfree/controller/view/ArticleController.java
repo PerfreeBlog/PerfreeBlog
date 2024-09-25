@@ -39,6 +39,9 @@ public class ArticleController  extends BaseViewController {
         ArticleRespVO articleRespVO = articleService.getBySlugAndTypeAndStatus(slug, ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED);
         if (articleRespVO != null) {
             model.addAttribute("article", articleRespVO);
+            model.addAttribute(SystemConstants.RENDER_PAGE_SEO_TITLE, StringUtils.isBlank(articleRespVO.getTitle()) ? null : articleRespVO.getTitle().trim());
+            model.addAttribute(SystemConstants.RENDER_PAGE_SEO_KEYWORD, StringUtils.isBlank(articleRespVO.getMetaKeywords()) ? null : articleRespVO.getMetaKeywords().trim());
+            model.addAttribute(SystemConstants.RENDER_PAGE_SEO_DESC, StringUtils.isBlank(articleRespVO.getMetaDescription()) ? null : articleRespVO.getMetaDescription().trim());
         }
         return themeView("article.html");
     }

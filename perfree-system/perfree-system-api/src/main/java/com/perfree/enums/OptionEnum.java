@@ -20,7 +20,8 @@ public enum OptionEnum {
     WEB_SITE("WEB_SITE",""),
     WEB_RSS_GEN_NUM("WEB_RSS_GEN_NUM",""),
     WEB_TITLE("WEB_TITLE", ""),
-    WEB_META_DESC("WEB_META_DESC", "")
+    WEB_META_DESC("WEB_META_DESC", ""),
+    WEB_META_KEYWORD("WEB_META_KEYWORD", "")
     ;
     private final String key;
 

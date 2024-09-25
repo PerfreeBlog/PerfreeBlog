@@ -1,6 +1,7 @@
 package com.perfree.config;
 
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.interceptor.FrontViewInterceptor;
 import com.perfree.plugin.core.PluginResourceResolver;
 import com.perfree.plugin.handle.PluginInterceptorBaseHandler;
 import com.perfree.security.interceptor.PluginPreAuthorizeInterceptor;
@@ -22,10 +23,15 @@ public class MvcConfig implements WebMvcConfigurer {
 
     private final PluginInterceptorBaseHandler pluginInterceptorBaseHandler;
 
+    private final FrontViewInterceptor frontViewInterceptor;
 
-    public MvcConfig(PluginPreAuthorizeInterceptor pluginPreAuthorizeInterceptor, PluginInterceptorBaseHandler pluginInterceptorBaseHandler) {
+
+    public MvcConfig(PluginPreAuthorizeInterceptor pluginPreAuthorizeInterceptor,
+                     PluginInterceptorBaseHandler pluginInterceptorBaseHandler,
+                     FrontViewInterceptor frontViewInterceptor) {
         this.pluginPreAuthorizeInterceptor = pluginPreAuthorizeInterceptor;
         this.pluginInterceptorBaseHandler = pluginInterceptorBaseHandler;
+        this.frontViewInterceptor = frontViewInterceptor;
     }
 
     @Override
@@ -79,6 +85,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(pluginInterceptorBaseHandler)
                 .addPathPatterns("/**");
+
+        registry.addInterceptor(frontViewInterceptor)
+                .addPathPatterns("/**");
+
     }
 
     @Bean
