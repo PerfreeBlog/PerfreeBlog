@@ -20,7 +20,9 @@ const primaryColor9 = useCssVar('--el-color-primary-light-9', el)
 const primaryColor2 = useCssVar('--el-color-primary-dark-2', el)
 
 onMounted(() => {
-  document.getElementById('loading-box').remove();
+  if (document.getElementById('loading-box')){
+    document.getElementById('loading-box').remove();
+  }
 })
 if (appStore.headerUnified === null) {
   appStore.setHeaderUnified(themeSettings.headerUnified)
@@ -64,8 +66,7 @@ const changeFaviconByUrl = (url) => {
   } else if (ext === 'png') {
     type = 'image/png';
   } else {
-    console.error('Unsupported favicon format. Only .ico and .png are supported.');
-    return;
+    type = 'image/x-icon';
   }
 
   // 创建或更新 favicon

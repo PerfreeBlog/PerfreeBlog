@@ -21,7 +21,6 @@ import AttachSelectInput from "@/core/components/attach/attach-select-input.vue"
 import FcDesigner from '@form-create/designer'
 import formCreate from '@form-create/element-ui'
 import install from '@form-create/element-ui/auto-import'
-import {CONSTANTS} from "@/core/utils/constants.js";
 import {hasPermission} from "@/core/directive/permission/hasPermission.js";
 import download from "@/core/utils/download.js";
 import {getOptionByNoAuth} from "@/core/api/system.js";
@@ -57,29 +56,14 @@ app.use(VueDOMPurifyHTML)
 
 
 // form-create
+FcDesigner.component('AttachSelectInput', AttachSelectInput);
 formCreate.use(install)
 formCreate.register(AttachSelectInputRule);
-formCreate.fetch = (options) => {
-    if (!options.headers) {
-        options.headers = [];
-    }
-    options.headers.push({ Authorization: "Bearer " + JSON.parse(localStorage.getItem(CONSTANTS.STORAGE_TOKEN)).accessToken})
-    fetch(options.action, {
-        headers: options.headers,
-        method: options.method,
-    }).then(res=>{
-        res.json(data=>{
-            options.onSuccess(data);
-        })
-    }).catch(e=>{
-        options.onError(e);
-    })
-}
 
 app.component('AttachSelectInput', AttachSelectInput);
 app.use(formCreate)
 app.use(FcDesigner)
-
+app.use(FcDesigner.formCreate)
 // 定义全局
 window.router = router;
 window.axios = axios;
