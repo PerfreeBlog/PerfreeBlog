@@ -6,6 +6,9 @@
         #else if(category != null && category.thumbnail != null && category.thumbnail != "")
             background: url(#(category.thumbnail)) rgba(0,0,0,0.3) center/cover no-repeat;
             background-blend-mode: multiply;
+        #else if(tag != null && tag.thumbnail != null && tag.thumbnail != "")
+            background: url(#(tag.thumbnail)) rgba(0,0,0,0.3) center/cover no-repeat;
+            background-blend-mode: multiply;
         #else if(option('HOME_BANNER') == "0")
             background: url(#option("HOME_BANNER_IMG", "/static/themes/default/static/imgs/bg.jpg")) rgba(0,0,0,0.3) center/cover no-repeat;
             background-blend-mode: multiply;

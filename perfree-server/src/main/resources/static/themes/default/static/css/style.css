@@ -341,14 +341,14 @@ body{
     color: var(--font-color);
 }
 .d-category-item:hover, .d-tag-item:hover{
-    transform: scale(1.04);
+    transform: scale(1.08);
 }
 .d-tag-item{
     display: inline-block;
     border-radius: 6px;
     box-shadow: var(--box-border);
     cursor: pointer;
-    transition: all .5s;
+    transition: all .2s;
     margin: 3px 2px 5px;
 }
 .d-tag-item a{

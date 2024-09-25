@@ -18,3 +18,17 @@
 .d-container{
     width: 50%;
 }
+.d-c-tag-list{
+    margin-top: 15px;
+    width: 100%;
+}
+.d-c-tag-list .d-tag-item{
+    margin: 6px 6px;
+    line-height: 30px;
+}
+.d-c-tag-list .tag-name{
+    font-size: 14px;
+}
+.d-c-tag-list .tag-count{
+    font-size: 12px;
+}

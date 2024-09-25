@@ -27,6 +27,7 @@ public class TagController extends BaseViewController {
         TagRespVO tagRespVO = tagService.getBySlug(slug);
         model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
         model.addAttribute("tagId", tagRespVO.getId());
+        model.addAttribute("tag", tagRespVO);
         model.addAttribute("url", SystemConstants.URL_ARTICLE_TAG + tagRespVO.getSlug()  + "/");
         return themeView("articleList.html");
     }
