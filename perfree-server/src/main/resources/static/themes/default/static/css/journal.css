@@ -41,7 +41,7 @@
 .d-post-box:hover{
     box-shadow: var(--box-border-hover);
 }
-.d-post-box .comment-box{
+.d-post-box .perfree-comment{
     margin-top: 10px;
 }
 .d-post-msg{
@@ -210,17 +210,20 @@
 .journal-comment{
     margin-top: 15px!important;
 }
-.comment-box .comment-editor, .comment-box .comment-name-input,
-.comment-box .comment-email-input,.comment-box .comment-website-input,
-.comment-box .comment-submit-box .comment-cancel-btn{
+.perfree-comment .comment-editor, .perfree-comment .comment-name-input,
+.perfree-comment .comment-email-input,.perfree-comment .comment-website-input,
+.perfree-comment .comment-submit-box .comment-cancel-btn{
     background-color: var(--comment-background);
     border: 1px solid var(--comment-border-color);
+    color: var(--font-color);
+}
+.perfree-comment .comment-editor-box{
     color: var(--font-color);
 }
 .comment-submit-box .comment-submit-btn{
     background: var(--primary-color);
 }
-.comment-box .comment-emjoi-btn{
+.perfree-comment .comment-emjoi-btn{
     color: var(--font-color-b);
 }
 .comment-detail-content{
@@ -306,7 +309,7 @@
     width: 193px;
     height: 170px;
     object-fit: cover;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color-b);
     border-radius: 5px;
 }
 @media screen and (max-width:750px) {

@@ -179,5 +179,10 @@
             <groupId>com.rometools</groupId>
             <artifactId>rome</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.dfabulich</groupId>
+            <artifactId>sitemapgen4j</artifactId>
+        </dependency>
     </dependencies>
 </project>

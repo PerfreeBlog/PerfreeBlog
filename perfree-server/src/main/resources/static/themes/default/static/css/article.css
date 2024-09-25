@@ -282,17 +282,20 @@
     background: var(--primary-color);
     color: white;
 }
-.comment-box .comment-editor, .comment-box .comment-name-input,
-.comment-box .comment-email-input,.comment-box .comment-website-input,
-.comment-box .comment-submit-box .comment-cancel-btn{
+.perfree-comment .comment-editor, .perfree-comment .comment-name-input,
+.perfree-comment .comment-email-input,.perfree-comment .comment-website-input,
+.perfree-comment .comment-submit-box .comment-cancel-btn{
     background-color: var(--comment-background);
     border: 1px solid var(--comment-border-color);
+    color: var(--font-color);
+}
+.perfree-comment .comment-editor-box{
     color: var(--font-color);
 }
 .comment-submit-box .comment-submit-btn{
     background: var(--primary-color);
 }
-.comment-box .comment-emjoi-btn{
+.perfree-comment .comment-emjoi-btn{
     color: var(--font-color-b);
 }
 .comment-detail-content{

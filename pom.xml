@@ -206,6 +206,12 @@
                 <artifactId>rome</artifactId>
                 <version>2.1.0</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.github.dfabulich</groupId>
+                <artifactId>sitemapgen4j</artifactId>
+                <version>1.1.2</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
