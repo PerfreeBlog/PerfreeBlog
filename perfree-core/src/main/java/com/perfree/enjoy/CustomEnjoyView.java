@@ -4,6 +4,7 @@ import com.jfinal.template.Template;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.CustomByteArrayOutputStream;
 import com.perfree.commons.utils.SpringBeanUtil;
+import com.perfree.constant.OptionConstant;
 import com.perfree.enums.OptionEnum;
 import com.perfree.plugin.commons.PluginUtils;
 import com.perfree.plugin.proxy.HtmlRenderProxy;
@@ -136,7 +137,7 @@ public class CustomEnjoyView extends JFinalView {
         String customHead = optionCacheService.getDefaultValue(OptionEnum.WEB_CUSTOM_HEAD.getKey(), "");
         doc.head().append(customHead);
         String isAutoPushBaidu = optionCacheService.getDefaultValue(OptionEnum.WEB_IS_AUTO_PUSH_BAIDU.getKey(), "");
-        if (StringUtils.isNotBlank(isAutoPushBaidu) && isAutoPushBaidu.equals("1")) {
+        if (StringUtils.isNotBlank(isAutoPushBaidu) && isAutoPushBaidu.equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             doc.head().append("<script>(function(){var bp=document.createElement('script');var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js'}else{bp.src='http://push.zhanzhang.baidu.com/push.js'}var s=document.getElementsByTagName(\"script\")[0];s.parentNode.insertBefore(bp,s)})();</script>");
         }
     }
