@@ -25,7 +25,6 @@ public class EnjoyConfig {
         jfr.setSessionInView(true);
         jfr.setViewClass(CustomEnjoyView.class);
         Engine engine = JFinalViewResolver.engine;
-        engine.setDevMode(true);
         engine.setSourceFactory(new TemplateSourceFactory());
         engine.addSharedMethod(new StrUtil());
         engine.setCompressorOn('\n');

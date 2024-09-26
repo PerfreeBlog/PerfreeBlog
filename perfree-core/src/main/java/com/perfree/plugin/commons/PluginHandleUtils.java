@@ -4,6 +4,7 @@ import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.SqlExecUtils;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.theme.commons.ThemeSetting;
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.hutool.core.compress.ZipUtil;
 import org.dromara.hutool.core.data.id.IdUtil;
 import org.dromara.hutool.core.io.file.FileReader;
@@ -228,6 +229,10 @@ public class PluginHandleUtils {
      * @return List<File>
      */
     public static List<File> getMapperXml(File pluginDir, PluginBaseConfig pluginBaseConfig) {
+        List<File> result = new ArrayList<>();
+        if (null == pluginBaseConfig.getPlugin().getMapperLocation() || StringUtils.isBlank(pluginBaseConfig.getPlugin().getMapperLocation())){
+            return result;
+        }
         String xmlLocationPattern = pluginBaseConfig.getPlugin().getMapperLocation()
                 .replaceAll("\\*\\*", "<>")
                 .replaceAll("\\*", "<>")
@@ -236,7 +241,6 @@ public class PluginHandleUtils {
 
         File codeDir = new File(pluginDir.getAbsolutePath() + File.separator + CODE_DIR);
         List<File> files = FileUtil.loopFiles(codeDir);
-        List<File> result = new ArrayList<>();
         for (File file : files) {
             String realPath = file.getAbsolutePath().replace(codeDir.getAbsolutePath() + File.separator, "").replaceAll("\\\\", "/");
             if (Pattern.matches(xmlLocationPattern, realPath) && file.getName().endsWith(".xml")) {
@@ -254,6 +258,10 @@ public class PluginHandleUtils {
      * @return List<String>
      */
     public static List<String> getMapperXmlPath(File pluginDir, PluginBaseConfig pluginBaseConfig) {
+        List<String> result = new ArrayList<>();
+        if (null == pluginBaseConfig.getPlugin().getMapperLocation() || StringUtils.isBlank(pluginBaseConfig.getPlugin().getMapperLocation())){
+            return result;
+        }
         String xmlLocationPattern = pluginBaseConfig.getPlugin().getMapperLocation()
                 .replaceAll("\\*\\*", "<>")
                 .replaceAll("\\*", "<>")
@@ -261,7 +269,6 @@ public class PluginHandleUtils {
                 .replaceAll("<>", ".*");
         File codeDir = new File(pluginDir.getAbsolutePath() + File.separator + CODE_DIR);
         List<File> files = FileUtil.loopFiles(codeDir);
-        List<String> result = new ArrayList<>();
         for (File file : files) {
             String realPath = file.getAbsolutePath().replace(codeDir.getAbsolutePath() + File.separator, "").replaceAll("\\\\", "/");
             if (Pattern.matches(xmlLocationPattern, realPath) && file.getName().endsWith(".xml")) {

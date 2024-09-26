@@ -53,7 +53,7 @@ public class TemplateSourceFactory implements ISourceFactory {
             HandlerMethod handler = (HandlerMethod) handlerChain.getHandler();
             Object bean = handler.getBean();
             ClassLoader classLoader = bean.getClass().getClassLoader();
-            // 插件静态资源处理 todo
+            // 插件静态资源处理
             List<PluginInfo> allPluginInfo = PluginInfoHolder.getAllPluginInfo();
             for (PluginInfo pluginInfo : allPluginInfo) {
                 if (pluginInfo.getPluginClassLoader() == classLoader) {
