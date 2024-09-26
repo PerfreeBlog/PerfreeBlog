@@ -2,6 +2,7 @@ package com.perfree.plugin;
 
 import com.perfree.constant.PluginConstant;
 import com.perfree.plugin.commons.PluginHandleUtils;
+import com.perfree.plugin.commons.PluginSetting;
 import com.perfree.plugin.exception.PluginException;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import com.perfree.plugin.pojo.PluginBaseConfig;
@@ -142,5 +143,14 @@ public class PluginManager{
         pluginHandle.stopPlugin(pluginInfo.getPluginId());
         PluginHandleUtils.execPluginUnInstallSql(pluginDirFile);
         FileUtil.del(pluginDirFile);
+    }
+
+    /**
+     * 获取插件设置项
+     * @param pluginDirFile pluginDirFile
+     * @return PluginSetting
+     */
+    public PluginSetting getPluginSetting(File pluginDirFile) {
+        return PluginHandleUtils.getPluginSetting(pluginDirFile);
     }
 }

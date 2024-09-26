@@ -46,10 +46,11 @@
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="140" fixed="right">
+        <el-table-column label="操作" width="210" fixed="right">
           <template v-slot="scope">
             <el-button size="small" type="primary" link :icon="Unlock" @click="handleEnable(scope.row)"  v-if="scope.row.status === 0" v-hasPermission="['admin:plugin:enable']">启用</el-button>
             <el-button size="small" type="primary" link :icon="Lock" @click="handleDisable(scope.row)"  v-if="scope.row.status === 1" v-hasPermission="['admin:plugin:disable']">禁用</el-button>
+            <el-button size="small" type="primary" link :icon="Setting" @click="handleSetting(scope.row)">插件设置</el-button>
             <el-button size="small" type="primary" link :icon="Delete" @click="handleUnInstall(scope.row)" v-hasPermission="['admin:plugin:uninstall']">卸载</el-button>
           </template>
         </el-table-column>
@@ -92,13 +93,14 @@
   </div>
 </template>
 <script setup>
-import {Delete, Edit, Plus,Lock, Unlock,Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
+import {Delete, Edit, Plus, Lock, Unlock, Refresh, Search, UploadFilled, Setting} from "@element-plus/icons-vue";
 import { initMenu, parseTime } from "@/core/utils/perfree.js";
 import {disablePluginApi, enablePluginApi, pluginsPageApi, uninstallPluginApi} from "../api/plugin.js";
 import {CONSTANTS} from "@/core/utils/constants.js";
 import axios_config from "@/core/api/axios_config.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {ref} from "vue";
+import {toPage} from "@/core/utils/tabs.js";
 
 const searchForm = ref({
   pageNo: 1,
@@ -117,6 +119,10 @@ let  headers = {
   Authorization: "Bearer " + JSON.parse(token_info).accessToken,
 };
 let uploadRef = ref();
+
+function handleSetting(row) {
+  toPage(`插件设置[${row.name}]`, '/admin/plugin/setting/' + row.pluginId, '')
+}
 
 /**
  * 加载列表

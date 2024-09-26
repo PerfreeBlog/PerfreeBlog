@@ -78,10 +78,6 @@ public class AppInit implements ApplicationRunner {
         pluginsService.initPlugins();
         LOGGER.info("-> 初始化插件完成");
 
-        LOGGER.info("-> 预热系统....");
-        HttpUtil.get("http://localhost:" + port + "/");
-        LOGGER.info("-> 预热系统完成....");
-
         String banner = """
                 ----------------------------------------------------------------------------------
                                          __                     \s

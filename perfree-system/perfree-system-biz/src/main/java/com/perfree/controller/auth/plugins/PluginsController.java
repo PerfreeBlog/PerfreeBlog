@@ -8,6 +8,7 @@ import com.perfree.controller.auth.plugins.vo.PluginsRespVO;
 import com.perfree.convert.plugins.PluginsConvert;
 import com.perfree.demoModel.DemoMode;
 import com.perfree.model.Plugins;
+import com.perfree.plugin.commons.PluginSetting;
 import com.perfree.service.plugins.PluginsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -65,4 +66,11 @@ public class PluginsController {
     public CommonResult<Boolean> uninstallPlugin(@RequestParam(value = "pluginId") String pluginId) {
         return success( pluginsService.unInstallPlugin(pluginId));
     }
+
+    @GetMapping("/getPluginSetting")
+    @Operation(summary = "获取插件设置项")
+    public CommonResult<PluginSetting> getPluginSetting(@RequestParam(value = "pluginId") String pluginId) {
+        return success( pluginsService.getPluginSetting(pluginId));
+    }
+
 }

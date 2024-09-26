@@ -14,3 +14,8 @@ export function enablePluginApi(pluginId) {
 export function uninstallPluginApi(pluginId) {
     return axios.post('/api/auth/plugins/uninstallPlugin?pluginId=' + pluginId);
 }
+
+
+export function getPluginSettingApi(pluginId) {
+    return axios.get('/api/auth/plugins/getPluginSetting?pluginId=' + pluginId)
+}

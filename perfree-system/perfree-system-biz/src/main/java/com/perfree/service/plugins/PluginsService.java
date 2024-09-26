@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
 import com.perfree.model.Plugins;
+import com.perfree.plugin.commons.PluginSetting;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -35,6 +36,8 @@ public interface PluginsService extends IService<Plugins> {
      */
     void watchMonitorDevPlugins() throws Exception;
 
+    void initDevPlugin (String pluginPath) throws Exception;
+
     /**
      * 初始化插件
      */
@@ -63,5 +66,12 @@ public interface PluginsService extends IService<Plugins> {
     Boolean unInstallPlugin(String pluginId);
 
     Long getTotalPlugins();
+
+    /**
+     * 获取插件设置项
+     * @param pluginId pluginId
+     * @return PluginSetting
+     */
+    PluginSetting getPluginSetting(String pluginId);
 
 }

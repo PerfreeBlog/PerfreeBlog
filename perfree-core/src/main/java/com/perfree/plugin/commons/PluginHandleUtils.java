@@ -3,11 +3,13 @@ package com.perfree.plugin.commons;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.SqlExecUtils;
 import com.perfree.plugin.pojo.PluginBaseConfig;
+import com.perfree.theme.commons.ThemeSetting;
 import org.dromara.hutool.core.compress.ZipUtil;
 import org.dromara.hutool.core.data.id.IdUtil;
 import org.dromara.hutool.core.io.file.FileReader;
 import org.dromara.hutool.core.io.file.FileUtil;
 import org.dromara.hutool.core.text.StrUtil;
+import org.dromara.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
@@ -30,6 +32,8 @@ public class PluginHandleUtils {
     public static final String LIB_DIR = "lib";
 
     public static final String PLUGIN_CONFIG_NAME = "plugin.yaml";
+
+    public static final String SETTING_JSON = "setting.json";
 
     public static final String TARGET_CLASS_DIR = "classes";
 
@@ -99,7 +103,7 @@ public class PluginHandleUtils {
         }
         for (File pluginSource : codeFiles) {
             switch (pluginSource.getName()) {
-                case PLUGIN_CONFIG_NAME, PLUGIN_UI_DIR, SQL_DIR ->
+                case PLUGIN_CONFIG_NAME, PLUGIN_UI_DIR, SQL_DIR,SETTING_JSON->
                         FileUtil.copy(pluginSource, pluginDir.getAbsoluteFile(), true);
                 default -> FileUtil.copy(pluginSource, codeDestDirFile, true);
             }
@@ -386,5 +390,17 @@ public class PluginHandleUtils {
             SqlExecUtils.execSql(sqlStr);
             LOGGER.info("执行插件卸载sql: {}", sqlStr);
         }
+    }
+
+    public static PluginSetting getPluginSetting(File pluginDirFile) {
+        if (!pluginDirFile.exists()) {
+            return null;
+        }
+        File settingJsonFile = new File(pluginDirFile.getAbsolutePath() + File.separator + SETTING_JSON);
+        if (!settingJsonFile.exists()) {
+            return null;
+        }
+        String fileContent = FileUtil.readUtf8String(settingJsonFile);
+        return JSONUtil.toBean(fileContent, PluginSetting.class);
     }
 }

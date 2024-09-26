@@ -1,6 +1,7 @@
 package com.perfree.service.plugins;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.perfree.cache.PluginChangeCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
@@ -16,6 +17,7 @@ import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.commons.PluginHandleUtils;
+import com.perfree.plugin.commons.PluginSetting;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
 import jakarta.annotation.Resource;
@@ -50,9 +52,6 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
     @Value("${perfree.autoLoadDevPlugin}")
     private Boolean autoLoadDevPlugin;
 
-    @Value("${perfree.autoLoadDevPluginTime}")
-    private Long autoLoadDevPluginTime;
-
     @Resource
     private PluginsMapper pluginsMapper;
 
@@ -64,6 +63,9 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
 
     @Resource
     private MenuMapper menuMapper;
+
+    @Resource
+    private PluginChangeCacheService pluginChangeCacheService;
 
 
     @Override
@@ -92,7 +94,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
     public void watchMonitorDevPlugins() {
         String command = System.getProperty("sun.java.command");
         if (command != null && !command.contains(".jar") && autoLoadDevPlugin) {
-            // 源码运行,且开启了插件监听,自动监听插件 TODO 不是很完美,需要改动
+            // 源码运行,且开启了插件监听,自动监听插件
             List<String> pluginsList = pluginDevManager.getPluginClassPath();
             if (null == pluginsList || pluginsList.isEmpty()) {
                 return;
@@ -103,53 +105,50 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
                     FileAlterationObserver fileAlterationObserver = new FileAlterationObserver(plugin);
                     fileAlterationObserver.addListener(new FileAlterationListener() {
 
-                        private Boolean flag = false;
-
                         @Override
                         public void onStart(FileAlterationObserver fileAlterationObserver) {
-                            flag = false;
                         }
 
                         @Override
                         public void onDirectoryCreate(File file) {
-                            flag = true;
+                            pluginChangeCacheService.putPluginChange(plugin, file);
                         }
 
                         @Override
                         public void onDirectoryChange(File file) {
-                            flag = true;
+                            pluginChangeCacheService.putPluginChange(plugin, file);
                         }
 
                         @Override
                         public void onDirectoryDelete(File file) {
-                            flag = true;
+                            pluginChangeCacheService.putPluginChange(plugin, file);
                         }
 
                         @Override
                         public void onFileCreate(File file) {
-                            flag = true;
+                            pluginChangeCacheService.putPluginChange(plugin, file);
                         }
 
                         @Override
                         public void onFileChange(File file) {
-                            flag = true;
+                            pluginChangeCacheService.putPluginChange(plugin, file);
                         }
 
                         @Override
                         public void onFileDelete(File file) {
-                            flag = true;
+                            pluginChangeCacheService.putPluginChange(plugin, file);
                         }
 
                         @SneakyThrows
                         @Override
                         public void onStop(FileAlterationObserver fileAlterationObserver) {
-                            if (flag) {
+                            /*if (flag) {
                                 LOGGER.info(plugin + ": 插件代码文件发生改变");
                                 initDevPlugin(plugin);
-                            }
+                            }*/
                         }
                     });
-                    FileAlterationMonitor fileAlterationMonitor = new FileAlterationMonitor(autoLoadDevPluginTime);
+                    FileAlterationMonitor fileAlterationMonitor = new FileAlterationMonitor(0);
                     fileAlterationMonitor.addObserver(fileAlterationObserver);
                     fileAlterationMonitor.start();
                 } catch (Exception e) {
@@ -159,7 +158,8 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
         }
     }
 
-    private synchronized void initDevPlugin (String pluginPath) throws Exception {
+    @Override
+    public synchronized void initDevPlugin (String pluginPath) throws Exception {
         PluginBaseConfig pluginConfig = PluginHandleUtils.getDevPluginConfig(pluginPath);
         if (null == pluginConfig) {
             LOGGER.error("{} plugin.yaml not found", pluginPath);
@@ -249,6 +249,12 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
     @Override
     public Long getTotalPlugins() {
         return pluginsMapper.selectCount();
+    }
+
+    @Override
+    public PluginSetting getPluginSetting(String pluginId) {
+        File pluginDirFile = new File(SystemConstants.PLUGINS_DIR + SystemConstants.FILE_SEPARATOR + pluginId);
+        return pluginManager.getPluginSetting(pluginDirFile);
     }
 
     /**
