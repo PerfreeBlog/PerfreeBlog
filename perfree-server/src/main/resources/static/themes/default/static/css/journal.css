@@ -210,53 +210,6 @@
 .journal-comment{
     margin-top: 15px!important;
 }
-.perfree-comment .comment-editor, .perfree-comment .comment-name-input,
-.perfree-comment .comment-email-input,.perfree-comment .comment-website-input,
-.perfree-comment .comment-submit-box .comment-cancel-btn{
-    background-color: var(--comment-background);
-    border: 1px solid var(--comment-border-color);
-    color: var(--font-color);
-}
-.perfree-comment .comment-editor-box{
-    color: var(--font-color);
-}
-.comment-submit-box .comment-submit-btn{
-    background: var(--primary-color);
-}
-.perfree-comment .comment-emjoi-btn{
-    color: var(--font-color-b);
-}
-.comment-detail-content{
-    background-color: var(--background-b);
-    color: var(--font-color);
-}
-.comment-pagination{
-    margin-top: 15px;
-}
-.comment-pagination .page{
-    background: var(--background);
-    border: 1px solid var(--border-color-b);
-    color: var(--font-color);
-}
-.comment-pagination .page:hover{
-    background: var(--primary-color);
-    color: var(--hero-color)
-}
-.comment-pagination .active{
-    background: var(--primary-color);
-    color: var(--hero-color)
-}
-.comment-pagination .disabled, .comment-pagination .disabled:hover{
-    cursor: not-allowed;
-    background: var(--background);
-    color: var(--font-color);
-}
-.comment-detail-reply-btn{
-    background: var(--primary-color);
-}
-.comment-detail-name{
-    color: var(--primary-color);
-}
 .d-post-attach{
     display: flex;
     flex-wrap: wrap;

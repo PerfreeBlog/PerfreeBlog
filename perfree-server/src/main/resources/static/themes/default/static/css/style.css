@@ -5,6 +5,7 @@ html{
     --header-box-shadow: 0 2px 5px rgba(0,0,0,.06);
     --header-background: white;
     --background: white;
+    --background-picker: white;
     --background-b: rgba(27, 31, 35, 0.05);
     --background-audio: rgba(27, 31, 35, 0.05);
     --border-color: #aaaaaa;
@@ -19,6 +20,7 @@ body.d-night{
     --header-background: #222;
     --font-color: rgba(255, 255, 255, 0.8);
     --background:  #181818;
+    --background-picker: #181818;
     --box-border:0 1px 8px 0 rgb(0 0 0 / 60%);
     --box-border-hover:0 2px 16px 0 rgba(0, 0, 0, 0.7);
     --border-color:rgba(0, 0, 0, 0.3);
@@ -551,6 +553,70 @@ body{
 .show-search{
     display: initial!important;
 }
+
+.perfree-comment .comment-editor, .perfree-comment .comment-name-input,
+.perfree-comment .comment-email-input,.perfree-comment .comment-website-input,
+.perfree-comment .comment-submit-box .comment-cancel-btn{
+    background-color: var(--comment-background)!important;
+    border: 1px solid var(--comment-border-color)!important;
+    color: var(--font-color)!important;
+}
+.perfree-comment .comment-editor-box{
+    color: var(--font-color)!important;
+}
+.comment-submit-box .comment-submit-btn{
+    background: var(--primary-color)!important;
+}
+.perfree-comment .comment-emjoi-btn{
+    color: var(--font-color-b)!important;
+}
+.comment-detail-content{
+    background-color: var(--background-b)!important;
+    color: var(--font-color)!important;
+}
+.comment-pagination{
+    margin-top: 15px!important;
+}
+.comment-pagination .page{
+    background: var(--background)!important;
+    border: 1px solid var(--border-color-b)!important;
+    color: var(--font-color)!important;
+}
+.comment-pagination .page:hover{
+    background: var(--primary-color)!important;
+    color: var(--hero-color)!important;
+}
+.comment-pagination .active{
+    background: var(--primary-color)!important;
+    color: var(--hero-color)!important;
+}
+.comment-pagination .disabled, .comment-pagination .disabled:hover{
+    cursor: not-allowed!important;
+    background: var(--background)!important;
+    color: var(--font-color)!important;
+}
+.comment-detail-reply-btn{
+    background: var(--primary-color)!important;
+}
+.comment-detail-name{
+    color: var(--primary-color)!important;
+}
+emoji-picker{
+    --border-radius: 6px!important;
+    --border-size: 0!important;
+    --background: var(--background-picker)!important;
+    --indicator-color: var(--primary-color)!important;
+    --input-border-color: var(--border-color-b)!important;
+    --input-font-color: var(--font-color)!important;
+    --input-placeholder-color: var(--border-color-b)!important;
+    --outline-color: var(--border-color)!important;
+    --category-font-color: var(--font-color)!important;
+    --button-active-background:var(--border-color)!important;
+    --button-hover-background: var(--border-color)!important;
+    --outline-size: 1px!important;
+    box-shadow: var(--box-border)!important;
+}
+
 @media screen and (max-width:1600px) {
     .d-container,.d-footer .d-footer-container {
         width: 1200px;
@@ -608,5 +674,23 @@ body{
 @media screen and (max-width: 840px) {
     .d-container,.d-footer .d-footer-container{
         width: calc(100% - 40px);
+    }
+    emoji-picker{
+        --emoji-size: 1.1rem!important;
+        --num-columns: 7!important;
+    }
+    .comment-submit-box .emoji-picker{
+        right: -85px!important;
+        width: 400px!important;
+    }
+}
+@media screen and (max-width:400px) {
+    emoji-picker{
+        --emoji-size: 1.1rem!important;
+        --num-columns: 7!important;
+    }
+    .comment-submit-box .emoji-picker{
+        right: -85px!important;
+        width: 300px!important;
     }
 }
