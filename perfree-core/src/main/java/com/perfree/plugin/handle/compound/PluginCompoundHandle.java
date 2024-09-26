@@ -35,10 +35,12 @@ public class PluginCompoundHandle implements BasePluginRegistryHandler, Applicat
         MapperXmlHandle mapperXmlHandle = new MapperXmlHandle();
         ControllerHandler controllerHandler = new ControllerHandler(this.applicationContext);
         WebSocketHandle webSocketHandle = new WebSocketHandle(this.applicationContext);
+        TemplateDirectiveHandle templateDirectiveHandle = new TemplateDirectiveHandle(this.applicationContext);
 
         pluginRegisterList.add(classHandler);
         pluginRegisterList.add(mapperXmlHandle);
         pluginRegisterList.add(controllerHandler);
+        pluginRegisterList.add(templateDirectiveHandle);
         pluginRegisterList.add(webSocketHandle);
         for (BasePluginRegistryHandler pluginHandle : pluginRegisterList) {
             pluginHandle.initialize();
@@ -46,6 +48,7 @@ public class PluginCompoundHandle implements BasePluginRegistryHandler, Applicat
 
 
         pluginUnRegisterList.add(mapperXmlHandle);
+        pluginUnRegisterList.add(templateDirectiveHandle);
         pluginUnRegisterList.add(controllerHandler);
         pluginUnRegisterList.add(webSocketHandle);
         pluginUnRegisterList.add(classHandler);
