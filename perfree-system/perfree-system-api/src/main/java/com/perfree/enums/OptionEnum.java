@@ -21,7 +21,9 @@ public enum OptionEnum {
     WEB_RSS_GEN_NUM("WEB_RSS_GEN_NUM",""),
     WEB_TITLE("WEB_TITLE", ""),
     WEB_META_DESC("WEB_META_DESC", ""),
-    WEB_META_KEYWORD("WEB_META_KEYWORD", "")
+    WEB_META_KEYWORD("WEB_META_KEYWORD", ""),
+    WEB_CUSTOM_HEAD("WEB_CUSTOM_HEAD", ""),
+    WEB_IS_AUTO_PUSH_BAIDU("WEB_IS_AUTO_PUSH_BAIDU", "")
     ;
     private final String key;
 

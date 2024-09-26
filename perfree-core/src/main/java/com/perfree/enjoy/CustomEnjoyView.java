@@ -1,7 +1,12 @@
 package com.perfree.enjoy;
 
 import com.jfinal.template.Template;
+import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.CustomByteArrayOutputStream;
+import com.perfree.commons.utils.SpringBeanUtil;
+import com.perfree.enums.OptionEnum;
+import com.perfree.plugin.commons.PluginUtils;
+import com.perfree.plugin.proxy.HtmlRenderProxy;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -13,6 +18,7 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 
 public class CustomEnjoyView extends JFinalView {
@@ -58,8 +64,8 @@ public class CustomEnjoyView extends JFinalView {
         buildPreviewThemeHtml(doc, response, request);
         // 自定义Head代码
         buildHeadHtml(doc, response, request);
-        // 插件proxy自定义html代码 todo
-      /*  List<HtmlRenderProxy> allPluginProxyClass = PluginsUtils.getAllPluginProxyClass(HtmlRenderProxy.class);
+        // 插件proxy自定义html代码
+        List<HtmlRenderProxy> allPluginProxyClass = PluginUtils.getAllPluginProxyClass(HtmlRenderProxy.class);
         for (HtmlRenderProxy htmlRenderProxy : allPluginProxyClass) {
             doc = htmlRenderProxy.editDocument(doc, response, request);
             if (request.getRequestURI().startsWith("/admin")) {
@@ -67,7 +73,7 @@ public class CustomEnjoyView extends JFinalView {
             } else {
                 doc = htmlRenderProxy.editFrontDocument(doc, response, request);
             }
-        }*/
+        }
         return doc.toString();
     }
 
@@ -123,16 +129,16 @@ public class CustomEnjoyView extends JFinalView {
      * @param request request
      */
     private void buildHeadHtml(Document doc, HttpServletResponse response, HttpServletRequest request) {
-       /* todo
         if (request.getRequestURI().startsWith("/admin")) {
             return;
         }
-        String customHead = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_CUSTOM_HEAD, "");
+        OptionCacheService optionCacheService = SpringBeanUtil.context.getBean(OptionCacheService.class);
+        String customHead = optionCacheService.getDefaultValue(OptionEnum.WEB_CUSTOM_HEAD.getKey(), "");
         doc.head().append(customHead);
-        String isAutoPushBaidu = OptionCacheUtil.getDefaultValue(Constants.OPTION_WEB_IS_AUTO_PUSH_BAIDU, "");
+        String isAutoPushBaidu = optionCacheService.getDefaultValue(OptionEnum.WEB_IS_AUTO_PUSH_BAIDU.getKey(), "");
         if (StringUtils.isNotBlank(isAutoPushBaidu) && isAutoPushBaidu.equals("1")) {
             doc.head().append("<script>(function(){var bp=document.createElement('script');var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js'}else{bp.src='http://push.zhanzhang.baidu.com/push.js'}var s=document.getElementsByTagName(\"script\")[0];s.parentNode.insertBefore(bp,s)})();</script>");
-        }*/
+        }
     }
 
 }
