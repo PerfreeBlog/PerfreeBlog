@@ -60,6 +60,8 @@ public class SystemConstants {
 
     public static final String THEME_OPTION_IDENT_PRE = "theme_";
 
+    public static final String PLUGIN_OPTION_IDENT_PRE = "plugin_";
+
     /** 预览主题的前缀 */
     public static final String PREVIEW_THEME_URL = "previewTheme";
 

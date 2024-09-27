@@ -18,9 +18,10 @@ import java.util.List;
 @Mapper
 public interface OptionMapper extends BaseMapperX<Option> {
 
-    default Option getByKey(String key){
+    default Option getByKeyAndIdentification(String key, String identification){
         return selectOne(new LambdaQueryWrapper<Option>()
                 .eq(Option::getKey, key)
+                .eq(Option::getIdentification, identification)
         );
     }
 

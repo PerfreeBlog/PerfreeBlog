@@ -23,9 +23,9 @@ import formCreate from '@form-create/element-ui'
 import install from '@form-create/element-ui/auto-import'
 import {hasPermission} from "@/core/directive/permission/hasPermission.js";
 import download from "@/core/utils/download.js";
-import {getOptionByNoAuth} from "@/core/api/system.js";
 import {useOptionStore} from "@/core/stores/optionStore.js";
 import {AttachSelectInputRule} from "@/core/components/attach/AttachSelectInput.js";
+import {getOptionByKeysAndIdentificationApi} from "@/core/api/option.js";
 
 const app = createApp(App);
 
@@ -71,9 +71,9 @@ window.pinia = pinia;
 window.download = download;
 
 
-// 加载开放的配置信息
+// 加载系统需要的配置信息
 const optionStore = useOptionStore()
-getOptionByNoAuth().then(res => {
+getOptionByKeysAndIdentificationApi(['WEB_TITLE', 'WEB_ICO', 'WEB_NAME', 'WEB_LOGO', 'WEB_IS_REGISTER', 'WEB_OPEN_CAPTCHA'], 'system_setting').then(res => {
     optionStore.setOptions(res.data);
     app.mount('#app')
 }).catch(e => {

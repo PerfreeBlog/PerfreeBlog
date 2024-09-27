@@ -6,11 +6,10 @@ import {CONSTANTS} from "@/core/utils/constants.js";
 import {useCommonStore} from "@/core/stores/commonStore.js";
 import _import from "@/core/utils/_import.js";
 import {getAllRouter, initMenu} from "@/core/utils/perfree.js";
-import {getOptionByNoAuth, userInfo} from "@/core/api/system.js";
+import { userInfo} from "@/core/api/system.js";
 import {listAllCacheApi} from "@/core/api/dictData.js";
 import {useDictStore} from "@/core/stores/dictStore.js";
 import {userStore} from "@/core/stores/userStore.js";
-import {useOptionStore} from "@/core/stores/optionStore.js";
 
 const router = createRouter({
     history: createWebHistory(),

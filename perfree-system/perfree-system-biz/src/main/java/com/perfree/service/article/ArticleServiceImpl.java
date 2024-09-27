@@ -279,7 +279,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (StringUtils.isNotBlank(summary)) {
             return summary;
         }
-        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_AUTO_GEN_SUMMARY.getKey());
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_AUTO_GEN_SUMMARY.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING);
         if (null != option && null != option.getValue() && !option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             return summary;
         }

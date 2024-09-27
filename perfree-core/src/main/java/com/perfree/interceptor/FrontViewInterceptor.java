@@ -3,6 +3,7 @@ package com.perfree.interceptor;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.annotation.FrontViewNodeRender;
 import com.perfree.commons.utils.WebUtils;
+import com.perfree.constant.OptionConstant;
 import com.perfree.enums.OptionEnum;
 import com.perfree.security.annotation.PluginPreAuthorize;
 import jakarta.annotation.Resource;
@@ -34,10 +35,10 @@ public class FrontViewInterceptor implements HandlerInterceptor {
             FrontViewNodeRender annotation = method.getAnnotation(FrontViewNodeRender.class);
             if (annotation != null) {
                 Map<String, Object> model = modelAndView.getModel();
-                model.putIfAbsent(OptionEnum.WEB_TITLE.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_TITLE.getKey(), null));
-                model.putIfAbsent(OptionEnum.WEB_META_KEYWORD.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_META_KEYWORD.getKey(), null));
-                model.putIfAbsent(OptionEnum.WEB_META_DESC.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_META_DESC.getKey(), null));
-                model.putIfAbsent(OptionEnum.WEB_SITE.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_META_DESC.getKey(), WebUtils.getUrl(serverPort)));
+                model.putIfAbsent(OptionEnum.WEB_TITLE.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_TITLE.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, null));
+                model.putIfAbsent(OptionEnum.WEB_META_KEYWORD.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_META_KEYWORD.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, null));
+                model.putIfAbsent(OptionEnum.WEB_META_DESC.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_META_DESC.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, null));
+                model.putIfAbsent(OptionEnum.WEB_SITE.getKey(), optionCacheService.getDefaultValue(OptionEnum.WEB_META_DESC.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, WebUtils.getUrl(serverPort)));
             }
         }
     }

@@ -3,6 +3,7 @@ package com.perfree.service.rss;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.WebUtils;
+import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.ArticleCategoryRespVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.enums.OptionEnum;
@@ -42,13 +43,13 @@ public class RssServiceImpl implements RssService{
     @Override
     public String genRss() {
         Date date = new Date();
-        String rssGenMode = optionCacheService.getDefaultValue(OptionEnum.WEB_RSS_GEN_MODE.getKey(), RSS_MODE_FULL);
-        String webSite = optionCacheService.getDefaultValue(OptionEnum.WEB_SITE.getKey(), WebUtils.getUrl(serverPort));
-        String rssNum = optionCacheService.getDefaultValue(OptionEnum.WEB_RSS_GEN_NUM.getKey(), RSS_DEFAULT_NUM);
+        String rssGenMode = optionCacheService.getDefaultValue(OptionEnum.WEB_RSS_GEN_MODE.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, RSS_MODE_FULL);
+        String webSite = optionCacheService.getDefaultValue(OptionEnum.WEB_SITE.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, WebUtils.getUrl(serverPort));
+        String rssNum = optionCacheService.getDefaultValue(OptionEnum.WEB_RSS_GEN_NUM.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, RSS_DEFAULT_NUM);
 
         Channel channel = new Channel("rss_2.0");
-        channel.setTitle(optionCacheService.getDefaultValue(OptionEnum.WEB_TITLE.getKey(), ""));
-        channel.setDescription(optionCacheService.getDefaultValue(OptionEnum.WEB_META_DESC.getKey(), ""));
+        channel.setTitle(optionCacheService.getDefaultValue(OptionEnum.WEB_TITLE.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, ""));
+        channel.setDescription(optionCacheService.getDefaultValue(OptionEnum.WEB_META_DESC.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, ""));
         channel.setLink(webSite);
         channel.setLastBuildDate(date);
         channel.setEncoding("GBK");

@@ -21,27 +21,27 @@ public class OptionCacheService {
         optionCache = CacheBuilder.newBuilder().build();
     }
 
-    public void putOption(String key, OptionDTO optionDTO) {
-        optionCache.put(key, optionDTO);
+    public void putOption(String key, String identification, OptionDTO optionDTO) {
+        optionCache.put(key + "_" + identification, optionDTO);
     }
 
-    public OptionDTO getOption(String key) {
+    public OptionDTO getOption(String key, String identification) {
         if (StringUtils.isBlank(key)) {
             return null;
         }
-        return optionCache.getIfPresent(key);
+        return optionCache.getIfPresent(key + "_" + identification);
     }
 
-    public void removeOption(String key) {
-        optionCache.invalidate(key);
+    public void removeOption(String key, String identification) {
+        optionCache.invalidate(key + "_" + identification);
     }
 
     public List<OptionDTO> getAllOption() {
         return optionCache.asMap().values().stream().toList();
     }
 
-    public String getDefaultValue(String key, String defaultValue) {
-        OptionDTO option = getOption(key);
+    public String getDefaultValue(String key, String identification, String defaultValue) {
+        OptionDTO option = getOption(key, identification);
         if (null == option || StringUtils.isBlank(option.getValue())) {
             return defaultValue;
         }

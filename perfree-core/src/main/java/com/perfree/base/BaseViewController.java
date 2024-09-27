@@ -4,6 +4,7 @@ package com.perfree.base;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.constant.OptionConstant;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.system.api.option.dto.OptionDTO;
@@ -34,7 +35,7 @@ public class BaseViewController {
         if (StringUtils.isNotBlank(previewTheme)) {
             return previewTheme;
         }
-        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_THEME.getKey());
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM);
         if (null == option) {
             throw new ServiceException(ErrorCode.OPTION_WEB_THEME_NOT_EXIST);
         }

@@ -3,6 +3,7 @@ package com.perfree.theme;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.constant.OptionConstant;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.system.api.option.OptionApi;
@@ -10,6 +11,7 @@ import com.perfree.theme.commons.ThemeFile;
 import com.perfree.theme.commons.ThemeInfo;
 import com.perfree.theme.commons.ThemeSetting;
 import jakarta.annotation.Resource;
+import okio.Options;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.hutool.core.compress.ZipUtil;
@@ -82,7 +84,7 @@ public class ThemeManager {
             // 读取 YAML 文件
             Yaml yaml = new Yaml();
             themeInfo = yaml.loadAs(input, ThemeInfo.class);
-            if (themeInfo.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), ""))) {
+            if (themeInfo.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, ""))) {
                 themeInfo.setIsActive(1);
             }
             themeInfo.setPath(file.getName());
@@ -157,7 +159,7 @@ public class ThemeManager {
         if (null == themeInfo) {
             throw new ServiceException(ErrorCode.THEME_SWITCH_CHECK_ERROR);
         }
-        return optionApi.updateOptionByKey(OptionEnum.WEB_THEME.getKey(), themeName);
+        return optionApi.updateOptionByKeyAndIdentification(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, themeName);
     }
 
     /**
@@ -167,7 +169,7 @@ public class ThemeManager {
      * @return Boolean
      */
     public Boolean unInstallTheme(String themeName) {
-        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), "");
+        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
         if (webTheme.equals(themeName)) {
             throw new ServiceException(ErrorCode.THEME_UNINSTALL_ERROR_BY_USE);
         }
@@ -219,7 +221,7 @@ public class ThemeManager {
      */
     private File getThemeDirFile(String themeName) {
         if (StringUtils.isBlank(themeName)) {
-            themeName = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), "");
+            themeName = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
         }
         File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
         File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);

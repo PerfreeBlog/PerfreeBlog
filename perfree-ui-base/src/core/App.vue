@@ -51,10 +51,10 @@ const initTheme = () => {
 }
 
 const initPageOption= () => {
-  const WEB_TITLE = getOptionByKey('WEB_TITLE');
+  const WEB_TITLE = getOptionByKey('WEB_TITLE', 'system_setting');
   document.title = WEB_TITLE ? WEB_TITLE.value : 'Perfree';
 
-  const WEB_ICO = getOptionByKey('WEB_ICO');
+  const WEB_ICO = getOptionByKey('WEB_ICO', 'system_setting');
   changeFaviconByUrl(WEB_ICO && WEB_ICO.value ? WEB_ICO.value : '/assets/favicon.ico');
 }
 

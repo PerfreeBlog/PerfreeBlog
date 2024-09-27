@@ -134,9 +134,9 @@ public class CustomEnjoyView extends JFinalView {
             return;
         }
         OptionCacheService optionCacheService = SpringBeanUtil.context.getBean(OptionCacheService.class);
-        String customHead = optionCacheService.getDefaultValue(OptionEnum.WEB_CUSTOM_HEAD.getKey(), "");
+        String customHead = optionCacheService.getDefaultValue(OptionEnum.WEB_CUSTOM_HEAD.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, "");
         doc.head().append(customHead);
-        String isAutoPushBaidu = optionCacheService.getDefaultValue(OptionEnum.WEB_IS_AUTO_PUSH_BAIDU.getKey(), "");
+        String isAutoPushBaidu = optionCacheService.getDefaultValue(OptionEnum.WEB_IS_AUTO_PUSH_BAIDU.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, "");
         if (StringUtils.isNotBlank(isAutoPushBaidu) && isAutoPushBaidu.equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             doc.head().append("<script>(function(){var bp=document.createElement('script');var curProtocol=window.location.protocol.split(':')[0];if(curProtocol==='https'){bp.src='https://zz.bdstatic.com/linksubmit/push.js'}else{bp.src='http://push.zhanzhang.baidu.com/push.js'}var s=document.getElementsByTagName(\"script\")[0];s.parentNode.insertBefore(bp,s)})();</script>");
         }

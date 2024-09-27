@@ -12,7 +12,7 @@ public class OptionApiImpl implements OptionApi {
     private OptionService optionService;
 
     @Override
-    public Boolean updateOptionByKey(String key, String value) {
-        return optionService.updateOptionByKey(key, value);
+    public Boolean updateOptionByKeyAndIdentification(String key,String identification, String value) {
+        return optionService.updateOptionByKeyAndIdentification(key,identification, value);
     }
 }

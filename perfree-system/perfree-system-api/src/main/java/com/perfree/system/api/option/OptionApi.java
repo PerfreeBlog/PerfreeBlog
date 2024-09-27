@@ -11,5 +11,5 @@ public interface OptionApi {
      * @param value value
      * @return Boolean
      */
-    Boolean updateOptionByKey(String key, String value);
+    Boolean updateOptionByKeyAndIdentification(String key,String identification, String value);
 }

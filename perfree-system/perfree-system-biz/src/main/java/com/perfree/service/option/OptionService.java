@@ -17,18 +17,12 @@ import java.util.List;
 public interface OptionService extends IService<Option> {
 
     /**
-     * 获取所有配置
-     * @return List<Option>
-     */
-    List<Option> getAllOption();
-
-    /**
      * 根据key修改value
      * @param key key
      * @param value value
      * @return Boolean
      */
-    Boolean updateOptionByKey(String key, String value);
+    Boolean updateOptionByKeyAndIdentification(String key,String identification, String value);
 
     /**
      * 保存配置项
@@ -61,5 +55,7 @@ public interface OptionService extends IService<Option> {
      * @return Boolean
      */
     Boolean saveCurrentThemeSetting(OptionAddListReqVO optionAddListReqVO);
+
+    void removeOptionByIdentification(String identification);
 
 }

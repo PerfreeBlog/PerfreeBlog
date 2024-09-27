@@ -21,4 +21,9 @@ public class OptionDTO {
     private String value;
 
     private String title;
+
+    /**
+     * 标识
+     */
+    private String identification;
 }

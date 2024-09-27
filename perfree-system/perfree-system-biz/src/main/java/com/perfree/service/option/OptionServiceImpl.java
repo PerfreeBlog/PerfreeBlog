@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.option.vo.OptionAddListReqVO;
 import com.perfree.controller.auth.option.vo.OptionAddReqVO;
 import com.perfree.convert.option.OptionConvert;
@@ -38,20 +39,15 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
     private OptionCacheService optionCacheService;
 
     @Override
-    public List<Option> getAllOption() {
-        return optionMapper.selectList();
-    }
-
-    @Override
     @Transactional
-    public Boolean updateOptionByKey(String key, String value) {
-        Option option = optionMapper.getByKey(key);
+    public Boolean updateOptionByKeyAndIdentification(String key,String identification, String value) {
+        Option option = optionMapper.getByKeyAndIdentification(key, identification);
         if (null == option) {
             return false;
         }
         option.setValue(value);
         optionMapper.updateById(option);
-        optionCacheService.putOption(option.getKey(), OptionConvert.INSTANCE.convertModelToDTO(option));
+        optionCacheService.putOption(option.getKey(), option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
         return true;
     }
 
@@ -65,7 +61,7 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
         optionMapper.delByIdentification(optionList.get(0).getIdentification());
         optionMapper.insertBatch(optionList);
         for (Option option : optionList) {
-            optionCacheService.putOption(option.getKey(), OptionConvert.INSTANCE.convertModelToDTO(option));
+            optionCacheService.putOption(option.getKey(), option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
         }
         return true;
     }
@@ -80,13 +76,13 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
         List<Option> optionList = optionMapper.selectList();
         List<OptionDTO> options = OptionConvert.INSTANCE.convertCacheDTO(optionList);
         for (OptionDTO option : options) {
-            optionCacheService.putOption(option.getKey(), option);
+            optionCacheService.putOption(option.getKey(), option.getIdentification(), option);
         }
     }
 
     @Override
     public List<Option> getCurrentThemeSettingValue() {
-        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), "");
+        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
         if (StringUtils.isBlank(webTheme)) {
             throw new ServiceException(ErrorCode.GET_CURRENT_THEME_ERROR);
         }
@@ -96,7 +92,7 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
     @Override
     @Transactional
     public Boolean saveCurrentThemeSetting(OptionAddListReqVO optionAddListReqVO) {
-        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), "");
+        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
         if (StringUtils.isBlank(webTheme)) {
             throw new ServiceException(ErrorCode.GET_CURRENT_THEME_ERROR);
         }
@@ -110,8 +106,21 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
         optionMapper.delByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + webTheme);
         optionMapper.insertBatch(optionList);
         for (Option option : optionList) {
-            optionCacheService.putOption(option.getKey(), OptionConvert.INSTANCE.convertModelToDTO(option));
+            optionCacheService.putOption(option.getKey(),option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
         }
         return true;
+    }
+
+    @Override
+    @Transactional
+    public void removeOptionByIdentification(String identification) {
+        List<Option> optionList = optionMapper.getSettingValueByIdentification(identification);
+        if (null == optionList || optionList.isEmpty()) {
+            return;
+        }
+        optionMapper.delByIdentification(identification);
+        for (Option option : optionList) {
+            optionCacheService.removeOption(option.getKey(),option.getIdentification());
+        }
     }
 }

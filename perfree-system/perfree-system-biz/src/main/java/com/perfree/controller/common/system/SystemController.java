@@ -4,6 +4,7 @@ import com.perfree.cache.CaptchaCacheService;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.option.vo.OptionRespVO;
 import com.perfree.controller.auth.system.vo.CaptchaImageRespVO;
 import com.perfree.controller.auth.user.vo.UserRespVO;
@@ -85,23 +86,6 @@ public class SystemController {
         return CommonResult.success(UserConvert.INSTANCE.convertRespVO(userService.register(reqVO)));
     }
 
-
-    @GetMapping("getOptionByNoAuth")
-    @Operation(summary = "获取未登录时可拥有的配置信息")
-    public CommonResult<List<OptionRespVO>> getOptionByNoAuth(){
-        List<OptionDTO> optionDTOList = new ArrayList<>();
-        OptionDTO option = optionCacheService.getOption(OptionEnum.OPEN_OPTIONS.getKey());
-        if (null == option || StringUtils.isBlank(option.getValue())) {
-            return CommonResult.success(OptionConvert.INSTANCE.convertCacheDTO2RespListVO(optionDTOList));
-        }
-        String[] split = option.getValue().split(",");
-        for (String key : split) {
-            OptionDTO openOption = optionCacheService.getOption(key);
-            optionDTOList.add(openOption);
-        }
-
-        return CommonResult.success(OptionConvert.INSTANCE.convertCacheDTO2RespListVO(optionDTOList));
-    }
 
     @PostMapping("captchaImage")
     @Operation(summary = "获取验证码")

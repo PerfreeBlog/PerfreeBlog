@@ -32,10 +32,10 @@ public class OptionDirective extends BaseDirective {
     @Override
     public void exec(Env env, Scope scope, Writer writer) {
         String defaultValue = null;
-        if (this.exprList.length() >= 2){
-            defaultValue = getParam(1, scope).toString();
+        if (this.exprList.length() >= 3){
+            defaultValue = getParam(2, scope).toString();
         }
-        String result = optionCacheService.getDefaultValue(getParam(0, scope).toString(), defaultValue);
+        String result = optionCacheService.getDefaultValue(getParam(0, scope).toString(), getParam(1, scope).toString(), defaultValue);
         write(writer, StringUtils.isBlank(result) ? "" : result);
     }
 

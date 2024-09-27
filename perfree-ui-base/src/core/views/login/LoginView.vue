@@ -155,8 +155,8 @@ const getCode = () => {
 }
 
 const initOption = () => {
-  captchaEnabled.value = getOptionByKey('WEB_OPEN_CAPTCHA') ? getOptionByKey('WEB_OPEN_CAPTCHA').value === 'ON' : true;
-  isOpenRegister.value = getOptionByKey('WEB_IS_REGISTER') ? getOptionByKey('WEB_IS_REGISTER').value === 'ON' : true;
+  captchaEnabled.value = getOptionByKey('WEB_OPEN_CAPTCHA', 'system_setting') ? getOptionByKey('WEB_OPEN_CAPTCHA', 'system_setting').value === 'ON' : true;
+  isOpenRegister.value = getOptionByKey('WEB_IS_REGISTER', 'system_setting') ? getOptionByKey('WEB_IS_REGISTER', 'system_setting').value === 'ON' : true;
   if (captchaEnabled.value) {
     getCode();
   }

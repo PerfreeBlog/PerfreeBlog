@@ -2,6 +2,8 @@ package com.perfree.enjoy.shared;
 
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.utils.SpringBeanUtil;
+import com.perfree.plugin.PluginInfo;
+import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.system.api.option.dto.OptionDTO;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,8 +15,8 @@ public class TplMethodShared {
      * @return java.lang.String
      * @author Perfree
      */
-    public String option(String key) {
-        OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key);
+    public String option(String key, String identification) {
+        OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key, identification);
         if (null == option || StringUtils.isBlank(option.getValue())) {
             return null;
         }
@@ -28,8 +30,8 @@ public class TplMethodShared {
      * @return boolean
      * @author Perfree
      */
-    public boolean optionCompare(String key, String compareValue) {
-        OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key);
+    public boolean optionCompare(String key, String identification, String compareValue) {
+        OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key, identification);
         if (null == option || StringUtils.isBlank(option.getValue())) {
             return false;
         }
@@ -42,11 +44,7 @@ public class TplMethodShared {
      * @return boolean
      */
     public boolean pluginIsStart(String pluginId) {
-      /*  PluginInfo plugin = PluginHolder.getPlugin(pluginId);
-        if (plugin == null) {
-            return false;
-        }
-        return plugin.getPluginWrapper().getPluginState().equals(PluginState.STARTED);*/
-        return false;
+        PluginInfo pluginInfo = PluginInfoHolder.getPluginInfo(pluginId);
+        return null == pluginInfo;
     }
 }

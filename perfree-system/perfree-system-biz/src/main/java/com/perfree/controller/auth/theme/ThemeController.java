@@ -8,6 +8,7 @@ import com.perfree.controller.auth.theme.vo.InstallThemeReqVO;
 import com.perfree.controller.auth.theme.vo.ThemeFileContentReqVO;
 import com.perfree.controller.auth.theme.vo.ThemeSaveFileContentReqVO;
 import com.perfree.enums.ErrorCode;
+import com.perfree.service.option.OptionService;
 import com.perfree.theme.ThemeManager;
 import com.perfree.theme.commons.ThemeFile;
 import com.perfree.theme.commons.ThemeInfo;
@@ -31,6 +32,9 @@ public class ThemeController {
 
     @Resource
     private ThemeManager themeManager;
+
+    @Resource
+    private OptionService optionService;
 
     @GetMapping("allTheme")
     @Operation(summary = "获取所有主题")
@@ -65,7 +69,11 @@ public class ThemeController {
     @DeleteMapping("unInstallTheme")
     @Operation(summary = "卸载主题")
     public CommonResult<Boolean> unInstallTheme(@RequestParam(value = "themeName") String themeName) {
-        return success(themeManager.unInstallTheme(themeName));
+        Boolean result = themeManager.unInstallTheme(themeName);
+        if (result) {
+            optionService.removeOptionByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE  + themeName);
+        }
+        return success(result);
     }
 
     @GetMapping("getCurrentThemeSetting")

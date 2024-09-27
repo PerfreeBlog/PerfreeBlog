@@ -313,7 +313,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.insert(user);
 
         // 处理默认角色
-        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_REGISTER_DEFAULT_ROLE.getKey());
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_REGISTER_DEFAULT_ROLE.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING);
         if (null != option && StringUtils.isNotBlank(option.getValue())) {
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getId());
@@ -356,7 +356,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * @param code code
      */
     private void validCaptcha(String uuid, String code){
-        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_OPEN_CAPTCHA.getKey());
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_OPEN_CAPTCHA.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING);
         if (null == option || option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             if (StringUtils.isBlank(uuid) || StringUtils.isBlank(code)) {
                 throw new ServiceException(ErrorCode.CAPTCHA_IS_NOT_EMPTY);

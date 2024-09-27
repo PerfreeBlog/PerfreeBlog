@@ -28,7 +28,7 @@ public class EnjoyConfig {
         engine.setSourceFactory(new TemplateSourceFactory());
         engine.addSharedMethod(new StrUtil());
         engine.setCompressorOn('\n');
-        engine.setCacheStringTemplate(true);
+        engine.setDevMode(true);
         Engine.setFastMode(true);
         Engine.setChineseExpression(true);
         engine.addSharedMethod(new TplMethodShared());

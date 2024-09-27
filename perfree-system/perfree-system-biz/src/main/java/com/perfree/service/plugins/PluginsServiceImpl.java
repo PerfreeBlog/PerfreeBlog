@@ -19,6 +19,7 @@ import com.perfree.plugin.PluginManager;
 import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.commons.PluginSetting;
 import com.perfree.plugin.pojo.PluginBaseConfig;
+import com.perfree.service.option.OptionService;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
 import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
@@ -57,6 +58,9 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
 
     @Resource
     private PluginManager pluginManager;
+
+    @Resource
+    private OptionService optionService;
 
     @Resource
     private PluginDevManager pluginDevManager;
@@ -224,6 +228,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
     }
 
     @Override
+    @Transactional
     public Boolean unInstallPlugin(String pluginId) {
         Plugins plugins = pluginsMapper.getByPluginId(pluginId);
         if (null != PluginInfoHolder.getPluginInfo(plugins.getPluginId())) {
@@ -234,6 +239,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
             try {
                 pluginManager.unInstallPlugin(pluginDirFile);
                 pluginsMapper.delByPluginId(plugins.getPluginId());
+                optionService.removeOptionByIdentification(SystemConstants.PLUGIN_OPTION_IDENT_PRE + pluginId);
                 return true;
             } catch (Exception e) {
                 LOGGER.error("插件卸载失败", e);
@@ -242,6 +248,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
         } else {
             // 可能是冗余数据,删掉
             pluginsMapper.delByPluginId(plugins.getPluginId());
+            optionService.removeOptionByIdentification(SystemConstants.PLUGIN_OPTION_IDENT_PRE + pluginId);
             throw new ServiceException(ErrorCode.PLUGIN_FILE_NOT_EXIST);
         }
     }

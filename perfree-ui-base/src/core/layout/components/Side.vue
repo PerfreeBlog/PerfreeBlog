@@ -30,8 +30,8 @@ const route = useRoute()
 const props = defineProps(['menuIsCollapse'])
 let currRouter = ref(router.currentRoute.value.path)
 let menuList = ref(commonStore.menuList)
-const WEB_NAME = getOptionByKey('WEB_NAME');
-const WEB_LOGO = getOptionByKey('WEB_LOGO');
+const WEB_NAME = getOptionByKey('WEB_NAME', 'system_setting');
+const WEB_LOGO = getOptionByKey('WEB_LOGO', 'system_setting');
 watch(route, () => {
   currRouter.value = route.fullPath
 })
