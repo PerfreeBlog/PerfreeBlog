@@ -13,6 +13,13 @@
             <outputDirectory>/</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>${basedir}/src/main/resources</directory>
+            <includes>
+                <include>setting.json</include>
+            </includes>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>${basedir}/src/main/resources/sql</directory>
             <includes>
                 <include>*.sql</include>

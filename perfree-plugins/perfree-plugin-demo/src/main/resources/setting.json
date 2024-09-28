@@ -1,0 +1,81 @@
+{
+  "option": {
+    "form": {
+      "inline": false,
+      "hideRequiredAsterisk": false,
+      "labelPosition": "right",
+      "size": "default",
+      "labelWidth": "125px"
+    },
+    "resetBtn": {
+      "show": false,
+      "innerText": "重置"
+    },
+    "submitBtn": {
+      "show": true,
+      "innerText": "提交"
+    }
+  },
+  "rule": [
+    {
+      "type": "input",
+      "field": "PLUGIN_DEMO_NAME",
+      "title": "插件设置项一",
+      "info": "插件设置项一",
+      "$required": false,
+      "props": {
+        "placeholder": "插件设置项一"
+      },
+      "_fc_id": "id_Foa3m1inhuavacc",
+      "name": "ref_Frxrm1inhuavadc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "input"
+    },
+    {
+      "type": "select",
+      "field": "PLUGIN_DEMO_SELECT",
+      "title": "插件设置项二",
+      "info": "插件设置项二",
+      "effect": {
+        "fetch": ""
+      },
+      "$required": false,
+      "props": {
+        "placeholder": "插件设置项二"
+      },
+      "options": [
+        {
+          "label": "选项01",
+          "value": "ON"
+        },
+        {
+          "label": "选项02",
+          "value": "OFF"
+        }
+      ],
+      "_fc_id": "id_Fw3rm1iniquzafc",
+      "name": "ref_Fficm1iniquzagc",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "select"
+    },
+    {
+      "type": "AttachSelectInput",
+      "field": "PLUGIN_DEMO_ATTACH",
+      "title": "插件设置项三",
+      "info": "插件设置项三",
+      "$required": false,
+      "props": {
+        "placeholder": "插件设置项三",
+        "attachType": "img",
+        "enableInput": true
+      },
+      "_fc_id": "id_Ff90m1injfi4ahc",
+      "name": "ref_Fcqcm1injfi4aic",
+      "display": true,
+      "hidden": false,
+      "_fc_drag_tag": "AttachSelectInput"
+    }
+  ]
+}

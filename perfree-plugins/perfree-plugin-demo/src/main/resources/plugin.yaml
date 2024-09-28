@@ -1,6 +1,6 @@
 plugin:
   # 插件id(必须唯一)
-  id: perfree-demo
+  id: perfree-plugin-demo
   # 插件名称,
   name: 示例插件
   # 插件mapperXml文件位置, 没有可不写
@@ -12,7 +12,7 @@ plugin:
   # 插件版本
   version: 1.0.2
   # 插件静态资源路径
-  staticLocations: classpath:/ui/
+  staticLocations: /ui/
   # 是否为开发环境(如果是插件前端通过node运行,需要开启dev且设置前端开发环境地址)
   isDev: false
   # 前端开发环境地址
