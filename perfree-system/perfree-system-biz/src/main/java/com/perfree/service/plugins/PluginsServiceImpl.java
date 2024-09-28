@@ -209,7 +209,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
     }
 
     @Override
-    @Transactional
+    @Transactional(noRollbackFor = ServiceException.class)
     public Boolean enablePlugin(String pluginId) {
         Plugins plugins = pluginsMapper.getByPluginId(pluginId);
         File pluginDirFile = new File(SystemConstants.PLUGINS_DIR + SystemConstants.FILE_SEPARATOR + plugins.getPluginId());
@@ -223,12 +223,13 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
         } else {
             // 可能是冗余数据,删掉
             pluginsMapper.delByPluginId(plugins.getPluginId());
+            LOGGER.error("{},可能是插件冗余数据,已清除", plugins.getPluginId());
             throw new ServiceException(ErrorCode.PLUGIN_FILE_NOT_EXIST);
         }
     }
 
     @Override
-    @Transactional
+    @Transactional(noRollbackFor = ServiceException.class)
     public Boolean unInstallPlugin(String pluginId) {
         Plugins plugins = pluginsMapper.getByPluginId(pluginId);
         if (null != PluginInfoHolder.getPluginInfo(plugins.getPluginId())) {
@@ -249,6 +250,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
             // 可能是冗余数据,删掉
             pluginsMapper.delByPluginId(plugins.getPluginId());
             optionService.removeOptionByIdentification(SystemConstants.PLUGIN_OPTION_IDENT_PRE + pluginId);
+            LOGGER.error("{},可能是插件冗余数据,已清除", plugins.getPluginId());
             throw new ServiceException(ErrorCode.PLUGIN_FILE_NOT_EXIST);
         }
     }
