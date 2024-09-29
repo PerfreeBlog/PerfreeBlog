@@ -1,6 +1,6 @@
 <template>
   <div ref="vditor" id="vditor"></div>
-  <el-dialog v-model="open" :title="title" width="900px" draggable   destroy-on-close>
+  <el-dialog v-model="open" :title="title" :width="dialogWidth(900)" draggable   destroy-on-close>
     <attach-select-panel @update:selected-attach="selectAttach" :max="attachMaxSelect" :attach-type="attachType"></attach-select-panel>
     <template #footer>
         <span class="dialog-footer">
@@ -18,6 +18,7 @@ import Vditor from "vditor";
 import 'vditor/dist/index.css';
 import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {CONSTANTS} from "@/core/utils/constants.js";
+import {dialogWidth} from "@/core/utils/perfree.js";
 
 const vditor = ref();
 let contentEditor = null;
