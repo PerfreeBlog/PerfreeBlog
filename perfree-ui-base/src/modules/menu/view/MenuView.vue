@@ -66,7 +66,7 @@
 
 
     <!-- 新增/修改 -->
-    <el-dialog v-model="open" :title="title" width="800px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(800)" draggable>
       <el-form
           ref="ruleFormRef"
           :model="addForm"
@@ -215,7 +215,7 @@
 
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {menuAddApi, menuDelApi, menuGetApi, menuPageApi, menuUpdateApi} from "../api/menu.js";
-import {handleTree} from "/src/core/utils/perfree.js";
+import {dialogWidth, handleTree} from "/src/core/utils/perfree.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import ElIconPicker from "@/core/components/icon/el-icon-picker.vue";
 import {reactive, ref} from "vue";

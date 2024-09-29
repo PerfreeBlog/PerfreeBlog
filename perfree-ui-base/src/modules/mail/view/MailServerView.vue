@@ -70,7 +70,7 @@
       />
     </div>
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -115,7 +115,7 @@
 </template>
 <script setup>
 import {ElMessage, ElMessageBox} from "element-plus";
-import {handleTree, parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, handleTree, parseTime} from "@/core/utils/perfree.js";
 import {mailServerAddApi, mailServerDelApi, mailServerGetApi, mailServerPageApi, mailServerUpdateApi, mailServerExportExcelApi} from "../api/mailServer.js";
 import {Delete, Edit, Filter, Plus, Refresh, Search, Download} from "@element-plus/icons-vue";
 import {reactive, ref} from "vue";

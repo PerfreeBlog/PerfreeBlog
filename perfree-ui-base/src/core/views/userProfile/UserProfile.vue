@@ -1,6 +1,7 @@
 <template>
   <el-row :gutter="10" v-loading="loading">
-    <el-col :span="6">
+
+    <el-col :xs="24" :sm="24" :md="6" :lg="6" :xl="6">
       <el-card>
         <template #header>
           <div class="card-header">
@@ -73,7 +74,8 @@
         </el-descriptions>
       </el-card>
     </el-col>
-    <el-col :span="18">
+
+    <el-col :xs="24" :sm="24" :md="18" :lg="18" :xl="18">
       <el-card>
         <el-tabs v-model="activeTab" class="demo-tabs">
           <el-tab-pane label="基础信息" name="base">

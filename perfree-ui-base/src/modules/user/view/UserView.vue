@@ -76,7 +76,7 @@
           :total="searchForm.total"
       />
     </div>
-    <el-dialog v-model="userRoleOpen" :title="title" width="600px" draggable>
+    <el-dialog v-model="userRoleOpen" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="userRoleFormRef"
           :model="userRoleForm"
@@ -117,7 +117,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -184,7 +184,7 @@ import {
 } from "../api/user.js";
 import {roleListAllApi} from "../api/role.js";
 import {Delete, Download, Edit, Filter, Plus, Refresh, RefreshLeft, Search} from "@element-plus/icons-vue";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import {h, reactive, ref} from "vue";
 import {DICT_TYPE} from "../script/DictConstant.js";
 import {getDictByParentDictType, getDictByParentDictTypeAndValue} from "@/core/utils/dictUtils.js";

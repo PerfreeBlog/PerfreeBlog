@@ -30,8 +30,8 @@
     <div class="table-box">
 
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
-        <el-table-column label="序号" min-width="50" type="index" fixed />
-        <el-table-column prop="title" label="页面标题" min-width="150" fixed show-overflow-tooltip/>
+        <el-table-column label="序号" min-width="60" type="index"/>
+        <el-table-column prop="title" label="页面标题" min-width="150" show-overflow-tooltip/>
         <el-table-column prop="status" label="状态" min-width="80">
           <template v-slot="scope">
             <el-tag type="success" v-if="scope.row.status === 0">已发布</el-tag>

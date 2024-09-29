@@ -14,6 +14,9 @@
     >
       <menu-tree :menu-list="menuList"></menu-tree>
     </el-menu>
+    <div :class="{'small-screen-menu-btn': true, 'show': !menuIsCollapse}" @click="emits('update:menuIsCollapse', true)">
+      <font-awesome-icon icon="fa-solid fa-outdent" />
+    </div>
   </el-aside>
 </template>
 
@@ -28,6 +31,7 @@ const commonStore = useCommonStore()
 const router = useRouter()
 const route = useRoute()
 const props = defineProps(['menuIsCollapse'])
+const emits = defineEmits(['update:menuIsCollapse'])
 let currRouter = ref(router.currentRoute.value.path)
 let menuList = ref(commonStore.menuList)
 const WEB_NAME = getOptionByKey('WEB_NAME', 'system_setting');
@@ -95,7 +99,20 @@ watch(
     color: var(--sider-text-color);
   }
 }
-
+.small-screen-menu-btn{
+  position: fixed;
+  left: -240px;
+  width: 35px;
+  height: 70px;
+  top: calc(50% - 70px);
+  background: white;
+  text-align: center;
+  line-height: 70px;
+  z-index: 9999999;
+  box-shadow: 3px 0px 3px 0px rgb(0 21 41 / 8%);
+  border-radius: 0 15px 15px 0;
+  transition: all 0.2s;
+}
 .collapseSider {
   width: 60px;
   .side-menu {
@@ -146,5 +163,19 @@ watch(
 }
 .logoHide {
   display: none;
+}
+@media screen and (max-width:700px) {
+  .collapseSider{
+    width: 0;
+  }
+  .sider{
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 9999999;
+  }
+  .small-screen-menu-btn.show{
+    left: 240px;
+  }
 }
 </style>

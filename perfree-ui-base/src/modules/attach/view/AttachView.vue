@@ -111,7 +111,7 @@
     </div>
 
     <!---添加附件-->
-    <el-dialog v-model="open" :title="title" width="600px" draggable  @close="closeAdd">
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable  @close="closeAdd">
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -161,7 +161,7 @@
 
 
     <!--附件详情-->
-    <el-dialog v-model="showOpen" :title="title" width="800px" draggable>
+    <el-dialog v-model="showOpen" :title="title" :width="dialogWidth(800)" draggable>
       <el-row>
         <el-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" >
           <div  style="padding-right: 15px">
@@ -231,7 +231,7 @@
 <script setup>
 
 import {ElMessage, ElMessageBox} from "element-plus";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import {Delete, Download, Refresh, Search, UploadFilled, View} from "@element-plus/icons-vue";
 import axios_config from "@/core/api/axios_config.js";
 import {CONSTANTS} from "@/core/utils/constants.js";

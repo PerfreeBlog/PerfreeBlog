@@ -2,21 +2,21 @@
   <el-row :gutter="15" style="height: 100%;">
     <el-col :span="24">
       <div class="panelBox">
-        <div style="display: flex">
+        <div style="display: flex;flex-wrap: wrap;">
           <el-avatar :size="65" :src="userInfo.avatar" />
           <div class="loginBoxRight">
             <div class="title">欢迎登录, {{userInfo.userName}}</div>
             <div class="welcome">工欲善其事，必先利其器。 -- 论语</div>
           </div>
-          <div style="margin-left: auto">
+          <div style="margin-left: auto" class="weather-widget">
             <iframe scrolling="no" src="https://widget.tianqiapi.com/?style=tg&skin=pitaya" frameborder="0" width="470" height="60" allowtransparency="true"></iframe>
           </div>
         </div>
       </div>
     </el-col>
-    <el-col :span="20">
+    <el-col :xs="24" :sm="16" :md="16" :lg="20" :xl="20">
       <el-row :gutter="15">
-        <el-col :span="4">
+        <el-col :xs="12" :sm="8" :md="4" :lg="4" :xl="4">
           <div class="panelBox"  v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.articleTotal">
               <template #title>
@@ -25,7 +25,7 @@
             </el-statistic>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="12" :sm="8" :md="4" :lg="4" :xl="4">
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.journalTotal">
               <template #title>
@@ -34,7 +34,7 @@
             </el-statistic>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="12" :sm="8" :md="4" :lg="4" :xl="4">
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.categoryTotal">
               <template #title>
@@ -43,7 +43,7 @@
             </el-statistic>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="12" :sm="8" :md="4" :lg="4" :xl="4">
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.tagTotal">
               <template #title>
@@ -52,7 +52,7 @@
             </el-statistic>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="12" :sm="8" :md="4" :lg="4" :xl="4">
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.commentTotal">
               <template #title>
@@ -61,7 +61,7 @@
             </el-statistic>
           </div>
         </el-col>
-        <el-col :span="4">
+        <el-col :xs="12" :sm="8" :md="4" :lg="4" :xl="4">
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.userTotal">
               <template #title>
@@ -72,7 +72,7 @@
         </el-col>
         <el-col :span="24">
           <el-row :gutter="15">
-            <el-col :span="12">
+            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
               <div class="panelBox">
                 <div class="panelTitle">最新文章</div>
                 <div style="text-align: center;margin-top: 10px;min-height: 500px">
@@ -83,7 +83,7 @@
                 </div>
               </div>
             </el-col>
-            <el-col :span="12">
+            <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
               <div class="panelBox">
                 <div class="panelTitle">最新评论</div>
                 <div style="margin-top: 10px;min-height: 500px">
@@ -112,7 +112,7 @@
         </el-col>
       </el-row>
     </el-col>
-    <el-col :span="4">
+    <el-col :xs="24" :sm="8" :md="8" :lg="4" :xl="4">
       <el-row :gutter="10">
         <el-col :span="24">
           <div class="panelBox">
@@ -381,6 +381,11 @@ getLatestComment();
   font-size: 12px;
   color: var(--el-text-color-regular);
   margin-left: 10px;
+}
+@media screen and (max-width:700px) {
+  .weather-widget{
+    display: none;
+  }
 }
 
 </style>

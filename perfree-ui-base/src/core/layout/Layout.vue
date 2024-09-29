@@ -2,9 +2,10 @@
   <el-config-provider :locale="locale">
     <div :class="classObject">
       <el-container class="fullMaxHeight">
-        <Side :menu-is-collapse="menuIsCollapse"></Side>
+        <Side :menu-is-collapse="menuIsCollapse" @update:menu-is-collapse="changeMenuIsCollapse"></Side>
         <el-container>
           <Header
+              :menu-is-collapse="menuIsCollapse"
               @menu-collapse="handleMenuCollapse"
               :class="{ headerBoxShadow: !appStore.tabOpen }"
           ></Header>
@@ -66,7 +67,7 @@
           <li @click="closeAllTab"><font-awesome-icon icon="fa-solid fa-remove " /> 全部关闭</li>
         </ul>
       </div>
-
+      <div class="small-screen-mask" v-if="!menuIsCollapse" @click="menuIsCollapse = true"></div>
     </div>
   </el-config-provider>
 </template>
@@ -84,7 +85,6 @@ import {useRoute, useRouter} from "vue-router";
 import {nextTick, reactive, ref, watch} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
-
 const appStore = useAppStore()
 const commonStore = useCommonStore()
 const route = useRoute()
@@ -94,7 +94,7 @@ const innerRef = ref()
 
 let cachedViews = ref(commonStore.cachedViews)
 let locale = ref(zhCn)
-let menuIsCollapse = ref(false)
+let menuIsCollapse = ref(document.body.clientWidth < 700)
 let tabs = reactive(tabsData)
 
 let rightMenuIsShow = ref(false)
@@ -108,6 +108,10 @@ const classObject = ref({
 watch(route, () => {
   handleAddTab(route)
 })
+
+function changeMenuIsCollapse(value) {
+  menuIsCollapse.value = value;
+}
 
 const handleAddTab = (route) => {
   let index = tabs.findIndex((tab) => tab.path === route.fullPath)
@@ -438,6 +442,25 @@ initTabs()
     li:hover{
       background-color: var(--el-bg-color-page);
     }
+  }
+}
+.small-screen-mask{
+  display: none;
+}
+@media screen and (max-width:700px) {
+  .small-screen-mask{
+    display:block;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #1c1d1f24;
+    z-index: 999999;
+    top: 0;
+  }
+  .tab-item-btn {
+    width: 20px!important;
+    text-align: center!important;
+    opacity: 1!important;
   }
 }
 </style>

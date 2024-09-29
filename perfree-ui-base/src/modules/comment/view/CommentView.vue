@@ -105,7 +105,7 @@
     </div>
 
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -129,7 +129,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="replyListShow" :title="title" width="600px" draggable >
+    <el-dialog v-model="replyListShow" :title="title" :width="dialogWidth(600)" draggable >
       <el-empty description="暂无回复" v-if="childCommentList.length <= 0 && !childLoading"/>
       <div style="height: 100px"  v-loading="childLoading" v-if="childLoading && childCommentParam.pageNo === 1"></div>
       <div class='comment-detail-box' v-for="item in childCommentList">
@@ -164,7 +164,7 @@
 </template>
 <script setup>
 import {ElMessage, ElMessageBox} from "element-plus";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import 'emoji-picker-element';
 import {
   commentPageApi,updateStatusApi, commentDelApi, queryChildCommentPageApi, submitCommentApi
@@ -463,5 +463,14 @@ initList();
   font-size: 12px;
   color: var(--el-text-color-regular);
   margin-left: 10px;
+}
+@media screen and (max-width:700px) {
+  .emoji-picker{
+    position: absolute;
+    top: 33px;
+    border-radius: 3px;
+    right: -100px;
+    z-index: 99999;
+  }
 }
 </style>

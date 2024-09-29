@@ -178,3 +178,7 @@ export function displayTime(data) {
 
     return result;
 }
+
+export function dialogWidth(defaultWidth) {
+    return window.document.body.clientWidth < defaultWidth ? window.document.body.clientWidth : defaultWidth
+}

@@ -68,7 +68,7 @@
       </el-col>
     </el-row>
 
-    <el-dialog v-model="themeUploadOpen" :title="'安装主题'" width="500px" draggable>
+    <el-dialog v-model="themeUploadOpen" :title="'安装主题'" :width="dialogWidth(600)" draggable>
       <el-upload
           class="upload-demo"
           drag
@@ -101,6 +101,7 @@ import {CONSTANTS} from "@/core/utils/constants.js";
 import axios_config from "@/core/api/axios_config.js";
 import {ref} from "vue";
 import {toPage} from "@/core/utils/tabs.js";
+import {dialogWidth} from "@/core/utils/perfree.js";
 
 let themeList = ref([]);
 let themeUploadOpen = ref(false);

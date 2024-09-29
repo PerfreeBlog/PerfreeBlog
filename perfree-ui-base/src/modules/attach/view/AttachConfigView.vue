@@ -67,7 +67,7 @@
     </div>
 
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -138,7 +138,7 @@ import {
   attachConfigUpdateApi, attachConfigUpdateMasterApi, getAttachConfigApi
 } from "../api/attachConfig.js";
 import {Delete, Discount, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import {reactive, ref} from "vue";
 
 let tableData = ref([]);

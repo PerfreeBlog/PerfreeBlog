@@ -6,7 +6,7 @@
       </template>
     </el-input>
 
-    <el-dialog v-model="open" :title="title" width="900px" draggable   destroy-on-close>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(900)" draggable   destroy-on-close>
       <attach-select-panel @update:selected-attach="selectAttach" :max="1" :attach-type="props.attachType"></attach-select-panel>
       <template #footer>
         <span class="dialog-footer">
@@ -22,7 +22,7 @@
 import {FolderOpened, Search} from "@element-plus/icons-vue";
 import AttachSelectPanel from "./attach-select-panel.vue";
 import {ref, watch} from "vue";
-
+import {dialogWidth} from "@/core/utils/perfree.js";
 
 const placeholder = ref('请选择图片')
 let open = ref(false)

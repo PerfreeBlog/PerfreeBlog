@@ -82,6 +82,12 @@ const target = ref(null)
 const { isFullscreen, toggle } = useFullscreen(target)
 const themeSettingRef = ref(null)
 const userInfo = ref(window.pinia.state._value?.userStore?.userInfo)
+const props = defineProps(['menuIsCollapse'])
+const emits = defineEmits(['menuCollapse'])
+let menuCollapse = ref(props.menuIsCollapse)
+watch(() => props.menuIsCollapse, (val) => {
+  menuCollapse.value = val;
+})
 
 watch(() => window.pinia.state._value?.userStore?.userInfo, (val) => {
   userInfo.value = val;
@@ -92,8 +98,8 @@ const toggleFullscreen = () => {
   toggle()
 }
 
-const emits = defineEmits(['menuCollapse'])
-let menuCollapse = ref(false)
+
+
 
 // 侧边栏收缩
 const handleMenuCollapse = () => {
@@ -189,6 +195,14 @@ const toUserProfile = () => {
   }
   :deep().el-breadcrumb__inner {
     color: var(--sider-text-color);
+  }
+}
+@media screen and (max-width:900px) {
+  .h-breadcrumb{
+    display: none;
+  }
+  .h-right .h-btn{
+    display: none;
   }
 }
 </style>

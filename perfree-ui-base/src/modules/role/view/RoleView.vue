@@ -55,7 +55,7 @@
       />
     </div>
 
-    <el-dialog v-model="roleMenuOpen" :title="title" width="600px" draggable>
+    <el-dialog v-model="roleMenuOpen" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="menuFormRef"
           :model="menuForm"
@@ -95,7 +95,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -129,7 +129,7 @@
 <script setup>
 import {assignRoleMenuApi, getRoleMenusApi, menuListApi} from "../api/menu.js";
 import {ElMessage, ElMessageBox} from "element-plus";
-import {handleTree, parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, handleTree, parseTime} from "@/core/utils/perfree.js";
 import {roleAddApi, roleDelApi, roleGetRoleApi, rolePageApi, roleUpdateApi} from "../api/role.js";
 import {Delete, Edit, Filter, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {reactive, ref} from "vue";

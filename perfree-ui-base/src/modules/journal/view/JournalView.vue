@@ -52,7 +52,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="status" label="状态" min-width="100">
+        <el-table-column prop="status" label="状态" min-width="120">
           <template v-slot="scope">
             <el-tag type="success" v-if="scope.row.status === 0">所有人可见</el-tag>
             <el-tag type="danger" v-else>仅自己可见</el-tag>
@@ -85,14 +85,14 @@
       />
     </div>
 
-    <el-dialog v-model="open" :title="title" width="650px" draggable destroy-on-close>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(650)" draggable destroy-on-close>
       <journal-create @close="open = false" @submit-success="open = false; initList()" :update-id="updateId"></journal-create>
     </el-dialog>
   </div>
 </template>
 <script setup>
 import {Check, Close, Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {h, ref} from "vue";
 import {

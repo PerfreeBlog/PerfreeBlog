@@ -52,7 +52,7 @@
       />
     </div>
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -90,7 +90,7 @@
 </template>
 <script setup>
 import {ElMessage, ElMessageBox} from "element-plus";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {reactive, ref} from "vue";
 import {extraAddApi, extraDelApi, extraGetApi, extraPageApi, extraUpdateApi} from "../api/extra.js";

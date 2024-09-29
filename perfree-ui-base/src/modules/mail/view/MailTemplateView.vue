@@ -71,7 +71,7 @@
       />
     </div>
 
-    <el-dialog v-model="open" :title="title" width="800px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(800)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -115,7 +115,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="testMailOpen" :title="title" width="800px" draggable>
+    <el-dialog v-model="testMailOpen" :title="title" :width="dialogWidth(800)" draggable>
       <el-form
           ref="testMailFormRef"
           :model="testMailForm"
@@ -143,7 +143,7 @@
 </template>
 <script setup>
 import {ElMessage, ElMessageBox} from "element-plus";
-import {handleTree, parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, handleTree, parseTime} from "@/core/utils/perfree.js";
 import {
   mailTemplateAddApi,
   mailTemplateDelApi,

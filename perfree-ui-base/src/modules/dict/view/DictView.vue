@@ -101,7 +101,7 @@
       </el-col>
     </el-row>
 
-    <el-dialog v-model="dictTypeOpen" :title="title" width="600px" draggable>
+    <el-dialog v-model="dictTypeOpen" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addDictTypeFormRef"
           :model="addDictTypeForm"
@@ -140,7 +140,7 @@
     </el-dialog>
 
 
-    <el-dialog v-model="dictDataOpen" :title="title" width="600px" draggable>
+    <el-dialog v-model="dictDataOpen" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addDictDataFormRef"
           :model="addDictDataForm"
@@ -186,7 +186,7 @@
 <script setup>
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {reactive, ref} from "vue";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import {dictAddApi, dictDelApi, dictGetApi, dictUpdateApi, queryListAllApi} from "@/modules/dict/api/dict.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {

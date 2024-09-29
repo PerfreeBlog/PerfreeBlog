@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column prop="description" label="描述" min-width="140" show-overflow-tooltip/>
         <el-table-column prop="userInfo.userName" label="创建人" min-width="120" show-overflow-tooltip/>
-        <el-table-column prop="createTime" label="创建时间" min-width="140">
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
@@ -58,7 +58,7 @@
       />
     </div>
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -86,7 +86,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="attachShow" :title="title" width="900px" draggable destroy-on-close>
+    <el-dialog v-model="attachShow" :title="title" :width="dialogWidth(1000)" draggable destroy-on-close>
       <attach-select-panel @update:selected-attach="selectAttach" :max="99" :attach-type="'audio'"></attach-select-panel>
       <template #footer>
         <span class="dialog-footer">
@@ -100,7 +100,7 @@
 <script setup>
 import {reactive, ref} from "vue";
 import {Delete, Edit, Plus, Refresh, Search, UploadFilled} from "@element-plus/icons-vue";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {

@@ -2,7 +2,7 @@
   <div class="page" v-loading="loading">
     <el-form :model="addForm" class="demo-form-inline" ref="addFormRef" label-position="top">
       <el-row :gutter="24">
-        <el-col :span="17">
+        <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
           <el-form-item prop="title">
             <template #label>
               <div class="content-label">
@@ -31,7 +31,7 @@
           </el-form-item>
         </el-col>
 
-        <el-col :span="7" class="article-right">
+        <el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7" class="article-right">
           <el-form-item>
               <el-button type="primary" @click="submitAddForm(0)">发布</el-button>
               <el-button @click="submitAddForm(1)">保存至草稿</el-button>

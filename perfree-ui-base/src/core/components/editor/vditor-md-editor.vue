@@ -44,7 +44,7 @@ onMounted(() => {
       pin: false,
     },
     outline: {
-      enable: true
+      enable: false
     },
     mode: "ir",
     preview: {

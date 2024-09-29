@@ -43,7 +43,7 @@
       <el-button type="primary" @click="submitAddForm">发 布</el-button>
       <el-button @click="cancelHandle">取 消</el-button>
     </div>
-    <el-dialog v-model="attachShow" :title="title" width="900px" draggable destroy-on-close>
+    <el-dialog v-model="attachShow" :title="title" :width="dialogWidth(900)" draggable destroy-on-close>
       <attach-select-panel @update:selected-attach="selectAttach" :max="9" :attach-type="''"></attach-select-panel>
       <template #footer>
         <span class="dialog-footer">
@@ -55,12 +55,13 @@
   </div>
 </template>
 <script setup>
-import {nextTick, onMounted, onUnmounted, reactive, ref} from "vue";
+import {nextTick, onMounted, onUnmounted, ref} from "vue";
 import 'emoji-picker-element';
 import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {ElMessage} from "element-plus";
 import {FolderOpened} from "@element-plus/icons-vue";
 import {createJournalApi, getJournalApi, updateJournalApi} from "@/core/api/journal.js";
+import {dialogWidth} from "@/core/utils/perfree.js";
 
 const emits = defineEmits(['submitSuccess', 'close'])
 const props = defineProps(['updateId'])
@@ -300,5 +301,14 @@ audio{
   line-height: 110px;
   text-align: center;
   font-size: 28px;
+}
+@media screen and (max-width:700px) {
+  .emoji-picker{
+    position: absolute;
+    top: 33px;
+    border-radius: 3px;
+    right: -200px;
+    z-index: 99999;
+  }
 }
 </style>

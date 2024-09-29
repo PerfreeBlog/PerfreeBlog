@@ -55,14 +55,14 @@
             <el-tag type="info" v-else>其他</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="visibility" label="状态" min-width="100">
+        <el-table-column prop="visibility" label="状态" min-width="120">
           <template v-slot="scope">
             <el-tag type="success" v-if="scope.row.visibility === 0">所有人可见</el-tag>
             <el-tag type="danger" v-else>仅自己可见</el-tag>
           </template>
         </el-table-column>
         <el-table-column prop="userInfo.userName" label="创建人" min-width="140"/>
-        <el-table-column prop="createTime" label="创建时间" min-width="140">
+        <el-table-column prop="createTime" label="创建时间" min-width="180">
           <template v-slot="scope">
             <span>{{ parseTime(scope.row.createTime) }}</span>
           </template>
@@ -88,7 +88,7 @@
       />
     </div>
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(650)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -130,7 +130,7 @@
       </template>
     </el-dialog>
 
-    <el-dialog v-model="attachItemsOpen" :title="title" width="1200px" draggable destroy-on-close>
+    <el-dialog v-model="attachItemsOpen" :title="title" :width="dialogWidth(1200)" draggable destroy-on-close>
       <attach-library-items-img :attach-library-id="currManagerAttachLibrary.id" v-if="currManagerAttachLibrary.type === 'img'"></attach-library-items-img>
       <attach-library-items-video :attach-library-id="currManagerAttachLibrary.id" v-else-if="currManagerAttachLibrary.type === 'video'"></attach-library-items-video>
       <attach-library-items-audio :attach-library-id="currManagerAttachLibrary.id" v-else-if="currManagerAttachLibrary.type === 'audio'"></attach-library-items-audio>
@@ -140,7 +140,7 @@
 </template>
 <script setup>
 import {ElMessage, ElMessageBox} from "element-plus";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import {
   attachLibraryAddApi,
   attachLibraryDelApi,

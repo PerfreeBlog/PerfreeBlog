@@ -68,7 +68,7 @@
       />
     </div>
 
-    <el-dialog v-model="pluginUploadOpen" :title="'安装插件'" width="500px" draggable>
+    <el-dialog v-model="pluginUploadOpen" :title="'安装插件'" :width="dialogWidth(600)" draggable>
       <el-upload
           class="upload-demo"
           drag
@@ -94,7 +94,7 @@
 </template>
 <script setup>
 import {Delete, Edit, Plus, Lock, Unlock, Refresh, Search, UploadFilled, Setting} from "@element-plus/icons-vue";
-import { initMenu, parseTime } from "@/core/utils/perfree.js";
+import {dialogWidth, initMenu, parseTime} from "@/core/utils/perfree.js";
 import {disablePluginApi, enablePluginApi, pluginsPageApi, uninstallPluginApi} from "../api/plugin.js";
 import {CONSTANTS} from "@/core/utils/constants.js";
 import axios_config from "@/core/api/axios_config.js";

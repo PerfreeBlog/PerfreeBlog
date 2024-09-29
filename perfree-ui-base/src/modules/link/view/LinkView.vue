@@ -26,7 +26,7 @@
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="80" type="index" />
         <el-table-column prop="name" label="网站名称" min-width="150" show-overflow-tooltip/>
-        <el-table-column prop="logo" label="网站logo" min-width="60">
+        <el-table-column prop="logo" label="网站logo" min-width="100">
           <template v-slot="scope">
             <el-image style="height: 50px" :src="scope.row.logo" :zoom-rate="1.2" :max-scale="7" :min-scale="0.2"
                       :preview-src-list="[scope.row.logo]" :initial-index="4" v-if="scope.row.logo"
@@ -66,7 +66,7 @@
       />
     </div>
 
-    <el-dialog v-model="open" :title="title" width="600px" draggable>
+    <el-dialog v-model="open" :title="title" :width="dialogWidth(600)" draggable>
       <el-form
           ref="addFormRef"
           :model="addForm"
@@ -103,7 +103,7 @@
 </template>
 <script setup>
 import {Delete, Edit, Plus, Refresh, Search} from "@element-plus/icons-vue";
-import {parseTime} from "@/core/utils/perfree.js";
+import {dialogWidth, parseTime} from "@/core/utils/perfree.js";
 import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {getLinkApi, linkAddApi, linkDelApi, linkPageApi, linkUpdateApi} from "../api/link.js";
