@@ -20,7 +20,7 @@
           <div class="panelBox"  v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.articleTotal">
               <template #title>
-                <span><el-icon><UserFilled /></el-icon> 文章数量</span>
+                <span><font-awesome-icon icon="fa-solid fa-file-alt" /> 文章数量</span>
               </template>
             </el-statistic>
           </div>
@@ -29,7 +29,7 @@
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.journalTotal">
               <template #title>
-                <span><el-icon><Checked /></el-icon> 动态数量</span>
+                <span><font-awesome-icon icon="fa-solid fa-golf-ball-tee" /> 动态数量</span>
               </template>
             </el-statistic>
           </div>
@@ -38,7 +38,7 @@
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.categoryTotal">
               <template #title>
-                <span><el-icon><Checked /></el-icon> 分类数量</span>
+                <span><font-awesome-icon icon="fa-solid fa-bars" /> 分类数量</span>
               </template>
             </el-statistic>
           </div>
@@ -47,7 +47,7 @@
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.tagTotal">
               <template #title>
-                <span><el-icon><Checked /></el-icon> 标签数量</span>
+                <span><font-awesome-icon icon="fa-solid fa-bookmark" /> 标签数量</span>
               </template>
             </el-statistic>
           </div>
@@ -56,7 +56,7 @@
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.commentTotal">
               <template #title>
-                <span><el-icon><PictureFilled /></el-icon> 评论数量</span>
+                <span><font-awesome-icon icon="fa-solid fa-comment-alt" /> 评论数量</span>
               </template>
             </el-statistic>
           </div>
@@ -65,7 +65,7 @@
           <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.userTotal">
               <template #title>
-                <span><el-icon><List /></el-icon> 用户数量</span>
+                <span><font-awesome-icon icon="fa-solid fa-user" /> 用户数量</span>
               </template>
             </el-statistic>
           </div>
