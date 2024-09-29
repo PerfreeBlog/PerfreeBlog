@@ -119,7 +119,7 @@
       <el-form
           ref="testMailFormRef"
           :model="testMailForm"
-          label-width="100px"
+          label-width="200px"
           status-icon
           :rules="testMailRule"
           v-loading="testMailLoading"
