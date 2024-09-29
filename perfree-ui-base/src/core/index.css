@@ -104,3 +104,12 @@ body,
         }
     }
 }
+.imgLoading{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    background: var(--el-border-color-light);
+}

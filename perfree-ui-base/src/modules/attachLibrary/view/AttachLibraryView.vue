@@ -70,6 +70,7 @@
         <el-table-column label="操作" width="240" fixed="right">
           <template v-slot="scope">
             <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['admin:attachLibrary:update']">修改</el-button>
+            <el-button size="small" type="primary" link :icon="FolderOpened" @click="handleAttachItems(scope.row)">附件管理</el-button>
             <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['admin:attachLibrary:delete']">删除</el-button>
           </template>
         </el-table-column>
@@ -128,16 +129,33 @@
         </span>
       </template>
     </el-dialog>
+
+    <el-dialog v-model="attachItemsOpen" :title="title" width="1200px" draggable destroy-on-close>
+      <attach-library-items-img :attach-library-id="currManagerAttachLibrary.id" v-if="currManagerAttachLibrary.type === 'img'"></attach-library-items-img>
+      <attach-library-items-video :attach-library-id="currManagerAttachLibrary.id" v-else-if="currManagerAttachLibrary.type === 'video'"></attach-library-items-video>
+      <attach-library-items-audio :attach-library-id="currManagerAttachLibrary.id" v-else-if="currManagerAttachLibrary.type === 'audio'"></attach-library-items-audio>
+      <attach-library-items-other :attach-library-id="currManagerAttachLibrary.id" v-else></attach-library-items-other>
+    </el-dialog>
   </div>
 </template>
 <script setup>
 import {ElMessage, ElMessageBox} from "element-plus";
-import {handleTree, parseTime} from "@/core/utils/perfree.js";
-import {attachLibraryAddApi, attachLibraryDelApi, attachLibraryGetApi, attachLibraryPageApi, attachLibraryUpdateApi, attachLibraryExportExcelApi} from "../api/attachLibrary.js";
-import {Delete, Edit, Filter, Plus, Refresh, Search, Download} from "@element-plus/icons-vue";
+import {parseTime} from "@/core/utils/perfree.js";
+import {
+  attachLibraryAddApi,
+  attachLibraryDelApi,
+  attachLibraryExportExcelApi,
+  attachLibraryGetApi,
+  attachLibraryPageApi,
+  attachLibraryUpdateApi
+} from "../api/attachLibrary.js";
+import {Delete, Edit, FolderOpened, Plus, Refresh, Search} from "@element-plus/icons-vue";
 import {reactive, ref} from "vue";
-import {getDictByParentDictType, getDictByParentDictTypeAndValue} from "@/core/utils/dictUtils.js";
 import AttachSelectInput from "@/core/components/attach/attach-select-input.vue";
+import AttachLibraryItemsImg from "@/modules/attachLibrary/view/AttachLibraryItemsImg.vue";
+import AttachLibraryItemsVideo from "@/modules/attachLibrary/view/AttachLibraryItemsVideo.vue";
+import AttachLibraryItemsAudio from "@/modules/attachLibrary/view/AttachLibraryItemsAudio.vue";
+import AttachLibraryItemsOther from "@/modules/attachLibrary/view/AttachLibraryItemsOther.vue";
 
 const searchForm = ref({
   pageNo: 1,
@@ -164,9 +182,18 @@ const addRule = reactive({
 const searchFormRef = ref();
 const addFormRef = ref();
 let open = ref(false);
+let attachItemsOpen = ref(false);
 let title = ref('');
 let tableData = ref([]);
 let loading = ref(false);
+let currManagerAttachLibrary = ref(null)
+
+function handleAttachItems(row) {
+  currManagerAttachLibrary.value = row;
+  title.value = row.name;
+  attachItemsOpen.value = true;
+}
+
 
 /**
  * 添加提交

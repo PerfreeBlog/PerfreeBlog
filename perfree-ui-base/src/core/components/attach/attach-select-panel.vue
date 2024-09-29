@@ -26,7 +26,7 @@
           <div class="attach-preview">
             <el-image  :key="item.url" :src="item.url" lazy class="attach-img" loading="lazy"  v-if="item.type&&item.type === 'img'">
               <template #placeholder>
-                <div class="image-slot">
+                <div class="imgLoading">
                   <el-icon class="is-loading">
                     <Loading />
                   </el-icon>

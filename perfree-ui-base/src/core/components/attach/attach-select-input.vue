@@ -33,7 +33,7 @@ let selectData = ref([])
 // enableInput: 是否允许自由输入
 // modelValue: 绑定值
 const props = defineProps(['attachType', 'enableInput', 'placeholder', 'modelValue'])
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'attachSelectChange'])
 
 const modelValue = ref(props.modelValue)
 
@@ -60,6 +60,7 @@ function submitAddForm() {
   selectData.value.forEach((r, index) => {
     result += r.url;
   });
+  emits('attachSelectChange', selectData.value)
   modelValue.value = result
   open.value = false
   selectData.value = []
