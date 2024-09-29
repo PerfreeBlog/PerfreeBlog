@@ -38,9 +38,9 @@ public class AttachLibrary extends BaseModel implements Serializable {
     private String description;
 
     /**
-    * 附件库类型: 0: 图库, 1 视频库, 2 音乐库
+    * 附件库类型:  附件库类型: img: 图库, video视频库, audio音乐库,other其他
     */
-    private Integer type;
+    private String type;
 
     /**
     * 是否可见, 0是, 1否

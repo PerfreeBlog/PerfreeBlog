@@ -7,10 +7,10 @@
         </el-form-item>
         <el-form-item label="附件库类型">
           <el-select v-model="searchForm.type" placeholder="请选择附件库类型" clearable  style="width: 200px">
-            <el-option :key="0" :label="'图库'" :value="0" />
-            <el-option :key="1" :label="'视频库'" :value="1" />
-            <el-option :key="2" :label="'音乐库'" :value="2" />
-            <el-option :key="3" :label="'其他'" :value="3" />
+            <el-option key="img" :label="'图库'" value="img" />
+            <el-option key="video" :label="'视频库'" value="video" />
+            <el-option key="audio" :label="'音乐库'" value="audio" />
+            <el-option key="other" :label="'其他'" value="other" />
           </el-select>
         </el-form-item>
         <el-form-item label="是否仅自己可见">
@@ -49,9 +49,9 @@
         <el-table-column prop="description" label="描述" min-width="240"/>
         <el-table-column prop="type" label="附件库类型" min-width="120">
           <template v-slot="scope">
-            <el-tag type="primary" v-if="scope.row.type === 0">图库</el-tag>
-            <el-tag type="success" v-else-if="scope.row.type === 1">视频库</el-tag>
-            <el-tag type="warning" v-else-if="scope.row.type === 2">音乐库</el-tag>
+            <el-tag type="primary" v-if="scope.row.type === 'img'">图库</el-tag>
+            <el-tag type="success" v-else-if="scope.row.type === 'video'">视频库</el-tag>
+            <el-tag type="warning" v-else-if="scope.row.type === 'audio'">音乐库</el-tag>
             <el-tag type="info" v-else>其他</el-tag>
           </template>
         </el-table-column>
@@ -100,10 +100,10 @@
         </el-form-item>
           <el-form-item label="附件库类型" prop="type">
             <el-select v-model="addForm.type" placeholder="请选择附件库类型"  style="width: 100%">
-              <el-option :key="0" :label="'图库'" :value="0" />
-              <el-option :key="1" :label="'视频库'" :value="1" />
-              <el-option :key="2" :label="'音乐库'" :value="2" />
-              <el-option :key="3" :label="'其他'" :value="3" />
+              <el-option key="img" :label="'图库'" value="img" />
+              <el-option key="video" :label="'视频库'" value="video" />
+              <el-option key="audio" :label="'音乐库'" value="audio" />
+              <el-option key="other" :label="'其他'" value="other" />
             </el-select>
           </el-form-item>
           <el-form-item label="是否仅自己可见" prop="visibility">

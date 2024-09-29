@@ -17,8 +17,8 @@ public class AttachLibraryExportReqVO {
     @Schema(description = "附件库名称")
     private String name;
 
-    @Schema(description = "附件库类型: 0: 图库, 1 视频库, 2 音乐库")
-    private Integer type;
+    @Schema(description = "附件库类型: img: 图库, video视频库, audio音乐库,other其他")
+    private String type;
 
     @Schema(description = "是否可见, 0是, 1否")
     private Integer visibility;
