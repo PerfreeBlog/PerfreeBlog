@@ -2,6 +2,7 @@ package com.perfree.controller.common.comment;
 
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.controller.auth.comment.vo.CommentAddReqVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
@@ -12,10 +13,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.perfree.commons.common.CommonResult.success;
 
@@ -44,5 +44,12 @@ public class CommentController {
     @Operation(summary = "提交评论")
     public CommonResult<CommentRespVO> submitComment(@Valid @RequestBody CommentAddReqVO reqVO) {
         return success(CommentConvert.INSTANCE.convertToRespVO(commentService.addComment(reqVO)));
+    }
+
+    @GetMapping("getLatestComment")
+    @Operation(summary = "获取最新评论")
+    public CommonResult<List<CommentRespVO>> getLatestComment(@RequestParam("num") Integer num) {
+        List<CommentRespVO> latestArticle = commentService.getLatestComment(num);
+        return success(latestArticle);
     }
 }

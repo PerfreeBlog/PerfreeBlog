@@ -16,96 +16,96 @@
     </el-col>
     <el-col :span="20">
       <el-row :gutter="15">
-        <el-col :span="6">
+        <el-col :span="4">
           <div class="panelBox"  v-loading="statisticLoading">
+            <el-statistic :value="homeStatistic.articleTotal">
+              <template #title>
+                <span><el-icon><UserFilled /></el-icon> 文章数量</span>
+              </template>
+            </el-statistic>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="panelBox" v-loading="statisticLoading">
+            <el-statistic :value="homeStatistic.journalTotal">
+              <template #title>
+                <span><el-icon><Checked /></el-icon> 动态数量</span>
+              </template>
+            </el-statistic>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="panelBox" v-loading="statisticLoading">
+            <el-statistic :value="homeStatistic.categoryTotal">
+              <template #title>
+                <span><el-icon><Checked /></el-icon> 分类数量</span>
+              </template>
+            </el-statistic>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="panelBox" v-loading="statisticLoading">
+            <el-statistic :value="homeStatistic.tagTotal">
+              <template #title>
+                <span><el-icon><Checked /></el-icon> 标签数量</span>
+              </template>
+            </el-statistic>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="panelBox" v-loading="statisticLoading">
+            <el-statistic :value="homeStatistic.commentTotal">
+              <template #title>
+                <span><el-icon><PictureFilled /></el-icon> 评论数量</span>
+              </template>
+            </el-statistic>
+          </div>
+        </el-col>
+        <el-col :span="4">
+          <div class="panelBox" v-loading="statisticLoading">
             <el-statistic :value="homeStatistic.userTotal">
               <template #title>
-                <span><el-icon><UserFilled /></el-icon> 用户数量</span>
-              </template>
-            </el-statistic>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="panelBox" v-loading="statisticLoading">
-            <el-statistic :value="homeStatistic.attachTotal">
-              <template #title>
-                <span><el-icon><PictureFilled /></el-icon> 附件数量</span>
-              </template>
-            </el-statistic>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="panelBox" v-loading="statisticLoading">
-            <el-statistic :value="homeStatistic.installPluginTotal">
-              <template #title>
-                <span><el-icon><List /></el-icon> 已安装插件数量</span>
-              </template>
-            </el-statistic>
-          </div>
-        </el-col>
-        <el-col :span="6">
-          <div class="panelBox" v-loading="statisticLoading">
-            <el-statistic :value="homeStatistic.runningPluginTotal">
-              <template #title>
-                <span><el-icon><Checked /></el-icon> 已运行插件数量</span>
+                <span><el-icon><List /></el-icon> 用户数量</span>
               </template>
             </el-statistic>
           </div>
         </el-col>
         <el-col :span="24">
-          <el-row :gutter="15" v-loading="serverLoading">
-            <el-col :span="8">
+          <el-row :gutter="15">
+            <el-col :span="12">
               <div class="panelBox">
-                <div class="panelTitle">服务器CPU使用率</div>
-                <div style="text-align: center;margin-top: 10px;">
-                 <el-progress type="dashboard" :percentage="cpuInfo.used" :color="colors"/>
-                 <el-descriptions :column="1" border>
-                   <el-descriptions-item label="CPU主频" label-class-name="my-label">{{cpuInfo.maxFrequency}}GHz</el-descriptions-item>
-                   <el-descriptions-item label="核心数" label-class-name="my-label">{{cpuInfo.cpuNum}}</el-descriptions-item>
-                 </el-descriptions>
+                <div class="panelTitle">最新文章</div>
+                <div style="text-align: center;margin-top: 10px;min-height: 500px">
+                  <el-link v-for="article in latestArticleList" class="latest-article" :href="'/article/' + article.slug" target="_blank">
+                    <el-icon><Calendar /></el-icon>&nbsp{{parseTime(article.createTime, '{y}-{m}-{d}')}} | {{article.title}}
+                  </el-link>
+                  <el-empty description="暂无文章" v-if="latestArticleList.length <= 0"/>
                 </div>
               </div>
             </el-col>
-            <el-col :span="8">
+            <el-col :span="12">
               <div class="panelBox">
-                <div class="panelTitle">服务器内存使用率</div>
-                <div style="text-align: center;margin-top: 10px;">
-                  <el-progress type="dashboard" :percentage="memInfo.usage" :color="colors"/>
-                  <el-descriptions :column="1" border>
-                    <el-descriptions-item label="总内存" label-class-name="my-label">{{memInfo.total}}G</el-descriptions-item>
-                    <el-descriptions-item label="已用内存" label-class-name="my-label">{{memInfo.used}}G</el-descriptions-item>
-                  </el-descriptions>
+                <div class="panelTitle">最新评论</div>
+                <div style="margin-top: 10px;min-height: 500px">
+                  <div class='comment-detail-box' v-for="item in latestCommentList">
+                    <div class='comment-detail-avatar-box'>
+                      <img :src='item.userInfo ? item.userInfo.avatar : item.avatar' width='35px' height="35px" v-if="item.avatar || (item.userInfo &&  item.userInfo.avatar)">
+                      <span v-else>{{item.userInfo ? item.userInfo.userName[0] : item.userName[0]}}</span>
+                    </div>
+                    <div class='comment-detail-msg-box'>
+                      <div class='comment-detail-info'>
+                        <span class='comment-detail-name'>{{ item.userInfo ? item.userInfo.userName : item.userName }}</span>
+                        <span class='comment-detail-time'>
+                          <span v-if="item.articleType === 'journal'">发表于动态标识为《{{item.articleId}}》</span>
+                          <span v-if="item.articleType === 'article'">发表于《{{item.articleTitle}}》</span>
+                          <span v-if="item.articleType === 'page'">发表于《{{item.articleTitle}}》</span>
+                          {{ displayTime(item.createTime) }}
+                        </span>
+                      </div>
+                      <div class='comment-detail-content'>{{ item.content }}</div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </el-col>
-            <el-col :span="8">
-              <div class="panelBox">
-                <div class="panelTitle">服务器JVM使用率</div>
-                <div style="text-align: center;margin-top: 10px;">
-                  <el-progress type="dashboard" :percentage="jvmInfo.usage" :color="colors"/>
-                  <el-descriptions :column="1" border>
-                    <el-descriptions-item label="JVM大小" label-class-name="my-label">{{jvmInfo.total}}M</el-descriptions-item>
-                    <el-descriptions-item label="已用JVM" label-class-name="my-label">{{jvmInfo.used}}M</el-descriptions-item>
-                  </el-descriptions>
-                </div>
-              </div>
-            </el-col>
-
-            <el-col :span="24">
-              <div class="panelBox">
-                <div class="panelTitle">服务器信息</div>
-                <el-descriptions :column="2" border style="margin-top: 15px">
-                  <el-descriptions-item label="服务器名称" >{{sysInfo.computerName}}</el-descriptions-item>
-                  <el-descriptions-item label="操作系统">{{sysInfo.osName}}</el-descriptions-item>
-                  <el-descriptions-item label="系统架构">{{sysInfo.osArch}}</el-descriptions-item>
-                  <el-descriptions-item label="CPU">{{cpuInfo.cpuName}}</el-descriptions-item>
-                  <el-descriptions-item label="CPU核心数">{{cpuInfo.cpuNum}}</el-descriptions-item>
-                  <el-descriptions-item label="CPU主频">{{cpuInfo.maxFrequency}}GHz</el-descriptions-item>
-                  <el-descriptions-item label="总内存">{{memInfo.total}}G</el-descriptions-item>
-                  <el-descriptions-item label="可用内存">{{memInfo.free}}G</el-descriptions-item>
-                  <el-descriptions-item label="JDK版本">{{jvmInfo.version}}</el-descriptions-item>
-                  <el-descriptions-item label="JDK路径">{{jvmInfo.home}}</el-descriptions-item>
-                </el-descriptions>
               </div>
             </el-col>
           </el-row>
@@ -119,67 +119,64 @@
             <div class="panelTitle">快捷功能</div>
             <el-row>
               <el-col :span="8" class="shortcuts-item">
-                <el-button plain @click="shortcutClick('/admin/menu')"><font-awesome-icon icon="fa-solid fa-list-numeric"></font-awesome-icon></el-button>
-                <div class="shortcuts-item-name">菜单管理</div>
+                <el-button plain @click="shortcutClick('/admin/article/create')"><font-awesome-icon icon="fa-solid fa-pencil-alt"></font-awesome-icon></el-button>
+                <div class="shortcuts-item-name">写文章</div>
               </el-col>
               <el-col :span="8" class="shortcuts-item">
-                <el-button plain @click="shortcutClick('/admin/user')"><font-awesome-icon icon="fa-solid fa-user"></font-awesome-icon></el-button>
-                <div class="shortcuts-item-name">用户管理</div>
+                <el-button plain @click="shortcutClick('/admin/article')"><font-awesome-icon icon="fa-solid fa-file-alt"></font-awesome-icon></el-button>
+                <div class="shortcuts-item-name">文章管理</div>
               </el-col>
               <el-col :span="8" class="shortcuts-item">
-                <el-button plain @click="shortcutClick('/admin/role')"><font-awesome-icon icon="fa-solid fa-male"></font-awesome-icon></el-button>
-                <div class="shortcuts-item-name">角色管理</div>
+                <el-button plain @click="shortcutClick('/admin/journal')"><font-awesome-icon icon="fa-solid fa-golf-ball-tee"></font-awesome-icon></el-button>
+                <div class="shortcuts-item-name">动态管理</div>
               </el-col>
               <el-col :span="8" class="shortcuts-item">
-                <el-button plain @click="shortcutClick('/admin/setting')"><font-awesome-icon icon="fa-solid fa-tools"></font-awesome-icon></el-button>
-                <div class="shortcuts-item-name">系统设置</div>
+                <el-button plain @click="shortcutClick('/admin/category')"><font-awesome-icon icon="fa-solid fa-bars"></font-awesome-icon></el-button>
+                <div class="shortcuts-item-name">分类管理</div>
               </el-col>
               <el-col :span="8" class="shortcuts-item">
-                <el-button plain @click="shortcutClick('/admin/dict')"><font-awesome-icon icon="fa-solid fa-clipboard"></font-awesome-icon></el-button>
-                <div class="shortcuts-item-name">字典管理</div>
+                <el-button plain @click="shortcutClick('/admin/tag')"><font-awesome-icon icon="fa-solid fa-bookmark"></font-awesome-icon></el-button>
+                <div class="shortcuts-item-name">标签管理</div>
               </el-col>
               <el-col :span="8" class="shortcuts-item">
-                <el-button plain @click="shortcutClick('/admin/plugin')"><font-awesome-icon icon="fa-solid fa-swatchbook"></font-awesome-icon></el-button>
+                <el-button plain @click="shortcutClick('/admin/plugin')"><font-awesome-icon icon="fa-solid fa-plug-circle-exclamation"></font-awesome-icon></el-button>
                 <div class="shortcuts-item-name">插件管理</div>
               </el-col>
 
             </el-row>
           </div>
         </el-col>
-
-        <el-col :span="24">
-          <div class="panelBox">
-            <div class="panelTitle">相关文档</div>
-            <ul class="link-ul">
-              <li>
-                <el-link :icon="Link" href="https://cn.vuejs.org" target="_blank">Vue 官方文档</el-link>
-              </li>
-              <li>
-                <el-link :icon="Link" href="https://element-plus.org" target="_blank">Element Plus 官方文档</el-link>
-              </li>
-              <li>
-                <el-link :icon="Link" href="https://base.perfree.org.cn" target="_blank">PerfreeBase 官网</el-link>
-              </li>
-              <li>
-                <el-link :icon="Link" href="https://base.perfree.org.cn/useDoc" target="_blank">PerfreeBase 使用文档</el-link>
-              </li>
-              <li>
-                <el-link :icon="Link" href="https://base.perfree.org.cn/devDoc" target="_blank">PerfreeBase 开发文档</el-link>
-              </li>
-              <li>
-                <el-link :icon="Link" href="https://base.perfree.org.cn/pluginDoc" target="_blank">PerfreeBase 插件开发文档</el-link>
-              </li>
-            </ul>
-          </div>
-        </el-col>
-
         <el-col :span="24">
           <div class="panelBox" v-loading="statisticLoading">
             <div class="panelTitle">附件统计</div>
             <div  class="echartsBox" id="attachEcharts" style="height:130px;"></div>
           </div>
         </el-col>
-
+        <el-col :span="24">
+          <div class="panelBox">
+            <div class="panelTitle">相关文档</div>
+            <ul class="link-ul">
+              <li>
+                <el-link :icon="Link" href="https://www.perfree.org.cn" target="_blank">PerfreeBlog 官网</el-link>
+              </li>
+              <li>
+                <el-link :icon="Link" href="https://www.perfree.org.cn/theme" target="_blank">PerfreeBlog 主题仓库</el-link>
+              </li>
+              <li>
+                <el-link :icon="Link" href="https://www.perfree.org.cn/plugin" target="_blank">PerfreeBlog 插件仓库</el-link>
+              </li>
+              <li>
+                <el-link :icon="Link" href="https://www.perfree.org.cn/useDoc" target="_blank">PerfreeBlog 使用文档</el-link>
+              </li>
+              <li>
+                <el-link :icon="Link" href="https://www.perfree.org.cn/themeDevDoc" target="_blank">PerfreeBlog 主题开发文档</el-link>
+              </li>
+              <li>
+                <el-link :icon="Link" href="https://www.perfree.org.cn/pluginDevDoc" target="_blank">PerfreeBlog 插件开发文档</el-link>
+              </li>
+            </ul>
+          </div>
+        </el-col>
       </el-row>
     </el-col>
   </el-row>
@@ -188,25 +185,18 @@
 <script setup>
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {Checked, Link, List, PictureFilled, UserFilled} from "@element-plus/icons-vue";
-import {getHomeStatisticApi, getServerInfoApi} from "../api/adminHome.js";
+import {getHomeStatisticApi, getLatestArticleApi, getLatestCommentApi} from "../api/adminHome.js";
 import {ElMessage} from "element-plus";
 import {onMounted, ref, watch} from "vue";
 import * as echarts from 'echarts';
+import {displayTime, parseTime} from "@/core/utils/perfree.js";
 
 let statisticLoading = ref(true);
-let serverLoading = ref(true);
+let articleLoading = ref(true);
+let commentLoading = ref(true);
 let homeStatistic = ref({});
-let cpuInfo = ref({
-  cpuNum: 0,
-  free: 0,
-  ioWait: 0,
-  sys: 0,
-  total: 0,
-  used: 0
-});
-let jvmInfo = ref({});
-let memInfo = ref({});
-let sysInfo = ref({});
+let latestArticleList = ref([]);
+let latestCommentList = ref([]);
 const userInfo = ref(window.pinia.state._value?.userStore?.userInfo)
 watch(() => window.pinia.state._value?.userStore?.userInfo, (val) => {
   userInfo.value = val;
@@ -219,21 +209,6 @@ const colors = [
   { color: '#e6a23c', percentage: 90 },
   { color: '#f56c6c', percentage: 100 },
 ]
-
-function getServerInfo() {
-  serverLoading.value = true;
-  getServerInfoApi().then(res => {
-    if (res.code === 200) {
-      cpuInfo.value = res.data.cpuInfo;
-      jvmInfo.value = res.data.jvmInfo;
-      memInfo.value = res.data.memInfo;
-      sysInfo.value = res.data.sysInfo;
-    } else {
-      ElMessage.error(res.msg);
-    }
-    serverLoading.value = false;
-  })
-}
 
 function getHomeStatistic() {
   statisticLoading.value = true;
@@ -281,7 +256,23 @@ onMounted(() => {
   getHomeStatistic();
 })
 
-getServerInfo();
+function getLatestArticle() {
+  articleLoading.value = true;
+  getLatestArticleApi(15).then(res => {
+    latestArticleList.value = res.data;
+    articleLoading.value = false;
+  });
+}
+
+function getLatestComment() {
+  commentLoading.value = true;
+  getLatestCommentApi(6).then(res => {
+    latestCommentList.value = res.data;
+    commentLoading.value = false;
+  })
+}
+getLatestArticle();
+getLatestComment();
 </script>
 <style scoped>
 .panelBox{
@@ -334,4 +325,62 @@ getServerInfo();
 :deep(.el-link__inner){
   padding-left: 5px;
 }
+.latest-article{
+  display: block;
+  text-align: left;
+  width: 100%;
+  line-height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.comment-detail-box{
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  width: 100%;
+}
+.comment-detail-avatar-box img{
+  border-radius: 50%;
+}
+.comment-detail-avatar-box span{
+  display: inline-block;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  background: var(--el-bg-color-page);
+  text-align: center;
+  font-weight: 600;
+  color: var(--el-text-color-regular);
+}
+.comment-detail-msg-box{
+  width: calc(100% - 45px);
+  padding-left: 10px;
+}
+.comment-detail-content{
+  margin-top: 5px;
+  width: calc(100% - 24px);
+  padding: 8px 12px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  word-break: break-all;
+  line-height: 24px;
+  background: var(--el-bg-color-page);
+  font-size: 14px;
+  opacity: .85;
+}
+.comment-detail-name{
+  font-weight: 500;
+  font-size: 14px;
+}
+.comment-detail-info{
+  position: relative;
+}
+.comment-detail-time{
+  font-size: 12px;
+  color: var(--el-text-color-regular);
+  margin-left: 10px;
+}
+
 </style>

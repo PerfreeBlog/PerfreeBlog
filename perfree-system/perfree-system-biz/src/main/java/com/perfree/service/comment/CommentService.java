@@ -80,4 +80,6 @@ public interface CommentService extends IService<Comment> {
      */
     void delByArticleId(Integer articleId);
 
+    List<CommentRespVO> getLatestComment(Integer num);
+
 }

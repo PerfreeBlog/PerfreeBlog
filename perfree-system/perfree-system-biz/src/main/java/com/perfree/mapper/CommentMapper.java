@@ -43,4 +43,6 @@ public interface CommentMapper extends BaseMapperX<Comment> {
         delete(new LambdaQueryWrapper<Comment>().eq(Comment::getArticleId, articleId));
     }
 
+    List<CommentRespVO> getLatestComment(@Param("num") Integer num);
+
 }

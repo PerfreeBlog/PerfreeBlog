@@ -20,4 +20,15 @@ public class HomeStatisticRespVO {
     private Long attachAudioTotal;
 
     private Long attachOtherTotal;
+
+    private Long articleTotal;
+
+    private Long journalTotal;
+
+    private Long categoryTotal;
+
+    private Long tagTotal;
+
+    private Long commentTotal;
+
 }

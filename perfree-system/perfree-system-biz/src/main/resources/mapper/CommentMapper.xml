@@ -69,4 +69,12 @@
         where t1.status = 0 and t1.topPid = #{pageVO.topPid}
         order by t1.createTime desc
     </select>
+
+    <select id="getLatestComment" resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+        t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
+        where t1.status = 0
+        order by t1.createTime desc LIMIT 0,#{num}
+    </select>
 </mapper>

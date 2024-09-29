@@ -2,8 +2,10 @@ package com.perfree.service.adminHome;
 
 import com.perfree.commons.utils.ArithmeticUtils;
 import com.perfree.controller.auth.adminHome.vo.*;
+import com.perfree.enjoy.directive.commons.vo.DirectiveStatisticVO;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.service.attach.AttachService;
+import com.perfree.service.common.CommonService;
 import com.perfree.service.plugins.PluginsService;
 import com.perfree.service.user.UserService;
 import jakarta.annotation.Resource;
@@ -34,6 +36,9 @@ public class AdminHomeServiceImpl implements AdminHomeService {
 
     @Resource
     private PluginsService pluginsService;
+
+    @Resource
+    private CommonService commonService;
 
 
     @Override
@@ -129,6 +134,12 @@ public class AdminHomeServiceImpl implements AdminHomeService {
         homeStatisticRespVO.setAttachTotal(attachService.getTotalAttach());
         homeStatisticRespVO.setInstallPluginTotal(pluginsService.getTotalPlugins());
         homeStatisticRespVO.setRunningPluginTotal((long) PluginInfoHolder.getAllPluginInfo().size());
+        DirectiveStatisticVO directiveStatisticVO = commonService.queryStatistics();
+        homeStatisticRespVO.setArticleTotal(directiveStatisticVO.getArticleCount());
+        homeStatisticRespVO.setCategoryTotal(directiveStatisticVO.getCategoryCount());
+        homeStatisticRespVO.setTagTotal(directiveStatisticVO.getTagCount());
+        homeStatisticRespVO.setCommentTotal(directiveStatisticVO.getCommentCount());
+        homeStatisticRespVO.setJournalTotal(directiveStatisticVO.getJournalCount());
         return homeStatisticRespVO;
     }
 }

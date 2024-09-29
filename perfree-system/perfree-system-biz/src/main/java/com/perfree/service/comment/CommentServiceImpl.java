@@ -117,4 +117,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     public void delByArticleId(Integer articleId) {
         commentMapper.delByArticleId(articleId);
     }
+
+    @Override
+    public List<CommentRespVO> getLatestComment(Integer num) {
+        return commentMapper.getLatestComment(num);
+    }
 }

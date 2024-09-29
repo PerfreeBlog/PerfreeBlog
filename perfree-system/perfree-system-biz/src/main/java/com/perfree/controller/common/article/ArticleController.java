@@ -12,6 +12,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.perfree.commons.common.CommonResult.success;
 
 @RestController
@@ -32,5 +34,12 @@ public class ArticleController {
     @Operation(summary = "文章归档列表分页")
     public CommonResult<PageResult<ArchiveRespVO>> archivePage(@RequestBody ArchivePageReqVO pageVO){
         return success(articleService.archivePage(pageVO));
+    }
+
+    @GetMapping("getLatestArticle")
+    @Operation(summary = "获取最近更新的文章")
+    public CommonResult<List<ArticleRespVO>> getLatestArticle(@RequestParam("num") Integer num) {
+        List<ArticleRespVO> latestArticle = articleService.getLatestArticle(num);
+        return success(latestArticle);
     }
 }
