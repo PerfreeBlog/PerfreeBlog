@@ -1,11 +1,11 @@
 <template>
   <div class="page">
     <div style="text-align: center;margin-bottom: 10px;display: flex;justify-content: center;">
-      <el-button link type="primary" @click="handleInstallTheme"> 安装新主题 </el-button>
+      <el-link type="primary" @click="handleInstallTheme">安装新主题</el-link>
       <span>-</span>
-      <el-button link type="primary"> 主题仓库 </el-button>
+      <el-link type="primary" href="https://www.perfree.org.cn/theme" target="_blank">主题仓库</el-link>
       <span>-</span>
-      <el-button link type="primary"> 主题开发指南 </el-button>
+      <el-link type="primary" href="https://www.perfree.org.cn/themeDevDoc" target="_blank">主题开发指南</el-link>
     </div>
     <el-row :gutter="15">
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6" v-for="theme in themeList" :key="theme.name">
@@ -59,7 +59,10 @@
               </el-button>
             </div>
             <div class="theme-btn-item">
-              <el-button link class="theme-button">
+              <el-button link class="theme-button" v-if="theme.isActive === 1">
+                <font-awesome-icon icon="fa-solid fa-external-link-square" class="theme-btn-icon" /> 访问
+              </el-button>
+              <el-button link class="theme-button" v-if="theme.isActive === 0">
                 <font-awesome-icon icon="fa-solid fa-external-link-square" class="theme-btn-icon" /> 预览
               </el-button>
             </div>
@@ -188,7 +191,7 @@ function unInstallTheme(theme) {
 }
 
 function toThemeSettingPage() {
-  toPage('', '/admin/themeSetting', null)
+  toPage('', '/admin/theme/setting', '')
 }
 
 function toThemeEditPage(theme) {
