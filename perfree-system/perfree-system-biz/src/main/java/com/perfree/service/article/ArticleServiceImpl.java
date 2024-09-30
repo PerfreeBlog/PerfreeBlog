@@ -10,6 +10,7 @@ import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.ArticleConstant;
+import com.perfree.constant.AttachLibraryConstant;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.*;
 import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
@@ -26,6 +27,7 @@ import com.perfree.mapper.ArticleCategoryMapper;
 import com.perfree.mapper.ArticleMapper;
 import com.perfree.mapper.ArticleTagMapper;
 import com.perfree.model.*;
+import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.service.articleCategory.ArticleCategoryService;
 import com.perfree.service.articleTag.ArticleTagService;
 import com.perfree.service.comment.CommentService;
@@ -166,7 +168,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public ArticleRespVO getArticleById(Integer id) {
-        return articleMapper.getArticleById(id);
+        ArticleRespVO articleById = articleMapper.getArticleById(id);
+        if (articleById.getStatus().equals(ArticleConstant.ARTICLE_STATUS_ONLY_SELF) && !articleById.getUser().getId().equals(SecurityFrameworkUtils.getLoginUserId())) {
+            throw new ServiceException(ErrorCode.NO_PERMISSION_PREVIEW);
+        }
+        return articleById;
     }
 
     @Override
@@ -228,13 +234,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 new SortingField("createTime", SortingField.ORDER_DESC)
         ));
         IPage<JournalRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<JournalRespVO> journalPage = articleMapper.journalPage(page, pageVO);
+        IPage<JournalRespVO> journalPage = articleMapper.journalPage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
         return new PageResult<>(journalPage.getRecords(), journalPage.getTotal());
     }
 
     @Override
     public JournalRespVO getJournalById(Integer id) {
-        return articleMapper.getJournalById(id);
+        JournalRespVO journalById = articleMapper.getJournalById(id);
+        if (journalById.getStatus().equals(ArticleConstant.ARTICLE_STATUS_ONLY_SELF) && !journalById.getUser().getId().equals(SecurityFrameworkUtils.getLoginUserId())) {
+            throw new ServiceException(ErrorCode.NO_PERMISSION_PREVIEW);
+        }
+        return journalById;
     }
 
     @Override
@@ -267,6 +277,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<ArticleRespVO> getLatestArticle(Integer num) {
         return articleMapper.getLatestArticle(num);
+    }
+
+    @Override
+    public List<ArticleRespVO> getHotArticleByCommentCount(Integer num) {
+        return articleMapper.getHotArticleByCommentCount(num);
+    }
+
+    @Override
+    public List<ArticleRespVO> getHotArticleByViewCount(Integer num) {
+        return articleMapper.getHotArticleByViewCount(num);
     }
 
     /**

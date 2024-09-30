@@ -1,18 +1,18 @@
-import { p as Q } from "./lib/perfree.js";
-import { m as W, a as X, b as Y, c as Z, d as ee, e as le } from "./lib/mailServer.js";
-import { s as ae, r as M, d as te, p as oe, e as ne, a as ue } from "./lib/@element-plus.js";
-const i = window.Vue.resolveComponent, e = window.Vue.createVNode, t = window.Vue.withCtx, s = window.Vue.unref, d = window.Vue.createTextVNode, L = window.Vue.resolveDirective, p = window.Vue.openBlock, v = window.Vue.createBlock, S = window.Vue.withDirectives, k = window.Vue.createElementVNode;
+import { p as K, d as Q } from "./lib/perfree.js";
+import { m as X, a as Y, b as Z, c as ee, d as le, e as te } from "./lib/mailServer.js";
+import { s as ae, r as M, d as oe, p as ne, e as ue, a as re } from "./lib/@element-plus.js";
+const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vue.withCtx, r = window.Vue.unref, d = window.Vue.createTextVNode, L = window.Vue.resolveDirective, c = window.Vue.openBlock, v = window.Vue.createBlock, S = window.Vue.withDirectives, x = window.Vue.createElementVNode;
 window.Vue.createCommentVNode;
-const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.createElementBlock, se = { class: "page" }, de = { class: "search-box" }, me = { class: "right-tool" }, ce = { class: "table-box" }, pe = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, ve = window.ElementPlus.ElMessageBox, fe = window.Vue.reactive, w = window.Vue.ref, be = {
+const ie = window.Vue.toDisplayString, z = window.Vue.isRef, se = window.Vue.createElementBlock, de = { class: "page" }, me = { class: "search-box" }, pe = { class: "right-tool" }, ce = { class: "table-box" }, ve = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, fe = window.ElementPlus.ElMessageBox, we = window.Vue.reactive, _ = window.Vue.ref, Se = {
   __name: "MailServerView",
-  setup(_e) {
-    const n = w({
+  setup(ge) {
+    const n = _({
       pageNo: 1,
       pageSize: 10,
       total: 0,
       name: null,
       account: null
-    }), o = w({
+    }), o = _({
       id: null,
       name: null,
       account: null,
@@ -22,7 +22,7 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
       port: null,
       status: 0,
       enableSSL: 0
-    }), F = fe({
+    }), F = we({
       name: [{ required: !0, message: "邮箱服务名称不能为空", trigger: "blur" }],
       account: [
         { required: !0, message: "邮箱服务账号不能为空", trigger: "blur" },
@@ -34,41 +34,41 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
       port: [{ required: !0, message: "邮箱服务SMTP端口不能为空", trigger: "blur" }],
       status: [{ required: !0, message: "状态不能为空", trigger: "blur" }],
       enableSSL: [{ required: !0, message: "是否开启SSL不能为空", trigger: "blur" }]
-    }), T = w(), x = w();
-    let m = w(!1), C = w(""), U = w([]), b = w(!1);
+    }), U = _(), N = _();
+    let m = _(!1), T = _(""), h = _([]), b = _(!1);
     function A() {
-      x.value.validate((u) => {
-        u && (o.value.id ? W(o.value).then((l) => {
-          l.code === 200 ? (V.success("操作成功"), m.value = !1, h(), g()) : V.error(l.msg);
-        }) : X(o.value).then((l) => {
-          l.code === 200 ? (V.success("操作成功"), m.value = !1, h(), g()) : V.error(l.msg);
+      N.value.validate((u) => {
+        u && (o.value.id ? X(o.value).then((e) => {
+          e.code === 200 ? (V.success("操作成功"), m.value = !1, y(), g()) : V.error(e.msg);
+        }) : Y(o.value).then((e) => {
+          e.code === 200 ? (V.success("操作成功"), m.value = !1, y(), g()) : V.error(e.msg);
         }));
       });
     }
     function B() {
-      h(), C.value = "添加邮箱服务", m.value = !0;
+      y(), T.value = "添加邮箱服务", m.value = !0;
     }
     function q(u) {
-      h(), C.value = "修改邮箱服务", m.value = !0, Y(u.id).then((l) => {
-        o.value = l.data;
+      y(), T.value = "修改邮箱服务", m.value = !0, Z(u.id).then((e) => {
+        o.value = e.data;
       });
     }
     function D(u) {
-      let l = Object.keys(u);
-      ve.confirm("确定要删除[" + u[l[0]] + "]吗？", "提示", {
+      let e = Object.keys(u);
+      fe.confirm("确定要删除[" + u[e[0]] + "]吗？", "提示", {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        Z(u.id).then((r) => {
-          r.code === 200 && r.data ? (V.success("删除成功"), g()) : V.error(r.msg);
+        ee(u.id).then((i) => {
+          i.code === 200 && i.data ? (V.success("删除成功"), g()) : V.error(i.msg);
         });
       }).catch(() => {
       });
     }
     function g() {
-      b.value = !0, ee(n.value).then((u) => {
-        U.value = u.data.list, n.value.total = u.data.total, b.value = !1;
+      b.value = !0, le(n.value).then((u) => {
+        h.value = u.data.list, n.value.total = u.data.total, b.value = !1;
       });
     }
     function R() {
@@ -78,9 +78,9 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
         total: 0,
         name: null,
         account: null
-      }, T.value.resetFields(), g();
+      }, U.value.resetFields(), g();
     }
-    function h() {
+    function y() {
       o.value = {
         id: null,
         name: null,
@@ -91,82 +91,82 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
         port: null,
         status: 0,
         enableSSL: 0
-      }, x.value && x.value.resetFields();
+      }, N.value && N.value.resetFields();
     }
     function j() {
-      b.value = !0, le(n.value).then((u) => {
+      b.value = !0, te(n.value).then((u) => {
         window.download.excel(u, "邮箱服务数据.xlsx"), b.value = !1;
       }).catch((u) => {
         V.error("导出失败"), b.value = !1;
       });
     }
-    return g(), (u, l) => {
-      const r = i("el-input"), c = i("el-form-item"), f = i("el-button"), P = i("el-form"), $ = i("el-col"), G = i("el-row"), _ = i("el-table-column"), N = i("el-tag"), O = i("el-table"), H = i("el-pagination"), E = i("el-switch"), I = i("el-dialog"), y = L("hasPermission"), J = L("loading");
-      return p(), ie("div", se, [
-        k("div", de, [
-          e(P, {
+    return g(), (u, e) => {
+      const i = s("el-input"), p = s("el-form-item"), f = s("el-button"), P = s("el-form"), $ = s("el-col"), G = s("el-row"), w = s("el-table-column"), C = s("el-tag"), O = s("el-table"), W = s("el-pagination"), E = s("el-switch"), H = s("el-dialog"), k = L("hasPermission"), I = L("loading");
+      return c(), se("div", de, [
+        x("div", me, [
+          l(P, {
             inline: !0,
             model: n.value,
             class: "demo-form-inline",
             ref_key: "searchFormRef",
-            ref: T
+            ref: U
           }, {
-            default: t(() => [
-              e(c, { label: "名称" }, {
-                default: t(() => [
-                  e(r, {
+            default: a(() => [
+              l(p, { label: "名称" }, {
+                default: a(() => [
+                  l(i, {
                     modelValue: n.value.name,
-                    "onUpdate:modelValue": l[0] || (l[0] = (a) => n.value.name = a),
+                    "onUpdate:modelValue": e[0] || (e[0] = (t) => n.value.name = t),
                     placeholder: "请输入邮箱服务名称",
                     clearable: ""
                   }, null, 8, ["modelValue"])
                 ]),
                 _: 1
               }),
-              e(c, { label: "账号" }, {
-                default: t(() => [
-                  e(r, {
+              l(p, { label: "账号" }, {
+                default: a(() => [
+                  l(i, {
                     modelValue: n.value.account,
-                    "onUpdate:modelValue": l[1] || (l[1] = (a) => n.value.account = a),
+                    "onUpdate:modelValue": e[1] || (e[1] = (t) => n.value.account = t),
                     placeholder: "请输入邮箱服务账号",
                     clearable: ""
                   }, null, 8, ["modelValue"])
                 ]),
                 _: 1
               }),
-              e(c, null, {
-                default: t(() => [
-                  S((p(), v(f, {
+              l(p, null, {
+                default: a(() => [
+                  S((c(), v(f, {
                     type: "primary",
                     onClick: g,
-                    icon: s(ae)
+                    icon: r(ae)
                   }, {
-                    default: t(() => [
+                    default: a(() => e[14] || (e[14] = [
                       d("查询")
-                    ]),
+                    ])),
                     _: 1
                   }, 8, ["icon"])), [
-                    [y, ["admin:mailServer:query"]]
+                    [k, ["admin:mailServer:query"]]
                   ]),
-                  e(f, {
-                    icon: s(M),
+                  l(f, {
+                    icon: r(M),
                     onClick: R
                   }, {
-                    default: t(() => [
+                    default: a(() => e[15] || (e[15] = [
                       d("重置")
-                    ]),
+                    ])),
                     _: 1
                   }, 8, ["icon"]),
-                  S((p(), v(f, {
-                    icon: s(te),
+                  S((c(), v(f, {
+                    icon: r(oe),
                     onClick: j
                   }, {
-                    default: t(() => [
+                    default: a(() => e[16] || (e[16] = [
                       d("导出")
-                    ]),
+                    ])),
                     _: 1
                   }, 8, ["icon"])), [
-                    [y, ["admin:mailServer:export"]]
+                    [k, ["admin:mailServer:export"]]
                   ])
                 ]),
                 _: 1
@@ -175,32 +175,32 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
             _: 1
           }, 8, ["model"])
         ]),
-        e(G, {
+        l(G, {
           gutter: 10,
           class: "mb8"
         }, {
-          default: t(() => [
-            e($, { span: 1.5 }, {
-              default: t(() => [
-                S((p(), v(f, {
-                  icon: s(oe),
+          default: a(() => [
+            l($, { span: 1.5 }, {
+              default: a(() => [
+                S((c(), v(f, {
+                  icon: r(ne),
                   type: "primary",
                   plain: "",
                   onClick: B
                 }, {
-                  default: t(() => [
+                  default: a(() => e[17] || (e[17] = [
                     d("新增")
-                  ]),
+                  ])),
                   _: 1
                 }, 8, ["icon"])), [
-                  [y, ["admin:mailServer:create"]]
+                  [k, ["admin:mailServer:create"]]
                 ])
               ]),
               _: 1
             }),
-            k("div", me, [
-              e(f, {
-                icon: s(M),
+            x("div", pe, [
+              l(f, {
+                icon: r(M),
                 circle: "",
                 onClick: g
               }, null, 8, ["icon"])
@@ -208,137 +208,142 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
           ]),
           _: 1
         }),
-        k("div", ce, [
-          S((p(), v(O, {
-            data: s(U),
+        x("div", ce, [
+          S((c(), v(O, {
+            data: r(h),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
           }, {
-            default: t(() => [
-              e(_, {
+            default: a(() => [
+              l(w, {
                 prop: "name",
                 label: "名称",
-                "min-width": "150"
+                "min-width": "150",
+                "show-overflow-tooltip": ""
               }),
-              e(_, {
+              l(w, {
                 prop: "account",
                 label: "账号",
-                "min-width": "150"
+                "min-width": "150",
+                "show-overflow-tooltip": ""
               }),
-              e(_, {
+              l(w, {
                 prop: "userName",
                 label: "用户名",
-                "min-width": "150"
+                "min-width": "150",
+                "show-overflow-tooltip": ""
               }),
-              e(_, {
+              l(w, {
                 prop: "address",
                 label: "SMTP域名",
-                "min-width": "150"
+                "min-width": "150",
+                "show-overflow-tooltip": ""
               }),
-              e(_, {
+              l(w, {
                 prop: "port",
                 label: "SMTP端口",
-                "min-width": "80"
+                "min-width": "80",
+                "show-overflow-tooltip": ""
               }),
-              e(_, {
+              l(w, {
                 prop: "status",
                 label: "状态",
                 "min-width": "80"
               }, {
-                default: t((a) => [
-                  a.row.status === 0 ? (p(), v(N, {
+                default: a((t) => [
+                  t.row.status === 0 ? (c(), v(C, {
                     key: 0,
                     class: "ml-2",
                     type: "success"
                   }, {
-                    default: t(() => [
+                    default: a(() => e[18] || (e[18] = [
                       d("启用")
-                    ]),
+                    ])),
                     _: 1
-                  })) : (p(), v(N, {
+                  })) : (c(), v(C, {
                     key: 1,
                     class: "ml-2",
                     type: "danger"
                   }, {
-                    default: t(() => [
+                    default: a(() => e[19] || (e[19] = [
                       d("禁用")
-                    ]),
+                    ])),
                     _: 1
                   }))
                 ]),
                 _: 1
               }),
-              e(_, {
+              l(w, {
                 prop: "enableSSL",
                 label: "SSL",
                 "min-width": "80"
               }, {
-                default: t((a) => [
-                  a.row.enableSSL === 0 ? (p(), v(N, {
+                default: a((t) => [
+                  t.row.enableSSL === 0 ? (c(), v(C, {
                     key: 0,
                     class: "ml-2",
                     type: "success"
                   }, {
-                    default: t(() => [
+                    default: a(() => e[20] || (e[20] = [
                       d("启用")
-                    ]),
+                    ])),
                     _: 1
-                  })) : (p(), v(N, {
+                  })) : (c(), v(C, {
                     key: 1,
                     class: "ml-2",
                     type: "danger"
                   }, {
-                    default: t(() => [
+                    default: a(() => e[21] || (e[21] = [
                       d("禁用")
-                    ]),
+                    ])),
                     _: 1
                   }))
                 ]),
                 _: 1
               }),
-              e(_, {
+              l(w, {
                 prop: "createTime",
                 label: "创建时间",
-                "min-width": "120"
+                "min-width": "180"
               }, {
-                default: t((a) => [
-                  k("span", null, re(s(Q)(a.row.createTime)), 1)
+                default: a((t) => [
+                  x("span", null, ie(r(K)(t.row.createTime)), 1)
                 ]),
                 _: 1
               }),
-              e(_, {
+              l(w, {
                 label: "操作",
                 width: "240",
                 fixed: "right"
               }, {
-                default: t((a) => [
-                  S((p(), v(f, {
+                default: a((t) => [
+                  S((c(), v(f, {
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: s(ne),
-                    onClick: (K) => q(a.row)
+                    icon: r(ue),
+                    onClick: (J) => q(t.row)
                   }, {
-                    default: t(() => [
+                    default: a(() => e[22] || (e[22] = [
                       d("修改")
-                    ]),
+                    ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
-                    [y, ["admin:mailServer:update"]]
+                    [k, ["admin:mailServer:update"]]
                   ]),
-                  S((p(), v(f, {
+                  S((c(), v(f, {
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: s(ue),
-                    onClick: (K) => D(a.row)
+                    icon: r(re),
+                    onClick: (J) => D(t.row)
                   }, {
-                    default: t(() => [
+                    default: a(() => e[23] || (e[23] = [
                       d("删除")
-                    ]),
+                    ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
-                    [y, ["admin:mailServer:delete"]]
+                    [k, ["admin:mailServer:delete"]]
                   ])
                 ]),
                 _: 1
@@ -346,13 +351,13 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
             ]),
             _: 1
           }, 8, ["data"])), [
-            [J, s(b)]
+            [I, r(b)]
           ]),
-          e(H, {
+          l(W, {
             "current-page": n.value.pageNo,
-            "onUpdate:currentPage": l[2] || (l[2] = (a) => n.value.pageNo = a),
+            "onUpdate:currentPage": e[2] || (e[2] = (t) => n.value.pageNo = t),
             "page-size": n.value.pageSize,
-            "onUpdate:pageSize": l[3] || (l[3] = (a) => n.value.pageSize = a),
+            "onUpdate:pageSize": e[3] || (e[3] = (t) => n.value.pageSize = t),
             "page-sizes": [10, 20, 30, 50],
             layout: "total,sizes,prev, pager, next, jumper",
             background: "",
@@ -361,132 +366,132 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
             total: n.value.total
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
-        e(I, {
-          modelValue: s(m),
-          "onUpdate:modelValue": l[13] || (l[13] = (a) => z(m) ? m.value = a : m = a),
-          title: s(C),
-          width: "600px",
+        l(H, {
+          modelValue: r(m),
+          "onUpdate:modelValue": e[13] || (e[13] = (t) => z(m) ? m.value = t : m = t),
+          title: r(T),
+          width: r(Q)(600),
           draggable: ""
         }, {
-          footer: t(() => [
-            k("span", pe, [
-              e(f, {
+          footer: a(() => [
+            x("span", ve, [
+              l(f, {
                 type: "primary",
                 onClick: A
               }, {
-                default: t(() => [
+                default: a(() => e[24] || (e[24] = [
                   d("确 定")
-                ]),
+                ])),
                 _: 1
               }),
-              e(f, {
-                onClick: l[12] || (l[12] = (a) => {
-                  z(m) ? m.value = !1 : m = !1, h();
+              l(f, {
+                onClick: e[12] || (e[12] = (t) => {
+                  z(m) ? m.value = !1 : m = !1, y();
                 })
               }, {
-                default: t(() => [
+                default: a(() => e[25] || (e[25] = [
                   d("取 消")
-                ]),
+                ])),
                 _: 1
               })
             ])
           ]),
-          default: t(() => [
-            e(P, {
+          default: a(() => [
+            l(P, {
               ref_key: "addFormRef",
-              ref: x,
+              ref: N,
               model: o.value,
               "label-width": "100px",
               "status-icon": "",
               rules: F
             }, {
-              default: t(() => [
-                e(c, {
+              default: a(() => [
+                l(p, {
                   label: "名称",
                   prop: "name"
                 }, {
-                  default: t(() => [
-                    e(r, {
+                  default: a(() => [
+                    l(i, {
                       modelValue: o.value.name,
-                      "onUpdate:modelValue": l[4] || (l[4] = (a) => o.value.name = a),
+                      "onUpdate:modelValue": e[4] || (e[4] = (t) => o.value.name = t),
                       placeholder: "请输入邮箱服务名称"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                e(c, {
+                l(p, {
                   label: "账号",
                   prop: "account"
                 }, {
-                  default: t(() => [
-                    e(r, {
+                  default: a(() => [
+                    l(i, {
                       modelValue: o.value.account,
-                      "onUpdate:modelValue": l[5] || (l[5] = (a) => o.value.account = a),
+                      "onUpdate:modelValue": e[5] || (e[5] = (t) => o.value.account = t),
                       placeholder: "请输入邮箱服务账号"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                e(c, {
+                l(p, {
                   label: "密码",
                   prop: "password"
                 }, {
-                  default: t(() => [
-                    e(r, {
+                  default: a(() => [
+                    l(i, {
                       modelValue: o.value.password,
-                      "onUpdate:modelValue": l[6] || (l[6] = (a) => o.value.password = a),
+                      "onUpdate:modelValue": e[6] || (e[6] = (t) => o.value.password = t),
                       placeholder: "请输入邮箱服务密码"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                e(c, {
+                l(p, {
                   label: "用户名",
                   prop: "userName"
                 }, {
-                  default: t(() => [
-                    e(r, {
+                  default: a(() => [
+                    l(i, {
                       modelValue: o.value.userName,
-                      "onUpdate:modelValue": l[7] || (l[7] = (a) => o.value.userName = a),
+                      "onUpdate:modelValue": e[7] || (e[7] = (t) => o.value.userName = t),
                       placeholder: "请输入邮箱服务用户名"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                e(c, {
+                l(p, {
                   label: "SMTP域名",
                   prop: "address"
                 }, {
-                  default: t(() => [
-                    e(r, {
+                  default: a(() => [
+                    l(i, {
                       modelValue: o.value.address,
-                      "onUpdate:modelValue": l[8] || (l[8] = (a) => o.value.address = a),
+                      "onUpdate:modelValue": e[8] || (e[8] = (t) => o.value.address = t),
                       placeholder: "请输入邮箱服务SMTP域名"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                e(c, {
+                l(p, {
                   label: "SMTP端口",
                   prop: "port"
                 }, {
-                  default: t(() => [
-                    e(r, {
+                  default: a(() => [
+                    l(i, {
                       modelValue: o.value.port,
-                      "onUpdate:modelValue": l[9] || (l[9] = (a) => o.value.port = a),
+                      "onUpdate:modelValue": e[9] || (e[9] = (t) => o.value.port = t),
                       placeholder: "请输入邮箱服务SMTP端口"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                e(c, {
+                l(p, {
                   label: "状态",
                   prop: "status"
                 }, {
-                  default: t(() => [
-                    e(E, {
+                  default: a(() => [
+                    l(E, {
                       modelValue: o.value.status,
-                      "onUpdate:modelValue": l[10] || (l[10] = (a) => o.value.status = a),
+                      "onUpdate:modelValue": e[10] || (e[10] = (t) => o.value.status = t),
                       "inline-prompt": "",
                       "active-text": "启用",
                       "inactive-text": "禁用",
@@ -496,14 +501,14 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
                   ]),
                   _: 1
                 }),
-                e(c, {
+                l(p, {
                   label: "SSL",
                   prop: "enableSSL"
                 }, {
-                  default: t(() => [
-                    e(E, {
+                  default: a(() => [
+                    l(E, {
                       modelValue: o.value.enableSSL,
-                      "onUpdate:modelValue": l[11] || (l[11] = (a) => o.value.enableSSL = a),
+                      "onUpdate:modelValue": e[11] || (e[11] = (t) => o.value.enableSSL = t),
                       "inline-prompt": "",
                       "active-text": "启用",
                       "inactive-text": "禁用",
@@ -518,11 +523,11 @@ const re = window.Vue.toDisplayString, z = window.Vue.isRef, ie = window.Vue.cre
             }, 8, ["model", "rules"])
           ]),
           _: 1
-        }, 8, ["modelValue", "title"])
+        }, 8, ["modelValue", "title", "width"])
       ]);
     };
   }
 };
 export {
-  be as default
+  Se as default
 };

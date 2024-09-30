@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var da = {
   name: "da",
@@ -69,6 +69,9 @@ var da = {
       noMatch: "Ingen matchende data",
       noData: "Ingen data",
       placeholder: "V\xE6lg"
+    },
+    mention: {
+      loading: "Henter"
     },
     cascader: {
       noMatch: "Ingen matchende data",

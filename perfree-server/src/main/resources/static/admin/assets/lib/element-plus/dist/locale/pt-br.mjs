@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var ptBr = {
   name: "pt-br",
@@ -68,6 +68,9 @@ var ptBr = {
       noMatch: "Sem resultados",
       noData: "Sem dados",
       placeholder: "Selecione"
+    },
+    mention: {
+      loading: "Carregando"
     },
     cascader: {
       noMatch: "Sem resultados",

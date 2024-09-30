@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var sv = {
   name: "sv",
@@ -68,6 +68,9 @@ var sv = {
       noMatch: "Hittade inget",
       noData: "Ingen data",
       placeholder: "V\xE4lj"
+    },
+    mention: {
+      loading: "Laddar"
     },
     cascader: {
       noMatch: "Hittade inget",

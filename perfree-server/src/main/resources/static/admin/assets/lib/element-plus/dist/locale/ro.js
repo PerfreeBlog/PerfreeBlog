@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -74,6 +74,9 @@
         noMatch: "Nu exist\u0103 date potrivite",
         noData: "Nu exist\u0103 date",
         placeholder: "Selecteaz\u0103"
+      },
+      mention: {
+        loading: "Se \xEEncarc\u0103"
       },
       cascader: {
         noMatch: "Nu exist\u0103 date potrivite",

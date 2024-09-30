@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var ja = {
   name: "ja",
@@ -68,6 +68,9 @@ var ja = {
       noMatch: "\u30C7\u30FC\u30BF\u306A\u3057",
       noData: "\u30C7\u30FC\u30BF\u306A\u3057",
       placeholder: "\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044"
+    },
+    mention: {
+      loading: "\u30ED\u30FC\u30C9\u4E2D"
     },
     cascader: {
       noMatch: "\u30C7\u30FC\u30BF\u306A\u3057",

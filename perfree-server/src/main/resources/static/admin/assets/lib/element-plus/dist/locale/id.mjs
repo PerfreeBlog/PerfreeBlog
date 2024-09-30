@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var id = {
   name: "id",
@@ -69,6 +69,9 @@ var id = {
       noMatch: "Tidak ada data yg cocok",
       noData: "Tidak ada data",
       placeholder: "Pilih"
+    },
+    mention: {
+      loading: "Memuat"
     },
     cascader: {
       noMatch: "Tidak ada data yg cocok",

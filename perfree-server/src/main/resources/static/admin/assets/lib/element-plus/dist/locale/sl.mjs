@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var sl = {
   name: "sl",
@@ -69,6 +69,9 @@ var sl = {
       noMatch: "Ni ustreznih podatkov",
       noData: "Ni podatkov",
       placeholder: "Izberi"
+    },
+    mention: {
+      loading: "Nalaganje"
     },
     cascader: {
       noMatch: "Ni ustreznih podatkov",

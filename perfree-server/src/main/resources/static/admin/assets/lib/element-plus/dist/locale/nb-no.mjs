@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var nbNo = {
   name: "nb-no",
@@ -69,6 +69,9 @@ var nbNo = {
       noMatch: "Ingen samsvarende resulater",
       noData: "Ingen resulater",
       placeholder: "Velg"
+    },
+    mention: {
+      loading: "Laster"
     },
     cascader: {
       noMatch: "Ingen samsvarende resultater",

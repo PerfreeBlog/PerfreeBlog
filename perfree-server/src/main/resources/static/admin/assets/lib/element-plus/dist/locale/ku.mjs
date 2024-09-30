@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var ku = {
   name: "ku",
@@ -68,6 +68,9 @@ var ku = {
       noMatch: "Li hembere ve agah\xEE tune",
       noData: "Agah\xEE tune",
       placeholder: "Bibij\xEAre"
+    },
+    mention: {
+      loading: "Bardibe"
     },
     cascader: {
       noMatch: "Li hembere ve agah\xEE tune",

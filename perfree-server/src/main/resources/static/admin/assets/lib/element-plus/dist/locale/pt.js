@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -74,6 +74,9 @@
         noMatch: "Sem correspond\xEAncia",
         noData: "Sem dados",
         placeholder: "Selecione"
+      },
+      mention: {
+        loading: "A carregar"
       },
       cascader: {
         noMatch: "Sem correspond\xEAncia",

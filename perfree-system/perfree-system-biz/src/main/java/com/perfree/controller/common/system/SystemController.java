@@ -1,46 +1,33 @@
 package com.perfree.controller.common.system;
 
 import com.perfree.cache.CaptchaCacheService;
-import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.constant.SystemConstants;
-import com.perfree.constant.OptionConstant;
-import com.perfree.controller.auth.option.vo.OptionRespVO;
 import com.perfree.controller.auth.system.vo.CaptchaImageRespVO;
 import com.perfree.controller.auth.user.vo.UserRespVO;
 import com.perfree.controller.common.system.vo.*;
-import com.perfree.convert.option.OptionConvert;
 import com.perfree.convert.user.UserConvert;
 import com.perfree.enums.ErrorCode;
-import com.perfree.enums.OptionEnum;
 import com.perfree.model.User;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.vo.LoginUserVO;
 import com.perfree.service.user.UserService;
-import com.perfree.system.api.option.dto.OptionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.apache.commons.lang3.StringUtils;
 import org.dromara.hutool.core.codec.binary.Base64;
 import org.dromara.hutool.core.data.id.IdUtil;
 import org.dromara.hutool.swing.captcha.CaptchaUtil;
 import org.dromara.hutool.swing.captcha.LineCaptcha;
 import org.dromara.hutool.swing.captcha.generator.RandomGenerator;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @description 系统基础接口
@@ -123,17 +110,6 @@ public class SystemController {
         }
         User byId = userService.getById(loginUser.getId());
         return CommonResult.success(UserConvert.INSTANCE.convertRespVO(byId));
-    }
-
-    @GetMapping("/logout")
-    @Operation(summary = "退出登录")
-    public CommonResult<Boolean> logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        SecurityContextHolder.clearContext();
-        return CommonResult.success(true);
     }
 
     @PostMapping("refreshToken")

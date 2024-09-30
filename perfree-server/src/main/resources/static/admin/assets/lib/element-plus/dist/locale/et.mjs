@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var et = {
   name: "et",
@@ -68,6 +68,9 @@ var et = {
       noMatch: "Sobivad andmed puuduvad",
       noData: "Andmed puuduvad",
       placeholder: "Vali"
+    },
+    mention: {
+      loading: "Laadimine"
     },
     cascader: {
       noMatch: "Sobivad andmed puuduvad",

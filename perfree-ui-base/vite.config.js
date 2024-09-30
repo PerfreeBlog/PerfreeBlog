@@ -104,7 +104,7 @@ export default defineConfig(({mode })=> {
       }
     },
     build: {
-      outDir: "./dist",
+      outDir: "../perfree-server/src/main/resources/static/admin",
       modulePreload: true,
       emptyOutDir: true,
       rollupOptions: {

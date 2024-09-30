@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var de = {
   name: "de",
@@ -71,6 +71,9 @@ var de = {
       noMatch: "Nichts gefunden.",
       noData: "Keine Daten",
       placeholder: "Daten w\xE4hlen"
+    },
+    mention: {
+      loading: "L\xE4dt."
     },
     cascader: {
       noMatch: "Nichts gefunden.",

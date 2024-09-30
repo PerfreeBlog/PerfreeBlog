@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -75,6 +75,9 @@
         noMatch: "Nema prona\u0111enih podataka",
         noData: "Nema podataka",
         placeholder: "Izaberi"
+      },
+      mention: {
+        loading: "U\u010Ditavanje"
       },
       cascader: {
         noMatch: "Nema prona\u0111enih podataka",

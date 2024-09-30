@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var tr = {
   name: "tr",
@@ -68,6 +68,9 @@ var tr = {
       noMatch: "E\u015Fle\u015Fen veri bulunamad\u0131",
       noData: "Veri yok",
       placeholder: "Se\xE7"
+    },
+    mention: {
+      loading: "Y\xFCkleniyor"
     },
     cascader: {
       noMatch: "E\u015Fle\u015Fen veri bulunamad\u0131",

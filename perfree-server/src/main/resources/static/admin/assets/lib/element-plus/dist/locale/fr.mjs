@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var fr = {
   name: "fr",
@@ -88,6 +88,9 @@ var fr = {
       noMatch: "Aucune correspondance",
       noData: "Aucune donn\xE9e",
       placeholder: "Choisir"
+    },
+    mention: {
+      loading: "Chargement"
     },
     cascader: {
       noMatch: "Aucune correspondance",

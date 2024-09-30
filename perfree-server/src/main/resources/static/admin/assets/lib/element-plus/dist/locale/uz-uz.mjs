@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var uzUz = {
   name: "uz-uz",
@@ -69,6 +69,9 @@ var uzUz = {
       noMatch: "Mos ma\u02BClumot yo\u02BBq",
       noData: "Ma\u02BClumot yo\u02BBq",
       placeholder: "Tanladizngiz"
+    },
+    mention: {
+      loading: "Yuklanmoqda"
     },
     cascader: {
       noMatch: "Mos ma\u02BClumot topilmadi",

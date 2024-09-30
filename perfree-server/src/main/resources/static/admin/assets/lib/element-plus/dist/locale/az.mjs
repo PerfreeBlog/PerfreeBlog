@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var az = {
   name: "az",
@@ -69,6 +69,9 @@ var az = {
       noMatch: "N\u0259tic\u0259 tap\u0131lmad\u0131",
       noData: "M\u0259lumat yoxdur",
       placeholder: "Se\xE7"
+    },
+    mention: {
+      loading: "Y\xFCkl\u0259nir"
     },
     cascader: {
       noMatch: "N\u0259tic\u0259 tap\u0131lmad\u0131",

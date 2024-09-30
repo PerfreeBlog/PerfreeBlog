@@ -1,5 +1,5 @@
-const g = window.Pinia.defineStore;
-g({
+const u = window.Pinia.defineStore;
+u({
   id: "common",
   state: () => ({
     menuInit: !1,
@@ -32,10 +32,10 @@ g({
     enabled: !1
   }
 });
-function c(e, r) {
+function d(e, i) {
   if (arguments.length === 0 || !e)
     return null;
-  const i = r || "{y}-{m}-{d} {h}:{i}:{s}";
+  const r = i || "{y}-{m}-{d} {h}:{i}:{s}";
   let t;
   typeof e == "object" ? t = e : (typeof e == "string" && /^[0-9]+$/.test(e) ? e = parseInt(e) : typeof e == "string" && (e = e.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof e == "number" && e.toString().length === 10 && (e = e * 1e3), t = new Date(e));
   const a = {
@@ -47,11 +47,15 @@ function c(e, r) {
     s: t.getSeconds(),
     a: t.getDay()
   };
-  return i.replace(/{([ymdhisa])+}/g, (u, s) => {
+  return r.replace(/{([ymdhisa])+}/g, (o, s) => {
     let n = a[s];
-    return s === "a" ? ["日", "一", "二", "三", "四", "五", "六"][n] : (u.length > 0 && n < 10 && (n = "0" + n), n || 0);
+    return s === "a" ? ["日", "一", "二", "三", "四", "五", "六"][n] : (o.length > 0 && n < 10 && (n = "0" + n), n || 0);
   });
 }
+function g(e) {
+  return window.document.body.clientWidth < e ? window.document.body.clientWidth : e;
+}
 export {
-  c as p
+  g as d,
+  d as p
 };

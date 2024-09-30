@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var es = {
   name: "es",
@@ -68,6 +68,9 @@ var es = {
       noMatch: "No hay datos que coincidan",
       noData: "Sin datos",
       placeholder: "Seleccionar"
+    },
+    mention: {
+      loading: "Cargando"
     },
     cascader: {
       noMatch: "No hay datos que coincidan",

@@ -43,4 +43,9 @@ public class SecurityFrameworkUtils {
         }
         return null;
     }
+
+    public static Integer getLoginUserId() {
+        LoginUserVO loginUser = getLoginUser();
+        return null == loginUser ? null : loginUser.getId();
+    }
 }

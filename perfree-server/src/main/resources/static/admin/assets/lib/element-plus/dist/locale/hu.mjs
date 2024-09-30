@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var hu = {
   name: "hu",
@@ -68,6 +68,9 @@ var hu = {
       noMatch: "Nincs tal\xE1lat",
       noData: "Nincs adat",
       placeholder: "V\xE1lassz"
+    },
+    mention: {
+      loading: "Bet\xF6lt\xE9s"
     },
     cascader: {
       noMatch: "Nincs tal\xE1lat",

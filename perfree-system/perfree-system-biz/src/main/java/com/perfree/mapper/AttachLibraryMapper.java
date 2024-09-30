@@ -38,7 +38,7 @@ public interface AttachLibraryMapper extends BaseMapperX<AttachLibrary> {
         return selectList(lambdaQueryWrapper);
     }
 
-    IPage<AttachLibraryRespVO> attachLibraryPage(IPage<AttachLibraryRespVO> page, @Param("pageVO") AttachLibraryPageReqVO pageVO);
+    IPage<AttachLibraryRespVO> attachLibraryPage(IPage<AttachLibraryRespVO> page, @Param("pageVO") AttachLibraryPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     AttachLibraryRespVO getById(@Param("id") Integer id);
 

@@ -55,15 +55,12 @@ const T = {
       }
     ];
   }
-}, r = window.Vue.unref, e = window.Vue.createVNode, d = window.Vue.resolveComponent, t = window.Vue.withCtx, c = window.Vue.createTextVNode, _ = window.Vue.isRef, m = window.Vue.createElementVNode, q = window.Vue.resolveDirective, z = window.Vue.withDirectives, G = window.Vue.openBlock, H = window.Vue.createElementBlock;
-window.Vue.pushScopeId;
-window.Vue.popScopeId;
-const L = { class: "page" }, P = { class: "dialog-footer" }, F = { class: "hljs" }, K = { class: "dialog-footer" }, Q = window.VueUse.useClipboard, w = window.ElementPlus.ElMessage, W = window.Vue.onMounted, p = window.Vue.ref, X = {
+}, r = window.Vue.unref, t = window.Vue.createVNode, d = window.Vue.resolveComponent, o = window.Vue.withCtx, p = window.Vue.createTextVNode, m = window.Vue.isRef, _ = window.Vue.createElementVNode, q = window.Vue.resolveDirective, z = window.Vue.withDirectives, G = window.Vue.openBlock, H = window.Vue.createElementBlock, L = { class: "page" }, P = { class: "dialog-footer" }, F = { class: "hljs" }, K = { class: "dialog-footer" }, Q = window.VueUse.useClipboard, w = window.ElementPlus.ElMessage, W = window.Vue.onMounted, c = window.Vue.ref, X = {
   __name: "GenSettingView",
   setup(v) {
-    const { copy: V, isSupported: C } = Q({ legacy: !0 }), a = p();
-    let s = p(!1), n = p(!1), g = p(""), f = p("");
-    const J = p({
+    const { copy: V, isSupported: C } = Q({ legacy: !0 }), u = c();
+    let s = c(!1), n = c(!1), g = c(""), f = c("");
+    const J = c({
       //控制字段ID输入框能否输入
       fieldReadonly: !1,
       //隐藏所有子表单组件
@@ -73,21 +70,21 @@ const L = { class: "page" }, P = { class: "dialog-footer" }, F = { class: "hljs"
     });
     function k() {
       s.value = !0, g.value = {
-        option: a.value.getOption(),
-        rule: a.value.getRule()
+        option: u.value.getOption(),
+        rule: u.value.getRule()
       };
     }
-    function S() {
+    function x() {
       n.value = !0;
     }
-    function x() {
+    function S() {
       const i = JSON.parse(f.value);
-      a.value.setOption(i.option), a.value.setRule(i.rule), w.success("导入成功"), n.value = !1;
+      u.value.setOption(i.option), u.value.setRule(i.rule), w.success("导入成功"), n.value = !1;
     }
     W(async () => {
-      a.value.addComponent(T), b.registerLanguage("json", D);
+      u.value.addComponent(T), b.registerLanguage("json", D);
     });
-    const I = (i) => (i = JSON.stringify(i, null, 2), b.highlight("json", i, !0).value || "&nbsp;"), N = async () => {
+    const N = (i) => (i = JSON.stringify(i, null, 2), b.highlight("json", i, !0).value || "&nbsp;"), j = async () => {
       try {
         if (!C.value) {
           w.error("复制失败,可能浏览器不支持,请手动复制");
@@ -98,85 +95,85 @@ const L = { class: "page" }, P = { class: "dialog-footer" }, F = { class: "hljs"
         w.error("复制失败,可能浏览器不支持,请手动复制");
       }
     };
-    return (i, o) => {
-      const h = d("el-icon"), u = d("el-button"), j = d("fc-designer"), E = d("el-input"), y = d("el-dialog"), O = d("el-scrollbar"), R = q("dompurify-html");
+    return (i, e) => {
+      const y = d("el-icon"), a = d("el-button"), E = d("fc-designer"), I = d("el-input"), h = d("el-dialog"), O = d("el-scrollbar"), R = q("dompurify-html");
       return G(), H("div", L, [
-        e(j, {
+        t(E, {
           ref_key: "designer",
-          ref: a,
+          ref: u,
           height: "100%",
           config: J.value
         }, {
-          handle: t(() => [
-            e(u, {
+          handle: o(() => [
+            t(a, {
               size: "small",
               type: "primary",
               plain: "",
-              onClick: S
+              onClick: x
             }, {
-              default: t(() => [
-                e(h, null, {
-                  default: t(() => [
-                    e(r(M))
+              default: o(() => [
+                t(y, null, {
+                  default: o(() => [
+                    t(r(M))
                   ]),
                   _: 1
                 }),
-                c(" 导入 Json")
+                e[5] || (e[5] = p(" 导入 Json"))
               ]),
               _: 1
             }),
-            e(u, {
+            t(a, {
               size: "small",
               type: "primary",
               plain: "",
               onClick: k
             }, {
-              default: t(() => [
-                e(h, null, {
-                  default: t(() => [
-                    e(r(B))
+              default: o(() => [
+                t(y, null, {
+                  default: o(() => [
+                    t(r(B))
                   ]),
                   _: 1
                 }),
-                c(" 生成 Json")
+                e[6] || (e[6] = p(" 生成 Json"))
               ]),
               _: 1
             })
           ]),
           _: 1
         }, 8, ["config"]),
-        e(y, {
+        t(h, {
           modelValue: r(n),
-          "onUpdate:modelValue": o[2] || (o[2] = (l) => _(n) ? n.value = l : n = l),
+          "onUpdate:modelValue": e[2] || (e[2] = (l) => m(n) ? n.value = l : n = l),
           title: "导入Json",
           width: "800px",
           draggable: ""
         }, {
-          footer: t(() => [
-            m("span", P, [
-              e(u, {
+          footer: o(() => [
+            _("span", P, [
+              t(a, {
                 type: "primary",
-                onClick: x
+                onClick: S
               }, {
-                default: t(() => [
-                  c("确 定")
-                ]),
+                default: o(() => e[7] || (e[7] = [
+                  p("确 定")
+                ])),
                 _: 1
               }),
-              e(u, {
-                onClick: o[1] || (o[1] = (l) => _(n) ? n.value = !1 : n = !1)
+              t(a, {
+                onClick: e[1] || (e[1] = (l) => m(n) ? n.value = !1 : n = !1)
               }, {
-                default: t(() => [
-                  c("关 闭")
-                ]),
+                default: o(() => e[8] || (e[8] = [
+                  p("关 闭")
+                ])),
                 _: 1
               })
             ])
           ]),
-          default: t(() => [
-            e(E, {
+          default: o(() => [
+            t(I, {
               modelValue: r(f),
-              "onUpdate:modelValue": o[0] || (o[0] = (l) => _(f) ? f.value = l : f = l),
+              "onUpdate:modelValue": e[0] || (e[0] = (l) => m(f) ? f.value = l : f = l),
               style: { width: "100%" },
               rows: 10,
               type: "textarea",
@@ -185,41 +182,41 @@ const L = { class: "page" }, P = { class: "dialog-footer" }, F = { class: "hljs"
           ]),
           _: 1
         }, 8, ["modelValue"]),
-        e(y, {
+        t(h, {
           modelValue: r(s),
-          "onUpdate:modelValue": o[4] || (o[4] = (l) => _(s) ? s.value = l : s = l),
+          "onUpdate:modelValue": e[4] || (e[4] = (l) => m(s) ? s.value = l : s = l),
           title: "生成Json",
           width: "800px",
           draggable: ""
         }, {
-          footer: t(() => [
-            m("span", K, [
-              e(u, {
+          footer: o(() => [
+            _("span", K, [
+              t(a, {
                 type: "primary",
-                onClick: N
+                onClick: j
               }, {
-                default: t(() => [
-                  c("复制Json")
-                ]),
+                default: o(() => e[9] || (e[9] = [
+                  p("复制Json")
+                ])),
                 _: 1
               }),
-              e(u, {
-                onClick: o[3] || (o[3] = (l) => _(s) ? s.value = !1 : s = !1)
+              t(a, {
+                onClick: e[3] || (e[3] = (l) => m(s) ? s.value = !1 : s = !1)
               }, {
-                default: t(() => [
-                  c("关 闭")
-                ]),
+                default: o(() => e[10] || (e[10] = [
+                  p("关 闭")
+                ])),
                 _: 1
               })
             ])
           ]),
-          default: t(() => [
-            e(O, { height: "580" }, {
-              default: t(() => [
-                m("div", null, [
-                  m("pre", null, [
-                    z(m("code", F, null, 512), [
-                      [R, I(r(g))]
+          default: o(() => [
+            t(O, { height: "580" }, {
+              default: o(() => [
+                _("div", null, [
+                  _("pre", null, [
+                    z(_("code", F, null, 512), [
+                      [R, N(r(g))]
                     ])
                   ])
                 ])
@@ -232,7 +229,7 @@ const L = { class: "page" }, P = { class: "dialog-footer" }, F = { class: "hljs"
       ]);
     };
   }
-}, te = /* @__PURE__ */ A(X, [["__scopeId", "data-v-94f4c217"]]);
+}, te = /* @__PURE__ */ A(X, [["__scopeId", "data-v-c2690f44"]]);
 export {
   te as default
 };

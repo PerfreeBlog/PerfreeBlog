@@ -161,4 +161,7 @@ public interface ArticleService extends IService<Article> {
      */
     List<ArticleRespVO> getLatestArticle(Integer num);
 
+    List<ArticleRespVO> getHotArticleByCommentCount(Integer num);
+
+    List<ArticleRespVO> getHotArticleByViewCount(Integer num);
 }

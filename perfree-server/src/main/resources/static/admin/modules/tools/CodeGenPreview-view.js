@@ -1,37 +1,34 @@
-import { g as I, h as B, a as P } from "./lib/codegen.js";
+import { g as B, h as I, a as P } from "./lib/codegen.js";
 import { F as r } from "./lib/@fortawesome.js";
 import { T as R } from "./lib/vue-codemirror.js";
-import { F as L, G as S } from "./lib/@codemirror.js";
-import { _ as G } from "./lib/_plugin-vue_export-helper.js";
+import { F as L, G } from "./lib/@codemirror.js";
+import { _ as q } from "./lib/_plugin-vue_export-helper.js";
 const t = window.Vue.unref, o = window.Vue.openBlock, i = window.Vue.createBlock;
 window.Vue.createCommentVNode;
-const q = window.Vue.toDisplayString, x = window.Vue.createElementVNode, _ = window.Vue.resolveComponent, d = window.Vue.withCtx, h = window.Vue.createVNode, M = window.Vue.resolveDirective, C = window.Vue.withDirectives, z = window.Vue.createElementBlock;
-window.Vue.pushScopeId;
-window.Vue.popScopeId;
-const A = { class: "page" }, K = { class: "custom-tree-node" }, a = window.Vue.ref, T = window.ElementPlus.ElMessage, O = window.VueRouter.useRoute, U = {
+const M = window.Vue.toDisplayString, x = window.Vue.createElementVNode, _ = window.Vue.resolveComponent, d = window.Vue.withCtx, h = window.Vue.createVNode, S = window.Vue.resolveDirective, C = window.Vue.withDirectives, z = window.Vue.createElementBlock, A = { class: "page" }, K = { class: "custom-tree-node" }, c = window.Vue.ref, T = window.ElementPlus.ElMessage, O = window.VueRouter.useRoute, U = {
   __name: "CodeGenPreview",
   setup(H) {
     const v = O();
-    let y = a([]), u = a(!0), f = a(!0);
+    let y = c([]), u = c(!0), f = c(!0);
     const F = {
       children: "children",
       label: "fileName"
     };
-    let p = a([]), b = a({});
-    const V = a(), w = a(""), E = [L(), S], N = ["java", "js", "css", "html", "json", "yaml", "less", "scss", "txt", "md", "vue", "xml", "sql"];
+    let p = c([]), b = c({});
+    const k = c(), m = c(""), E = [L(), G], N = ["java", "js", "css", "html", "json", "yaml", "less", "scss", "txt", "md", "vue", "xml", "sql"];
     function j() {
-      u.value = !0, I(v.params.id).then((e) => {
+      u.value = !0, B(v.params.id).then((e) => {
         if (e.code === 200) {
           let n = null;
           e.data.forEach((s) => {
             s.fileType !== "dir" && n === null && (n = s, p.value = [s.id]);
-          }), y.value = B(e.data, "id", "pid", "children", "-1"), k(n);
+          }), y.value = I(e.data, "id", "pid", "children", "-1"), V(n);
         } else
           T.error(e.msg);
         u.value = !1;
       });
     }
-    function k(e) {
+    function V(e) {
       if (e.fileType === "dir" || N.findIndex((l) => l === e.fileType) < 0)
         return;
       let s = {
@@ -39,11 +36,11 @@ const A = { class: "page" }, K = { class: "custom-tree-node" }, a = window.Vue.r
         path: e.filePath
       };
       f.value = !0, P(s).then((l) => {
-        l.code === 200 ? (p.value = [e.id], w.value = l.data, b.value = e, V.value.setCheckedKeys([e.id], !0)) : T.error(l.msg), f.value = !1;
+        l.code === 200 ? (p.value = [e.id], m.value = l.data, b.value = e, k.value.setCheckedKeys([e.id], !0)) : T.error(l.msg), f.value = !1;
       });
     }
     return j(), (e, n) => {
-      const s = _("el-tree"), l = _("el-col"), D = _("el-row"), g = M("loading");
+      const s = _("el-tree"), l = _("el-col"), D = _("el-row"), g = S("loading");
       return o(), z("div", A, [
         h(D, { gutter: 20 }, {
           default: d(() => [
@@ -53,32 +50,32 @@ const A = { class: "page" }, K = { class: "custom-tree-node" }, a = window.Vue.r
                   style: { width: "100%", "max-height": "700px", overflow: "auto" },
                   data: t(y),
                   props: F,
-                  onNodeClick: k,
+                  onNodeClick: V,
                   "node-key": "id",
                   "default-checked-keys": t(p),
                   "default-expand-all": "",
                   ref_key: "treeRef",
-                  ref: V
+                  ref: k
                 }, {
-                  default: d(({ node: m, data: c }) => [
+                  default: d(({ node: w, data: a }) => [
                     x("span", K, [
-                      c.fileType === "dir" ? (o(), i(t(r), {
+                      a.fileType === "dir" ? (o(), i(t(r), {
                         key: 0,
                         icon: "fa-regular fa-folder-open ",
                         class: "file-list-icon folder"
-                      })) : c.fileType === "js" ? (o(), i(t(r), {
+                      })) : a.fileType === "js" ? (o(), i(t(r), {
                         key: 1,
                         icon: "fa-brands fa-js-square",
                         class: "file-list-icon js"
-                      })) : c.fileType === "html" ? (o(), i(t(r), {
+                      })) : a.fileType === "html" ? (o(), i(t(r), {
                         key: 2,
                         icon: "fa-brands fa-html5 ",
                         class: "file-list-icon html"
-                      })) : c.fileType === "css" || c.fileType === "less" || c.fileType === "scss" ? (o(), i(t(r), {
+                      })) : a.fileType === "css" || a.fileType === "less" || a.fileType === "scss" ? (o(), i(t(r), {
                         key: 3,
                         icon: "fa-brands fa-css3 ",
                         class: "file-list-icon css"
-                      })) : c.fileType === "txt" ? (o(), i(t(r), {
+                      })) : a.fileType === "txt" ? (o(), i(t(r), {
                         key: 4,
                         icon: "fa-solid fa-text-height ",
                         class: "file-list-icon txt"
@@ -87,7 +84,7 @@ const A = { class: "page" }, K = { class: "custom-tree-node" }, a = window.Vue.r
                         icon: "fa-regular fa-file ",
                         class: "file-list-icon"
                       })),
-                      x("span", null, q(m.label), 1)
+                      x("span", null, M(w.label), 1)
                     ])
                   ]),
                   _: 1
@@ -100,8 +97,8 @@ const A = { class: "page" }, K = { class: "custom-tree-node" }, a = window.Vue.r
             C((o(), i(l, { span: 18 }, {
               default: d(() => [
                 h(t(R), {
-                  modelValue: w.value,
-                  "onUpdate:modelValue": n[0] || (n[0] = (m) => w.value = m),
+                  modelValue: m.value,
+                  "onUpdate:modelValue": n[0] || (n[0] = (w) => m.value = w),
                   placeholder: "请选择左侧要编辑的文件...",
                   style: { height: "700px" },
                   autofocus: !0,
@@ -120,7 +117,7 @@ const A = { class: "page" }, K = { class: "custom-tree-node" }, a = window.Vue.r
       ]);
     };
   }
-}, Z = /* @__PURE__ */ G(U, [["__scopeId", "data-v-c5b497c7"]]);
+}, Z = /* @__PURE__ */ q(U, [["__scopeId", "data-v-c5b497c7"]]);
 export {
   Z as default
 };

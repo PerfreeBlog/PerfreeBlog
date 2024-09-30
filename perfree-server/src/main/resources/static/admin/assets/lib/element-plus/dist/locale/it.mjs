@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var it = {
   name: "it",
@@ -68,6 +68,9 @@ var it = {
       noMatch: "Nessuna corrispondenza",
       noData: "Nessun dato",
       placeholder: "Seleziona"
+    },
+    mention: {
+      loading: "Caricamento"
     },
     cascader: {
       noMatch: "Nessuna corrispondenza",

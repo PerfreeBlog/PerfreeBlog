@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var eu = {
   name: "eu",
@@ -68,6 +68,9 @@ var eu = {
       noMatch: "Bat datorren daturik ez",
       noData: "Daturik ez",
       placeholder: "Hautatu"
+    },
+    mention: {
+      loading: "Kargatzen"
     },
     cascader: {
       noMatch: "Bat datorren daturik ez",

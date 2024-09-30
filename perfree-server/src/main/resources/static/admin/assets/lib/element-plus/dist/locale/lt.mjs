@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var lt = {
   name: "lt",
@@ -68,6 +68,9 @@ var lt = {
       noMatch: "Duomen\u0173 nerasta",
       noData: "N\u0117ra duomen\u0173",
       placeholder: "Pasirink"
+    },
+    mention: {
+      loading: "Kraunasi"
     },
     cascader: {
       noMatch: "Duomen\u0173 nerasta",

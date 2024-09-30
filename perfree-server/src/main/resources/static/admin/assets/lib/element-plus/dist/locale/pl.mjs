@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var pl = {
   name: "pl",
@@ -69,6 +69,9 @@ var pl = {
       noMatch: "Brak dopasowa\u0144",
       noData: "Brak danych",
       placeholder: "Wybierz"
+    },
+    mention: {
+      loading: "\u0141adowanie"
     },
     cascader: {
       noMatch: "Brak dopasowa\u0144",

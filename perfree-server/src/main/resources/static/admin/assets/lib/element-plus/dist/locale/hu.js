@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -74,6 +74,9 @@
         noMatch: "Nincs tal\xE1lat",
         noData: "Nincs adat",
         placeholder: "V\xE1lassz"
+      },
+      mention: {
+        loading: "Bet\xF6lt\xE9s"
       },
       cascader: {
         noMatch: "Nincs tal\xE1lat",

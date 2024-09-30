@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var ru = {
   name: "ru",
@@ -69,6 +69,9 @@ var ru = {
       noMatch: "\u0421\u043E\u0432\u043F\u0430\u0434\u0435\u043D\u0438\u0439 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E",
       noData: "\u041D\u0435\u0442 \u0434\u0430\u043D\u043D\u044B\u0445",
       placeholder: "\u0412\u044B\u0431\u0440\u0430\u0442\u044C"
+    },
+    mention: {
+      loading: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430"
     },
     cascader: {
       noMatch: "\u0421\u043E\u0432\u043F\u0430\u0434\u0435\u043D\u0438\u0439 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D\u043E",

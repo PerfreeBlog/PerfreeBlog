@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var lv = {
   name: "lv",
@@ -68,6 +68,9 @@ var lv = {
       noMatch: "Nav atbilsto\u0161u datu",
       noData: "Nav datu",
       placeholder: "Izv\u0113l\u0113ties"
+    },
+    mention: {
+      loading: "Iel\u0101d\u0113"
     },
     cascader: {
       noMatch: "Nav atbilsto\u0161u datu",

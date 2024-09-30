@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var fi = {
   name: "fi",
@@ -68,6 +68,9 @@ var fi = {
       noMatch: "Ei vastaavia tietoja",
       noData: "Ei tietoja",
       placeholder: "Valitse"
+    },
+    mention: {
+      loading: "Lataa"
     },
     cascader: {
       noMatch: "Ei vastaavia tietoja",

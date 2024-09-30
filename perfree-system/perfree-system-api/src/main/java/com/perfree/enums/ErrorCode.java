@@ -55,6 +55,7 @@ public enum ErrorCode {
     NOT_ALLOW_REGISTER(100000046, "网站已关闭注册功能!"),
     EMAIL_ACCOUNT_NOT_MATE(100000047, "邮箱账户不匹配!"),
     EMAIL_CODE_FAIL(100000048, "邮箱验证码错误!"),
+    NO_PERMISSION_PREVIEW(100000049,"仅作者可看,您无权查看!"),
     ;
 
     private final Integer code;

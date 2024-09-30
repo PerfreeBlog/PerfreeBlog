@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var af = {
   name: "af",
@@ -68,6 +68,9 @@ var af = {
       noMatch: "Geen toepaslike data",
       noData: "Geen data",
       placeholder: "Kies"
+    },
+    mention: {
+      loading: "Laai"
     },
     cascader: {
       noMatch: "Geen toepaslike data",

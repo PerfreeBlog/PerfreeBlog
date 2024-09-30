@@ -1,10 +1,10 @@
-function c(t) {
+function g(t) {
   return axios.post("/api/auth/attachConfig/page", t);
 }
-function f(t) {
+function h(t) {
   return axios.post("/api/auth/attachConfig/add", t);
 }
-function h(t) {
+function f(t) {
   return axios.put("/api/auth/attachConfig/update", t);
 }
 function p(t) {
@@ -53,7 +53,7 @@ u({
     enabled: !1
   }
 });
-function A(t, i) {
+function w(t, i) {
   if (arguments.length === 0 || !t)
     return null;
   const s = i || "{y}-{m}-{d} {h}:{i}:{s}";
@@ -73,13 +73,17 @@ function A(t, i) {
     return n === "a" ? ["日", "一", "二", "三", "四", "五", "六"][a] : (r.length > 0 && a < 10 && (a = "0" + a), a || 0);
   });
 }
+function A(t) {
+  return window.document.body.clientWidth < t ? window.document.body.clientWidth : t;
+}
 export {
-  c as a,
-  h as b,
-  f as c,
-  l as d,
-  d as e,
-  C as f,
+  g as a,
+  f as b,
+  h as c,
+  A as d,
+  l as e,
+  d as f,
   p as g,
-  A as p
+  C as h,
+  w as p
 };

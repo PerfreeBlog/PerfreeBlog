@@ -129,10 +129,8 @@ const refreshRoute = () => {
  * 退出登录
  */
 const logout = () => {
-  logoutApi().then(res => {
-    localStorage.removeItem(CONSTANTS.STORAGE_TOKEN);
-    router.replace("/login")
-  })
+  localStorage.removeItem(CONSTANTS.STORAGE_TOKEN);
+  logoutApi().then(res => {})
 
 }
 

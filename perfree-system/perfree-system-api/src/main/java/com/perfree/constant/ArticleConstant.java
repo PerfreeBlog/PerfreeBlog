@@ -16,4 +16,5 @@ public class ArticleConstant {
 
     /** 文章状态:草稿 */
     public static final Integer ARTICLE_STATUS_DRAFT = 1;
+    public static final Integer ARTICLE_STATUS_ONLY_SELF = 2;
 }

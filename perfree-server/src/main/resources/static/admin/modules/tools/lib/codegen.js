@@ -32,10 +32,10 @@ c({
     enabled: !1
   }
 });
-function l(e, i) {
+function l(e, a) {
   if (arguments.length === 0 || !e)
     return null;
-  const a = i || "{y}-{m}-{d} {h}:{i}:{s}";
+  const i = a || "{y}-{m}-{d} {h}:{i}:{s}";
   let t;
   typeof e == "object" ? t = e : (typeof e == "string" && /^[0-9]+$/.test(e) ? e = parseInt(e) : typeof e == "string" && (e = e.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof e == "number" && e.toString().length === 10 && (e = e * 1e3), t = new Date(e));
   const o = {
@@ -47,23 +47,23 @@ function l(e, i) {
     s: t.getSeconds(),
     a: t.getDay()
   };
-  return a.replace(/{([ymdhisa])+}/g, (r, n) => {
+  return i.replace(/{([ymdhisa])+}/g, (r, n) => {
     let s = o[n];
     return n === "a" ? ["日", "一", "二", "三", "四", "五", "六"][s] : (r.length > 0 && s < 10 && (s = "0" + s), s || 0);
   });
 }
-function d(e, i, a, t, o) {
-  i = i || "id", a = a || "parentId", o = o || Math.min.apply(Math, e.map((n) => n[a])) || 0;
-  const u = JSON.parse(JSON.stringify(e)), r = u.filter((n) => {
-    let s = u.filter((g) => n[i] === g[a]);
-    return s.length > 0 && (n.children = s), n[a] === o;
+function d(e, a, i, t, o) {
+  a = a || "id", i = i || "parentId", o = o || Math.min.apply(Math, e.map((n) => n[i])) || 0;
+  const g = JSON.parse(JSON.stringify(e)), r = g.filter((n) => {
+    let s = g.filter((u) => n[a] === u[i]);
+    return s.length > 0 && (n.children = s), n[i] === o;
   });
-  return r !== "" ? r : e;
-}
-function f(e) {
-  return axios.post("/api/auth/codegen/getTableList", e);
+  return r.length === 0 && e.length > 0 ? e : r.length > 0 ? r : e;
 }
 function h(e) {
+  return axios.post("/api/auth/codegen/getTableList", e);
+}
+function f(e) {
   return axios.post("/api/auth/codegen/create-list", e);
 }
 function p(e) {
@@ -91,8 +91,8 @@ export {
   x as a,
   b,
   p as c,
-  f as d,
-  h as e,
+  h as d,
+  f as e,
   y as f,
   w as g,
   d as h,

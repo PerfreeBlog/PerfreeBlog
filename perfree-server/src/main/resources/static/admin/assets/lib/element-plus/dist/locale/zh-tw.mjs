@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var zhTw = {
   name: "zh-tw",
@@ -10,7 +10,8 @@ var zhTw = {
       confirm: "\u78BA\u8A8D",
       clear: "\u6E05\u7A7A",
       defaultLabel: "\u8272\u5F69\u9078\u64C7\u5668",
-      description: "\u76EE\u524D\u8272\u5F69\u70BA {color}\u3002\u6309\u4E00\u4E0B Enter \u4EE5\u9078\u64C7\u65B0\u8272\u5F69\u3002"
+      description: "\u76EE\u524D\u8272\u5F69\u70BA {color}\u3002\u6309\u4E00\u4E0B Enter \u4EE5\u9078\u64C7\u65B0\u8272\u5F69\u3002",
+      alphaLabel: "\u9078\u64C7\u900F\u660E\u5EA6\u7684\u503C"
     },
     datepicker: {
       now: "\u73FE\u5728",
@@ -87,6 +88,9 @@ var zhTw = {
       noMatch: "\u7121\u76F8\u7B26\u8CC7\u6599",
       noData: "\u7121\u8CC7\u6599",
       placeholder: "\u8ACB\u9078\u64C7"
+    },
+    mention: {
+      loading: "\u8F09\u5165\u4E2D"
     },
     dropdown: {
       toggleDropdown: "\u5207\u63DB\u4E0B\u62C9\u9078\u55AE"

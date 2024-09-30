@@ -94,16 +94,27 @@
     </resultMap>
 
     <select id="journalPage" resultMap="JOURNAL_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        select a.* from (SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where
+        articleId = t1.id and status = 0) as commentCount
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'journal'
+
         <if test="pageVO.status != null">
             and t1.status = #{pageVO.status}
         </if>
 
         <if test="pageVO.content != null and pageVO.content != ''">
-            <bind name="content" value="'%' + _parameter.pageVO.content + '%'" />
+            <bind name="content" value="'%' + _parameter.pageVO.content + '%'"/>
             and t1.content like #{content}
         </if>
+        ) a
+        <where>
+            <if test="loginUserId != null">
+                and a.createUserId = #{loginUserId}
+            </if>
+            <if test="loginUserId == null">
+                and a.status = 0
+            </if>
+        </where>
     </select>
 
     <!-- 获取文章的标签 -->
@@ -139,5 +150,17 @@
         SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
         order by t1.createTime desc LIMIT 0,#{num}
+    </select>
+
+    <select id="getHotArticleByCommentCount" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by  commentCount desc LIMIT 0,#{num}
+    </select>
+
+    <select id="getHotArticleByViewCount" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by   t1.viewCount desc LIMIT 0,#{num}
     </select>
 </mapper>

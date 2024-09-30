@@ -14,7 +14,8 @@
     </resultMap>
 
     <select id="attachLibraryPage" resultMap="ATTACH_LIBRARY_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_attach_library t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        select a.* from (SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website FROM p_attach_library t1 left JOIN p_user
+        t2 on t1.createUserId = t2.id
         <where>
             <if test="pageVO.type != null and pageVO.type != ''">
                 and t1.type = #{pageVO.type}
@@ -23,8 +24,17 @@
                 and t1.visibility = #{pageVO.visibility}
             </if>
             <if test="pageVO.name != null and pageVO.name != ''">
-                <bind name="name" value="'%' + _parameter.pageVO.name + '%'" />
+                <bind name="name" value="'%' + _parameter.pageVO.name + '%'"/>
                 and t1.name like #{name}
+            </if>
+        </where>
+        ) a
+        <where>
+            <if test="loginUserId != null">
+                and  a.createUserId = #{loginUserId}
+            </if>
+            <if test="loginUserId != null">
+                and  a.visibility = 0
             </if>
         </where>
     </select>

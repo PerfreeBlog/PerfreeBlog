@@ -1,15 +1,15 @@
-import { s as ue, r as q, p as de, e as ce, f as pe, d as me } from "./lib/@element-plus.js";
-function fe(e) {
-  return axios.get("/api/auth/role/getRoleMenus?id=" + e);
+import { s as de, r as q, p as ce, e as pe, f as me, d as fe } from "./lib/@element-plus.js";
+function ge(t) {
+  return axios.get("/api/auth/role/getRoleMenus?id=" + t);
 }
-function he(e) {
-  return axios.post("/api/auth/role/assignRoleMenu", e);
+function he(t) {
+  return axios.post("/api/auth/role/assignRoleMenu", t);
 }
-function ge(e) {
-  return axios.post("/api/auth/menu/list", e);
+function ve(t) {
+  return axios.post("/api/auth/menu/list", t);
 }
-const ve = window.Pinia.defineStore;
-ve({
+const we = window.Pinia.defineStore;
+we({
   id: "common",
   state: () => ({
     menuInit: !1,
@@ -28,26 +28,26 @@ ve({
     }
   },
   actions: {
-    setMenuInit(e) {
-      this.menuInit = e;
+    setMenuInit(t) {
+      this.menuInit = t;
     },
-    setMenuList(e) {
-      this.menuList = e;
+    setMenuList(t) {
+      this.menuList = t;
     },
-    setCachedViews(e) {
-      this.cachedViews = e;
+    setCachedViews(t) {
+      this.cachedViews = t;
     }
   },
   persist: {
     enabled: !1
   }
 });
-function _e(e, y) {
-  if (arguments.length === 0 || !e)
+function _e(t, y) {
+  if (arguments.length === 0 || !t)
     return null;
-  const w = y || "{y}-{m}-{d} {h}:{i}:{s}";
+  const _ = y || "{y}-{m}-{d} {h}:{i}:{s}";
   let i;
-  typeof e == "object" ? i = e : (typeof e == "string" && /^[0-9]+$/.test(e) ? e = parseInt(e) : typeof e == "string" && (e = e.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof e == "number" && e.toString().length === 10 && (e = e * 1e3), i = new Date(e));
+  typeof t == "object" ? i = t : (typeof t == "string" && /^[0-9]+$/.test(t) ? t = parseInt(t) : typeof t == "string" && (t = t.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof t == "number" && t.toString().length === 10 && (t = t * 1e3), i = new Date(t));
   const r = {
     y: i.getFullYear(),
     m: i.getMonth() + 1,
@@ -57,36 +57,39 @@ function _e(e, y) {
     s: i.getSeconds(),
     a: i.getDay()
   };
-  return w.replace(/{([ymdhisa])+}/g, (A, s) => {
-    let g = r[s];
-    return s === "a" ? ["日", "一", "二", "三", "四", "五", "六"][g] : (A.length > 0 && g < 10 && (g = "0" + g), g || 0);
+  return _.replace(/{([ymdhisa])+}/g, (x, s) => {
+    let h = r[s];
+    return s === "a" ? ["日", "一", "二", "三", "四", "五", "六"][h] : (x.length > 0 && h < 10 && (h = "0" + h), h || 0);
   });
 }
-function we(e, y, w, i, r) {
-  y = y || "id", w = w || "parentId", r = r || Math.min.apply(Math, e.map((s) => s[w])) || 0;
-  const u = JSON.parse(JSON.stringify(e)), A = u.filter((s) => {
-    let g = u.filter((M) => s[y] === M[w]);
-    return g.length > 0 && (s.children = g), s[w] === r;
+function be(t, y, _, i, r) {
+  y = y || "id", _ = _ || "parentId", r = r || Math.min.apply(Math, t.map((s) => s[_])) || 0;
+  const d = JSON.parse(JSON.stringify(t)), x = d.filter((s) => {
+    let h = d.filter((M) => s[y] === M[_]);
+    return h.length > 0 && (s.children = h), s[_] === r;
   });
-  return A !== "" ? A : e;
+  return x.length === 0 && t.length > 0 ? t : x.length > 0 ? x : t;
 }
-function be(e) {
-  return axios.post("/api/auth/role/page", e);
+function J(t) {
+  return window.document.body.clientWidth < t ? window.document.body.clientWidth : t;
 }
-function Ve(e) {
-  return axios.get("/api/auth/role/get?id=" + e);
+function Ve(t) {
+  return axios.post("/api/auth/role/page", t);
 }
-function ye(e) {
-  return axios.post("/api/auth/role/add", e);
+function ye(t) {
+  return axios.get("/api/auth/role/get?id=" + t);
 }
-function ke(e) {
-  return axios.post("/api/auth/role/update", e);
+function ke(t) {
+  return axios.post("/api/auth/role/add", t);
 }
-function xe(e) {
-  return axios.delete("/api/auth/role/del?id=" + e);
+function xe(t) {
+  return axios.post("/api/auth/role/update", t);
 }
-const Ce = window.Pinia.defineStore;
-Ce({
+function Ce(t) {
+  return axios.delete("/api/auth/role/del?id=" + t);
+}
+const Re = window.Pinia.defineStore;
+Re({
   id: "app",
   state: () => ({
     activeTab: null,
@@ -127,26 +130,26 @@ Ce({
     }
   },
   actions: {
-    setActiveTab(e) {
-      this.activeTab = e;
+    setActiveTab(t) {
+      this.activeTab = t;
     },
-    setTheme(e) {
-      this.theme = e;
+    setTheme(t) {
+      this.theme = t;
     },
-    setPrimaryColor(e) {
-      this.primaryColor = e;
+    setPrimaryColor(t) {
+      this.primaryColor = t;
     },
-    setHeaderUnified(e) {
-      this.headerUnified = e;
+    setHeaderUnified(t) {
+      this.headerUnified = t;
     },
-    setTabOpen(e) {
-      this.tabOpen = e;
+    setTabOpen(t) {
+      this.tabOpen = t;
     },
-    setRefreshRouteflag(e) {
-      this.refreshRouteflag = e;
+    setRefreshRouteflag(t) {
+      this.refreshRouteflag = t;
     },
-    setRouteAnimation(e) {
-      this.routeAnimation = e;
+    setRouteAnimation(t) {
+      this.routeAnimation = t;
     }
   },
   persist: {
@@ -154,11 +157,11 @@ Ce({
     //开启本地存储
   }
 });
-const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vue.withCtx, d = window.Vue.unref, _ = window.Vue.createTextVNode, J = window.Vue.resolveDirective, x = window.Vue.openBlock, T = window.Vue.createBlock, C = window.Vue.withDirectives, R = window.Vue.createElementVNode, Re = window.Vue.toDisplayString, D = window.Vue.isRef, Ae = window.Vue.createElementBlock, Me = { class: "page" }, Te = { class: "search-box" }, Fe = { class: "right-tool" }, Ue = { class: "table-box" }, Ee = { style: { width: "100%", border: "1px solid rgb(228 231 237)", padding: "5px" } }, Se = { class: "dialog-footer" }, De = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, ze = window.ElementPlus.ElMessageBox, Oe = window.Vue.reactive, p = window.Vue.ref, Pe = {
+const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vue.withCtx, u = window.Vue.unref, w = window.Vue.createTextVNode, W = window.Vue.resolveDirective, C = window.Vue.openBlock, T = window.Vue.createBlock, R = window.Vue.withDirectives, A = window.Vue.createElementVNode, Ae = window.Vue.toDisplayString, D = window.Vue.isRef, Me = window.Vue.createElementBlock, Te = { class: "page" }, Fe = { class: "search-box" }, Ue = { class: "right-tool" }, Ee = { class: "table-box" }, Se = { style: { width: "100%", border: "1px solid rgb(228 231 237)", padding: "5px" } }, De = { class: "dialog-footer" }, ze = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, Oe = window.ElementPlus.ElMessageBox, Ne = window.Vue.reactive, p = window.Vue.ref, Be = {
   __name: "RoleView",
-  setup(e) {
+  setup(t) {
     let y = p([]);
-    const w = {
+    const _ = {
       children: "children",
       label: "name"
     }, i = p({
@@ -172,69 +175,69 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
       code: "",
       expand: !1,
       selectAll: !1
-    }), u = p({
+    }), d = p({
       id: "",
       name: "",
       code: "",
       description: ""
-    }), A = Oe({
+    }), x = Ne({
       name: [{ required: !0, message: "请输入角色名称", trigger: "blur" }],
       code: [{ required: !0, message: "请输入角色编码", trigger: "blur" }]
-    }), s = p(), g = p(), M = p(), z = p();
+    }), s = p(), h = p(), M = p(), z = p();
     let b = p(!1), v = p(!1), F = p(""), j = p([]), O = p(!1), N = p(!1);
-    function G(a, l) {
-      let c = l.checkedKeys.findIndex((m) => m === a.id), f = !1;
-      c >= 0 && (f = !0), s.value.setChecked(a.id, f, !1), f ? P(a, !0) : P(a, !1);
+    function G(n, e) {
+      let c = e.checkedKeys.findIndex((m) => m === n.id), f = !1;
+      c >= 0 && (f = !0), s.value.setChecked(n.id, f, !1), f ? P(n, !0) : P(n, !1);
     }
-    function P(a, l) {
-      a.children && a.children.length > 0 && a.children.forEach((c) => {
-        s.value.setChecked(c.id, l, !1), c.children && c.children.length > 0 && P(c, l);
+    function P(n, e) {
+      n.children && n.children.length > 0 && n.children.forEach((c) => {
+        s.value.setChecked(c.id, e, !1), c.children && c.children.length > 0 && P(c, e);
       });
     }
     function Y() {
-      M.value.validate((a) => {
-        a && (u.value.id ? ke(u.value).then((l) => {
-          l.code === 200 ? (V.success("操作成功"), v.value = !1, U(), k()) : V.error(l.msg);
-        }) : ye(u.value).then((l) => {
-          l.code === 200 ? (V.success("操作成功"), v.value = !1, U(), k()) : V.error(l.msg);
+      M.value.validate((n) => {
+        n && (d.value.id ? xe(d.value).then((e) => {
+          e.code === 200 ? (V.success("操作成功"), v.value = !1, U(), k()) : V.error(e.msg);
+        }) : ke(d.value).then((e) => {
+          e.code === 200 ? (V.success("操作成功"), v.value = !1, U(), k()) : V.error(e.msg);
         }));
       });
     }
     function Q() {
       U(), F.value = "添加角色", v.value = !0;
     }
-    function W(a) {
-      U(), F.value = "修改角色", v.value = !0, Ve(a.id).then((l) => {
-        u.value = l.data;
+    function X(n) {
+      U(), F.value = "修改角色", v.value = !0, ye(n.id).then((e) => {
+        d.value = e.data;
       });
     }
-    function X(a) {
-      ze.confirm("确定要删除[" + a.name + "]吗？", "提示", {
+    function Z(n) {
+      Oe.confirm("确定要删除[" + n.name + "]吗？", "提示", {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        xe(a.id).then((l) => {
-          l.code === 200 && l.data ? (V.success("删除成功"), k()) : V.error(l.msg);
+        Ce(n.id).then((e) => {
+          e.code === 200 && e.data ? (V.success("删除成功"), k()) : V.error(e.msg);
         });
       }).catch(() => {
       });
     }
     function k() {
-      O.value = !0, be(i.value).then((a) => {
-        j.value = a.data.list, i.value.total = a.data.total, O.value = !1;
+      O.value = !0, Ve(i.value).then((n) => {
+        j.value = n.data.list, i.value.total = n.data.total, O.value = !1;
       });
     }
-    function Z() {
+    function ee() {
       i.value = {
         pageNo: 1,
         pageSize: 10,
         total: 0,
         name: ""
-      }, g.value.resetFields(), k();
+      }, h.value.resetFields(), k();
     }
     function U() {
-      u.value = {
+      d.value = {
         id: "",
         name: "",
         code: "",
@@ -250,80 +253,80 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
         selectAll: !1
       }, z.value && z.value.resetFields();
     }
-    function ee(a) {
-      if (a.code === "admin") {
+    function te(n) {
+      if (n.code === "admin") {
         V.warning("admin角色默认拥有所有权限,不可修改");
         return;
       }
-      B(), b.value = !0, r.value.name = a.name, r.value.code = a.code, r.value.id = a.id, F.value = "菜单权限", N.value = !0, ge({}).then((l) => {
-        y.value = we(l.data, "id", "pid", "children", "-1"), fe(a.id).then((c) => {
+      B(), b.value = !0, r.value.name = n.name, r.value.code = n.code, r.value.id = n.id, F.value = "菜单权限", N.value = !0, ve({ type: 1 }).then((e) => {
+        y.value = be(e.data, "id", "pid", "children", "-1"), ge(n.id).then((c) => {
           s.value.setCheckedKeys(c.data), N.value = !1;
         });
       });
     }
     function le() {
-      r.value.expand ? Object.values(s.value.store.nodesMap).forEach((a) => a.expand()) : Object.values(s.value.store.nodesMap).forEach((a) => a.collapse());
+      r.value.expand ? Object.values(s.value.store.nodesMap).forEach((n) => n.expand()) : Object.values(s.value.store.nodesMap).forEach((n) => n.collapse());
     }
-    function te() {
-      r.value.selectAll ? Object.values(s.value.store.nodesMap).forEach((a) => {
-        a.checked = !0;
-      }) : Object.values(s.value.store.nodesMap).forEach((a) => {
-        a.checked = !1;
+    function ne() {
+      r.value.selectAll ? Object.values(s.value.store.nodesMap).forEach((n) => {
+        n.checked = !0;
+      }) : Object.values(s.value.store.nodesMap).forEach((n) => {
+        n.checked = !1;
       });
     }
-    function ae() {
-      let a = {
+    function oe() {
+      let n = {
         menuIds: [...s.value.getCheckedKeys(), ...s.value.getHalfCheckedKeys()],
         roleId: r.value.id
       };
-      he(a).then((l) => {
-        l.code === 200 && l.data ? (V.success("操作成功"), b.value = !1, B()) : V.error(l.msg);
+      he(n).then((e) => {
+        e.code === 200 && e.data ? (V.success("操作成功"), b.value = !1, B()) : V.error(e.msg);
       });
     }
-    return k(), (a, l) => {
-      const c = h("el-input"), f = h("el-form-item"), m = h("el-button"), L = h("el-form"), ne = h("el-col"), oe = h("el-row"), E = h("el-table-column"), ie = h("el-table"), re = h("el-pagination"), $ = h("el-checkbox"), se = h("el-tree"), H = h("el-dialog"), S = J("hasPermission"), I = J("loading");
-      return x(), Ae("div", Me, [
-        R("div", Te, [
-          t(L, {
+    return k(), (n, e) => {
+      const c = g("el-input"), f = g("el-form-item"), m = g("el-button"), L = g("el-form"), ae = g("el-col"), ie = g("el-row"), E = g("el-table-column"), re = g("el-table"), se = g("el-pagination"), $ = g("el-checkbox"), ue = g("el-tree"), H = g("el-dialog"), S = W("hasPermission"), I = W("loading");
+      return C(), Me("div", Te, [
+        A("div", Fe, [
+          l(L, {
             inline: !0,
             model: i.value,
             class: "demo-form-inline",
             ref_key: "searchFormRef",
-            ref: g
+            ref: h
           }, {
-            default: o(() => [
-              t(f, { label: "角色名称" }, {
-                default: o(() => [
-                  t(c, {
+            default: a(() => [
+              l(f, { label: "角色名称" }, {
+                default: a(() => [
+                  l(c, {
                     modelValue: i.value.name,
-                    "onUpdate:modelValue": l[0] || (l[0] = (n) => i.value.name = n),
+                    "onUpdate:modelValue": e[0] || (e[0] = (o) => i.value.name = o),
                     placeholder: "请输入角色名称",
                     clearable: ""
                   }, null, 8, ["modelValue"])
                 ]),
                 _: 1
               }),
-              t(f, null, {
-                default: o(() => [
-                  C((x(), T(m, {
+              l(f, null, {
+                default: a(() => [
+                  R((C(), T(m, {
                     type: "primary",
                     onClick: k,
-                    icon: d(ue)
+                    icon: u(de)
                   }, {
-                    default: o(() => [
-                      _("查询")
-                    ]),
+                    default: a(() => e[14] || (e[14] = [
+                      w("查询")
+                    ])),
                     _: 1
                   }, 8, ["icon"])), [
                     [S, ["admin:role:query"]]
                   ]),
-                  t(m, {
-                    icon: d(q),
-                    onClick: Z
+                  l(m, {
+                    icon: u(q),
+                    onClick: ee
                   }, {
-                    default: o(() => [
-                      _("重置")
-                    ]),
+                    default: a(() => e[15] || (e[15] = [
+                      w("重置")
+                    ])),
                     _: 1
                   }, 8, ["icon"])
                 ]),
@@ -333,22 +336,22 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             _: 1
           }, 8, ["model"])
         ]),
-        t(oe, {
+        l(ie, {
           gutter: 10,
           class: "mb8"
         }, {
-          default: o(() => [
-            t(ne, { span: 1.5 }, {
-              default: o(() => [
-                C((x(), T(m, {
-                  icon: d(de),
+          default: a(() => [
+            l(ae, { span: 1.5 }, {
+              default: a(() => [
+                R((C(), T(m, {
+                  icon: u(ce),
                   type: "primary",
                   plain: "",
                   onClick: Q
                 }, {
-                  default: o(() => [
-                    _("新增")
-                  ]),
+                  default: a(() => e[16] || (e[16] = [
+                    w("新增")
+                  ])),
                   _: 1
                 }, 8, ["icon"])), [
                   [S, ["admin:role:create"]]
@@ -356,9 +359,9 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
               ]),
               _: 1
             }),
-            R("div", Fe, [
-              t(m, {
-                icon: d(q),
+            A("div", Ue, [
+              l(m, {
+                icon: u(q),
                 circle: "",
                 onClick: k
               }, null, 8, ["icon"])
@@ -366,82 +369,85 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
           ]),
           _: 1
         }),
-        R("div", Ue, [
-          C((x(), T(ie, {
-            data: d(j),
+        A("div", Ee, [
+          R((C(), T(re, {
+            data: u(j),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
           }, {
-            default: o(() => [
-              t(E, {
+            default: a(() => [
+              l(E, {
                 prop: "name",
                 label: "角色名称",
-                "min-width": "150"
+                "min-width": "150",
+                "show-overflow-tooltip": ""
               }),
-              t(E, {
+              l(E, {
                 prop: "code",
                 label: "角色编码",
-                "min-width": "150"
+                "min-width": "150",
+                "show-overflow-tooltip": ""
               }),
-              t(E, {
+              l(E, {
                 prop: "description",
                 label: "描述",
-                "min-width": "240"
+                "min-width": "240",
+                "show-overflow-tooltip": ""
               }),
-              t(E, {
+              l(E, {
                 prop: "createTime",
                 label: "创建时间",
-                "min-width": "120"
+                "min-width": "180"
               }, {
-                default: o((n) => [
-                  R("span", null, Re(d(_e)(n.row.createTime)), 1)
+                default: a((o) => [
+                  A("span", null, Ae(u(_e)(o.row.createTime)), 1)
                 ]),
                 _: 1
               }),
-              t(E, {
+              l(E, {
                 label: "操作",
                 width: "240",
                 fixed: "right"
               }, {
-                default: o((n) => [
-                  C((x(), T(m, {
+                default: a((o) => [
+                  R((C(), T(m, {
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: d(ce),
-                    onClick: (K) => W(n.row)
+                    icon: u(pe),
+                    onClick: (K) => X(o.row)
                   }, {
-                    default: o(() => [
-                      _("修改")
-                    ]),
+                    default: a(() => e[17] || (e[17] = [
+                      w("修改")
+                    ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
                     [S, ["admin:role:update"]]
                   ]),
-                  C((x(), T(m, {
+                  R((C(), T(m, {
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: d(pe),
-                    onClick: (K) => ee(n.row)
+                    icon: u(me),
+                    onClick: (K) => te(o.row)
                   }, {
-                    default: o(() => [
-                      _("菜单权限 ")
-                    ]),
+                    default: a(() => e[18] || (e[18] = [
+                      w("菜单权限 ")
+                    ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
                     [S, ["admin:role:permission"]]
                   ]),
-                  C((x(), T(m, {
+                  R((C(), T(m, {
                     size: "small",
                     type: "primary",
                     link: "",
-                    icon: d(me),
-                    onClick: (K) => X(n.row)
+                    icon: u(fe),
+                    onClick: (K) => Z(o.row)
                   }, {
-                    default: o(() => [
-                      _("删除")
-                    ]),
+                    default: a(() => e[19] || (e[19] = [
+                      w("删除")
+                    ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
                     [S, ["admin:role:delete"]]
@@ -452,13 +458,13 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             ]),
             _: 1
           }, 8, ["data"])), [
-            [I, d(O)]
+            [I, u(O)]
           ]),
-          t(re, {
+          l(se, {
             "current-page": i.value.pageNo,
-            "onUpdate:currentPage": l[1] || (l[1] = (n) => i.value.pageNo = n),
+            "onUpdate:currentPage": e[1] || (e[1] = (o) => i.value.pageNo = o),
             "page-size": i.value.pageSize,
-            "onUpdate:pageSize": l[2] || (l[2] = (n) => i.value.pageSize = n),
+            "onUpdate:pageSize": e[2] || (e[2] = (o) => i.value.pageSize = o),
             "page-sizes": [10, 20, 30, 50],
             layout: "total,sizes,prev, pager, next, jumper",
             background: "",
@@ -467,38 +473,38 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             total: i.value.total
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
-        t(H, {
-          modelValue: d(b),
-          "onUpdate:modelValue": l[8] || (l[8] = (n) => D(b) ? b.value = n : b = n),
-          title: d(F),
-          width: "600px",
+        l(H, {
+          modelValue: u(b),
+          "onUpdate:modelValue": e[8] || (e[8] = (o) => D(b) ? b.value = o : b = o),
+          title: u(F),
+          width: u(J)(600),
           draggable: ""
         }, {
-          footer: o(() => [
-            R("span", Se, [
-              t(m, {
+          footer: a(() => [
+            A("span", De, [
+              l(m, {
                 type: "primary",
-                onClick: ae
+                onClick: oe
               }, {
-                default: o(() => [
-                  _("确 定")
-                ]),
+                default: a(() => e[20] || (e[20] = [
+                  w("确 定")
+                ])),
                 _: 1
               }),
-              t(m, {
-                onClick: l[7] || (l[7] = (n) => {
+              l(m, {
+                onClick: e[7] || (e[7] = (o) => {
                   D(b) ? b.value = !1 : b = !1, B();
                 })
               }, {
-                default: o(() => [
-                  _("取 消")
-                ]),
+                default: a(() => e[21] || (e[21] = [
+                  w("取 消")
+                ])),
                 _: 1
               })
             ])
           ]),
-          default: o(() => [
-            t(L, {
+          default: a(() => [
+            l(L, {
               ref_key: "menuFormRef",
               ref: z,
               model: r.value,
@@ -506,54 +512,54 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
               class: "demo-ruleForm",
               "status-icon": ""
             }, {
-              default: o(() => [
-                t(f, {
+              default: a(() => [
+                l(f, {
                   label: "角色名称",
                   prop: "name"
                 }, {
-                  default: o(() => [
-                    t(c, {
+                  default: a(() => [
+                    l(c, {
                       modelValue: r.value.name,
-                      "onUpdate:modelValue": l[3] || (l[3] = (n) => r.value.name = n),
+                      "onUpdate:modelValue": e[3] || (e[3] = (o) => r.value.name = o),
                       disabled: ""
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                t(f, {
+                l(f, {
                   label: "角色编码",
                   prop: "code"
                 }, {
-                  default: o(() => [
-                    t(c, {
+                  default: a(() => [
+                    l(c, {
                       modelValue: r.value.code,
-                      "onUpdate:modelValue": l[4] || (l[4] = (n) => r.value.code = n),
+                      "onUpdate:modelValue": e[4] || (e[4] = (o) => r.value.code = o),
                       disabled: ""
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                t(f, {
+                l(f, {
                   label: "菜单权限",
                   prop: "code"
                 }, {
-                  default: o(() => [
-                    t($, {
+                  default: a(() => [
+                    l($, {
                       modelValue: r.value.expand,
-                      "onUpdate:modelValue": l[5] || (l[5] = (n) => r.value.expand = n),
+                      "onUpdate:modelValue": e[5] || (e[5] = (o) => r.value.expand = o),
                       label: "展开/折叠",
                       onChange: le
                     }, null, 8, ["modelValue"]),
-                    t($, {
+                    l($, {
                       modelValue: r.value.selectAll,
-                      "onUpdate:modelValue": l[6] || (l[6] = (n) => r.value.selectAll = n),
+                      "onUpdate:modelValue": e[6] || (e[6] = (o) => r.value.selectAll = o),
                       label: "全选/全不选",
-                      onChange: te
+                      onChange: ne
                     }, null, 8, ["modelValue"]),
-                    R("div", Ee, [
-                      C(t(se, {
-                        props: w,
-                        data: d(y),
+                    A("div", Se, [
+                      R(l(ue, {
+                        props: _,
+                        data: u(y),
                         "node-key": "id",
                         "show-checkbox": "",
                         ref_key: "menuTree",
@@ -561,7 +567,7 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
                         "check-strictly": !0,
                         onCheck: G
                       }, null, 8, ["data"]), [
-                        [I, d(N)]
+                        [I, u(N)]
                       ])
                     ])
                   ]),
@@ -572,81 +578,81 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             }, 8, ["model"])
           ]),
           _: 1
-        }, 8, ["modelValue", "title"]),
-        t(H, {
-          modelValue: d(v),
-          "onUpdate:modelValue": l[13] || (l[13] = (n) => D(v) ? v.value = n : v = n),
-          title: d(F),
-          width: "600px",
+        }, 8, ["modelValue", "title", "width"]),
+        l(H, {
+          modelValue: u(v),
+          "onUpdate:modelValue": e[13] || (e[13] = (o) => D(v) ? v.value = o : v = o),
+          title: u(F),
+          width: u(J)(600),
           draggable: ""
         }, {
-          footer: o(() => [
-            R("span", De, [
-              t(m, {
+          footer: a(() => [
+            A("span", ze, [
+              l(m, {
                 type: "primary",
                 onClick: Y
               }, {
-                default: o(() => [
-                  _("确 定")
-                ]),
+                default: a(() => e[22] || (e[22] = [
+                  w("确 定")
+                ])),
                 _: 1
               }),
-              t(m, {
-                onClick: l[12] || (l[12] = (n) => {
+              l(m, {
+                onClick: e[12] || (e[12] = (o) => {
                   D(v) ? v.value = !1 : v = !1, U();
                 })
               }, {
-                default: o(() => [
-                  _("取 消")
-                ]),
+                default: a(() => e[23] || (e[23] = [
+                  w("取 消")
+                ])),
                 _: 1
               })
             ])
           ]),
-          default: o(() => [
-            t(L, {
+          default: a(() => [
+            l(L, {
               ref_key: "addFormRef",
               ref: M,
-              model: u.value,
+              model: d.value,
               "label-width": "80px",
               "status-icon": "",
-              rules: A
+              rules: x
             }, {
-              default: o(() => [
-                t(f, {
+              default: a(() => [
+                l(f, {
                   label: "角色名称",
                   prop: "name"
                 }, {
-                  default: o(() => [
-                    t(c, {
-                      modelValue: u.value.name,
-                      "onUpdate:modelValue": l[9] || (l[9] = (n) => u.value.name = n),
+                  default: a(() => [
+                    l(c, {
+                      modelValue: d.value.name,
+                      "onUpdate:modelValue": e[9] || (e[9] = (o) => d.value.name = o),
                       placeholder: "请输入角色名称"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                t(f, {
+                l(f, {
                   label: "角色编码",
                   prop: "code"
                 }, {
-                  default: o(() => [
-                    t(c, {
-                      modelValue: u.value.code,
-                      "onUpdate:modelValue": l[10] || (l[10] = (n) => u.value.code = n),
+                  default: a(() => [
+                    l(c, {
+                      modelValue: d.value.code,
+                      "onUpdate:modelValue": e[10] || (e[10] = (o) => d.value.code = o),
                       placeholder: "请输入角色编码"
                     }, null, 8, ["modelValue"])
                   ]),
                   _: 1
                 }),
-                t(f, {
+                l(f, {
                   label: "描述",
                   prop: "description"
                 }, {
-                  default: o(() => [
-                    t(c, {
-                      modelValue: u.value.description,
-                      "onUpdate:modelValue": l[11] || (l[11] = (n) => u.value.description = n),
+                  default: a(() => [
+                    l(c, {
+                      modelValue: d.value.description,
+                      "onUpdate:modelValue": e[11] || (e[11] = (o) => d.value.description = o),
                       placeholder: "请输入角色描述",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -659,11 +665,11 @@ const h = window.Vue.resolveComponent, t = window.Vue.createVNode, o = window.Vu
             }, 8, ["model", "rules"])
           ]),
           _: 1
-        }, 8, ["modelValue", "title"])
+        }, 8, ["modelValue", "title", "width"])
       ]);
     };
   }
 };
 export {
-  Pe as default
+  Be as default
 };

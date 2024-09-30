@@ -1,20 +1,31 @@
-const u = /* @__PURE__ */ Object.assign({ "./view/PluginView.vue": () => import("./PluginView-view.js") }), r = (m) => ({
-  router: (o, n) => {
-    let t = [];
+const i = /* @__PURE__ */ Object.assign({ "./view/PluginSettingView.vue": () => import("./PluginSettingView-view.js"), "./view/PluginView.vue": () => import("./PluginView-view.js") }), m = (u) => ({
+  router: (o, t) => {
+    let n = [
+      {
+        path: "/admin/plugin/setting/:id",
+        name: "pluginSetting",
+        component: i["./view/PluginSettingView.vue"],
+        meta: {
+          moduleName: t,
+          title: "插件设置",
+          keepAlive: !1
+        }
+      }
+    ];
     for (let e of o)
-      e.url && e.component && t.push({
+      e.url && e.component && n.push({
         name: e.componentName,
         path: e.url,
-        component: u[`.${e.component}.vue`],
+        component: i[`.${e.component}.vue`],
         meta: {
-          moduleName: n,
+          moduleName: t,
           title: e.name,
           keepAlive: !0
         }
       });
-    return t;
+    return n;
   }
 });
 export {
-  r as default
+  m as default
 };

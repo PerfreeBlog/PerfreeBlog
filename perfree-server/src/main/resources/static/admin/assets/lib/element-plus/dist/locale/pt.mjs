@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var pt = {
   name: "pt",
@@ -68,6 +68,9 @@ var pt = {
       noMatch: "Sem correspond\xEAncia",
       noData: "Sem dados",
       placeholder: "Selecione"
+    },
+    mention: {
+      loading: "A carregar"
     },
     cascader: {
       noMatch: "Sem correspond\xEAncia",

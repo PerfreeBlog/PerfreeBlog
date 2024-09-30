@@ -107,7 +107,7 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @param pageVO pageVO
      * @return IPage<JournalRespVO>
      */
-    IPage<JournalRespVO> journalPage(IPage<JournalRespVO> page, @Param("pageVO") JournalPageReqVO pageVO);
+    IPage<JournalRespVO> journalPage(IPage<JournalRespVO> page, @Param("pageVO") JournalPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     /**
      * 根据id获取动态
@@ -137,4 +137,8 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @return List<ArticleRespVO>
      */
     List<ArticleRespVO> getLatestArticle(@Param("num") Integer num);
+
+    List<ArticleRespVO> getHotArticleByCommentCount(@Param("num") Integer num);
+
+    List<ArticleRespVO> getHotArticleByViewCount(@Param("num") Integer num);
 }

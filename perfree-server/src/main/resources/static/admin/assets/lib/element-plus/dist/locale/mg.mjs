@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 var mg = {
   name: "mg",
@@ -69,6 +69,9 @@ var mg = {
       noMatch: "Tsy misy angona mifanentana",
       noData: "Tsy misy angona",
       placeholder: "Safidy"
+    },
+    mention: {
+      loading: "Eo ampiandrasana"
     },
     cascader: {
       noMatch: "Tsy misy angona mifanentana",

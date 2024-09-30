@@ -1,4 +1,4 @@
-/*! Element Plus v2.7.7 */
+/*! Element Plus v2.8.3 */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -94,6 +94,9 @@
         noMatch: "Aucune correspondance",
         noData: "Aucune donn\xE9e",
         placeholder: "Choisir"
+      },
+      mention: {
+        loading: "Chargement"
       },
       cascader: {
         noMatch: "Aucune correspondance",

@@ -4,12 +4,17 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.common.SortingField;
+import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
+import com.perfree.constant.AttachLibraryConstant;
 import com.perfree.controller.auth.attachLibrary.vo.*;
 import com.perfree.convert.attachLibrary.AttachLibraryConvert;
+import com.perfree.enums.ErrorCode;
 import com.perfree.mapper.AttachLibraryMapper;
 import com.perfree.model.AttachLibrary;
+import com.perfree.security.SecurityFrameworkUtils;
+import com.perfree.security.vo.LoginUserVO;
 import jakarta.annotation.Resource;
 import org.dromara.hutool.core.collection.ListUtil;
 import org.springframework.stereotype.Service;
@@ -34,7 +39,7 @@ public class AttachLibraryServiceImpl extends ServiceImpl<AttachLibraryMapper, A
                 new SortingField("createTime", SortingField.ORDER_DESC)
         ));
         IPage<AttachLibraryRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<AttachLibraryRespVO> attachLibraryRespVOIPage = attachLibraryMapper.attachLibraryPage(page, pageVO);
+        IPage<AttachLibraryRespVO> attachLibraryRespVOIPage = attachLibraryMapper.attachLibraryPage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
         return new PageResult<>(attachLibraryRespVOIPage.getRecords(), attachLibraryRespVOIPage.getTotal());
     }
 
@@ -56,7 +61,11 @@ public class AttachLibraryServiceImpl extends ServiceImpl<AttachLibraryMapper, A
 
     @Override
     public AttachLibraryRespVO get(Integer id) {
-        return attachLibraryMapper.getById(id);
+        AttachLibraryRespVO byId = attachLibraryMapper.getById(id);
+        if (byId.getVisibility().equals(AttachLibraryConstant.VISIBILITY_FALSE) && !byId.getUserInfo().getId().equals(SecurityFrameworkUtils.getLoginUserId())) {
+            throw new ServiceException(ErrorCode.NO_PERMISSION_PREVIEW);
+        }
+        return byId;
     }
 
     @Override
