@@ -8,6 +8,8 @@ import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.service.article.ArticleService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +25,8 @@ public class PageController extends BaseViewController {
 
     @GetMapping(value = {"/page/{slug}", "/page/{slug}/{pageIndex}"})
     @FrontViewNodeRender(isPageView = true)
-    public String page(@PathVariable("slug") String slug,@PathVariable(value = "pageIndex", required = false) Integer pageIndex,  Model model) {
+    public String page(@PathVariable("slug") String slug, @PathVariable(value = "pageIndex", required = false) Integer pageIndex, Model model,
+                       HttpServletRequest request, HttpServletResponse response) {
         ArticleRespVO articleRespVO = articleService.getBySlugAndTypeAndStatus(slug, ArticleConstant.ARTICLE_TYPE_PAGE, ArticleConstant.ARTICLE_STATUS_PUBLISHED);
         model.addAttribute("url", SystemConstants.URL_PAGE + slug);
         model.addAttribute("pageIndex", null == pageIndex ? 1 : pageIndex);
@@ -32,6 +35,7 @@ public class PageController extends BaseViewController {
             model.addAttribute(SystemConstants.RENDER_PAGE_SEO_TITLE, StringUtils.isBlank(articleRespVO.getTitle()) ? null : articleRespVO.getTitle().trim());
             model.addAttribute(SystemConstants.RENDER_PAGE_SEO_KEYWORD, StringUtils.isBlank(articleRespVO.getMetaKeywords()) ? null : articleRespVO.getMetaKeywords().trim());
             model.addAttribute(SystemConstants.RENDER_PAGE_SEO_DESC, StringUtils.isBlank(articleRespVO.getMetaDescription()) ? null : articleRespVO.getMetaDescription().trim());
+            articleService.viewCountHandle(request, response, articleRespVO.getId());
             if (StringUtils.isNotBlank(articleRespVO.getTemplate())) {
                 return themeView(articleRespVO.getTemplate());
             }

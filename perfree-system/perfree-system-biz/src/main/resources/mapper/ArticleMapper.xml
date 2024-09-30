@@ -19,6 +19,10 @@
         update p_article set greatCount = greatCount+1 where id = #{id}
     </update>
 
+    <update id="updateViewCount">
+        update p_article set viewCount = viewCount+1 where id = #{id}
+    </update>
+
     <!-- 文章分页列表 -->
     <select id="articlePage" resultMap="ARTICLE_RESULT">
         select a.* from (SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where

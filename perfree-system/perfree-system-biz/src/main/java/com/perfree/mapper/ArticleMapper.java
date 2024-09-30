@@ -141,4 +141,7 @@ public interface ArticleMapper extends BaseMapperX<Article> {
     List<ArticleRespVO> getHotArticleByCommentCount(@Param("num") Integer num);
 
     List<ArticleRespVO> getHotArticleByViewCount(@Param("num") Integer num);
+
+    void updateViewCount(@Param("id") Integer id);
+
 }

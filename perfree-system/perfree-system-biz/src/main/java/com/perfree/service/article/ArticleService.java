@@ -10,6 +10,8 @@ import com.perfree.controller.auth.journal.vo.JournalUpdateReqVO;
 import com.perfree.controller.common.article.vo.ArchivePageReqVO;
 import com.perfree.controller.common.article.vo.ArchiveRespVO;
 import com.perfree.model.Article;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
@@ -164,4 +166,6 @@ public interface ArticleService extends IService<Article> {
     List<ArticleRespVO> getHotArticleByCommentCount(Integer num);
 
     List<ArticleRespVO> getHotArticleByViewCount(Integer num);
+
+    void viewCountHandle(HttpServletRequest request, HttpServletResponse response, Integer id);
 }

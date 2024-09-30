@@ -35,9 +35,14 @@ import com.perfree.service.journal.JournalAttachService;
 import com.perfree.service.tag.TagService;
 import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.hutool.core.array.ArrayUtil;
 import org.dromara.hutool.core.collection.ListUtil;
 import org.dromara.hutool.http.html.HtmlUtil;
+import org.dromara.hutool.http.server.servlet.ServletUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -287,6 +292,28 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<ArticleRespVO> getHotArticleByViewCount(Integer num) {
         return articleMapper.getHotArticleByViewCount(num);
+    }
+
+    @Override
+    public void viewCountHandle(HttpServletRequest request, HttpServletResponse response, Integer id) {
+        Cookie cookie = ServletUtil.getCookie(request, SystemConstants.COOKIE_ARTICLE_VIEW);
+        if (null != cookie) {
+            if (StringUtils.isBlank(cookie.getValue())) {
+                articleMapper.updateViewCount(id);
+                ServletUtil.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
+                return;
+            }
+
+            String[] split = cookie.getValue().split("_");
+            if (ArrayUtil.contains(split, String.valueOf(id))){
+                return;
+            }
+            articleMapper.updateViewCount(id);
+            ServletUtil.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, cookie.getValue() + "_" + id, 60 * 60);
+            return;
+        }
+        articleMapper.updateViewCount(id);
+        ServletUtil.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
     }
 
     /**

@@ -98,4 +98,5 @@ public class SystemConstants {
     /** url - article(文章) */
     public static final String URL_ARTICLE = "/article/";
 
+    public static final String COOKIE_ARTICLE_VIEW = "a";
 }
