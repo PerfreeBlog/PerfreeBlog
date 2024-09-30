@@ -35,7 +35,7 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @param pageVO pageVO
      * @return IPage<ArticleRespVO>
      */
-    IPage<ArticleRespVO> articlePage(IPage<ArticleRespVO> page,  @Param("pageVO") ArticlePageReqVO pageVO);
+    IPage<ArticleRespVO> articlePage(IPage<ArticleRespVO> page,  @Param("pageVO") ArticlePageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     /**
      * 根据slug查询

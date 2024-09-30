@@ -21,10 +21,11 @@
 
     <!-- 文章分页列表 -->
     <select id="articlePage" resultMap="ARTICLE_RESULT">
-        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        select a.* from (SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where
+        articleId = t1.id and status = 0) as commentCount
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where 1 =1
-        <if test="pageVO.categoryId != null">
-           and t1.id IN (SELECT articleId FROM p_article_category WHERE categoryId = #{pageVO.categoryId})
+        <if test="pageVO.categoryId != null">and t1.id IN (SELECT articleId FROM p_article_category WHERE categoryId =
+            #{pageVO.categoryId})
         </if>
 
         <if test="pageVO.tagId != null">
@@ -42,7 +43,15 @@
         <if test="pageVO.title != null and pageVO.title != ''">
             <bind name="title" value="'%' + _parameter.pageVO.title + '%'" />
             and t1.title like #{title}
-        </if>
+        </if>) a
+        <where>
+            <if test="loginUserId != null">
+                and a.createUserId = #{loginUserId}
+            </if>
+            <if test="loginUserId == null">
+                and a.status = 0
+            </if>
+        </where>
     </select>
 
     <!-- 获取文章的标签 -->

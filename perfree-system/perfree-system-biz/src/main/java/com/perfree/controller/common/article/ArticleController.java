@@ -2,10 +2,13 @@ package com.perfree.controller.common.article;
 
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.controller.common.article.vo.ArchivePageReqVO;
 import com.perfree.controller.common.article.vo.ArchiveRespVO;
+import com.perfree.convert.article.ArticleConvert;
+import com.perfree.model.Article;
 import com.perfree.service.article.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -41,5 +44,36 @@ public class ArticleController {
     public CommonResult<List<ArticleRespVO>> getLatestArticle(@RequestParam("num") Integer num) {
         List<ArticleRespVO> latestArticle = articleService.getLatestArticle(num);
         return success(latestArticle);
+    }
+
+    @PostMapping("/page")
+    @Operation(summary = "文章分页列表")
+    public CommonResult<PageResult<ArticleRespVO>> page(@RequestBody ArticlePageReqVO pageVO) {
+        return success(articleService.articlePage(pageVO));
+    }
+
+    @GetMapping("/get")
+    @Operation(summary = "根据id获取文章")
+    public CommonResult<ArticleRespVO> get(@RequestParam(value = "id") Integer id) {
+        return CommonResult.success(articleService.getArticleById(id));
+    }
+
+    @GetMapping("/getAllPage")
+    @Operation(summary = "获取所有页面")
+    public CommonResult<List<ArticleRespVO>> getAllPage() {
+        List<Article> articleList = articleService.getAllPage();
+        return CommonResult.success(ArticleConvert.INSTANCE.convertToRespList(articleList));
+    }
+
+    @GetMapping("/getNextArticle")
+    @Operation(summary = "根据id获取下一篇文章")
+    public CommonResult<ArticleRespVO> getNextArticle(@RequestParam(value = "id") Integer id) {
+        return CommonResult.success(articleService.getNextArticle(id, ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED));
+    }
+
+    @GetMapping("/getPreArticle")
+    @Operation(summary = "根据id获取上一篇文章")
+    public CommonResult<ArticleRespVO> getPreArticle(@RequestParam(value = "id") Integer id) {
+        return CommonResult.success(articleService.getPreArticle(id, ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED));
     }
 }

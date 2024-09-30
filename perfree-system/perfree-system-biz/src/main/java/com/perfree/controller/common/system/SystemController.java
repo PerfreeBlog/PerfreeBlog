@@ -4,6 +4,7 @@ import com.perfree.cache.CaptchaCacheService;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.controller.auth.system.vo.CaptchaImageRespVO;
+import com.perfree.controller.auth.system.vo.MenuTreeListRespVO;
 import com.perfree.controller.auth.user.vo.UserRespVO;
 import com.perfree.controller.common.system.vo.*;
 import com.perfree.convert.user.UserConvert;
@@ -11,6 +12,7 @@ import com.perfree.enums.ErrorCode;
 import com.perfree.model.User;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.vo.LoginUserVO;
+import com.perfree.service.menu.MenuService;
 import com.perfree.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @description 系统基础接口
@@ -44,6 +47,9 @@ public class SystemController {
 
     @Resource
     private CaptchaCacheService captchaCacheService;
+
+    @Resource
+    private MenuService menuService;
 
     @Value("${perfree.demoModel}")
     private Boolean demoModel;
@@ -117,4 +123,12 @@ public class SystemController {
     public CommonResult<LoginUserRespVO> refreshToken(@Valid @RequestBody RefreshTokenReqVO reqVO){
         return CommonResult.success(userService.refreshToken(reqVO.getRefreshToken()));
     }
+
+    @GetMapping("menuList")
+    @Operation(summary = "获取所有菜单")
+    public CommonResult<List<MenuTreeListRespVO>> menuList(){
+        List<MenuTreeListRespVO> menuTreeListRespVOS = menuService.menuFrontList();
+        return CommonResult.success(menuTreeListRespVOS);
+    }
+
 }

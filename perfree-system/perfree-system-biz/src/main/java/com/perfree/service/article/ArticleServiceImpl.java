@@ -85,7 +85,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 new SortingField("createTime", SortingField.ORDER_DESC)
         ));
         IPage<ArticleRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<ArticleRespVO> articlePage = articleMapper.articlePage(page, pageVO);
+        IPage<ArticleRespVO> articlePage = articleMapper.articlePage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
         return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
     }
 
