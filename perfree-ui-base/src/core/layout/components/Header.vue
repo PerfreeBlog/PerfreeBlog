@@ -18,10 +18,11 @@
       </el-breadcrumb>
     </div>
     <div class="h-right">
+      <el-tooltip content="访问前台" placement="bottom">
+        <el-link class="h-btn" :underline="false" href="/" target="_blank"><font-awesome-icon icon="fa-solid fa-external-link-square" /></el-link>
+      </el-tooltip>
       <el-tooltip content="源码地址" placement="bottom">
-        <div class="h-btn">
-          <font-awesome-icon icon=" fa-brands fa-github " />
-        </div>
+        <el-link class="h-btn" :underline="false" href="https://github.com/PerfreeBlog/PerfreeBlog" target="_blank"><font-awesome-icon icon=" fa-brands fa-github " /></el-link>
       </el-tooltip>
       <el-tooltip content="全屏" placement="bottom" v-if="!isFullscreen">
         <div class="h-btn" @click="toggleFullscreen">
