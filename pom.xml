@@ -27,7 +27,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <spring.boot.version>3.2.1</spring.boot.version>
-        <druid.version>1.2.23</druid.version>
         <mybatis-plus.version>3.5.6</mybatis-plus.version>
         <lombok.version>1.18.30</lombok.version>
         <knife4j.version>4.3.0</knife4j.version>
@@ -65,11 +64,6 @@
             </dependency>
 
 
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
@@ -187,12 +181,6 @@
                 <groupId>com.jfinal</groupId>
                 <artifactId>enjoy</artifactId>
                 <version>5.2.2</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-3-starter</artifactId>
-                <version>1.2.23</version>
             </dependency>
 
             <dependency>

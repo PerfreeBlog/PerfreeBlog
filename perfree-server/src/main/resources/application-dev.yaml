@@ -39,30 +39,15 @@ spring:
     url: jdbc:mysql://153.153.234.13:3306/perfree?useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&nullCatalogMeansCurrent=true
     password: xwt@123
     driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    druid:
-      initial-size: 20
-      max-active: 300
-      min-idle: 20
-      max-wait: 60000
-      db-type: mysql
-      web-stat-filter:
-        enabled: true
-      stat-view-servlet:
-        enabled: true
-        allow:
-        url-pattern: /druid/*
-        login-username: druid
-        login-password: druid123..
-      filter:
-        stat:
-          enabled: true
-          log-slow-sql: true
-          slow-sql-millis: 100
-          merge-sql: true
-        wall:
-          config:
-            multi-statement-allow: true
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 30
+      maximum-pool-size: 300
+      auto-commit: true
+      idle-timeout: 600000
+      pool-name: perfree
+      max-lifetime: 1800000
+      connection-timeout: 30000
 # MyBatis Plus 的配置项
 mybatis-plus:
   configuration:
