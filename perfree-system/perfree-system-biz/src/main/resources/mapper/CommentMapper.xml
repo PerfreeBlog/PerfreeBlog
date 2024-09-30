@@ -14,7 +14,7 @@
     <select id="commentPage" resultMap="COMMENT_RESULT">
         select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
        t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite ,
-       (select count(1) from p_comment where topPid = t1.id or pid = t1.id) childNum
+       (select count(1) from p_comment where topPid = t1.id or pid = t1.id and status = 0) childNum
         from p_comment t1
         LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
         where 1 = 1
@@ -57,7 +57,7 @@
     </select>
 
     <select id="pageByArticleId" resultMap="COMMENT_RESULT">
-        select t1.*,(select count(1) from p_comment where topPid = t1.id) childNum,
+        select t1.*,(select count(1) from p_comment where topPid = t1.id and status = 0) childNum,
         t2.avatar as tAvatar, t2.email as tEmail, t2.userName as tUserName, t2.website as tWebsite
         from p_comment t1 LEFT JOIN p_user t2 on t1.userId = t2.id
         where t1.status = 0 and t1.topPid = -1 and t1.articleId = #{pageVO.articleId}

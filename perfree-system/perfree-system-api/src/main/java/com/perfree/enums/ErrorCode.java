@@ -50,7 +50,8 @@ public enum ErrorCode {
     REFRESH_TOKEN_VALID_FAIL(100000041, "refreshToken不合法!"),
     COMMENT_USER_NAME_NOT_EMPTY(100000042, "姓名或昵称不能为空!"),
     COMMENT_EMAIL_NOT_EMPTY(100000043, "邮箱不能为空!"),
-    JOURNAL_NOT_EMPTY(100000044, "内容或附件不能全部为空!")
+    JOURNAL_NOT_EMPTY(100000044, "内容或附件不能全部为空!"),
+    COMMENT_STINT_ERROR(100000045, "评论过于频繁,请稍候再试!"),
     ;
 
     private final Integer code;

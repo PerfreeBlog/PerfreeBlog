@@ -3071,7 +3071,12 @@ function submitComment() {
   submitLoading.value = true;
   submitCommentApi(comment.value).then(res => {
     if (res.code === 200) {
-      DialogService.openDialog('评论发表成功', 'success');
+      if(res.data.status === 1) {
+        DialogService.openDialog('评论发表成功,正在等待审核', 'success');
+      } else {
+        DialogService.openDialog('评论发表成功', 'success');
+      }
+
       comment.value = {
         content: '',
         articleId: props.articleId,

@@ -55,7 +55,7 @@ public class CommentController {
     @PostMapping("/updateStatus")
     @Operation(summary = "修改评论状态")
     public CommonResult<Boolean> updateStatus(@RequestBody @Valid CommentUpdateStatusReqVO commentUpdateStatusReqVO) {
-        return CommonResult.success(commentService.commentService(commentUpdateStatusReqVO));
+        return CommonResult.success(commentService.updateStatus(commentUpdateStatusReqVO));
     }
 
 }

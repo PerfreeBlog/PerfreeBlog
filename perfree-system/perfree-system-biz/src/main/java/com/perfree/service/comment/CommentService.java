@@ -51,7 +51,7 @@ public interface CommentService extends IService<Comment> {
      * @param commentUpdateStatusReqVO  commentUpdateStatusReqVO
      * @return Boolean
      */
-    Boolean commentService(CommentUpdateStatusReqVO commentUpdateStatusReqVO);
+    Boolean updateStatus(CommentUpdateStatusReqVO commentUpdateStatusReqVO);
 
     /**
      * 根据文章id获取评论分页列表
