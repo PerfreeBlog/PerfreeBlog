@@ -8,10 +8,7 @@ import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.option.vo.OptionRespVO;
 import com.perfree.controller.auth.system.vo.CaptchaImageRespVO;
 import com.perfree.controller.auth.user.vo.UserRespVO;
-import com.perfree.controller.common.system.vo.LoginUserReqVO;
-import com.perfree.controller.common.system.vo.LoginUserRespVO;
-import com.perfree.controller.common.system.vo.RefreshTokenReqVO;
-import com.perfree.controller.common.system.vo.RegisterUserReqVO;
+import com.perfree.controller.common.system.vo.*;
 import com.perfree.convert.option.OptionConvert;
 import com.perfree.convert.user.UserConvert;
 import com.perfree.enums.ErrorCode;
@@ -61,9 +58,6 @@ public class SystemController {
     @Resource
     private CaptchaCacheService captchaCacheService;
 
-    @Resource
-    private OptionCacheService optionCacheService;
-
     @Value("${perfree.demoModel}")
     private Boolean demoModel;
 
@@ -86,6 +80,17 @@ public class SystemController {
         return CommonResult.success(UserConvert.INSTANCE.convertRespVO(userService.register(reqVO)));
     }
 
+    @PostMapping("findPasswordStep1")
+    @Operation(summary = "找回密码步骤1")
+    public CommonResult<Boolean> findPasswordStep1(@RequestBody @Valid FindPasswordStep1ReqVO reqVO){
+        return CommonResult.success(userService.findPasswordStep1(reqVO));
+    }
+
+    @PostMapping("findPasswordStep2")
+    @Operation(summary = "找回密码步骤2")
+    public CommonResult<Boolean> findPasswordStep2(@RequestBody @Valid FindPasswordStep2ReqVO reqVO){
+        return CommonResult.success(userService.findPasswordStep2(reqVO));
+    }
 
     @PostMapping("captchaImage")
     @Operation(summary = "获取验证码")

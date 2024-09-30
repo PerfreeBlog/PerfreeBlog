@@ -67,7 +67,7 @@
               <router-link class="link-type" to="/register">立即注册</router-link>
             </div>
             <div class="forget-password-box">
-              <a href="javascript:;">忘记密码?</a>
+              <router-link class="link-type" to="/findPassword">忘记密码?</router-link>
             </div>
           </div>
         </el-form-item>

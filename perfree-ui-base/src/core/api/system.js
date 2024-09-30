@@ -29,3 +29,11 @@ export function refreshTokenApi(data) {
 export function logoutApi() {
     return axios.get('/api/logout');
 }
+
+export function findPasswordStep1Api(data) {
+    return axios.post('/api/findPasswordStep1', data);
+}
+
+export function findPasswordStep2Api(data) {
+    return axios.post('/api/findPasswordStep2', data);
+}

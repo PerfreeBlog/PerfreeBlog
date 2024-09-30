@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.system.vo.LoginUserInfoRespVO;
 import com.perfree.controller.auth.user.vo.*;
-import com.perfree.controller.common.system.vo.LoginUserReqVO;
-import com.perfree.controller.common.system.vo.LoginUserRespVO;
-import com.perfree.controller.common.system.vo.RegisterUserReqVO;
+import com.perfree.controller.common.system.vo.*;
 import com.perfree.model.User;
 
 import java.util.List;
@@ -146,5 +144,9 @@ public interface UserService extends IService<User> {
     LoginUserRespVO refreshToken(String refreshToken);
 
     Long getTotalUser();
+
+    Boolean findPasswordStep1(FindPasswordStep1ReqVO reqVO);
+
+    Boolean findPasswordStep2(FindPasswordStep2ReqVO reqVO);
 
 }

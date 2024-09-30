@@ -1,7 +1,6 @@
 package com.perfree.service.async;
 
 import com.perfree.cache.OptionCacheService;
-import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.utils.WebUtils;
 import com.perfree.constant.ArticleConstant;
 import com.perfree.constant.CommentConstant;
@@ -11,9 +10,8 @@ import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.controller.auth.comment.vo.CommentRespVO;
 import com.perfree.enums.OptionEnum;
 import com.perfree.mail.MailService;
-import com.perfree.model.Comment;
-import com.perfree.service.article.ArticleService;
-import com.perfree.service.comment.CommentService;
+import com.perfree.mapper.ArticleMapper;
+import com.perfree.mapper.CommentMapper;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.hutool.core.date.DateUtil;
@@ -30,10 +28,10 @@ public class AsyncServiceImpl implements AsyncService{
     private int serverPort;
 
     @Resource
-    private CommentService commentService;
+    private CommentMapper commentMapper;
 
     @Resource
-    private ArticleService articleService;
+    private ArticleMapper articleMapper;
 
     @Resource
     private MailService mailService;
@@ -46,8 +44,8 @@ public class AsyncServiceImpl implements AsyncService{
     public void sendCommentMail(Integer commentId, boolean isUpdateStatus) {
         String webSite = optionCacheService.getDefaultValue(OptionEnum.WEB_SITE.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, WebUtils.getUrl(serverPort));
 
-        CommentRespVO commentRespVO = commentService.queryById(commentId);
-        ArticleRespVO articleById = articleService.getArticleById(commentRespVO.getArticleId());
+        CommentRespVO commentRespVO = commentMapper.queryById(commentId);
+        ArticleRespVO articleById = articleMapper.getArticleById(commentRespVO.getArticleId());
 
         HashMap<String, String> params = new HashMap<>();
         params.put("content", commentRespVO.getContent());
@@ -90,7 +88,7 @@ public class AsyncServiceImpl implements AsyncService{
             return;
         }
 
-        CommentRespVO parentComment = commentService.queryById(commentRespVO.getPid());
+        CommentRespVO parentComment = commentMapper.queryById(commentRespVO.getPid());
         String parentEmail = null != parentComment.getUserInfo()? parentComment.getUserInfo().getEmail() : parentComment.getEmail();
         if (StringUtils.isBlank(parentEmail)) {
             return;
@@ -105,5 +103,13 @@ public class AsyncServiceImpl implements AsyncService{
         }
         params.put("parentContent", parentComment.getContent());
         mailService.sendMailByTemplateCode(MailTemplateConstant.COMMENT_REVERT_EMAIL_CODE, parentEmail, params);
+    }
+
+    @Override
+    @Async
+    public void sendFindPasswordMail(String random, String email) {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("random", random);
+        mailService.sendMailByTemplateCode(MailTemplateConstant.FIND_PASSWORD_CODE, email, params);
     }
 }

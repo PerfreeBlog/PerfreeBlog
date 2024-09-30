@@ -50,6 +50,11 @@ const router = createRouter({
             name: 'register',
             component: () => import('../views/register/RegisterView.vue')
         },
+        {
+            path: '/findPassword',
+            name: 'findPassword',
+            component: () => import('../views/findPassword/FindPasswordView.vue')
+        },
     ],
 });
 
@@ -62,7 +67,7 @@ router.afterEach(() => {
 router.beforeEach((to, from, next) => {
     const commonStore = useCommonStore()
     NProgress.start();
-    if (to.path === '/login' || to.path === '/register') {
+    if (to.path === '/login' || to.path === '/register' || to.path === '/findPassword') {
         next();
         return
     }

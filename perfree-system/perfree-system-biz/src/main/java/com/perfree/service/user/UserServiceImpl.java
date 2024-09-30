@@ -1,10 +1,8 @@
 package com.perfree.service.user;
 
-import io.jsonwebtoken.Claims;
-import org.dromara.hutool.core.data.id.IdUtil;
-import org.dromara.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.CaptchaCacheService;
+import com.perfree.cache.FindPasswordCacheService;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
@@ -13,9 +11,7 @@ import com.perfree.constant.OptionConstant;
 import com.perfree.constant.UserConstant;
 import com.perfree.controller.auth.system.vo.LoginUserInfoRespVO;
 import com.perfree.controller.auth.user.vo.*;
-import com.perfree.controller.common.system.vo.LoginUserReqVO;
-import com.perfree.controller.common.system.vo.LoginUserRespVO;
-import com.perfree.controller.common.system.vo.RegisterUserReqVO;
+import com.perfree.controller.common.system.vo.*;
 import com.perfree.convert.user.UserConvert;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
@@ -30,10 +26,17 @@ import com.perfree.security.SecurityConstants;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.util.JwtUtil;
 import com.perfree.security.vo.LoginUserVO;
+import com.perfree.service.async.AsyncService;
 import com.perfree.service.menu.MenuService;
 import com.perfree.system.api.option.dto.OptionDTO;
+import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.hutool.core.data.id.IdUtil;
+import org.dromara.hutool.core.util.RandomUtil;
+import org.dromara.hutool.crypto.digest.DigestUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -58,6 +61,7 @@ import static com.perfree.enums.ErrorCode.*;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
     @Resource
     private UserMapper userMapper;
 
@@ -75,6 +79,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Resource
     private MenuService menuService;
+
+    @Resource
+    private AsyncService asyncService;
+
+    @Resource
+    private FindPasswordCacheService findPasswordCacheService;
 
     @Override
     public LoginUserRespVO login(LoginUserReqVO loginUserVO) {
@@ -352,7 +362,50 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return userMapper.getTotalUser();
     }
 
+    @Override
+    @Transactional
+    public Boolean findPasswordStep1(FindPasswordStep1ReqVO reqVO) {
+        validCaptchaHandle(reqVO.getUuid(), reqVO.getCode());
+        User byAccount = userMapper.findByAccount(reqVO.getAccount());
+        if (null == byAccount) {
+            throw new ServiceException(ACCOUNT_NOT_FOUNT);
+        }
+        if (!byAccount.getEmail().equals(reqVO.getEmail())) {
+            throw new ServiceException(EMAIL_ACCOUNT_NOT_MATE);
+        }
+        String random = RandomUtil.randomString(6);
+        findPasswordCacheService.putCode(reqVO.getAccount(), random);
+        LOGGER.error("找回密码-验证码: {}, 邮箱: {}", random, reqVO.getEmail());
+        asyncService.sendFindPasswordMail(random, reqVO.getEmail());
+        return true;
+    }
 
+    @Override
+    @Transactional
+    public Boolean findPasswordStep2(FindPasswordStep2ReqVO reqVO) {
+        validCaptchaHandle(reqVO.getUuid(), reqVO.getCode());
+        if (!findPasswordCacheService.getCode(reqVO.getAccount()).equals(reqVO.getFindPasswordCode())) {
+            throw new ServiceException(EMAIL_CODE_FAIL);
+        }
+
+        User user = userMapper.findByAccount(reqVO.getAccount());
+        String newPass = DigestUtil.md5Hex(user.getSalt() + reqVO.getNewPassword());
+        user.setPassword(newPass);
+        userMapper.updateById(user);
+        return true;
+    }
+
+
+    private void validCaptchaHandle(String uuid, String code){
+        String captcha = captchaCacheService.getCaptcha(uuid);
+        if (StringUtils.isBlank(captcha)){
+            throw new ServiceException(ErrorCode.CAPTCHA_EXPIRE);
+        }
+        captchaCacheService.removeCaptcha(uuid);
+        if (!captcha.equals(code)) {
+            throw new ServiceException(ErrorCode.CAPTCHA_VALID_ERROR);
+        }
+    }
     /**
      * 校验验证码
      * @param uuid uuid
@@ -364,14 +417,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             if (StringUtils.isBlank(uuid) || StringUtils.isBlank(code)) {
                 throw new ServiceException(ErrorCode.CAPTCHA_IS_NOT_EMPTY);
             }
-            String captcha = captchaCacheService.getCaptcha(uuid);
-            if (StringUtils.isBlank(captcha)){
-                throw new ServiceException(ErrorCode.CAPTCHA_EXPIRE);
-            }
-            captchaCacheService.removeCaptcha(uuid);
-            if (!captcha.equals(code)) {
-                throw new ServiceException(ErrorCode.CAPTCHA_VALID_ERROR);
-            }
+            validCaptchaHandle(uuid, code);
         }
     }
 }

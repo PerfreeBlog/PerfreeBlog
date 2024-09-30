@@ -53,6 +53,8 @@ public enum ErrorCode {
     JOURNAL_NOT_EMPTY(100000044, "内容或附件不能全部为空!"),
     COMMENT_STINT_ERROR(100000045, "评论过于频繁,请稍候再试!"),
     NOT_ALLOW_REGISTER(100000046, "网站已关闭注册功能!"),
+    EMAIL_ACCOUNT_NOT_MATE(100000047, "邮箱账户不匹配!"),
+    EMAIL_CODE_FAIL(100000048, "邮箱验证码错误!"),
     ;
 
     private final Integer code;
