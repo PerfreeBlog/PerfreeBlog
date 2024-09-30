@@ -52,6 +52,7 @@ public enum ErrorCode {
     COMMENT_EMAIL_NOT_EMPTY(100000043, "邮箱不能为空!"),
     JOURNAL_NOT_EMPTY(100000044, "内容或附件不能全部为空!"),
     COMMENT_STINT_ERROR(100000045, "评论过于频繁,请稍候再试!"),
+    NOT_ALLOW_REGISTER(100000046, "网站已关闭注册功能!"),
     ;
 
     private final Integer code;

@@ -45,8 +45,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.perfree.enums.ErrorCode.ACCOUNT_EXIST;
-import static com.perfree.enums.ErrorCode.USER_PASSWORD_NOT_EMPTY;
+import static com.perfree.enums.ErrorCode.*;
 
 /**
  * <p>
@@ -292,6 +291,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transactional
     public User register(RegisterUserReqVO reqVO) {
+        String isOpenRegister = optionCacheService.getDefaultValue(OptionEnum.WEB_IS_REGISTER.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, OptionConstant.OPTION_PUBLIC_TRUE);
+        if (isOpenRegister.equals(OptionConstant.OPTION_PUBLIC_FALSE)) {
+            throw new ServiceException(NOT_ALLOW_REGISTER);
+        }
         validCaptcha(reqVO.getUuid(), reqVO.getCode());
         User user = UserConvert.INSTANCE.convertByRegisterVO(reqVO);
         if (StringUtils.isBlank(user.getPassword())) {
