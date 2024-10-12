@@ -104,7 +104,7 @@ knife4j:
     password: 12313
 perfree:
   # 是否开启开发环境插件自动更新,当执行build modules时,会自动更新插件
-  autoLoadDevPlugin: true
+  autoLoadDevPlugin: false
   # 监听插件是否发生改变的时间间隔(毫秒)   默认10秒(根据你的电脑配置改动,编译的快就调短一点)
   autoLoadDevPluginTime: 10000
   # 是否为演示环境

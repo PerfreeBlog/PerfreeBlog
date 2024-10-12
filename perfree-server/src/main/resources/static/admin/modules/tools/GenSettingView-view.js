@@ -1,8 +1,8 @@
-import { a as M, l as B } from "./lib/@element-plus.js";
-import { H as b, j as D } from "./lib/highlight.js.js";
-import { u as U } from "./lib/@form-create.js";
-import { _ as A } from "./lib/_plugin-vue_export-helper.js";
-const T = {
+import { a as B, l as D } from "./lib/@element-plus.js";
+import { H as C, j as U } from "./lib/highlight.js.js";
+import { u as b } from "./lib/@form-create.js";
+import { _ as q } from "./lib/_plugin-vue_export-helper.js";
+const A = {
   //插入菜单位置
   menu: "main",
   //图标
@@ -18,11 +18,11 @@ const T = {
   //定义组件的事件
   event: ["change"],
   //定义组件的渲染规则
-  rule({ t: v }) {
+  rule({ t: g }) {
     return {
       type: "AttachSelectInput",
       //field不能重复!!!
-      field: U(),
+      field: b(),
       title: "附件选择输入",
       info: "",
       $required: !1,
@@ -30,7 +30,7 @@ const T = {
     };
   },
   //组件的属性配置
-  props(v, { t: V }) {
+  props(g, { t: v }) {
     return [
       {
         type: "select",
@@ -55,12 +55,43 @@ const T = {
       }
     ];
   }
-}, r = window.Vue.unref, t = window.Vue.createVNode, d = window.Vue.resolveComponent, o = window.Vue.withCtx, p = window.Vue.createTextVNode, m = window.Vue.isRef, _ = window.Vue.createElementVNode, q = window.Vue.resolveDirective, z = window.Vue.withDirectives, G = window.Vue.openBlock, H = window.Vue.createElementBlock, L = { class: "page" }, P = { class: "dialog-footer" }, F = { class: "hljs" }, K = { class: "dialog-footer" }, Q = window.VueUse.useClipboard, w = window.ElementPlus.ElMessage, W = window.Vue.onMounted, c = window.Vue.ref, X = {
+}, T = {
+  //插入菜单位置
+  menu: "main",
+  //图标
+  icon: "icon-refresh",
+  //名称
+  label: "轮播设置项",
+  //id,唯一!
+  name: "SettingCarousel",
+  //是否可以操作, 除了容器类组件建议为true !
+  mask: !0,
+  //支持组件验证, 值的类型
+  validate: ["string"],
+  //定义组件的事件
+  event: ["change"],
+  //定义组件的渲染规则
+  rule({ t: g }) {
+    return {
+      type: "SettingCarousel",
+      //field不能重复!!!
+      field: b(),
+      title: "轮播设置项",
+      info: "",
+      $required: !1,
+      props: {}
+    };
+  },
+  //组件的属性配置
+  props(g, { t: v }) {
+    return [];
+  }
+}, r = window.Vue.unref, t = window.Vue.createVNode, d = window.Vue.resolveComponent, o = window.Vue.withCtx, p = window.Vue.createTextVNode, m = window.Vue.isRef, _ = window.Vue.createElementVNode, z = window.Vue.resolveDirective, G = window.Vue.withDirectives, H = window.Vue.openBlock, L = window.Vue.createElementBlock, P = { class: "page" }, $ = { class: "dialog-footer" }, F = { class: "hljs" }, K = { class: "dialog-footer" }, Q = window.VueUse.useClipboard, w = window.ElementPlus.ElMessage, W = window.Vue.onMounted, c = window.Vue.ref, X = {
   __name: "GenSettingView",
-  setup(v) {
-    const { copy: V, isSupported: C } = Q({ legacy: !0 }), u = c();
-    let s = c(!1), n = c(!1), g = c(""), f = c("");
-    const J = c({
+  setup(g) {
+    const { copy: v, isSupported: J } = Q({ legacy: !0 }), a = c();
+    let s = c(!1), n = c(!1), V = c(""), f = c("");
+    const k = c({
       //控制字段ID输入框能否输入
       fieldReadonly: !1,
       //隐藏所有子表单组件
@@ -68,44 +99,44 @@ const T = {
       //隐藏输入框和密码输入框
       //hiddenItem: ['input','pasasword'],
     });
-    function k() {
-      s.value = !0, g.value = {
-        option: u.value.getOption(),
-        rule: u.value.getRule()
+    function S() {
+      s.value = !0, V.value = {
+        option: a.value.getOption(),
+        rule: a.value.getRule()
       };
     }
     function x() {
       n.value = !0;
     }
-    function S() {
+    function N() {
       const i = JSON.parse(f.value);
-      u.value.setOption(i.option), u.value.setRule(i.rule), w.success("导入成功"), n.value = !1;
+      a.value.setOption(i.option), a.value.setRule(i.rule), w.success("导入成功"), n.value = !1;
     }
     W(async () => {
-      u.value.addComponent(T), b.registerLanguage("json", D);
+      a.value.addComponent(A), a.value.addComponent(T), C.registerLanguage("json", U);
     });
-    const N = (i) => (i = JSON.stringify(i, null, 2), b.highlight("json", i, !0).value || "&nbsp;"), j = async () => {
+    const j = (i) => (i = JSON.stringify(i, null, 2), C.highlight("json", i, !0).value || "&nbsp;"), R = async () => {
       try {
-        if (!C.value) {
+        if (!J.value) {
           w.error("复制失败,可能浏览器不支持,请手动复制");
           return;
         }
-        await V(JSON.stringify(g.value, null, 2) || ""), w.success("复制成功");
+        await v(JSON.stringify(V.value, null, 2) || ""), w.success("复制成功");
       } catch {
         w.error("复制失败,可能浏览器不支持,请手动复制");
       }
     };
     return (i, e) => {
-      const y = d("el-icon"), a = d("el-button"), E = d("fc-designer"), I = d("el-input"), h = d("el-dialog"), O = d("el-scrollbar"), R = q("dompurify-html");
-      return G(), H("div", L, [
+      const y = d("el-icon"), u = d("el-button"), E = d("fc-designer"), I = d("el-input"), h = d("el-dialog"), O = d("el-scrollbar"), M = z("dompurify-html");
+      return H(), L("div", P, [
         t(E, {
           ref_key: "designer",
-          ref: u,
+          ref: a,
           height: "100%",
-          config: J.value
+          config: k.value
         }, {
           handle: o(() => [
-            t(a, {
+            t(u, {
               size: "small",
               type: "primary",
               plain: "",
@@ -114,7 +145,7 @@ const T = {
               default: o(() => [
                 t(y, null, {
                   default: o(() => [
-                    t(r(M))
+                    t(r(B))
                   ]),
                   _: 1
                 }),
@@ -122,16 +153,16 @@ const T = {
               ]),
               _: 1
             }),
-            t(a, {
+            t(u, {
               size: "small",
               type: "primary",
               plain: "",
-              onClick: k
+              onClick: S
             }, {
               default: o(() => [
                 t(y, null, {
                   default: o(() => [
-                    t(r(B))
+                    t(r(D))
                   ]),
                   _: 1
                 }),
@@ -150,17 +181,17 @@ const T = {
           draggable: ""
         }, {
           footer: o(() => [
-            _("span", P, [
-              t(a, {
+            _("span", $, [
+              t(u, {
                 type: "primary",
-                onClick: S
+                onClick: N
               }, {
                 default: o(() => e[7] || (e[7] = [
                   p("确 定")
                 ])),
                 _: 1
               }),
-              t(a, {
+              t(u, {
                 onClick: e[1] || (e[1] = (l) => m(n) ? n.value = !1 : n = !1)
               }, {
                 default: o(() => e[8] || (e[8] = [
@@ -191,16 +222,16 @@ const T = {
         }, {
           footer: o(() => [
             _("span", K, [
-              t(a, {
+              t(u, {
                 type: "primary",
-                onClick: j
+                onClick: R
               }, {
                 default: o(() => e[9] || (e[9] = [
                   p("复制Json")
                 ])),
                 _: 1
               }),
-              t(a, {
+              t(u, {
                 onClick: e[3] || (e[3] = (l) => m(s) ? s.value = !1 : s = !1)
               }, {
                 default: o(() => e[10] || (e[10] = [
@@ -215,8 +246,8 @@ const T = {
               default: o(() => [
                 _("div", null, [
                   _("pre", null, [
-                    z(_("code", F, null, 512), [
-                      [R, N(r(g))]
+                    G(_("code", F, null, 512), [
+                      [M, j(r(V))]
                     ])
                   ])
                 ])
@@ -229,7 +260,7 @@ const T = {
       ]);
     };
   }
-}, te = /* @__PURE__ */ A(X, [["__scopeId", "data-v-c2690f44"]]);
+}, oe = /* @__PURE__ */ q(X, [["__scopeId", "data-v-c38e9ae1"]]);
 export {
-  te as default
+  oe as default
 };

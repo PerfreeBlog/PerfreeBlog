@@ -3,7 +3,6 @@
     <form-create v-model="formData" v-model:api="fApi" :rule="rule" :option="option" ></form-create>
     <el-empty description="当前主题无设置项" v-if="notSetting" />
 
-    <setting-carousel></setting-carousel>
   </div>
 </template>
 <script setup>
@@ -13,7 +12,6 @@ import {ElMessage} from "element-plus";
 import {ref} from "vue";
 import {getOptionByIdentificationApi, saveOptionListApi} from "../api/option.js";
 import formCreate from "@form-create/element-ui";
-import SettingCarousel from "@/core/components/setting-carousel/setting-carousel.vue";
 
 const fApi = ref({});
 const formData = ref({});
