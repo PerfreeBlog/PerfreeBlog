@@ -36,5 +36,6 @@ public interface CategoryMapper extends BaseMapperX<Category> {
 
     IPage<CategoryRespVO> categoryPage(IPage<CategoryRespVO> page, @Param("pageVO") CategoryPageReqVO pageVO);
 
+    List<CategoryRespVO> getHotCategory(@Param("num") int num);
 }
 

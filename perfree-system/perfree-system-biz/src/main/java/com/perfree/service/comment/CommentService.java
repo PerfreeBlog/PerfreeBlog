@@ -82,4 +82,6 @@ public interface CommentService extends IService<Comment> {
 
     List<CommentRespVO> getLatestComment(Integer num);
 
+    List<CommentRespVO> getCommentByArticleId(Integer articleId);
+
 }

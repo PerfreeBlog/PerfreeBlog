@@ -6,6 +6,9 @@ import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.system.api.option.dto.OptionDTO;
 import org.apache.commons.lang3.StringUtils;
+import org.dromara.hutool.core.data.id.IdUtil;
+import org.dromara.hutool.json.JSONArray;
+import org.dromara.hutool.json.JSONUtil;
 
 public class TplMethodShared {
 
@@ -19,6 +22,20 @@ public class TplMethodShared {
         OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key, identification);
         if (null == option || StringUtils.isBlank(option.getValue())) {
             return null;
+        }
+        return option.getValue();
+    }
+
+    /**
+     * @description 根据key获取字典值
+     * @param key  key
+     * @return java.lang.String
+     * @author Perfree
+     */
+    public String option(String key, String identification,String defaultValue) {
+        OptionDTO option = SpringBeanUtil.context.getBean(OptionCacheService.class).getOption(key, identification);
+        if (null == option || StringUtils.isBlank(option.getValue())) {
+            return defaultValue;
         }
         return option.getValue();
     }
@@ -47,4 +64,23 @@ public class TplMethodShared {
         PluginInfo pluginInfo = PluginInfoHolder.getPluginInfo(pluginId);
         return null == pluginInfo;
     }
+
+    public String fastSimpleUUID() {
+        return  IdUtil.fastSimpleUUID();
+    }
+
+    public JSONArray parseJsonToArray(String jsonStr) {
+        if (StringUtils.isBlank(jsonStr)) {
+            return null;
+        }
+        return JSONUtil.parseArray(jsonStr);
+    }
+
+    public Object parseJsonToObj(String jsonStr) {
+        return JSONUtil.parse(jsonStr);
+    }
+
+
+
 }
+

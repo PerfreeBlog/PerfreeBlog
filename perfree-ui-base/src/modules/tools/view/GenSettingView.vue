@@ -48,6 +48,7 @@ import {useClipboard} from "@vueuse/core";
 import {ElMessage} from "element-plus";
 import {AttachSelectInputRule} from "@/core/components/attach/AttachSelectInput.js";
 import {onMounted, ref} from "vue";
+import {SettingCarouselRule} from "@/core/components/setting-carousel/SettingCarousel.js";
 
 const { copy, isSupported } = useClipboard({ legacy: true })
 const designer = ref();
@@ -87,6 +88,7 @@ function onImportJson() {
 /** 初始化 **/
 onMounted(async () => {
   designer.value.addComponent(AttachSelectInputRule)
+  designer.value.addComponent(SettingCarouselRule)
   // 注册代码高亮的各种语言
   hljs.registerLanguage('json', json)
 })

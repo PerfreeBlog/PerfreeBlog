@@ -28,12 +28,19 @@
         select a.* from (SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where
         articleId = t1.id and status = 0) as commentCount
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where 1 =1
-        <if test="pageVO.categoryId != null">and t1.id IN (SELECT articleId FROM p_article_category WHERE categoryId =
-            #{pageVO.categoryId})
+        <if test="pageVO.categoryId != null">
+           and t1.id IN (SELECT articleId FROM p_article_category WHERE categoryId = #{pageVO.categoryId})
+        </if>
+        <if test="pageVO.categorySlug != null and pageVO.categorySlug != ''">
+            and t1.id IN (SELECT articleId FROM p_article_category a1 LEFT JOIN p_category a2 ON a1.categoryId = a2.id WHERE a2.slug = #{pageVO.categorySlug})
         </if>
 
         <if test="pageVO.tagId != null">
             and  t1.id IN (SELECT articleId FROM p_article_tag WHERE tagId = #{pageVO.tagId})
+        </if>
+
+        <if test="pageVO.tagSlug != null and pageVO.tagSlug != ''">
+            and t1.id IN (SELECT articleId FROM p_article_tag a1 LEFT JOIN p_tag a2 ON a1.tagId = a2.id WHERE a2.slug = #{pageVO.tagSlug})
         </if>
 
         <if test="pageVO.status != null">
@@ -175,5 +182,16 @@
         SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
         order by   t1.viewCount desc LIMIT 0,#{num}
+    </select>
+    <select id="getBySlug" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.slug = #{slug}
+    </select>
+
+    <select id="getHotArticleByGreatCount" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by   t1.greatCount desc LIMIT 0,#{num}
     </select>
 </mapper>

@@ -144,4 +144,8 @@ public interface ArticleMapper extends BaseMapperX<Article> {
 
     void updateViewCount(@Param("id") Integer id);
 
+    ArticleRespVO getBySlug(@Param("slug") String slug);
+
+    List<ArticleRespVO> getHotArticleByGreatCount(@Param("num") Integer num);
+
 }

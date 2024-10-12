@@ -45,4 +45,5 @@ public interface CommentMapper extends BaseMapperX<Comment> {
 
     List<CommentRespVO> getLatestComment(@Param("num") Integer num);
 
+    List<CommentRespVO> getCommentByArticleId(@Param("articleId") Integer articleId);
 }

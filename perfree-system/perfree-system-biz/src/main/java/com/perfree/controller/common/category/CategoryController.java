@@ -42,4 +42,15 @@ public class CategoryController {
         return success(categoryService.getCategoryById(id));
     }
 
+    @GetMapping("/getBySlug")
+    @Operation(summary = "根据slug获取分类")
+    public CommonResult<CategoryRespVO> getBySlug(@RequestParam(value = "slug") String slug) {
+        return success(categoryService.getBySlug(slug));
+    }
+
+    @GetMapping("/getHotCategory")
+    @Operation(summary = "获取热门分类")
+    public CommonResult<List<CategoryRespVO>> getHotCategory(@RequestParam(value = "num") Integer num) {
+        return success(categoryService.getHotCategory(num));
+    }
 }

@@ -10,6 +10,7 @@ import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.WebUtils;
 import com.perfree.constant.CommentConstant;
 import com.perfree.constant.OptionConstant;
+import com.perfree.constant.UserConstant;
 import com.perfree.controller.auth.comment.vo.*;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;
 import com.perfree.controller.common.comment.vo.CommentPageByTopPidReqVO;
@@ -127,6 +128,8 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         if (null != loginUser) {
             User user = userMapper.selectById(loginUser.getId());
             reqVO.setUserId(user.getId());
+        } else {
+            reqVO.setAvatar(UserConstant.DEFAULT_AVATAR);
         }
         reqVO.setIp(WebUtils.getClientIP());
         reqVO.setDevice(WebUtils.getDevice());
@@ -162,5 +165,10 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Override
     public List<CommentRespVO> getLatestComment(Integer num) {
         return commentMapper.getLatestComment(num);
+    }
+
+    @Override
+    public List<CommentRespVO> getCommentByArticleId(Integer articleId) {
+        return commentMapper.getCommentByArticleId(articleId);
     }
 }

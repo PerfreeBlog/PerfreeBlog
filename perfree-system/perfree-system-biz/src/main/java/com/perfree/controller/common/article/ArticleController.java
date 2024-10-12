@@ -46,6 +46,27 @@ public class ArticleController {
         return success(latestArticle);
     }
 
+    @GetMapping("getHotArticleByComment")
+    @Operation(summary = "获取评论最多的热门文章文章")
+    public CommonResult<List<ArticleRespVO>> getHotArticleByComment(@RequestParam("num") Integer num) {
+        List<ArticleRespVO> latestArticle = articleService.getHotArticleByCommentCount(num);
+        return success(latestArticle);
+    }
+
+    @GetMapping("getHotArticleByViewCount")
+    @Operation(summary = "获取浏览量最多的热门文章文章")
+    public CommonResult<List<ArticleRespVO>> getHotArticleByViewCount(@RequestParam("num") Integer num) {
+        List<ArticleRespVO> latestArticle = articleService.getHotArticleByViewCount(num);
+        return success(latestArticle);
+    }
+
+    @GetMapping("getHotArticleByGreatCount")
+    @Operation(summary = "获取点赞最多的热门文章文章")
+    public CommonResult<List<ArticleRespVO>> getHotArticleByGreatCount(@RequestParam("num") Integer num) {
+        List<ArticleRespVO> latestArticle = articleService.getHotArticleByGreatCount(num);
+        return success(latestArticle);
+    }
+
     @PostMapping("/page")
     @Operation(summary = "文章分页列表")
     public CommonResult<PageResult<ArticleRespVO>> page(@RequestBody ArticlePageReqVO pageVO) {
@@ -56,6 +77,12 @@ public class ArticleController {
     @Operation(summary = "根据id获取文章")
     public CommonResult<ArticleRespVO> get(@RequestParam(value = "id") Integer id) {
         return CommonResult.success(articleService.getArticleById(id));
+    }
+
+    @GetMapping("/getBySlug")
+    @Operation(summary = "根据slug获取文章")
+    public CommonResult<ArticleRespVO> getBySlug(@RequestParam(value = "slug") String slug) {
+        return CommonResult.success(articleService.getBySlug(slug));
     }
 
     @GetMapping("/getAllPage")

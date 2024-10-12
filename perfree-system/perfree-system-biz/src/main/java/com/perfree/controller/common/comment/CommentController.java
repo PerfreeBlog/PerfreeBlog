@@ -52,4 +52,11 @@ public class CommentController {
         List<CommentRespVO> latestArticle = commentService.getLatestComment(num);
         return success(latestArticle);
     }
+
+    @GetMapping("getCommentByArticleId")
+    @Operation(summary = "根据文章id获取所有评论")
+    public CommonResult<List<CommentRespVO>> getCommentByArticleId(@RequestParam("articleId") Integer articleId) {
+        List<CommentRespVO> latestArticle = commentService.getCommentByArticleId(articleId);
+        return success(latestArticle);
+    }
 }

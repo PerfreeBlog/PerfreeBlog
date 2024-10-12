@@ -73,4 +73,6 @@ public interface CategoryService extends IService<Category> {
      */
     PageResult<CategoryRespVO> categoryPage(CategoryPageReqVO reqVO);
 
+    List<CategoryRespVO> getHotCategory(int count);
+
 }

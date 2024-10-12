@@ -51,4 +51,9 @@
             </if>
         </where>
     </select>
+    <select id="getHotCategory" resultMap="CATEGORY_RESULT_MAP">
+        select t1.*, (select count(1) from p_article_category WHERE categoryId = t1.id) as `count`,t2.userName,t2.avatar,t2.email,t2.website
+        from p_category t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        ORDER BY `count` desc LIMIT 0,#{num}
+    </select>
 </mapper>

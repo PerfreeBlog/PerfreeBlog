@@ -7,6 +7,7 @@ import com.perfree.commons.directive.BaseDirective;
 import com.perfree.commons.directive.TemplateDirective;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.service.article.ArticleService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,9 +31,11 @@ public class HotArticleDirective extends BaseDirective {
         int count = Integer.parseInt(para.get("count"));
         String type = para.get("type");
         List<ArticleRespVO> hotArticleList;
-        if (type.equals("comment")) {
+        if (StringUtils.isNotBlank(type) && type.equals("comment")) {
             hotArticleList = articleService.getHotArticleByCommentCount(count);
-        } else {
+        } else if (StringUtils.isNotBlank(type) && type.equals("great")) {
+            hotArticleList = articleService.getHotArticleByGreatCount(count);
+        }else {
             hotArticleList = articleService.getHotArticleByViewCount(count);
         }
         scope.set("articles", hotArticleList);

@@ -316,6 +316,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         ServletUtil.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
     }
 
+    @Override
+    public ArticleRespVO getBySlug(String slug) {
+        return articleMapper.getBySlug(slug);
+    }
+
+    @Override
+    public List<ArticleRespVO> getHotArticleByGreatCount(Integer num) {
+        return articleMapper.getHotArticleByGreatCount(num);
+    }
+
     /**
      * 生成文章摘要
      * @param summary summary

@@ -128,6 +128,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
     }
 
+    @Override
+    public List<CategoryRespVO> getHotCategory(int num) {
+        return categoryMapper.getHotCategory(num);
+    }
+
 
     /**
      * 生成子分类

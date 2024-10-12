@@ -26,6 +26,8 @@ import download from "@/core/utils/download.js";
 import {useOptionStore} from "@/core/stores/optionStore.js";
 import {AttachSelectInputRule} from "@/core/components/attach/AttachSelectInput.js";
 import {getOptionByKeysAndIdentificationApi} from "@/core/api/option.js";
+import SettingCarousel from "@/core/components/setting-carousel/setting-carousel.vue";
+import {SettingCarouselRule} from "@/core/components/setting-carousel/SettingCarousel.js";
 
 const app = createApp(App);
 
@@ -57,10 +59,13 @@ app.use(VueDOMPurifyHTML)
 
 // form-create
 FcDesigner.component('AttachSelectInput', AttachSelectInput);
+FcDesigner.component('SettingCarousel', SettingCarousel);
 formCreate.use(install)
 formCreate.register(AttachSelectInputRule);
+formCreate.register(SettingCarouselRule);
 
 app.component('AttachSelectInput', AttachSelectInput);
+app.component('SettingCarousel', SettingCarousel);
 app.use(formCreate)
 app.use(FcDesigner)
 app.use(FcDesigner.formCreate)

@@ -168,4 +168,9 @@ public interface ArticleService extends IService<Article> {
     List<ArticleRespVO> getHotArticleByViewCount(Integer num);
 
     void viewCountHandle(HttpServletRequest request, HttpServletResponse response, Integer id);
+
+    ArticleRespVO getBySlug(String slug);
+
+    List<ArticleRespVO> getHotArticleByGreatCount(Integer num);
+
 }

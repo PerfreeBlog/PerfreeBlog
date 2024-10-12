@@ -43,4 +43,15 @@ public class TagController {
         return CommonResult.success(tagService.getTagById(id));
     }
 
+    @GetMapping("/getBySlug")
+    @Operation(summary = "根据slug获取标签信息")
+    public CommonResult<TagRespVO> getBySlug(@RequestParam(value = "slug") String slug) {
+        return CommonResult.success(tagService.getBySlug(slug));
+    }
+
+    @GetMapping("/getHotTag")
+    @Operation(summary = "获取热门标签")
+    public CommonResult<List<TagRespVO>> getHotTag(@RequestParam(value = "num") Integer num) {
+        return CommonResult.success(tagService.getHotTag(num));
+    }
 }
