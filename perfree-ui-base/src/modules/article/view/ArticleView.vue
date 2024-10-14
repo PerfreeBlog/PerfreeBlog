@@ -55,7 +55,7 @@
       <el-table :data="tableData" style="width: 100%;height:100%;" row-key="id" v-loading="loading" >
         <el-table-column label="序号" min-width="60" type="index" />
         <el-table-column prop="title" label="文章标题" min-width="150" show-overflow-tooltip/>
-        <el-table-column prop="status" label="状态" min-width="80">
+        <el-table-column prop="status" label="状态" min-width="120">
           <template v-slot="scope">
             <el-tag type="success" v-if="scope.row.status === 0">已发布</el-tag>
             <el-tag type="danger" v-else>草稿箱</el-tag>
@@ -73,10 +73,10 @@
                       append-to-body fit="cover" preview-teleported></el-image>
           </template>
         </el-table-column>
-        <el-table-column prop="viewCount" label="阅读数量" min-width="70" align="center"/>
-        <el-table-column prop="greatCount" label="点赞数量" min-width="70" align="center"/>
-        <el-table-column prop="commentCount" label="评论数量" min-width="70" align="center"/>
-        <el-table-column prop="isComment" label="允许评论" min-width="80" align="center">
+        <el-table-column prop="viewCount" label="阅读数量" min-width="100" align="center"/>
+        <el-table-column prop="greatCount" label="点赞数量" min-width="100" align="center"/>
+        <el-table-column prop="commentCount" label="评论数量" min-width="100" align="center"/>
+        <el-table-column prop="isComment" label="允许评论" min-width="100" align="center">
           <template v-slot="scope">
             <el-switch v-model="scope.row.isComment"  :active-value="1" :inactive-value="0" inline-prompt :active-icon="Check"
                        :inactive-icon="Close" @click.native.prevent="changeIsComment(scope.row)" disabled/>
