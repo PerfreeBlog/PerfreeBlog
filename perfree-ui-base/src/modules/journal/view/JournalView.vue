@@ -5,10 +5,10 @@
         <el-form-item label="内容">
           <el-input v-model="searchForm.content" placeholder="请输入内容" clearable/>
         </el-form-item>
-        <el-form-item label="状态">
-          <el-select v-model="searchForm.status" placeholder="请选择状态" style="width: 200px" clearable>
+        <el-form-item label="是否可见">
+          <el-select v-model="searchForm.visibility" placeholder="请选择是否可见" style="width: 200px" clearable>
             <el-option :key="0" :label="'所有人可见'" :value="0" />
-            <el-option :key="2" :label="'仅自己可见'" :value="2" />
+            <el-option :key="1" :label="'仅自己可见'" :value="1" />
           </el-select>
         </el-form-item>
         <el-form-item>
@@ -20,7 +20,7 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button :icon="Plus" type="primary" plain @click="handleAdd">发表动态</el-button>
+        <el-button :icon="Plus" type="primary" plain @click="handleAdd" v-hasPermission="['admin:journal:create']">发表动态</el-button>
       </el-col>
       <div class="right-tool">
         <el-button :icon="Refresh" circle @click="initList"/>
@@ -52,9 +52,9 @@
           </template>
         </el-table-column>
 
-        <el-table-column prop="status" label="状态" min-width="120">
+        <el-table-column prop="visibility" label="是否可见" min-width="120">
           <template v-slot="scope">
-            <el-tag type="success" v-if="scope.row.status === 0">所有人可见</el-tag>
+            <el-tag type="success" v-if="scope.row.visibility === 0">所有人可见</el-tag>
             <el-tag type="danger" v-else>仅自己可见</el-tag>
           </template>
         </el-table-column>
@@ -66,8 +66,8 @@
         </el-table-column>
         <el-table-column label="操作" width="140" fixed="right">
           <template v-slot="scope">
-            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">修改</el-button>
-            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['admin:journal:update']">修改</el-button>
+            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['admin:journal:delete']">删除</el-button>
 
           </template>
         </el-table-column>
@@ -108,7 +108,7 @@ const searchForm = ref({
   pageSize: 10,
   total: 0,
   content: null,
-  status: null
+  visibility: null
 })
 
 const searchFormRef = ref();
@@ -139,7 +139,7 @@ function resetSearchForm() {
     pageSize: 10,
     total: 0,
     content: null,
-    status: null
+    visibility: null
   }
   searchFormRef.value.resetFields();
   initList();

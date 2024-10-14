@@ -117,4 +117,8 @@ public class Article extends BaseModel implements Serializable {
     private String template;
 
 
+    /**
+     * 是否可见, 0是, 1否
+     */
+    private Integer visibility;
 }

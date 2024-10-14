@@ -173,4 +173,6 @@ public interface ArticleService extends IService<Article> {
 
     List<ArticleRespVO> getHotArticleByGreatCount(Integer num);
 
+    Boolean updateVisibility(ArticleUpdateVisibilityReqVO updateReqVO);
+
 }

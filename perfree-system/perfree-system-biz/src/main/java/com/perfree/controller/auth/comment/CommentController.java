@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,12 +49,14 @@ public class CommentController {
 
     @DeleteMapping("/del")
     @Operation(summary = "根据id删除评论")
+    @PreAuthorize("@ss.hasPermission('admin:comment:delete')")
     public CommonResult<Boolean> del(@RequestParam(value = "id") Integer id) {
         return CommonResult.success(commentService.del(id));
     }
 
     @PostMapping("/updateStatus")
     @Operation(summary = "修改评论状态")
+    @PreAuthorize("@ss.hasPermission('admin:comment:audit')")
     public CommonResult<Boolean> updateStatus(@RequestBody @Valid CommentUpdateStatusReqVO commentUpdateStatusReqVO) {
         return CommonResult.success(commentService.updateStatus(commentUpdateStatusReqVO));
     }

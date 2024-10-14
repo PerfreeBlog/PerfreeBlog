@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class CategoryController {
 
     @PostMapping("/add")
     @Operation(summary = "添加分类")
+    @PreAuthorize("@ss.hasPermission('admin:category:create')")
     public CommonResult<CategoryRespVO> add(@RequestBody @Valid CategoryAddReqVO categoryAddReqVO) {
         Category category = categoryService.addCategory(categoryAddReqVO);
         return success(CategoryConvert.INSTANCE.convertRespVO(category));
@@ -46,6 +48,7 @@ public class CategoryController {
 
     @PutMapping("/update")
     @Operation(summary = "更新分类")
+    @PreAuthorize("@ss.hasPermission('admin:category:update')")
     public CommonResult<CategoryRespVO> update(@RequestBody @Valid CategoryUpdateReqVO categoryUpdateReqVO) {
         Category category = categoryService.updateCategory(categoryUpdateReqVO);
         return success(CategoryConvert.INSTANCE.convertRespVO(category));
@@ -59,6 +62,7 @@ public class CategoryController {
 
     @DeleteMapping("/del")
     @Operation(summary = "删除分类")
+    @PreAuthorize("@ss.hasPermission('admin:category:delete')")
     public CommonResult<Boolean> del(@RequestParam(value = "id") Integer id) {
         return success(categoryService.del(id));
     }

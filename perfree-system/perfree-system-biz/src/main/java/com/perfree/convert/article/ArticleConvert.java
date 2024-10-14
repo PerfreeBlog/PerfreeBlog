@@ -35,4 +35,6 @@ public interface ArticleConvert {
 
     List<ArticleRespVO> convertToRespList(List<Article> articleList);
 
+    Article convertModelByVisibilityVO(ArticleUpdateVisibilityReqVO updateReqVO);
+
 }

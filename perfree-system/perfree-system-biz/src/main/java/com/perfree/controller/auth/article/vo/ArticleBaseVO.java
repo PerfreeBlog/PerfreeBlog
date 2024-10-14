@@ -61,4 +61,7 @@ public class ArticleBaseVO {
 
     @Schema(description = "模板")
     private String template;
+
+    @Schema(description = "是否可见, 0是, 1否")
+    private Integer visibility;
 }

@@ -51,6 +51,7 @@ public class OptionController {
 
     @PostMapping("/saveCurrentThemeSetting")
     @Operation(summary = "保存当前启用主题的设置项")
+    @PreAuthorize("@ss.hasPermission('admin:theme:updateSetting')")
     public CommonResult<Boolean> saveCurrentThemeSetting(@RequestBody @Valid OptionAddListReqVO optionAddListReqVO) {
         return success(optionService.saveCurrentThemeSetting(optionAddListReqVO));
     }

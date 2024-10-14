@@ -14,6 +14,10 @@ export function articleUpdateIsTopApi(data) {
     return axios.post('/api/auth/article/updateIsTop', data);
 }
 
+export function articleUpdateVisibilityApi(data) {
+    return axios.put('/api/auth/article/updateVisibility', data);
+}
+
 export function articleUpdateStatusApi(data) {
     return axios.post('/api/auth/article/updateStatus', data);
 }

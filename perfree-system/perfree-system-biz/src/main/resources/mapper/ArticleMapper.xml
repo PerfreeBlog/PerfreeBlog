@@ -50,6 +50,9 @@
         <if test="pageVO.type != null and pageVO.type != ''">
             and t1.type = #{pageVO.type}
         </if>
+        <if test="pageVO.visibility != null">
+            and t1.visibility = #{pageVO.visibility}
+        </if>
 
         <if test="pageVO.title != null and pageVO.title != ''">
             <bind name="title" value="'%' + _parameter.pageVO.title + '%'" />
@@ -57,10 +60,10 @@
         </if>) a
         <where>
             <if test="loginUserId != null">
-                and a.createUserId = #{loginUserId}
+                and (a.createUserId = #{loginUserId} or a.visibility = 0)
             </if>
             <if test="loginUserId == null">
-                and a.status = 0
+                and a.visibility = 0
             </if>
         </where>
     </select>
@@ -118,8 +121,8 @@
         articleId = t1.id and status = 0) as commentCount
         FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'journal'
 
-        <if test="pageVO.status != null">
-            and t1.status = #{pageVO.status}
+        <if test="pageVO.visibility != null">
+            and t1.visibility = #{pageVO.visibility}
         </if>
 
         <if test="pageVO.content != null and pageVO.content != ''">
@@ -129,10 +132,10 @@
         ) a
         <where>
             <if test="loginUserId != null">
-                and a.createUserId = #{loginUserId}
+                and (a.createUserId = #{loginUserId} or a.visibility = 0)
             </if>
             <if test="loginUserId == null">
-                and a.status = 0
+                and a.visibility = 0
             </if>
         </where>
     </select>

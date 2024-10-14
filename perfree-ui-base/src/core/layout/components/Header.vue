@@ -46,7 +46,7 @@
 
       <el-dropdown>
         <div class="h-user">
-          <el-avatar :src="userInfo.avatar" />
+          <el-avatar :src="userInfo?.avatar" />
           <span class="h-userName">{{userInfo.userName}}</span>
         </div>
         <template #dropdown>

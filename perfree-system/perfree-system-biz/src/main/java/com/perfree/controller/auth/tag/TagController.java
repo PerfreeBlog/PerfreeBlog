@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +43,7 @@ public class TagController {
 
     @PostMapping("/add")
     @Operation(summary = "新增标签")
+    @PreAuthorize("@ss.hasPermission('admin:tag:create')")
     public CommonResult<TagRespVO> add(@RequestBody @Valid TagCreateReqVO tagCreateReqVO) {
         com.perfree.model.Tag tag = tagService.add(tagCreateReqVO);
         return CommonResult.success(TagConvert.INSTANCE.convertRespVO(tag));
@@ -55,6 +57,7 @@ public class TagController {
 
     @PutMapping("/update")
     @Operation(summary = "修改标签")
+    @PreAuthorize("@ss.hasPermission('admin:tag:update')")
     public CommonResult<Boolean> update(@RequestBody @Valid TagUpdateReqVO tagUpdateReqVO) {
         return CommonResult.success(tagService.updateTag(tagUpdateReqVO));
     }
@@ -62,6 +65,7 @@ public class TagController {
 
     @DeleteMapping("/del")
     @Operation(summary = "根据id删除标签")
+    @PreAuthorize("@ss.hasPermission('admin:tag:delete')")
     public CommonResult<Boolean> del(@RequestParam(value = "id") Integer id) {
         return CommonResult.success(tagService.del(id));
     }

@@ -84,10 +84,10 @@
         </el-table-column>
         <el-table-column label="操作" width="260" fixed="right">
           <template v-slot="scope">
-            <el-button size="small" type="primary" link :icon="Check" @click="handleAudit(scope.row)" v-if="scope.row.status === 1">审核通过</el-button>
+            <el-button size="small" type="primary" link :icon="Check" @click="handleAudit(scope.row)" v-if="scope.row.status === 1" v-hasPermission="['admin:comment:audit']">审核通过</el-button>
             <el-button size="small" type="primary" link :icon="ChatDotSquare" @click="showAllReplyList(scope.row)" v-if="scope.row.status === 0">查看所有回复({{scope.row.childNum}})</el-button>
-            <el-button size="small" type="primary" link :icon="ChatLineSquare" @click="handleReply(scope.row)" v-if="scope.row.status === 0">回复</el-button>
-            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['admin:role:delete']">删除</el-button>
+            <el-button size="small" type="primary" link :icon="ChatLineSquare" @click="handleReply(scope.row)" v-if="scope.row.status === 0"  v-hasPermission="['admin:comment:reply']">回复</el-button>
+            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['admin:comment:delete']">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

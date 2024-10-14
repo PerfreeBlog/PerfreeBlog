@@ -11,6 +11,12 @@
             <el-option :key="1" :label="'草稿箱'" :value="1" />
           </el-select>
         </el-form-item>
+        <el-form-item label="是否可见">
+          <el-select v-model="searchForm.visibility" placeholder="请选择是否可见" style="width: 200px" clearable>
+            <el-option :key="0" :label="'所有人可见'" :value="0" />
+            <el-option :key="1" :label="'仅自己可见'" :value="1" />
+          </el-select>
+        </el-form-item>
         <el-form-item label="所属分类">
           <el-tree-select
               v-model="searchForm.categoryId"
@@ -37,7 +43,7 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button :icon="Plus" type="primary" plain @click="handleAdd">写文章</el-button>
+        <el-button :icon="Plus" type="primary" plain @click="handleAdd" v-hasPermission="['admin:article:create']">写文章</el-button>
       </el-col>
       <div class="right-tool">
         <el-button :icon="Refresh" circle @click="initList"/>
@@ -82,6 +88,13 @@
                        :inactive-icon="Close" @click.native.prevent="changeIsTop(scope.row)" disabled/>
           </template>
         </el-table-column>
+        <el-table-column prop="visibility" label="是否可见" min-width="120">
+          <template v-slot="scope">
+            <el-switch v-model="scope.row.visibility" :active-value="0" :inactive-value="1" inline-prompt
+                       style="--el-switch-on-color: var(--el-color-success); --el-switch-off-color: var(--el-color-warning); margin-right: 10px"
+                       active-text="所有人可见" inactive-text="仅自己可见" @click.native.prevent="changeVisibility(scope.row)" disabled/>
+          </template>
+        </el-table-column>
 
         <el-table-column prop="user.userName" label="创建人" min-width="100"/>
         <el-table-column prop="createTime" label="创建时间" min-width="180">
@@ -91,10 +104,10 @@
         </el-table-column>
         <el-table-column label="操作" width="190" fixed="right">
           <template v-slot="scope">
-            <el-button size="small" type="primary" link :icon="Finished" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 1">发布</el-button>
-            <el-button size="small" type="primary" link :icon="ToiletPaper" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 0">草稿</el-button>
-            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">修改</el-button>
-            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button size="small" type="primary" link :icon="Finished" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 1" v-hasPermission="['admin:article:updateStatus']">发布</el-button>
+            <el-button size="small" type="primary" link :icon="ToiletPaper" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 0" v-hasPermission="['admin:article:updateStatus']">草稿</el-button>
+            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['admin:article:update']">修改</el-button>
+            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['admin:article:delete']">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -123,7 +136,7 @@ import {
   articlePageApi,
   articleUpdateIsCommentApi,
   articleUpdateIsTopApi,
-  articleUpdateStatusApi
+  articleUpdateStatusApi, articleUpdateVisibilityApi
 } from "../api/article.js";
 import {categoryListTreeApi} from "../api/category.js";
 import {toPage} from "@/core/utils/tabs.js";
@@ -137,7 +150,8 @@ const searchForm = ref({
   type: 'article',
   status: null,
   categoryId: null,
-  tagId: null
+  tagId: null,
+  visibility: null
 })
 
 const searchFormRef = ref();
@@ -193,7 +207,8 @@ function resetSearchForm() {
     type: 'article',
     status: null,
     categoryId: null,
-    tagId: null
+    tagId: null,
+    visibility: null
   }
   searchFormRef.value.resetFields();
   initList();
@@ -290,6 +305,34 @@ function changeIsTop(row) {
       isTop: row.isTop === 0 ? 1 : 0
     }
     articleUpdateIsTopApi(param).then(res => {
+      if (res.code === 200) {
+        initList();
+        ElMessage.success("修改成功");
+      } else {
+        ElMessage.error("修改失败");
+      }
+    });
+  }).catch(() => {});
+}
+
+function changeVisibility(row) {
+  let msg = row.visibility === 0 ? '仅自己可见': '所有人可见';
+  ElMessageBox({
+    title: '提示',
+    message: h('p', null, [
+      `确定要修改文章[${row.title}]为`,
+      h('font', { style: 'color: var(--el-color-warning)' }, msg), '吗?'
+    ]),
+    showCancelButton: true,
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
+  }).then(() => {
+    let param = {
+      id: row.id,
+      visibility: row.visibility === 0 ? 1 : 0
+    }
+    articleUpdateVisibilityApi(param).then(res => {
       if (res.code === 200) {
         initList();
         ElMessage.success("修改成功");

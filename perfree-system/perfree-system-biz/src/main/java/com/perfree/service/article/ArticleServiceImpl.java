@@ -326,6 +326,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.getHotArticleByGreatCount(num);
     }
 
+    @Override
+    public Boolean updateVisibility(ArticleUpdateVisibilityReqVO updateReqVO) {
+        Article article = ArticleConvert.INSTANCE.convertModelByVisibilityVO(updateReqVO);
+        articleMapper.updateById(article);
+        return true;
+    }
+
     /**
      * 生成文章摘要
      * @param summary summary

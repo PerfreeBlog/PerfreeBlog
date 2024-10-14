@@ -46,5 +46,8 @@ public class JournalRespVO {
     @Schema(description = "是否允许评论0:否,1是")
     private Integer isComment;
 
+    @Schema(description = "是否可见")
+    private Integer visibility;
+
     private List<JournalAttachRespVO> attachList;
 }

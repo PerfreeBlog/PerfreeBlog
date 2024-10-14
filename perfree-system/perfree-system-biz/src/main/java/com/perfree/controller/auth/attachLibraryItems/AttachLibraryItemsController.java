@@ -35,7 +35,6 @@ public class AttachLibraryItemsController {
 
     @PostMapping("/page")
     @Operation(summary = "附件库数据分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibraryItems:query')")
     public CommonResult<PageResult<AttachLibraryItemsRespVO>> page(@RequestBody AttachLibraryItemsPageReqVO pageVO) {
         PageResult<AttachLibraryItemsRespVO> attachLibraryItemsPageResult = attachLibraryItemsService.attachLibraryItemsPage(pageVO);
         return success(attachLibraryItemsPageResult);

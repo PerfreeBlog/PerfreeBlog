@@ -1,8 +1,8 @@
 <template>
   <div class="page">
     <div style="text-align: center;margin-bottom: 10px;display: flex;justify-content: center;">
-      <el-link type="primary" @click="handleInstallTheme">安装新主题</el-link>
-      <span>-</span>
+      <el-link type="primary" @click="handleInstallTheme" v-hasPermission="['admin:theme:install']">安装新主题</el-link>
+      <span v-hasPermission="['admin:theme:install']">-</span>
       <el-link type="primary" href="https://www.perfree.org.cn/theme" target="_blank">主题仓库</el-link>
       <span>-</span>
       <el-link type="primary" href="https://www.perfree.org.cn/themeDevDoc" target="_blank">主题开发指南</el-link>

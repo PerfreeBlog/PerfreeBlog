@@ -1,5 +1,5 @@
 export function articleAddApi(data) {
-    return axios.post('/api/auth/article/createArticle', data);
+    return axios.post('/api/auth/page/createArticle', data);
 }
 
 export function articlePageApi(data) {
@@ -7,19 +7,19 @@ export function articlePageApi(data) {
 }
 
 export function articleUpdateIsCommentApi(data) {
-    return axios.post('/api/auth/article/updateIsComment', data);
+    return axios.post('/api/auth/page/updateIsComment', data);
 }
 
 export function articleUpdateIsTopApi(data) {
-    return axios.post('/api/auth/article/updateIsTop', data);
+    return axios.post('/api/auth/page/updateIsTop', data);
 }
 
 export function articleUpdateStatusApi(data) {
-    return axios.post('/api/auth/article/updateStatus', data);
+    return axios.post('/api/auth/page/updateStatus', data);
 }
 
 export function articleDelApi(id) {
-    return axios.delete('/api/auth/article/del?id=' + id);
+    return axios.delete('/api/auth/page/del?id=' + id);
 }
 
 export function articleGetApi(id) {
@@ -27,5 +27,5 @@ export function articleGetApi(id) {
 }
 
 export function updateArticleApi(data) {
-    return axios.put('/api/auth/article/updateArticle', data);
+    return axios.put('/api/auth/page/updateArticle', data);
 }

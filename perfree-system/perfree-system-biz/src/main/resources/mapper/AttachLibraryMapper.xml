@@ -31,7 +31,7 @@
         ) a
         <where>
             <if test="loginUserId != null">
-                and  a.createUserId = #{loginUserId}
+                and  (a.createUserId = #{loginUserId} or a.visibility = 0)
             </if>
             <if test="loginUserId != null">
                 and  a.visibility = 0

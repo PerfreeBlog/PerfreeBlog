@@ -81,6 +81,9 @@
               <div style="margin-left: 15px;">
                 <span class="custom-label">置顶</span> <el-switch v-model="addForm.isTop"  :active-value="1" :inactive-value="0"/>
               </div>
+              <div style="margin-left: 15px;">
+                <span class="custom-label">可见</span>  <el-switch v-model="addForm.visibility" :active-value="0" :inactive-value="1" inline-prompt style="--el-switch-on-color: var(--el-color-success); --el-switch-off-color: var(--el-color-warning); margin-right: 10px" active-text="所有人可见" inactive-text="仅自己可见"/>
+              </div>
             </div>
           </el-form-item>
           <el-form-item label="封面图" prop="thumbnail">
@@ -121,8 +124,8 @@ const addForm = ref({
   isComment: 1,
   flag: '',
   type: 'article',
-  contentModel: 'Vditor'
-
+  contentModel: 'Vditor',
+  visibility: 0
 });
 
 const treeSelectProps = reactive({
@@ -192,7 +195,8 @@ function resetAddForm() {
     isComment: 1,
     flag: '',
     type: 'article',
-    contentModel: 'Vditor'
+    contentModel: 'Vditor',
+    visibility: 0
   }
   editorRef.value.resetContent();
   addFormRef.value.resetFields();

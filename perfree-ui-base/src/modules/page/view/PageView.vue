@@ -20,7 +20,7 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button :icon="Plus" type="primary" plain @click="handleAdd">添加页面</el-button>
+        <el-button :icon="Plus" type="primary" plain @click="handleAdd" v-hasPermission="['admin:page:create']">添加页面</el-button>
       </el-col>
       <div class="right-tool">
         <el-button :icon="Refresh" circle @click="initList"/>
@@ -68,10 +68,10 @@
         </el-table-column>
         <el-table-column label="操作" width="190" fixed="right">
           <template v-slot="scope">
-            <el-button size="small" type="primary" link :icon="Finished" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 1">发布</el-button>
-            <el-button size="small" type="primary" link :icon="ToiletPaper" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 0">草稿</el-button>
-            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)">修改</el-button>
-            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button size="small" type="primary" link :icon="Finished" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 1"  v-hasPermission="['admin:page:updateStatus']">发布</el-button>
+            <el-button size="small" type="primary" link :icon="ToiletPaper" @click="handleUpdateStatus(scope.row)" v-if="scope.row.status === 0"  v-hasPermission="['admin:page:updateStatus']">草稿</el-button>
+            <el-button size="small" type="primary" link :icon="Edit" @click="handleUpdate(scope.row)" v-hasPermission="['admin:page:update']">修改</el-button>
+            <el-button size="small" type="primary" link :icon="Delete" @click="handleDelete(scope.row)" v-hasPermission="['admin:page:delete']">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

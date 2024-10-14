@@ -16,6 +16,7 @@ import com.perfree.theme.commons.ThemeSetting;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
@@ -44,6 +45,7 @@ public class ThemeController {
 
     @PostMapping("installTheme")
     @Operation(summary = "安装主题")
+    @PreAuthorize("@ss.hasPermission('admin:theme:install')")
     public CommonResult<ThemeInfo> installTheme(InstallThemeReqVO installThemeReqVO) throws IOException {
         String multiFileName = installThemeReqVO.getFile().getOriginalFilename();
         File dir = new File(SystemConstants.UPLOAD_TEMP_PATH);
@@ -61,6 +63,7 @@ public class ThemeController {
 
     @PostMapping("swatchTheme")
     @Operation(summary = "切换主题")
+    @PreAuthorize("@ss.hasPermission('admin:theme:swatchTheme')")
     public CommonResult<Boolean> swatchTheme(@RequestParam(value = "themeName") String themeName) {
         return success(themeManager.swatchTheme(themeName));
     }
@@ -68,6 +71,7 @@ public class ThemeController {
 
     @DeleteMapping("unInstallTheme")
     @Operation(summary = "卸载主题")
+    @PreAuthorize("@ss.hasPermission('admin:theme:uninstall')")
     public CommonResult<Boolean> unInstallTheme(@RequestParam(value = "themeName") String themeName) {
         Boolean result = themeManager.unInstallTheme(themeName);
         if (result) {
@@ -98,6 +102,7 @@ public class ThemeController {
     @PostMapping("saveThemeFileContent")
     @Operation(summary = "保存主题文件内容")
     @ResponseBody
+    @PreAuthorize("@ss.hasPermission('admin:theme:edit')")
     public CommonResult<Boolean> saveThemeFileContent(@RequestBody ThemeSaveFileContentReqVO themeSaveFileContentReqVO) {
         return success(themeManager.saveThemeFileContent(themeSaveFileContentReqVO.getPath(),
                 themeSaveFileContentReqVO.getThemeName(), themeSaveFileContentReqVO.getContent()));

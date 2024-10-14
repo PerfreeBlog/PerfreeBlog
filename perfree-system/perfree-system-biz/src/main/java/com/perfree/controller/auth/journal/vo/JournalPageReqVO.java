@@ -13,6 +13,7 @@ public class JournalPageReqVO extends PageParam {
     @Schema(description = "内容")
     private String content;
 
-    @Schema(description = "状态0:已发布,1:草稿,2:仅自己可见")
-    private Integer status;
+    @Schema(description = "是否可见")
+    private Integer visibility;
+
 }

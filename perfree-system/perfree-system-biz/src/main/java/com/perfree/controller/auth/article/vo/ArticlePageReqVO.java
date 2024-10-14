@@ -30,4 +30,8 @@ public class ArticlePageReqVO extends PageParam {
 
     @Schema(description = "状态0:已发布,1:草稿")
     private Integer status;
+
+
+    @Schema(description = "是否可见")
+    private Integer visibility;
 }

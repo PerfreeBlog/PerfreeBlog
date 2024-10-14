@@ -24,9 +24,9 @@ public class JournalUpdateReqVO {
     @Schema(description = "解析后的动态内容")
     private String parseContent;
 
-    @Schema(description = "状态0:已发布,1:草稿, 2 仅自己可见", requiredMode = Schema.RequiredMode.REQUIRED)
-    @NotNull(message = "动态状态不能为空")
-    private Integer status;
+    @Schema(description = "是否可见", requiredMode = Schema.RequiredMode.REQUIRED)
+    @NotNull(message = "是否可见不能为空")
+    private Integer visibility;
 
     @Schema(description = "附件集合")
     private List<JournalAttachAddReqVO> attachList;
