@@ -19,7 +19,7 @@ function fe(y) {
 function ve(y) {
   return axios.get("/api/auth/attachLibrary/get?id=" + y);
 }
-const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vue.withCtx, o = window.Vue.openBlock, n = window.Vue.createBlock, i = window.Vue.unref, p = window.Vue.createTextVNode, q = window.Vue.resolveDirective, C = window.Vue.withDirectives, z = window.Vue.createElementVNode, be = window.Vue.createCommentVNode, we = window.Vue.toDisplayString, E = window.Vue.isRef, ge = window.Vue.createElementBlock, _e = { class: "page" }, he = { class: "search-box" }, Ve = { class: "right-tool" }, ke = { class: "table-box" }, xe = { class: "dialog-footer" }, k = window.ElementPlus.ElMessage, Le = window.ElementPlus.ElMessageBox, Ae = window.Vue.reactive, f = window.Vue.ref, Ee = {
+const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vue.withCtx, o = window.Vue.openBlock, n = window.Vue.createBlock, i = window.Vue.unref, p = window.Vue.createTextVNode, C = window.Vue.createElementVNode, q = window.Vue.resolveDirective, N = window.Vue.withDirectives, be = window.Vue.createCommentVNode, we = window.Vue.toDisplayString, E = window.Vue.isRef, ge = window.Vue.createElementBlock, _e = { class: "page" }, he = { class: "search-box" }, Ve = { class: "right-tool" }, ke = { class: "table-box" }, xe = { class: "dialog-footer" }, k = window.ElementPlus.ElMessage, Le = window.ElementPlus.ElMessageBox, Ae = window.Vue.reactive, f = window.Vue.ref, Ee = {
   __name: "AttachLibraryView",
   setup(y) {
     const u = f({
@@ -40,13 +40,13 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
       name: [{ required: !0, message: "附件库名称不能为空", trigger: "blur" }],
       type: [{ required: !0, message: "附件库类型不能为空", trigger: "blur" }],
       visibility: [{ required: !0, message: "是否仅自己可见不能为空", trigger: "blur" }]
-    }), D = f(), U = f();
-    let c = f(!1), x = f(!1), L = f(""), I = f([]), B = f(!1), w = f(null);
+    }), D = f(), z = f();
+    let c = f(!1), x = f(!1), L = f(""), I = f([]), F = f(!1), w = f(null);
     function j(d) {
       w.value = d, L.value = d.name, x.value = !0;
     }
     function $() {
-      U.value.validate((d) => {
+      z.value.validate((d) => {
         d && (r.value.id ? ye(r.value).then((e) => {
           e.code === 200 ? (k.success("操作成功"), c.value = !1, A(), g()) : k.error(e.msg);
         }) : ce(r.value).then((e) => {
@@ -76,8 +76,8 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
       });
     }
     function g() {
-      B.value = !0, me(u.value).then((d) => {
-        I.value = d.data.list, u.value.total = d.data.total, B.value = !1;
+      F.value = !0, me(u.value).then((d) => {
+        I.value = d.data.list, u.value.total = d.data.total, F.value = !1;
       });
     }
     function J() {
@@ -98,12 +98,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
         type: null,
         visibility: 0,
         thumbnail: null
-      }, U.value && U.value.resetFields();
+      }, z.value && z.value.resetFields();
     }
     return g(), (d, e) => {
-      const h = s("el-input"), v = s("el-form-item"), m = s("el-option"), N = s("el-select"), b = s("el-button"), R = s("el-form"), K = s("el-col"), Q = s("el-row"), _ = s("el-table-column"), X = s("el-image"), V = s("el-tag"), Y = s("el-table"), Z = s("el-pagination"), S = s("el-dialog"), F = q("hasPermission"), ee = q("loading");
+      const h = s("el-input"), v = s("el-form-item"), m = s("el-option"), U = s("el-select"), b = s("el-button"), R = s("el-form"), K = s("el-col"), Q = s("el-row"), _ = s("el-table-column"), X = s("el-image"), V = s("el-tag"), Y = s("el-table"), Z = s("el-pagination"), S = s("el-dialog"), B = q("hasPermission"), ee = q("loading");
       return o(), ge("div", _e, [
-        z("div", he, [
+        C("div", he, [
           l(R, {
             inline: !0,
             model: u.value,
@@ -125,7 +125,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
               }),
               l(v, { label: "附件库类型" }, {
                 default: a(() => [
-                  l(N, {
+                  l(U, {
                     modelValue: u.value.type,
                     "onUpdate:modelValue": e[1] || (e[1] = (t) => u.value.type = t),
                     placeholder: "请选择附件库类型",
@@ -161,7 +161,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
               }),
               l(v, { label: "是否仅自己可见" }, {
                 default: a(() => [
-                  l(N, {
+                  l(U, {
                     modelValue: u.value.visibility,
                     "onUpdate:modelValue": e[2] || (e[2] = (t) => u.value.visibility = t),
                     placeholder: "请选择是否仅自己可见",
@@ -187,7 +187,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
               }),
               l(v, null, {
                 default: a(() => [
-                  C((o(), n(b, {
+                  l(b, {
                     type: "primary",
                     onClick: g,
                     icon: i(ae)
@@ -196,9 +196,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                       p("查询")
                     ])),
                     _: 1
-                  }, 8, ["icon"])), [
-                    [F, ["admin:attachLibrary:query"]]
-                  ]),
+                  }, 8, ["icon"]),
                   l(b, {
                     icon: i(M),
                     onClick: J
@@ -222,7 +220,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
           default: a(() => [
             l(K, { span: 1.5 }, {
               default: a(() => [
-                C((o(), n(b, {
+                N((o(), n(b, {
                   icon: i(ie),
                   type: "primary",
                   plain: "",
@@ -233,12 +231,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                   ])),
                   _: 1
                 }, 8, ["icon"])), [
-                  [F, ["admin:attachLibrary:create"]]
+                  [B, ["admin:attachLibrary:create"]]
                 ])
               ]),
               _: 1
             }),
-            z("div", Ve, [
+            C("div", Ve, [
               l(b, {
                 icon: i(M),
                 circle: "",
@@ -248,8 +246,8 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
           ]),
           _: 1
         }),
-        z("div", ke, [
-          C((o(), n(Y, {
+        C("div", ke, [
+          N((o(), n(Y, {
             data: i(I),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
@@ -366,7 +364,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                 "min-width": "180"
               }, {
                 default: a((t) => [
-                  z("span", null, we(i(le)(t.row.createTime)), 1)
+                  C("span", null, we(i(le)(t.row.createTime)), 1)
                 ]),
                 _: 1
               }),
@@ -376,7 +374,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                 fixed: "right"
               }, {
                 default: a((t) => [
-                  C((o(), n(b, {
+                  N((o(), n(b, {
                     size: "small",
                     type: "primary",
                     link: "",
@@ -388,7 +386,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
-                    [F, ["admin:attachLibrary:update"]]
+                    [B, ["admin:attachLibrary:update"]]
                   ]),
                   l(b, {
                     size: "small",
@@ -402,7 +400,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"]),
-                  C((o(), n(b, {
+                  N((o(), n(b, {
                     size: "small",
                     type: "primary",
                     link: "",
@@ -414,7 +412,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
-                    [F, ["admin:attachLibrary:delete"]]
+                    [B, ["admin:attachLibrary:delete"]]
                   ])
                 ]),
                 _: 1
@@ -422,7 +420,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
             ]),
             _: 1
           }, 8, ["data"])), [
-            [ee, i(B)]
+            [ee, i(F)]
           ]),
           l(Z, {
             "current-page": u.value.pageNo,
@@ -445,7 +443,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
           draggable: ""
         }, {
           footer: a(() => [
-            z("span", xe, [
+            C("span", xe, [
               l(b, {
                 type: "primary",
                 onClick: $
@@ -470,7 +468,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
           default: a(() => [
             l(R, {
               ref_key: "addFormRef",
-              ref: U,
+              ref: z,
               model: r.value,
               "label-width": "130px",
               "status-icon": "",
@@ -495,7 +493,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                   prop: "type"
                 }, {
                   default: a(() => [
-                    l(N, {
+                    l(U, {
                       modelValue: r.value.type,
                       "onUpdate:modelValue": e[6] || (e[6] = (t) => r.value.type = t),
                       placeholder: "请选择附件库类型",
@@ -533,7 +531,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                   prop: "visibility"
                 }, {
                   default: a(() => [
-                    l(N, {
+                    l(U, {
                       modelValue: r.value.visibility,
                       "onUpdate:modelValue": e[7] || (e[7] = (t) => r.value.visibility = t),
                       placeholder: "请选择是否仅自己可见",

@@ -40,7 +40,7 @@ function le(o, y) {
   const u = y || "{y}-{m}-{d} {h}:{i}:{s}";
   let d;
   typeof o == "object" ? d = o : (typeof o == "string" && /^[0-9]+$/.test(o) ? o = parseInt(o) : typeof o == "string" && (o = o.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof o == "number" && o.toString().length === 10 && (o = o * 1e3), d = new Date(o));
-  const E = {
+  const M = {
     y: d.getFullYear(),
     m: d.getMonth() + 1,
     d: d.getDate(),
@@ -50,7 +50,7 @@ function le(o, y) {
     a: d.getDay()
   };
   return u.replace(/{([ymdhisa])+}/g, (D, I) => {
-    let v = E[I];
+    let v = M[I];
     return I === "a" ? ["日", "一", "二", "三", "四", "五", "六"][v] : (D.length > 0 && v < 10 && (v = "0" + v), v || 0);
   });
 }
@@ -74,13 +74,13 @@ function Pe(o) {
 }
 const ze = (o, y) => {
   const u = o.__vccOpts || o;
-  for (const [d, E] of y)
-    u[d] = E;
+  for (const [d, M] of y)
+    u[d] = M;
   return u;
-}, p = window.Vue.resolveComponent, n = window.Vue.createVNode, l = window.Vue.withCtx, s = window.Vue.openBlock, r = window.Vue.createBlock, a = window.Vue.unref, c = window.Vue.createTextVNode, ne = window.Vue.resolveDirective, L = window.Vue.withDirectives, m = window.Vue.createElementVNode, w = window.Vue.toDisplayString, g = window.Vue.createCommentVNode, T = window.Vue.createElementBlock, Se = window.Vue.vModelText, F = window.Vue.isRef, Ee = window.Vue.renderList, Me = window.Vue.Fragment, je = { class: "page" }, Le = { class: "search-box" }, Fe = { class: "right-tool" }, De = { class: "table-box" }, Re = { key: 0 }, Ue = { key: 1 }, Be = { class: "dialog-footer" }, Ae = { style: { position: "relative" } }, qe = {
+}, p = window.Vue.resolveComponent, n = window.Vue.createVNode, l = window.Vue.withCtx, s = window.Vue.openBlock, r = window.Vue.createBlock, a = window.Vue.unref, c = window.Vue.createTextVNode, ne = window.Vue.resolveDirective, z = window.Vue.withDirectives, m = window.Vue.createElementVNode, w = window.Vue.toDisplayString, g = window.Vue.createCommentVNode, T = window.Vue.createElementBlock, Se = window.Vue.vModelText, F = window.Vue.isRef, Ee = window.Vue.renderList, Me = window.Vue.Fragment, je = { class: "page" }, Le = { class: "search-box" }, Fe = { class: "right-tool" }, De = { class: "table-box" }, Re = { key: 0 }, Ue = { key: 1 }, Be = { class: "dialog-footer" }, Ae = { style: { position: "relative" } }, qe = {
   key: 1,
   style: { height: "100px" }
-}, $e = { class: "comment-detail-box" }, Oe = { class: "comment-detail-avatar-box" }, We = ["src"], He = { key: 1 }, Ye = { class: "comment-detail-msg-box" }, Ge = { class: "comment-detail-info" }, Je = { class: "comment-detail-name" }, Ke = { class: "comment-detail-time" }, Qe = { class: "comment-detail-content" }, Xe = { class: "dialog-footer" }, S = window.ElementPlus.ElMessage, Ze = window.ElementPlus.ElMessageBox, et = window.Vue.nextTick, tt = window.Vue.onMounted, lt = window.Vue.onUnmounted, ot = window.Vue.reactive, f = window.Vue.ref, nt = {
+}, $e = { class: "comment-detail-box" }, Oe = { class: "comment-detail-avatar-box" }, We = ["src"], He = { key: 1 }, Ye = { class: "comment-detail-msg-box" }, Ge = { class: "comment-detail-info" }, Je = { class: "comment-detail-name" }, Ke = { class: "comment-detail-time" }, Qe = { class: "comment-detail-content" }, Xe = { class: "dialog-footer" }, E = window.ElementPlus.ElMessage, Ze = window.ElementPlus.ElMessageBox, et = window.Vue.nextTick, tt = window.Vue.onMounted, lt = window.Vue.onUnmounted, ot = window.Vue.reactive, f = window.Vue.ref, nt = {
   __name: "CommentView",
   setup(o) {
     const y = f(), u = f({
@@ -97,29 +97,29 @@ const ze = (o, y) => {
       articleId: null,
       pid: null,
       topPid: null
-    }), E = ot({
+    }), M = ot({
       content: [{ required: !0, message: "请输入回复内容", trigger: "blur" }]
-    }), M = f(), D = f(), I = f();
-    let v = f(!1), k = f(!1), R = f(""), W = f([]), B = f(!1), C = f(!1), V = f({
+    }), j = f(), D = f(), I = f();
+    let v = f(!1), k = f(!1), R = f(""), H = f([]), A = f(!1), C = f(!1), V = f({
       pageNo: 1,
       pageSize: 10,
       id: null
-    }), U = f([]), A = f(0), P = f(!1);
+    }), U = f([]), q = f(0), P = f(!1);
     function ae() {
-      V.value.pageNo += 1, H();
+      V.value.pageNo += 1, Y();
     }
     function ie(i) {
-      R.value = "回复列表@" + (i.userInfo ? i.userInfo.userName : i.userName), V.value.pageNo = 1, V.value.id = i.id, U.value = [], A.value = 0, C.value = !0, H();
+      R.value = "回复列表@" + (i.userInfo ? i.userInfo.userName : i.userName), V.value.pageNo = 1, V.value.id = i.id, U.value = [], q.value = 0, C.value = !0, Y();
     }
-    function H() {
+    function Y() {
       P.value = !0, Ie(V.value).then((i) => {
-        U.value.push(...i.data.list), A.value = i.data.total, P.value = !1;
+        U.value.push(...i.data.list), q.value = i.data.total, P.value = !1;
       });
     }
     function se() {
       I.value.validate((i) => {
         i && Pe(d.value).then((t) => {
-          t.code === 200 ? (S.success("回复成功"), k.value = !1, q(), x()) : S.error(t.msg);
+          t.code === 200 ? (E.success("回复成功"), k.value = !1, $(), x()) : E.error(t.msg);
         });
       });
     }
@@ -130,14 +130,14 @@ const ze = (o, y) => {
         type: "warning"
       }).then(() => {
         Te(i.id).then((t) => {
-          t.code === 200 && t.data ? (S.success("删除成功"), x()) : S.error(t.msg);
+          t.code === 200 && t.data ? (E.success("删除成功"), x()) : E.error(t.msg);
         });
       }).catch(() => {
       });
     }
     function x() {
-      B.value = !0, xe(u.value).then((i) => {
-        W.value = i.data.list, u.value.total = i.data.total, B.value = !1;
+      A.value = !0, xe(u.value).then((i) => {
+        H.value = i.data.list, u.value.total = i.data.total, A.value = !1;
       });
     }
     function re() {
@@ -152,7 +152,7 @@ const ze = (o, y) => {
         articleType: null
       }, D.value.resetFields(), x();
     }
-    function q() {
+    function $() {
       d.value = {
         content: "",
         articleId: null,
@@ -166,11 +166,11 @@ const ze = (o, y) => {
         status: 0
       };
       Ne(t).then((N) => {
-        N.code === 200 ? (S.success("审核通过成功"), x()) : S.error(N.msg);
+        N.code === 200 ? (E.success("审核通过成功"), x()) : E.error(N.msg);
       });
     }
     function ce(i) {
-      q(), d.value.articleId = i.articleId, d.value.pid = i.id, d.value.topPid = i.topPid === -1 ? i.id : i.topPid, R.value = "回复@" + (i.userInfo ? i.userInfo.userName : i.userName), k.value = !0;
+      $(), d.value.articleId = i.articleId, d.value.pid = i.id, d.value.topPid = i.topPid === -1 ? i.id : i.topPid, R.value = "回复@" + (i.userInfo ? i.userInfo.userName : i.userName), k.value = !0;
     }
     function me(i) {
       const t = y.value.selectionStart, N = y.value.selectionEnd;
@@ -181,19 +181,19 @@ const ze = (o, y) => {
       });
     }
     tt(() => {
-      document.addEventListener("mousedown", Y);
+      document.addEventListener("mousedown", G);
     }), lt(() => {
-      document.removeEventListener("mousedown", Y);
+      document.removeEventListener("mousedown", G);
     });
-    function Y(i) {
+    function G(i) {
       const t = i.composedPath();
-      M.value && !t.includes(M.value) && (v.value = !1);
+      j.value && !t.includes(j.value) && (v.value = !1);
     }
     return x(), (i, t) => {
-      const N = p("el-input"), h = p("el-form-item"), j = p("el-option"), G = p("el-select"), _ = p("el-button"), J = p("el-form"), pe = p("el-row"), b = p("el-table-column"), z = p("el-tag"), $ = p("el-link"), fe = p("el-table"), ve = p("el-pagination"), K = p("el-dialog"), _e = p("el-empty"), Q = p("el-icon"), X = p("el-divider"), we = p("Loading"), Z = ne("hasPermission"), ee = ne("loading");
+      const N = p("el-input"), h = p("el-form-item"), L = p("el-option"), J = p("el-select"), _ = p("el-button"), K = p("el-form"), pe = p("el-row"), b = p("el-table-column"), S = p("el-tag"), O = p("el-link"), fe = p("el-table"), ve = p("el-pagination"), Q = p("el-dialog"), _e = p("el-empty"), X = p("el-icon"), Z = p("el-divider"), we = p("Loading"), B = ne("hasPermission"), ee = ne("loading");
       return s(), T("div", je, [
         m("div", Le, [
-          n(J, {
+          n(K, {
             inline: !0,
             model: u.value,
             class: "demo-form-inline",
@@ -236,7 +236,7 @@ const ze = (o, y) => {
               }),
               n(h, { label: "状态" }, {
                 default: l(() => [
-                  n(G, {
+                  n(J, {
                     modelValue: u.value.status,
                     "onUpdate:modelValue": t[3] || (t[3] = (e) => u.value.status = e),
                     placeholder: "请选择状态",
@@ -244,12 +244,12 @@ const ze = (o, y) => {
                     clearable: ""
                   }, {
                     default: l(() => [
-                      (s(), r(j, {
+                      (s(), r(L, {
                         key: 0,
                         label: "正常",
                         value: 0
                       })),
-                      (s(), r(j, {
+                      (s(), r(L, {
                         key: 1,
                         label: "待审核",
                         value: 1
@@ -262,7 +262,7 @@ const ze = (o, y) => {
               }),
               n(h, { label: "类型" }, {
                 default: l(() => [
-                  n(G, {
+                  n(J, {
                     modelValue: u.value.articleType,
                     "onUpdate:modelValue": t[4] || (t[4] = (e) => u.value.articleType = e),
                     placeholder: "请选择类型",
@@ -270,17 +270,17 @@ const ze = (o, y) => {
                     clearable: ""
                   }, {
                     default: l(() => [
-                      (s(), r(j, {
+                      (s(), r(L, {
                         key: "article",
                         label: "文章",
                         value: "article"
                       })),
-                      (s(), r(j, {
+                      (s(), r(L, {
                         key: "journal",
                         label: "动态",
                         value: "journal"
                       })),
-                      (s(), r(j, {
+                      (s(), r(L, {
                         key: "page",
                         label: "页面",
                         value: "page"
@@ -293,7 +293,7 @@ const ze = (o, y) => {
               }),
               n(h, null, {
                 default: l(() => [
-                  L((s(), r(_, {
+                  z((s(), r(_, {
                     type: "primary",
                     onClick: x,
                     icon: a(ge)
@@ -303,7 +303,7 @@ const ze = (o, y) => {
                     ])),
                     _: 1
                   }, 8, ["icon"])), [
-                    [Z, ["admin:role:query"]]
+                    [B, ["admin:role:query"]]
                   ]),
                   n(_, {
                     icon: a(te),
@@ -337,8 +337,8 @@ const ze = (o, y) => {
           _: 1
         }),
         m("div", De, [
-          L((s(), r(fe, {
-            data: a(W),
+          z((s(), r(fe, {
+            data: a(H),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
           }, {
@@ -383,7 +383,7 @@ const ze = (o, y) => {
                 "min-width": "150"
               }, {
                 default: l((e) => [
-                  e.row.articleType === "article" ? (s(), r(z, {
+                  e.row.articleType === "article" ? (s(), r(S, {
                     key: 0,
                     type: "primary"
                   }, {
@@ -391,7 +391,7 @@ const ze = (o, y) => {
                       c("文章")
                     ])),
                     _: 1
-                  })) : e.row.articleType === "page" ? (s(), r(z, {
+                  })) : e.row.articleType === "page" ? (s(), r(S, {
                     key: 1,
                     type: "success"
                   }, {
@@ -399,7 +399,7 @@ const ze = (o, y) => {
                       c("页面")
                     ])),
                     _: 1
-                  })) : e.row.articleType === "journal" ? (s(), r(z, {
+                  })) : e.row.articleType === "journal" ? (s(), r(S, {
                     key: 2,
                     type: "warning"
                   }, {
@@ -407,7 +407,7 @@ const ze = (o, y) => {
                       c("动态")
                     ])),
                     _: 1
-                  })) : (s(), r(z, {
+                  })) : (s(), r(S, {
                     key: 3,
                     type: "info"
                   }, {
@@ -426,7 +426,7 @@ const ze = (o, y) => {
                 "min-width": "240"
               }, {
                 default: l((e) => [
-                  e.row.articleType === "article" ? (s(), r($, {
+                  e.row.articleType === "article" ? (s(), r(O, {
                     key: 0,
                     href: "/article/" + e.row.articleSlug,
                     target: "_blank"
@@ -436,7 +436,7 @@ const ze = (o, y) => {
                     ]),
                     _: 2
                   }, 1032, ["href"])) : g("", !0),
-                  e.row.articleType === "page" ? (s(), r($, {
+                  e.row.articleType === "page" ? (s(), r(O, {
                     key: 1,
                     href: "/page/" + e.row.articleSlug,
                     target: "_blank"
@@ -446,7 +446,7 @@ const ze = (o, y) => {
                     ]),
                     _: 2
                   }, 1032, ["href"])) : g("", !0),
-                  e.row.articleType === "journal" ? (s(), r($, {
+                  e.row.articleType === "journal" ? (s(), r(O, {
                     key: 2,
                     href: "/admin/journal",
                     target: "_self"
@@ -465,7 +465,7 @@ const ze = (o, y) => {
                 "min-width": "80"
               }, {
                 default: l((e) => [
-                  e.row.status === 0 ? (s(), r(z, {
+                  e.row.status === 0 ? (s(), r(S, {
                     key: 0,
                     type: "success"
                   }, {
@@ -473,7 +473,7 @@ const ze = (o, y) => {
                       c("正常")
                     ])),
                     _: 1
-                  })) : (s(), r(z, {
+                  })) : (s(), r(S, {
                     key: 1,
                     type: "danger"
                   }, {
@@ -501,58 +501,62 @@ const ze = (o, y) => {
                 fixed: "right"
               }, {
                 default: l((e) => [
-                  e.row.status === 1 ? (s(), r(_, {
+                  e.row.status === 1 ? z((s(), r(_, {
                     key: 0,
                     size: "small",
                     type: "primary",
                     link: "",
                     icon: a(ye),
-                    onClick: (O) => de(e.row)
+                    onClick: (W) => de(e.row)
                   }, {
                     default: l(() => t[21] || (t[21] = [
                       c("审核通过")
                     ])),
                     _: 2
-                  }, 1032, ["icon", "onClick"])) : g("", !0),
+                  }, 1032, ["icon", "onClick"])), [
+                    [B, ["admin:comment:audit"]]
+                  ]) : g("", !0),
                   e.row.status === 0 ? (s(), r(_, {
                     key: 1,
                     size: "small",
                     type: "primary",
                     link: "",
                     icon: a(he),
-                    onClick: (O) => ie(e.row)
+                    onClick: (W) => ie(e.row)
                   }, {
                     default: l(() => [
                       c("查看所有回复(" + w(e.row.childNum) + ")", 1)
                     ]),
                     _: 2
                   }, 1032, ["icon", "onClick"])) : g("", !0),
-                  e.row.status === 0 ? (s(), r(_, {
+                  e.row.status === 0 ? z((s(), r(_, {
                     key: 2,
                     size: "small",
                     type: "primary",
                     link: "",
                     icon: a(ke),
-                    onClick: (O) => ce(e.row)
+                    onClick: (W) => ce(e.row)
                   }, {
                     default: l(() => t[22] || (t[22] = [
                       c("回复")
                     ])),
                     _: 2
-                  }, 1032, ["icon", "onClick"])) : g("", !0),
-                  L((s(), r(_, {
+                  }, 1032, ["icon", "onClick"])), [
+                    [B, ["admin:comment:reply"]]
+                  ]) : g("", !0),
+                  z((s(), r(_, {
                     size: "small",
                     type: "primary",
                     link: "",
                     icon: a(Ve),
-                    onClick: (O) => ue(e.row)
+                    onClick: (W) => ue(e.row)
                   }, {
                     default: l(() => t[23] || (t[23] = [
                       c("删除")
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
-                    [Z, ["admin:role:delete"]]
+                    [B, ["admin:comment:delete"]]
                   ])
                 ]),
                 _: 1
@@ -560,7 +564,7 @@ const ze = (o, y) => {
             ]),
             _: 1
           }, 8, ["data"])), [
-            [ee, a(B)]
+            [ee, a(A)]
           ]),
           n(ve, {
             "current-page": u.value.pageNo,
@@ -575,7 +579,7 @@ const ze = (o, y) => {
             total: u.value.total
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
-        n(K, {
+        n(Q, {
           modelValue: a(k),
           "onUpdate:modelValue": t[10] || (t[10] = (e) => F(k) ? k.value = e : k = e),
           title: a(R),
@@ -610,12 +614,12 @@ const ze = (o, y) => {
                   ])),
                   _: 1
                 }),
-                a(v) ? (s(), r(a(M), {
+                a(v) ? (s(), r(a(j), {
                   key: 0,
                   class: "emoji-picker",
                   locale: "zh_CN",
                   ref_key: "emojiPicker",
-                  ref: M,
+                  ref: j,
                   onEmojiClick: me
                 }, null, 512)) : g("", !0)
               ]),
@@ -630,7 +634,7 @@ const ze = (o, y) => {
               }),
               n(_, {
                 onClick: t[9] || (t[9] = (e) => {
-                  F(k) ? k.value = !1 : k = !1, q();
+                  F(k) ? k.value = !1 : k = !1, $();
                 })
               }, {
                 default: l(() => t[26] || (t[26] = [
@@ -641,17 +645,17 @@ const ze = (o, y) => {
             ])
           ]),
           default: l(() => [
-            n(J, {
+            n(K, {
               ref_key: "addFormRef",
               ref: I,
               model: d.value,
               "status-icon": "",
-              rules: E
+              rules: M
             }, {
               default: l(() => [
                 n(h, { prop: "content" }, {
                   default: l(() => [
-                    L(m("textarea", {
+                    z(m("textarea", {
                       placeholder: "回复内容",
                       class: "comment-editor",
                       ref_key: "editor",
@@ -670,7 +674,7 @@ const ze = (o, y) => {
           ]),
           _: 1
         }, 8, ["modelValue", "title", "width"]),
-        n(K, {
+        n(Q, {
           modelValue: a(C),
           "onUpdate:modelValue": t[12] || (t[12] = (e) => F(C) ? C.value = e : C = e),
           title: a(R),
@@ -694,7 +698,7 @@ const ze = (o, y) => {
               key: 0,
               description: "暂无回复"
             })) : g("", !0),
-            a(P) && a(V).pageNo === 1 ? L((s(), T("div", qe, null, 512)), [
+            a(P) && a(V).pageNo === 1 ? z((s(), T("div", qe, null, 512)), [
               [ee, a(P)]
             ]) : g("", !0),
             (s(!0), T(Me, null, Ee(a(U), (e) => (s(), T("div", $e, [
@@ -714,14 +718,14 @@ const ze = (o, y) => {
                 m("div", Qe, w(e.content), 1)
               ])
             ]))), 256)),
-            a(V).pageNo >= 1 && a(V).pageNo < Math.ceil(a(A) / a(V).pageSize) && !a(P) ? (s(), r(X, { key: 2 }, {
+            a(V).pageNo >= 1 && a(V).pageNo < Math.ceil(a(q) / a(V).pageSize) && !a(P) ? (s(), r(Z, { key: 2 }, {
               default: l(() => [
                 n(_, {
                   text: "",
                   onClick: ae
                 }, {
                   default: l(() => [
-                    n(Q, null, {
+                    n(X, null, {
                       default: l(() => [
                         n(a(be))
                       ]),
@@ -734,9 +738,9 @@ const ze = (o, y) => {
               ]),
               _: 1
             })) : g("", !0),
-            a(V).pageNo > 1 && a(P) ? (s(), r(X, { key: 3 }, {
+            a(V).pageNo > 1 && a(P) ? (s(), r(Z, { key: 3 }, {
               default: l(() => [
-                n(Q, { class: "is-loading" }, {
+                n(X, { class: "is-loading" }, {
                   default: l(() => [
                     n(we)
                   ]),
@@ -752,7 +756,7 @@ const ze = (o, y) => {
       ]);
     };
   }
-}, st = /* @__PURE__ */ ze(nt, [["__scopeId", "data-v-8c05988c"]]);
+}, st = /* @__PURE__ */ ze(nt, [["__scopeId", "data-v-cde11d2c"]]);
 export {
   st as default
 };

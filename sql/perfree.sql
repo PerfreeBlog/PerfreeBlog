@@ -1,3 +1,18 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : 153.153.234.13
+ Source Server Type    : MySQL
+ Source Server Version : 80100
+ Source Host           : 153.153.234.13:3306
+ Source Schema         : perfree
+
+ Target Server Type    : MySQL
+ Target Server Version : 80100
+ File Encoding         : 65001
+
+ Date: 14/10/2024 10:29:19
+*/
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -29,17 +44,20 @@ CREATE TABLE `p_article`  (
   `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `createUserId` int NOT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+  `visibility` int NOT NULL DEFAULT 0 COMMENT '是否可见, 0是, 1否',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `slug`(`slug`) USING BTREE,
   INDEX `isTop`(`isTop`) USING BTREE,
   INDEX `type`(`type`) USING BTREE,
   INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 81 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_article
 -- ----------------------------
-INSERT INTO `p_article` VALUES (81, 'Hello world', '欢迎使用PerfreeBlog, 这是一篇示例文章\n', '<p>欢迎使用PerfreeBlog, 这是一篇示例文章</p>\n', 'Vditor', 'article', '欢迎使用PerfreeBlog, 这是一篇示例文章', '', '', '', 'hello', 0, 0, 0, 0, 1, '', NULL, '2024-10-12 15:57:33', NULL, 1, NULL);
+INSERT INTO `p_article` VALUES (81, '✨️Hello world✨️', '欢迎使用PerfreeBlog, 这是一篇示例文章✨️\n', '<p>欢迎使用PerfreeBlog, 这是一篇示例文章✨️</p>\n', 'Vditor', 'article', '欢迎使用PerfreeBlog, 这是一篇示例文章', '', '', '', 'hello', 0, 0, 0, 0, 1, '', NULL, '2024-10-12 15:57:33', '2024-10-14 10:27:05', 1, 1, 0);
+INSERT INTO `p_article` VALUES (82, '友情链接', '这里可以写友链申请格式~\n', '<p>这里可以写友链申请格式~</p>\n', 'Vditor', 'page', '', '', '', '', 'link', 0, 0, 0, 0, 1, '', 'default', '2024-10-14 08:31:19', NULL, 1, NULL, 0);
+INSERT INTO `p_article` VALUES (84, '', '✨️Hello world, 欢迎使用PerfreeBlog, 这是第一条动态~✨️', '✨️Hello world, 欢迎使用PerfreeBlog, 这是第一条动态~✨️', 'journal', 'journal', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 1, NULL, NULL, '2024-10-14 09:15:03', '2024-10-14 10:10:56', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for p_article_category
@@ -566,52 +584,89 @@ INSERT INTO `p_menu` VALUES ('727856ff2c0e4f2394ca0f61e612228a', '90bbec779bcb4c
 INSERT INTO `p_menu` VALUES ('761690b8556346c5a12878adb64a0aa6', '-1', '系统管理', '', 'fa-solid fa-shield-alt', 6, 0, 0, '2024-07-18 18:03:41', '2024-07-22 15:16:06', 0, NULL, NULL, '', '', '', '', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('7f53578b36a34017b14046fa1bbfa3b9', '651e7efc87654772a02ae7c7d1657673', '删除附加数据', '', '', 0, 0, 0, '2024-07-29 11:27:11', NULL, 2, NULL, NULL, '', '', '', 'admin:extra:delete', 1, 5, NULL, 1);
 INSERT INTO `p_menu` VALUES ('80ed89e93dcf4c709d8140770c509163', '651e7efc87654772a02ae7c7d1657673', '查询附加数据', '', '', 0, 0, 0, '2024-08-05 15:10:24', NULL, 2, NULL, NULL, '', '', '', 'admin:extra:query', 1, 5, NULL, 1);
+INSERT INTO `p_menu` VALUES ('826ad4e022e169fc826ad4e022e169fc', 'b94a31113b739a83b94a31113b739a83', '删除分类', '', '', 0, 0, 0, '2024-10-14 08:47:45', NULL, 2, NULL, NULL, '', '', '', 'admin:category:delete', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('827fc9ecdb7f33e9827fc9ecdb7f33e9', 'bc0f7fd0e99873cbbc0f7fd0e99873cb', '审核评论', '', '', 0, 0, 0, '2024-10-14 08:54:08', NULL, 2, NULL, NULL, '', '', '', 'admin:comment:audit', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('83e63cf35ce9f74e83e63cf35ce9f74e', '-1', '分类', '/categories', 'fa-solid fa-rectangle-list', 1, 0, 0, '2024-09-20 16:30:36', '2024-09-23 08:53:53', 1, NULL, NULL, '', '', '', '', 1, 1, 1, 0);
 INSERT INTO `p_menu` VALUES ('8439294ab87f89be8439294ab87f89be', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '页面管理', '/admin/page', 'fa-solid fa-laptop', 1, 0, 0, '2024-09-20 08:07:24', '2024-09-29 17:05:54', 1, NULL, NULL, '/view/PageView', 'page', 'page', '', 1, 1, 1, 1);
+INSERT INTO `p_menu` VALUES ('846572dd17d082e9846572dd17d082e9', 'a6493c36629994bea6493c36629994be', '修改主题设置', '', '', 0, 0, 0, '2024-10-14 09:07:28', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:updateSetting', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('846a28729d1f23a3846a28729d1f23a3', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '文章管理', '/admin/article', 'fa-solid fa-file-alt', 0, 0, 0, '2024-09-11 09:55:56', NULL, 1, NULL, NULL, '/view/ArticleView', 'article', 'article', '', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('8523081cf49d4147bc7915c4a1dcc779', '761690b8556346c5a12878adb64a0aa6', '菜单管理', '/admin/menu', 'fa-solid fa-list-numeric', 2, 0, 0, '2024-07-18 18:04:47', '2024-07-22 15:55:21', 1, NULL, NULL, '/view/MenuView', 'menu', 'menu', '', 1, 1, 1, 1);
+INSERT INTO `p_menu` VALUES ('8719f2ecf75b79728719f2ecf75b7972', '87d8e48951829daf87d8e48951829daf', '删除动态', '', '', 0, 0, 0, '2024-10-14 08:27:00', NULL, 2, NULL, NULL, '', '', '', 'admin:journal:delete', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('87d8e48951829daf87d8e48951829daf', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '动态管理', '/admin/journal', 'fa-solid fa-golf-ball-tee', 2, 0, 0, '2024-09-19 09:56:06', '2024-09-29 17:05:58', 1, NULL, NULL, '/view/JournalView', 'journal', 'journal', '', 1, 1, 1, 1);
-INSERT INTO `p_menu` VALUES ('8823eba087599c9c8823eba087599c9c', '846a28729d1f23a3846a28729d1f23a3', '发表文章', '', '', 0, 0, 0, '2024-10-12 16:13:48', NULL, 2, NULL, NULL, '', '', '', 'admin:article:createArticle', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('8823eba087599c9c8823eba087599c9c', '846a28729d1f23a3846a28729d1f23a3', '发表文章', '', '', 0, 0, 0, '2024-10-12 16:13:48', '2024-10-14 08:31:42', 2, NULL, NULL, '', '', '', 'admin:article:create', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('89467371e0fef2d689467371e0fef2d6', 'a59f78ea3ae9bdc5a59f78ea3ae9bdc5', '主题管理', '/admin/theme', 'fa-solid fa-gauge-med', 0, 0, 0, '2024-09-11 14:36:37', '2024-09-11 14:46:07', 1, NULL, NULL, '/view/ThemeView', 'theme', 'theme', '', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('8a6f0f85cac5433a8a6f0f85cac5433a', '-1', '写文章', '/admin/article/create', 'fa-solid fa-pencil-alt', 1, 0, 0, '2024-09-11 08:47:50', '2024-09-11 10:06:05', 1, NULL, NULL, '/view/ArticleCreateView', 'articleCreate', 'article', '', 1, 1, 1, 1);
+INSERT INTO `p_menu` VALUES ('8c37b6ec9b6f7cc48c37b6ec9b6f7cc4', '8d408e60c6bfe3a88d408e60c6bfe3a8', '删除附件库数据项', '', '', 0, 0, 0, '2024-10-14 09:01:28', NULL, 2, NULL, NULL, '', '', '', 'admin:attachLibraryItems:delete', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('8c9f74d7f14f34808c9f74d7f14f3480', 'bc0f7fd0e99873cbbc0f7fd0e99873cb', '删除评论', '', '', 0, 0, 0, '2024-10-14 08:53:32', NULL, 2, NULL, NULL, '', '', '', 'admin:comment:delete', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('8ccfded986f9bc068ccfded986f9bc06', '846a28729d1f23a3846a28729d1f23a3', '修改状态', '', '', 0, 0, 0, '2024-10-14 08:33:24', NULL, 2, NULL, NULL, '', '', '', 'admin:article:updateStatus', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('8d408e60c6bfe3a88d408e60c6bfe3a8', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '附件库管理', '/admin/attachLibrary', 'fa-solid fa-feather-alt', 8, 0, 0, '2024-09-29 08:55:32', '2024-09-29 17:06:37', 1, NULL, NULL, '/view/AttachLibraryView', 'attachLibrary', 'attachLibrary', NULL, 1, NULL, 1, 1);
 INSERT INTO `p_menu` VALUES ('8d916e50770b47d5a7e351e5b4c7a04f', 'f624dfd78d0549c9a0978d837098123b', '邮箱服务创建', NULL, NULL, 0, 0, 0, '2024-08-07 08:43:12', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailServer:create', 1, NULL, NULL, 1);
 INSERT INTO `p_menu` VALUES ('8d92598d6cd848ff88a0e7931ed75fbf', '63b7b5c9448c46849006d9a70db7bf44', '修改个人密码', '', '', 0, 0, 0, '2024-08-06 16:14:57', NULL, 2, NULL, NULL, '', '', '', 'admin:user:updatePassword', 1, 5, NULL, 1);
+INSERT INTO `p_menu` VALUES ('8e5b8cf04fda42ce8e5b8cf04fda42ce', '8d408e60c6bfe3a88d408e60c6bfe3a8', '批量导入附件', '', '', 0, 0, 0, '2024-10-14 09:00:51', NULL, 2, NULL, NULL, '', '', '', 'admin:attachLibraryItems:batchAdd', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('8fec82b531eee0408fec82b531eee040', '89467371e0fef2d689467371e0fef2d6', '主题设置', '', '', 0, 0, 0, '2024-10-14 09:05:45', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:setting', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('907b4a4c20c086d9907b4a4c20c086d9', 'b94a31113b739a83b94a31113b739a83', '添加分类', '', '', 0, 0, 0, '2024-10-14 08:47:17', NULL, 2, NULL, NULL, '', '', '', 'admin:category:create', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('9098d2a9b29bf1b39098d2a9b29bf1b3', '8d408e60c6bfe3a88d408e60c6bfe3a8', '附件库编辑', NULL, NULL, 0, 0, 0, '2024-09-29 08:55:32', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:attachLibrary:update', 1, NULL, NULL, 1);
 INSERT INTO `p_menu` VALUES ('90bbec779bcb4c5b9146c34939843fb3', '761690b8556346c5a12878adb64a0aa6', '字典管理', '/admin/dict', 'fa-solid fa-clipboard', 7, 0, 0, '2024-08-01 08:39:07', '2024-08-01 08:39:49', 1, NULL, NULL, '/view/DictView', 'dict', 'dict', '', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('91a4d8bab0b1014891a4d8bab0b10148', '8d408e60c6bfe3a88d408e60c6bfe3a8', '附件库删除', NULL, NULL, 0, 0, 0, '2024-09-29 08:55:32', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:attachLibrary:delete', 1, NULL, NULL, 1);
+INSERT INTO `p_menu` VALUES ('936e84e0c5a85e80936e84e0c5a85e80', '846a28729d1f23a3846a28729d1f23a3', '删除文章', '', '', 0, 0, 0, '2024-10-14 08:32:08', NULL, 2, NULL, NULL, '', '', '', 'admin:article:delete', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('937470b5543f4a65834f81420290f165', '710f1bffd9fc4f689527da9c3b65d3de', '邮件模板创建', NULL, NULL, 0, 0, 0, '2024-08-07 09:09:52', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailTemplate:create', 1, NULL, NULL, 1);
+INSERT INTO `p_menu` VALUES ('941c14534e92acd8941c14534e92acd8', '846a28729d1f23a3846a28729d1f23a3', '修改是否置顶', '', '', 0, 0, 0, '2024-10-14 08:32:54', NULL, 2, NULL, NULL, '', '', '', 'admin:article:updateIsTop', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('96fa134407395a5896fa134407395a58', '89467371e0fef2d689467371e0fef2d6', '卸载主题', '', '', 0, 0, 0, '2024-10-14 09:03:35', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:uninstall', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('9778b9d1fe60e4299778b9d1fe60e429', 'b94a31113b739a83b94a31113b739a83', '修改分类', '', '', 0, 0, 0, '2024-10-14 08:47:35', NULL, 2, NULL, NULL, '', '', '', 'admin:category:update', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('9846230efec146ac88d17f4b18dbde75', '37544c31dc704f5eb5222c85225acf75', '邮件日志查询', NULL, NULL, 0, 0, 0, '2024-08-07 09:25:14', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailLog:query', 1, NULL, NULL, 1);
+INSERT INTO `p_menu` VALUES ('98e414e57560315498e414e575603154', 'aacf5aa0c3751526aacf5aa0c3751526', '修改标签', '', '', 0, 0, 0, '2024-10-14 08:51:03', NULL, 2, NULL, NULL, '', '', '', 'admin:tag:update', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('9a741d9bc83b4208b30d57120506cdf3', '63b7b5c9448c46849006d9a70db7bf44', '重置密码', '', '', 0, 0, 0, '2024-07-29 09:39:19', NULL, 2, NULL, NULL, '', '', '', 'admin:user:resetPassword', 1, 5, NULL, 1);
 INSERT INTO `p_menu` VALUES ('9a7c3f7e068447989fcdaad8c6ab451a', 'f624dfd78d0549c9a0978d837098123b', '邮箱服务查询', NULL, NULL, 0, 0, 0, '2024-08-07 08:43:12', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailServer:query', 1, NULL, NULL, 1);
 INSERT INTO `p_menu` VALUES ('9bf42425eb245d469bf42425eb245d46', '8d408e60c6bfe3a88d408e60c6bfe3a8', '附件库创建', NULL, NULL, 0, 0, 0, '2024-09-29 08:55:32', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:attachLibrary:create', 1, NULL, NULL, 1);
+INSERT INTO `p_menu` VALUES ('9d0c7bdeb0d674b59d0c7bdeb0d674b5', '89467371e0fef2d689467371e0fef2d6', '编辑主题', '', '', 0, 0, 0, '2024-10-14 09:05:05', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:edit', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('9d13b76791c244828d8666af2299378b', 'cc82cb6786f44ed4839d00e34f497a1f', '添加角色', '', '', 0, 0, 0, '2024-07-29 10:09:36', NULL, 2, NULL, NULL, '', '', '', 'admin:role:create', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('9e5ea10ef164e07a9e5ea10ef164e07a', '8439294ab87f89be8439294ab87f89be', '修改是否置顶', '', '', 0, 0, 0, '2024-10-14 08:41:53', NULL, 2, NULL, NULL, '', '', '', 'admin:page:updateIsTop', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('9e8431afbc1f6a529e8431afbc1f6a52', 'a1045e533cda960da1045e533cda960d', '修改友链', '', '', 0, 0, 0, '2024-10-14 08:56:18', NULL, 2, NULL, NULL, '', '', '', 'admin:link:update', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('a1045e533cda960da1045e533cda960d', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '友链管理', '/admin/link', 'fa-solid fa-chain', 6, 0, 0, '2024-09-11 10:00:47', '2024-09-29 17:06:26', 1, NULL, NULL, '/view/LinkView', 'link', 'link', '', 1, 1, 1, 1);
+INSERT INTO `p_menu` VALUES ('a10f6a599716c868a10f6a599716c868', '846a28729d1f23a3846a28729d1f23a3', '修改是否可见', '', '', 0, 0, 0, '2024-10-14 10:01:40', NULL, 2, NULL, NULL, '', '', '', 'admin:article:updateVisibility', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('a151742c04f74cbca151742c04f74cbc', '87d8e48951829daf87d8e48951829daf', '修改是否置顶', '', '', 0, 0, 0, '2024-10-14 08:36:09', NULL, 2, NULL, NULL, '', '', '', 'admin:journal:updateIsTop', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('a2a62a7e0f30a1a6a2a62a7e0f30a1a6', '-1', '首页', '/', 'fa-solid fa-home-lg', 0, 0, 0, '2024-09-20 16:29:20', '2024-09-26 16:02:20', 1, NULL, NULL, '', '', '', '', 1, 1, 1, 0);
+INSERT INTO `p_menu` VALUES ('a316f0ad858a32a3a316f0ad858a32a3', '87d8e48951829daf87d8e48951829daf', '修改动态', '', '', 0, 0, 0, '2024-10-14 08:20:22', NULL, 2, NULL, NULL, '', '', '', 'admin:journal:update', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('a4b3ab65ab806409a4b3ab65ab806409', '8439294ab87f89be8439294ab87f89be', '删除页面', '', '', 0, 0, 0, '2024-10-14 08:40:50', NULL, 2, NULL, NULL, '', '', '', 'admin:page:delete', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('a4c7fb3617b0c7caa4c7fb3617b0c7ca', '8439294ab87f89be8439294ab87f89be', '修改页面', '', '', 0, 0, 0, '2024-10-14 08:40:34', NULL, 2, NULL, NULL, '', '', '', 'admin:page:update', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('a59f78ea3ae9bdc5a59f78ea3ae9bdc5', '-1', '主题管理', '', 'fa-solid fa-tachometer-alt-average', 4, 0, 0, '2024-09-11 14:43:35', NULL, 0, NULL, NULL, '', '', '', '', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('a63668a379e14651a2a70d32881fe978', 'cc82cb6786f44ed4839d00e34f497a1f', '获取所有角色', '', '', 0, 0, 0, '2024-07-29 10:12:55', NULL, 2, NULL, NULL, '', '', '', 'admin:role:listAll', 1, 5, NULL, 1);
 INSERT INTO `p_menu` VALUES ('a6493c36629994bea6493c36629994be', 'a59f78ea3ae9bdc5a59f78ea3ae9bdc5', '主题设置', '/admin/theme/setting', 'fa-solid fa-cog', 1, 0, 0, '2024-09-11 14:45:35', NULL, 1, NULL, NULL, '/view/ThemeSettingView', 'themeSetting', 'theme', '', 1, 1, NULL, 1);
-INSERT INTO `p_menu` VALUES ('a68ea892c428db72a68ea892c428db72', '8d408e60c6bfe3a88d408e60c6bfe3a8', '附件库查询', NULL, NULL, 0, 0, 0, '2024-09-29 08:55:32', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:attachLibrary:query', 1, NULL, NULL, 1);
 INSERT INTO `p_menu` VALUES ('a6d1c4bd6ae14381919da10e7235c8da', '37544c31dc704f5eb5222c85225acf75', '邮件日志删除', NULL, NULL, 0, 0, 0, '2024-08-07 09:25:14', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailLog:delete', 1, NULL, NULL, 1);
+INSERT INTO `p_menu` VALUES ('a7ce84c35fc13cb0a7ce84c35fc13cb0', 'aacf5aa0c3751526aacf5aa0c3751526', '新增标签', '', '', 0, 0, 0, '2024-10-14 08:50:50', NULL, 2, NULL, NULL, '', '', '', 'admin:tag:create', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('aacf5aa0c3751526aacf5aa0c3751526', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '标签管理', '/admin/tag', 'fa-solid fa-bookmark', 4, 0, 0, '2024-09-11 09:59:31', '2024-09-29 17:06:14', 1, NULL, NULL, '/view/TagView', 'tag', 'tag', '', 1, 1, 1, 1);
+INSERT INTO `p_menu` VALUES ('ab02e0cef77adde0ab02e0cef77adde0', 'a1045e533cda960da1045e533cda960d', '新增友链', '', '', 0, 0, 0, '2024-10-14 08:56:06', NULL, 2, NULL, NULL, '', '', '', 'admin:link:create', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('ab46accc83c8a9d1ab46accc83c8a9d1', '846a28729d1f23a3846a28729d1f23a3', '修改是否允许评论', '', '', 0, 0, 0, '2024-10-14 08:32:32', NULL, 2, NULL, NULL, '', '', '', 'admin:article:updateIsComment', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('ac4b85255d624274ae18510f1a078f47', 'cc82cb6786f44ed4839d00e34f497a1f', '删除角色', '', '', 0, 0, 0, '2024-07-29 10:10:00', NULL, 2, NULL, NULL, '', '', '', 'admin:role:delete', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('adbbceb6f644a4e6adbbceb6f644a4e6', '-1', '插件管理', '', 'fa-solid fa-plug-circle-exclamation', 5, 0, 0, '2024-09-11 14:48:22', NULL, 0, NULL, NULL, '', '', '', '', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('adbc1ca8908347aeba5259055ade89c9', '90bbec779bcb4c5b9146c34939843fb3', '查询字典数据', '', '', 0, 0, 0, '2024-08-05 15:09:54', NULL, 2, NULL, NULL, '', '', '', 'admin:dictData:query', 1, 5, NULL, 1);
+INSERT INTO `p_menu` VALUES ('add655451e5cfa5cadd655451e5cfa5c', '87d8e48951829daf87d8e48951829daf', '发表动态', '', '', 0, 0, 0, '2024-10-14 08:20:00', NULL, 2, NULL, NULL, '', '', '', 'admin:journal:create', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('ae18dd4845aacef8ae18dd4845aacef8', '8439294ab87f89be8439294ab87f89be', '发表页面', '', '', 0, 0, 0, '2024-10-14 08:40:21', NULL, 2, NULL, NULL, '', '', '', 'admin:page:create', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('ae637b4c6e6dcc4eae637b4c6e6dcc4e', 'bc0f7fd0e99873cbbc0f7fd0e99873cb', '回复评论', '', '', 0, 0, 0, '2024-10-14 08:54:50', NULL, 2, NULL, NULL, '', '', '', 'admin:comment:reply', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('af4cb0b4a4c1807faf4cb0b4a4c1807f', '-1', '内容管理', '', 'fa-solid fa-chart-simple', 2, 0, 0, '2024-09-11 09:54:58', NULL, 0, NULL, NULL, '', '', '', '', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('b0edea62c3d2402791cae086f5916ceb', '63b7b5c9448c46849006d9a70db7bf44', '用户查询', '', '', 0, 0, 0, '2024-08-05 15:08:45', NULL, 2, NULL, NULL, '', '', '', 'admin:user:query', 1, 5, NULL, 1);
 INSERT INTO `p_menu` VALUES ('b2477cd3874d2dbbb2477cd3874d2dbb', '-1', '标签', '/tags', 'fa-solid fa-tags', 2, 0, 0, '2024-09-24 14:04:59', '2024-09-24 14:05:14', 1, NULL, NULL, '', '', '', '', 1, 1, 1, 0);
+INSERT INTO `p_menu` VALUES ('b30a24fb2739f3d0b30a24fb2739f3d0', '8d408e60c6bfe3a88d408e60c6bfe3a8', '添加附件库数据项', '', '', 0, 0, 0, '2024-10-14 09:00:31', NULL, 2, NULL, NULL, '', '', '', 'admin:attachLibraryItems:create', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('b458cc83d9811393b458cc83d9811393', '846a28729d1f23a3846a28729d1f23a3', '修改文章', '', '', 0, 0, 0, '2024-10-14 08:31:56', NULL, 2, NULL, NULL, '', '', '', 'admin:article:update', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('b468499f2c09e567b468499f2c09e567', '-1', '动态', '/journal', 'fa-solid fa-golf-ball-tee', 3, 0, 0, '2024-09-20 17:29:41', '2024-09-24 14:05:19', 1, NULL, NULL, '', '', '', '', 1, 1, 1, 0);
 INSERT INTO `p_menu` VALUES ('b536e4fe1ca44947a8080f4bae6644a9', '90bbec779bcb4c5b9146c34939843fb3', '更新数据字典值', '', '', 0, 0, 0, '2024-08-01 15:12:43', NULL, 2, NULL, NULL, '', '', '', 'admin:dictData:update', 1, 5, NULL, 1);
 INSERT INTO `p_menu` VALUES ('b622a22f7a034e0db622a22f7a034e0d', '-1', '友链', '/page/link', 'fa-solid fa-link', 5, 0, 0, '2024-09-23 11:06:25', NULL, 1, NULL, NULL, '', '', '', '', 1, 1, NULL, 0);
 INSERT INTO `p_menu` VALUES ('b6d28fa097924806b78a4fbe3e1b35dc', '37544c31dc704f5eb5222c85225acf75', '邮件日志编辑', NULL, NULL, 0, 0, 0, '2024-08-07 09:25:14', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailLog:update', 1, NULL, NULL, 1);
+INSERT INTO `p_menu` VALUES ('b7d28f813460937cb7d28f813460937c', '87d8e48951829daf87d8e48951829daf', '修改是否允许评论', '', '', 0, 0, 0, '2024-10-14 08:35:58', NULL, 2, NULL, NULL, '', '', '', 'admin:journal:updateIsComment', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('b84afefce4e60045b84afefce4e60045', '8439294ab87f89be8439294ab87f89be', '修改状态', '', '', 0, 0, 0, '2024-10-14 08:42:11', NULL, 2, NULL, NULL, '', '', '', 'admin:page:updateStatus', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('b8e3f9fc79e75aaab8e3f9fc79e75aaa', 'aacf5aa0c3751526aacf5aa0c3751526', '删除标签', '', '', 0, 0, 0, '2024-10-14 08:51:33', NULL, 2, NULL, NULL, '', '', '', 'admin:tag:delete', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('b94a31113b739a83b94a31113b739a83', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '分类管理', '/admin/category', 'fa-solid fa-bars', 3, 0, 0, '2024-09-11 09:57:28', '2024-09-29 17:06:08', 1, NULL, NULL, '/view/CategoryView', 'category', 'category', '', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('b995018b44b14b05b5049633fe0824f9', '8523081cf49d4147bc7915c4a1dcc779', '删除菜单', '', '', 0, 0, 0, '2024-07-29 10:19:33', NULL, 2, NULL, NULL, '', '', '', 'admin:menu:del', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('b9a6351339647689b9a6351339647689', '8439294ab87f89be8439294ab87f89be', '修改是否允许评论', '', '', 0, 0, 0, '2024-10-14 08:41:09', NULL, 2, NULL, NULL, '', '', '', 'admin:page:updateIsComment', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('ba8cb1619a8cc77cba8cb1619a8cc77c', '8d408e60c6bfe3a88d408e60c6bfe3a8', '修改附件库数据项', '', '', 0, 0, 0, '2024-10-14 09:01:08', NULL, 2, NULL, NULL, '', '', '', 'admin:attachLibraryItems:update', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('baa91d3a624041e89fd3f65049119352', '63b7b5c9448c46849006d9a70db7bf44', '创建用户', '', '', 0, 0, 0, '2024-07-29 09:22:51', NULL, 2, NULL, NULL, '', '', '', 'admin:user:create', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('baaef8fce790d0cfbaaef8fce790d0cf', 'a1045e533cda960da1045e533cda960d', '删除友链', '', '', 0, 0, 0, '2024-10-14 08:56:32', NULL, 2, NULL, NULL, '', '', '', 'admin:link:delete', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('bb626f4c02de498f8b67af93ae4bbcbd', '37544c31dc704f5eb5222c85225acf75', '邮件日志导出', NULL, NULL, 0, 0, 0, '2024-08-07 09:25:14', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailLog:export', 1, NULL, NULL, 1);
 INSERT INTO `p_menu` VALUES ('bc0f7fd0e99873cbbc0f7fd0e99873cb', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '评论管理', '/admin/comment', 'fa-solid fa-comment-alt', 5, 0, 0, '2024-09-11 10:02:50', '2024-09-29 17:06:21', 1, NULL, NULL, '/view/CommentView', 'comment', 'comment', '', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('bc393973512edd7abc393973512edd7a', '-1', '归档', '/archive', 'fa-solid fa-archive', 4, 0, 0, '2024-09-23 08:59:39', '2024-09-24 14:05:24', 1, NULL, NULL, '', '', '', '', 1, 1, 1, 0);
-INSERT INTO `p_menu` VALUES ('bc432bc0748d4f62bc432bc0748d4f62', '8d408e60c6bfe3a88d408e60c6bfe3a8', '附件库导出', NULL, NULL, 0, 0, 0, '2024-09-29 08:55:32', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:attachLibrary:export', 1, NULL, NULL, 1);
+INSERT INTO `p_menu` VALUES ('bc473014a9ac0aafbc473014a9ac0aaf', '89467371e0fef2d689467371e0fef2d6', '安装主题', '', '', 0, 0, 0, '2024-10-14 09:03:19', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:install', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('bdc65690e1564309bf3599464be79c87', '761690b8556346c5a12878adb64a0aa6', '系统设置', '/admin/setting', 'fa-solid fa-tools', 6, 0, 0, '2024-07-24 10:46:44', NULL, 1, NULL, NULL, '/view/SettingView', 'setting', 'setting', '', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('bf6fa66804256db4bf6fa66804256db4', '89467371e0fef2d689467371e0fef2d6', '切换主题', '', '', 0, 0, 0, '2024-10-14 09:04:28', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:swatchTheme', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('c19c0aa30b204da38e05b59df0d33f98', 'f624dfd78d0549c9a0978d837098123b', '邮箱服务删除', NULL, NULL, 0, 0, 0, '2024-08-07 08:43:12', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailServer:delete', 1, NULL, NULL, 1);
 INSERT INTO `p_menu` VALUES ('c2841323ae404bb5931387daaebcc033', 'cf0fc9ecb7a54b058a9a1804277b588d', '修改附件', '', '', 0, 0, 0, '2024-07-29 10:39:30', NULL, 2, NULL, NULL, '', '', '', 'admin:attach:update', 1, 5, NULL, 1);
 INSERT INTO `p_menu` VALUES ('c669c1b7b2164c059cb2cd168593a7ae', 'd5f2f94d387c4017b12be016461d901b', '新增配置', '', '', 0, 0, 0, '2024-07-29 10:34:43', NULL, 2, NULL, NULL, '', '', '', 'admin:attachConfig:create', 1, 5, NULL, 1);
@@ -647,7 +702,7 @@ CREATE TABLE `p_option`  (
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   `identification` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标识',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3442 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 3496 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_option
@@ -750,6 +805,60 @@ CREATE TABLE `p_role_menu`  (
 -- ----------------------------
 -- Records of p_role_menu
 -- ----------------------------
+INSERT INTO `p_role_menu` VALUES (3788, 3, '8a6f0f85cac5433a8a6f0f85cac5433a', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3789, 3, 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3790, 3, '846a28729d1f23a3846a28729d1f23a3', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3791, 3, '8823eba087599c9c8823eba087599c9c', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3792, 3, '8ccfded986f9bc068ccfded986f9bc06', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3793, 3, '936e84e0c5a85e80936e84e0c5a85e80', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3794, 3, '941c14534e92acd8941c14534e92acd8', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3795, 3, 'a10f6a599716c868a10f6a599716c868', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3796, 3, 'ab46accc83c8a9d1ab46accc83c8a9d1', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3797, 3, 'b458cc83d9811393b458cc83d9811393', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3798, 3, '8439294ab87f89be8439294ab87f89be', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3799, 3, '9e5ea10ef164e07a9e5ea10ef164e07a', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3800, 3, 'a4b3ab65ab806409a4b3ab65ab806409', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3801, 3, 'a4c7fb3617b0c7caa4c7fb3617b0c7ca', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3802, 3, 'ae18dd4845aacef8ae18dd4845aacef8', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3803, 3, 'b84afefce4e60045b84afefce4e60045', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3804, 3, 'b9a6351339647689b9a6351339647689', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3805, 3, '87d8e48951829daf87d8e48951829daf', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3806, 3, '8719f2ecf75b79728719f2ecf75b7972', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3807, 3, 'a151742c04f74cbca151742c04f74cbc', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3808, 3, 'a316f0ad858a32a3a316f0ad858a32a3', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3809, 3, 'add655451e5cfa5cadd655451e5cfa5c', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3810, 3, 'b7d28f813460937cb7d28f813460937c', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3811, 3, 'b94a31113b739a83b94a31113b739a83', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3812, 3, '826ad4e022e169fc826ad4e022e169fc', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3813, 3, '907b4a4c20c086d9907b4a4c20c086d9', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3814, 3, '9778b9d1fe60e4299778b9d1fe60e429', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3815, 3, 'aacf5aa0c3751526aacf5aa0c3751526', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3816, 3, '98e414e57560315498e414e575603154', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3817, 3, 'a7ce84c35fc13cb0a7ce84c35fc13cb0', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3818, 3, 'b8e3f9fc79e75aaab8e3f9fc79e75aaa', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3819, 3, 'bc0f7fd0e99873cbbc0f7fd0e99873cb', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3820, 3, '827fc9ecdb7f33e9827fc9ecdb7f33e9', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3821, 3, '8c9f74d7f14f34808c9f74d7f14f3480', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3822, 3, 'ae637b4c6e6dcc4eae637b4c6e6dcc4e', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3823, 3, 'a1045e533cda960da1045e533cda960d', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3824, 3, '9e8431afbc1f6a529e8431afbc1f6a52', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3825, 3, 'ab02e0cef77adde0ab02e0cef77adde0', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3826, 3, 'baaef8fce790d0cfbaaef8fce790d0cf', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3827, 3, 'cf0fc9ecb7a54b058a9a1804277b588d', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3828, 3, '0f1f2a0fc6c74716bf5fb18372c304da', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3829, 3, '250011c482c64fd3a5e8937b52432555', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3830, 3, '414c91ca406643d9bdf82f27e35a4040', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3831, 3, 'c2841323ae404bb5931387daaebcc033', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3832, 3, 'cff9c2d2df054315a4ce80e93f2be26f', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3833, 3, 'd905ce8ac56c4bd38dbaae495406b872', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3834, 3, '8d408e60c6bfe3a88d408e60c6bfe3a8', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3835, 3, '8c37b6ec9b6f7cc48c37b6ec9b6f7cc4', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3836, 3, '8e5b8cf04fda42ce8e5b8cf04fda42ce', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3837, 3, '9098d2a9b29bf1b39098d2a9b29bf1b3', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3838, 3, '91a4d8bab0b1014891a4d8bab0b10148', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3839, 3, '9bf42425eb245d469bf42425eb245d46', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3840, 3, 'b30a24fb2739f3d0b30a24fb2739f3d0', '2024-10-14 10:24:34', NULL, 1, NULL);
+INSERT INTO `p_role_menu` VALUES (3841, 3, 'ba8cb1619a8cc77cba8cb1619a8cc77c', '2024-10-14 10:24:34', NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for p_tag
@@ -804,7 +913,7 @@ CREATE TABLE `p_user`  (
 -- ----------------------------
 -- Records of p_user
 -- ----------------------------
-INSERT INTO `p_user` VALUES (1, 'admin', '管理员', '9bd2ab79508f1652977a50095b79e0ff', '030f2839093144909edaad631f735c09', 0, '/api/attach/2024-09-24/949643eff1e37ee9949643eff1e37ee9.png', '', '', '2024-07-29 09:34:45', '2024-10-12 15:47:00', 1, 1, NULL, '', 1, '127.0.0.1', '2024-10-12 16:00:45');
+INSERT INTO `p_user` VALUES (1, 'admin', '管理员', '9bd2ab79508f1652977a50095b79e0ff', '030f2839093144909edaad631f735c09', 0, '/api/attach/2024-09-24/949643eff1e37ee9949643eff1e37ee9.png', '', '', '2024-07-29 09:34:45', '2024-10-12 15:47:00', 1, 1, NULL, '', 1, '127.0.0.1', '2024-10-14 08:41:27');
 
 -- ----------------------------
 -- Table structure for p_user_role

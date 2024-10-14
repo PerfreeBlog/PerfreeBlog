@@ -1,5 +1,5 @@
-const l = window.Pinia.defineStore;
-l({
+const p = window.Pinia.defineStore;
+p({
   id: "common",
   state: () => ({
     menuInit: !1,
@@ -62,31 +62,31 @@ const f = (e, i) => {
   return a;
 };
 function g(e) {
-  return axios.post("/api/auth/article/createArticle", e);
+  return axios.post("/api/auth/page/createArticle", e);
 }
 function m(e) {
   return axios.post("/api/auth/article/page", e);
 }
 function A(e) {
-  return axios.post("/api/auth/article/updateIsComment", e);
+  return axios.post("/api/auth/page/updateIsComment", e);
 }
 function b(e) {
-  return axios.post("/api/auth/article/updateIsTop", e);
+  return axios.post("/api/auth/page/updateIsTop", e);
 }
 function x(e) {
-  return axios.post("/api/auth/article/updateStatus", e);
+  return axios.post("/api/auth/page/updateStatus", e);
 }
 function w(e) {
-  return axios.delete("/api/auth/article/del?id=" + e);
+  return axios.delete("/api/auth/page/del?id=" + e);
 }
 function y(e) {
   return axios.get("/api/auth/article/get?id=" + e);
 }
 function T(e) {
-  return axios.put("/api/auth/article/updateArticle", e);
+  return axios.put("/api/auth/page/updateArticle", e);
 }
-const c = window.Pinia.defineStore;
-c({
+const l = window.Pinia.defineStore;
+l({
   id: "app",
   state: () => ({
     activeTab: null,
