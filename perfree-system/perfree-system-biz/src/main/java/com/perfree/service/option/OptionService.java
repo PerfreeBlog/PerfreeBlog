@@ -58,4 +58,7 @@ public interface OptionService extends IService<Option> {
 
     void removeOptionByIdentification(String identification);
 
+    Option getOptionByIdentificationAndKey(String optionIdentificationSystem, String key);
+
+    void handleWebVersion();
 }

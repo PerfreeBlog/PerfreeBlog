@@ -33,4 +33,7 @@ public interface OptionMapper extends BaseMapperX<Option> {
         return selectList(new LambdaQueryWrapper<Option>().eq(Option::getIdentification, identification));
     }
 
+    default Option getOptionByIdentificationAndKey(String identification, String key){
+        return selectOne(new LambdaQueryWrapper<Option>().eq(Option::getIdentification, identification).eq(Option::getKey, key));
+    }
 }

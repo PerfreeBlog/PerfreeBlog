@@ -15,7 +15,7 @@ public enum OptionEnum {
     WEB_AUTO_GEN_SUMMARY("WEB_AUTO_GEN_SUMMARY","是否自动生成文章摘要"),
     WEB_IS_REGISTER("WEB_IS_REGISTER", "是否允许注册新用户"),
     WEB_REGISTER_DEFAULT_ROLE("WEB_REGISTER_DEFAULT_ROLE", "注册账户默认角色"),
-    OPEN_OPTIONS("OPEN_OPTIONS",  "开放的配置"),
+    WEB_VERSION("WEB_VERSION",  "版本"),
     WEB_RSS_GEN_MODE("WEB_RSS_GEN_MODE", ""),
     WEB_SITE("WEB_SITE",""),
     WEB_RSS_GEN_NUM("WEB_RSS_GEN_NUM",""),

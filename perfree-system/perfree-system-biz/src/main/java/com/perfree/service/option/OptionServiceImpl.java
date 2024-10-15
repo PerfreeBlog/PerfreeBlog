@@ -15,6 +15,7 @@ import com.perfree.model.Option;
 import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,9 @@ import java.util.List;
  */
 @Service
 public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> implements OptionService {
+
+    @Value("${version}")
+    private String version;
 
     @Resource
     private OptionMapper optionMapper;
@@ -122,5 +126,27 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
         for (Option option : optionList) {
             optionCacheService.removeOption(option.getKey(),option.getIdentification());
         }
+    }
+
+    @Override
+    public Option getOptionByIdentificationAndKey(String identification, String key) {
+        return optionMapper.getOptionByIdentificationAndKey(identification, key);
+    }
+
+    @Override
+    public void handleWebVersion() {
+        Option optionByIdentificationAndKey = getOptionByIdentificationAndKey(OptionConstant.OPTION_IDENTIFICATION_SYSTEM, OptionEnum.WEB_VERSION.getKey());
+        if (null == optionByIdentificationAndKey) {
+            Option option = new Option();
+            option.setTitle("当前版本");
+            option.setKey(OptionEnum.WEB_VERSION.getKey());
+            option.setIdentification(OptionConstant.OPTION_IDENTIFICATION_SYSTEM);
+            option.setValue(version);
+            optionMapper.insert(option);
+        } else {
+            optionByIdentificationAndKey.setValue(version);
+            optionMapper.updateById(optionByIdentificationAndKey);
+        }
+
     }
 }

@@ -1,9 +1,12 @@
 package com.perfree.plugin.commons;
 
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.commons.utils.SqlExecUtils;
+import com.perfree.commons.utils.VersionUtil;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.theme.commons.ThemeSetting;
+import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.dromara.hutool.core.compress.ZipUtil;
 import org.dromara.hutool.core.data.id.IdUtil;
@@ -13,6 +16,10 @@ import org.dromara.hutool.core.text.StrUtil;
 import org.dromara.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.EncodedResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -293,10 +300,6 @@ public class PluginHandleUtils {
         return pluginDir;
     }
 
-    public static long versionToLong(String versionStr) {
-        return Long.parseLong(versionStr.replaceAll("\r\n", "").replaceAll("--", "")
-                .replaceAll("\\.", "").replace("v", ""));
-    }
 
     public static PluginBaseConfig getDevPluginConfig(String pluginPath) {
         File classes = new File(pluginPath + "/classes");
@@ -326,10 +329,7 @@ public class PluginHandleUtils {
         }
         for (File file : files) {
             if (file.getName().endsWith(".sql") && file.getName().startsWith("install")) {
-                FileReader fileReader = new FileReader(file.getAbsoluteFile(), StandardCharsets.UTF_8);
-                String sqlStr = fileReader.readString();
-                SqlExecUtils.execSql(sqlStr);
-                LOGGER.info("执行插件安装sql: {}", sqlStr);
+                SqlExecUtils.execSqlFile(file);
             }
         }
     }
@@ -354,31 +354,11 @@ public class PluginHandleUtils {
         List<File> updateSqlFiles = FileUtil.loopFiles(sqlDir)
                 .stream()
                 .filter(file -> file.isFile() && StrUtil.startWith(file.getName(), "update-") && file.getName().endsWith(".sql")
-                        && isWithinVersionRange(file, oldVersion, newVersion))
+                        && VersionUtil.isWithinVersionRange(file, oldVersion, newVersion))
                 .toList();
         for (File updateSqlFile : updateSqlFiles) {
-            FileReader fileReader = new FileReader(updateSqlFile, StandardCharsets.UTF_8);
-            String sqlStr = fileReader.readString();
-            SqlExecUtils.execSql(sqlStr);
-            LOGGER.info("执行插件更新sql: {}", sqlStr);
+            SqlExecUtils.execSqlFile(updateSqlFile);
         }
-    }
-
-    /**
-     * 判断更新文件是否在版本范围内
-     *
-     * @param file       file
-     * @param oldVersion oldVersion
-     * @param newVersion newVersion
-     * @return boolean
-     */
-    private static boolean isWithinVersionRange(File file, String oldVersion, String newVersion) {
-        String fileName = file.getName();
-        String versionStr = fileName.substring("update-".length(), fileName.length() - ".sql".length());
-        long currFileVersionNum = PluginHandleUtils.versionToLong(versionStr);
-        long oldVersionNum = PluginHandleUtils.versionToLong(oldVersion);
-        long newVersionNum = PluginHandleUtils.versionToLong(newVersion);
-        return currFileVersionNum > oldVersionNum && currFileVersionNum <= newVersionNum;
     }
 
     /**
@@ -392,10 +372,7 @@ public class PluginHandleUtils {
         }
         File installSqlFile = new File(pluginDir.getAbsolutePath() + File.separator + SQL_DIR + File.separator + "uninstall.sql");
         if (installSqlFile.exists()) {
-            FileReader fileReader = new FileReader(installSqlFile, StandardCharsets.UTF_8);
-            String sqlStr = fileReader.readString();
-            SqlExecUtils.execSql(sqlStr);
-            LOGGER.info("执行插件卸载sql: {}", sqlStr);
+            SqlExecUtils.execSqlFile(installSqlFile);
         }
     }
 

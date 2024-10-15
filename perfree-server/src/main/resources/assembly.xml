@@ -29,6 +29,14 @@
             <fileMode>0644</fileMode>
         </fileSet>
         <fileSet>
+            <directory>${basedir}/src/main/resources</directory>
+            <includes>
+                <include>sql/**</include>
+            </includes>
+            <outputDirectory>resources</outputDirectory>
+            <fileMode>0644</fileMode>
+        </fileSet>
+        <fileSet>
             <directory>${project.build.directory}</directory>
             <includes>
                 <include>${project.artifactId}.jar</include>

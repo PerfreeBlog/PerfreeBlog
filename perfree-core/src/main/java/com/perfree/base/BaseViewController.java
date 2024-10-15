@@ -4,6 +4,7 @@ package com.perfree.base;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.ClassPathFileUtil;
 import com.perfree.constant.OptionConstant;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
@@ -65,20 +66,12 @@ public class BaseViewController {
     public String themeView(String view, String defaultView) {
         File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
                 currentTheme() + SystemConstants.FILE_SEPARATOR + view);
-        File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
+        File devFile = ClassPathFileUtil.getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
                 currentTheme() + SystemConstants.FILE_SEPARATOR + view);
         if (file.exists() || (devFile != null && devFile.exists())) {
             return currentThemePage() + SystemConstants.FILE_SEPARATOR + view;
         } else {
             return defaultView;
-        }
-    }
-
-    private File getClassPathFile(String path) {
-        try{
-            return new ClassPathResource(path).getFile();
-        }catch (Exception e) {
-            return null;
         }
     }
 }

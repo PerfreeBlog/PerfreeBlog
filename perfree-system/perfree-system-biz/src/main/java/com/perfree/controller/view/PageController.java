@@ -40,6 +40,6 @@ public class PageController extends BaseViewController {
                 return themeView(articleRespVO.getTemplate());
             }
         }
-        return themeView(ArticleConstant.ARTICLE_TYPE_PAGE + SystemConstants.FILE_SEPARATOR +  slug + ".html");
+        return themeView(SystemConstants.FILE_SEPARATOR + ArticleConstant.ARTICLE_TYPE_PAGE + SystemConstants.FILE_SEPARATOR +  slug + ".html");
     }
 }

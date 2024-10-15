@@ -1,21 +1,4 @@
-/*
- Navicat Premium Data Transfer
-
- Source Server         : 153.153.234.13
- Source Server Type    : MySQL
- Source Server Version : 80100
- Source Host           : 153.153.234.13:3306
- Source Schema         : perfree
-
- Target Server Type    : MySQL
- Target Server Version : 80100
- File Encoding         : 65001
-
- Date: 14/10/2024 10:29:19
-*/
-
 SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for p_article
@@ -934,5 +917,3 @@ CREATE TABLE `p_user_role`  (
 -- Records of p_user_role
 -- ----------------------------
 INSERT INTO `p_user_role` VALUES (1, 1, 1, '2024-08-26 16:09:02', NULL, 1, NULL);
-
-SET FOREIGN_KEY_CHECKS = 1;

@@ -1,0 +1,1 @@
+INSERT INTO `p_user_role` VALUES (2, 2, 2, '2024-08-26 16:09:02', NULL, 1, NULL);

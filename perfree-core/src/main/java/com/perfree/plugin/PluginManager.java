@@ -1,5 +1,6 @@
 package com.perfree.plugin;
 
+import com.perfree.commons.utils.VersionUtil;
 import com.perfree.constant.PluginConstant;
 import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.commons.PluginSetting;
@@ -85,7 +86,7 @@ public class PluginManager{
         }
 
         if (StringUtils.isNotBlank(pluginConfig.getPlugin().getMinimalVersion()) &&
-                PluginHandleUtils.versionToLong(pluginConfig.getPlugin().getMinimalVersion()) > PluginHandleUtils.versionToLong(version)){
+                VersionUtil.versionToLong(pluginConfig.getPlugin().getMinimalVersion()) > VersionUtil.versionToLong(version)){
             FileUtil.del(pluginTempDir);
             throw new PluginException("插件安装失败:该插件最低需要" + pluginConfig.getPlugin().getMinimalVersion() + "版本的PerfreeBlog");
         }
@@ -93,8 +94,8 @@ public class PluginManager{
         boolean update = false;
         PluginBaseConfig installedPluginConfig = PluginHandleUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
         if (null != installedPluginConfig) {
-            long oldVersion = PluginHandleUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
-            long newVersion = PluginHandleUtils.versionToLong(pluginConfig.getPlugin().getVersion());
+            long oldVersion = VersionUtil.versionToLong(installedPluginConfig.getPlugin().getVersion());
+            long newVersion = VersionUtil.versionToLong(pluginConfig.getPlugin().getVersion());
             if (oldVersion == newVersion) {
                 FileUtil.del(pluginTempDir);
                 throw new PluginException("插件安装失败:该版本插件已经安装,请勿再次安装");

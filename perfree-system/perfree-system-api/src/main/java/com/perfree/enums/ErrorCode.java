@@ -9,6 +9,7 @@ import lombok.Getter;
  */
 @Getter
 public enum ErrorCode {
+    DATASOURCE_INIT_SQL_NOT_EXIST(100000000,"数据库初始化脚本不存在!"),
     ACCOUNT_NOT_FOUNT(100000001,"账号不存在!"),
     ACCOUNT_PASSWORD_ERROR(100000002,"账号或密码错误!"),
     CAPTCHA_IMAGE_ERROR(100000004,"验证码生成失败!"),

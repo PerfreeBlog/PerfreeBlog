@@ -1,6 +1,7 @@
 package com.perfree.plugin;
 
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.VersionUtil;
 import com.perfree.constant.PluginConstant;
 import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.handle.compound.PluginHandle;
@@ -51,8 +52,8 @@ public class PluginDevManager {
         PluginBaseConfig installedPluginConfig = PluginHandleUtils.getInstalledPluginConfig(pluginConfig.getPlugin().getId());
         if (null != installedPluginConfig) {
             isExist = true;
-            long oldVersion = PluginHandleUtils.versionToLong(installedPluginConfig.getPlugin().getVersion());
-            long newVersion = PluginHandleUtils.versionToLong(pluginConfig.getPlugin().getVersion());
+            long oldVersion = VersionUtil.versionToLong(installedPluginConfig.getPlugin().getVersion());
+            long newVersion = VersionUtil.versionToLong(pluginConfig.getPlugin().getVersion());
             if (newVersion > oldVersion) {
                 update = true;
             }
