@@ -4,12 +4,16 @@ ke({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -21,6 +25,9 @@ ke({
   actions: {
     setMenuInit(i) {
       this.menuInit = i;
+    },
+    setOptionInit(i) {
+      this.optionInit = i;
     },
     setMenuList(i) {
       this.menuList = i;
@@ -49,8 +56,8 @@ function Te(i, D) {
     a: g.getDay()
   };
   return k.replace(/{([ymdhisa])+}/g, (V, U) => {
-    let d = N[U];
-    return U === "a" ? ["日", "一", "二", "三", "四", "五", "六"][d] : (V.length > 0 && d < 10 && (d = "0" + d), d || 0);
+    let n = N[U];
+    return U === "a" ? ["日", "一", "二", "三", "四", "五", "六"][n] : (V.length > 0 && n < 10 && (n = "0" + n), n || 0);
   });
 }
 function ie(i) {
@@ -91,22 +98,22 @@ const Re = (i, D) => {
   for (const [g, N] of D)
     k[g] = N;
   return k;
-}, m = window.Vue.createTextVNode, r = window.Vue.resolveComponent, oe = window.Vue.resolveDirective, a = window.Vue.withCtx, c = window.Vue.openBlock, y = window.Vue.createBlock, h = window.Vue.withDirectives, u = window.Vue.unref, t = window.Vue.createVNode, s = window.Vue.createElementVNode, Se = window.Vue.renderList, Be = window.Vue.Fragment, $ = window.Vue.createElementBlock, E = window.Vue.toDisplayString;
+}, m = window.Vue.createTextVNode, r = window.Vue.resolveComponent, oe = window.Vue.resolveDirective, a = window.Vue.withCtx, c = window.Vue.openBlock, y = window.Vue.createBlock, h = window.Vue.withDirectives, u = window.Vue.unref, t = window.Vue.createVNode, s = window.Vue.createElementVNode, Se = window.Vue.renderList, Be = window.Vue.Fragment, O = window.Vue.createElementBlock, E = window.Vue.toDisplayString;
 window.Vue.createCommentVNode;
-const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.Vue.isRef, Ie = { class: "page" }, Pe = { class: "dictTypeBox" }, $e = { class: "dictTypeHead" }, Oe = { class: "dictTypeList" }, je = ["onClick"], Ge = { class: "dictTypeName" }, He = { class: "dictTypeOpt" }, We = { class: "dictDataBox" }, Ye = { class: "search-box" }, Je = { class: "right-tool" }, Ke = { class: "table-box" }, Qe = { class: "dialog-footer" }, Xe = { class: "dialog-footer" }, ne = window.Vue.reactive, f = window.Vue.ref, v = window.ElementPlus.ElMessage, ue = window.ElementPlus.ElMessageBox, Ze = {
+const ne = window.Vue.withModifiers, Ie = window.Vue.normalizeClass, S = window.Vue.isRef, Me = { class: "page" }, Pe = { class: "dictTypeBox" }, Oe = { class: "dictTypeHead" }, $e = { class: "dictTypeList" }, je = ["onClick"], Ge = { class: "dictTypeName" }, He = { class: "dictTypeOpt" }, We = { class: "dictDataBox" }, Ye = { class: "search-box" }, Je = { class: "right-tool" }, Ke = { class: "table-box" }, Qe = { class: "dialog-footer" }, Xe = { class: "dialog-footer" }, de = window.Vue.reactive, f = window.Vue.ref, v = window.ElementPlus.ElMessage, ue = window.ElementPlus.ElMessageBox, Ze = {
   __name: "DictView",
   setup(i) {
     let D = f("");
     const k = f("");
     let g = f([]), N = f(!0), T = f({}), V = f(!1);
-    const U = f(), d = f({
+    const U = f(), n = f({
       id: "",
       dictType: "",
       remark: "",
       dictName: "",
       seq: 0,
       status: 0
-    }), se = ne({
+    }), se = de({
       dictType: [{ required: !0, message: "字典类型不能为空", trigger: "blur" }],
       dictName: [{ required: !0, message: "字典名称不能为空", trigger: "blur" }],
       status: [{ required: !0, message: "状态不能为空", trigger: "blur" }]
@@ -117,9 +124,9 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
       dictLabel: "",
       dictType: "",
       parentDictType: ""
-    }), O = f();
+    }), $ = f();
     let j = f([]), A = f(!1), b = f(!1);
-    const n = f({
+    const d = f({
       id: "",
       dictLabel: "",
       dictValue: "",
@@ -128,7 +135,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
       seq: 0,
       dictType: "",
       parentDictType: ""
-    }), re = ne({
+    }), re = de({
       dictLabel: [{ required: !0, message: "展示值不能为空", trigger: "blur" }],
       dictType: [{ required: !0, message: "字典类型不能为空", trigger: "blur" }],
       dictValue: [{ required: !0, message: "字典值不能为空", trigger: "blur" }],
@@ -142,7 +149,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
         dictLabel: "",
         dictType: "",
         parentDictType: T.value.dictType
-      }, O.value.resetFields(), C();
+      }, $.value.resetFields(), C();
     }
     function pe(o) {
       ue.confirm("确定要删除[" + o.dictType + "]吗？", "提示", {
@@ -159,20 +166,20 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
     }
     function me(o) {
       D.value = "修改字典值", b.value = !0, ze(o.id).then((e) => {
-        n.value = e.data;
+        d.value = e.data;
       });
     }
     function fe() {
       z.value.validate((o) => {
-        o && (n.value.id ? Fe(n.value).then((e) => {
+        o && (d.value.id ? Fe(d.value).then((e) => {
           e.code === 200 ? (v.success("操作成功"), b.value = !1, B(), C()) : v.error(e.msg);
-        }) : (n.value.parentDictType = T.value.dictType, Ae(n.value).then((e) => {
+        }) : (d.value.parentDictType = T.value.dictType, Ae(d.value).then((e) => {
           e.code === 200 ? (v.success("操作成功"), b.value = !1, B(), C()) : v.error(e.msg);
         })));
       });
     }
     function B() {
-      n.value = {
+      d.value = {
         id: "",
         dictLabel: "",
         dictValue: "",
@@ -188,7 +195,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
         v.error("请选择字典分类");
         return;
       }
-      n.value.dictType = T.value.dictType, b.value = !0, D.value = "添加数据字典值";
+      d.value.dictType = T.value.dictType, b.value = !0, D.value = "添加数据字典值";
     }
     function ge(o) {
       ue.confirm("确定要删除[" + o.dictName + "]吗？", "提示", {
@@ -204,20 +211,20 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
     }
     function we(o) {
       D.value = "修改字典分类", V.value = !0, Ne(o.id).then((e) => {
-        d.value = e.data;
+        n.value = e.data;
       });
     }
     function _e() {
       U.value.validate((o) => {
-        o && (d.value.id ? Ce(d.value).then((e) => {
-          e.code === 200 ? (v.success("操作成功"), V.value = !1, M(), F()) : v.error(e.msg);
-        }) : he(d.value).then((e) => {
-          e.code === 200 ? (v.success("操作成功"), V.value = !1, M(), F()) : v.error(e.msg);
+        o && (n.value.id ? Ce(n.value).then((e) => {
+          e.code === 200 ? (v.success("操作成功"), V.value = !1, I(), F()) : v.error(e.msg);
+        }) : he(n.value).then((e) => {
+          e.code === 200 ? (v.success("操作成功"), V.value = !1, I(), F()) : v.error(e.msg);
         }));
       });
     }
-    function M() {
-      d.value = {
+    function I() {
+      n.value = {
         id: "",
         dictType: "",
         remark: "",
@@ -243,14 +250,14 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
       });
     }
     return F(), (o, e) => {
-      const w = r("el-button"), x = r("el-input"), H = r("el-text"), W = r("el-icon"), ye = r("el-tooltip"), I = r("el-col"), _ = r("el-form-item"), P = r("el-form"), Y = r("el-row"), L = r("el-table-column"), J = r("el-tag"), De = r("el-table"), be = r("el-pagination"), K = r("el-switch"), Q = r("el-input-number"), X = r("el-dialog"), q = oe("hasPermission"), Z = oe("loading");
-      return c(), $("div", Ie, [
+      const w = r("el-button"), x = r("el-input"), H = r("el-text"), W = r("el-icon"), ye = r("el-tooltip"), M = r("el-col"), _ = r("el-form-item"), P = r("el-form"), Y = r("el-row"), L = r("el-table-column"), J = r("el-tag"), De = r("el-table"), be = r("el-pagination"), K = r("el-switch"), Q = r("el-input-number"), X = r("el-dialog"), q = oe("hasPermission"), Z = oe("loading");
+      return c(), O("div", Me, [
         t(Y, {
           gutter: 10,
           class: "elRow"
         }, {
           default: a(() => [
-            t(I, {
+            t(M, {
               xs: 24,
               sm: 24,
               md: 8,
@@ -260,7 +267,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
             }, {
               default: a(() => [
                 s("div", Pe, [
-                  s("div", $e, [
+                  s("div", Oe, [
                     h((c(), y(w, {
                       type: "primary",
                       style: { width: "100%" },
@@ -289,9 +296,9 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                       _: 1
                     }, 8, ["modelValue"])
                   ]),
-                  h((c(), $("div", Oe, [
+                  h((c(), O("div", $e, [
                     s("ul", null, [
-                      (c(!0), $(Be, null, Se(u(g), (l) => (c(), y(ye, {
+                      (c(!0), O(Be, null, Se(u(g), (l) => (c(), y(ye, {
                         placement: "right",
                         key: l.id,
                         effect: "light"
@@ -328,14 +335,14 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                         default: a(() => [
                           s("li", {
                             onClick: (R) => G(l),
-                            class: Me({ active: l.id === u(T).id })
+                            class: Ie({ active: l.id === u(T).id })
                           }, [
                             s("div", Ge, E(l.dictName), 1),
                             s("div", He, [
                               h((c(), y(w, {
                                 type: "primary",
                                 link: "",
-                                onClick: de((R) => we(l), ["stop"])
+                                onClick: ne((R) => we(l), ["stop"])
                               }, {
                                 default: a(() => [
                                   t(W, null, {
@@ -352,7 +359,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                               h((c(), y(w, {
                                 type: "danger",
                                 link: "",
-                                onClick: de((R) => ge(l), ["stop"])
+                                onClick: ne((R) => ge(l), ["stop"])
                               }, {
                                 default: a(() => [
                                   t(W, null, {
@@ -379,7 +386,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
               ]),
               _: 1
             }),
-            t(I, {
+            t(M, {
               xs: 24,
               sm: 24,
               md: 16,
@@ -395,7 +402,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                       model: p.value,
                       class: "demo-form-inline",
                       ref_key: "dictDataSearchFormRef",
-                      ref: O
+                      ref: $
                     }, {
                       default: a(() => [
                         t(_, { label: "字典展示值" }, {
@@ -455,7 +462,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                     class: "mb8"
                   }, {
                     default: a(() => [
-                      t(I, { span: 1.5 }, {
+                      t(M, { span: 1.5 }, {
                         default: a(() => [
                           h((c(), y(w, {
                             icon: u(xe),
@@ -639,7 +646,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
               }),
               t(w, {
                 onClick: e[10] || (e[10] = (l) => {
-                  S(V) ? V.value = !1 : V = !1, M();
+                  S(V) ? V.value = !1 : V = !1, I();
                 })
               }, {
                 default: a(() => e[32] || (e[32] = [
@@ -653,7 +660,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
             t(P, {
               ref_key: "addDictTypeFormRef",
               ref: U,
-              model: d.value,
+              model: n.value,
               "label-width": "80px",
               "status-icon": "",
               rules: se
@@ -665,8 +672,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(x, {
-                      modelValue: d.value.dictName,
-                      "onUpdate:modelValue": e[5] || (e[5] = (l) => d.value.dictName = l),
+                      modelValue: n.value.dictName,
+                      "onUpdate:modelValue": e[5] || (e[5] = (l) => n.value.dictName = l),
                       placeholder: "请输入字典名"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -678,10 +685,10 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(x, {
-                      modelValue: d.value.dictType,
-                      "onUpdate:modelValue": e[6] || (e[6] = (l) => d.value.dictType = l),
+                      modelValue: n.value.dictType,
+                      "onUpdate:modelValue": e[6] || (e[6] = (l) => n.value.dictType = l),
                       placeholder: "请输入字典类型",
-                      disabled: d.value.id !== ""
+                      disabled: n.value.id !== ""
                     }, null, 8, ["modelValue", "disabled"])
                   ]),
                   _: 1
@@ -692,8 +699,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(K, {
-                      modelValue: d.value.status,
-                      "onUpdate:modelValue": e[7] || (e[7] = (l) => d.value.status = l),
+                      modelValue: n.value.status,
+                      "onUpdate:modelValue": e[7] || (e[7] = (l) => n.value.status = l),
                       "inline-prompt": "",
                       "active-text": "启用",
                       "inactive-text": "禁用",
@@ -709,8 +716,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(Q, {
-                      modelValue: d.value.seq,
-                      "onUpdate:modelValue": e[8] || (e[8] = (l) => d.value.seq = l),
+                      modelValue: n.value.seq,
+                      "onUpdate:modelValue": e[8] || (e[8] = (l) => n.value.seq = l),
                       min: 0,
                       max: 9999999,
                       placeholder: "排序"
@@ -724,8 +731,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(x, {
-                      modelValue: d.value.remark,
-                      "onUpdate:modelValue": e[9] || (e[9] = (l) => d.value.remark = l),
+                      modelValue: n.value.remark,
+                      "onUpdate:modelValue": e[9] || (e[9] = (l) => n.value.remark = l),
                       placeholder: "请输入备注",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -773,7 +780,7 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
             t(P, {
               ref_key: "addDictDataFormRef",
               ref: z,
-              model: n.value,
+              model: d.value,
               "label-width": "80px",
               "status-icon": "",
               rules: re
@@ -785,10 +792,10 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(x, {
-                      modelValue: n.value.dictType,
-                      "onUpdate:modelValue": e[12] || (e[12] = (l) => n.value.dictType = l),
+                      modelValue: d.value.dictType,
+                      "onUpdate:modelValue": e[12] || (e[12] = (l) => d.value.dictType = l),
                       placeholder: "请输入字典类型",
-                      disabled: n.value.id !== ""
+                      disabled: d.value.id !== ""
                     }, null, 8, ["modelValue", "disabled"])
                   ]),
                   _: 1
@@ -799,8 +806,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(x, {
-                      modelValue: n.value.dictLabel,
-                      "onUpdate:modelValue": e[13] || (e[13] = (l) => n.value.dictLabel = l),
+                      modelValue: d.value.dictLabel,
+                      "onUpdate:modelValue": e[13] || (e[13] = (l) => d.value.dictLabel = l),
                       placeholder: "请输入展示值"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -812,8 +819,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(x, {
-                      modelValue: n.value.dictValue,
-                      "onUpdate:modelValue": e[14] || (e[14] = (l) => n.value.dictValue = l),
+                      modelValue: d.value.dictValue,
+                      "onUpdate:modelValue": e[14] || (e[14] = (l) => d.value.dictValue = l),
                       placeholder: "请输入字典值"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -825,8 +832,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(x, {
-                      modelValue: n.value.dictExtendValue,
-                      "onUpdate:modelValue": e[15] || (e[15] = (l) => n.value.dictExtendValue = l),
+                      modelValue: d.value.dictExtendValue,
+                      "onUpdate:modelValue": e[15] || (e[15] = (l) => d.value.dictExtendValue = l),
                       placeholder: "请输入扩展值"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -838,8 +845,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(K, {
-                      modelValue: n.value.status,
-                      "onUpdate:modelValue": e[16] || (e[16] = (l) => n.value.status = l),
+                      modelValue: d.value.status,
+                      "onUpdate:modelValue": e[16] || (e[16] = (l) => d.value.status = l),
                       "inline-prompt": "",
                       "active-text": "启用",
                       "inactive-text": "禁用",
@@ -855,8 +862,8 @@ const de = window.Vue.withModifiers, Me = window.Vue.normalizeClass, S = window.
                 }, {
                   default: a(() => [
                     t(Q, {
-                      modelValue: n.value.seq,
-                      "onUpdate:modelValue": e[17] || (e[17] = (l) => n.value.seq = l),
+                      modelValue: d.value.seq,
+                      "onUpdate:modelValue": e[17] || (e[17] = (l) => d.value.seq = l),
                       min: 0,
                       max: 9999999,
                       placeholder: "排序"

@@ -4,23 +4,27 @@ import { i as q } from "./lib/echarts.js";
 function z() {
   return axios.get("/api/auth/adminHome/getHomeStatistic");
 }
-function W(o) {
-  return axios.get("/api/article/getLatestArticle?num=" + o);
+function W(l) {
+  return axios.get("/api/article/getLatestArticle?num=" + l);
 }
-function X(o) {
-  return axios.get("/api/comment/getLatestComment?num=" + o);
+function X(l) {
+  return axios.get("/api/comment/getLatestComment?num=" + l);
 }
 const G = window.Pinia.defineStore;
 G({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -30,26 +34,29 @@ G({
     }
   },
   actions: {
-    setMenuInit(o) {
-      this.menuInit = o;
+    setMenuInit(l) {
+      this.menuInit = l;
     },
-    setMenuList(o) {
-      this.menuList = o;
+    setOptionInit(l) {
+      this.optionInit = l;
     },
-    setCachedViews(o) {
-      this.cachedViews = o;
+    setMenuList(l) {
+      this.menuList = l;
+    },
+    setCachedViews(l) {
+      this.cachedViews = l;
     }
   },
   persist: {
     enabled: !1
   }
 });
-function J(o, u) {
-  if (arguments.length === 0 || !o)
+function J(l, u) {
+  if (arguments.length === 0 || !l)
     return null;
   const h = u || "{y}-{m}-{d} {h}:{i}:{s}";
   let f;
-  typeof o == "object" ? f = o : (typeof o == "string" && /^[0-9]+$/.test(o) ? o = parseInt(o) : typeof o == "string" && (o = o.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof o == "number" && o.toString().length === 10 && (o = o * 1e3), f = new Date(o));
+  typeof l == "object" ? f = l : (typeof l == "string" && /^[0-9]+$/.test(l) ? l = parseInt(l) : typeof l == "string" && (l = l.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof l == "number" && l.toString().length === 10 && (l = l * 1e3), f = new Date(l));
   const d = {
     y: f.getFullYear(),
     m: f.getMonth() + 1,
@@ -59,30 +66,30 @@ function J(o, u) {
     s: f.getSeconds(),
     a: f.getDay()
   };
-  return h.replace(/{([ymdhisa])+}/g, (C, k) => {
+  return h.replace(/{([ymdhisa])+}/g, (b, k) => {
     let p = d[k];
-    return k === "a" ? ["日", "一", "二", "三", "四", "五", "六"][p] : (C.length > 0 && p < 10 && (p = "0" + p), p || 0);
+    return k === "a" ? ["日", "一", "二", "三", "四", "五", "六"][p] : (b.length > 0 && p < 10 && (p = "0" + p), p || 0);
   });
 }
-function K(o) {
-  const u = new Date(o), h = /* @__PURE__ */ new Date(), f = 1e3 * 60, d = f * 60, y = d * 24, C = y * 7, k = y * 30, p = h - u;
+function K(l) {
+  const u = new Date(l), h = /* @__PURE__ */ new Date(), f = 1e3 * 60, d = f * 60, y = d * 24, b = y * 7, k = y * 30, p = h - u;
   if (p < 0)
     return "刚刚发表";
-  const v = p / k, N = p / C, E = p / y, M = p / d, S = p / f;
+  const v = p / k, N = p / b, E = p / y, M = p / d, S = p / f;
   let i;
   return v >= 3 ? i = `${u.getFullYear()}-${(u.getMonth() + 1).toString().padStart(2, "0")}-${u.getDate().toString().padStart(2, "0")}` : v >= 1 ? i = `${Math.floor(v)}月前` : N >= 1 ? i = `${Math.floor(N)}周前` : E >= 1 ? i = `${Math.floor(E)}天前` : M >= 1 ? i = `${Math.floor(M)}小时前` : S >= 1 ? i = `${Math.floor(S)}分钟前` : i = "刚刚发表", i;
 }
-const Q = (o, u) => {
-  const h = o.__vccOpts || o;
+const Q = (l, u) => {
+  const h = l.__vccOpts || l;
   for (const [f, d] of u)
     h[f] = d;
   return h;
-}, x = window.Vue.resolveComponent, e = window.Vue.createVNode, w = window.Vue.toDisplayString, s = window.Vue.createElementVNode, n = window.Vue.withCtx, l = window.Vue.unref, g = window.Vue.createTextVNode, U = window.Vue.resolveDirective, c = window.Vue.openBlock, m = window.Vue.createElementBlock, T = window.Vue.withDirectives, H = window.Vue.renderList, F = window.Vue.Fragment, A = window.Vue.createBlock, P = window.Vue.createCommentVNode, Z = { class: "panelBox" }, tt = { style: { display: "flex", "flex-wrap": "wrap" } }, et = { class: "loginBoxRight" }, nt = { class: "title" }, st = { class: "panelBox" }, lt = { class: "panelBox" }, ot = { class: "panelBox" }, at = { class: "panelBox" }, it = { class: "panelBox" }, rt = { class: "panelBox" }, ut = { class: "panelBox" }, dt = { style: { "text-align": "center", "margin-top": "10px", "min-height": "500px" } }, ct = { class: "panelBox" }, ft = { style: { "margin-top": "10px", "min-height": "500px" } }, mt = { class: "comment-detail-box" }, pt = { class: "comment-detail-avatar-box" }, gt = ["src"], _t = { key: 1 }, vt = { class: "comment-detail-msg-box" }, wt = { class: "comment-detail-info" }, ht = { class: "comment-detail-name" }, xt = { class: "comment-detail-time" }, yt = { key: 0 }, kt = { key: 1 }, Vt = { key: 2 }, Bt = { class: "comment-detail-content" }, Tt = { class: "panelBox" }, bt = { class: "panelBox" }, Ct = { class: "panelBox" }, It = { class: "link-ul" }, Dt = window.ElementPlus.ElMessage, Lt = window.Vue.onMounted, b = window.Vue.ref, Mt = window.Vue.watch, St = {
+}, x = window.Vue.resolveComponent, e = window.Vue.createVNode, w = window.Vue.toDisplayString, s = window.Vue.createElementVNode, n = window.Vue.withCtx, o = window.Vue.unref, g = window.Vue.createTextVNode, U = window.Vue.resolveDirective, c = window.Vue.openBlock, m = window.Vue.createElementBlock, I = window.Vue.withDirectives, H = window.Vue.renderList, O = window.Vue.Fragment, A = window.Vue.createBlock, P = window.Vue.createCommentVNode, Z = { class: "panelBox" }, tt = { style: { display: "flex", "flex-wrap": "wrap" } }, et = { class: "loginBoxRight" }, nt = { class: "title" }, st = { class: "panelBox" }, ot = { class: "panelBox" }, lt = { class: "panelBox" }, at = { class: "panelBox" }, it = { class: "panelBox" }, rt = { class: "panelBox" }, ut = { class: "panelBox" }, dt = { style: { "text-align": "center", "margin-top": "10px", "min-height": "500px" } }, ct = { class: "panelBox" }, ft = { style: { "margin-top": "10px", "min-height": "500px" } }, mt = { class: "comment-detail-box" }, pt = { class: "comment-detail-avatar-box" }, gt = ["src"], _t = { key: 1 }, vt = { class: "comment-detail-msg-box" }, wt = { class: "comment-detail-info" }, ht = { class: "comment-detail-name" }, xt = { class: "comment-detail-time" }, yt = { key: 0 }, kt = { key: 1 }, Vt = { key: 2 }, Bt = { class: "comment-detail-content" }, It = { class: "panelBox" }, Tt = { class: "panelBox" }, bt = { class: "panelBox" }, Ct = { class: "link-ul" }, Dt = window.ElementPlus.ElMessage, Lt = window.Vue.onMounted, T = window.Vue.ref, Mt = window.Vue.watch, St = {
   __name: "Home",
-  setup(o) {
+  setup(l) {
     var M, S;
-    let u = b(!0), h = b(!0), f = b(!0), d = b({}), y = b([]), C = b([]);
-    const k = b((S = (M = window.pinia.state._value) == null ? void 0 : M.userStore) == null ? void 0 : S.userInfo);
+    let u = T(!0), h = T(!0), f = T(!0), d = T({}), y = T([]), b = T([]);
+    const k = T((S = (M = window.pinia.state._value) == null ? void 0 : M.userStore) == null ? void 0 : S.userInfo);
     Mt(() => {
       var i, t;
       return (t = (i = window.pinia.state._value) == null ? void 0 : i.userStore) == null ? void 0 : t.userInfo;
@@ -131,11 +138,11 @@ const Q = (o, u) => {
     }
     function E() {
       f.value = !0, X(6).then((i) => {
-        C.value = i.data, f.value = !1;
+        b.value = i.data, f.value = !1;
       });
     }
     return N(), E(), (i, t) => {
-      const j = x("el-avatar"), r = x("el-col"), I = x("el-statistic"), O = x("Calendar"), R = x("el-icon"), V = x("el-link"), Y = x("el-empty"), $ = x("el-row"), D = x("el-button"), B = U("loading");
+      const F = x("el-avatar"), r = x("el-col"), C = x("el-statistic"), j = x("Calendar"), R = x("el-icon"), V = x("el-link"), Y = x("el-empty"), $ = x("el-row"), D = x("el-button"), B = U("loading");
       return c(), A($, {
         gutter: 15,
         style: { height: "100%" }
@@ -145,7 +152,7 @@ const Q = (o, u) => {
             default: n(() => [
               s("div", Z, [
                 s("div", tt, [
-                  e(j, {
+                  e(F, {
                     size: 65,
                     src: k.value.avatar
                   }, null, 8, ["src"]),
@@ -189,20 +196,20 @@ const Q = (o, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      T((c(), m("div", st, [
-                        e(I, {
-                          value: l(d).articleTotal
+                      I((c(), m("div", st, [
+                        e(C, {
+                          value: o(d).articleTotal
                         }, {
                           title: n(() => [
                             s("span", null, [
-                              e(l(_), { icon: "fa-solid fa-file-alt" }),
+                              e(o(_), { icon: "fa-solid fa-file-alt" }),
                               t[8] || (t[8] = g(" 文章数量"))
                             ])
                           ]),
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, l(u)]
+                        [B, o(u)]
                       ])
                     ]),
                     _: 1
@@ -215,20 +222,20 @@ const Q = (o, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      T((c(), m("div", lt, [
-                        e(I, {
-                          value: l(d).journalTotal
+                      I((c(), m("div", ot, [
+                        e(C, {
+                          value: o(d).journalTotal
                         }, {
                           title: n(() => [
                             s("span", null, [
-                              e(l(_), { icon: "fa-solid fa-golf-ball-tee" }),
+                              e(o(_), { icon: "fa-solid fa-golf-ball-tee" }),
                               t[9] || (t[9] = g(" 动态数量"))
                             ])
                           ]),
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, l(u)]
+                        [B, o(u)]
                       ])
                     ]),
                     _: 1
@@ -241,20 +248,20 @@ const Q = (o, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      T((c(), m("div", ot, [
-                        e(I, {
-                          value: l(d).categoryTotal
+                      I((c(), m("div", lt, [
+                        e(C, {
+                          value: o(d).categoryTotal
                         }, {
                           title: n(() => [
                             s("span", null, [
-                              e(l(_), { icon: "fa-solid fa-bars" }),
+                              e(o(_), { icon: "fa-solid fa-bars" }),
                               t[10] || (t[10] = g(" 分类数量"))
                             ])
                           ]),
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, l(u)]
+                        [B, o(u)]
                       ])
                     ]),
                     _: 1
@@ -267,20 +274,20 @@ const Q = (o, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      T((c(), m("div", at, [
-                        e(I, {
-                          value: l(d).tagTotal
+                      I((c(), m("div", at, [
+                        e(C, {
+                          value: o(d).tagTotal
                         }, {
                           title: n(() => [
                             s("span", null, [
-                              e(l(_), { icon: "fa-solid fa-bookmark" }),
+                              e(o(_), { icon: "fa-solid fa-bookmark" }),
                               t[11] || (t[11] = g(" 标签数量"))
                             ])
                           ]),
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, l(u)]
+                        [B, o(u)]
                       ])
                     ]),
                     _: 1
@@ -293,20 +300,20 @@ const Q = (o, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      T((c(), m("div", it, [
-                        e(I, {
-                          value: l(d).commentTotal
+                      I((c(), m("div", it, [
+                        e(C, {
+                          value: o(d).commentTotal
                         }, {
                           title: n(() => [
                             s("span", null, [
-                              e(l(_), { icon: "fa-solid fa-comment-alt" }),
+                              e(o(_), { icon: "fa-solid fa-comment-alt" }),
                               t[12] || (t[12] = g(" 评论数量"))
                             ])
                           ]),
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, l(u)]
+                        [B, o(u)]
                       ])
                     ]),
                     _: 1
@@ -319,20 +326,20 @@ const Q = (o, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      T((c(), m("div", rt, [
-                        e(I, {
-                          value: l(d).userTotal
+                      I((c(), m("div", rt, [
+                        e(C, {
+                          value: o(d).userTotal
                         }, {
                           title: n(() => [
                             s("span", null, [
-                              e(l(_), { icon: "fa-solid fa-user" }),
+                              e(o(_), { icon: "fa-solid fa-user" }),
                               t[13] || (t[13] = g(" 用户数量"))
                             ])
                           ]),
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, l(u)]
+                        [B, o(u)]
                       ])
                     ]),
                     _: 1
@@ -352,7 +359,7 @@ const Q = (o, u) => {
                               s("div", ut, [
                                 t[14] || (t[14] = s("div", { class: "panelTitle" }, "最新文章", -1)),
                                 s("div", dt, [
-                                  (c(!0), m(F, null, H(l(y), (a) => (c(), A(V, {
+                                  (c(!0), m(O, null, H(o(y), (a) => (c(), A(V, {
                                     class: "latest-article",
                                     href: "/article/" + a.slug,
                                     target: "_blank"
@@ -360,15 +367,15 @@ const Q = (o, u) => {
                                     default: n(() => [
                                       e(R, null, {
                                         default: n(() => [
-                                          e(O)
+                                          e(j)
                                         ]),
                                         _: 1
                                       }),
-                                      g(" " + w(l(J)(a.createTime, "{y}-{m}-{d}")) + " | " + w(a.title), 1)
+                                      g(" " + w(o(J)(a.createTime, "{y}-{m}-{d}")) + " | " + w(a.title), 1)
                                     ]),
                                     _: 2
                                   }, 1032, ["href"]))), 256)),
-                                  l(y).length <= 0 ? (c(), A(Y, {
+                                  o(y).length <= 0 ? (c(), A(Y, {
                                     key: 0,
                                     description: "暂无文章"
                                   })) : P("", !0)
@@ -388,7 +395,7 @@ const Q = (o, u) => {
                               s("div", ct, [
                                 t[15] || (t[15] = s("div", { class: "panelTitle" }, "最新评论", -1)),
                                 s("div", ft, [
-                                  (c(!0), m(F, null, H(l(C), (a) => (c(), m("div", mt, [
+                                  (c(!0), m(O, null, H(o(b), (a) => (c(), m("div", mt, [
                                     s("div", pt, [
                                       a.avatar || a.userInfo && a.userInfo.avatar ? (c(), m("img", {
                                         key: 0,
@@ -404,7 +411,7 @@ const Q = (o, u) => {
                                           a.articleType === "journal" ? (c(), m("span", yt, "发表于动态标识为《" + w(a.articleId) + "》", 1)) : P("", !0),
                                           a.articleType === "article" ? (c(), m("span", kt, "发表于《" + w(a.articleTitle) + "》", 1)) : P("", !0),
                                           a.articleType === "page" ? (c(), m("span", Vt, "发表于《" + w(a.articleTitle) + "》", 1)) : P("", !0),
-                                          g(" " + w(l(K)(a.createTime)), 1)
+                                          g(" " + w(o(K)(a.createTime)), 1)
                                         ])
                                       ]),
                                       s("div", Bt, w(a.content), 1)
@@ -439,7 +446,7 @@ const Q = (o, u) => {
                 default: n(() => [
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      s("div", Tt, [
+                      s("div", It, [
                         t[22] || (t[22] = s("div", { class: "panelTitle" }, "快捷功能", -1)),
                         e($, null, {
                           default: n(() => [
@@ -453,7 +460,7 @@ const Q = (o, u) => {
                                   onClick: t[0] || (t[0] = (a) => v("/admin/article/create"))
                                 }, {
                                   default: n(() => [
-                                    e(l(_), { icon: "fa-solid fa-pencil-alt" })
+                                    e(o(_), { icon: "fa-solid fa-pencil-alt" })
                                   ]),
                                   _: 1
                                 }),
@@ -471,7 +478,7 @@ const Q = (o, u) => {
                                   onClick: t[1] || (t[1] = (a) => v("/admin/article"))
                                 }, {
                                   default: n(() => [
-                                    e(l(_), { icon: "fa-solid fa-file-alt" })
+                                    e(o(_), { icon: "fa-solid fa-file-alt" })
                                   ]),
                                   _: 1
                                 }),
@@ -489,7 +496,7 @@ const Q = (o, u) => {
                                   onClick: t[2] || (t[2] = (a) => v("/admin/journal"))
                                 }, {
                                   default: n(() => [
-                                    e(l(_), { icon: "fa-solid fa-golf-ball-tee" })
+                                    e(o(_), { icon: "fa-solid fa-golf-ball-tee" })
                                   ]),
                                   _: 1
                                 }),
@@ -507,7 +514,7 @@ const Q = (o, u) => {
                                   onClick: t[3] || (t[3] = (a) => v("/admin/category"))
                                 }, {
                                   default: n(() => [
-                                    e(l(_), { icon: "fa-solid fa-bars" })
+                                    e(o(_), { icon: "fa-solid fa-bars" })
                                   ]),
                                   _: 1
                                 }),
@@ -525,7 +532,7 @@ const Q = (o, u) => {
                                   onClick: t[4] || (t[4] = (a) => v("/admin/tag"))
                                 }, {
                                   default: n(() => [
-                                    e(l(_), { icon: "fa-solid fa-bookmark" })
+                                    e(o(_), { icon: "fa-solid fa-bookmark" })
                                   ]),
                                   _: 1
                                 }),
@@ -543,7 +550,7 @@ const Q = (o, u) => {
                                   onClick: t[5] || (t[5] = (a) => v("/admin/plugin"))
                                 }, {
                                   default: n(() => [
-                                    e(l(_), { icon: "fa-solid fa-plug-circle-exclamation" })
+                                    e(o(_), { icon: "fa-solid fa-plug-circle-exclamation" })
                                   ]),
                                   _: 1
                                 }),
@@ -560,7 +567,7 @@ const Q = (o, u) => {
                   }),
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      T((c(), m("div", bt, t[23] || (t[23] = [
+                      I((c(), m("div", Tt, t[23] || (t[23] = [
                         s("div", { class: "panelTitle" }, "附件统计", -1),
                         s("div", {
                           class: "echartsBox",
@@ -568,19 +575,19 @@ const Q = (o, u) => {
                           style: { height: "130px" }
                         }, null, -1)
                       ]))), [
-                        [B, l(u)]
+                        [B, o(u)]
                       ])
                     ]),
                     _: 1
                   }),
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      s("div", Ct, [
+                      s("div", bt, [
                         t[30] || (t[30] = s("div", { class: "panelTitle" }, "相关文档", -1)),
-                        s("ul", It, [
+                        s("ul", Ct, [
                           s("li", null, [
                             e(V, {
-                              icon: l(L),
+                              icon: o(L),
                               href: "https://www.perfree.org.cn",
                               target: "_blank"
                             }, {
@@ -592,7 +599,7 @@ const Q = (o, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: l(L),
+                              icon: o(L),
                               href: "https://www.perfree.org.cn/theme",
                               target: "_blank"
                             }, {
@@ -604,7 +611,7 @@ const Q = (o, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: l(L),
+                              icon: o(L),
                               href: "https://www.perfree.org.cn/plugin",
                               target: "_blank"
                             }, {
@@ -616,7 +623,7 @@ const Q = (o, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: l(L),
+                              icon: o(L),
                               href: "https://www.perfree.org.cn/useDoc",
                               target: "_blank"
                             }, {
@@ -628,7 +635,7 @@ const Q = (o, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: l(L),
+                              icon: o(L),
                               href: "https://www.perfree.org.cn/themeDevDoc",
                               target: "_blank"
                             }, {
@@ -640,7 +647,7 @@ const Q = (o, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: l(L),
+                              icon: o(L),
                               href: "https://www.perfree.org.cn/pluginDevDoc",
                               target: "_blank"
                             }, {

@@ -1,15 +1,19 @@
-import { s as H, r as S, p as O, e as Y, d as J } from "./lib/@element-plus.js";
+import { s as G, r as S, p as H, e as Y, d as J } from "./lib/@element-plus.js";
 const Q = window.Pinia.defineStore;
 Q({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -21,6 +25,9 @@ Q({
   actions: {
     setMenuInit(t) {
       this.menuInit = t;
+    },
+    setOptionInit(t) {
+      this.optionInit = t;
     },
     setMenuList(t) {
       this.menuList = t;
@@ -65,13 +72,13 @@ function te(t) {
 function ae(t) {
   return axios.post("/api/auth/extra/add", t);
 }
-function le(t) {
+function oe(t) {
   return axios.post("/api/auth/extra/update", t);
 }
-function oe(t) {
+function le(t) {
   return axios.delete("/api/auth/extra/del?id=" + t);
 }
-const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vue.withCtx, s = window.Vue.unref, w = window.Vue.createTextVNode, B = window.Vue.resolveDirective, v = window.Vue.openBlock, D = window.Vue.createBlock, N = window.Vue.withDirectives, C = window.Vue.createElementVNode, ne = window.Vue.toDisplayString, M = window.Vue.isRef, ie = window.Vue.createElementBlock, re = { class: "page" }, se = { class: "search-box" }, ue = { class: "right-tool" }, de = { class: "table-box" }, pe = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, ce = window.ElementPlus.ElMessageBox, me = window.Vue.reactive, g = window.Vue.ref, ge = {
+const p = window.Vue.resolveComponent, a = window.Vue.createVNode, l = window.Vue.withCtx, s = window.Vue.unref, w = window.Vue.createTextVNode, I = window.Vue.resolveDirective, v = window.Vue.openBlock, D = window.Vue.createBlock, N = window.Vue.withDirectives, C = window.Vue.createElementVNode, ne = window.Vue.toDisplayString, B = window.Vue.isRef, ie = window.Vue.createElementBlock, re = { class: "page" }, se = { class: "search-box" }, ue = { class: "right-tool" }, de = { class: "table-box" }, pe = { class: "dialog-footer" }, h = window.ElementPlus.ElMessage, ce = window.ElementPlus.ElMessageBox, me = window.Vue.reactive, g = window.Vue.ref, ge = {
   __name: "ExtraView",
   setup(t) {
     const i = g({
@@ -89,33 +96,33 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
       extraName: [{ required: !0, message: "请输入名称", trigger: "blur" }],
       extraKey: [{ required: !0, message: "请输入key", trigger: "blur" }],
       extraData: [{ required: !0, message: "请输入附加数据值", trigger: "blur" }]
-    }), z = g(), h = g();
+    }), z = g(), V = g();
     let r = g(!1), x = g(""), c = g([]), R = g(!1);
-    function U() {
-      h.value.validate((d) => {
-        d && (n.value.id ? le(n.value).then((e) => {
-          e.code === 200 ? (V.success("操作成功"), r.value = !1, y(), m()) : V.error(e.msg);
+    function M() {
+      V.value.validate((d) => {
+        d && (n.value.id ? oe(n.value).then((e) => {
+          e.code === 200 ? (h.success("操作成功"), r.value = !1, y(), m()) : h.error(e.msg);
         }) : ae(n.value).then((e) => {
-          e.code === 200 ? (V.success("操作成功"), r.value = !1, y(), m()) : V.error(e.msg);
+          e.code === 200 ? (h.success("操作成功"), r.value = !1, y(), m()) : h.error(e.msg);
         }));
       });
     }
-    function A() {
+    function U() {
       y(), x.value = "添加附加数据", r.value = !0;
     }
-    function T(d) {
+    function A(d) {
       y(), x.value = "修改附加数据", r.value = !0, te(d.id).then((e) => {
         n.value = e.data;
       });
     }
-    function K(d) {
+    function T(d) {
       ce.confirm("确定要删除[" + d.extraName + "]吗？", "提示", {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        oe(d.id).then((e) => {
-          e.code === 200 && e.data ? (V.success("删除成功"), m()) : V.error(e.msg);
+        le(d.id).then((e) => {
+          e.code === 200 && e.data ? (h.success("删除成功"), m()) : h.error(e.msg);
         });
       }).catch(() => {
       });
@@ -125,7 +132,7 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
         c.value = d.data.list, i.value.total = d.data.total, R.value = !1;
       });
     }
-    function P() {
+    function K() {
       i.value = {
         pageNo: 1,
         pageSize: 10,
@@ -140,10 +147,10 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
         extraDescription: "",
         extraKey: "",
         extraData: ""
-      }, h.value && h.value.resetFields();
+      }, V.value && V.value.resetFields();
     }
     return m(), (d, e) => {
-      const b = p("el-input"), _ = p("el-form-item"), f = p("el-button"), F = p("el-form"), I = p("el-col"), L = p("el-row"), k = p("el-table-column"), q = p("el-table"), j = p("el-pagination"), $ = p("el-dialog"), E = B("hasPermission"), W = B("loading");
+      const b = p("el-input"), _ = p("el-form-item"), f = p("el-button"), F = p("el-form"), P = p("el-col"), L = p("el-row"), k = p("el-table-column"), q = p("el-table"), j = p("el-pagination"), O = p("el-dialog"), E = I("hasPermission"), $ = I("loading");
       return v(), ie("div", re, [
         C("div", se, [
           a(F, {
@@ -153,12 +160,12 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
             ref_key: "searchFormRef",
             ref: z
           }, {
-            default: o(() => [
+            default: l(() => [
               a(_, { label: "附加数据名称" }, {
-                default: o(() => [
+                default: l(() => [
                   a(b, {
                     modelValue: i.value.extraName,
-                    "onUpdate:modelValue": e[0] || (e[0] = (l) => i.value.extraName = l),
+                    "onUpdate:modelValue": e[0] || (e[0] = (o) => i.value.extraName = o),
                     placeholder: "请输入附加数据名称",
                     clearable: ""
                   }, null, 8, ["modelValue"])
@@ -166,13 +173,13 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                 _: 1
               }),
               a(_, null, {
-                default: o(() => [
+                default: l(() => [
                   N((v(), D(f, {
                     type: "primary",
                     onClick: m,
-                    icon: s(H)
+                    icon: s(G)
                   }, {
-                    default: o(() => e[9] || (e[9] = [
+                    default: l(() => e[9] || (e[9] = [
                       w("查询")
                     ])),
                     _: 1
@@ -181,9 +188,9 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                   ]),
                   a(f, {
                     icon: s(S),
-                    onClick: P
+                    onClick: K
                   }, {
-                    default: o(() => e[10] || (e[10] = [
+                    default: l(() => e[10] || (e[10] = [
                       w("重置")
                     ])),
                     _: 1
@@ -199,16 +206,16 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
           gutter: 10,
           class: "mb8"
         }, {
-          default: o(() => [
-            a(I, { span: 1.5 }, {
-              default: o(() => [
+          default: l(() => [
+            a(P, { span: 1.5 }, {
+              default: l(() => [
                 N((v(), D(f, {
-                  icon: s(O),
+                  icon: s(H),
                   type: "primary",
                   plain: "",
-                  onClick: A
+                  onClick: U
                 }, {
-                  default: o(() => e[11] || (e[11] = [
+                  default: l(() => e[11] || (e[11] = [
                     w("新增")
                   ])),
                   _: 1
@@ -234,7 +241,7 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
             style: { width: "100%", height: "100%" },
             "row-key": "id"
           }, {
-            default: o(() => [
+            default: l(() => [
               a(k, {
                 prop: "extraName",
                 label: "名称",
@@ -258,8 +265,8 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                 label: "创建时间",
                 "min-width": "180"
               }, {
-                default: o((l) => [
-                  C("span", null, ne(s(X)(l.row.createTime)), 1)
+                default: l((o) => [
+                  C("span", null, ne(s(X)(o.row.createTime)), 1)
                 ]),
                 _: 1
               }),
@@ -268,15 +275,15 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                 width: "160",
                 fixed: "right"
               }, {
-                default: o((l) => [
+                default: l((o) => [
                   N((v(), D(f, {
                     size: "small",
                     type: "primary",
                     link: "",
                     icon: s(Y),
-                    onClick: (G) => T(l.row)
+                    onClick: (W) => A(o.row)
                   }, {
-                    default: o(() => e[12] || (e[12] = [
+                    default: l(() => e[12] || (e[12] = [
                       w("修改")
                     ])),
                     _: 2
@@ -288,9 +295,9 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                     type: "primary",
                     link: "",
                     icon: s(J),
-                    onClick: (G) => K(l.row)
+                    onClick: (W) => T(o.row)
                   }, {
-                    default: o(() => e[13] || (e[13] = [
+                    default: l(() => e[13] || (e[13] = [
                       w("删除")
                     ])),
                     _: 2
@@ -303,13 +310,13 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
             ]),
             _: 1
           }, 8, ["data"])), [
-            [W, s(R)]
+            [$, s(R)]
           ]),
           a(j, {
             "current-page": i.value.pageNo,
-            "onUpdate:currentPage": e[1] || (e[1] = (l) => i.value.pageNo = l),
+            "onUpdate:currentPage": e[1] || (e[1] = (o) => i.value.pageNo = o),
             "page-size": i.value.pageSize,
-            "onUpdate:pageSize": e[2] || (e[2] = (l) => i.value.pageSize = l),
+            "onUpdate:pageSize": e[2] || (e[2] = (o) => i.value.pageSize = o),
             "page-sizes": [10, 20, 30, 50],
             layout: "total,sizes,prev, pager, next, jumper",
             background: "",
@@ -318,54 +325,54 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
             total: i.value.total
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
-        a($, {
+        a(O, {
           modelValue: s(r),
-          "onUpdate:modelValue": e[8] || (e[8] = (l) => M(r) ? r.value = l : r = l),
+          "onUpdate:modelValue": e[8] || (e[8] = (o) => B(r) ? r.value = o : r = o),
           title: s(x),
           width: s(Z)(600),
           draggable: ""
         }, {
-          footer: o(() => [
+          footer: l(() => [
             C("span", pe, [
               a(f, {
                 type: "primary",
-                onClick: U
+                onClick: M
               }, {
-                default: o(() => e[14] || (e[14] = [
+                default: l(() => e[14] || (e[14] = [
                   w("确 定")
                 ])),
                 _: 1
               }),
               a(f, {
-                onClick: e[7] || (e[7] = (l) => {
-                  M(r) ? r.value = !1 : r = !1, y();
+                onClick: e[7] || (e[7] = (o) => {
+                  B(r) ? r.value = !1 : r = !1, y();
                 })
               }, {
-                default: o(() => e[15] || (e[15] = [
+                default: l(() => e[15] || (e[15] = [
                   w("取 消")
                 ])),
                 _: 1
               })
             ])
           ]),
-          default: o(() => [
+          default: l(() => [
             a(F, {
               ref_key: "addFormRef",
-              ref: h,
+              ref: V,
               model: n.value,
               "label-width": "80px",
               "status-icon": "",
               rules: u
             }, {
-              default: o(() => [
+              default: l(() => [
                 a(_, {
                   label: "名称",
                   prop: "extraName"
                 }, {
-                  default: o(() => [
+                  default: l(() => [
                     a(b, {
                       modelValue: n.value.extraName,
-                      "onUpdate:modelValue": e[3] || (e[3] = (l) => n.value.extraName = l),
+                      "onUpdate:modelValue": e[3] || (e[3] = (o) => n.value.extraName = o),
                       placeholder: "请输入名称"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -375,10 +382,10 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                   label: "key",
                   prop: "extraKey"
                 }, {
-                  default: o(() => [
+                  default: l(() => [
                     a(b, {
                       modelValue: n.value.extraKey,
-                      "onUpdate:modelValue": e[4] || (e[4] = (l) => n.value.extraKey = l),
+                      "onUpdate:modelValue": e[4] || (e[4] = (o) => n.value.extraKey = o),
                       placeholder: "请输入key"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -388,10 +395,10 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                   label: "描述",
                   prop: "extraDescription"
                 }, {
-                  default: o(() => [
+                  default: l(() => [
                     a(b, {
                       modelValue: n.value.extraDescription,
-                      "onUpdate:modelValue": e[5] || (e[5] = (l) => n.value.extraDescription = l),
+                      "onUpdate:modelValue": e[5] || (e[5] = (o) => n.value.extraDescription = o),
                       placeholder: "请输入描述",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -403,10 +410,10 @@ const p = window.Vue.resolveComponent, a = window.Vue.createVNode, o = window.Vu
                   label: "附加值",
                   prop: "extraData"
                 }, {
-                  default: o(() => [
+                  default: l(() => [
                     a(b, {
                       modelValue: n.value.extraData,
-                      "onUpdate:modelValue": e[6] || (e[6] = (l) => n.value.extraData = l),
+                      "onUpdate:modelValue": e[6] || (e[6] = (o) => n.value.extraData = o),
                       placeholder: "请输入附加数据值",
                       autosize: { minRows: 5, maxRows: 10 },
                       type: "textarea"

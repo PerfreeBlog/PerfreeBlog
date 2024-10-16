@@ -13,12 +13,16 @@ we({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -30,6 +34,9 @@ we({
   actions: {
     setMenuInit(t) {
       this.menuInit = t;
+    },
+    setOptionInit(t) {
+      this.optionInit = t;
     },
     setMenuList(t) {
       this.menuList = t;
@@ -157,7 +164,7 @@ Re({
     //开启本地存储
   }
 });
-const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vue.withCtx, u = window.Vue.unref, w = window.Vue.createTextVNode, W = window.Vue.resolveDirective, C = window.Vue.openBlock, T = window.Vue.createBlock, R = window.Vue.withDirectives, A = window.Vue.createElementVNode, Ae = window.Vue.toDisplayString, D = window.Vue.isRef, Me = window.Vue.createElementBlock, Te = { class: "page" }, Fe = { class: "search-box" }, Ue = { class: "right-tool" }, Ee = { class: "table-box" }, Se = { style: { width: "100%", border: "1px solid rgb(228 231 237)", padding: "5px" } }, De = { class: "dialog-footer" }, ze = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, Oe = window.ElementPlus.ElMessageBox, Ne = window.Vue.reactive, p = window.Vue.ref, Be = {
+const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vue.withCtx, u = window.Vue.unref, w = window.Vue.createTextVNode, W = window.Vue.resolveDirective, C = window.Vue.openBlock, T = window.Vue.createBlock, R = window.Vue.withDirectives, A = window.Vue.createElementVNode, Ae = window.Vue.toDisplayString, D = window.Vue.isRef, Me = window.Vue.createElementBlock, Te = { class: "page" }, Fe = { class: "search-box" }, Ue = { class: "right-tool" }, Ee = { class: "table-box" }, Se = { style: { width: "100%", border: "1px solid rgb(228 231 237)", padding: "5px" } }, De = { class: "dialog-footer" }, Oe = { class: "dialog-footer" }, V = window.ElementPlus.ElMessage, ze = window.ElementPlus.ElMessageBox, Ne = window.Vue.reactive, p = window.Vue.ref, Be = {
   __name: "RoleView",
   setup(t) {
     let y = p([]);
@@ -183,8 +190,8 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
     }), x = Ne({
       name: [{ required: !0, message: "请输入角色名称", trigger: "blur" }],
       code: [{ required: !0, message: "请输入角色编码", trigger: "blur" }]
-    }), s = p(), h = p(), M = p(), z = p();
-    let b = p(!1), v = p(!1), F = p(""), j = p([]), O = p(!1), N = p(!1);
+    }), s = p(), h = p(), M = p(), O = p();
+    let b = p(!1), v = p(!1), F = p(""), L = p([]), z = p(!1), N = p(!1);
     function G(n, e) {
       let c = e.checkedKeys.findIndex((m) => m === n.id), f = !1;
       c >= 0 && (f = !0), s.value.setChecked(n.id, f, !1), f ? P(n, !0) : P(n, !1);
@@ -212,7 +219,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
       });
     }
     function Z(n) {
-      Oe.confirm("确定要删除[" + n.name + "]吗？", "提示", {
+      ze.confirm("确定要删除[" + n.name + "]吗？", "提示", {
         confirmButtonText: "确认",
         cancelButtonText: "取消",
         type: "warning"
@@ -224,8 +231,8 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
       });
     }
     function k() {
-      O.value = !0, Ve(i.value).then((n) => {
-        j.value = n.data.list, i.value.total = n.data.total, O.value = !1;
+      z.value = !0, Ve(i.value).then((n) => {
+        L.value = n.data.list, i.value.total = n.data.total, z.value = !1;
       });
     }
     function ee() {
@@ -251,7 +258,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
         code: "",
         expand: !1,
         selectAll: !1
-      }, z.value && z.value.resetFields();
+      }, O.value && O.value.resetFields();
     }
     function te(n) {
       if (n.code === "admin") {
@@ -284,10 +291,10 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
       });
     }
     return k(), (n, e) => {
-      const c = g("el-input"), f = g("el-form-item"), m = g("el-button"), L = g("el-form"), ae = g("el-col"), ie = g("el-row"), E = g("el-table-column"), re = g("el-table"), se = g("el-pagination"), $ = g("el-checkbox"), ue = g("el-tree"), H = g("el-dialog"), S = W("hasPermission"), I = W("loading");
+      const c = g("el-input"), f = g("el-form-item"), m = g("el-button"), I = g("el-form"), ae = g("el-col"), ie = g("el-row"), E = g("el-table-column"), re = g("el-table"), se = g("el-pagination"), j = g("el-checkbox"), ue = g("el-tree"), $ = g("el-dialog"), S = W("hasPermission"), H = W("loading");
       return C(), Me("div", Te, [
         A("div", Fe, [
-          l(L, {
+          l(I, {
             inline: !0,
             model: i.value,
             class: "demo-form-inline",
@@ -371,7 +378,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
         }),
         A("div", Ee, [
           R((C(), T(re, {
-            data: u(j),
+            data: u(L),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
           }, {
@@ -458,7 +465,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
             ]),
             _: 1
           }, 8, ["data"])), [
-            [I, u(O)]
+            [H, u(z)]
           ]),
           l(se, {
             "current-page": i.value.pageNo,
@@ -473,7 +480,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
             total: i.value.total
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
-        l(H, {
+        l($, {
           modelValue: u(b),
           "onUpdate:modelValue": e[8] || (e[8] = (o) => D(b) ? b.value = o : b = o),
           title: u(F),
@@ -504,9 +511,9 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
             ])
           ]),
           default: a(() => [
-            l(L, {
+            l(I, {
               ref_key: "menuFormRef",
-              ref: z,
+              ref: O,
               model: r.value,
               "label-width": "80px",
               class: "demo-ruleForm",
@@ -544,13 +551,13 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                   prop: "code"
                 }, {
                   default: a(() => [
-                    l($, {
+                    l(j, {
                       modelValue: r.value.expand,
                       "onUpdate:modelValue": e[5] || (e[5] = (o) => r.value.expand = o),
                       label: "展开/折叠",
                       onChange: le
                     }, null, 8, ["modelValue"]),
-                    l($, {
+                    l(j, {
                       modelValue: r.value.selectAll,
                       "onUpdate:modelValue": e[6] || (e[6] = (o) => r.value.selectAll = o),
                       label: "全选/全不选",
@@ -567,7 +574,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
                         "check-strictly": !0,
                         onCheck: G
                       }, null, 8, ["data"]), [
-                        [I, u(N)]
+                        [H, u(N)]
                       ])
                     ])
                   ]),
@@ -579,7 +586,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
           ]),
           _: 1
         }, 8, ["modelValue", "title", "width"]),
-        l(H, {
+        l($, {
           modelValue: u(v),
           "onUpdate:modelValue": e[13] || (e[13] = (o) => D(v) ? v.value = o : v = o),
           title: u(F),
@@ -587,7 +594,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
           draggable: ""
         }, {
           footer: a(() => [
-            A("span", ze, [
+            A("span", Oe, [
               l(m, {
                 type: "primary",
                 onClick: Y
@@ -610,7 +617,7 @@ const g = window.Vue.resolveComponent, l = window.Vue.createVNode, a = window.Vu
             ])
           ]),
           default: a(() => [
-            l(L, {
+            l(I, {
               ref_key: "addFormRef",
               ref: M,
               model: d.value,

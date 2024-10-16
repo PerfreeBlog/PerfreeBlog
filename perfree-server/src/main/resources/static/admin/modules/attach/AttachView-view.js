@@ -9,7 +9,6 @@ const Ue = {
   timeout: 60 * 1e3,
   // 是否跨站点访问控制请求
   withCredentials: !1
-  // default
 }, Re = {
   STORAGE_USER_INFO: "user_info",
   STORAGE_TOKEN: "token_info",

@@ -11,6 +11,9 @@ import com.perfree.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,9 +60,14 @@ public class SystemController {
         return CommonResult.success(userService.userInfo());
     }
 
-    @PostMapping("logout")
+    @GetMapping("logout")
     @Operation(summary = "退出登录")
-    public CommonResult<String> logout(){
+    public CommonResult<String> logout(HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+        SecurityContextHolder.clearContext();
         return CommonResult.success("退出成功");
     }
 }

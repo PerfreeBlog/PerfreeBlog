@@ -1,15 +1,19 @@
-import { s as te, r as U, p as ne, u as oe, l as le, a as ie, d as ae, b as se } from "./lib/@element-plus.js";
+import { s as te, r as O, p as ne, u as oe, l as le, a as ie, d as ae, b as se } from "./lib/@element-plus.js";
 import { p as re, d as ue, e as de, u as ce } from "./lib/plugin.js";
 const pe = window.Pinia.defineStore, me = pe({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -21,6 +25,9 @@ const pe = window.Pinia.defineStore, me = pe({
   actions: {
     setMenuInit(e) {
       this.menuInit = e;
+    },
+    setOptionInit(e) {
+      this.optionInit = e;
     },
     setMenuList(e) {
       this.menuList = e;
@@ -104,7 +111,6 @@ const _e = {
   timeout: 60 * 1e3,
   // 是否跨站点访问控制请求
   withCredentials: !1
-  // default
 }, be = window.Pinia.defineStore;
 be({
   id: "app",
@@ -174,9 +180,9 @@ be({
     //开启本地存储
   }
 });
-let z = [{ name: "首页", hasClose: !1, path: "/admin", currActive: !0 }];
+let P = [{ name: "首页", hasClose: !1, path: "/admin", currActive: !0 }];
 function ye(e, a, g) {
-  e && z.findIndex((d) => d.path === a) < 0 && z.push({
+  e && P.findIndex((d) => d.path === a) < 0 && P.push({
     name: e,
     hasClose: !0,
     path: a,
@@ -186,7 +192,7 @@ function ye(e, a, g) {
     params: g
   });
 }
-const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vue.withCtx, r = window.Vue.unref, p = window.Vue.createTextVNode, B = window.Vue.resolveDirective, f = window.Vue.openBlock, _ = window.Vue.createBlock, k = window.Vue.withDirectives, v = window.Vue.createElementVNode, I = window.Vue.createCommentVNode, O = window.Vue.toDisplayString, ke = window.Vue.isRef, Ve = window.Vue.createElementBlock, Ce = { class: "page" }, Te = { class: "search-box" }, xe = { class: "right-tool" }, Se = { class: "table-box" }, Re = ["href"], m = window.ElementPlus.ElMessage, E = window.ElementPlus.ElMessageBox, V = window.Vue.ref, Ne = {
+const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vue.withCtx, r = window.Vue.unref, p = window.Vue.createTextVNode, U = window.Vue.resolveDirective, f = window.Vue.openBlock, _ = window.Vue.createBlock, k = window.Vue.withDirectives, v = window.Vue.createElementVNode, z = window.Vue.createCommentVNode, B = window.Vue.toDisplayString, ke = window.Vue.isRef, Ve = window.Vue.createElementBlock, Ce = { class: "page" }, Te = { class: "search-box" }, xe = { class: "right-tool" }, Se = { class: "table-box" }, Re = ["href"], m = window.ElementPlus.ElMessage, E = window.ElementPlus.ElMessageBox, V = window.Vue.ref, Ie = {
   __name: "PluginView",
   setup(e) {
     const a = V({
@@ -261,7 +267,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
       });
     }
     return h(), (i, t) => {
-      const R = u("el-input"), N = u("el-form-item"), w = u("el-button"), q = u("el-form"), K = u("el-col"), W = u("el-row"), c = u("el-table-column"), P = u("el-tag"), J = u("el-table"), Y = u("el-pagination"), Q = u("el-icon"), X = u("el-upload"), Z = u("el-dialog"), C = B("hasPermission"), ee = B("loading");
+      const R = u("el-input"), I = u("el-form-item"), w = u("el-button"), q = u("el-form"), K = u("el-col"), W = u("el-row"), c = u("el-table-column"), N = u("el-tag"), J = u("el-table"), Y = u("el-pagination"), Q = u("el-icon"), X = u("el-upload"), Z = u("el-dialog"), C = U("hasPermission"), ee = U("loading");
       return f(), Ve("div", Ce, [
         v("div", Te, [
           n(q, {
@@ -272,7 +278,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
             ref: g
           }, {
             default: o(() => [
-              n(N, { label: "插件名称" }, {
+              n(I, { label: "插件名称" }, {
                 default: o(() => [
                   n(R, {
                     modelValue: a.value.name,
@@ -283,7 +289,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                 ]),
                 _: 1
               }),
-              n(N, null, {
+              n(I, null, {
                 default: o(() => [
                   k((f(), _(w, {
                     type: "primary",
@@ -298,7 +304,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                     [C, ["admin:plugin:query"]]
                   ]),
                   n(w, {
-                    icon: r(U),
+                    icon: r(O),
                     onClick: D
                   }, {
                     default: o(() => t[5] || (t[5] = [
@@ -338,7 +344,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
             }),
             v("div", xe, [
               n(w, {
-                icon: r(U),
+                icon: r(O),
                 circle: "",
                 onClick: h
               }, null, 8, ["icon"])
@@ -382,7 +388,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                 width: "100"
               }, {
                 default: o((l) => [
-                  l.row.status === 1 ? (f(), _(P, {
+                  l.row.status === 1 ? (f(), _(N, {
                     key: 0,
                     class: "ml-2",
                     type: "success"
@@ -391,7 +397,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                       p("已启用")
                     ])),
                     _: 1
-                  })) : (f(), _(P, {
+                  })) : (f(), _(N, {
                     key: 1,
                     class: "ml-2",
                     type: "danger"
@@ -420,7 +426,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                   v("a", {
                     href: l.row.website,
                     target: "_blank"
-                  }, O(l.row.website), 9, Re)
+                  }, B(l.row.website), 9, Re)
                 ]),
                 _: 1
               }),
@@ -436,7 +442,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                 "min-width": "180"
               }, {
                 default: o((l) => [
-                  v("span", null, O(r(ge)(l.row.createTime)), 1)
+                  v("span", null, B(r(ge)(l.row.createTime)), 1)
                 ]),
                 _: 1
               }),
@@ -460,7 +466,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
                     [C, ["admin:plugin:enable"]]
-                  ]) : I("", !0),
+                  ]) : z("", !0),
                   l.row.status === 1 ? k((f(), _(w, {
                     key: 1,
                     size: "small",
@@ -475,7 +481,7 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
                     [C, ["admin:plugin:disable"]]
-                  ]) : I("", !0),
+                  ]) : z("", !0),
                   n(w, {
                     size: "small",
                     type: "primary",
@@ -567,5 +573,5 @@ const u = window.Vue.resolveComponent, n = window.Vue.createVNode, o = window.Vu
   }
 };
 export {
-  Ne as default
+  Ie as default
 };

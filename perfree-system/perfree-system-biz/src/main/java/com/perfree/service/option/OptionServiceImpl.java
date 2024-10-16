@@ -143,10 +143,19 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
             option.setIdentification(OptionConstant.OPTION_IDENTIFICATION_SYSTEM);
             option.setValue(version);
             optionMapper.insert(option);
+            optionCacheService.putOption(option.getKey(),option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
         } else {
             optionByIdentificationAndKey.setValue(version);
             optionMapper.updateById(optionByIdentificationAndKey);
+            optionCacheService.putOption(optionByIdentificationAndKey.getKey(),optionByIdentificationAndKey.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(optionByIdentificationAndKey));
         }
 
+    }
+
+    @Override
+    public Option saveOption(Option option) {
+        optionMapper.insert(option);
+        optionCacheService.putOption(option.getKey(),option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
+        return option;
     }
 }

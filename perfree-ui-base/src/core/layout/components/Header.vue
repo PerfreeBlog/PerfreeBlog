@@ -130,8 +130,9 @@ const refreshRoute = () => {
  */
 const logout = () => {
   localStorage.removeItem(CONSTANTS.STORAGE_TOKEN);
-  logoutApi().then(res => {})
-  window.location.href = '/'
+  logoutApi().then(res => {
+    window.location.href = '/'
+  })
 }
 
 const toUserProfile = () => {

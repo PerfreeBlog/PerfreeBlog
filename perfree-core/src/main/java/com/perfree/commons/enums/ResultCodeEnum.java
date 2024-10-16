@@ -15,7 +15,8 @@ public enum ResultCodeEnum {
     AUTH_UNAUTHORIZED(401,"账号未登录"),
     AUTH_FORBIDDEN(403,"没有该操作权限"),
     DEMO_MODEL(4002,"演示环境,不允许操作!"),
-    DATASOURCE_NOT_INIT(40001,"数据库未初始化,请先进行安装配置");
+    DATASOURCE_NOT_INIT(40001,"数据库未初始化,请先进行安装配置"),
+    WEB_NOT_INIT(40002,"网站未初始化"),;
 
     private final Integer code;
 

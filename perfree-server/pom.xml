@@ -44,7 +44,6 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>static/**</exclude>
                         <exclude>*.yaml</exclude>
                     </excludes>
                 </configuration>

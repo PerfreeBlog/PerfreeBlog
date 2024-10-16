@@ -2,6 +2,7 @@ package com.perfree.config;
 
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.interceptor.FrontViewInterceptor;
+import com.perfree.interceptor.WebInitInterceptor;
 import com.perfree.plugin.core.PluginResourceResolver;
 import com.perfree.plugin.handle.PluginInterceptorBaseHandler;
 import com.perfree.security.interceptor.PluginPreAuthorizeInterceptor;
@@ -25,13 +26,16 @@ public class MvcConfig implements WebMvcConfigurer {
 
     private final FrontViewInterceptor frontViewInterceptor;
 
+    private final WebInitInterceptor webInitInterceptor;
+
 
     public MvcConfig(PluginPreAuthorizeInterceptor pluginPreAuthorizeInterceptor,
                      PluginInterceptorBaseHandler pluginInterceptorBaseHandler,
-                     FrontViewInterceptor frontViewInterceptor) {
+                     FrontViewInterceptor frontViewInterceptor, WebInitInterceptor webInitInterceptor) {
         this.pluginPreAuthorizeInterceptor = pluginPreAuthorizeInterceptor;
         this.pluginInterceptorBaseHandler = pluginInterceptorBaseHandler;
         this.frontViewInterceptor = frontViewInterceptor;
+        this.webInitInterceptor = webInitInterceptor;
     }
 
     @Override
@@ -39,6 +43,9 @@ public class MvcConfig implements WebMvcConfigurer {
         // 如果前端放在后端容器运行
         registry.addViewController("/admin/**").setViewName("/static/admin/index.html");
         registry.addViewController("/login").setViewName("/static/admin/index.html");
+        registry.addViewController("/register").setViewName("/static/admin/index.html");
+        registry.addViewController("/findPassword").setViewName("/static/admin/index.html");
+        registry.addViewController("/init").setViewName("/static/admin/index.html");
         WebMvcConfigurer.super.addViewControllers(registry);
     }
 
@@ -80,6 +87,9 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(webInitInterceptor)
+                .addPathPatterns("/**").excludePathPatterns("/static/**", "/assets/**", "/modules/**", "/api/static/**");
+
         registry.addInterceptor(pluginPreAuthorizeInterceptor)
                 .addPathPatterns("/**");
 

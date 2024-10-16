@@ -182,3 +182,29 @@ export function displayTime(data) {
 export function dialogWidth(defaultWidth) {
     return window.document.body.clientWidth < defaultWidth ? window.document.body.clientWidth : defaultWidth
 }
+
+export function changeFaviconByUrl  (url) {
+    const ext = url.split('.').pop().toLowerCase();
+    let type = '';
+    if (ext === 'ico') {
+        type = 'image/x-icon';
+    } else if (ext === 'png') {
+        type = 'image/png';
+    } else {
+        type = 'image/x-icon';
+    }
+
+    // 创建或更新 favicon
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = type;
+    link.href = url;
+
+    // 移除已有的 favicon 链接
+    const head = document.querySelector('head');
+    const existingLinks = head.querySelectorAll('link[rel*="icon"]');
+    existingLinks.forEach(link => head.removeChild(link));
+
+    // 添加新的 favicon
+    head.appendChild(link);
+}

@@ -27,7 +27,7 @@ export function refreshTokenApi(data) {
 }
 
 export function logoutApi() {
-    return axios.get('/api/logout');
+    return axios.get('/api/auth/logout');
 }
 
 export function findPasswordStep1Api(data) {
@@ -36,4 +36,8 @@ export function findPasswordStep1Api(data) {
 
 export function findPasswordStep2Api(data) {
     return axios.post('/api/findPasswordStep2', data);
+}
+
+export function initWebApi(data) {
+    return axios.post('/api/initWeb', data);
 }

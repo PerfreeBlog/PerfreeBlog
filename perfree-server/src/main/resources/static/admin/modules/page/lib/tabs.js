@@ -3,12 +3,16 @@ p({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -20,6 +24,9 @@ p({
   actions: {
     setMenuInit(e) {
       this.menuInit = e;
+    },
+    setOptionInit(e) {
+      this.optionInit = e;
     },
     setMenuList(e) {
       this.menuList = e;
@@ -35,10 +42,10 @@ p({
 function h(e, i) {
   if (arguments.length === 0 || !e)
     return null;
-  const a = i || "{y}-{m}-{d} {h}:{i}:{s}";
+  const n = i || "{y}-{m}-{d} {h}:{i}:{s}";
   let t;
   typeof e == "object" ? t = e : (typeof e == "string" && /^[0-9]+$/.test(e) ? e = parseInt(e) : typeof e == "string" && (e = e.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof e == "number" && e.toString().length === 10 && (e = e * 1e3), t = new Date(e));
-  const n = {
+  const a = {
     y: t.getFullYear(),
     m: t.getMonth() + 1,
     d: t.getDate(),
@@ -47,8 +54,8 @@ function h(e, i) {
     s: t.getSeconds(),
     a: t.getDay()
   };
-  return a.replace(/{([ymdhisa])+}/g, (u, o) => {
-    let r = n[o];
+  return n.replace(/{([ymdhisa])+}/g, (u, o) => {
+    let r = a[o];
     return o === "a" ? ["日", "一", "二", "三", "四", "五", "六"][r] : (u.length > 0 && r < 10 && (r = "0" + r), r || 0);
   });
 }
@@ -56,10 +63,10 @@ function d(e) {
   return window.document.body.clientWidth < e ? window.document.body.clientWidth : e;
 }
 const f = (e, i) => {
-  const a = e.__vccOpts || e;
-  for (const [t, n] of i)
-    a[t] = n;
-  return a;
+  const n = e.__vccOpts || e;
+  for (const [t, a] of i)
+    n[t] = a;
+  return n;
 };
 function g(e) {
   return axios.post("/api/auth/page/createArticle", e);
@@ -76,13 +83,13 @@ function b(e) {
 function x(e) {
   return axios.post("/api/auth/page/updateStatus", e);
 }
-function w(e) {
+function I(e) {
   return axios.delete("/api/auth/page/del?id=" + e);
 }
-function y(e) {
+function w(e) {
   return axios.get("/api/auth/article/get?id=" + e);
 }
-function T(e) {
+function y(e) {
   return axios.put("/api/auth/page/updateArticle", e);
 }
 const l = window.Pinia.defineStore;
@@ -155,33 +162,33 @@ l({
   }
 });
 let s = [{ name: "首页", hasClose: !1, path: "/admin", currActive: !0 }];
-function I(e, i, a) {
-  e && s.findIndex((n) => n.path === i) < 0 && s.push({
+function T(e, i, n) {
+  e && s.findIndex((a) => a.path === i) < 0 && s.push({
     name: e,
     hasClose: !0,
     path: i,
     currActive: !1
   }), router.push({
     path: i,
-    params: a
+    params: n
   });
 }
 function C(e) {
-  let i = s.findIndex((a) => a.path === e);
+  let i = s.findIndex((n) => n.path === e);
   i >= 0 && s.splice(i, 1);
 }
 export {
   f as _,
   g as a,
-  y as b,
+  w as b,
   C as c,
   d,
   m as e,
-  w as f,
+  I as f,
   A as g,
   b as h,
   x as i,
   h as p,
-  I as t,
-  T as u
+  T as t,
+  y as u
 };

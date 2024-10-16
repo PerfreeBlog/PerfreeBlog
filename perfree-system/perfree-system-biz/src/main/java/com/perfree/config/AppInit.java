@@ -19,24 +19,16 @@ import com.perfree.service.attachConfig.AttachConfigService;
 import com.perfree.service.dictData.DictDataService;
 import com.perfree.service.option.OptionService;
 import com.perfree.service.plugins.PluginsService;
-import com.zaxxer.hikari.HikariDataSource;
 import org.dromara.hutool.core.io.file.FileUtil;
-import org.dromara.hutool.core.io.resource.ResourceUtil;
 import org.dromara.hutool.core.text.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.EncodedResource;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -78,10 +70,7 @@ public class AppInit implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         if (!datasourceIsExist()) {
             LOGGER.info("-> 数据库未初始化,正在执行初始化....");
-            File sqlFile = new File("resources/sql/perfree.sql");
-            if(!sqlFile.exists()){
-                sqlFile = ClassPathFileUtil.getClassPathFile("classpath:sql/perfree.sql");
-            }
+            File sqlFile = ClassPathFileUtil.getClassPathFile("classpath:sql/perfree.sql");
             if(sqlFile == null || !sqlFile.exists()){
                 throw new ServiceException(ErrorCode.DATASOURCE_INIT_SQL_NOT_EXIST);
             }
@@ -120,10 +109,7 @@ public class AppInit implements ApplicationRunner {
             return;
         }
 
-        File sqlDir = new File("resources/sql");
-        if(!sqlDir.exists()){
-            sqlDir = ClassPathFileUtil.getClassPathFile("classpath:sql");
-        }
+        File sqlDir =  ClassPathFileUtil.getClassPathFile("classpath:sql");
         if(sqlDir == null || !sqlDir.exists()){
             return;
         }

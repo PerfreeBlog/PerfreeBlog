@@ -4,12 +4,16 @@ Te({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -21,6 +25,9 @@ Te({
   actions: {
     setMenuInit(a) {
       this.menuInit = a;
+    },
+    setOptionInit(a) {
+      this.optionInit = a;
     },
     setMenuList(a) {
       this.menuList = a;
@@ -36,7 +43,7 @@ Te({
 function kt(a, I) {
   if (arguments.length === 0 || !a)
     return null;
-  const d = I || "{y}-{m}-{d} {h}:{i}:{s}";
+  const i = I || "{y}-{m}-{d} {h}:{i}:{s}";
   let u;
   typeof a == "object" ? u = a : (typeof a == "string" && /^[0-9]+$/.test(a) ? a = parseInt(a) : typeof a == "string" && (a = a.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof a == "number" && a.toString().length === 10 && (a = a * 1e3), u = new Date(a));
   const h = {
@@ -48,7 +55,7 @@ function kt(a, I) {
     s: u.getSeconds(),
     a: u.getDay()
   };
-  return d.replace(/{([ymdhisa])+}/g, (w, V) => {
+  return i.replace(/{([ymdhisa])+}/g, (w, V) => {
     let _ = h[V];
     return V === "a" ? ["日", "一", "二", "三", "四", "五", "六"][_] : (w.length > 0 && _ < 10 && (_ = "0" + _), _ || 0);
   });
@@ -62,10 +69,10 @@ function ze(a) {
 function $e() {
   return axios.get("/api/auth/attach/getAllAttachGroup");
 }
-function Be(a) {
+function Oe(a) {
   return axios.put("/apiv/attach/update", a);
 }
-function Oe(a) {
+function Be(a) {
   return axios.get("/api/auth/attach/get?id=" + a);
 }
 const Me = {
@@ -81,17 +88,16 @@ const Me = {
   timeout: 60 * 1e3,
   // 是否跨站点访问控制请求
   withCredentials: !1
-  // default
 };
 function Pe() {
   return axios.get("/api/auth/attachConfig/getAll");
 }
-const ie = (a, I) => {
-  const d = a.__vccOpts || a;
+const de = (a, I) => {
+  const i = a.__vccOpts || a;
   for (const [u, h] of I)
-    d[u] = h;
-  return d;
-}, i = window.Vue.resolveComponent, l = window.Vue.createVNode, o = window.Vue.withCtx, c = window.Vue.unref, B = window.Vue.renderList, O = window.Vue.Fragment, r = window.Vue.openBlock, g = window.Vue.createElementBlock, E = window.Vue.createBlock, k = window.Vue.createTextVNode, p = window.Vue.createElementVNode;
+    i[u] = h;
+  return i;
+}, d = window.Vue.resolveComponent, l = window.Vue.createVNode, o = window.Vue.withCtx, c = window.Vue.unref, O = window.Vue.renderList, B = window.Vue.Fragment, r = window.Vue.openBlock, g = window.Vue.createElementBlock, E = window.Vue.createBlock, k = window.Vue.createTextVNode, p = window.Vue.createElementVNode;
 window.Vue.createCommentVNode;
 const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = window.Vue.withModifiers, Y = window.Vue.isRef, Ke = { class: "page" }, We = { class: "search-box" }, qe = { class: "table-box" }, He = { class: "attach-list-box" }, Je = ["onClick"], Ye = { class: "attach-preview" }, Qe = { class: "imgLoading" }, Xe = {
   key: 1,
@@ -110,12 +116,12 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
   key: 2,
   controls: "",
   preload: "none"
-}, st = ["src"], dt = { key: 3 }, it = { class: "showForm" }, rt = { class: "dialog-footer" }, ct = window.Vue.computed, pt = window.Vue.reactive, m = window.Vue.ref, R = window.ElementPlus.ElMessage, ft = {
+}, st = ["src"], it = { key: 3 }, dt = { class: "showForm" }, rt = { class: "dialog-footer" }, ct = window.Vue.computed, pt = window.Vue.reactive, m = window.Vue.ref, R = window.ElementPlus.ElMessage, ft = {
   __name: "attach-select-panel",
   props: ["attachType", "max"],
   emits: ["update:selectedAttach"],
   setup(a, { emit: I }) {
-    const d = m(), u = m({
+    const i = m(), u = m({
       pageNo: 1,
       pageSize: 18,
       total: 0,
@@ -182,7 +188,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
         name: "",
         type: "",
         attachGroup: ""
-      }, d.value.resetFields(), U();
+      }, i.value.resetFields(), U();
     }
     function he(s) {
       if (!s.selected && w.value.size >= _.max) {
@@ -197,13 +203,13 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
       });
     }
     function _e(s) {
-      H(), j(), Oe(s.id).then((e) => {
+      H(), j(), Be(s.id).then((e) => {
         n.value = e.data, L.value = "详情", y.value = !0;
       });
     }
     function ve() {
       N.value.validate((s) => {
-        s && Be(n.value).then((e) => {
+        s && Oe(n.value).then((e) => {
           e.code === 200 ? (R.success("修改成功"), y.value = !1, H(), U()) : R.error(e.msg);
         });
       });
@@ -235,7 +241,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
       R.error("上传失败,请检查网络是否通通畅");
     }
     return j(), U(), (s, e) => {
-      const S = i("el-input"), v = i("el-form-item"), K = i("el-option"), W = i("el-select"), $ = i("el-button"), J = i("el-form"), ke = i("Loading"), q = i("el-icon"), Z = i("el-image"), Ae = i("el-text"), Ce = i("InfoFilled"), Ie = i("SuccessFilled"), Ge = i("el-pagination"), Se = i("el-link"), ee = i("el-col"), Le = i("el-row"), te = i("el-dialog"), Fe = i("el-upload");
+      const S = d("el-input"), v = d("el-form-item"), K = d("el-option"), W = d("el-select"), $ = d("el-button"), J = d("el-form"), ke = d("Loading"), q = d("el-icon"), Z = d("el-image"), Ae = d("el-text"), Ce = d("InfoFilled"), Ie = d("SuccessFilled"), Ge = d("el-pagination"), Se = d("el-link"), ee = d("el-col"), Le = d("el-row"), te = d("el-dialog"), Fe = d("el-upload");
       return r(), g("div", Ke, [
         p("div", We, [
           l(J, {
@@ -243,7 +249,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
             model: u.value,
             class: "demo-form-inline",
             ref_key: "searchFormRef",
-            ref: d
+            ref: i
           }, {
             default: o(() => [
               l(v, { label: "附件名称" }, {
@@ -269,7 +275,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
                     style: { width: "200px" }
                   }, {
                     default: o(() => [
-                      (r(!0), g(O, null, B(c(F), (t) => (r(), E(K, {
+                      (r(!0), g(B, null, O(c(F), (t) => (r(), E(K, {
                         key: t.attachGroup,
                         label: t.attachGroup,
                         value: t.attachGroup
@@ -326,7 +332,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
         ]),
         p("div", qe, [
           p("div", He, [
-            (r(!0), g(O, null, B(c(h), (t) => (r(), g("div", {
+            (r(!0), g(B, null, O(c(h), (t) => (r(), g("div", {
               class: oe({ "attach-block": !0, selected: t.selected }),
               onClick: (Ne) => he(t)
             }, [
@@ -461,7 +467,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
                         p("source", {
                           src: n.value.url
                         }, null, 8, st)
-                      ])) : (r(), g("i", dt, [
+                      ])) : (r(), g("i", it, [
                         e[20] || (e[20] = k("无法预览，点击 ")),
                         l(Se, {
                           type: "primary",
@@ -488,7 +494,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
                   xl: 12
                 }, {
                   default: o(() => [
-                    p("div", it, [
+                    p("div", dt, [
                       l(J, {
                         ref_key: "showFormRef",
                         ref: N,
@@ -531,7 +537,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
                                 "allow-create": ""
                               }, {
                                 default: o(() => [
-                                  (r(!0), g(O, null, B(c(F), (t) => (r(), E(K, {
+                                  (r(!0), g(B, null, O(c(F), (t) => (r(), E(K, {
                                     key: t.attachGroup,
                                     label: t.attachGroup,
                                     value: t.attachGroup
@@ -617,7 +623,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
                       clearable: ""
                     }, {
                       default: o(() => [
-                        (r(!0), g(O, null, B(c(C), (t) => (r(), E(K, {
+                        (r(!0), g(B, null, O(c(C), (t) => (r(), E(K, {
                           key: t.id,
                           label: t.name,
                           value: t.id
@@ -641,7 +647,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
                       "allow-create": ""
                     }, {
                       default: o(() => [
-                        (r(!0), g(O, null, B(c(F), (t) => (r(), E(K, {
+                        (r(!0), g(B, null, O(c(F), (t) => (r(), E(K, {
                           key: t.attachGroup,
                           label: t.attachGroup,
                           value: t.attachGroup
@@ -702,13 +708,13 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
       ]);
     };
   }
-}, mt = /* @__PURE__ */ ie(ft, [["__scopeId", "data-v-3b66d397"]]), T = window.Vue.unref, Q = window.Vue.resolveComponent, z = window.Vue.createVNode, M = window.Vue.withCtx, ht = window.Vue.toDisplayString, ne = window.Vue.openBlock, ue = window.Vue.createElementBlock, _t = window.Vue.createCommentVNode, se = window.Vue.createTextVNode, de = window.Vue.isRef, vt = window.Vue.createElementVNode, gt = { style: { width: "100%" } }, wt = { class: "dialog-footer" }, Vt = { key: 0 }, D = window.Vue.ref, yt = window.Vue.watch, bt = {
+}, mt = /* @__PURE__ */ de(ft, [["__scopeId", "data-v-3b66d397"]]), T = window.Vue.unref, Q = window.Vue.resolveComponent, z = window.Vue.createVNode, M = window.Vue.withCtx, ht = window.Vue.toDisplayString, ne = window.Vue.openBlock, ue = window.Vue.createElementBlock, _t = window.Vue.createCommentVNode, se = window.Vue.createTextVNode, ie = window.Vue.isRef, vt = window.Vue.createElementVNode, gt = { style: { width: "100%" } }, wt = { class: "dialog-footer" }, Vt = { key: 0 }, D = window.Vue.ref, yt = window.Vue.watch, bt = {
   __name: "attach-select-input",
   props: ["attachType", "enableInput", "placeholder", "modelValue"],
   emits: ["update:modelValue", "attachSelectChange"],
   setup(a, { emit: I }) {
     D("请选择图片");
-    let d = D(!1), u = D(""), h = D([]);
+    let i = D(!1), u = D(""), h = D([]);
     const x = a, w = I, V = D(x.modelValue);
     yt(() => x.modelValue, (n, f) => {
       V.value = n;
@@ -717,16 +723,16 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
       w("update:modelValue", V.value);
     }
     function y() {
-      d.value = !0, u.value = "请选择附件";
+      i.value = !0, u.value = "请选择附件";
     }
     function L() {
       let n = "";
       h.value.forEach((f, A) => {
         n += f.url;
-      }), w("attachSelectChange", h.value), V.value = n, d.value = !1, h.value = [], w("update:modelValue", V.value);
+      }), w("attachSelectChange", h.value), V.value = n, i.value = !1, h.value = [], w("update:modelValue", V.value);
     }
     function F() {
-      d.value = !1, h.value = [];
+      i.value = !1, h.value = [];
     }
     function N(n) {
       h.value = n;
@@ -752,8 +758,8 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
           _: 1
         }, 8, ["modelValue", "placeholder", "disabled"]),
         z(G, {
-          modelValue: T(d),
-          "onUpdate:modelValue": f[2] || (f[2] = (C) => de(d) ? d.value = C : d = C),
+          modelValue: T(i),
+          "onUpdate:modelValue": f[2] || (f[2] = (C) => ie(i) ? i.value = C : i = C),
           title: T(u),
           width: T(X)(900),
           draggable: "",
@@ -773,7 +779,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
               }),
               z(A, {
                 onClick: f[1] || (f[1] = (C) => {
-                  de(d) ? d.value = !1 : d = !1, F();
+                  ie(i) ? i.value = !1 : i = !1, F();
                 })
               }, {
                 default: M(() => f[4] || (f[4] = [
@@ -795,7 +801,7 @@ const le = window.Vue.toDisplayString, oe = window.Vue.normalizeClass, je = wind
       ]);
     };
   }
-}, At = /* @__PURE__ */ ie(bt, [["__scopeId", "data-v-52e51a92"]]);
+}, At = /* @__PURE__ */ de(bt, [["__scopeId", "data-v-52e51a92"]]);
 function Ct(a) {
   return axios.post("/api/auth/attachLibraryItems/page", a);
 }
@@ -816,7 +822,7 @@ function Ft(a) {
 }
 export {
   At as A,
-  ie as _,
+  de as _,
   mt as a,
   It as b,
   St as c,

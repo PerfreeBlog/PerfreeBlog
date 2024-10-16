@@ -14,7 +14,6 @@ const Z = {
   timeout: 60 * 1e3,
   // 是否跨站点访问控制请求
   withCredentials: !1
-  // default
 }, te = window.Pinia.defineStore;
 te({
   id: "app",

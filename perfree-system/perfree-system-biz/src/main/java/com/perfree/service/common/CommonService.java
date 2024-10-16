@@ -1,5 +1,6 @@
 package com.perfree.service.common;
 
+import com.perfree.controller.common.system.vo.InitWebReqVO;
 import com.perfree.enjoy.directive.commons.vo.DirectiveStatisticVO;
 
 public interface CommonService {
@@ -9,5 +10,7 @@ public interface CommonService {
      * @return DirectiveStatisticVO
      */
     DirectiveStatisticVO queryStatistics();
+
+    Boolean initWeb(InitWebReqVO reqVO);
 
 }

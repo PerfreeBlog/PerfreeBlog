@@ -33,14 +33,11 @@ CREATE TABLE `p_article`  (
   INDEX `isTop`(`isTop`) USING BTREE,
   INDEX `type`(`type`) USING BTREE,
   INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 82 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_article
 -- ----------------------------
-INSERT INTO `p_article` VALUES (81, '✨️Hello world✨️', '欢迎使用PerfreeBlog, 这是一篇示例文章✨️\n', '<p>欢迎使用PerfreeBlog, 这是一篇示例文章✨️</p>\n', 'Vditor', 'article', '欢迎使用PerfreeBlog, 这是一篇示例文章', '', '', '', 'hello', 0, 0, 0, 0, 1, '', NULL, '2024-10-12 15:57:33', '2024-10-14 10:27:05', 1, 1, 0);
-INSERT INTO `p_article` VALUES (82, '友情链接', '这里可以写友链申请格式~\n', '<p>这里可以写友链申请格式~</p>\n', 'Vditor', 'page', '', '', '', '', 'link', 0, 0, 0, 0, 1, '', 'default', '2024-10-14 08:31:19', NULL, 1, NULL, 0);
-INSERT INTO `p_article` VALUES (84, '', '✨️Hello world, 欢迎使用PerfreeBlog, 这是第一条动态~✨️', '✨️Hello world, 欢迎使用PerfreeBlog, 这是第一条动态~✨️', 'journal', 'journal', NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 1, NULL, NULL, '2024-10-14 09:15:03', '2024-10-14 10:10:56', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for p_article_category
@@ -55,7 +52,7 @@ CREATE TABLE `p_article_category`  (
   `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 32 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_article_category
@@ -74,7 +71,7 @@ CREATE TABLE `p_article_tag`  (
   `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_article_tag
@@ -102,7 +99,7 @@ CREATE TABLE `p_attach`  (
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `type`(`type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 204 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_attach
@@ -124,12 +121,12 @@ CREATE TABLE `p_attach_config`  (
   `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4  COMMENT = '附件服务器配置' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4  COMMENT = '附件服务器配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_attach_config
 -- ----------------------------
-INSERT INTO `p_attach_config` VALUES (11, '默认配置', 0, '默认配置', '{\"basePath\":\"resources/upload\"}', '2024-08-01 09:08:19', '2024-08-26 16:20:50', b'1', 1, 1);
+INSERT INTO `p_attach_config` VALUES (1, '默认配置', 0, '默认配置', '{\"basePath\":\"resources/upload\"}', '2024-08-01 09:08:19', '2024-08-26 16:20:50', b'1', 1, 1);
 
 -- ----------------------------
 -- Table structure for p_attach_library
@@ -147,7 +144,7 @@ CREATE TABLE `p_attach_library`  (
   `createUserId` int NOT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4  COMMENT = '附件库' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '附件库' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_attach_library
@@ -168,7 +165,7 @@ CREATE TABLE `p_attach_library_items`  (
   `name` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件名称',
   `description` varchar(1024) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4  COMMENT = '附件库数据' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '附件库数据' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_attach_library_items
@@ -195,7 +192,7 @@ CREATE TABLE `p_category`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `status`(`status`) USING BTREE,
   INDEX `slug`(`slug`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4  COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_category
@@ -287,7 +284,7 @@ CREATE TABLE `p_comment`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `articleId`(`articleId`) USING BTREE,
   INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 98 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_comment
@@ -384,7 +381,7 @@ CREATE TABLE `p_journal_attach`  (
   `type` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型',
   `name` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 98 CHARACTER SET = utf8mb4  COMMENT = '动态附件表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '动态附件表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of p_journal_attach
@@ -405,7 +402,7 @@ CREATE TABLE `p_link`  (
   `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_link
@@ -691,20 +688,9 @@ CREATE TABLE `p_option`  (
 -- Records of p_option
 -- ----------------------------
 INSERT INTO `p_option` VALUES (1, 'WEB_THEME', 'Default', '默认主题', '2024-09-11 14:40:51', '2024-09-11 14:42:01', 1, 1, 'system');
-INSERT INTO `p_option` VALUES (1942, 'PERFREE_WEB_NAME', '', NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1943, 'PERFREE_WEB_RIGHT_LOGO', '', NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1944, 'DEFAULT_HERO_TITLE', '', NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1945, 'DEFAULT_HERO_SUB_TITLE', '', NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1946, 'HOME_BANNER', '', NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1947, 'HOME_BANNER_IMG', '', NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1948, 'HOME_BANNER_COLOR', NULL, NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1949, 'HOME_TITLE_COLOR', NULL, NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1950, 'HOME_SUB_TITLE_COLOR', NULL, NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (1951, 'PERFREE_PRIMARY_COLOR', NULL, NULL, '2024-10-08 14:53:38', NULL, 1, NULL, 'theme_Default');
-INSERT INTO `p_option` VALUES (3478, 'WEB_NAME', 'Perfree', '网站名称', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
+INSERT INTO `p_option` VALUES (2, 'WEB_INIT', 'OFF', '网站是否已初始化', '2024-09-11 14:40:51', '2024-09-11 14:42:01', 1, 1, 'system');
 INSERT INTO `p_option` VALUES (3479, 'WEB_ICO', '', '网站ICO', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
 INSERT INTO `p_option` VALUES (3480, 'WEB_LOGO', '', '网站logo', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
-INSERT INTO `p_option` VALUES (3481, 'WEB_TITLE', 'Perfree', '网站标题', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
 INSERT INTO `p_option` VALUES (3482, 'WEB_COPYRIGHT', '', '版权信息', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
 INSERT INTO `p_option` VALUES (3483, 'WEB_META_KEYWORD', '', '网站关键词', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
 INSERT INTO `p_option` VALUES (3484, 'WEB_META_DESC', '', '网站描述', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
@@ -891,12 +877,7 @@ CREATE TABLE `p_user`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `account`(`account`) USING BTREE,
   INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of p_user
--- ----------------------------
-INSERT INTO `p_user` VALUES (1, 'admin', '管理员', '9bd2ab79508f1652977a50095b79e0ff', '030f2839093144909edaad631f735c09', 0, '/api/attach/2024-09-24/949643eff1e37ee9949643eff1e37ee9.png', '', '', '2024-07-29 09:34:45', '2024-10-12 15:47:00', 1, 1, NULL, '', 1, '127.0.0.1', '2024-10-14 08:41:27');
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for p_user_role
@@ -911,9 +892,4 @@ CREATE TABLE `p_user_role`  (
   `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
   `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of p_user_role
--- ----------------------------
-INSERT INTO `p_user_role` VALUES (1, 1, 1, '2024-08-26 16:09:02', NULL, 1, NULL);
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;

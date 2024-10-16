@@ -3,12 +3,16 @@ l({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -18,39 +22,42 @@ l({
     }
   },
   actions: {
-    setMenuInit(e) {
-      this.menuInit = e;
+    setMenuInit(t) {
+      this.menuInit = t;
     },
-    setMenuList(e) {
-      this.menuList = e;
+    setOptionInit(t) {
+      this.optionInit = t;
     },
-    setCachedViews(e) {
-      this.cachedViews = e;
+    setMenuList(t) {
+      this.menuList = t;
+    },
+    setCachedViews(t) {
+      this.cachedViews = t;
     }
   },
   persist: {
     enabled: !1
   }
 });
-function a(e, n, t, c, i) {
-  n = n || "id", t = t || "parentId", i = i || Math.min.apply(Math, e.map((s) => s[t])) || 0;
-  const u = JSON.parse(JSON.stringify(e)), r = u.filter((s) => {
-    let h = u.filter((o) => s[n] === o[t]);
-    return h.length > 0 && (s.children = h), s[t] === i;
+function a(t, n, e, o, i) {
+  n = n || "id", e = e || "parentId", i = i || Math.min.apply(Math, t.map((s) => s[e])) || 0;
+  const c = JSON.parse(JSON.stringify(t)), r = c.filter((s) => {
+    let h = c.filter((u) => s[n] === u[e]);
+    return h.length > 0 && (s.children = h), s[e] === i;
   });
-  return r.length === 0 && e.length > 0 ? e : r.length > 0 ? r : e;
+  return r.length === 0 && t.length > 0 ? t : r.length > 0 ? r : t;
 }
-function d(e) {
-  return window.document.body.clientWidth < e ? window.document.body.clientWidth : e;
+function d(t) {
+  return window.document.body.clientWidth < t ? window.document.body.clientWidth : t;
 }
-const m = (e, n) => {
-  const t = e.__vccOpts || e;
-  for (const [c, i] of n)
-    t[c] = i;
-  return t;
+const g = (t, n) => {
+  const e = t.__vccOpts || t;
+  for (const [o, i] of n)
+    e[o] = i;
+  return e;
 };
 export {
-  m as _,
+  g as _,
   d,
   a as h
 };

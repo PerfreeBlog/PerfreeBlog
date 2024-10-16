@@ -66,7 +66,7 @@ public class BaseViewController {
     public String themeView(String view, String defaultView) {
         File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
                 currentTheme() + SystemConstants.FILE_SEPARATOR + view);
-        File devFile = ClassPathFileUtil.getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
+        File devFile = ClassPathFileUtil.getDevClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
                 currentTheme() + SystemConstants.FILE_SEPARATOR + view);
         if (file.exists() || (devFile != null && devFile.exists())) {
             return currentThemePage() + SystemConstants.FILE_SEPARATOR + view;

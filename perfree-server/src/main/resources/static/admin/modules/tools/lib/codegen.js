@@ -3,12 +3,16 @@ c({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -21,6 +25,9 @@ c({
     setMenuInit(e) {
       this.menuInit = e;
     },
+    setOptionInit(e) {
+      this.optionInit = e;
+    },
     setMenuList(e) {
       this.menuList = e;
     },
@@ -32,13 +39,13 @@ c({
     enabled: !1
   }
 });
-function l(e, a) {
+function l(e, o) {
   if (arguments.length === 0 || !e)
     return null;
-  const i = a || "{y}-{m}-{d} {h}:{i}:{s}";
+  const s = o || "{y}-{m}-{d} {h}:{i}:{s}";
   let t;
   typeof e == "object" ? t = e : (typeof e == "string" && /^[0-9]+$/.test(e) ? e = parseInt(e) : typeof e == "string" && (e = e.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof e == "number" && e.toString().length === 10 && (e = e * 1e3), t = new Date(e));
-  const o = {
+  const a = {
     y: t.getFullYear(),
     m: t.getMonth() + 1,
     d: t.getDate(),
@@ -47,26 +54,26 @@ function l(e, a) {
     s: t.getSeconds(),
     a: t.getDay()
   };
-  return i.replace(/{([ymdhisa])+}/g, (r, n) => {
-    let s = o[n];
-    return n === "a" ? ["日", "一", "二", "三", "四", "五", "六"][s] : (r.length > 0 && s < 10 && (s = "0" + s), s || 0);
+  return s.replace(/{([ymdhisa])+}/g, (r, n) => {
+    let i = a[n];
+    return n === "a" ? ["日", "一", "二", "三", "四", "五", "六"][i] : (r.length > 0 && i < 10 && (i = "0" + i), i || 0);
   });
 }
-function d(e, a, i, t, o) {
-  a = a || "id", i = i || "parentId", o = o || Math.min.apply(Math, e.map((n) => n[i])) || 0;
+function d(e, o, s, t, a) {
+  o = o || "id", s = s || "parentId", a = a || Math.min.apply(Math, e.map((n) => n[s])) || 0;
   const g = JSON.parse(JSON.stringify(e)), r = g.filter((n) => {
-    let s = g.filter((u) => n[a] === u[i]);
-    return s.length > 0 && (n.children = s), n[i] === o;
+    let i = g.filter((u) => n[o] === u[s]);
+    return i.length > 0 && (n.children = i), n[s] === a;
   });
   return r.length === 0 && e.length > 0 ? e : r.length > 0 ? r : e;
 }
 function h(e) {
   return axios.post("/api/auth/codegen/getTableList", e);
 }
-function f(e) {
+function p(e) {
   return axios.post("/api/auth/codegen/create-list", e);
 }
-function p(e) {
+function f(e) {
   return axios.post("/api/auth/codegen/codegenTablePage", e);
 }
 function b(e) {
@@ -84,19 +91,19 @@ function x(e) {
 function y(e) {
   return axios.delete("/api/auth/codegen/del?id=" + e);
 }
-function L(e) {
+function I(e) {
   return axios.get("/api/auth/codegen/download?id=" + e, { responseType: "blob" });
 }
 export {
   x as a,
   b,
-  p as c,
+  f as c,
   h as d,
-  f as e,
+  p as e,
   y as f,
   w as g,
   d as h,
-  L as i,
+  I as i,
   l as p,
   C as s
 };

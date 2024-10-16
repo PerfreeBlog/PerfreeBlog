@@ -1,0 +1,556 @@
+2024-10-16T09:06:59.610+08:00  INFO 32900 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 32900 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T09:06:59.611+08:00  INFO 32900 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T09:07:00.741+08:00  INFO 32900 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T09:07:00.748+08:00  INFO 32900 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T09:07:00.749+08:00  INFO 32900 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T09:07:00.785+08:00  INFO 32900 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T09:07:00.786+08:00  INFO 32900 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1148 ms
+2024-10-16T09:07:02.744+08:00  INFO 32900 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@280c3dc0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6f89ad03, org.springframework.security.web.context.SecurityContextHolderFilter@6b6c0b7c, org.springframework.security.web.header.HeaderWriterFilter@399fd710, org.springframework.web.filter.CorsFilter@657b3b, org.springframework.web.filter.CorsFilter@657b3b, com.perfree.security.filter.JwtAuthorizationFilter@5ef2cbe6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7120daa6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6cbb6c41, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f287a4e, org.springframework.security.web.session.SessionManagementFilter@11d422fd, org.springframework.security.web.access.ExceptionTranslationFilter@52963839, org.springframework.security.web.access.intercept.AuthorizationFilter@55cb3b7]
+2024-10-16T09:07:03.002+08:00  INFO 32900 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T09:07:03.002+08:00  INFO 32900 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T09:07:03.003+08:00  INFO 32900 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-16T09:07:03.004+08:00  INFO 32900 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T09:07:03.008+08:00  INFO 32900 --- [main] com.perfree.Application                  : Started Application in 3.696 seconds (process running for 4.094)
+2024-10-16T09:07:03.050+08:00  INFO 32900 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T09:07:03.149+08:00  INFO 32900 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@145ef9e8
+2024-10-16T09:07:03.151+08:00  INFO 32900 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T09:07:03.195+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令....
+2024-10-16T09:07:03.199+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: archivePage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articlePage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotArticle
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: journalPage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: latestArticle
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: nextArticle
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: pages
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: preArticle
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryItemsPage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryPage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categories
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categoriesPage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotCategories
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: recentComment
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articleImage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: loginUser
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: statistics
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: timeAgo
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: linkPage
+2024-10-16T09:07:03.200+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: menus
+2024-10-16T09:07:03.201+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: option
+2024-10-16T09:07:03.201+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotTag
+2024-10-16T09:07:03.201+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : Add Directive: tagsPage
+2024-10-16T09:07:03.201+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令完成
+2024-10-16T09:07:03.201+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存....
+2024-10-16T09:07:03.207+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存完成
+2024-10-16T09:07:03.207+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存....
+2024-10-16T09:07:03.219+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存完成
+2024-10-16T09:07:03.219+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存....
+2024-10-16T09:07:03.225+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存完成
+2024-10-16T09:07:03.225+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则....
+2024-10-16T09:07:03.268+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则完成
+2024-10-16T09:07:03.268+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件....
+2024-10-16T09:07:03.279+08:00  INFO 32900 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件完成
+2024-10-16T09:07:03.296+08:00  INFO 32900 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-10-16T09:07:03.307+08:00 ERROR 32900 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.dromara.hutool.core.io.IORuntimeException: java.nio.file.FileAlreadyExistsException: E:\my-work\PerfreeBlog\resources\static\themes\default\.git\COMMIT_EDITMSG
+	at org.dromara.hutool.core.io.file.PathUtil.copy(PathUtil.java:276) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.io.file.FileUtil.copy(FileUtil.java:1011) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readEntry(ZipReader.java:187) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.lambda$readTo$0(ZipReader.java:143) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipFileResource.read(ZipFileResource.java:47) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.read(ZipReader.java:157) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readTo(ZipReader.java:141) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readTo(ZipReader.java:127) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:580) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:546) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:533) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:520) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at com.perfree.config.AppInit.initTheme(AppInit.java:123) ~[classes/:na]
+	at com.perfree.config.AppInit.run(AppInit.java:114) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.lambda$callRunner$4(SpringApplication.java:794) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:88) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:806) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:794) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.lambda$callRunners$3(SpringApplication.java:782) ~[spring-boot-3.2.1.jar:3.2.1]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[na:na]
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:510) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596) ~[na:na]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:782) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:341) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1358) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1347) ~[spring-boot-3.2.1.jar:3.2.1]
+	at com.perfree.Application.main(Application.java:20) ~[classes/:na]
+Caused by: java.nio.file.FileAlreadyExistsException: E:\my-work\PerfreeBlog\resources\static\themes\default\.git\COMMIT_EDITMSG
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87) ~[na:na]
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[na:na]
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[na:na]
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:234) ~[na:na]
+	at java.base/java.nio.file.spi.FileSystemProvider.newOutputStream(FileSystemProvider.java:482) ~[na:na]
+	at java.base/java.nio.file.Files.newOutputStream(Files.java:227) ~[na:na]
+	at java.base/java.nio.file.Files.copy(Files.java:3140) ~[na:na]
+	at org.dromara.hutool.core.io.file.PathUtil.copy(PathUtil.java:274) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	... 33 common frames omitted
+
+2024-10-16T09:07:03.317+08:00  INFO 32900 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T09:07:03.334+08:00  INFO 32900 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.
+2024-10-16T09:26:15.216+08:00  INFO 15672 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 15672 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T09:26:15.218+08:00  INFO 15672 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T09:26:16.356+08:00  INFO 15672 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T09:26:16.363+08:00  INFO 15672 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T09:26:16.363+08:00  INFO 15672 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T09:26:16.401+08:00  INFO 15672 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T09:26:16.401+08:00  INFO 15672 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1155 ms
+2024-10-16T09:26:18.297+08:00  INFO 15672 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@42e4431, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5e198c40, org.springframework.security.web.context.SecurityContextHolderFilter@1734b1a, org.springframework.security.web.header.HeaderWriterFilter@4e26c308, org.springframework.web.filter.CorsFilter@bd273b2, org.springframework.web.filter.CorsFilter@bd273b2, com.perfree.security.filter.JwtAuthorizationFilter@5817f1ca, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@318511f0, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@53564a4c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@dcdb883, org.springframework.security.web.session.SessionManagementFilter@1f013047, org.springframework.security.web.access.ExceptionTranslationFilter@363ba634, org.springframework.security.web.access.intercept.AuthorizationFilter@44c2e8a8]
+2024-10-16T09:26:18.523+08:00  INFO 15672 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T09:26:18.524+08:00  INFO 15672 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T09:26:18.524+08:00  INFO 15672 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2024-10-16T09:26:18.526+08:00  INFO 15672 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T09:26:18.531+08:00  INFO 15672 --- [main] com.perfree.Application                  : Started Application in 3.627 seconds (process running for 3.991)
+2024-10-16T09:26:18.570+08:00  INFO 15672 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T09:26:18.671+08:00  INFO 15672 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@22a22f1
+2024-10-16T09:26:18.672+08:00  INFO 15672 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T09:26:18.781+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 数据库未初始化,正在执行初始化....
+2024-10-16T09:26:22.502+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 数据库初始化完毕....
+2024-10-16T09:26:22.507+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令....
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: archivePage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articlePage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotArticle
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: journalPage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: latestArticle
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: nextArticle
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: pages
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: preArticle
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryItemsPage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryPage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categories
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categoriesPage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotCategories
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: recentComment
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articleImage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: loginUser
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: statistics
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: timeAgo
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: linkPage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: menus
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: option
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotTag
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : Add Directive: tagsPage
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令完成
+2024-10-16T09:26:22.511+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存....
+2024-10-16T09:26:22.518+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存完成
+2024-10-16T09:26:22.518+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存....
+2024-10-16T09:26:22.527+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存完成
+2024-10-16T09:26:22.527+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存....
+2024-10-16T09:26:22.532+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存完成
+2024-10-16T09:26:22.532+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则....
+2024-10-16T09:26:22.559+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则完成
+2024-10-16T09:26:22.559+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件....
+2024-10-16T09:26:22.574+08:00  INFO 15672 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件完成
+2024-10-16T09:26:22.581+08:00  INFO 15672 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-10-16T09:26:22.590+08:00 ERROR 15672 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.dromara.hutool.core.io.IORuntimeException: java.nio.file.FileAlreadyExistsException: E:\my-work\PerfreeBlog\resources\static\themes\default\.git\COMMIT_EDITMSG
+	at org.dromara.hutool.core.io.file.PathUtil.copy(PathUtil.java:276) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.io.file.FileUtil.copy(FileUtil.java:1011) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readEntry(ZipReader.java:187) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.lambda$readTo$0(ZipReader.java:143) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipFileResource.read(ZipFileResource.java:47) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.read(ZipReader.java:157) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readTo(ZipReader.java:141) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readTo(ZipReader.java:127) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:580) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:546) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:533) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:520) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at com.perfree.config.AppInit.initTheme(AppInit.java:120) ~[classes/:na]
+	at com.perfree.config.AppInit.run(AppInit.java:111) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.lambda$callRunner$4(SpringApplication.java:794) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:88) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:806) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:794) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.lambda$callRunners$3(SpringApplication.java:782) ~[spring-boot-3.2.1.jar:3.2.1]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[na:na]
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:510) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596) ~[na:na]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:782) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:341) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1358) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1347) ~[spring-boot-3.2.1.jar:3.2.1]
+	at com.perfree.Application.main(Application.java:20) ~[classes/:na]
+Caused by: java.nio.file.FileAlreadyExistsException: E:\my-work\PerfreeBlog\resources\static\themes\default\.git\COMMIT_EDITMSG
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87) ~[na:na]
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[na:na]
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[na:na]
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:234) ~[na:na]
+	at java.base/java.nio.file.spi.FileSystemProvider.newOutputStream(FileSystemProvider.java:482) ~[na:na]
+	at java.base/java.nio.file.Files.newOutputStream(Files.java:227) ~[na:na]
+	at java.base/java.nio.file.Files.copy(Files.java:3140) ~[na:na]
+	at org.dromara.hutool.core.io.file.PathUtil.copy(PathUtil.java:274) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	... 33 common frames omitted
+
+2024-10-16T09:26:22.600+08:00  INFO 15672 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T09:26:22.605+08:00  INFO 15672 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.
+2024-10-16T09:29:33.758+08:00  INFO 31012 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 31012 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T09:29:33.759+08:00  INFO 31012 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T09:29:34.909+08:00  INFO 31012 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T09:29:34.916+08:00  INFO 31012 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T09:29:34.916+08:00  INFO 31012 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T09:29:34.954+08:00  INFO 31012 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T09:29:34.954+08:00  INFO 31012 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1166 ms
+2024-10-16T09:29:36.851+08:00  INFO 31012 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@280c3dc0, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6f89ad03, org.springframework.security.web.context.SecurityContextHolderFilter@6b6c0b7c, org.springframework.security.web.header.HeaderWriterFilter@399fd710, org.springframework.web.filter.CorsFilter@2bc16fe2, org.springframework.web.filter.CorsFilter@2bc16fe2, com.perfree.security.filter.JwtAuthorizationFilter@d84418a, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7120daa6, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6cbb6c41, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@f287a4e, org.springframework.security.web.session.SessionManagementFilter@11d422fd, org.springframework.security.web.access.ExceptionTranslationFilter@52963839, org.springframework.security.web.access.intercept.AuthorizationFilter@55cb3b7]
+2024-10-16T09:29:37.083+08:00  INFO 31012 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T09:29:37.083+08:00  INFO 31012 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T09:29:37.084+08:00  INFO 31012 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-16T09:29:37.084+08:00  INFO 31012 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T09:29:37.089+08:00  INFO 31012 --- [main] com.perfree.Application                  : Started Application in 3.642 seconds (process running for 4.04)
+2024-10-16T09:29:37.141+08:00  INFO 31012 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T09:29:37.243+08:00  INFO 31012 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@66b62ebd
+2024-10-16T09:29:37.244+08:00  INFO 31012 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T09:29:37.350+08:00  INFO 31012 --- [main] o.s.boot.ApplicationRunner               : -> 数据库未初始化,正在执行初始化....
+2024-10-16T09:29:44.952+08:00  INFO 31012 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T09:29:44.962+08:00  INFO 31012 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.
+2024-10-16T10:58:23.730+08:00  INFO 25200 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 25200 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T10:58:23.732+08:00  INFO 25200 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T10:58:24.978+08:00  INFO 25200 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T10:58:24.989+08:00  INFO 25200 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T10:58:24.989+08:00  INFO 25200 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T10:58:25.029+08:00  INFO 25200 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T10:58:25.029+08:00  INFO 25200 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1268 ms
+2024-10-16T10:58:26.964+08:00  INFO 25200 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@39420d59, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4fbbd98c, org.springframework.security.web.context.SecurityContextHolderFilter@53564a4c, org.springframework.security.web.header.HeaderWriterFilter@4ac0d49, org.springframework.web.filter.CorsFilter@5c9a4f3b, org.springframework.web.filter.CorsFilter@5c9a4f3b, com.perfree.security.filter.JwtAuthorizationFilter@1c2dd89b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@69a294d8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@70b1028d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5dd227b7, org.springframework.security.web.session.SessionManagementFilter@1734b1a, org.springframework.security.web.access.ExceptionTranslationFilter@7c8f803d, org.springframework.security.web.access.intercept.AuthorizationFilter@5e198c40]
+2024-10-16T10:58:27.209+08:00  INFO 25200 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T10:58:27.209+08:00  INFO 25200 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T10:58:27.210+08:00  INFO 25200 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-16T10:58:27.211+08:00  INFO 25200 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T10:58:27.215+08:00  INFO 25200 --- [main] com.perfree.Application                  : Started Application in 3.8 seconds (process running for 4.194)
+2024-10-16T10:58:27.255+08:00  INFO 25200 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T10:58:27.353+08:00  INFO 25200 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@66b62ebd
+2024-10-16T10:58:27.354+08:00  INFO 25200 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T10:58:27.397+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令....
+2024-10-16T10:58:27.400+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: archivePage
+2024-10-16T10:58:27.400+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articlePage
+2024-10-16T10:58:27.400+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotArticle
+2024-10-16T10:58:27.400+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: journalPage
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: latestArticle
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: nextArticle
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: pages
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: preArticle
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryItemsPage
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryPage
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categories
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categoriesPage
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotCategories
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: recentComment
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articleImage
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: loginUser
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: statistics
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: timeAgo
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: linkPage
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: menus
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: option
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotTag
+2024-10-16T10:58:27.401+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : Add Directive: tagsPage
+2024-10-16T10:58:27.402+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令完成
+2024-10-16T10:58:27.402+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存....
+2024-10-16T10:58:27.407+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存完成
+2024-10-16T10:58:27.408+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存....
+2024-10-16T10:58:27.422+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存完成
+2024-10-16T10:58:27.423+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存....
+2024-10-16T10:58:27.428+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存完成
+2024-10-16T10:58:27.428+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则....
+2024-10-16T10:58:27.470+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则完成
+2024-10-16T10:58:27.470+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件....
+2024-10-16T10:58:27.482+08:00  INFO 25200 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件完成
+2024-10-16T10:58:27.500+08:00  INFO 25200 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-10-16T10:58:27.511+08:00 ERROR 25200 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.dromara.hutool.core.io.IORuntimeException: java.nio.file.FileAlreadyExistsException: E:\my-work\PerfreeBlog\resources\static\themes\default\.git\COMMIT_EDITMSG
+	at org.dromara.hutool.core.io.file.PathUtil.copy(PathUtil.java:276) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.io.file.FileUtil.copy(FileUtil.java:1011) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readEntry(ZipReader.java:187) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.lambda$readTo$0(ZipReader.java:143) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipFileResource.read(ZipFileResource.java:47) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.read(ZipReader.java:157) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readTo(ZipReader.java:141) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipReader.readTo(ZipReader.java:127) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:580) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:546) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:533) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at org.dromara.hutool.core.compress.ZipUtil.unzip(ZipUtil.java:520) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	at com.perfree.config.AppInit.initTheme(AppInit.java:120) ~[classes/:na]
+	at com.perfree.config.AppInit.run(AppInit.java:111) ~[classes/:na]
+	at org.springframework.boot.SpringApplication.lambda$callRunner$4(SpringApplication.java:794) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.util.function.ThrowingConsumer$1.acceptWithException(ThrowingConsumer.java:83) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.util.function.ThrowingConsumer.accept(ThrowingConsumer.java:60) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.util.function.ThrowingConsumer$1.accept(ThrowingConsumer.java:88) ~[spring-core-6.1.2.jar:6.1.2]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:806) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.callRunner(SpringApplication.java:794) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.lambda$callRunners$3(SpringApplication.java:782) ~[spring-boot-3.2.1.jar:3.2.1]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:184) ~[na:na]
+	at java.base/java.util.stream.SortedOps$SizedRefSortingSink.end(SortedOps.java:357) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:510) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:151) ~[na:na]
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:174) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:596) ~[na:na]
+	at org.springframework.boot.SpringApplication.callRunners(SpringApplication.java:782) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:341) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1358) ~[spring-boot-3.2.1.jar:3.2.1]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1347) ~[spring-boot-3.2.1.jar:3.2.1]
+	at com.perfree.Application.main(Application.java:20) ~[classes/:na]
+Caused by: java.nio.file.FileAlreadyExistsException: E:\my-work\PerfreeBlog\resources\static\themes\default\.git\COMMIT_EDITMSG
+	at java.base/sun.nio.fs.WindowsException.translateToIOException(WindowsException.java:87) ~[na:na]
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:103) ~[na:na]
+	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(WindowsException.java:108) ~[na:na]
+	at java.base/sun.nio.fs.WindowsFileSystemProvider.newByteChannel(WindowsFileSystemProvider.java:234) ~[na:na]
+	at java.base/java.nio.file.spi.FileSystemProvider.newOutputStream(FileSystemProvider.java:482) ~[na:na]
+	at java.base/java.nio.file.Files.newOutputStream(Files.java:227) ~[na:na]
+	at java.base/java.nio.file.Files.copy(Files.java:3140) ~[na:na]
+	at org.dromara.hutool.core.io.file.PathUtil.copy(PathUtil.java:274) ~[hutool-all-6.0.0-M15.jar:6.0.0-M15]
+	... 33 common frames omitted
+
+2024-10-16T10:58:27.522+08:00  INFO 25200 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T10:58:27.532+08:00  INFO 25200 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.
+2024-10-16T10:59:00.247+08:00  INFO 31548 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 31548 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T10:59:00.249+08:00  INFO 31548 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T10:59:01.649+08:00  INFO 31548 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T10:59:01.657+08:00  INFO 31548 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T10:59:01.657+08:00  INFO 31548 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T10:59:01.696+08:00  INFO 31548 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T10:59:01.696+08:00  INFO 31548 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1401 ms
+2024-10-16T10:59:03.668+08:00  INFO 31548 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@6f89ad03, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@f287a4e, org.springframework.security.web.context.SecurityContextHolderFilter@5b1f0f26, org.springframework.security.web.header.HeaderWriterFilter@7c359808, org.springframework.web.filter.CorsFilter@657b3b, org.springframework.web.filter.CorsFilter@657b3b, com.perfree.security.filter.JwtAuthorizationFilter@5ef2cbe6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6cbb6c41, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6787bd41, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3879feec, org.springframework.security.web.session.SessionManagementFilter@6e489bb8, org.springframework.security.web.access.ExceptionTranslationFilter@ce0bbd5, org.springframework.security.web.access.intercept.AuthorizationFilter@497fd334]
+2024-10-16T10:59:03.901+08:00  INFO 31548 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T10:59:03.902+08:00  INFO 31548 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T10:59:03.903+08:00  INFO 31548 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-16T10:59:03.903+08:00  INFO 31548 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T10:59:03.908+08:00  INFO 31548 --- [main] com.perfree.Application                  : Started Application in 4.179 seconds (process running for 4.625)
+2024-10-16T10:59:03.946+08:00  INFO 31548 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T10:59:04.061+08:00  INFO 31548 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@5440a3a
+2024-10-16T10:59:04.062+08:00  INFO 31548 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T10:59:04.105+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令....
+2024-10-16T10:59:04.108+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: archivePage
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articlePage
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotArticle
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: journalPage
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: latestArticle
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: nextArticle
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: pages
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: preArticle
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryItemsPage
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryPage
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categories
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categoriesPage
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotCategories
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: recentComment
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articleImage
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: loginUser
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: statistics
+2024-10-16T10:59:04.109+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: timeAgo
+2024-10-16T10:59:04.110+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: linkPage
+2024-10-16T10:59:04.110+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: menus
+2024-10-16T10:59:04.110+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: option
+2024-10-16T10:59:04.110+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotTag
+2024-10-16T10:59:04.110+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : Add Directive: tagsPage
+2024-10-16T10:59:04.110+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令完成
+2024-10-16T10:59:04.110+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存....
+2024-10-16T10:59:04.116+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存完成
+2024-10-16T10:59:04.116+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存....
+2024-10-16T10:59:04.126+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存完成
+2024-10-16T10:59:04.126+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存....
+2024-10-16T10:59:04.133+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存完成
+2024-10-16T10:59:04.133+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则....
+2024-10-16T10:59:04.181+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则完成
+2024-10-16T10:59:04.181+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件....
+2024-10-16T10:59:04.192+08:00  INFO 31548 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件完成
+2024-10-16T10:59:26.444+08:00  INFO 31548 --- [http-nio-8080-exec-3] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [Hm_lvt_fadc1bd5db1a1d6f581df60a1807f8ab=1722999774,1725243016;] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2024-10-16T11:10:53.456+08:00  WARN 31548 --- [perfree housekeeper] com.zaxxer.hikari.pool.HikariPool        : perfree - Thread starvation or clock leap detected (housekeeper delta=49s103ms720µs600ns).
+2024-10-16T11:11:21.774+08:00  INFO 31548 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T11:11:21.779+08:00  INFO 31548 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.
+2024-10-16T11:11:24.448+08:00  INFO 11716 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 11716 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T11:11:24.449+08:00  INFO 11716 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T11:11:25.604+08:00  INFO 11716 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T11:11:25.613+08:00  INFO 11716 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T11:11:25.613+08:00  INFO 11716 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T11:11:25.661+08:00  INFO 11716 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T11:11:25.661+08:00  INFO 11716 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1182 ms
+2024-10-16T11:11:27.585+08:00  INFO 11716 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4fbbd98c, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5dd227b7, org.springframework.security.web.context.SecurityContextHolderFilter@4866e0a7, org.springframework.security.web.header.HeaderWriterFilter@7c6ab057, org.springframework.web.filter.CorsFilter@e881e46, org.springframework.web.filter.CorsFilter@e881e46, com.perfree.security.filter.JwtAuthorizationFilter@2c6927f0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@70b1028d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@11d422fd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3d3b852e, org.springframework.security.web.session.SessionManagementFilter@17e6d07b, org.springframework.security.web.access.ExceptionTranslationFilter@176e839e, org.springframework.security.web.access.intercept.AuthorizationFilter@dcdb883]
+2024-10-16T11:11:27.830+08:00  INFO 11716 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T11:11:27.830+08:00  INFO 11716 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T11:11:27.831+08:00  INFO 11716 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-16T11:11:27.832+08:00  INFO 11716 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T11:11:27.837+08:00  INFO 11716 --- [main] com.perfree.Application                  : Started Application in 3.721 seconds (process running for 4.122)
+2024-10-16T11:11:27.881+08:00  INFO 11716 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T11:11:27.979+08:00  INFO 11716 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@145ef9e8
+2024-10-16T11:11:27.981+08:00  INFO 11716 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T11:11:28.024+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令....
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: archivePage
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articlePage
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotArticle
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: journalPage
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: latestArticle
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: nextArticle
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: pages
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: preArticle
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryItemsPage
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryPage
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categories
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categoriesPage
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotCategories
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: recentComment
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articleImage
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: loginUser
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: statistics
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: timeAgo
+2024-10-16T11:11:28.028+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: linkPage
+2024-10-16T11:11:28.029+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: menus
+2024-10-16T11:11:28.029+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: option
+2024-10-16T11:11:28.029+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotTag
+2024-10-16T11:11:28.029+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : Add Directive: tagsPage
+2024-10-16T11:11:28.029+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令完成
+2024-10-16T11:11:28.029+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存....
+2024-10-16T11:11:28.036+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存完成
+2024-10-16T11:11:28.036+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存....
+2024-10-16T11:11:28.048+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存完成
+2024-10-16T11:11:28.048+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存....
+2024-10-16T11:11:28.054+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存完成
+2024-10-16T11:11:28.055+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则....
+2024-10-16T11:11:28.097+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则完成
+2024-10-16T11:11:28.097+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件....
+2024-10-16T11:11:28.108+08:00  INFO 11716 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件完成
+2024-10-16T11:11:29.806+08:00  INFO 11716 --- [http-nio-8080-exec-1] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [Hm_lvt_fadc1bd5db1a1d6f581df60a1807f8ab=1722999774,1725243016;] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2024-10-16T11:34:17.823+08:00  INFO 11716 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T11:34:17.831+08:00  INFO 11716 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.
+2024-10-16T11:34:20.984+08:00  INFO 13896 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 13896 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T11:34:20.985+08:00  INFO 13896 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T11:34:22.111+08:00  INFO 13896 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T11:34:22.118+08:00  INFO 13896 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T11:34:22.118+08:00  INFO 13896 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T11:34:22.154+08:00  INFO 13896 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T11:34:22.154+08:00  INFO 13896 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1141 ms
+2024-10-16T11:34:24.039+08:00  INFO 13896 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@55cb3b7, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@497fd334, org.springframework.security.web.context.SecurityContextHolderFilter@6e489bb8, org.springframework.security.web.header.HeaderWriterFilter@52963839, org.springframework.web.filter.CorsFilter@e881e46, org.springframework.web.filter.CorsFilter@e881e46, com.perfree.security.filter.JwtAuthorizationFilter@2c6927f0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6b6c0b7c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5b1f0f26, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@280c3dc0, org.springframework.security.web.session.SessionManagementFilter@69a294d8, org.springframework.security.web.access.ExceptionTranslationFilter@1f7557fe, org.springframework.security.web.access.intercept.AuthorizationFilter@3d3b852e]
+2024-10-16T11:34:24.275+08:00  INFO 13896 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T11:34:24.275+08:00  INFO 13896 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T11:34:24.276+08:00  INFO 13896 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-16T11:34:24.277+08:00  INFO 13896 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T11:34:24.282+08:00  INFO 13896 --- [main] com.perfree.Application                  : Started Application in 3.594 seconds (process running for 3.973)
+2024-10-16T11:34:24.324+08:00  INFO 13896 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T11:34:24.425+08:00  INFO 13896 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@24fb752f
+2024-10-16T11:34:24.426+08:00  INFO 13896 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T11:34:24.474+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令....
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: archivePage
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articlePage
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotArticle
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: journalPage
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: latestArticle
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: nextArticle
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: pages
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: preArticle
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryItemsPage
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryPage
+2024-10-16T11:34:24.478+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categories
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categoriesPage
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotCategories
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: recentComment
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articleImage
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: loginUser
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: statistics
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: timeAgo
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: linkPage
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: menus
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: option
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotTag
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : Add Directive: tagsPage
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令完成
+2024-10-16T11:34:24.479+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存....
+2024-10-16T11:34:24.486+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存完成
+2024-10-16T11:34:24.486+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存....
+2024-10-16T11:34:24.498+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存完成
+2024-10-16T11:34:24.498+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存....
+2024-10-16T11:34:24.504+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存完成
+2024-10-16T11:34:24.504+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则....
+2024-10-16T11:34:24.548+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则完成
+2024-10-16T11:34:24.548+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件....
+2024-10-16T11:34:24.559+08:00  INFO 13896 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件完成
+2024-10-16T11:35:55.034+08:00  INFO 13896 --- [http-nio-8080-exec-3] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [Hm_lvt_fadc1bd5db1a1d6f581df60a1807f8ab=1722999774,1725243016;] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2024-10-16T11:50:39.511+08:00  INFO 13896 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T11:50:39.517+08:00  INFO 13896 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.
+2024-10-16T11:50:41.984+08:00  INFO 16020 --- [main] com.perfree.Application                  : Starting Application using Java 21.0.4 with PID 16020 (E:\my-work\PerfreeBlog\perfree-server\target\classes started by Administrator in E:\my-work\PerfreeBlog)
+2024-10-16T11:50:41.985+08:00  INFO 16020 --- [main] com.perfree.Application                  : The following 1 profile is active: "prod"
+2024-10-16T11:50:43.119+08:00  INFO 16020 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-10-16T11:50:43.127+08:00  INFO 16020 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-10-16T11:50:43.127+08:00  INFO 16020 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.17]
+2024-10-16T11:50:43.168+08:00  INFO 16020 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-10-16T11:50:43.168+08:00  INFO 16020 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1153 ms
+2024-10-16T11:50:45.066+08:00  INFO 16020 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1fa796a4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@68de8522, org.springframework.security.web.context.SecurityContextHolderFilter@3340ff7c, org.springframework.security.web.header.HeaderWriterFilter@17e6d07b, org.springframework.web.filter.CorsFilter@34549979, org.springframework.web.filter.CorsFilter@34549979, com.perfree.security.filter.JwtAuthorizationFilter@5b4954b2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5e198c40, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@dcdb883, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@8dcacf1, org.springframework.security.web.session.SessionManagementFilter@6cbb6c41, org.springframework.security.web.access.ExceptionTranslationFilter@51566ce0, org.springframework.security.web.access.intercept.AuthorizationFilter@71d2261e]
+2024-10-16T11:50:45.300+08:00  INFO 16020 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-10-16T11:50:45.300+08:00  INFO 16020 --- [main] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-10-16T11:50:45.301+08:00  INFO 16020 --- [main] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-10-16T11:50:45.302+08:00  INFO 16020 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-10-16T11:50:45.307+08:00  INFO 16020 --- [main] com.perfree.Application                  : Started Application in 3.628 seconds (process running for 3.996)
+2024-10-16T11:50:45.346+08:00  INFO 16020 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Starting...
+2024-10-16T11:50:45.452+08:00  INFO 16020 --- [main] com.zaxxer.hikari.pool.HikariPool        : perfree - Added connection com.mysql.cj.jdbc.ConnectionImpl@75973f7a
+2024-10-16T11:50:45.453+08:00  INFO 16020 --- [main] com.zaxxer.hikari.HikariDataSource       : perfree - Start completed.
+2024-10-16T11:50:45.499+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令....
+2024-10-16T11:50:45.502+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: archivePage
+2024-10-16T11:50:45.502+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articlePage
+2024-10-16T11:50:45.502+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotArticle
+2024-10-16T11:50:45.502+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: journalPage
+2024-10-16T11:50:45.502+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: latestArticle
+2024-10-16T11:50:45.502+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: nextArticle
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: pages
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: preArticle
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryItemsPage
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: attachLibraryPage
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categories
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: categoriesPage
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotCategories
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: recentComment
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: articleImage
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: loginUser
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: statistics
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: timeAgo
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: linkPage
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: menus
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: option
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: hotTag
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : Add Directive: tagsPage
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化模板指令完成
+2024-10-16T11:50:45.503+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存....
+2024-10-16T11:50:45.511+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化存储策略配置缓存完成
+2024-10-16T11:50:45.511+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存....
+2024-10-16T11:50:45.522+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化配置缓存完成
+2024-10-16T11:50:45.522+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存....
+2024-10-16T11:50:45.528+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化数据字典缓存完成
+2024-10-16T11:50:45.529+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则....
+2024-10-16T11:50:45.573+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化静态资源映射规则完成
+2024-10-16T11:50:45.573+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件....
+2024-10-16T11:50:45.584+08:00  INFO 16020 --- [main] o.s.boot.ApplicationRunner               : -> 初始化插件完成
+2024-10-16T11:50:50.490+08:00  INFO 16020 --- [http-nio-8080-exec-1] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [Hm_lvt_fadc1bd5db1a1d6f581df60a1807f8ab=1722999774,1725243016;] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2024-10-16T11:50:50.490+08:00  INFO 16020 --- [http-nio-8080-exec-2] o.apache.tomcat.util.http.parser.Cookie  : A cookie header was received [Hm_lvt_fadc1bd5db1a1d6f581df60a1807f8ab=1722999774,1725243016;] that contained an invalid cookie. That cookie will be ignored.
+ Note: further occurrences of this error will be logged at DEBUG level.
+2024-10-16T15:39:51.904+08:00  INFO 16020 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown initiated...
+2024-10-16T15:39:51.907+08:00  INFO 16020 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : perfree - Shutdown completed.

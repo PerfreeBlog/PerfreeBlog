@@ -12,6 +12,7 @@ import com.perfree.enums.ErrorCode;
 import com.perfree.model.User;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.vo.LoginUserVO;
+import com.perfree.service.common.CommonService;
 import com.perfree.service.menu.MenuService;
 import com.perfree.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -50,6 +51,9 @@ public class SystemController {
 
     @Resource
     private MenuService menuService;
+
+    @Resource
+    private CommonService commonService;
 
     @Value("${perfree.demoModel}")
     private Boolean demoModel;
@@ -131,4 +135,9 @@ public class SystemController {
         return CommonResult.success(menuTreeListRespVOS);
     }
 
+    @PostMapping("initWeb")
+    @Operation(summary = "初始化站点", hidden = true)
+    public CommonResult<Boolean> initWeb(@Valid @RequestBody InitWebReqVO reqVO){
+        return CommonResult.success(commonService.initWeb(reqVO));
+    }
 }

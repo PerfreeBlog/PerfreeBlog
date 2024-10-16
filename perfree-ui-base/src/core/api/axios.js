@@ -3,8 +3,10 @@ import axios_config from "./axios_config";
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {CONSTANTS} from "../utils/constants.js";
 import {refreshTokenApi} from "@/core/api/system.js";
+import router from "@/core/router/index.js";
 
 const axios = Axios.create(axios_config);
+let isShowingLoginConfirmBox = false;
 
 // 请求拦截器
 axios.interceptors.request.use(
@@ -36,19 +38,28 @@ axios.interceptors.response.use(
                   localStorage.setItem(CONSTANTS.STORAGE_TOKEN, JSON.stringify(token_info));
                   return await axios.request(response.config);
               } else {
+                  if (isShowingLoginConfirmBox) {
+                      return ;
+                  }
+                  isShowingLoginConfirmBox = true;
                   ElMessageBox.confirm('登录状态已过期，是否重新登陆?', '提示', {
                       confirmButtonText: '确认',
                       cancelButtonText: '取消',
                       type: 'warning',
                   }).then(() => {
                       localStorage.removeItem(CONSTANTS.STORAGE_TOKEN);
-                      window.location.href = "/login";
-                  }).catch(() => {})
+                      router.replace("/login")
+                  }).catch(() => {}).finally(() => {
+                      isShowingLoginConfirmBox = false;
+                  })
               }
           }
           if (response.data.code === 403) {
               ElMessage.error(response.data.msg)
               return Promise.reject(new Error(response.data.msg));
+          }
+          if (response.data.code === 40002) {
+              router.replace("/init")
           }
           if (response.data.code === 500) {
               ElMessage.error(response.data.msg)
@@ -61,7 +72,7 @@ axios.interceptors.response.use(
       }
   },
   function(error) {
-      if (error.response.status === 403) {
+      if (error.response && error.response.status === 403) {
           ElMessage.error(error.response.data.msg)
       }
       ElMessage.error('系统异常,请联系管理员')

@@ -28,7 +28,6 @@ const _e = {
   timeout: 60 * 1e3,
   // 是否跨站点访问控制请求
   withCredentials: !1
-  // default
 };
 function kt() {
   return axios.get("/api/auth/attachConfig/getAll");

@@ -97,7 +97,6 @@
               <router-link class="link-type" :to="'/login'">前往登录</router-link>
             </div>
             <div class="forget-password-box">
-              <a href="javascript:;">忘记密码?</a>
             </div>
           </div>
         </el-form-item>

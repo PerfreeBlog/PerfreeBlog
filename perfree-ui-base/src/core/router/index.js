@@ -5,11 +5,14 @@ import NProgress from 'nprogress'
 import {CONSTANTS} from "@/core/utils/constants.js";
 import {useCommonStore} from "@/core/stores/commonStore.js";
 import _import from "@/core/utils/_import.js";
-import {getAllRouter, initMenu} from "@/core/utils/perfree.js";
+import {changeFaviconByUrl, getAllRouter, initMenu} from "@/core/utils/perfree.js";
 import { userInfo} from "@/core/api/system.js";
 import {listAllCacheApi} from "@/core/api/dictData.js";
 import {useDictStore} from "@/core/stores/dictStore.js";
 import {userStore} from "@/core/stores/userStore.js";
+import {getOptionByKeysAndIdentificationApi} from "@/core/api/option.js";
+import {useOptionStore} from "@/core/stores/optionStore.js";
+import {getOptionByKey} from "@/core/utils/optionUtils.js";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -55,6 +58,11 @@ const router = createRouter({
             name: 'findPassword',
             component: () => import('../views/findPassword/FindPasswordView.vue')
         },
+        {
+            path: '/init',
+            name: 'init',
+            component: () => import('../views/init/InitView.vue')
+        },
     ],
 });
 
@@ -63,11 +71,30 @@ router.afterEach(() => {
     NProgress.done() // 进度条结束
 })
 
+router.beforeResolve((to, from, next) => {
+    const commonStore = useCommonStore()
+    if (to.path !== '/init' && !commonStore.optionInit) {
+        const optionStore = useOptionStore()
+        getOptionByKeysAndIdentificationApi(['WEB_TITLE', 'WEB_ICO', 'WEB_NAME', 'WEB_LOGO', 'WEB_IS_REGISTER', 'WEB_OPEN_CAPTCHA'], 'system_setting').then(res => {
+            optionStore.setOptions(res.data);
+            const WEB_TITLE = getOptionByKey('WEB_TITLE', 'system_setting');
+            document.title = WEB_TITLE ? WEB_TITLE.value : 'Perfree';
+
+            const WEB_ICO = getOptionByKey('WEB_ICO', 'system_setting');
+            changeFaviconByUrl(WEB_ICO && WEB_ICO.value ? WEB_ICO.value : '/assets/favicon.ico');
+            commonStore.setOptionInit(true);
+            next();
+        })
+        return
+    }
+    next();
+})
+
 // 路由守卫
 router.beforeEach((to, from, next) => {
     const commonStore = useCommonStore()
     NProgress.start();
-    if (to.path === '/login' || to.path === '/register' || to.path === '/findPassword') {
+    if (to.path === '/login' || to.path === '/register' || to.path === '/findPassword' || to.path === '/init') {
         next();
         return
     }
@@ -100,6 +127,7 @@ router.beforeEach((to, from, next) => {
         })
     });
 });
+
 
 function initDict() {
     const  useDict = useDictStore()

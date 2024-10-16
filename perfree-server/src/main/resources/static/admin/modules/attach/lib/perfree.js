@@ -4,10 +4,10 @@ function g(t) {
 function h(t) {
   return axios.post("/api/auth/attachConfig/add", t);
 }
-function f(t) {
+function p(t) {
   return axios.put("/api/auth/attachConfig/update", t);
 }
-function p(t) {
+function f(t) {
   return axios.get("/api/auth/attachConfig/get?id=" + t);
 }
 function d(t) {
@@ -24,12 +24,16 @@ u({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -42,6 +46,9 @@ u({
     setMenuInit(t) {
       this.menuInit = t;
     },
+    setOptionInit(t) {
+      this.optionInit = t;
+    },
     setMenuList(t) {
       this.menuList = t;
     },
@@ -53,10 +60,10 @@ u({
     enabled: !1
   }
 });
-function w(t, i) {
+function w(t, a) {
   if (arguments.length === 0 || !t)
     return null;
-  const s = i || "{y}-{m}-{d} {h}:{i}:{s}";
+  const s = a || "{y}-{m}-{d} {h}:{i}:{s}";
   let e;
   typeof t == "object" ? e = t : (typeof t == "string" && /^[0-9]+$/.test(t) ? t = parseInt(t) : typeof t == "string" && (t = t.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof t == "number" && t.toString().length === 10 && (t = t * 1e3), e = new Date(t));
   const o = {
@@ -68,9 +75,9 @@ function w(t, i) {
     s: e.getSeconds(),
     a: e.getDay()
   };
-  return s.replace(/{([ymdhisa])+}/g, (r, n) => {
-    let a = o[n];
-    return n === "a" ? ["日", "一", "二", "三", "四", "五", "六"][a] : (r.length > 0 && a < 10 && (a = "0" + a), a || 0);
+  return s.replace(/{([ymdhisa])+}/g, (r, i) => {
+    let n = o[i];
+    return i === "a" ? ["日", "一", "二", "三", "四", "五", "六"][n] : (r.length > 0 && n < 10 && (n = "0" + n), n || 0);
   });
 }
 function A(t) {
@@ -78,12 +85,12 @@ function A(t) {
 }
 export {
   g as a,
-  f as b,
+  p as b,
   h as c,
   A as d,
   l as e,
   d as f,
-  p as g,
+  f as g,
   C as h,
   w as p
 };

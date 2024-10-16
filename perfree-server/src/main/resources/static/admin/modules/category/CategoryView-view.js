@@ -1,31 +1,35 @@
 import { s as Me, r as Ae, u as Re, f as Ze, p as Fe, e as et, d as tt } from "./lib/@element-plus.js";
 import { p as Ne } from "./lib/js-pinyin.js";
-function be(a) {
-  return axios.post("/api/auth/category/pageList", a);
+function be(l) {
+  return axios.post("/api/auth/category/pageList", l);
 }
-function lt(a) {
-  return axios.post("/api/auth/category/add", a);
+function lt(l) {
+  return axios.post("/api/auth/category/add", l);
 }
-function at(a) {
-  return axios.put("/api/auth/category/update", a);
+function at(l) {
+  return axios.put("/api/auth/category/update", l);
 }
-function ot(a) {
-  return axios.get("/api/auth/category/get?id=" + a);
+function ot(l) {
+  return axios.get("/api/auth/category/get?id=" + l);
 }
-function nt(a) {
-  return axios.delete("/api/auth/category/del?id=" + a);
+function nt(l) {
+  return axios.delete("/api/auth/category/del?id=" + l);
 }
 const ut = window.Pinia.defineStore;
 ut({
   id: "common",
   state: () => ({
     menuInit: !1,
+    optionInit: !1,
     menuList: [],
     cachedViews: []
   }),
   getters: {
     getMenuInit() {
       return this.menuInit;
+    },
+    getOptionInit() {
+      return this.optionInit;
     },
     getMenuList() {
       return this.menuList;
@@ -35,26 +39,29 @@ ut({
     }
   },
   actions: {
-    setMenuInit(a) {
-      this.menuInit = a;
+    setMenuInit(l) {
+      this.menuInit = l;
     },
-    setMenuList(a) {
-      this.menuList = a;
+    setOptionInit(l) {
+      this.optionInit = l;
     },
-    setCachedViews(a) {
-      this.cachedViews = a;
+    setMenuList(l) {
+      this.menuList = l;
+    },
+    setCachedViews(l) {
+      this.cachedViews = l;
     }
   },
   persist: {
     enabled: !1
   }
 });
-function it(a, $) {
-  if (arguments.length === 0 || !a)
+function it(l, $) {
+  if (arguments.length === 0 || !l)
     return null;
   const r = $ || "{y}-{m}-{d} {h}:{i}:{s}";
   let s;
-  typeof a == "object" ? s = a : (typeof a == "string" && /^[0-9]+$/.test(a) ? a = parseInt(a) : typeof a == "string" && (a = a.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof a == "number" && a.toString().length === 10 && (a = a * 1e3), s = new Date(a));
+  typeof l == "object" ? s = l : (typeof l == "string" && /^[0-9]+$/.test(l) ? l = parseInt(l) : typeof l == "string" && (l = l.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof l == "number" && l.toString().length === 10 && (l = l * 1e3), s = new Date(l));
   const v = {
     y: s.getFullYear(),
     m: s.getMonth() + 1,
@@ -65,32 +72,32 @@ function it(a, $) {
     a: s.getDay()
   };
   return r.replace(/{([ymdhisa])+}/g, (m, _) => {
-    let w = v[_];
-    return _ === "a" ? ["日", "一", "二", "三", "四", "五", "六"][w] : (m.length > 0 && w < 10 && (w = "0" + w), w || 0);
+    let h = v[_];
+    return _ === "a" ? ["日", "一", "二", "三", "四", "五", "六"][h] : (m.length > 0 && h < 10 && (h = "0" + h), h || 0);
   });
 }
-function ke(a, $, r, s, v) {
-  $ = $ || "id", r = r || "parentId", v = v || Math.min.apply(Math, a.map((_) => _[r])) || 0;
-  const k = JSON.parse(JSON.stringify(a)), m = k.filter((_) => {
-    let w = k.filter((h) => _[$] === h[r]);
-    return w.length > 0 && (_.children = w), _[r] === v;
+function ke(l, $, r, s, v) {
+  $ = $ || "id", r = r || "parentId", v = v || Math.min.apply(Math, l.map((_) => _[r])) || 0;
+  const k = JSON.parse(JSON.stringify(l)), m = k.filter((_) => {
+    let h = k.filter((w) => _[$] === w[r]);
+    return h.length > 0 && (_.children = h), _[r] === v;
   });
-  return m.length === 0 && a.length > 0 ? a : m.length > 0 ? m : a;
+  return m.length === 0 && l.length > 0 ? l : m.length > 0 ? m : l;
 }
-function me(a) {
-  return window.document.body.clientWidth < a ? window.document.body.clientWidth : a;
+function me(l) {
+  return window.document.body.clientWidth < l ? window.document.body.clientWidth : l;
 }
-function st(a) {
-  return axios.post("/api/auth/attach/page", a);
+function st(l) {
+  return axios.post("/api/auth/attach/page", l);
 }
 function dt() {
   return axios.get("/api/auth/attach/getAllAttachGroup");
 }
-function rt(a) {
-  return axios.put("/apiv/attach/update", a);
+function rt(l) {
+  return axios.put("/apiv/attach/update", l);
 }
-function ct(a) {
-  return axios.get("/api/auth/attach/get?id=" + a);
+function ct(l) {
+  return axios.get("/api/auth/attach/get?id=" + l);
 }
 const pt = {
   STORAGE_USER_INFO: "user_info",
@@ -105,19 +112,18 @@ const pt = {
   timeout: 60 * 1e3,
   // 是否跨站点访问控制请求
   withCredentials: !1
-  // default
 };
 function ft() {
   return axios.get("/api/auth/attachConfig/getAll");
 }
-const Pe = (a, $) => {
-  const r = a.__vccOpts || a;
+const Pe = (l, $) => {
+  const r = l.__vccOpts || l;
   for (const [s, v] of $)
     r[s] = v;
   return r;
 }, g = window.Vue.resolveComponent, o = window.Vue.createVNode, u = window.Vue.withCtx, y = window.Vue.unref, ae = window.Vue.renderList, oe = window.Vue.Fragment, V = window.Vue.openBlock, G = window.Vue.createElementBlock, Y = window.Vue.createBlock, P = window.Vue.createTextVNode, b = window.Vue.createElementVNode;
 window.Vue.createCommentVNode;
-const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = window.Vue.withModifiers, xe = window.Vue.isRef, _t = { class: "page" }, wt = { class: "search-box" }, ht = { class: "table-box" }, gt = { class: "attach-list-box" }, Vt = ["onClick"], yt = { class: "attach-preview" }, bt = { class: "imgLoading" }, kt = {
+const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = window.Vue.withModifiers, xe = window.Vue.isRef, _t = { class: "page" }, ht = { class: "search-box" }, wt = { class: "table-box" }, gt = { class: "attach-list-box" }, Vt = ["onClick"], yt = { class: "attach-preview" }, bt = { class: "imgLoading" }, kt = {
   key: 1,
   preload: "none",
   controls: "",
@@ -134,11 +140,11 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
   key: 2,
   controls: "",
   preload: "none"
-}, Nt = ["src"], Ut = { key: 3 }, Gt = { class: "showForm" }, Tt = { class: "dialog-footer" }, Dt = window.Vue.computed, zt = window.Vue.reactive, A = window.Vue.ref, Q = window.ElementPlus.ElMessage, Bt = {
+}, Nt = ["src"], Ut = { key: 3 }, Gt = { class: "showForm" }, Tt = { class: "dialog-footer" }, Dt = window.Vue.computed, zt = window.Vue.reactive, A = window.Vue.ref, Q = window.ElementPlus.ElMessage, It = {
   __name: "attach-select-panel",
   props: ["attachType", "max"],
   emits: ["update:selectedAttach"],
-  setup(a, { emit: $ }) {
+  setup(l, { emit: $ }) {
     const r = A(), s = A({
       pageNo: 1,
       pageSize: 18,
@@ -148,8 +154,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       attachGroup: ""
     });
     let v = A([]), k = A(!1), m = A(/* @__PURE__ */ new Map());
-    const _ = $, w = a;
-    let h = A(!1), j = A(""), d = A([]);
+    const _ = $, h = l;
+    let w = A(!1), j = A(""), d = A([]);
     const q = A(), n = A({
       name: "",
       type: "",
@@ -159,8 +165,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       desc: ""
     }), f = zt({
       name: [{ required: !0, message: "请输入附件名称", trigger: "blur" }]
-    }), B = A();
-    let J = A(), E = A(!1), L = A([]);
+    }), I = A();
+    let J = A(), E = A(!1), O = A([]);
     const R = A({
       attachConfigId: "",
       attachGroup: "default",
@@ -169,8 +175,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
     let fe = localStorage.getItem(pt.STORAGE_TOKEN), ve = mt.baseURL, C = {
       Authorization: "Bearer " + JSON.parse(fe).accessToken
     };
-    const l = Dt(() => {
-      switch (w.attachType) {
+    const a = Dt(() => {
+      switch (h.attachType) {
         case "img":
           return "image/*";
         case "video":
@@ -192,7 +198,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       }, q.value && q.value.resetFields();
     }
     function x() {
-      w.attachType && (s.value.type = w.attachType), k.value = !0, st(s.value).then((p) => {
+      h.attachType && (s.value.type = h.attachType), k.value = !0, st(s.value).then((p) => {
         p.data.list.forEach((e) => {
           e.selected = m.value.has(e.id);
         }), v.value = p.data.list, s.value.total = p.data.total, k.value = !1;
@@ -209,8 +215,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       }, r.value.resetFields(), x();
     }
     function se(p) {
-      if (!p.selected && m.value.size >= w.max) {
-        Q.error(`最多选择${w.max}个`);
+      if (!p.selected && m.value.size >= h.max) {
+        Q.error(`最多选择${h.max}个`);
         return;
       }
       p.selected = !p.selected, p.selected ? m.value.set(p.id, p) : m.value.delete(p.id), _("update:selectedAttach", Array.from(m.value.values()));
@@ -222,23 +228,23 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
     }
     function _e(p) {
       F(), W(), ct(p.id).then((e) => {
-        n.value = e.data, j.value = "详情", h.value = !0;
+        n.value = e.data, j.value = "详情", w.value = !0;
       });
     }
     function N() {
       q.value.validate((p) => {
         p && rt(n.value).then((e) => {
-          e.code === 200 ? (Q.success("修改成功"), h.value = !1, F(), x()) : Q.error(e.msg);
+          e.code === 200 ? (Q.success("修改成功"), w.value = !1, F(), x()) : Q.error(e.msg);
         });
       });
     }
-    function we() {
+    function he() {
       W(), x();
     }
-    function de(p, e, O) {
+    function de(p, e, B) {
       p.code === 200 ? Q.success(`[${e.name}]上传成功`) : (Q.error(p.msg), J.value.handleRemove(e));
     }
-    function he() {
+    function we() {
       ge(), j.value = "上传附件", Ve(), W(), E.value = !0;
     }
     function ge() {
@@ -246,11 +252,11 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
         attachConfigId: "",
         attachGroup: "default",
         fileList: []
-      }, B.value && B.value.resetFields();
+      }, I.value && I.value.resetFields();
     }
     function Ve() {
       ft().then((p) => {
-        L.value = p.data, p.data.forEach((e) => {
+        O.value = p.data, p.data.forEach((e) => {
           e.master && (R.value.attachConfigId = e.id);
         });
       });
@@ -259,9 +265,9 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       Q.error("上传失败,请检查网络是否通通畅");
     }
     return W(), x(), (p, e) => {
-      const O = g("el-input"), U = g("el-form-item"), re = g("el-option"), ce = g("el-select"), le = g("el-button"), ye = g("el-form"), Ke = g("Loading"), pe = g("el-icon"), Se = g("el-image"), je = g("el-text"), qe = g("InfoFilled"), Je = g("SuccessFilled"), We = g("el-pagination"), He = g("el-link"), $e = g("el-col"), Ye = g("el-row"), Ee = g("el-dialog"), Qe = g("el-upload");
+      const B = g("el-input"), U = g("el-form-item"), re = g("el-option"), ce = g("el-select"), le = g("el-button"), ye = g("el-form"), Ke = g("Loading"), pe = g("el-icon"), Se = g("el-image"), je = g("el-text"), qe = g("InfoFilled"), Je = g("SuccessFilled"), We = g("el-pagination"), He = g("el-link"), $e = g("el-col"), Ye = g("el-row"), Ee = g("el-dialog"), Qe = g("el-upload");
       return V(), G("div", _t, [
-        b("div", wt, [
+        b("div", ht, [
           o(ye, {
             inline: !0,
             model: s.value,
@@ -272,7 +278,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
             default: u(() => [
               o(U, { label: "附件名称" }, {
                 default: u(() => [
-                  o(O, {
+                  o(B, {
                     modelValue: s.value.name,
                     "onUpdate:modelValue": e[0] || (e[0] = (t) => s.value.name = t),
                     placeholder: "请输入附件名称",
@@ -334,7 +340,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                     icon: y(Re),
                     type: "primary",
                     plain: "",
-                    onClick: he
+                    onClick: we
                   }, {
                     default: u(() => e[18] || (e[18] = [
                       P("上传附件")
@@ -348,7 +354,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
             _: 1
           }, 8, ["model"])
         ]),
-        b("div", ht, [
+        b("div", wt, [
           b("div", gt, [
             (V(!0), G(oe, null, ae(y(v), (t) => (V(), G("div", {
               class: Ge({ "attach-block": !0, selected: t.selected }),
@@ -426,8 +432,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
         o(Ee, {
-          modelValue: y(h),
-          "onUpdate:modelValue": e[11] || (e[11] = (t) => xe(h) ? h.value = t : h = t),
+          modelValue: y(w),
+          "onUpdate:modelValue": e[11] || (e[11] = (t) => xe(w) ? w.value = t : w = t),
           title: y(j),
           width: y(me)(800),
           draggable: ""
@@ -445,7 +451,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
               }),
               o(le, {
                 onClick: e[10] || (e[10] = (t) => {
-                  xe(h) ? h.value = !1 : h = !1, F();
+                  xe(w) ? w.value = !1 : w = !1, F();
                 })
               }, {
                 default: u(() => e[22] || (e[22] = [
@@ -527,7 +533,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                             prop: "name"
                           }, {
                             default: u(() => [
-                              o(O, {
+                              o(B, {
                                 modelValue: n.value.name,
                                 "onUpdate:modelValue": e[4] || (e[4] = (t) => n.value.name = t)
                               }, null, 8, ["modelValue"])
@@ -536,7 +542,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                           }),
                           o(U, { label: "附件类型" }, {
                             default: u(() => [
-                              o(O, {
+                              o(B, {
                                 modelValue: n.value.type,
                                 "onUpdate:modelValue": e[5] || (e[5] = (t) => n.value.type = t),
                                 disabled: ""
@@ -568,7 +574,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                           }),
                           o(U, { label: "存储路径" }, {
                             default: u(() => [
-                              o(O, {
+                              o(B, {
                                 modelValue: n.value.path,
                                 "onUpdate:modelValue": e[7] || (e[7] = (t) => n.value.path = t),
                                 disabled: ""
@@ -578,7 +584,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                           }),
                           o(U, { label: "访问地址" }, {
                             default: u(() => [
-                              o(O, {
+                              o(B, {
                                 modelValue: n.value.url,
                                 "onUpdate:modelValue": e[8] || (e[8] = (t) => n.value.url = t),
                                 disabled: ""
@@ -588,7 +594,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                           }),
                           o(U, { label: "附件描述" }, {
                             default: u(() => [
-                              o(O, {
+                              o(B, {
                                 modelValue: n.value.desc,
                                 "onUpdate:modelValue": e[9] || (e[9] = (t) => n.value.desc = t),
                                 autosize: { minRows: 2, maxRows: 4 },
@@ -618,12 +624,12 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
           title: y(j),
           width: y(me)(600),
           draggable: "",
-          onClose: we
+          onClose: he
         }, {
           default: u(() => [
             o(ye, {
               ref_key: "addFormRef",
-              ref: B,
+              ref: I,
               model: R.value,
               "label-width": "80px",
               "status-icon": ""
@@ -641,7 +647,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                       clearable: ""
                     }, {
                       default: u(() => [
-                        (V(!0), G(oe, null, ae(y(L), (t) => (V(), Y(re, {
+                        (V(!0), G(oe, null, ae(y(O), (t) => (V(), Y(re, {
                           key: t.id,
                           label: t.name,
                           value: t.id
@@ -695,7 +701,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                       data: { attachConfigId: R.value.attachConfigId, attachGroup: R.value.attachGroup },
                       "on-success": de,
                       "on-error": H,
-                      accept: l.value
+                      accept: a.value
                     }, {
                       tip: u(() => e[23] || (e[23] = [
                         b("div", { class: "el-upload__tip" }, " 请先选择存储策略及分组,如不选择将使用默认存储策略及分组 ", -1)
@@ -726,26 +732,26 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       ]);
     };
   }
-}, Lt = /* @__PURE__ */ Pe(Bt, [["__scopeId", "data-v-3b66d397"]]), X = window.Vue.unref, Ce = window.Vue.resolveComponent, Z = window.Vue.createVNode, ne = window.Vue.withCtx, Ot = window.Vue.toDisplayString, Te = window.Vue.openBlock, De = window.Vue.createElementBlock, It = window.Vue.createCommentVNode, ze = window.Vue.createTextVNode, Be = window.Vue.isRef, Mt = window.Vue.createElementVNode, Pt = { style: { width: "100%" } }, Kt = { class: "dialog-footer" }, jt = { key: 0 }, ue = window.Vue.ref, qt = window.Vue.watch, Jt = {
+}, Ot = /* @__PURE__ */ Pe(It, [["__scopeId", "data-v-3b66d397"]]), X = window.Vue.unref, Ce = window.Vue.resolveComponent, Z = window.Vue.createVNode, ne = window.Vue.withCtx, Bt = window.Vue.toDisplayString, Te = window.Vue.openBlock, De = window.Vue.createElementBlock, Lt = window.Vue.createCommentVNode, ze = window.Vue.createTextVNode, Ie = window.Vue.isRef, Mt = window.Vue.createElementVNode, Pt = { style: { width: "100%" } }, Kt = { class: "dialog-footer" }, jt = { key: 0 }, ue = window.Vue.ref, qt = window.Vue.watch, Jt = {
   __name: "attach-select-input",
   props: ["attachType", "enableInput", "placeholder", "modelValue"],
   emits: ["update:modelValue", "attachSelectChange"],
-  setup(a, { emit: $ }) {
+  setup(l, { emit: $ }) {
     ue("请选择图片");
     let r = ue(!1), s = ue(""), v = ue([]);
-    const k = a, m = $, _ = ue(k.modelValue);
+    const k = l, m = $, _ = ue(k.modelValue);
     qt(() => k.modelValue, (n, f) => {
       _.value = n;
     });
-    function w() {
+    function h() {
       m("update:modelValue", _.value);
     }
-    function h() {
+    function w() {
       r.value = !0, s.value = "请选择附件";
     }
     function j() {
       let n = "";
-      v.value.forEach((f, B) => {
+      v.value.forEach((f, I) => {
         n += f.url;
       }), m("attachSelectChange", v.value), _.value = n, r.value = !1, v.value = [], m("update:modelValue", _.value);
     }
@@ -756,28 +762,28 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       v.value = n;
     }
     return (n, f) => {
-      const B = Ce("el-button"), J = Ce("el-input"), E = Ce("el-dialog");
+      const I = Ce("el-button"), J = Ce("el-input"), E = Ce("el-dialog");
       return Te(), De("div", Pt, [
         Z(J, {
           modelValue: _.value,
-          "onUpdate:modelValue": f[0] || (f[0] = (L) => _.value = L),
+          "onUpdate:modelValue": f[0] || (f[0] = (O) => _.value = O),
           placeholder: k.placeholder,
           style: { width: "100%" },
           disabled: !k.enableInput,
-          onChange: w
+          onChange: h
         }, {
           append: ne(() => [
-            Z(B, {
+            Z(I, {
               icon: X(Ze),
               type: "info",
-              onClick: h
+              onClick: w
             }, null, 8, ["icon"])
           ]),
           _: 1
         }, 8, ["modelValue", "placeholder", "disabled"]),
         Z(E, {
           modelValue: X(r),
-          "onUpdate:modelValue": f[2] || (f[2] = (L) => Be(r) ? r.value = L : r = L),
+          "onUpdate:modelValue": f[2] || (f[2] = (O) => Ie(r) ? r.value = O : r = O),
           title: X(s),
           width: X(me)(900),
           draggable: "",
@@ -785,19 +791,19 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
         }, {
           footer: ne(() => [
             Mt("span", Kt, [
-              Z(B, {
+              Z(I, {
                 type: "primary",
                 onClick: j
               }, {
                 default: ne(() => [
                   f[3] || (f[3] = ze("确 定")),
-                  X(v).length > 0 ? (Te(), De("span", jt, "(已选" + Ot(X(v).length) + "个)", 1)) : It("", !0)
+                  X(v).length > 0 ? (Te(), De("span", jt, "(已选" + Bt(X(v).length) + "个)", 1)) : Lt("", !0)
                 ]),
                 _: 1
               }),
-              Z(B, {
-                onClick: f[1] || (f[1] = (L) => {
-                  Be(r) ? r.value = !1 : r = !1, d();
+              Z(I, {
+                onClick: f[1] || (f[1] = (O) => {
+                  Ie(r) ? r.value = !1 : r = !1, d();
                 })
               }, {
                 default: ne(() => f[4] || (f[4] = [
@@ -808,7 +814,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
             ])
           ]),
           default: ne(() => [
-            Z(Lt, {
+            Z(Ot, {
               "onUpdate:selectedAttach": q,
               max: 1,
               "attach-type": k.attachType
@@ -819,18 +825,18 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       ]);
     };
   }
-}, Wt = /* @__PURE__ */ Pe(Jt, [["__scopeId", "data-v-52e51a92"]]), T = window.Vue.resolveComponent, i = window.Vue.createVNode, c = window.Vue.withCtx, S = window.Vue.unref, I = window.Vue.createTextVNode, ie = window.Vue.createElementVNode, Le = window.Vue.resolveDirective, M = window.Vue.openBlock, K = window.Vue.createBlock, ee = window.Vue.withDirectives, Ht = window.Vue.createCommentVNode, Yt = window.Vue.toDisplayString, Oe = window.Vue.isRef, Qt = window.Vue.createElementBlock, Xt = { class: "page" }, Zt = { class: "search-box" }, el = { class: "right-tool" }, tl = { class: "table-box" }, ll = { class: "dialog-footer" }, te = window.ElementPlus.ElMessage, al = window.ElementPlus.ElMessageBox, Ie = window.Vue.reactive, D = window.Vue.ref, ul = {
+}, Wt = /* @__PURE__ */ Pe(Jt, [["__scopeId", "data-v-52e51a92"]]), T = window.Vue.resolveComponent, i = window.Vue.createVNode, c = window.Vue.withCtx, S = window.Vue.unref, L = window.Vue.createTextVNode, ie = window.Vue.createElementVNode, Oe = window.Vue.resolveDirective, M = window.Vue.openBlock, K = window.Vue.createBlock, ee = window.Vue.withDirectives, Ht = window.Vue.createCommentVNode, Yt = window.Vue.toDisplayString, Be = window.Vue.isRef, Qt = window.Vue.createElementBlock, Xt = { class: "page" }, Zt = { class: "search-box" }, el = { class: "right-tool" }, tl = { class: "table-box" }, ll = { class: "dialog-footer" }, te = window.ElementPlus.ElMessage, al = window.ElementPlus.ElMessageBox, Le = window.Vue.reactive, D = window.Vue.ref, ul = {
   __name: "CategoryView",
-  setup(a) {
+  setup(l) {
     const $ = D(), r = D({
       name: ""
     });
     let s = D(!1), v = D([]);
     D([]);
     let k = D([]), m = D(!1), _ = D("");
-    const w = D();
-    let h = D(!1);
-    const j = Ie({
+    const h = D();
+    let w = D(!1);
+    const j = Le({
       children: "children",
       label: "name",
       value: "id"
@@ -843,7 +849,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
       thumbnail: "",
       slug: "",
       metaDescription: ""
-    }), q = Ie({
+    }), q = Le({
       pid: [{ required: !0, message: "请选择父级分类", trigger: "blur" }],
       name: [{ required: !0, message: "请输入分类名称", trigger: "blur" }]
     }), n = D();
@@ -852,14 +858,14 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
         v.value = ke(C.data, "id", "pid", "children", -1), s.value = !1;
       });
     }
-    function B() {
+    function I() {
       r.value = {
         name: ""
       }, $.value.resetFields(), f();
     }
     function J(C) {
-      E(), C && C.id && (d.value.pid = C.id), _.value = "添加分类", m.value = !0, h.value = !0, be({}).then((l) => {
-        k.value = [{ id: -1, name: "主类目", children: ke(l.data, "id", "pid", "children", -1) }], h.value = !1;
+      E(), C && C.id && (d.value.pid = C.id), _.value = "添加分类", m.value = !0, w.value = !0, be({}).then((a) => {
+        k.value = [{ id: -1, name: "主类目", children: ke(a.data, "id", "pid", "children", -1) }], w.value = !1;
       });
     }
     function E() {
@@ -874,19 +880,19 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
         metaDescription: ""
       }, n.value && n.value.resetFields();
     }
-    function L() {
+    function O() {
       n.value.validate((C) => {
-        C && (d.value.id ? at(d.value).then((l) => {
-          l.code === 200 ? (te.success("修改成功"), m.value = !1, E(), f()) : te.error(l.msg);
-        }) : lt(d.value).then((l) => {
-          l.code === 200 ? (te.success("添加成功"), m.value = !1, E(), f()) : te.error(l.msg);
+        C && (d.value.id ? at(d.value).then((a) => {
+          a.code === 200 ? (te.success("修改成功"), m.value = !1, E(), f()) : te.error(a.msg);
+        }) : lt(d.value).then((a) => {
+          a.code === 200 ? (te.success("添加成功"), m.value = !1, E(), f()) : te.error(a.msg);
         }));
       });
     }
     function R(C) {
-      _.value = "修改分类", E(), m.value = !0, h.value = !0, be({}).then((l) => {
-        k.value = [{ id: -1, name: "主类目", children: ke(l.data, "id", "pid", "children", -1) }], ot(C.id).then((F) => {
-          d.value = F.data, w.value.setCurrentKey(F.data.pid), h.value = !1;
+      _.value = "修改分类", E(), m.value = !0, w.value = !0, be({}).then((a) => {
+        k.value = [{ id: -1, name: "主类目", children: ke(a.data, "id", "pid", "children", -1) }], ot(C.id).then((F) => {
+          d.value = F.data, h.value.setCurrentKey(F.data.pid), w.value = !1;
         });
       });
     }
@@ -896,8 +902,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        nt(C.id).then((l) => {
-          l.code === 200 && l.data ? (te.success("删除成功"), f()) : te.error(l.msg);
+        nt(C.id).then((a) => {
+          a.code === 200 && a.data ? (te.success("删除成功"), f()) : te.error(a.msg);
         });
       }).catch(() => {
       });
@@ -905,8 +911,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
     function ve() {
       d.value.id || (Ne.setOptions({ charCase: 1, checkPolyphone: !1 }), d.value.slug = Ne.getCamelChars(d.value.name));
     }
-    return f(), (C, l) => {
-      const F = T("el-input"), x = T("el-form-item"), z = T("el-button"), se = T("el-form"), W = T("el-col"), _e = T("el-row"), N = T("el-table-column"), we = T("el-image"), de = T("el-tag"), he = T("el-table"), ge = T("el-tree-select"), Ve = T("el-dialog"), H = Le("hasPermission"), p = Le("loading");
+    return f(), (C, a) => {
+      const F = T("el-input"), x = T("el-form-item"), z = T("el-button"), se = T("el-form"), W = T("el-col"), _e = T("el-row"), N = T("el-table-column"), he = T("el-image"), de = T("el-tag"), we = T("el-table"), ge = T("el-tree-select"), Ve = T("el-dialog"), H = Oe("hasPermission"), p = Oe("loading");
       return M(), Qt("div", Xt, [
         ie("div", Zt, [
           i(se, {
@@ -920,7 +926,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                 default: c(() => [
                   i(F, {
                     modelValue: r.value.name,
-                    "onUpdate:modelValue": l[0] || (l[0] = (e) => r.value.name = e),
+                    "onUpdate:modelValue": a[0] || (a[0] = (e) => r.value.name = e),
                     placeholder: "请输入分类名称",
                     clearable: ""
                   }, null, 8, ["modelValue"])
@@ -934,17 +940,17 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                     onClick: f,
                     icon: S(Me)
                   }, {
-                    default: c(() => l[10] || (l[10] = [
-                      I("查询")
+                    default: c(() => a[10] || (a[10] = [
+                      L("查询")
                     ])),
                     _: 1
                   }, 8, ["icon"]),
                   i(z, {
                     icon: S(Ae),
-                    onClick: B
+                    onClick: I
                   }, {
-                    default: c(() => l[11] || (l[11] = [
-                      I("重置")
+                    default: c(() => a[11] || (a[11] = [
+                      L("重置")
                     ])),
                     _: 1
                   }, 8, ["icon"])
@@ -968,8 +974,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                   plain: "",
                   onClick: J
                 }, {
-                  default: c(() => l[12] || (l[12] = [
-                    I("新增")
+                  default: c(() => a[12] || (a[12] = [
+                    L("新增")
                   ])),
                   _: 1
                 }, 8, ["icon"])), [
@@ -989,7 +995,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
           _: 1
         }),
         ie("div", tl, [
-          ee((M(), K(he, {
+          ee((M(), K(we, {
             data: S(v),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
@@ -1024,7 +1030,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                 "min-width": "80"
               }, {
                 default: c((e) => [
-                  e.row.thumbnail ? (M(), K(we, {
+                  e.row.thumbnail ? (M(), K(he, {
                     key: 0,
                     style: { height: "50px" },
                     src: e.row.thumbnail,
@@ -1063,8 +1069,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                     class: "ml-2",
                     type: "success"
                   }, {
-                    default: c(() => l[13] || (l[13] = [
-                      I("正常")
+                    default: c(() => a[13] || (a[13] = [
+                      L("正常")
                     ])),
                     _: 1
                   })) : (M(), K(de, {
@@ -1072,8 +1078,8 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                     class: "ml-2",
                     type: "danger"
                   }, {
-                    default: c(() => l[14] || (l[14] = [
-                      I("禁用")
+                    default: c(() => a[14] || (a[14] = [
+                      L("禁用")
                     ])),
                     _: 1
                   }))
@@ -1107,10 +1113,10 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                     type: "primary",
                     link: "",
                     icon: S(et),
-                    onClick: (O) => R(e.row)
+                    onClick: (B) => R(e.row)
                   }, {
-                    default: c(() => l[15] || (l[15] = [
-                      I("修改")
+                    default: c(() => a[15] || (a[15] = [
+                      L("修改")
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
@@ -1121,10 +1127,10 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                     type: "primary",
                     link: "",
                     icon: S(Fe),
-                    onClick: (O) => J(e.row)
+                    onClick: (B) => J(e.row)
                   }, {
-                    default: c(() => l[16] || (l[16] = [
-                      I("新增")
+                    default: c(() => a[16] || (a[16] = [
+                      L("新增")
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
@@ -1135,10 +1141,10 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                     type: "primary",
                     link: "",
                     icon: S(tt),
-                    onClick: (O) => fe(e.row)
+                    onClick: (B) => fe(e.row)
                   }, {
-                    default: c(() => l[17] || (l[17] = [
-                      I("删除")
+                    default: c(() => a[17] || (a[17] = [
+                      L("删除")
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
@@ -1155,7 +1161,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
         ]),
         i(Ve, {
           modelValue: S(m),
-          "onUpdate:modelValue": l[9] || (l[9] = (e) => Oe(m) ? m.value = e : m = e),
+          "onUpdate:modelValue": a[9] || (a[9] = (e) => Be(m) ? m.value = e : m = e),
           title: S(_),
           width: S(me)(600),
           draggable: ""
@@ -1164,20 +1170,20 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
             ie("span", ll, [
               i(z, {
                 type: "primary",
-                onClick: L
+                onClick: O
               }, {
-                default: c(() => l[18] || (l[18] = [
-                  I("确 定")
+                default: c(() => a[18] || (a[18] = [
+                  L("确 定")
                 ])),
                 _: 1
               }),
               i(z, {
-                onClick: l[8] || (l[8] = (e) => {
-                  Oe(m) ? m.value = !1 : m = !1, E();
+                onClick: a[8] || (a[8] = (e) => {
+                  Be(m) ? m.value = !1 : m = !1, E();
                 })
               }, {
-                default: c(() => l[19] || (l[19] = [
-                  I("取 消")
+                default: c(() => a[19] || (a[19] = [
+                  L("取 消")
                 ])),
                 _: 1
               })
@@ -1200,7 +1206,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                   default: c(() => [
                     i(ge, {
                       modelValue: d.value.pid,
-                      "onUpdate:modelValue": l[1] || (l[1] = (e) => d.value.pid = e),
+                      "onUpdate:modelValue": a[1] || (a[1] = (e) => d.value.pid = e),
                       data: S(k),
                       props: j,
                       "check-strictly": "",
@@ -1208,7 +1214,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                       style: { width: "100%" },
                       "node-key": "id",
                       ref_key: "addTreeRef",
-                      ref: w,
+                      ref: h,
                       clearable: ""
                     }, null, 8, ["modelValue", "data", "props"])
                   ]),
@@ -1222,7 +1228,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                   default: c(() => [
                     i(F, {
                       modelValue: d.value.name,
-                      "onUpdate:modelValue": l[2] || (l[2] = (e) => d.value.name = e),
+                      "onUpdate:modelValue": a[2] || (a[2] = (e) => d.value.name = e),
                       placeholder: "请输入分类名称"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -1235,7 +1241,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                   default: c(() => [
                     i(F, {
                       modelValue: d.value.desc,
-                      "onUpdate:modelValue": l[3] || (l[3] = (e) => d.value.desc = e),
+                      "onUpdate:modelValue": a[3] || (a[3] = (e) => d.value.desc = e),
                       placeholder: "请输入分类描述",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -1250,7 +1256,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                   default: c(() => [
                     i(F, {
                       modelValue: d.value.slug,
-                      "onUpdate:modelValue": l[4] || (l[4] = (e) => d.value.slug = e),
+                      "onUpdate:modelValue": a[4] || (a[4] = (e) => d.value.slug = e),
                       placeholder: "请输入分类slug"
                     }, null, 8, ["modelValue"])
                   ]),
@@ -1266,7 +1272,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                       "enable-input": !0,
                       placeholder: "请选择封面图",
                       "model-value": d.value.thumbnail,
-                      "onUpdate:modelValue": l[5] || (l[5] = (e) => d.value.thumbnail = e)
+                      "onUpdate:modelValue": a[5] || (a[5] = (e) => d.value.thumbnail = e)
                     }, null, 8, ["model-value"])
                   ]),
                   _: 1
@@ -1278,7 +1284,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                   default: c(() => [
                     i(F, {
                       modelValue: d.value.metaKeywords,
-                      "onUpdate:modelValue": l[6] || (l[6] = (e) => d.value.metaKeywords = e),
+                      "onUpdate:modelValue": a[6] || (a[6] = (e) => d.value.metaKeywords = e),
                       placeholder: "请输入SEO关键字",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -1293,7 +1299,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
                   default: c(() => [
                     i(F, {
                       modelValue: d.value.metaDescription,
-                      "onUpdate:modelValue": l[7] || (l[7] = (e) => d.value.metaDescription = e),
+                      "onUpdate:modelValue": a[7] || (a[7] = (e) => d.value.metaDescription = e),
                       placeholder: "请输入SEO描述内容",
                       autosize: { minRows: 3, maxRows: 6 },
                       type: "textarea"
@@ -1304,7 +1310,7 @@ const Ue = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, vt = wind
               ]),
               _: 1
             }, 8, ["model", "rules"])), [
-              [p, S(h)]
+              [p, S(w)]
             ])
           ]),
           _: 1

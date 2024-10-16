@@ -75,12 +75,13 @@ window.axios = axios;
 window.pinia = pinia;
 window.download = download;
 
+app.mount('#app')
 
-// 加载系统需要的配置信息
+/*// 加载系统需要的配置信息
 const optionStore = useOptionStore()
 getOptionByKeysAndIdentificationApi(['WEB_TITLE', 'WEB_ICO', 'WEB_NAME', 'WEB_LOGO', 'WEB_IS_REGISTER', 'WEB_OPEN_CAPTCHA'], 'system_setting').then(res => {
     optionStore.setOptions(res.data);
     app.mount('#app')
 }).catch(e => {
     app.mount('#app')
-})
+})*/

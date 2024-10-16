@@ -50,41 +50,7 @@ const initTheme = () => {
   document.getElementsByTagName('body')[0].setAttribute('class', 'theme-' + appStore.theme)
 }
 
-const initPageOption= () => {
-  const WEB_TITLE = getOptionByKey('WEB_TITLE', 'system_setting');
-  document.title = WEB_TITLE ? WEB_TITLE.value : 'Perfree';
 
-  const WEB_ICO = getOptionByKey('WEB_ICO', 'system_setting');
-  changeFaviconByUrl(WEB_ICO && WEB_ICO.value ? WEB_ICO.value : '/assets/favicon.ico');
-}
-
-const changeFaviconByUrl = (url) => {
-  const ext = url.split('.').pop().toLowerCase();
-  let type = '';
-  if (ext === 'ico') {
-    type = 'image/x-icon';
-  } else if (ext === 'png') {
-    type = 'image/png';
-  } else {
-    type = 'image/x-icon';
-  }
-
-  // 创建或更新 favicon
-  const link = document.createElement('link');
-  link.rel = 'icon';
-  link.type = type;
-  link.href = url;
-
-  // 移除已有的 favicon 链接
-  const head = document.querySelector('head');
-  const existingLinks = head.querySelectorAll('link[rel*="icon"]');
-  existingLinks.forEach(link => head.removeChild(link));
-
-  // 添加新的 favicon
-  head.appendChild(link);
-}
-
-initPageOption();
 initPrimaryColor()
 initTheme()
 </script>

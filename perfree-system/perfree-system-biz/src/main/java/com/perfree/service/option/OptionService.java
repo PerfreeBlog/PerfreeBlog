@@ -61,4 +61,7 @@ public interface OptionService extends IService<Option> {
     Option getOptionByIdentificationAndKey(String optionIdentificationSystem, String key);
 
     void handleWebVersion();
+
+    Option saveOption(Option option);
+
 }

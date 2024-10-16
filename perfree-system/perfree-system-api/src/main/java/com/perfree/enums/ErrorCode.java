@@ -57,6 +57,8 @@ public enum ErrorCode {
     EMAIL_ACCOUNT_NOT_MATE(100000047, "邮箱账户不匹配!"),
     EMAIL_CODE_FAIL(100000048, "邮箱验证码错误!"),
     NO_PERMISSION_PREVIEW(100000049,"仅作者可看,您无权查看!"),
+    DEFAULT_THEME_NOT_EXIST(100000050,"默认主题文件不存在!"),
+    WEB_IS_INIT(100000051,"网站已初始化, 无法再次初始化!"),
     ;
 
     private final Integer code;
