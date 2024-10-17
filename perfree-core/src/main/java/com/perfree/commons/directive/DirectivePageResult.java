@@ -1,9 +1,11 @@
 package com.perfree.commons.directive;
 
 import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.UrlUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 import org.dromara.hutool.core.text.StrUtil;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -72,6 +74,14 @@ public final class DirectivePageResult<T> implements Serializable {
             requestURI += SystemConstants.URL_SEPARATOR;
             this.previousUrl =  this.hasPrevious ? requestURI + (this.pageNo - 1) : "";
             this.nextUrl = this.hasNext ? requestURI + (this.pageNo + 1) : "";
+        }
+
+        if (StringUtils.isNotBlank(this.nextUrl)) {
+            this.nextUrl = UrlUtil.buildUrl(this.nextUrl);
+        }
+
+        if (StringUtils.isNotBlank(this.previousUrl)) {
+            this.previousUrl = UrlUtil.buildUrl(this.previousUrl);
         }
     }
 }

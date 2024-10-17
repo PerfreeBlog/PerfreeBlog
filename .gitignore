@@ -1,5 +1,4 @@
-/perfree-web/target/
+**/target/
 /Perfree.iml
 /.idea/
 /resources/
-/perfree-web/perfree-web.iml

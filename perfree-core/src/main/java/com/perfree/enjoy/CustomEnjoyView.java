@@ -110,6 +110,9 @@ public class CustomEnjoyView extends JFinalView {
 
             StringBuilder urlBuilder = new StringBuilder(baseUrl);
             if (baseUrl.contains("?")) {
+                if (baseUrl.contains("previewTheme")) {
+                    continue;
+                }
                 urlBuilder.append("&previewTheme=").append(previewTheme);
             } else {
                 urlBuilder.append("?previewTheme=").append(previewTheme);
