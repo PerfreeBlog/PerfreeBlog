@@ -62,9 +62,9 @@
               <el-link class="theme-button" v-if="theme.isActive === 1" href="/" target="_blank">
                 <font-awesome-icon icon="fa-solid fa-external-link-square" class="theme-btn-icon" /> 访问
               </el-link>
-              <el-button link class="theme-button" v-if="theme.isActive === 0">
+              <el-link class="theme-button" v-if="theme.isActive === 0" :href="'/?previewTheme=' + theme.path" target="_blank">
                 <font-awesome-icon icon="fa-solid fa-external-link-square" class="theme-btn-icon" /> 预览
-              </el-button>
+              </el-link>
             </div>
           </div>
         </el-card>

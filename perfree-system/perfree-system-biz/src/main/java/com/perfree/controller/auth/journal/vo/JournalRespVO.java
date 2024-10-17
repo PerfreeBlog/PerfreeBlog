@@ -1,6 +1,8 @@
 package com.perfree.controller.auth.journal.vo;
 
 import com.perfree.commons.common.CommonUserMsg;
+import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.UrlUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

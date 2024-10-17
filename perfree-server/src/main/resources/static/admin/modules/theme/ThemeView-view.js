@@ -84,54 +84,54 @@ te({
   }
 });
 let E = [{ name: "首页", hasClose: !1, path: "/admin", currActive: !0 }];
-function S(o, f, d) {
-  o && E.findIndex((V) => V.path === f) < 0 && E.push({
+function S(o, p, d) {
+  o && E.findIndex((V) => V.path === p) < 0 && E.push({
     name: o,
     hasClose: !0,
-    path: f,
+    path: p,
     currActive: !1
   }), router.push({
-    path: f,
+    path: p,
     params: d
   });
 }
-const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = window.Vue.resolveDirective, s = window.Vue.withCtx, c = window.Vue.openBlock, T = window.Vue.createBlock, N = window.Vue.withDirectives, u = window.Vue.createElementBlock, n = window.Vue.createVNode, a = window.Vue.createElementVNode, h = window.Vue.unref, se = window.Vue.renderList, oe = window.Vue.Fragment, g = window.Vue.toDisplayString, ie = window.Vue.normalizeClass, w = window.Vue.createCommentVNode, le = window.Vue.isRef, ae = { class: "page" }, re = { style: { "text-align": "center", "margin-bottom": "10px", display: "flex", "justify-content": "center" } }, ce = {
+const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = window.Vue.resolveDirective, s = window.Vue.withCtx, c = window.Vue.openBlock, T = window.Vue.createBlock, N = window.Vue.withDirectives, m = window.Vue.createElementBlock, n = window.Vue.createVNode, a = window.Vue.createElementVNode, h = window.Vue.unref, se = window.Vue.renderList, oe = window.Vue.Fragment, v = window.Vue.toDisplayString, ie = window.Vue.normalizeClass, w = window.Vue.createCommentVNode, le = window.Vue.isRef, ae = { class: "page" }, re = { style: { "text-align": "center", "margin-bottom": "10px", display: "flex", "justify-content": "center" } }, ce = {
   slot: "header",
   class: "header"
-}, de = { class: "theme-box-body" }, ue = { class: "theme-desc" }, me = { class: "theme-btn-box" }, fe = { class: "theme-btn-item" }, _e = { key: 0 }, pe = { key: 1 }, he = {
+}, de = { class: "theme-box-body" }, ue = { class: "theme-desc" }, me = { class: "theme-btn-box" }, fe = { class: "theme-btn-item" }, pe = { key: 0 }, _e = { key: 1 }, he = {
   key: 0,
   class: "theme-btn-item"
 }, we = { class: "theme-btn-item" }, ve = {
   key: 1,
   class: "theme-btn-item"
-}, ge = { class: "theme-btn-item" }, m = window.ElementPlus.ElMessage, A = window.Vue.ref, be = {
+}, ge = { class: "theme-btn-item" }, f = window.ElementPlus.ElMessage, A = window.Vue.ref, be = {
   __name: "ThemeView",
   setup(o) {
-    let f = A([]), d = A(!1), C = localStorage.getItem(Z.STORAGE_TOKEN), V = ee.baseURL, O = {
+    let p = A([]), d = A(!1), C = localStorage.getItem(Z.STORAGE_TOKEN), V = ee.baseURL, O = {
       Authorization: "Bearer " + JSON.parse(C).accessToken
     }, x = A();
-    function b() {
+    function g() {
       j().then((l) => {
-        f.value = l.data;
+        p.value = l.data;
       });
     }
     function U() {
       d.value = !0;
     }
-    function D(l, e, _) {
-      l.code === 200 ? (m.success("主题安装成功"), d.value = !1, x.value.clearFiles(), b()) : (m.error(l.msg), x.value.handleRemove(e));
+    function D(l, e, u) {
+      l.code === 200 ? (f.success("主题安装成功"), d.value = !1, x.value.clearFiles(), g()) : (f.error(l.msg), x.value.handleRemove(e));
     }
     function P(l) {
-      m.error("主题上传失败,请检查网络是否通通畅");
+      f.error("主题上传失败,请检查网络是否通通畅");
     }
     function B(l) {
       l.isActive !== 1 && J(l.path).then((e) => {
-        e.code === 200 ? (m.success("主题启用成功"), b()) : m.error(e.msg);
+        e.code === 200 ? (f.success("主题启用成功"), g()) : f.error(e.msg);
       });
     }
     function I(l) {
       W(l.path).then((e) => {
-        e.code === 200 ? (m.success("主题卸载成功"), b()) : m.error(e.msg);
+        e.code === 200 ? (f.success("主题卸载成功"), g()) : f.error(e.msg);
       });
     }
     function L() {
@@ -140,11 +140,11 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
     function G(l) {
       S(`主题编辑-[${l.name}]`, "/admin/theme/edit/" + l.path, "");
     }
-    return b(), (l, e) => {
-      const _ = r("el-link"), z = r("el-image"), k = r("el-text"), p = r("font-awesome-icon"), v = r("el-button"), F = r("el-card"), $ = r("el-col"), q = r("el-row"), H = r("el-icon"), K = r("el-upload"), M = r("el-dialog"), R = ne("hasPermission");
-      return c(), u("div", ae, [
+    return g(), (l, e) => {
+      const u = r("el-link"), z = r("el-image"), b = r("el-text"), _ = r("font-awesome-icon"), k = r("el-button"), F = r("el-card"), $ = r("el-col"), q = r("el-row"), H = r("el-icon"), K = r("el-upload"), M = r("el-dialog"), R = ne("hasPermission");
+      return c(), m("div", ae, [
         a("div", re, [
-          N((c(), T(_, {
+          N((c(), T(u, {
             type: "primary",
             onClick: U
           }, {
@@ -155,12 +155,12 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
           })), [
             [R, ["admin:theme:install"]]
           ]),
-          N((c(), u("span", null, e[3] || (e[3] = [
+          N((c(), m("span", null, e[3] || (e[3] = [
             i("-")
           ]))), [
             [R, ["admin:theme:install"]]
           ]),
-          n(_, {
+          n(u, {
             type: "primary",
             href: "https://www.perfree.org.cn/theme",
             target: "_blank"
@@ -171,7 +171,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
             _: 1
           }),
           e[6] || (e[6] = a("span", null, "-", -1)),
-          n(_, {
+          n(u, {
             type: "primary",
             href: "https://www.perfree.org.cn/themeDevDoc",
             target: "_blank"
@@ -184,7 +184,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
         ]),
         n(q, { gutter: 15 }, {
           default: s(() => [
-            (c(!0), u(oe, null, se(h(f), (t) => (c(), T($, {
+            (c(!0), m(oe, null, se(h(p), (t) => (c(), T($, {
               xs: 24,
               sm: 12,
               md: 8,
@@ -199,7 +199,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                 }, {
                   default: s(() => [
                     a("div", ce, [
-                      a("span", null, g(t.name), 1)
+                      a("span", null, v(t.name), 1)
                     ]),
                     a("div", de, [
                       n(z, {
@@ -208,49 +208,49 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                         "preview-src-list": ["/api/static/themes/" + t.name + "/" + t.screenshots]
                       }, null, 8, ["src", "preview-src-list"]),
                       a("div", ue, [
-                        n(k, {
+                        n(b, {
                           "line-clamp": "1",
                           class: "theme-desc-text"
                         }, {
                           default: s(() => [
-                            i(" 主题作者: " + g(t.author.name), 1)
+                            i(" 主题作者: " + v(t.author.name), 1)
                           ]),
                           _: 2
                         }, 1024),
-                        n(k, {
+                        n(b, {
                           "line-clamp": "1",
                           class: "theme-desc-text"
                         }, {
                           default: s(() => [
-                            i(" 联系邮箱: " + g(t.author.email), 1)
+                            i(" 联系邮箱: " + v(t.author.email), 1)
                           ]),
                           _: 2
                         }, 1024),
-                        n(k, {
+                        n(b, {
                           "line-clamp": "1",
                           class: "theme-desc-text"
                         }, {
                           default: s(() => [
                             e[7] || (e[7] = i(" 作者网址: ")),
-                            n(_, {
+                            n(u, {
                               href: t.author.webSite,
                               target: "_blank",
                               class: "theme-desc-link"
                             }, {
                               default: s(() => [
-                                i(g(t.author.webSite), 1)
+                                i(v(t.author.webSite), 1)
                               ]),
                               _: 2
                             }, 1032, ["href"])
                           ]),
                           _: 2
                         }, 1024),
-                        n(k, {
+                        n(b, {
                           "line-clamp": "2",
                           class: "theme-desc-text"
                         }, {
                           default: s(() => [
-                            i(g(t.description), 1)
+                            i(v(t.description), 1)
                           ]),
                           _: 2
                         }, 1024)
@@ -258,30 +258,30 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                     ]),
                     a("div", me, [
                       a("div", fe, [
-                        n(v, {
+                        n(k, {
                           link: "",
                           class: "theme-button",
                           onClick: (y) => B(t)
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-square-check",
                               class: ie({ "theme-btn-icon": !0, "theme-active": t.isActive === 1 })
                             }, null, 8, ["class"]),
-                            t.isActive === 0 ? (c(), u("span", _e, "启用")) : w("", !0),
-                            t.isActive === 1 ? (c(), u("span", pe, "已启用")) : w("", !0)
+                            t.isActive === 0 ? (c(), m("span", pe, "启用")) : w("", !0),
+                            t.isActive === 1 ? (c(), m("span", _e, "已启用")) : w("", !0)
                           ]),
                           _: 2
                         }, 1032, ["onClick"])
                       ]),
-                      t.isActive === 1 ? (c(), u("div", he, [
-                        n(v, {
+                      t.isActive === 1 ? (c(), m("div", he, [
+                        n(k, {
                           link: "",
                           class: "theme-button",
                           onClick: e[0] || (e[0] = (y) => L())
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-wrench",
                               class: "theme-btn-icon"
                             }),
@@ -291,13 +291,13 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                         })
                       ])) : w("", !0),
                       a("div", we, [
-                        n(v, {
+                        n(k, {
                           link: "",
                           class: "theme-button",
                           onClick: (y) => G(t)
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-pencil-alt",
                               class: "theme-btn-icon"
                             }),
@@ -306,14 +306,14 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           _: 2
                         }, 1032, ["onClick"])
                       ]),
-                      t.isActive === 0 ? (c(), u("div", ve, [
-                        n(v, {
+                      t.isActive === 0 ? (c(), m("div", ve, [
+                        n(k, {
                           link: "",
                           class: "theme-button",
                           onClick: (y) => I(t)
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-trash-can",
                               class: "theme-btn-icon"
                             }),
@@ -323,14 +323,14 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                         }, 1032, ["onClick"])
                       ])) : w("", !0),
                       a("div", ge, [
-                        t.isActive === 1 ? (c(), T(_, {
+                        t.isActive === 1 ? (c(), T(u, {
                           key: 0,
                           class: "theme-button",
                           href: "/",
                           target: "_blank"
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-external-link-square",
                               class: "theme-btn-icon"
                             }),
@@ -338,20 +338,21 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           ]),
                           _: 1
                         })) : w("", !0),
-                        t.isActive === 0 ? (c(), T(v, {
+                        t.isActive === 0 ? (c(), T(u, {
                           key: 1,
-                          link: "",
-                          class: "theme-button"
+                          class: "theme-button",
+                          href: "/?previewTheme=" + t.path,
+                          target: "_blank"
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-external-link-square",
                               class: "theme-btn-icon"
                             }),
                             e[12] || (e[12] = i(" 预览 "))
                           ]),
-                          _: 1
-                        })) : w("", !0)
+                          _: 2
+                        }, 1032, ["href"])) : w("", !0)
                       ])
                     ])
                   ]),
@@ -405,7 +406,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
       ]);
     };
   }
-}, xe = /* @__PURE__ */ X(be, [["__scopeId", "data-v-dfe0bca4"]]);
+}, xe = /* @__PURE__ */ X(be, [["__scopeId", "data-v-9f70e6f5"]]);
 export {
   xe as default
 };

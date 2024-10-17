@@ -99,4 +99,5 @@ public class SystemConstants {
     public static final String URL_ARTICLE = "/article/";
 
     public static final String COOKIE_ARTICLE_VIEW = "a";
+    public static final String URL_JOURNAL = "/journal/";
 }

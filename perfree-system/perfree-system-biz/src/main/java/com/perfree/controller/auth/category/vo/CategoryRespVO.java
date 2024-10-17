@@ -1,6 +1,8 @@
 package com.perfree.controller.auth.category.vo;
 
 import com.perfree.commons.common.CommonUserMsg;
+import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.UrlUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,4 +31,11 @@ public class CategoryRespVO extends CategoryBaseVO{
 
     @Schema(description = "用户信息")
     private CommonUserMsg userInfo;
+
+    @Schema(description = "url")
+    private String url;
+
+    public String getUrl() {
+        return UrlUtil.buildUrl(SystemConstants.URL_ARTICLE_CATEGORY + getSlug());
+    }
 }
