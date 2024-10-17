@@ -20,13 +20,13 @@ public class ArticlePageReqVO extends PageParam {
     private Integer categoryId;
 
     @Schema(description = "分类slug")
-    private Integer categorySlug;
+    private String categorySlug;
 
     @Schema(description = "标签ID")
     private Integer tagId;
 
     @Schema(description = "标签slug")
-    private Integer tagSlug;
+    private String tagSlug;
 
     @Schema(description = "状态0:已发布,1:草稿")
     private Integer status;
