@@ -2,20 +2,20 @@ export function allThemeApi() {
     return axios.get('/api/auth/theme/allTheme');
 }
 
-export function swatchThemeApi(themeName) {
-    return axios.post('/api/auth/theme/swatchTheme?themeName=' + themeName);
+export function swatchThemeApi(themePath) {
+    return axios.post('/api/auth/theme/swatchTheme?themePath=' + themePath);
 }
 
-export function unInstallThemeApi(themeName) {
-    return axios.delete('/api/auth/theme/unInstallTheme?themeName=' + themeName);
+export function unInstallThemeApi(themePath) {
+    return axios.delete('/api/auth/theme/unInstallTheme?themePath=' + themePath);
 }
 
 export function getCurrentThemeSettingApi() {
     return axios.get('/api/auth/theme/getCurrentThemeSetting');
 }
 
-export function getThemeFilesByName(themeName) {
-    return axios.get('/api/auth/theme/getThemeFilesByName?themeName=' + themeName);
+export function getThemeFilesByName(themePath) {
+    return axios.get('/api/auth/theme/getThemeFilesByName?themePath=' + themePath);
 }
 
 export function getThemeFileContent(data) {

@@ -3,59 +3,59 @@ import { _ as K, h as U } from "./lib/_plugin-vue_export-helper.js";
 import { F as r } from "./lib/@fortawesome.js";
 import { T as H } from "./lib/vue-codemirror.js";
 import { F as J, G as O } from "./lib/@codemirror.js";
-const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.createElementVNode, Q = window.Vue.createTextVNode, u = window.Vue.resolveComponent, f = window.Vue.withCtx, a = window.Vue.createVNode, l = window.Vue.openBlock, c = window.Vue.createBlock, W = window.Vue.createCommentVNode, X = window.Vue.resolveDirective, Y = window.Vue.createElementBlock, Z = window.Vue.withDirectives, $ = { class: "theme-header-box" }, ee = { class: "theme-editor-title" }, te = { class: "custom-tree-node" }, i = window.Vue.ref, m = window.ElementPlus.ElMessage, oe = {
+const t = window.Vue.unref, N = window.Vue.toDisplayString, _ = window.Vue.createElementVNode, Q = window.Vue.createTextVNode, u = window.Vue.resolveComponent, f = window.Vue.withCtx, a = window.Vue.createVNode, l = window.Vue.openBlock, c = window.Vue.createBlock, W = window.Vue.createCommentVNode, X = window.Vue.resolveDirective, Y = window.Vue.createElementBlock, Z = window.Vue.withDirectives, $ = { class: "theme-header-box" }, ee = { class: "theme-editor-title" }, te = { class: "custom-tree-node" }, i = window.Vue.ref, m = window.ElementPlus.ElMessage, oe = {
   __name: "ThemeEditView",
   setup(le) {
-    const p = router.currentRoute.value.params.name;
+    const p = router.currentRoute.value.params.themePath;
     let x = i([]), s = i(!0);
-    const I = {
+    const b = {
       children: "children",
       label: "fileName"
     };
     let k = i([]), w = i({});
-    const T = i(), b = ["jpg", "png", "gif", "ico", "jpeg"];
-    let N = i([]), v = i(!1);
-    const _ = i(""), E = [J(), O], j = ["java", "js", "css", "html", "json", "yaml", "less", "scss", "txt", "md"];
-    function B() {
+    const T = i(), I = ["jpg", "png", "gif", "ico", "jpeg"];
+    let C = i([]), v = i(!1);
+    const h = i(""), E = [J(), O], P = ["java", "js", "css", "html", "json", "yaml", "less", "scss", "txt", "md"];
+    function j() {
       s.value = !0, z(p).then((e) => {
         e.code === 200 ? x.value = U(e.data, "id", "pid", "children", "-1") : m.error(e.msg), s.value = !1;
       });
     }
-    function D(e) {
+    function B(e) {
       if (e.fileType === "dir")
         return;
-      if (j.findIndex((o) => o === e.fileType) < 0) {
-        if (b.findIndex((g) => g === e.fileType) < 0) {
+      if (P.findIndex((o) => o === e.fileType) < 0) {
+        if (I.findIndex((g) => g === e.fileType) < 0) {
           m.error("暂不支持该类型文件的预览和修改");
           return;
         }
-        P(e.staticPath);
+        D(e.staticPath);
         return;
       }
       let y = {
-        themeName: p,
+        themePath: p,
         path: e.filePath
       };
       s.value = !0, A(y).then((o) => {
-        o.code === 200 ? (k.value = [e.id], _.value = o.data, w.value = e, T.value.setCheckedKeys([e.id], !0)) : m.error(o.msg), s.value = !1;
+        o.code === 200 ? (k.value = [e.id], h.value = o.data, w.value = e, T.value.setCheckedKeys([e.id], !0)) : m.error(o.msg), s.value = !1;
       });
     }
-    function P(e) {
-      N.value[0] = "/static/themes/" + e, v.value = !0;
+    function D(e) {
+      C.value[0] = "/static/themes/" + e, v.value = !0;
     }
     function L() {
       v.value = !1;
     }
     function R() {
-      w.value.filePath && (s.value = !0, G({ themeName: p, content: _.value, path: w.value.filePath }).then((e) => {
+      w.value.filePath && (s.value = !0, G({ themePath: p, content: h.value, path: w.value.filePath }).then((e) => {
         e.code === 200 && e.data ? m.success("保存成功") : m.error(e.msg), s.value = !1;
       }));
     }
-    return B(), (e, d) => {
-      const y = u("el-button"), o = u("el-divider"), g = u("el-tree"), C = u("el-col"), M = u("el-row"), S = u("el-image-viewer"), q = X("loading");
+    return j(), (e, d) => {
+      const y = u("el-button"), o = u("el-divider"), g = u("el-tree"), F = u("el-col"), M = u("el-row"), S = u("el-image-viewer"), q = X("loading");
       return Z((l(), Y("div", null, [
-        h("div", $, [
-          h("h2", ee, "主题编辑: " + F(t(p)), 1),
+        _("div", $, [
+          _("h2", ee, "主题编辑: " + N(t(p)), 1),
           a(y, {
             type: "primary",
             style: { "margin-left": "auto" },
@@ -70,7 +70,7 @@ const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.creat
         a(o),
         a(M, { gutter: 20 }, {
           default: f(() => [
-            a(C, {
+            a(F, {
               xs: 24,
               sm: 24,
               md: 4,
@@ -81,15 +81,15 @@ const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.creat
                 a(g, {
                   style: { width: "100%", "max-height": "700px", overflow: "auto" },
                   data: t(x),
-                  props: I,
-                  onNodeClick: D,
+                  props: b,
+                  onNodeClick: B,
                   "node-key": "id",
                   "default-checked-keys": t(k),
                   ref_key: "treeRef",
                   ref: T
                 }, {
                   default: f(({ node: V, data: n }) => [
-                    h("span", te, [
+                    _("span", te, [
                       n.fileType === "dir" ? (l(), c(t(r), {
                         key: 0,
                         icon: "fa-regular fa-folder-open ",
@@ -115,7 +115,7 @@ const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.creat
                         icon: "fa-regular fa-file ",
                         class: "file-list-icon"
                       })),
-                      h("span", null, F(V.label), 1)
+                      _("span", null, N(V.label), 1)
                     ])
                   ]),
                   _: 1
@@ -123,7 +123,7 @@ const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.creat
               ]),
               _: 1
             }),
-            a(C, {
+            a(F, {
               xs: 24,
               sm: 24,
               md: 20,
@@ -132,8 +132,8 @@ const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.creat
             }, {
               default: f(() => [
                 a(t(H), {
-                  modelValue: _.value,
-                  "onUpdate:modelValue": d[0] || (d[0] = (V) => _.value = V),
+                  modelValue: h.value,
+                  "onUpdate:modelValue": d[0] || (d[0] = (V) => h.value = V),
                   placeholder: "请选择左侧要编辑的文件...",
                   style: { height: "700px" },
                   autofocus: !0,
@@ -149,7 +149,7 @@ const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.creat
         }),
         t(v) ? (l(), c(S, {
           key: 0,
-          "url-list": t(N),
+          "url-list": t(C),
           "hide-on-click-modal": "",
           onClose: L
         }, null, 8, ["url-list"])) : W("", !0)
@@ -158,7 +158,7 @@ const t = window.Vue.unref, F = window.Vue.toDisplayString, h = window.Vue.creat
       ]);
     };
   }
-}, re = /* @__PURE__ */ K(oe, [["__scopeId", "data-v-cef3a125"]]);
+}, re = /* @__PURE__ */ K(oe, [["__scopeId", "data-v-3f1727be"]]);
 export {
   re as default
 };

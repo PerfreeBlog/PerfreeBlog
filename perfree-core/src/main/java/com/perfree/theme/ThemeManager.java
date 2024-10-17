@@ -84,7 +84,7 @@ public class ThemeManager {
             // 读取 YAML 文件
             Yaml yaml = new Yaml();
             themeInfo = yaml.loadAs(input, ThemeInfo.class);
-            if (themeInfo.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, ""))) {
+            if (file.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, ""))) {
                 themeInfo.setIsActive(1);
             }
             themeInfo.setPath(file.getName());
@@ -151,29 +151,29 @@ public class ThemeManager {
     /**
      * 切换主题
      *
-     * @param themeName themeName
+     * @param themePath themePath
      * @return Boolean
      */
-    public Boolean swatchTheme(String themeName) {
-        ThemeInfo themeInfo = getThemeInfo(themeName);
+    public Boolean swatchTheme(String themePath) {
+        ThemeInfo themeInfo = getThemeInfo(themePath);
         if (null == themeInfo) {
             throw new ServiceException(ErrorCode.THEME_SWITCH_CHECK_ERROR);
         }
-        return optionApi.updateOptionByKeyAndIdentification(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, themeName);
+        return optionApi.updateOptionByKeyAndIdentification(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, themePath);
     }
 
     /**
      * 卸载主题(只卸载生产目录的,开发换目录不卸载)
      *
-     * @param themeName themeName
+     * @param themePath themePath
      * @return Boolean
      */
-    public Boolean unInstallTheme(String themeName) {
+    public Boolean unInstallTheme(String themePath) {
         String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
-        if (webTheme.equals(themeName)) {
+        if (webTheme.equals(themePath)) {
             throw new ServiceException(ErrorCode.THEME_UNINSTALL_ERROR_BY_USE);
         }
-        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themePath);
         if (file.exists()) {
             FileUtil.del(file.getAbsoluteFile());
             return true;
@@ -184,11 +184,11 @@ public class ThemeManager {
     /**
      * 获取主题配置信息
      *
-     * @param themeName themeName 可为空,为空获取当前默认主题
+     * @param themePath themePath 可为空,为空获取当前默认主题
      * @return ThemeInfo
      */
-    public ThemeInfo getThemeInfo(String themeName) {
-        File themeDirFile = getThemeDirFile(themeName);
+    public ThemeInfo getThemeInfo(String themePath) {
+        File themeDirFile = getThemeDirFile(themePath);
         if (null == themeDirFile) {
             return null;
         }
@@ -216,15 +216,15 @@ public class ThemeManager {
     /**
      * 获取主题所在目录的File对象,如果themeName为空则获取当前启用主题
      *
-     * @param themeName themeName
+     * @param themePath themePath
      * @return File
      */
-    private File getThemeDirFile(String themeName) {
-        if (StringUtils.isBlank(themeName)) {
-            themeName = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
+    private File getThemeDirFile(String themePath) {
+        if (StringUtils.isBlank(themePath)) {
+            themePath = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
         }
-        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
-        File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themePath);
+        File devFile = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themePath);
         if (null != devFile && devFile.exists()) {
             return devFile;
         }
@@ -234,16 +234,16 @@ public class ThemeManager {
         return null;
     }
 
-    public List<ThemeFile> getThemeFilesByName(String themeName) {
-        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+    public List<ThemeFile> getThemeFilesByName(String themePath) {
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themePath);
         if (!file.exists()) {
-            file = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+            file = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themePath);
         }
         if (null == file || !file.exists()) {
             return null;
         }
         List<ThemeFile> result = new ArrayList<>();
-        getThemeFilesByNameHandle(file, result, "-1", themeName);
+        getThemeFilesByNameHandle(file, result, "-1", themePath);
         return result.stream()
                 .sorted(Comparator.comparing(ThemeFile::getFileType, Comparator.comparing(s -> !s.equals("dir"))))
                 .collect(Collectors.toList());
@@ -275,8 +275,8 @@ public class ThemeManager {
         }
     }
 
-    public String getThemeFileContent(String path, String themeName) {
-        boolean validResult = validThemeFilePath(themeName, path);
+    public String getThemeFileContent(String path, String themePath) {
+        boolean validResult = validThemeFilePath(themePath, path);
         if (!validResult) {
             throw new ServiceException(ErrorCode.ACCESS_VIOLATION);
         }
@@ -306,10 +306,10 @@ public class ThemeManager {
         return true;
     }
 
-    private boolean validThemeFilePath (String themeName, String path){
-        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+    private boolean validThemeFilePath (String themePath, String path){
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themePath);
         if (!file.exists()) {
-            file = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeName);
+            file = getClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themePath);
         }
         if (null == file || !file.exists()) {
             return false;

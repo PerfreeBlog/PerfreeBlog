@@ -8,7 +8,7 @@ import lombok.Data;
 public class ThemeSaveFileContentReqVO {
     private String path;
 
-    private String themeName;
+    private String themePath;
 
     private String content;
 

@@ -2,16 +2,16 @@ function t() {
   return axios.get("/api/auth/theme/allTheme");
 }
 function a(e) {
-  return axios.post("/api/auth/theme/swatchTheme?themeName=" + e);
+  return axios.post("/api/auth/theme/swatchTheme?themePath=" + e);
 }
 function n(e) {
-  return axios.delete("/api/auth/theme/unInstallTheme?themeName=" + e);
+  return axios.delete("/api/auth/theme/unInstallTheme?themePath=" + e);
 }
 function h() {
   return axios.get("/api/auth/theme/getCurrentThemeSetting");
 }
 function i(e) {
-  return axios.get("/api/auth/theme/getThemeFilesByName?themeName=" + e);
+  return axios.get("/api/auth/theme/getThemeFilesByName?themePath=" + e);
 }
 function m(e) {
   return axios.post("/api/auth/theme/getThemeFileContent", e);

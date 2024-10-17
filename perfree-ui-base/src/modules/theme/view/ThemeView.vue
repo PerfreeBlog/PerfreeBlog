@@ -59,9 +59,9 @@
               </el-button>
             </div>
             <div class="theme-btn-item">
-              <el-button link class="theme-button" v-if="theme.isActive === 1">
+              <el-link class="theme-button" v-if="theme.isActive === 1" href="/" target="_blank">
                 <font-awesome-icon icon="fa-solid fa-external-link-square" class="theme-btn-icon" /> 访问
-              </el-button>
+              </el-link>
               <el-button link class="theme-button" v-if="theme.isActive === 0">
                 <font-awesome-icon icon="fa-solid fa-external-link-square" class="theme-btn-icon" /> 预览
               </el-button>
@@ -165,7 +165,7 @@ function activeTheme(theme) {
   if (theme.isActive === 1) {
     return;
   }
-  swatchThemeApi(theme.name).then(res => {
+  swatchThemeApi(theme.path).then(res => {
     if (res.code === 200) {
       ElMessage.success('主题启用成功');
       initList();
@@ -180,7 +180,7 @@ function activeTheme(theme) {
  * @param theme
  */
 function unInstallTheme(theme) {
-  unInstallThemeApi(theme.name).then(res => {
+  unInstallThemeApi(theme.path).then(res => {
     if (res.code === 200) {
       ElMessage.success('主题卸载成功');
       initList();
@@ -195,7 +195,7 @@ function toThemeSettingPage() {
 }
 
 function toThemeEditPage(theme) {
-  toPage(`主题编辑-[${theme.name}]`, '/admin/theme/edit/' + theme.name, '')
+  toPage(`主题编辑-[${theme.name}]`, '/admin/theme/edit/' + theme.path, '')
 }
 initList();
 </script>

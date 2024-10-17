@@ -4,7 +4,7 @@ export default module => {
         router: (menusRouter, moduleName) => {
             let router = [
                 {
-                    path: '/admin/theme/edit/:name',
+                    path: '/admin/theme/edit/:themePath',
                     name: 'themeEdit',
                     component: modules[`./view/ThemeEditView.vue`],
                     meta: {

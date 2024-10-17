@@ -687,7 +687,7 @@ CREATE TABLE `p_option`  (
 -- ----------------------------
 -- Records of p_option
 -- ----------------------------
-INSERT INTO `p_option` VALUES (1, 'WEB_THEME', 'Default', '默认主题', '2024-09-11 14:40:51', '2024-09-11 14:42:01', 1, 1, 'system');
+INSERT INTO `p_option` VALUES (1, 'WEB_THEME', 'default', '默认主题', '2024-09-11 14:40:51', '2024-09-11 14:42:01', 1, 1, 'system');
 INSERT INTO `p_option` VALUES (2, 'WEB_INIT', 'OFF', '网站是否已初始化', '2024-09-11 14:40:51', '2024-09-11 14:42:01', 1, 1, 'system');
 INSERT INTO `p_option` VALUES (3479, 'WEB_ICO', '', '网站ICO', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
 INSERT INTO `p_option` VALUES (3480, 'WEB_LOGO', '', '网站logo', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');

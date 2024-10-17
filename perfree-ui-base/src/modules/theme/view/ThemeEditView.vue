@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading">
     <div class="theme-header-box">
-      <h2 class="theme-editor-title">主题编辑: {{currThemeName}}</h2>
+      <h2 class="theme-editor-title">主题编辑: {{currThemePath}}</h2>
       <el-button type="primary" style="margin-left: auto;" @click="saveFile">保存</el-button>
     </div>
     <el-divider />
@@ -66,7 +66,7 @@ import {Codemirror} from 'vue-codemirror'
 import {javascript} from '@codemirror/lang-javascript'
 import {oneDark} from '@codemirror/theme-one-dark'
 
-const currThemeName = router.currentRoute.value.params.name;
+const currThemePath = router.currentRoute.value.params.themePath;
 let fileList = ref([]);
 let loading = ref(true)
 const defaultProps = {
@@ -87,7 +87,7 @@ const extensions = [javascript(), oneDark]
 const supportEditFileType = ['java', 'js', 'css', 'html', 'json', 'yaml', 'less', 'scss', 'txt', 'md']
 function initFileList() {
   loading.value = true;
-  getThemeFilesByName(currThemeName).then(res => {
+  getThemeFilesByName(currThemePath).then(res => {
     if (res.code === 200) {
       fileList.value = handleTree(res.data, "id", "pid",'children', '-1');
     } else {
@@ -112,7 +112,7 @@ function handleNodeClick(data) {
     return;
   }
   let param = {
-    themeName: currThemeName,
+    themePath: currThemePath,
     path:  data.filePath
   }
   loading.value = true;
@@ -144,7 +144,7 @@ function saveFile() {
     return
   }
   loading.value = true;
-  saveThemeFileContent({themeName: currThemeName, content: code.value, path: activeFile.value.filePath}).then(res => {
+  saveThemeFileContent({themePath: currThemePath, content: code.value, path: activeFile.value.filePath}).then(res => {
     if (res.code === 200 && res.data) {
       ElMessage.success('保存成功');
     } else {

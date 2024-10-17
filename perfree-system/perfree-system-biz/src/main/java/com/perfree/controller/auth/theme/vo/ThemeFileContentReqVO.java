@@ -8,6 +8,6 @@ import lombok.Data;
 public class ThemeFileContentReqVO {
     private String path;
 
-    private String themeName;
+    private String themePath;
 
 }
