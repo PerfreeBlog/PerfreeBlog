@@ -84,21 +84,21 @@ te({
   }
 });
 let E = [{ name: "首页", hasClose: !1, path: "/admin", currActive: !0 }];
-function S(o, _, d) {
-  o && E.findIndex((V) => V.path === _) < 0 && E.push({
+function S(o, p, d) {
+  o && E.findIndex((V) => V.path === p) < 0 && E.push({
     name: o,
     hasClose: !0,
-    path: _,
+    path: p,
     currActive: !1
   }), router.push({
-    path: _,
+    path: p,
     params: d
   });
 }
 const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = window.Vue.resolveDirective, s = window.Vue.withCtx, c = window.Vue.openBlock, T = window.Vue.createBlock, N = window.Vue.withDirectives, m = window.Vue.createElementBlock, n = window.Vue.createVNode, a = window.Vue.createElementVNode, h = window.Vue.unref, se = window.Vue.renderList, oe = window.Vue.Fragment, v = window.Vue.toDisplayString, ie = window.Vue.normalizeClass, w = window.Vue.createCommentVNode, le = window.Vue.isRef, ae = { class: "page" }, re = { style: { "text-align": "center", "margin-bottom": "10px", display: "flex", "justify-content": "center" } }, ce = {
   slot: "header",
   class: "header"
-}, de = { class: "theme-box-body" }, ue = { class: "theme-desc" }, me = { class: "theme-btn-box" }, fe = { class: "theme-btn-item" }, _e = { key: 0 }, pe = { key: 1 }, he = {
+}, de = { class: "theme-box-body" }, ue = { class: "theme-desc" }, me = { class: "theme-btn-box" }, fe = { class: "theme-btn-item" }, pe = { key: 0 }, _e = { key: 1 }, he = {
   key: 0,
   class: "theme-btn-item"
 }, we = { class: "theme-btn-item" }, ve = {
@@ -107,12 +107,12 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
 }, ge = { class: "theme-btn-item" }, f = window.ElementPlus.ElMessage, A = window.Vue.ref, be = {
   __name: "ThemeView",
   setup(o) {
-    let _ = A([]), d = A(!1), C = localStorage.getItem(Z.STORAGE_TOKEN), V = ee.baseURL, O = {
+    let p = A([]), d = A(!1), C = localStorage.getItem(Z.STORAGE_TOKEN), V = ee.baseURL, O = {
       Authorization: "Bearer " + JSON.parse(C).accessToken
     }, x = A();
     function g() {
       j().then((l) => {
-        _.value = l.data;
+        p.value = l.data;
       });
     }
     function U() {
@@ -141,7 +141,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
       S(`主题编辑-[${l.name}]`, "/admin/theme/edit/" + l.path, "");
     }
     return g(), (l, e) => {
-      const u = r("el-link"), z = r("el-image"), b = r("el-text"), p = r("font-awesome-icon"), k = r("el-button"), F = r("el-card"), $ = r("el-col"), q = r("el-row"), H = r("el-icon"), K = r("el-upload"), M = r("el-dialog"), R = ne("hasPermission");
+      const u = r("el-link"), z = r("el-image"), b = r("el-text"), _ = r("font-awesome-icon"), k = r("el-button"), F = r("el-card"), $ = r("el-col"), q = r("el-row"), H = r("el-icon"), K = r("el-upload"), M = r("el-dialog"), R = ne("hasPermission");
       return c(), m("div", ae, [
         a("div", re, [
           N((c(), T(u, {
@@ -184,7 +184,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
         ]),
         n(q, { gutter: 15 }, {
           default: s(() => [
-            (c(!0), m(oe, null, se(h(_), (t) => (c(), T($, {
+            (c(!0), m(oe, null, se(h(p), (t) => (c(), T($, {
               xs: 24,
               sm: 12,
               md: 8,
@@ -204,8 +204,8 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                     a("div", de, [
                       n(z, {
                         style: { width: "100%", height: "220px" },
-                        src: "/static/themes/" + t.name + "/" + t.screenshots,
-                        "preview-src-list": ["/static/themes/" + t.name + "/" + t.screenshots]
+                        src: "/static/themes/" + t.path + "/" + t.screenshots,
+                        "preview-src-list": ["/static/themes/" + t.path + "/" + t.screenshots]
                       }, null, 8, ["src", "preview-src-list"]),
                       a("div", ue, [
                         n(b, {
@@ -264,12 +264,12 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           onClick: (y) => B(t)
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-square-check",
                               class: ie({ "theme-btn-icon": !0, "theme-active": t.isActive === 1 })
                             }, null, 8, ["class"]),
-                            t.isActive === 0 ? (c(), m("span", _e, "启用")) : w("", !0),
-                            t.isActive === 1 ? (c(), m("span", pe, "已启用")) : w("", !0)
+                            t.isActive === 0 ? (c(), m("span", pe, "启用")) : w("", !0),
+                            t.isActive === 1 ? (c(), m("span", _e, "已启用")) : w("", !0)
                           ]),
                           _: 2
                         }, 1032, ["onClick"])
@@ -281,7 +281,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           onClick: e[0] || (e[0] = (y) => L())
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-wrench",
                               class: "theme-btn-icon"
                             }),
@@ -297,7 +297,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           onClick: (y) => G(t)
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-pencil-alt",
                               class: "theme-btn-icon"
                             }),
@@ -313,7 +313,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           onClick: (y) => I(t)
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-trash-can",
                               class: "theme-btn-icon"
                             }),
@@ -330,7 +330,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           target: "_blank"
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-external-link-square",
                               class: "theme-btn-icon"
                             }),
@@ -345,7 +345,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
                           target: "_blank"
                         }, {
                           default: s(() => [
-                            n(p, {
+                            n(_, {
                               icon: "fa-solid fa-external-link-square",
                               class: "theme-btn-icon"
                             }),
@@ -406,7 +406,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
       ]);
     };
   }
-}, xe = /* @__PURE__ */ X(be, [["__scopeId", "data-v-b5a33458"]]);
+}, xe = /* @__PURE__ */ X(be, [["__scopeId", "data-v-5b0dc4b7"]]);
 export {
   xe as default
 };
