@@ -16,8 +16,8 @@
          <div class="theme-box-body">
            <el-image
                style="width: 100%; height: 220px;"
-               :src="'/api/static/themes/' + theme.name + '/' + theme.screenshots"
-               :preview-src-list="['/api/static/themes/' + theme.name + '/' + theme.screenshots]">
+               :src="'/static/themes/' + theme.name + '/' + theme.screenshots"
+               :preview-src-list="['/static/themes/' + theme.name + '/' + theme.screenshots]">
            </el-image>
            <div class="theme-desc">
              <el-text line-clamp="1" class="theme-desc-text">
