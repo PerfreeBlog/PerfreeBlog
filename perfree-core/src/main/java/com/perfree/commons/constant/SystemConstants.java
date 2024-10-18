@@ -100,4 +100,5 @@ public class SystemConstants {
 
     public static final String COOKIE_ARTICLE_VIEW = "a";
     public static final String URL_JOURNAL = "/journal/";
+    public static final String THEME_TYPE_NODE = "VUE,ANGULAR,REACT";
 }

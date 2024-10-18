@@ -19,6 +19,7 @@ import com.perfree.service.attachConfig.AttachConfigService;
 import com.perfree.service.dictData.DictDataService;
 import com.perfree.service.option.OptionService;
 import com.perfree.service.plugins.PluginsService;
+import com.perfree.theme.ThemeManager;
 import org.dromara.hutool.core.io.file.FileUtil;
 import org.dromara.hutool.core.text.StrUtil;
 import org.slf4j.Logger;
@@ -57,13 +58,16 @@ public class AppInit implements ApplicationRunner {
 
     private final DictDataService dictDataService;
 
+    private final ThemeManager themeManager;
+
 
     public AppInit(OptionService optionService,  AttachConfigService attachConfigService,
-                   PluginsService pluginsService, DictDataService dictDataService) {
+                   PluginsService pluginsService, DictDataService dictDataService, ThemeManager themeManager) {
         this.optionService = optionService;
         this.attachConfigService = attachConfigService;
         this.pluginsService = pluginsService;
         this.dictDataService = dictDataService;
+        this.themeManager = themeManager;
     }
 
     @Override
@@ -152,6 +156,14 @@ public class AppInit implements ApplicationRunner {
         pluginsService.watchMonitorDevPlugins();
         pluginsService.initPlugins();
         LOGGER.info("-> 初始化插件完成");
+
+        LOGGER.info("-> 初始化主题处理逻辑....");
+        initThemeHandle();
+        LOGGER.info("-> 初始化主题处理逻辑");
+    }
+
+    private void initThemeHandle() {
+        themeManager.initThemeResourceHandle(null);
     }
 
     /**

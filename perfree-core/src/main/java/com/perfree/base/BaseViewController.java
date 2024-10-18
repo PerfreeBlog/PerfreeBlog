@@ -9,6 +9,8 @@ import com.perfree.constant.OptionConstant;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.system.api.option.dto.OptionDTO;
+import com.perfree.theme.ThemeManager;
+import com.perfree.theme.commons.ThemeInfo;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +28,9 @@ public class BaseViewController {
     @Resource
     private OptionCacheService optionCacheService;
 
+    @Resource
+    private ThemeManager themeManager;
+
     /**
      * 获取当前启用的主题
      * @return String
@@ -34,6 +39,7 @@ public class BaseViewController {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String previewTheme = request.getParameter(SystemConstants.PREVIEW_THEME_URL);
         if (StringUtils.isNotBlank(previewTheme)) {
+            themeManager.initThemeResourceHandle(previewTheme);
             return previewTheme;
         }
         OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM);
@@ -64,6 +70,13 @@ public class BaseViewController {
      * @return String
      */
     public String themeView(String view, String defaultView) {
+        ThemeInfo themeInfo = themeManager.getThemeInfo(currentTheme());
+        if (null != themeInfo && StringUtils.isNotBlank( themeInfo.getType())) {
+            String upperCase = themeInfo.getType().toUpperCase();
+            if (SystemConstants.THEME_TYPE_NODE.contains(upperCase)) {
+                return currentThemePage() + SystemConstants.FILE_SEPARATOR + "index.html";
+            }
+        }
         File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
                 currentTheme() + SystemConstants.FILE_SEPARATOR + view);
         File devFile = ClassPathFileUtil.getDevClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR +

@@ -3,6 +3,7 @@ package com.perfree.theme;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.constant.OptionConstant;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
@@ -24,17 +25,20 @@ import org.dromara.hutool.core.io.resource.ClassPathResource;
 import org.dromara.hutool.json.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -159,7 +163,9 @@ public class ThemeManager {
         if (null == themeInfo) {
             throw new ServiceException(ErrorCode.THEME_SWITCH_CHECK_ERROR);
         }
-        return optionApi.updateOptionByKeyAndIdentification(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, themePath);
+        Boolean result = optionApi.updateOptionByKeyAndIdentification(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, themePath);
+        initThemeResourceHandle(themePath);
+        return result;
     }
 
     /**
@@ -341,5 +347,49 @@ public class ThemeManager {
             pageTemplates.add("page/" + file.getName());
         }
         return pageTemplates;
+    }
+
+    public void initThemeResourceHandle(String themePath) {
+        if (StringUtils.isBlank(themePath)) {
+            themePath = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
+        }
+        if (StringUtils.isBlank(themePath)){
+            return;
+        }
+        ThemeInfo themeInfo = getThemeInfo(themePath);
+        if (null == themeInfo) {
+            return;
+        }
+        if (StringUtils.isBlank(themeInfo.getType())){
+            return;
+        }
+        String upperCase = themeInfo.getType().toUpperCase();
+        if (SystemConstants.THEME_TYPE_NODE.contains(upperCase)){
+            addStaticResourceHandler("file:./resources/static/themes/" + themePath + "/static/");
+        }
+    }
+
+    public void addStaticResourceHandler(String locationStr) {
+        try{
+            SimpleUrlHandlerMapping mapping = (SimpleUrlHandlerMapping) SpringBeanUtil.context.getBean("resourceHandlerMapping");
+            ResourceHttpRequestHandler handler = (ResourceHttpRequestHandler) mapping.getUrlMap().get("/static/**");
+            Class<?> clazz = handler.getClass();
+            Field field = clazz.getDeclaredField("locationValues");
+            field.setAccessible(true);
+            @SuppressWarnings("unchecked")
+            List<String> locationValues = (List<String>) field.get(handler);
+            if (locationValues.contains(locationStr)) {
+                return;
+            }
+            Set<String> locationStrings = new HashSet<>(locationValues);
+            locationStrings.add(locationStr);
+
+            handler.setLocationValues(locationStrings.stream().toList());
+            handler.getLocations().clear();
+            handler.getResourceResolvers().clear();
+            handler.afterPropertiesSet();
+        }catch (Exception e) {
+            throw new BeanInitializationException("Failed to init ResourceHttpRequestHandler", e);
+        }
     }
 }

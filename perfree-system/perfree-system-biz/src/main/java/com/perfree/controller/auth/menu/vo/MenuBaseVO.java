@@ -1,6 +1,8 @@
 package com.perfree.controller.auth.menu.vo;
 
 
+import com.perfree.commons.constant.SystemConstants;
+import com.perfree.commons.utils.UrlUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -60,4 +62,7 @@ public class MenuBaseVO {
     @NotNull(message = "菜单类型不能为空")
     private Integer type;
 
+    public String getUrl() {
+        return UrlUtil.buildUrl(url);
+    }
 }
