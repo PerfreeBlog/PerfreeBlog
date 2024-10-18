@@ -38,6 +38,10 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
+           if ( !request.getRequestURI().startsWith("/api/auth") ) {
+               filterChain.doFilter(request, response);
+               return;
+           }
             //  从request中获取token
             String token = this.getTokenFromHttpServletRequest(request);
             //  如果token不存在或者携带了刷新token(长度小于150,可以根据自己生成的refreshToken来判断),
