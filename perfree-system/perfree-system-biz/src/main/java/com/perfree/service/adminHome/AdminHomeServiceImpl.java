@@ -1,15 +1,23 @@
 package com.perfree.service.adminHome;
 
+import com.perfree.cache.OptionCacheService;
+import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.ArithmeticUtils;
+import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.adminHome.vo.*;
 import com.perfree.enjoy.directive.commons.vo.DirectiveStatisticVO;
+import com.perfree.enums.ErrorCode;
+import com.perfree.enums.OptionEnum;
+import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.service.attach.AttachService;
 import com.perfree.service.common.CommonService;
 import com.perfree.service.plugins.PluginsService;
 import com.perfree.service.user.UserService;
+import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
 import org.dromara.hutool.core.net.Ipv4Util;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
@@ -26,7 +34,8 @@ import java.util.Properties;
 @Service
 public class AdminHomeServiceImpl implements AdminHomeService {
 
-    private static final int OSHI_WAIT_SECOND = 1000;
+    @Value("${version}")
+    private String version;
 
     @Resource
     private UserService userService;
@@ -40,55 +49,35 @@ public class AdminHomeServiceImpl implements AdminHomeService {
     @Resource
     private CommonService commonService;
 
+    @Resource
+    private OptionCacheService optionCacheService;
+
 
     @Override
     public ServerInfoRespVO getServerInfo() {
         ServerInfoRespVO serverInfoRespVO = new ServerInfoRespVO();
         SystemInfo si = new SystemInfo();
-        HardwareAbstractionLayer hal = si.getHardware();
-
-        // CPU信息
-        long[] prevTicks = hal.getProcessor().getSystemCpuLoadTicks();
-        Util.sleep(OSHI_WAIT_SECOND);
-        long[] ticks = hal.getProcessor().getSystemCpuLoadTicks();
-        long nice = ticks[CentralProcessor.TickType.NICE.getIndex()] - prevTicks[CentralProcessor.TickType.NICE.getIndex()];
-        long irq = ticks[CentralProcessor.TickType.IRQ.getIndex()] - prevTicks[CentralProcessor.TickType.IRQ.getIndex()];
-        long softIrq = ticks[CentralProcessor.TickType.SOFTIRQ.getIndex()] - prevTicks[CentralProcessor.TickType.SOFTIRQ.getIndex()];
-        long steal = ticks[CentralProcessor.TickType.STEAL.getIndex()] - prevTicks[CentralProcessor.TickType.STEAL.getIndex()];
-        long cSys = ticks[CentralProcessor.TickType.SYSTEM.getIndex()] - prevTicks[CentralProcessor.TickType.SYSTEM.getIndex()];
-        long user = ticks[CentralProcessor.TickType.USER.getIndex()] - prevTicks[CentralProcessor.TickType.USER.getIndex()];
-        long ioWait = ticks[CentralProcessor.TickType.IOWAIT.getIndex()] - prevTicks[CentralProcessor.TickType.IOWAIT.getIndex()];
-        long idle = ticks[CentralProcessor.TickType.IDLE.getIndex()] - prevTicks[CentralProcessor.TickType.IDLE.getIndex()];
-        long totalCpu = user + nice + cSys + idle + ioWait + irq + softIrq + steal;
-
-        CpuInfoRespVO cpuInfoRespVO = CpuInfoRespVO.builder()
-                .cpuName(hal.getProcessor().getProcessorIdentifier().getName())
-                .cpuNum(hal.getProcessor().getLogicalProcessorCount())
-                .maxFrequency(hal.getProcessor().getMaxFreq())
-                .total(totalCpu)
-                .free(idle)
-                .ioWait(ioWait)
-                .used(user)
-                .sys(cSys)
-                .build();
-        serverInfoRespVO.setCpuInfo(cpuInfoRespVO);
-
-        // 内存信息
-        MemInfoRespVO memInfoRespVO = MemInfoRespVO.builder()
-                .total(hal.getMemory().getTotal())
-                .free(hal.getMemory().getAvailable())
-                .used(hal.getMemory().getTotal() - hal.getMemory().getAvailable())
-                .build();
-        serverInfoRespVO.setMemInfo(memInfoRespVO);
-
         // 服务器信息
         Properties props = System.getProperties();
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM);
+        String theme = "";
+        if (null != option) {
+            theme = option.getValue();
+        }
+
+        List<String> pluginList = new ArrayList<>();
+        for (PluginInfo pluginInfo : PluginInfoHolder.getAllPluginInfo()) {
+            pluginList.add(pluginInfo.getPluginConfig().getPlugin().getName());
+        }
         SysInfoRespVO sysInfoRespVO = SysInfoRespVO.builder()
                 .computerName(Ipv4Util.getLocalhost().getHostName())
                 .computerIp(Ipv4Util.getLocalhost().getHostAddress())
                 .osName(props.getProperty("os.name"))
                 .osArch(props.getProperty("os.arch"))
                 .userDir(props.getProperty("user.dir"))
+                .version(version)
+                .theme(theme)
+                .pluginList(pluginList)
                 .build();
         serverInfoRespVO.setSysInfo(sysInfoRespVO);
 

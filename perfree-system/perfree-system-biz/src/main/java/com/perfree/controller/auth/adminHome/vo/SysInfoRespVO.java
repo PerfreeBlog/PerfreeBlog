@@ -3,6 +3,8 @@ package com.perfree.controller.auth.adminHome.vo;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class SysInfoRespVO {
@@ -31,4 +33,19 @@ public class SysInfoRespVO {
      * 系统架构
      */
     private String osArch;
+
+    /**
+     * 版本
+     */
+    private String version;
+
+    /**
+     * 主题
+     */
+    private String theme;
+
+    /**
+     * 插件
+     */
+    private List<String> pluginList;
 }

@@ -7,11 +7,7 @@ import java.util.List;
 @Data
 public class ServerInfoRespVO {
 
-    private CpuInfoRespVO cpuInfo;
-
     private JvmInfoRespVO jvmInfo;
-
-    private MemInfoRespVO memInfo;
 
     private List<SysFileInfoRespVO> sysFileInfoList;
 
