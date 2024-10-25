@@ -78,7 +78,7 @@
             <dependency>
                 <groupId>org.dromara.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
-                <version>6.0.0-M15</version>
+                <version>6.0.0-M17</version>
             </dependency>
 
             <dependency>

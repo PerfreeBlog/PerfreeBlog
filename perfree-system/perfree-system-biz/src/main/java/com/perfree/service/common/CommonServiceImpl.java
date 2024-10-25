@@ -90,6 +90,7 @@ public class CommonServiceImpl implements CommonService{
         return true;
     }
 
+
     private void initTheme() {
         File file = ClassPathFileUtil.getClassPathFile("classpath:static/themes/default.zip");
         if (null == file || !file.exists()) {

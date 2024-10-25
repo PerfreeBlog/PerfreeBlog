@@ -3,6 +3,7 @@ package com.perfree.theme;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
+import com.perfree.commons.utils.FileUtils;
 import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.constant.OptionConstant;
 import com.perfree.enums.ErrorCode;
@@ -147,8 +148,8 @@ public class ThemeManager {
             throw new ServiceException(ErrorCode.THEME_CONFIG_YAML_ERROR);
         }
         File themeDir = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR + themeInfo.getName());
-        FileUtil.copy(unzip.getAbsoluteFile(), themeDir.getAbsoluteFile(), true);
-        FileUtil.del(unzip);
+        FileUtils.copyFile(unzip.getAbsolutePath(), themeDir.getAbsolutePath(), true);
+        FileUtil.del(unzip.getAbsoluteFile());
         return themeInfo;
     }
 

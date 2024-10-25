@@ -117,7 +117,7 @@ public class AttachServiceImpl extends ServiceImpl<AttachMapper, Attach> impleme
     @Override
     public Attach uploadAttachByUrl(String url) {
         try{
-            String fileName = IdUtil.fastSimpleUUID() + "." + FileNameUtil.extName(FileUtil.getName(Path.of(UrlUtil.toURI(url))));
+            String fileName = IdUtil.fastSimpleUUID() + "." + FileNameUtil.extName(FileNameUtil.getName(UrlUtil.toURI(url).getPath()));
             File tmpSaveFile = FileUtil.file(SystemConstants.UPLOAD_TEMP_PATH + File.separator + fileName);
             HttpDownloader.downloadFile(url, tmpSaveFile.getAbsoluteFile());
             // 自动检测文件 MIME 类型
