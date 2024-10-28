@@ -1,9 +1,10 @@
 package com.perfree.commons.utils;
 
-import org.dromara.hutool.core.io.IoUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.util.StrUtil;
+import jakarta.servlet.ServletRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.dromara.hutool.http.server.servlet.ServletUtil;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -62,7 +63,7 @@ public class WebUtils {
         if (request == null) {
             return null;
         }
-        return ServletUtil.getClientIP(request);
+        return IpUtils.getClientIp(request);
     }
 
     public static String getDevice() {
@@ -83,5 +84,9 @@ public class WebUtils {
             return "http://" + address.getHostAddress() + ":" + serverPort;
         } catch (UnknownHostException ignored) { }
         return null;
+    }
+
+    public static boolean isJsonRequest(ServletRequest request) {
+        return StrUtil.startWithIgnoreCase(request.getContentType(), MediaType.APPLICATION_JSON_VALUE);
     }
 }

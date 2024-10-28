@@ -1,5 +1,7 @@
 package com.perfree.mail;
 
+import cn.hutool.extra.mail.MailAccount;
+import cn.hutool.extra.mail.MailUtil;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.constant.MailLogConstant;
 import com.perfree.enums.ErrorCode;
@@ -11,8 +13,6 @@ import com.perfree.system.api.mailTemplate.MailTemplateApi;
 import com.perfree.system.api.mailTemplate.dto.MailTemplateDTO;
 import com.sun.mail.util.MailSSLSocketFactory;
 import jakarta.annotation.Resource;
-import org.dromara.hutool.extra.mail.MailAccount;
-import org.dromara.hutool.extra.mail.MailUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -83,7 +83,7 @@ public class MailService {
             MailAccount account = new MailAccount();
             account.setFrom(mailServerDTO.getUserName())
                     .setHost(mailServerDTO.getAddress()).setPort(mailServerDTO.getPort()).setSslEnable(mailServerDTO.getEnableSSL() == 0)
-                    .setAuth(true).setUser(mailServerDTO.getAccount()).setPass(mailServerDTO.getPassword().toCharArray());
+                    .setAuth(true).setUser(mailServerDTO.getAccount()).setPass(mailServerDTO.getPassword());
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
             sf.setTrustAllHosts(true);
             account.setCustomProperty("mail.smtp.ssl.socketFactory", sf);

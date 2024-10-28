@@ -1,8 +1,8 @@
 package com.perfree.commons.utils;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
 import com.perfree.commons.constant.SystemConstants;
-import org.dromara.hutool.core.io.file.FileUtil;
-import org.dromara.hutool.core.io.resource.ClassPathResource;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +18,7 @@ public class ClassPathFileUtil {
         }catch (Exception e) {
             try (InputStream inputStream = classPathResource.getStream()) {
                 String targetPath = SystemConstants.UPLOAD_TEMP_PATH + SystemConstants.FILE_SEPARATOR + path.replace("classpath:", "");
-                return FileUtil.copy(inputStream, new File(targetPath), StandardCopyOption.REPLACE_EXISTING);
+                return FileUtil.copyFile(inputStream, new File(targetPath), StandardCopyOption.REPLACE_EXISTING);
             } catch (IOException ex) {
                 return null;
             }

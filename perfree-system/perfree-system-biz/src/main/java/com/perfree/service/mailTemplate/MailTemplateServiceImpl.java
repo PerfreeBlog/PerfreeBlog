@@ -1,5 +1,6 @@
 package com.perfree.service.mailTemplate;
 
+import cn.hutool.core.util.ReUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.mailTemplate.vo.*;
@@ -8,7 +9,6 @@ import com.perfree.mail.MailService;
 import com.perfree.mapper.MailTemplateMapper;
 import com.perfree.model.MailTemplate;
 import jakarta.annotation.Resource;
-import org.dromara.hutool.core.regex.ReUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

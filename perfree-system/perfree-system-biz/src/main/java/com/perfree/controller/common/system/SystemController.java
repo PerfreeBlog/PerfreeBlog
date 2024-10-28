@@ -1,5 +1,10 @@
 package com.perfree.controller.common.system;
 
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.captcha.generator.RandomGenerator;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.IdUtil;
 import com.perfree.cache.CaptchaCacheService;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.constant.SystemConstants;
@@ -19,11 +24,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
-import org.dromara.hutool.core.codec.binary.Base64;
-import org.dromara.hutool.core.data.id.IdUtil;
-import org.dromara.hutool.swing.captcha.CaptchaUtil;
-import org.dromara.hutool.swing.captcha.LineCaptcha;
-import org.dromara.hutool.swing.captcha.generator.RandomGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.bind.annotation.*;
@@ -92,7 +92,7 @@ public class SystemController {
     @PostMapping("captchaImage")
     @Operation(summary = "获取验证码")
     public CommonResult<CaptchaImageRespVO> captchaImage(){
-        LineCaptcha lineCaptcha = CaptchaUtil.ofLineCaptcha(SystemConstants.CAPTCHA_IMAGE_WIDTH, SystemConstants.CAPTCHA_IMAGE_HEIGHT);
+        LineCaptcha lineCaptcha =  CaptchaUtil.createLineCaptcha(SystemConstants.CAPTCHA_IMAGE_WIDTH, SystemConstants.CAPTCHA_IMAGE_HEIGHT);
         lineCaptcha.setGenerator(new RandomGenerator(SystemConstants.CAPTCHA_RANDOM, SystemConstants.CAPTCHA_LENGTH));
         String code = lineCaptcha.getCode();
         String uuid = IdUtil.simpleUUID();

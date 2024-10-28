@@ -1,5 +1,6 @@
 package com.perfree.apiImpl.permission;
 
+import cn.hutool.core.util.ArrayUtil;
 import com.perfree.enums.RoleEnum;
 import com.perfree.model.Role;
 import com.perfree.security.SecurityFrameworkUtils;
@@ -8,7 +9,6 @@ import com.perfree.service.menu.MenuService;
 import com.perfree.service.role.RoleService;
 import com.perfree.system.api.permission.PermissionApi;
 import jakarta.annotation.Resource;
-import org.dromara.hutool.core.array.ArrayUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;

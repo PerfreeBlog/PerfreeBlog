@@ -1,12 +1,12 @@
 package com.perfree.plugin.handle;
 
+import cn.hutool.core.text.AntPathMatcher;
 import com.perfree.plugin.PluginApplicationContextHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.annotation.InterceptPath;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.dromara.hutool.core.text.AntPathMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;

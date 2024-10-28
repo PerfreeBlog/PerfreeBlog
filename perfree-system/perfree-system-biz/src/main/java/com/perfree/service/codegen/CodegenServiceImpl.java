@@ -1,11 +1,12 @@
 package com.perfree.service.codegen;
 
-import org.dromara.hutool.core.collection.CollUtil;
-import org.dromara.hutool.core.compress.ZipUtil;
-import org.dromara.hutool.core.data.id.IdUtil;
-import org.dromara.hutool.core.io.file.FileReader;
-import org.dromara.hutool.core.io.file.FileUtil;
-import org.dromara.hutool.core.io.file.PathUtil;
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileReader;
+import cn.hutool.core.io.file.PathUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
@@ -31,7 +32,6 @@ import com.perfree.model.CodegenColumn;
 import com.perfree.model.CodegenTable;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
-import org.dromara.hutool.core.text.StrUtil;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

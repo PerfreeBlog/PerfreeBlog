@@ -68,7 +68,7 @@
             <artifactId>mybatis-plus-generator</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.dromara.hutool</groupId>
+            <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
 

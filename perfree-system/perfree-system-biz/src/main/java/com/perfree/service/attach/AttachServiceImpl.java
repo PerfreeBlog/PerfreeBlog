@@ -1,6 +1,11 @@
 package com.perfree.service.attach;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.file.FileNameUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.URLUtil;
+import cn.hutool.http.HttpDownloader;
+import cn.hutool.http.HttpUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.CustomMultipartFile;
 import com.perfree.commons.common.PageResult;
@@ -20,11 +25,6 @@ import com.perfree.model.Attach;
 import com.perfree.system.api.attach.dto.AttachFileDTO;
 import com.perfree.system.api.attach.dto.AttachUploadDTO;
 import jakarta.annotation.Resource;
-import org.dromara.hutool.core.data.id.IdUtil;
-import org.dromara.hutool.core.io.file.FileNameUtil;
-import org.dromara.hutool.core.io.file.FileUtil;
-import org.dromara.hutool.core.net.url.UrlUtil;
-import org.dromara.hutool.http.client.HttpDownloader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,9 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -117,9 +115,9 @@ public class AttachServiceImpl extends ServiceImpl<AttachMapper, Attach> impleme
     @Override
     public Attach uploadAttachByUrl(String url) {
         try{
-            String fileName = IdUtil.fastSimpleUUID() + "." + FileNameUtil.extName(FileNameUtil.getName(UrlUtil.toURI(url).getPath()));
+            String fileName = IdUtil.fastSimpleUUID() + "." + FileNameUtil.extName(FileNameUtil.getName(URLUtil.toURI(url).getPath()));
             File tmpSaveFile = FileUtil.file(SystemConstants.UPLOAD_TEMP_PATH + File.separator + fileName);
-            HttpDownloader.downloadFile(url, tmpSaveFile.getAbsoluteFile());
+            HttpUtil.downloadFileFromUrl(url, tmpSaveFile.getAbsoluteFile());
             // 自动检测文件 MIME 类型
             String contentType = Files.probeContentType(Paths.get(tmpSaveFile.getAbsolutePath()));
             if (contentType == null) {

@@ -1,12 +1,12 @@
 package com.perfree.service.adminHome;
 
+import cn.hutool.core.net.Ipv4Util;
+import cn.hutool.core.net.NetUtil;
 import com.perfree.cache.OptionCacheService;
-import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.ArithmeticUtils;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.adminHome.vo.*;
 import com.perfree.enjoy.directive.commons.vo.DirectiveStatisticVO;
-import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.PluginInfoHolder;
@@ -16,18 +16,13 @@ import com.perfree.service.plugins.PluginsService;
 import com.perfree.service.user.UserService;
 import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
-import org.dromara.hutool.core.net.Ipv4Util;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
-import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.FileSystem;
 import oshi.software.os.OSFileStore;
-import oshi.util.Util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 
@@ -70,8 +65,8 @@ public class AdminHomeServiceImpl implements AdminHomeService {
             pluginList.add(pluginInfo.getPluginConfig().getPlugin().getName());
         }
         SysInfoRespVO sysInfoRespVO = SysInfoRespVO.builder()
-                .computerName(Ipv4Util.getLocalhost().getHostName())
-                .computerIp(Ipv4Util.getLocalhost().getHostAddress())
+                .computerName(NetUtil.getLocalHostName())
+                .computerIp(NetUtil.getLocalhostStr())
                 .osName(props.getProperty("os.name"))
                 .osArch(props.getProperty("os.arch"))
                 .userDir(props.getProperty("user.dir"))

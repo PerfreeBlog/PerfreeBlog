@@ -1,5 +1,6 @@
 package com.perfree.commons.excel;
 
+import cn.hutool.core.convert.Convert;
 import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.converters.ReadConverterContext;
 import com.alibaba.excel.converters.WriteConverterContext;
@@ -11,7 +12,6 @@ import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.perfree.cache.DictDataCacheService;
 import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.system.api.dictData.dto.DictDataDTO;
-import org.dromara.hutool.core.convert.ConvertUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +47,7 @@ public class DictExcelConvert implements Converter<Object> {
             return null;
         }
         Class<?> fieldClazz = contentProperty.getField().getType();
-        return ConvertUtil.convert(fieldClazz, byDictValueAndParentDictType.getDictValue());
+        return Convert.convert(fieldClazz, byDictValueAndParentDictType.getDictValue());
     }
 
     @Override

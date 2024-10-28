@@ -1,5 +1,7 @@
 package com.perfree.config;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import com.jfinal.template.Directive;
 import com.perfree.commons.directive.TemplateDirective;
 import com.perfree.commons.exception.ServiceException;
@@ -20,8 +22,6 @@ import com.perfree.service.dictData.DictDataService;
 import com.perfree.service.option.OptionService;
 import com.perfree.service.plugins.PluginsService;
 import com.perfree.theme.ThemeManager;
-import org.dromara.hutool.core.io.file.FileUtil;
-import org.dromara.hutool.core.text.StrUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

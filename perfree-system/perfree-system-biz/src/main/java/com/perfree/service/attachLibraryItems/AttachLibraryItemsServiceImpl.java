@@ -1,22 +1,20 @@
 package com.perfree.service.attachLibraryItems;
 
+import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.common.SortingField;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
-import com.perfree.controller.auth.attachLibrary.vo.AttachLibraryRespVO;
 import com.perfree.controller.auth.attachLibraryItems.vo.*;
 import com.perfree.convert.attachLibraryItems.AttachLibraryItemsConvert;
 import com.perfree.mapper.AttachLibraryItemsMapper;
 import com.perfree.model.AttachLibraryItems;
 import jakarta.annotation.Resource;
-import org.dromara.hutool.core.collection.ListUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

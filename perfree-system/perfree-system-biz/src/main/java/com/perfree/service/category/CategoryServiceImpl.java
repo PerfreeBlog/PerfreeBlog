@@ -1,5 +1,6 @@
 package com.perfree.service.category;
 
+import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
@@ -8,7 +9,6 @@ import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.CategoryConstant;
-import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.controller.auth.category.vo.*;
 import com.perfree.convert.category.CategoryConvert;
 import com.perfree.mapper.ArticleCategoryMapper;
@@ -16,7 +16,6 @@ import com.perfree.mapper.CategoryMapper;
 import com.perfree.model.Category;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
-import org.dromara.hutool.core.collection.ListUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

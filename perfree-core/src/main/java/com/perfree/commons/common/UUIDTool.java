@@ -1,6 +1,7 @@
 package com.perfree.commons.common;
 
-import org.dromara.hutool.core.data.id.IdUtil;
+
+import cn.hutool.core.util.IdUtil;
 
 public class UUIDTool {
     public String generateUUID() {

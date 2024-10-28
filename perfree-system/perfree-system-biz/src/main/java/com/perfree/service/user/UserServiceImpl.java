@@ -1,5 +1,8 @@
 package com.perfree.service.user;
 
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.CaptchaCacheService;
 import com.perfree.cache.FindPasswordCacheService;
@@ -32,9 +35,6 @@ import com.perfree.system.api.option.dto.OptionDTO;
 import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
-import org.dromara.hutool.core.data.id.IdUtil;
-import org.dromara.hutool.core.util.RandomUtil;
-import org.dromara.hutool.crypto.digest.DigestUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;

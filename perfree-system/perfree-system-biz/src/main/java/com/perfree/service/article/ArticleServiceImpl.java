@@ -1,5 +1,8 @@
 package com.perfree.service.article;
 
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.OptionCacheService;
@@ -8,9 +11,9 @@ import com.perfree.commons.common.SortingField;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
+import com.perfree.commons.utils.ServletUtils;
 import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.constant.ArticleConstant;
-import com.perfree.constant.AttachLibraryConstant;
 import com.perfree.constant.OptionConstant;
 import com.perfree.controller.auth.article.vo.*;
 import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
@@ -23,10 +26,10 @@ import com.perfree.convert.article.ArticleConvert;
 import com.perfree.convert.journalAttach.JournalAttachConvert;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
-import com.perfree.mapper.ArticleCategoryMapper;
 import com.perfree.mapper.ArticleMapper;
-import com.perfree.mapper.ArticleTagMapper;
-import com.perfree.model.*;
+import com.perfree.model.Article;
+import com.perfree.model.JournalAttach;
+import com.perfree.model.Tag;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.service.articleCategory.ArticleCategoryService;
 import com.perfree.service.articleTag.ArticleTagService;
@@ -39,14 +42,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.dromara.hutool.core.array.ArrayUtil;
-import org.dromara.hutool.core.collection.ListUtil;
-import org.dromara.hutool.http.html.HtmlUtil;
-import org.dromara.hutool.http.server.servlet.ServletUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.perfree.enums.ErrorCode.ARTICLE_SLUG_EXIST;
@@ -296,24 +294,21 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public void viewCountHandle(HttpServletRequest request, HttpServletResponse response, Integer id) {
-        Cookie cookie = ServletUtil.getCookie(request, SystemConstants.COOKIE_ARTICLE_VIEW);
-        if (null != cookie) {
-            if (StringUtils.isBlank(cookie.getValue())) {
-                articleMapper.updateViewCount(id);
-                ServletUtil.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
-                return;
-            }
-
-            String[] split = cookie.getValue().split("_");
+        String cookie = ServletUtils.getCookie(request, SystemConstants.COOKIE_ARTICLE_VIEW);
+        if (StringUtils.isBlank(cookie)) {
+            articleMapper.updateViewCount(id);
+            ServletUtils.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
+        } else {
+            String[] split = cookie.split("_");
             if (ArrayUtil.contains(split, String.valueOf(id))){
                 return;
             }
             articleMapper.updateViewCount(id);
-            ServletUtil.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, cookie.getValue() + "_" + id, 60 * 60);
-            return;
+            ServletUtils.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, cookie + "_" + id, 60 * 60);
         }
+
         articleMapper.updateViewCount(id);
-        ServletUtil.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
+        ServletUtils.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
     }
 
     @Override
