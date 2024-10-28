@@ -295,18 +295,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public void viewCountHandle(HttpServletRequest request, HttpServletResponse response, Integer id) {
         String cookie = ServletUtils.getCookie(request, SystemConstants.COOKIE_ARTICLE_VIEW);
-        if (StringUtils.isBlank(cookie)) {
-            articleMapper.updateViewCount(id);
-            ServletUtils.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
-        } else {
+        if (StringUtils.isNotBlank(cookie)) {
             String[] split = cookie.split("_");
             if (ArrayUtil.contains(split, String.valueOf(id))){
                 return;
             }
-            articleMapper.updateViewCount(id);
-            ServletUtils.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, cookie + "_" + id, 60 * 60);
         }
-
         articleMapper.updateViewCount(id);
         ServletUtils.addCookie(response,  SystemConstants.COOKIE_ARTICLE_VIEW, String.valueOf(id), 60 * 60);
     }
