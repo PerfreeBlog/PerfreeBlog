@@ -21,7 +21,6 @@ import com.perfree.theme.commons.ThemeFile;
 import com.perfree.theme.commons.ThemeInfo;
 import com.perfree.theme.commons.ThemeSetting;
 import jakarta.annotation.Resource;
-import okio.Options;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -34,7 +33,6 @@ import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
