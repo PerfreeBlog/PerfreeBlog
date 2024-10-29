@@ -53,18 +53,18 @@ public class PluginClassLoader extends URLClassLoader {
 
     public void addFile(File file) {
         try {
-            File codeFile = new File(file.getAbsolutePath() + File.separator + PluginHandleUtils.CODE_DIR);
-            addURL(codeFile.getCanonicalFile().toURI().toURL());
             File libFile = new File(file.getAbsolutePath() + File.separator + PluginHandleUtils.LIB_DIR);
             if (libFile.exists() && libFile.listFiles() != null) {
                 File[] files = libFile.listFiles();
-                if (null == files || files.length == 0) {
-                    return;
+                if (null != files) {
+                    for (File jarFile : files) {
+                        addURL(jarFile.getCanonicalFile().toURI().toURL());
+                    }
                 }
-                for (File jarFile : files) {
-                    addURL(jarFile.toURI().toURL());
-                }
+
             }
+            File codeFile = new File(file.getAbsolutePath() + File.separator + PluginHandleUtils.CODE_DIR);
+            addURL(codeFile.getCanonicalFile().toURI().toURL());
         } catch (IOException e) {
             LOGGER.error("PluginClassLoader addFile error", e);
             throw new RuntimeException(e);
@@ -91,6 +91,11 @@ public class PluginClassLoader extends URLClassLoader {
             return loadedClass;
         }
         loadedClass = findClassFromLocal(className);
+        if (loadedClass != null) {
+            return loadedClass;
+        }
+
+        loadedClass = super.findClass(className);
         if (loadedClass != null) {
             return loadedClass;
         }
