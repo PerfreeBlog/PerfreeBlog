@@ -37,13 +37,13 @@
       <el-button text @click="showAttachPanel"><el-icon><FolderOpened /></el-icon> 附件</el-button>
       <div style="position: relative">
         <el-button  text @click="showEmojiPanel = !showEmojiPanel"><svg t="1726277716465" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="24517" width="18" height="18"><path d="M754.4 185.6c0.4 0 0.8-0.3 0.8-0.8v-76c0-10.2 4.1-20 11.3-27.1s16.9-11.3 27.1-11.3 20 4.1 27.1 11.3c7.2 7.2 11.3 16.9 11.3 27.1v76c0 0.4 0.3 0.8 0.8 0.8h76c10.2 0 20 4.1 27.1 11.3 7.2 7.2 11.3 16.9 11.3 27.1s-4.1 20-11.3 27.1c-7.2 7.2-16.9 11.3-27.1 11.3h-76c-0.4 0-0.8 0.3-0.8 0.8v76c0 10.2-4.1 20-11.3 27.1-7.2 7.2-16.9 11.3-27.1 11.3s-20-4.1-27.1-11.3-11.3-16.9-11.3-27.1v-76c0-0.4-0.3-0.8-0.8-0.8h-76c-10.2 0-20-4.1-27.1-11.3-7.2-7.1-11.3-16.9-11.3-27.1s4.1-20 11.3-27.1c7.2-7.2 16.9-11.3 27.1-11.3h76zM819.2 544c0-35.4-5.5-69.4-15.7-101.4-0.2-0.5 0.2-1 0.7-1h78.3c0.4 0 0.7 0.2 0.8 0.6 13.8 54 16.9 112.4 6.8 172.6-28.3 169.3-160.8 302.9-329.9 332.4C276.4 996.6 34 754.2 83.3 470.4c29.4-169.1 163-301.7 332.3-330.1 60.3-10.1 118.6-7 172.7 6.8 0.3 0.1 0.6 0.4 0.6 0.8v78.3c0 0.5-0.5 0.9-1 0.7-32-10.2-66-15.7-101.4-15.7-194.7 0-350.4 167.2-331.2 365.9 15.2 157.5 140.6 283 298.1 298.1C652 894.4 819.2 738.7 819.2 544zM281.9 434.3c3.4-36.7 32.5-65.8 69.2-69.2 47.6-4.4 88.2 36.1 83.7 83.7-3.4 36.7-32.5 65.8-69.2 69.2-47.6 4.5-88.1-36-83.7-83.7z m325.2-69.2c-36.7 3.4-65.8 32.5-69.2 69.2-4.4 47.6 36.1 88.2 83.7 83.7 36.7-3.4 65.8-32.5 69.2-69.2 4.5-47.6-36-88.1-83.7-83.7zM486.4 800c54.3 0 106.5-21.5 144.9-59.9C669.5 701.9 691 650 691.2 596c0-0.4-0.3-0.8-0.8-0.8h-408c-0.4 0-0.8 0.4-0.8 0.8 0.2 54 21.7 105.9 59.9 144.1 38.4 38.4 90.6 59.9 144.9 59.9z" fill="#555555" p-id="24518"></path></svg>表情</el-button>
-        <emoji-picker class="emoji-picker" locale="zh_CN" ref="emojiPicker"  @emoji-click="onEmojiClick" v-if="showEmojiPanel"></emoji-picker>
+        <div ref="pickerRef" class="emoji-picker" v-show="showEmojiPanel"></div>
       </div>
       <el-switch v-model="addForm.visibility" :active-value="0" :inactive-value="1" inline-prompt style="--el-switch-on-color: var(--el-color-success); --el-switch-off-color: var(--el-color-warning); margin-right: 10px" active-text="所有人可见" inactive-text="仅自己可见"/>
       <el-button type="primary" @click="submitAddForm">发 布</el-button>
       <el-button @click="cancelHandle">取 消</el-button>
     </div>
-    <el-dialog v-model="attachShow" :title="title" :width="dialogWidth(900)" draggable destroy-on-close>
+    <el-dialog v-model="attachShow" :title="attachTitle" :width="dialogWidth(900)" draggable destroy-on-close>
       <attach-select-panel @update:selected-attach="selectAttach" :max="9" :attach-type="''"></attach-select-panel>
       <template #footer>
         <span class="dialog-footer">
@@ -55,13 +55,15 @@
   </div>
 </template>
 <script setup>
+import { Picker } from 'emoji-mart'
+import data from '@emoji-mart/data'
 import {nextTick, onMounted, onUnmounted, ref} from "vue";
-import 'emoji-picker-element';
 import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
 import {ElMessage} from "element-plus";
 import {FolderOpened} from "@element-plus/icons-vue";
 import {createJournalApi, getJournalApi, updateJournalApi} from "@/core/api/journal.js";
 import {dialogWidth} from "@/core/utils/perfree.js";
+import {useDark} from "@vueuse/core";
 
 const emits = defineEmits(['submitSuccess', 'close'])
 const props = defineProps(['updateId'])
@@ -76,11 +78,11 @@ const addForm = ref({
 });
 const addFormRef = ref();
 const editor = ref();
-const emojiPicker = ref();
 let attachShow = ref(false);
-let title = ref(null);
+let attachTitle = ref(null);
 let selectData = ref([])
 let loading = ref(false);
+const pickerRef = ref();
 
 function cancelHandle() {
   resetAddForm();
@@ -171,7 +173,7 @@ function selectAttach(data) {
 }
 
 function showAttachPanel() {
-  title.value = '选择图片';
+  attachTitle.value = '选择图片';
   resetAttachForm();
   attachShow.value = true;
 }
@@ -183,17 +185,35 @@ function showAttachPanel() {
 function onEmojiClick(emoji) {
   const start = editor.value.selectionStart;
   const end = editor.value.selectionEnd;
-  addForm.value.content = addForm.value.content.slice(0, start) +  emoji.detail.emoji.unicode + addForm.value.content.slice(end);
+  addForm.value.content = addForm.value.content.slice(0, start) +  emoji.native + addForm.value.content.slice(end);
   editor.value.focus();
   nextTick(() => {
     editor.value.focus();
     // 设置光标位置到 emoji 后面
-    const newPosition = start + emoji.detail.emoji.unicode.length;
+    const newPosition = start + emoji.native.length;
     editor.value.setSelectionRange(newPosition, newPosition);
   });
 }
 
+
+
 onMounted(() => {
+  if (!window.Picker) {
+    window.Picker = Picker;
+  }
+  if (pickerRef.value !== null) {
+    new window.Picker({
+      data,
+      parent: pickerRef.value,
+      searchPosition: 'sticky',
+      skinTonePosition: 'search',
+      previewPosition: 'none',
+      autoFocus: true,
+      onEmojiSelect: onEmojiClick,
+      locale: 'zh',
+      theme: useDark().value ? 'dark' : 'light'
+    });
+  }
   document.addEventListener('mousedown', handleCloseEmojiPicker);
 });
 
@@ -208,8 +228,10 @@ onUnmounted(() => {
  */
 function handleCloseEmojiPicker(event) {
   const path = event.composedPath();
-  if (emojiPicker.value && !path.includes(emojiPicker.value)) {
-    showEmojiPanel.value = false;
+  if (pickerRef.value && !path.includes(pickerRef.value)) {
+    if (showEmojiPanel.value) {
+      showEmojiPanel.value = false;
+    }
   }
 }
 

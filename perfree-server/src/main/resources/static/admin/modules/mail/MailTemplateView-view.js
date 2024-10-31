@@ -1,7 +1,7 @@
 import { d as me, p as tl } from "./lib/perfree.js";
 import { s as Ke, r as Me, u as ze, d as al, p as ol, b as nl, e as il, a as ul } from "./lib/@element-plus.js";
 import { f as rl } from "./lib/mailServer.js";
-import { H as dl } from "./lib/aieditor.js";
+import { e as dl } from "./lib/aieditor.js";
 function sl(m) {
   return axios.post("/api/auth/mailTemplate/page", m);
 }
@@ -57,9 +57,9 @@ const We = (m, P) => {
   for (const [o, V] of P)
     f[o] = V;
   return f;
-}, h = window.Vue.resolveComponent, n = window.Vue.createVNode, d = window.Vue.withCtx, k = window.Vue.unref, pe = window.Vue.renderList, ce = window.Vue.Fragment, b = window.Vue.openBlock, I = window.Vue.createElementBlock, ne = window.Vue.createBlock, K = window.Vue.createTextVNode, C = window.Vue.createElementVNode;
+}, h = window.Vue.resolveComponent, n = window.Vue.createVNode, d = window.Vue.withCtx, k = window.Vue.unref, pe = window.Vue.renderList, ce = window.Vue.Fragment, b = window.Vue.openBlock, B = window.Vue.createElementBlock, ne = window.Vue.createBlock, K = window.Vue.createTextVNode, C = window.Vue.createElementVNode;
 window.Vue.createCommentVNode;
-const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = window.Vue.withModifiers, Fe = window.Vue.isRef, kl = { class: "page" }, Cl = { class: "search-box" }, xl = { class: "table-box" }, Tl = { class: "attach-list-box" }, Al = ["onClick"], Sl = { class: "attach-preview" }, $l = { class: "imgLoading" }, Fl = {
+const Le = window.Vue.toDisplayString, Ie = window.Vue.normalizeClass, yl = window.Vue.withModifiers, Fe = window.Vue.isRef, kl = { class: "page" }, Cl = { class: "search-box" }, xl = { class: "table-box" }, Tl = { class: "attach-list-box" }, Al = ["onClick"], Sl = { class: "attach-preview" }, $l = { class: "imgLoading" }, Fl = {
   key: 1,
   preload: "none",
   controls: "",
@@ -76,7 +76,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
   key: 2,
   controls: "",
   preload: "none"
-}, Hl = ["src"], Il = { key: 3 }, Bl = { class: "showForm" }, Pl = { class: "dialog-footer" }, Ol = window.Vue.computed, Dl = window.Vue.reactive, U = window.Vue.ref, ie = window.ElementPlus.ElMessage, ql = {
+}, Il = ["src"], Bl = { key: 3 }, Hl = { class: "showForm" }, Pl = { class: "dialog-footer" }, Ol = window.Vue.computed, Dl = window.Vue.reactive, U = window.Vue.ref, ie = window.ElementPlus.ElMessage, ql = {
   __name: "attach-select-panel",
   props: ["attachType", "max"],
   emits: ["update:selectedAttach"],
@@ -102,7 +102,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
     }), X = Dl({
       name: [{ required: !0, message: "请输入附件名称", trigger: "blur" }]
     }), c = U();
-    let p = U(), B = U(!1), W = U([]);
+    let p = U(), H = U(!1), W = U([]);
     const y = U({
       attachConfigId: "",
       attachGroup: "default",
@@ -133,7 +133,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
         desc: ""
       }, O.value && O.value.resetFields();
     }
-    function H() {
+    function I() {
       v.attachType && (o.value.type = v.attachType), L.value = !0, wl(o.value).then((s) => {
         s.data.list.forEach((l) => {
           l.selected = S.value.has(l.id);
@@ -148,7 +148,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
         name: "",
         type: "",
         attachGroup: ""
-      }, f.value.resetFields(), H();
+      }, f.value.resetFields(), I();
     }
     function Te(s) {
       if (!s.selected && S.value.size >= v.max) {
@@ -170,18 +170,18 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
     function Se() {
       O.value.validate((s) => {
         s && gl(r.value).then((l) => {
-          l.code === 200 ? (ie.success("修改成功"), g.value = !1, de(), H()) : ie.error(l.msg);
+          l.code === 200 ? (ie.success("修改成功"), g.value = !1, de(), I()) : ie.error(l.msg);
         });
       });
     }
     function w() {
-      ae(), H();
+      ae(), I();
     }
     function e(s, l, Z) {
       s.code === 200 ? ie.success(`[${l.name}]上传成功`) : (ie.error(s.msg), p.value.handleRemove(l));
     }
     function $() {
-      T(), q.value = "上传附件", fe(), ae(), B.value = !0;
+      T(), q.value = "上传附件", fe(), ae(), H.value = !0;
     }
     function T() {
       y.value = {
@@ -200,9 +200,9 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
     function ve(s) {
       ie.error("上传失败,请检查网络是否通通畅");
     }
-    return ae(), H(), (s, l) => {
+    return ae(), I(), (s, l) => {
       const Z = h("el-input"), F = h("el-form-item"), M = h("el-option"), Y = h("el-select"), ee = h("el-button"), se = h("el-form"), $e = h("Loading"), le = h("el-icon"), j = h("el-image"), we = h("el-text"), a = h("InfoFilled"), oe = h("SuccessFilled"), Qe = h("el-pagination"), Xe = h("el-link"), Ne = h("el-col"), Ye = h("el-row"), Re = h("el-dialog"), el = h("el-upload");
-      return b(), I("div", kl, [
+      return b(), B("div", kl, [
         C("div", Cl, [
           n(se, {
             inline: !0,
@@ -235,7 +235,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                     style: { width: "200px" }
                   }, {
                     default: d(() => [
-                      (b(!0), I(ce, null, pe(k(R), (t) => (b(), ne(M, {
+                      (b(!0), B(ce, null, pe(k(R), (t) => (b(), ne(M, {
                         key: t.attachGroup,
                         label: t.attachGroup,
                         value: t.attachGroup
@@ -250,7 +250,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                 default: d(() => [
                   n(ee, {
                     type: "primary",
-                    onClick: H,
+                    onClick: I,
                     icon: k(Ke)
                   }, {
                     default: d(() => l[16] || (l[16] = [
@@ -292,8 +292,8 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
         ]),
         C("div", xl, [
           C("div", Tl, [
-            (b(!0), I(ce, null, pe(k(V), (t) => (b(), I("div", {
-              class: He({ "attach-block": !0, selected: t.selected }),
+            (b(!0), B(ce, null, pe(k(V), (t) => (b(), B("div", {
+              class: Ie({ "attach-block": !0, selected: t.selected }),
               onClick: (ll) => Te(t)
             }, [
               C("div", Sl, [
@@ -315,11 +315,11 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                     ])
                   ]),
                   _: 2
-                }, 1032, ["src"])) : t.type && t.type === "video" ? (b(), I("video", Fl, [
+                }, 1032, ["src"])) : t.type && t.type === "video" ? (b(), B("video", Fl, [
                   C("source", {
                     src: t.url
                   }, null, 8, Ul)
-                ])) : (b(), I("div", El, Le(t.path.split(".").pop()), 1))
+                ])) : (b(), B("div", El, Le(t.path.split(".").pop()), 1))
               ]),
               C("div", Ml, [
                 n(we, {
@@ -333,7 +333,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                 }, 1024)
               ]),
               C("div", {
-                class: He({ "operate-mask": !0, selected: t.selected })
+                class: Ie({ "operate-mask": !0, selected: t.selected })
               }, null, 2),
               C("div", Nl, [
                 n(le, {
@@ -363,7 +363,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
             layout: "total,sizes,prev, pager, next, jumper",
             background: "",
             small: "",
-            onChange: H,
+            onChange: I,
             total: o.value.total
           }, null, 8, ["current-page", "page-size", "total"])
         ]),
@@ -419,15 +419,15 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                         "preview-src-list": [r.value.url],
                         "initial-index": 4,
                         fit: "cover"
-                      }, null, 8, ["src", "preview-src-list"])) : r.value.type && r.value.type === "video" ? (b(), I("video", zl, [
+                      }, null, 8, ["src", "preview-src-list"])) : r.value.type && r.value.type === "video" ? (b(), B("video", zl, [
                         C("source", {
                           src: r.value.url
                         }, null, 8, Gl)
-                      ])) : r.value.type && r.value.type === "audio" ? (b(), I("audio", Ll, [
+                      ])) : r.value.type && r.value.type === "audio" ? (b(), B("audio", Ll, [
                         C("source", {
                           src: r.value.url
-                        }, null, 8, Hl)
-                      ])) : (b(), I("i", Il, [
+                        }, null, 8, Il)
+                      ])) : (b(), B("i", Bl, [
                         l[20] || (l[20] = K("无法预览，点击 ")),
                         n(Xe, {
                           type: "primary",
@@ -454,7 +454,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                   xl: 12
                 }, {
                   default: d(() => [
-                    C("div", Bl, [
+                    C("div", Hl, [
                       n(se, {
                         ref_key: "showFormRef",
                         ref: O,
@@ -497,7 +497,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                                 "allow-create": ""
                               }, {
                                 default: d(() => [
-                                  (b(!0), I(ce, null, pe(k(R), (t) => (b(), ne(M, {
+                                  (b(!0), B(ce, null, pe(k(R), (t) => (b(), ne(M, {
                                     key: t.attachGroup,
                                     label: t.attachGroup,
                                     value: t.attachGroup
@@ -555,8 +555,8 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
           _: 1
         }, 8, ["modelValue", "title", "width"]),
         n(Re, {
-          modelValue: k(B),
-          "onUpdate:modelValue": l[15] || (l[15] = (t) => Fe(B) ? B.value = t : B = t),
+          modelValue: k(H),
+          "onUpdate:modelValue": l[15] || (l[15] = (t) => Fe(H) ? H.value = t : H = t),
           title: k(q),
           width: k(me)(600),
           draggable: "",
@@ -583,7 +583,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                       clearable: ""
                     }, {
                       default: d(() => [
-                        (b(!0), I(ce, null, pe(k(W), (t) => (b(), ne(M, {
+                        (b(!0), B(ce, null, pe(k(W), (t) => (b(), ne(M, {
                           key: t.id,
                           label: t.name,
                           value: t.id
@@ -607,7 +607,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
                       "allow-create": ""
                     }, {
                       default: d(() => [
-                        (b(!0), I(ce, null, pe(k(R), (t) => (b(), ne(M, {
+                        (b(!0), B(ce, null, pe(k(R), (t) => (b(), ne(M, {
                           key: t.attachGroup,
                           label: t.attachGroup,
                           value: t.attachGroup
@@ -668,7 +668,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
       ]);
     };
   }
-}, Zl = /* @__PURE__ */ We(ql, [["__scopeId", "data-v-3b66d397"]]), jl = window.Vue.normalizeStyle, Ie = window.Vue.createElementVNode, te = window.Vue.unref, _e = window.Vue.createVNode, Kl = window.Vue.toDisplayString, Be = window.Vue.openBlock, Pe = window.Vue.createElementBlock, Jl = window.Vue.createCommentVNode, Oe = window.Vue.createTextVNode, De = window.Vue.resolveComponent, ge = window.Vue.withCtx, qe = window.Vue.isRef, Wl = window.Vue.Fragment, Ql = { class: "dialog-footer" }, Xl = { key: 0 }, Yl = window.Vue.onMounted, et = window.Vue.onUnmounted, ue = window.Vue.ref, lt = window.Vue.watch, Ve = window.ElementPlus.ElMessage, tt = {
+}, Zl = /* @__PURE__ */ We(ql, [["__scopeId", "data-v-3b66d397"]]), jl = window.Vue.normalizeStyle, Be = window.Vue.createElementVNode, te = window.Vue.unref, _e = window.Vue.createVNode, Kl = window.Vue.toDisplayString, He = window.Vue.openBlock, Pe = window.Vue.createElementBlock, Jl = window.Vue.createCommentVNode, Oe = window.Vue.createTextVNode, De = window.Vue.resolveComponent, ge = window.Vue.withCtx, qe = window.Vue.isRef, Wl = window.Vue.Fragment, Ql = { class: "dialog-footer" }, Xl = { key: 0 }, Yl = window.Vue.onMounted, et = window.Vue.onUnmounted, ue = window.Vue.ref, lt = window.Vue.watch, Ve = window.ElementPlus.ElMessage, tt = {
   __name: "ai-editor",
   props: ["initValue", "height"],
   setup(m, { expose: P }) {
@@ -776,7 +776,7 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
     }
     function R() {
       let c = "";
-      S.value.forEach((p, B) => {
+      S.value.forEach((p, H) => {
         E.value === "img" && (c += `![${p.name}](${p.url})`), E.value === "video" && (c += `<video src="${p.url}" controls="controls" width="100%"></video>`), E.value === "other" && (c += `[${p.name}](${p.url})`);
       }), o.insert(c), V.value = !1, S.value = [];
     }
@@ -796,9 +796,9 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
       resetContent: r,
       getValue: X
     }), (c, p) => {
-      const B = De("el-button"), W = De("el-dialog");
-      return Be(), Pe(Wl, null, [
-        Ie("div", {
+      const H = De("el-button"), W = De("el-dialog");
+      return He(), Pe(Wl, null, [
+        Be("div", {
           ref_key: "divRef",
           ref: f,
           style: jl({ height: g.height })
@@ -812,18 +812,18 @@ const Le = window.Vue.toDisplayString, He = window.Vue.normalizeClass, yl = wind
           "destroy-on-close": ""
         }, {
           footer: ge(() => [
-            Ie("span", Ql, [
-              _e(B, {
+            Be("span", Ql, [
+              _e(H, {
                 type: "primary",
                 onClick: R
               }, {
                 default: ge(() => [
                   p[2] || (p[2] = Oe("确 定")),
-                  te(S).length > 0 ? (Be(), Pe("span", Xl, "(已选" + Kl(te(S).length) + "个)", 1)) : Jl("", !0)
+                  te(S).length > 0 ? (He(), Pe("span", Xl, "(已选" + Kl(te(S).length) + "个)", 1)) : Jl("", !0)
                 ]),
                 _: 1
               }),
-              _e(B, {
+              _e(H, {
                 onClick: p[0] || (p[0] = (y) => {
                   qe(V) ? V.value = !1 : V = !1, O();
                 })
@@ -884,7 +884,7 @@ const ot = window.Vue.toDisplayString, be = window.Vue.isRef, nt = { class: "pag
       mailTemplateId: "",
       receiveMail: "",
       mailParams: {}
-    }), p = A(), B = je({
+    }), p = A(), H = je({
       receiveMail: [
         { required: !0, message: "收件邮箱不能为空", trigger: "blur" },
         { type: "email", message: "请输入正确的邮箱地址", trigger: ["blur", "change"] }
@@ -895,17 +895,17 @@ const ot = window.Vue.toDisplayString, be = window.Vue.isRef, nt = { class: "pag
     function y() {
       o.value.mailContent = L.value.getValue().parseContent, E.value.validate((w) => {
         w && (o.value.id ? cl(o.value).then((e) => {
-          e.code === 200 ? (J.success("操作成功"), v.value = !1, H(), D()) : J.error(e.msg);
+          e.code === 200 ? (J.success("操作成功"), v.value = !1, I(), D()) : J.error(e.msg);
         }) : pl(o.value).then((e) => {
-          e.code === 200 ? (J.success("操作成功"), v.value = !1, H(), D()) : J.error(e.msg);
+          e.code === 200 ? (J.success("操作成功"), v.value = !1, I(), D()) : J.error(e.msg);
         }));
       });
     }
     function ye() {
-      H(), g.value = "添加邮件模板", v.value = !0;
+      I(), g.value = "添加邮件模板", v.value = !0;
     }
     function ke(w) {
-      H(), g.value = "修改邮件模板", v.value = !0, Ge(w.id).then((e) => {
+      I(), g.value = "修改邮件模板", v.value = !0, Ge(w.id).then((e) => {
         o.value = e.data, P.value = o.value.mailContent;
       });
     }
@@ -937,7 +937,7 @@ const ot = window.Vue.toDisplayString, be = window.Vue.isRef, nt = { class: "pag
         mailServerId: null
       }, S.value.resetFields(), D();
     }
-    function H() {
+    function I() {
       P.value = "", L.value && L.value.resetContent(), o.value = {
         id: null,
         name: null,
@@ -1280,7 +1280,7 @@ const ot = window.Vue.toDisplayString, be = window.Vue.isRef, nt = { class: "pag
               }),
               i(s, {
                 onClick: e[12] || (e[12] = (a) => {
-                  be(v) ? v.value = !1 : v = !1, H();
+                  be(v) ? v.value = !1 : v = !1, I();
                 })
               }, {
                 default: u(() => e[27] || (e[27] = [
@@ -1465,7 +1465,7 @@ const ot = window.Vue.toDisplayString, be = window.Vue.isRef, nt = { class: "pag
               model: c.value,
               "label-width": "200px",
               "status-icon": "",
-              rules: B
+              rules: H
             }, {
               default: u(() => [
                 i(T, {

@@ -1,6 +1,4 @@
-function Ml(n) {
-  return n && n.__esModule && Object.prototype.hasOwnProperty.call(n, "default") ? n.default : n;
-}
+import { g as Ml } from "./codemirror.js";
 function _l(n) {
   return n instanceof Map ? n.clear = n.delete = n.set = function() {
     throw new Error("map is read-only");
@@ -48468,8 +48466,8 @@ u.registerLanguage("zephir", em());
 u.HighlightJS = u;
 u.default = u;
 var tm = u;
-const np = /* @__PURE__ */ Ml(tm);
-function ap(n) {
+const ap = /* @__PURE__ */ Ml(tm);
+function rp(n) {
   const e = {
     className: "attr",
     begin: /"(\\.|[^\\"\r\n])*"(?=\s*:)/,
@@ -48505,6 +48503,6 @@ function ap(n) {
   };
 }
 export {
-  np as H,
-  ap as j
+  ap as H,
+  rp as j
 };

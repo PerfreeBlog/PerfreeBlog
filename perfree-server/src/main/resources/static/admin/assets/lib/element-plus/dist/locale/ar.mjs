@@ -1,4 +1,4 @@
-/*! Element Plus v2.8.3 */
+/*! Element Plus v2.8.6 */
 
 var ar = {
   name: "ar",

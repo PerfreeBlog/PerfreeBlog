@@ -1,10 +1,10 @@
-/*! Element Plus v2.8.3 */
+/*! Element Plus v2.8.6 */
 
 var de = {
   name: "de",
   el: {
     breadcrumb: {
-      label: "Breadcrumb"
+      label: "Brotkr\xFCmel"
     },
     colorpicker: {
       confirm: "OK",
@@ -86,12 +86,12 @@ var de = {
       pagesize: " pro Seite",
       total: "Gesamt {total}",
       pageClassifier: "",
-      page: "Page",
-      prev: "Go to previous page",
-      next: "Go to next page",
-      currentPage: "page {pager}",
-      prevPages: "Previous {pager} pages",
-      nextPages: "Next {pager} pages"
+      page: "Seite",
+      prev: "Zur vorherigen Seite gehen",
+      next: "Zur n\xE4chsten Seite gehen",
+      currentPage: "Seite {pager}",
+      prevPages: "Vorherige {pager} Seiten",
+      nextPages: "N\xE4chste {pager} Seiten"
     },
     messagebox: {
       confirm: "OK",
@@ -138,9 +138,9 @@ var de = {
       cancelButtonText: "Nein"
     },
     carousel: {
-      leftArrow: "Carousel arrow left",
-      rightArrow: "Carousel arrow right",
-      indicator: "Carousel switch to index {index}"
+      leftArrow: "Karussell-Pfeil links",
+      rightArrow: "Karussell-Pfeil rechts",
+      indicator: "Karussell zu Index {index} wechseln"
     }
   }
 };

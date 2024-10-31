@@ -1,7 +1,7 @@
 import { s as yt, r as bt, u as Me, f as Ct } from "./lib/@element-plus.js";
 import { _ as ie, d as ne, c as kt, h as xt, g as $t, u as At, t as Ue, a as Fe, b as Et, e as Nt } from "./lib/tabs.js";
 import { V as St } from "./lib/vditor.js";
-import { H as Tt } from "./lib/aieditor.js";
+import { e as Tt } from "./lib/aieditor.js";
 import { p as Re } from "./lib/js-pinyin.js";
 function Bt(A) {
   return axios.post("/api/auth/attach/page", A);
@@ -34,7 +34,7 @@ function zt() {
 }
 const C = window.Vue.resolveComponent, n = window.Vue.createVNode, r = window.Vue.withCtx, x = window.Vue.unref, te = window.Vue.renderList, le = window.Vue.Fragment, k = window.Vue.openBlock, F = window.Vue.createElementBlock, K = window.Vue.createBlock, G = window.Vue.createTextVNode, $ = window.Vue.createElementVNode;
 window.Vue.createCommentVNode;
-const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = window.Vue.withModifiers, ke = window.Vue.isRef, Lt = { class: "page" }, Ht = { class: "search-box" }, It = { class: "table-box" }, Ot = { class: "attach-list-box" }, Dt = ["onClick"], Pt = { class: "attach-preview" }, Kt = { class: "imgLoading" }, Zt = {
+const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = window.Vue.withModifiers, ke = window.Vue.isRef, Lt = { class: "page" }, It = { class: "search-box" }, Ht = { class: "table-box" }, Ot = { class: "attach-list-box" }, Dt = ["onClick"], Pt = { class: "attach-preview" }, Kt = { class: "imgLoading" }, Zt = {
   key: 1,
   preload: "none",
   controls: "",
@@ -152,7 +152,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
     function it() {
       P(), R();
     }
-    function ut(h, l, H) {
+    function ut(h, l, I) {
       h.code === 200 ? Z.success(`[${l.name}]上传成功`) : (Z.error(h.msg), a.value.handleRemove(l));
     }
     function st() {
@@ -176,9 +176,9 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
       Z.error("上传失败,请检查网络是否通通畅");
     }
     return P(), R(), (h, l) => {
-      const H = C("el-input"), N = C("el-form-item"), de = C("el-option"), ce = C("el-select"), ee = C("el-button"), Ce = C("el-form"), pt = C("Loading"), pe = C("el-icon"), Se = C("el-image"), mt = C("el-text"), ft = C("InfoFilled"), vt = C("SuccessFilled"), wt = C("el-pagination"), ht = C("el-link"), Te = C("el-col"), Vt = C("el-row"), Be = C("el-dialog"), gt = C("el-upload");
+      const I = C("el-input"), N = C("el-form-item"), de = C("el-option"), ce = C("el-select"), ee = C("el-button"), Ce = C("el-form"), pt = C("Loading"), pe = C("el-icon"), Se = C("el-image"), mt = C("el-text"), ft = C("InfoFilled"), vt = C("SuccessFilled"), wt = C("el-pagination"), ht = C("el-link"), Te = C("el-col"), Vt = C("el-row"), Be = C("el-dialog"), gt = C("el-upload");
       return k(), F("div", Lt, [
-        $("div", Ht, [
+        $("div", It, [
           n(Ce, {
             inline: !0,
             model: e.value,
@@ -189,7 +189,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
             default: r(() => [
               n(N, { label: "附件名称" }, {
                 default: r(() => [
-                  n(H, {
+                  n(I, {
                     modelValue: e.value.name,
                     "onUpdate:modelValue": l[0] || (l[0] = (o) => e.value.name = o),
                     placeholder: "请输入附件名称",
@@ -265,7 +265,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
             _: 1
           }, 8, ["model"])
         ]),
-        $("div", It, [
+        $("div", Ht, [
           $("div", Ot, [
             (k(!0), F(le, null, te(x(s), (o) => (k(), F("div", {
               class: Ge({ "attach-block": !0, selected: o.selected }),
@@ -444,7 +444,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                             prop: "name"
                           }, {
                             default: r(() => [
-                              n(H, {
+                              n(I, {
                                 modelValue: i.value.name,
                                 "onUpdate:modelValue": l[4] || (l[4] = (o) => i.value.name = o)
                               }, null, 8, ["modelValue"])
@@ -453,7 +453,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                           }),
                           n(N, { label: "附件类型" }, {
                             default: r(() => [
-                              n(H, {
+                              n(I, {
                                 modelValue: i.value.type,
                                 "onUpdate:modelValue": l[5] || (l[5] = (o) => i.value.type = o),
                                 disabled: ""
@@ -485,7 +485,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                           }),
                           n(N, { label: "存储路径" }, {
                             default: r(() => [
-                              n(H, {
+                              n(I, {
                                 modelValue: i.value.path,
                                 "onUpdate:modelValue": l[7] || (l[7] = (o) => i.value.path = o),
                                 disabled: ""
@@ -495,7 +495,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                           }),
                           n(N, { label: "访问地址" }, {
                             default: r(() => [
-                              n(H, {
+                              n(I, {
                                 modelValue: i.value.url,
                                 "onUpdate:modelValue": l[8] || (l[8] = (o) => i.value.url = o),
                                 disabled: ""
@@ -505,7 +505,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                           }),
                           n(N, { label: "附件描述" }, {
                             default: r(() => [
-                              n(H, {
+                              n(I, {
                                 modelValue: i.value.desc,
                                 "onUpdate:modelValue": l[9] || (l[9] = (o) => i.value.desc = o),
                                 autosize: { minRows: 2, maxRows: 4 },
@@ -643,7 +643,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
       ]);
     };
   }
-}, Ne = /* @__PURE__ */ ie(ul, [["__scopeId", "data-v-3b66d397"]]), J = window.Vue.unref, xe = window.Vue.resolveComponent, q = window.Vue.createVNode, oe = window.Vue.withCtx, sl = window.Vue.toDisplayString, Le = window.Vue.openBlock, He = window.Vue.createElementBlock, rl = window.Vue.createCommentVNode, Ie = window.Vue.createTextVNode, Oe = window.Vue.isRef, dl = window.Vue.createElementVNode, cl = { style: { width: "100%" } }, pl = { class: "dialog-footer" }, ml = { key: 0 }, ae = window.Vue.ref, fl = window.Vue.watch, vl = {
+}, Ne = /* @__PURE__ */ ie(ul, [["__scopeId", "data-v-3b66d397"]]), J = window.Vue.unref, xe = window.Vue.resolveComponent, q = window.Vue.createVNode, oe = window.Vue.withCtx, sl = window.Vue.toDisplayString, Le = window.Vue.openBlock, Ie = window.Vue.createElementBlock, rl = window.Vue.createCommentVNode, He = window.Vue.createTextVNode, Oe = window.Vue.isRef, dl = window.Vue.createElementVNode, cl = { style: { width: "100%" } }, pl = { class: "dialog-footer" }, ml = { key: 0 }, ae = window.Vue.ref, fl = window.Vue.watch, vl = {
   __name: "attach-select-input",
   props: ["attachType", "enableInput", "placeholder", "modelValue"],
   emits: ["update:modelValue", "attachSelectChange"],
@@ -674,7 +674,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
     }
     return (i, b) => {
       const u = xe("el-button"), a = xe("el-input"), t = xe("el-dialog");
-      return Le(), He("div", cl, [
+      return Le(), Ie("div", cl, [
         q(a, {
           modelValue: v.value,
           "onUpdate:modelValue": b[0] || (b[0] = (c) => v.value = c),
@@ -707,8 +707,8 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                 onClick: B
               }, {
                 default: oe(() => [
-                  b[3] || (b[3] = Ie("确 定")),
-                  J(s).length > 0 ? (Le(), He("span", ml, "(已选" + sl(J(s).length) + "个)", 1)) : rl("", !0)
+                  b[3] || (b[3] = He("确 定")),
+                  J(s).length > 0 ? (Le(), Ie("span", ml, "(已选" + sl(J(s).length) + "个)", 1)) : rl("", !0)
                 ]),
                 _: 1
               }),
@@ -718,7 +718,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                 })
               }, {
                 default: oe(() => b[4] || (b[4] = [
-                  Ie("取 消")
+                  He("取 消")
                 ])),
                 _: 1
               })
@@ -736,7 +736,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
       ]);
     };
   }
-}, wl = /* @__PURE__ */ ie(vl, [["__scopeId", "data-v-52e51a92"]]), De = window.Vue.createElementVNode, I = window.Vue.unref, me = window.Vue.createVNode, hl = window.Vue.toDisplayString, Pe = window.Vue.openBlock, Ke = window.Vue.createElementBlock, Vl = window.Vue.createCommentVNode, Ze = window.Vue.createTextVNode, Je = window.Vue.resolveComponent, fe = window.Vue.withCtx, qe = window.Vue.isRef, gl = window.Vue.Fragment, _l = { class: "dialog-footer" }, yl = { key: 0 }, bl = window.Vue.onBeforeUnmount, Cl = window.Vue.onMounted, j = window.Vue.ref, kl = window.Vue.watch, xl = {
+}, wl = /* @__PURE__ */ ie(vl, [["__scopeId", "data-v-52e51a92"]]), De = window.Vue.createElementVNode, H = window.Vue.unref, me = window.Vue.createVNode, hl = window.Vue.toDisplayString, Pe = window.Vue.openBlock, Ke = window.Vue.createElementBlock, Vl = window.Vue.createCommentVNode, Ze = window.Vue.createTextVNode, Je = window.Vue.resolveComponent, fe = window.Vue.withCtx, qe = window.Vue.isRef, gl = window.Vue.Fragment, _l = { class: "dialog-footer" }, yl = { key: 0 }, bl = window.Vue.onBeforeUnmount, Cl = window.Vue.onMounted, j = window.Vue.ref, kl = window.Vue.watch, xl = {
   __name: "vditor-md-editor",
   props: ["initValue", "height"],
   setup(A, { expose: T }) {
@@ -919,10 +919,10 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
           id: "vditor"
         }, null, 512),
         me(c, {
-          modelValue: I(s),
+          modelValue: H(s),
           "onUpdate:modelValue": a[1] || (a[1] = (p) => qe(s) ? s.value = p : s = p),
-          title: I(g),
-          width: I(ne)(900),
+          title: H(g),
+          width: H(ne)(900),
           draggable: "",
           "destroy-on-close": ""
         }, {
@@ -934,7 +934,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
               }, {
                 default: fe(() => [
                   a[2] || (a[2] = Ze("确 定")),
-                  I(w).length > 0 ? (Pe(), Ke("span", yl, "(已选" + hl(I(w).length) + "个)", 1)) : Vl("", !0)
+                  H(w).length > 0 ? (Pe(), Ke("span", yl, "(已选" + hl(H(w).length) + "个)", 1)) : Vl("", !0)
                 ]),
                 _: 1
               }),
@@ -953,8 +953,8 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
           default: fe(() => [
             me(Ne, {
               "onUpdate:selectedAttach": B,
-              max: I(_),
-              "attach-type": I(v)
+              max: H(_),
+              "attach-type": H(v)
             }, null, 8, ["max", "attach-type"])
           ]),
           _: 1
@@ -1141,11 +1141,11 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
       ], 64);
     };
   }
-}, zl = /* @__PURE__ */ ie(Rl, [["__scopeId", "data-v-87814627"]]), $e = window.Vue.openBlock, tt = window.Vue.createBlock, lt = window.Vue.createCommentVNode, Gl = window.Vue.Fragment, Ll = window.Vue.createElementBlock, Hl = window.Vue.ref, Il = {
+}, zl = /* @__PURE__ */ ie(Rl, [["__scopeId", "data-v-87814627"]]), $e = window.Vue.openBlock, tt = window.Vue.createBlock, lt = window.Vue.createCommentVNode, Gl = window.Vue.Fragment, Ll = window.Vue.createElementBlock, Il = window.Vue.ref, Hl = {
   __name: "custom-editor",
   props: ["editorType", "initValue", "height"],
   setup(A, { expose: T }) {
-    const m = A, e = Hl();
+    const m = A, e = Il();
     function s() {
       e.value.resetContent();
     }
@@ -1373,7 +1373,7 @@ const ze = window.Vue.toDisplayString, Ge = window.Vue.normalizeClass, Gt = wind
                         ])
                       ]),
                       default: y(() => [
-                        Ve(m) ? Ol("", !0) : (Q(), ge(Il, {
+                        Ve(m) ? Ol("", !0) : (Q(), ge(Hl, {
                           key: 0,
                           "editor-type": e.value.contentModel,
                           "init-value": e.value.content,

@@ -1,13 +1,13 @@
-import { b as B } from "./codemirror.js";
-import { z as g, E as h, p as z, A as T, B as E, C as F, S as P, D as W } from "./@codemirror.js";
+import { c as B } from "./codemirror.js";
+import { E as g, a as h, k as E, i as T, b as z, p as F, S as P, C as W } from "./@codemirror.js";
 /*!
 * VueCodemirror v6.1.1
 * Copyright (c) Surmon. All rights reserved.
 * Released under the MIT License.
 * Surmon
 */
-const R = window.Vue.inject, A = window.Vue.defineComponent, y = window.Vue.shallowRef, M = window.Vue.computed, I = window.Vue.toRaw, k = window.Vue.onMounted, f = window.Vue.watch, L = window.Vue.onBeforeUnmount, N = window.Vue.h;
-var q = Object.freeze({ autofocus: !1, disabled: !1, indentWithTab: !0, tabSize: 2, placeholder: "", autoDestroy: !0, extensions: [B] }), G = Symbol("vue-codemirror-global-config"), a, H = function(t) {
+const R = window.Vue.inject, M = window.Vue.defineComponent, y = window.Vue.shallowRef, k = window.Vue.computed, A = window.Vue.toRaw, I = window.Vue.onMounted, f = window.Vue.watch, L = window.Vue.onBeforeUnmount, N = window.Vue.h;
+var q = Object.freeze({ autofocus: !1, disabled: !1, indentWithTab: !0, tabSize: 2, placeholder: "", autoDestroy: !0, extensions: [B.basicSetup] }), G = Symbol("vue-codemirror-global-config"), a, H = function(t) {
   var r = t.onUpdate, c = t.onChange, p = t.onFocus, d = t.onBlur, s = function(n, l) {
     var o = {};
     for (var e in n) Object.prototype.hasOwnProperty.call(n, e) && l.indexOf(e) < 0 && (o[e] = n[e]);
@@ -49,15 +49,15 @@ m[a.Change] = function(t, r) {
 };
 var O = {};
 O[a.ModelUpdate] = m[a.Change];
-var X = Object.assign(Object.assign({}, m), O), Y = A({ name: "VueCodemirror", props: Object.assign({}, Q), emits: Object.assign({}, X), setup: function(t, r) {
-  var c = y(), p = y(), d = y(), s = Object.assign(Object.assign({}, q), R(G, {})), n = M(function() {
+var X = Object.assign(Object.assign({}, m), O), Y = M({ name: "VueCodemirror", props: Object.assign({}, Q), emits: Object.assign({}, X), setup: function(t, r) {
+  var c = y(), p = y(), d = y(), s = Object.assign(Object.assign({}, q), R(G, {})), n = k(function() {
     var l = {};
-    return Object.keys(I(t)).forEach(function(o) {
+    return Object.keys(A(t)).forEach(function(o) {
       var e;
       o !== "modelValue" && (l[o] = (e = t[o]) !== null && e !== void 0 ? e : s[o]);
     }), l;
   });
-  return k(function() {
+  return I(function() {
     var l;
     p.value = H({ doc: t.modelValue, selection: n.value.selection, extensions: (l = s.extensions) !== null && l !== void 0 ? l : [], onFocus: function(e) {
       return r.emit(a.Focus, e);
@@ -73,15 +73,15 @@ var X = Object.assign(Object.assign({}, m), O), Y = A({ name: "VueCodemirror", p
     var o = function(e) {
       var i = function() {
         return e.state.doc.toString();
-      }, j = b(e).run, S = w(e, [g.editable.of(!1), h.readOnly.of(!0)]), V = w(e, z.of([T])), C = b(e).run, x = b(e).run, U = b(e).run, D = b(e).run;
+      }, j = b(e).run, S = w(e, [g.editable.of(!1), h.readOnly.of(!0)]), V = w(e, E.of([T])), x = b(e).run, C = b(e).run, U = b(e).run, D = b(e).run;
       return { focus: function() {
         return e.focus();
       }, getDoc: i, setDoc: function(u) {
         u !== i() && e.dispatch({ changes: { from: 0, to: e.state.doc.length, insert: u } });
       }, reExtensions: j, toggleDisabled: S, toggleIndentWithTab: V, setTabSize: function(u) {
-        C([h.tabSize.of(u), E.of(" ".repeat(u))]);
+        x([h.tabSize.of(u), z.of(" ".repeat(u))]);
       }, setPhrases: function(u) {
-        x([h.phrases.of(u)]);
+        C([h.phrases.of(u)]);
       }, setPlaceholder: function(u) {
         U(F(u));
       }, setStyle: function(u) {
