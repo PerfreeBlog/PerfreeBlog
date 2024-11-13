@@ -1,5 +1,6 @@
 package com.perfree.service.comment;
 
+import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.perfree.cache.CommentStintCache;
@@ -142,6 +143,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             comment.setStatus(CommentConstant.COMMENT_STATUS_AUDIT);
         }
 
+        comment.setContent(HtmlUtil.filter(comment.getContent()));
         commentMapper.insert(comment);
 
         if (commentStint.equals(OptionConstant.OPTION_PUBLIC_TRUE)) {

@@ -89,6 +89,11 @@ export default defineConfig(({mode })=> {
           changeOrigin: true,
           rewrite: path => path.replace(/^\/static/, '')
         },
+        "/public": {
+          target: 'http://127.0.0.1:8080/public',
+          changeOrigin: true,
+          rewrite: path => path.replace(/^\/public/, '')
+        },
         "/plugin-dev": {
           target: 'http://127.0.0.1:8080',
           changeOrigin: true,

@@ -51,7 +51,11 @@
             <span>{{ scope.row.userInfo? scope.row.userInfo.email: scope.row.email }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="content" label="评论内容"   show-overflow-tooltip min-width="240"/>
+        <el-table-column prop="content" label="评论内容"   show-overflow-tooltip min-width="240">
+          <template v-slot="scope">
+            <div v-html="scope.row.content"></div>
+          </template>
+        </el-table-column>
         <el-table-column prop="articleType" label="类型" min-width="150">
           <template v-slot="scope">
             <el-tag type="primary" v-if="scope.row.articleType === 'article'">文章</el-tag>
@@ -123,7 +127,7 @@
             <span class='comment-detail-name'>{{ item.userInfo ? item.userInfo.userName : item.userName }}</span>
             <span class='comment-detail-time'>{{ parseTime(item.createTime) }}</span>
           </div>
-          <div class='comment-detail-content'>{{ item.content }}</div>
+          <div class='comment-detail-content' v-html="item.content"></div>
         </div>
       </div>
       <el-divider v-if="childCommentParam.pageNo >= 1 && childCommentParam.pageNo < Math.ceil(childCommentTotal / childCommentParam.pageSize) && !childLoading">
