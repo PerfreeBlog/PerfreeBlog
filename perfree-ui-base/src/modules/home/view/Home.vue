@@ -102,7 +102,7 @@
                           {{ displayTime(item.createTime) }}
                         </span>
                       </div>
-                      <div class='comment-detail-content'>{{ item.content }}</div>
+                      <div class='comment-detail-content' v-html="item.content"></div>
                     </div>
                   </div>
                 </div>

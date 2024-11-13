@@ -1,5 +1,5 @@
 import { F as _ } from "./lib/@fortawesome.js";
-import { l as L } from "./lib/@element-plus.js";
+import { l as M } from "./lib/@element-plus.js";
 import { i as q } from "./lib/echarts.js";
 function z() {
   return axios.get("/api/auth/adminHome/getHomeStatistic");
@@ -54,7 +54,7 @@ G({
 function J(l, u) {
   if (arguments.length === 0 || !l)
     return null;
-  const h = u || "{y}-{m}-{d} {h}:{i}:{s}";
+  const w = u || "{y}-{m}-{d} {h}:{i}:{s}";
   let f;
   typeof l == "object" ? f = l : (typeof l == "string" && /^[0-9]+$/.test(l) ? l = parseInt(l) : typeof l == "string" && (l = l.replace(new RegExp(/-/gm), "/").replace("T", " ").replace(new RegExp(/\.\d{3}/gm), "")), typeof l == "number" && l.toString().length === 10 && (l = l * 1e3), f = new Date(l));
   const d = {
@@ -66,31 +66,31 @@ function J(l, u) {
     s: f.getSeconds(),
     a: f.getDay()
   };
-  return h.replace(/{([ymdhisa])+}/g, (b, k) => {
+  return w.replace(/{([ymdhisa])+}/g, (b, k) => {
     let p = d[k];
     return k === "a" ? ["日", "一", "二", "三", "四", "五", "六"][p] : (b.length > 0 && p < 10 && (p = "0" + p), p || 0);
   });
 }
 function K(l) {
-  const u = new Date(l), h = /* @__PURE__ */ new Date(), f = 1e3 * 60, d = f * 60, y = d * 24, b = y * 7, k = y * 30, p = h - u;
+  const u = new Date(l), w = /* @__PURE__ */ new Date(), f = 1e3 * 60, d = f * 60, y = d * 24, b = y * 7, k = y * 30, p = w - u;
   if (p < 0)
     return "刚刚发表";
-  const v = p / k, N = p / b, E = p / y, M = p / d, S = p / f;
+  const v = p / k, N = p / b, E = p / y, D = p / d, S = p / f;
   let i;
-  return v >= 3 ? i = `${u.getFullYear()}-${(u.getMonth() + 1).toString().padStart(2, "0")}-${u.getDate().toString().padStart(2, "0")}` : v >= 1 ? i = `${Math.floor(v)}月前` : N >= 1 ? i = `${Math.floor(N)}周前` : E >= 1 ? i = `${Math.floor(E)}天前` : M >= 1 ? i = `${Math.floor(M)}小时前` : S >= 1 ? i = `${Math.floor(S)}分钟前` : i = "刚刚发表", i;
+  return v >= 3 ? i = `${u.getFullYear()}-${(u.getMonth() + 1).toString().padStart(2, "0")}-${u.getDate().toString().padStart(2, "0")}` : v >= 1 ? i = `${Math.floor(v)}月前` : N >= 1 ? i = `${Math.floor(N)}周前` : E >= 1 ? i = `${Math.floor(E)}天前` : D >= 1 ? i = `${Math.floor(D)}小时前` : S >= 1 ? i = `${Math.floor(S)}分钟前` : i = "刚刚发表", i;
 }
 const Q = (l, u) => {
-  const h = l.__vccOpts || l;
+  const w = l.__vccOpts || l;
   for (const [f, d] of u)
-    h[f] = d;
-  return h;
-}, x = window.Vue.resolveComponent, e = window.Vue.createVNode, w = window.Vue.toDisplayString, s = window.Vue.createElementVNode, n = window.Vue.withCtx, o = window.Vue.unref, g = window.Vue.createTextVNode, U = window.Vue.resolveDirective, c = window.Vue.openBlock, m = window.Vue.createElementBlock, I = window.Vue.withDirectives, H = window.Vue.renderList, O = window.Vue.Fragment, A = window.Vue.createBlock, P = window.Vue.createCommentVNode, Z = { class: "panelBox" }, tt = { style: { display: "flex", "flex-wrap": "wrap" } }, et = { class: "loginBoxRight" }, nt = { class: "title" }, st = { class: "panelBox" }, ot = { class: "panelBox" }, lt = { class: "panelBox" }, at = { class: "panelBox" }, it = { class: "panelBox" }, rt = { class: "panelBox" }, ut = { class: "panelBox" }, dt = { style: { "text-align": "center", "margin-top": "10px", "min-height": "500px" } }, ct = { class: "panelBox" }, ft = { style: { "margin-top": "10px", "min-height": "500px" } }, mt = { class: "comment-detail-box" }, pt = { class: "comment-detail-avatar-box" }, gt = ["src"], _t = { key: 1 }, vt = { class: "comment-detail-msg-box" }, wt = { class: "comment-detail-info" }, ht = { class: "comment-detail-name" }, xt = { class: "comment-detail-time" }, yt = { key: 0 }, kt = { key: 1 }, Vt = { key: 2 }, Bt = { class: "comment-detail-content" }, It = { class: "panelBox" }, Tt = { class: "panelBox" }, bt = { class: "panelBox" }, Ct = { class: "link-ul" }, Dt = window.ElementPlus.ElMessage, Lt = window.Vue.onMounted, T = window.Vue.ref, Mt = window.Vue.watch, St = {
+    w[f] = d;
+  return w;
+}, h = window.Vue.resolveComponent, e = window.Vue.createVNode, x = window.Vue.toDisplayString, s = window.Vue.createElementVNode, n = window.Vue.withCtx, o = window.Vue.unref, g = window.Vue.createTextVNode, U = window.Vue.resolveDirective, c = window.Vue.openBlock, m = window.Vue.createElementBlock, B = window.Vue.withDirectives, A = window.Vue.renderList, O = window.Vue.Fragment, P = window.Vue.createBlock, H = window.Vue.createCommentVNode, Z = { class: "panelBox" }, tt = { style: { display: "flex", "flex-wrap": "wrap" } }, et = { class: "loginBoxRight" }, nt = { class: "title" }, st = { class: "panelBox" }, ot = { class: "panelBox" }, lt = { class: "panelBox" }, at = { class: "panelBox" }, it = { class: "panelBox" }, rt = { class: "panelBox" }, ut = { class: "panelBox" }, dt = { style: { "text-align": "center", "margin-top": "10px", "min-height": "500px" } }, ct = { class: "panelBox" }, ft = { style: { "margin-top": "10px", "min-height": "500px" } }, mt = { class: "comment-detail-box" }, pt = { class: "comment-detail-avatar-box" }, gt = ["src"], _t = { key: 1 }, vt = { class: "comment-detail-msg-box" }, wt = { class: "comment-detail-info" }, ht = { class: "comment-detail-name" }, xt = { class: "comment-detail-time" }, yt = { key: 0 }, kt = { key: 1 }, Vt = { key: 2 }, Tt = ["innerHTML"], Bt = { class: "panelBox" }, It = { class: "panelBox" }, bt = { class: "panelBox" }, Ct = { class: "link-ul" }, Lt = window.ElementPlus.ElMessage, Mt = window.Vue.onMounted, I = window.Vue.ref, Dt = window.Vue.watch, St = {
   __name: "Home",
   setup(l) {
-    var M, S;
-    let u = T(!0), h = T(!0), f = T(!0), d = T({}), y = T([]), b = T([]);
-    const k = T((S = (M = window.pinia.state._value) == null ? void 0 : M.userStore) == null ? void 0 : S.userInfo);
-    Mt(() => {
+    var D, S;
+    let u = I(!0), w = I(!0), f = I(!0), d = I({}), y = I([]), b = I([]);
+    const k = I((S = (D = window.pinia.state._value) == null ? void 0 : D.userStore) == null ? void 0 : S.userInfo);
+    Dt(() => {
       var i, t;
       return (t = (i = window.pinia.state._value) == null ? void 0 : i.userStore) == null ? void 0 : t.userInfo;
     }, (i) => {
@@ -122,18 +122,18 @@ const Q = (l, u) => {
               }
             }
           ]
-        })) : Dt.error(i.msg), u.value = !1;
+        })) : Lt.error(i.msg), u.value = !1;
       });
     }
     function v(i) {
       router.replace(i);
     }
-    Lt(() => {
+    Mt(() => {
       p();
     });
     function N() {
-      h.value = !0, W(15).then((i) => {
-        y.value = i.data, h.value = !1;
+      w.value = !0, W(15).then((i) => {
+        y.value = i.data, w.value = !1;
       });
     }
     function E() {
@@ -142,8 +142,8 @@ const Q = (l, u) => {
       });
     }
     return N(), E(), (i, t) => {
-      const F = x("el-avatar"), r = x("el-col"), C = x("el-statistic"), j = x("Calendar"), R = x("el-icon"), V = x("el-link"), Y = x("el-empty"), $ = x("el-row"), D = x("el-button"), B = U("loading");
-      return c(), A($, {
+      const F = h("el-avatar"), r = h("el-col"), C = h("el-statistic"), j = h("Calendar"), R = h("el-icon"), V = h("el-link"), Y = h("el-empty"), $ = h("el-row"), L = h("el-button"), T = U("loading");
+      return c(), P($, {
         gutter: 15,
         style: { height: "100%" }
       }, {
@@ -157,7 +157,7 @@ const Q = (l, u) => {
                     src: k.value.avatar
                   }, null, 8, ["src"]),
                   s("div", et, [
-                    s("div", nt, "欢迎登录, " + w(k.value.userName), 1),
+                    s("div", nt, "欢迎登录, " + x(k.value.userName), 1),
                     t[6] || (t[6] = s("div", { class: "welcome" }, "工欲善其事，必先利其器。 -- 论语", -1))
                   ]),
                   t[7] || (t[7] = s("div", {
@@ -196,7 +196,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      I((c(), m("div", st, [
+                      B((c(), m("div", st, [
                         e(C, {
                           value: o(d).articleTotal
                         }, {
@@ -209,7 +209,7 @@ const Q = (l, u) => {
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, o(u)]
+                        [T, o(u)]
                       ])
                     ]),
                     _: 1
@@ -222,7 +222,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      I((c(), m("div", ot, [
+                      B((c(), m("div", ot, [
                         e(C, {
                           value: o(d).journalTotal
                         }, {
@@ -235,7 +235,7 @@ const Q = (l, u) => {
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, o(u)]
+                        [T, o(u)]
                       ])
                     ]),
                     _: 1
@@ -248,7 +248,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      I((c(), m("div", lt, [
+                      B((c(), m("div", lt, [
                         e(C, {
                           value: o(d).categoryTotal
                         }, {
@@ -261,7 +261,7 @@ const Q = (l, u) => {
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, o(u)]
+                        [T, o(u)]
                       ])
                     ]),
                     _: 1
@@ -274,7 +274,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      I((c(), m("div", at, [
+                      B((c(), m("div", at, [
                         e(C, {
                           value: o(d).tagTotal
                         }, {
@@ -287,7 +287,7 @@ const Q = (l, u) => {
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, o(u)]
+                        [T, o(u)]
                       ])
                     ]),
                     _: 1
@@ -300,7 +300,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      I((c(), m("div", it, [
+                      B((c(), m("div", it, [
                         e(C, {
                           value: o(d).commentTotal
                         }, {
@@ -313,7 +313,7 @@ const Q = (l, u) => {
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, o(u)]
+                        [T, o(u)]
                       ])
                     ]),
                     _: 1
@@ -326,7 +326,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      I((c(), m("div", rt, [
+                      B((c(), m("div", rt, [
                         e(C, {
                           value: o(d).userTotal
                         }, {
@@ -339,7 +339,7 @@ const Q = (l, u) => {
                           _: 1
                         }, 8, ["value"])
                       ])), [
-                        [B, o(u)]
+                        [T, o(u)]
                       ])
                     ]),
                     _: 1
@@ -359,7 +359,7 @@ const Q = (l, u) => {
                               s("div", ut, [
                                 t[14] || (t[14] = s("div", { class: "panelTitle" }, "最新文章", -1)),
                                 s("div", dt, [
-                                  (c(!0), m(O, null, H(o(y), (a) => (c(), A(V, {
+                                  (c(!0), m(O, null, A(o(y), (a) => (c(), P(V, {
                                     class: "latest-article",
                                     href: "/article/" + a.slug,
                                     target: "_blank"
@@ -371,14 +371,14 @@ const Q = (l, u) => {
                                         ]),
                                         _: 1
                                       }),
-                                      g(" " + w(o(J)(a.createTime, "{y}-{m}-{d}")) + " | " + w(a.title), 1)
+                                      g(" " + x(o(J)(a.createTime, "{y}-{m}-{d}")) + " | " + x(a.title), 1)
                                     ]),
                                     _: 2
                                   }, 1032, ["href"]))), 256)),
-                                  o(y).length <= 0 ? (c(), A(Y, {
+                                  o(y).length <= 0 ? (c(), P(Y, {
                                     key: 0,
                                     description: "暂无文章"
-                                  })) : P("", !0)
+                                  })) : H("", !0)
                                 ])
                               ])
                             ]),
@@ -395,26 +395,29 @@ const Q = (l, u) => {
                               s("div", ct, [
                                 t[15] || (t[15] = s("div", { class: "panelTitle" }, "最新评论", -1)),
                                 s("div", ft, [
-                                  (c(!0), m(O, null, H(o(b), (a) => (c(), m("div", mt, [
+                                  (c(!0), m(O, null, A(o(b), (a) => (c(), m("div", mt, [
                                     s("div", pt, [
                                       a.avatar || a.userInfo && a.userInfo.avatar ? (c(), m("img", {
                                         key: 0,
                                         src: a.userInfo ? a.userInfo.avatar : a.avatar,
                                         width: "35px",
                                         height: "35px"
-                                      }, null, 8, gt)) : (c(), m("span", _t, w(a.userInfo ? a.userInfo.userName[0] : a.userName[0]), 1))
+                                      }, null, 8, gt)) : (c(), m("span", _t, x(a.userInfo ? a.userInfo.userName[0] : a.userName[0]), 1))
                                     ]),
                                     s("div", vt, [
                                       s("div", wt, [
-                                        s("span", ht, w(a.userInfo ? a.userInfo.userName : a.userName), 1),
+                                        s("span", ht, x(a.userInfo ? a.userInfo.userName : a.userName), 1),
                                         s("span", xt, [
-                                          a.articleType === "journal" ? (c(), m("span", yt, "发表于动态标识为《" + w(a.articleId) + "》", 1)) : P("", !0),
-                                          a.articleType === "article" ? (c(), m("span", kt, "发表于《" + w(a.articleTitle) + "》", 1)) : P("", !0),
-                                          a.articleType === "page" ? (c(), m("span", Vt, "发表于《" + w(a.articleTitle) + "》", 1)) : P("", !0),
-                                          g(" " + w(o(K)(a.createTime)), 1)
+                                          a.articleType === "journal" ? (c(), m("span", yt, "发表于动态标识为《" + x(a.articleId) + "》", 1)) : H("", !0),
+                                          a.articleType === "article" ? (c(), m("span", kt, "发表于《" + x(a.articleTitle) + "》", 1)) : H("", !0),
+                                          a.articleType === "page" ? (c(), m("span", Vt, "发表于《" + x(a.articleTitle) + "》", 1)) : H("", !0),
+                                          g(" " + x(o(K)(a.createTime)), 1)
                                         ])
                                       ]),
-                                      s("div", Bt, w(a.content), 1)
+                                      s("div", {
+                                        class: "comment-detail-content",
+                                        innerHTML: a.content
+                                      }, null, 8, Tt)
                                     ])
                                   ]))), 256))
                                 ])
@@ -446,7 +449,7 @@ const Q = (l, u) => {
                 default: n(() => [
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      s("div", It, [
+                      s("div", Bt, [
                         t[22] || (t[22] = s("div", { class: "panelTitle" }, "快捷功能", -1)),
                         e($, null, {
                           default: n(() => [
@@ -455,7 +458,7 @@ const Q = (l, u) => {
                               class: "shortcuts-item"
                             }, {
                               default: n(() => [
-                                e(D, {
+                                e(L, {
                                   plain: "",
                                   onClick: t[0] || (t[0] = (a) => v("/admin/article/create"))
                                 }, {
@@ -473,7 +476,7 @@ const Q = (l, u) => {
                               class: "shortcuts-item"
                             }, {
                               default: n(() => [
-                                e(D, {
+                                e(L, {
                                   plain: "",
                                   onClick: t[1] || (t[1] = (a) => v("/admin/article"))
                                 }, {
@@ -491,7 +494,7 @@ const Q = (l, u) => {
                               class: "shortcuts-item"
                             }, {
                               default: n(() => [
-                                e(D, {
+                                e(L, {
                                   plain: "",
                                   onClick: t[2] || (t[2] = (a) => v("/admin/journal"))
                                 }, {
@@ -509,7 +512,7 @@ const Q = (l, u) => {
                               class: "shortcuts-item"
                             }, {
                               default: n(() => [
-                                e(D, {
+                                e(L, {
                                   plain: "",
                                   onClick: t[3] || (t[3] = (a) => v("/admin/category"))
                                 }, {
@@ -527,7 +530,7 @@ const Q = (l, u) => {
                               class: "shortcuts-item"
                             }, {
                               default: n(() => [
-                                e(D, {
+                                e(L, {
                                   plain: "",
                                   onClick: t[4] || (t[4] = (a) => v("/admin/tag"))
                                 }, {
@@ -545,7 +548,7 @@ const Q = (l, u) => {
                               class: "shortcuts-item"
                             }, {
                               default: n(() => [
-                                e(D, {
+                                e(L, {
                                   plain: "",
                                   onClick: t[5] || (t[5] = (a) => v("/admin/plugin"))
                                 }, {
@@ -567,7 +570,7 @@ const Q = (l, u) => {
                   }),
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      I((c(), m("div", Tt, t[23] || (t[23] = [
+                      B((c(), m("div", It, t[23] || (t[23] = [
                         s("div", { class: "panelTitle" }, "附件统计", -1),
                         s("div", {
                           class: "echartsBox",
@@ -575,7 +578,7 @@ const Q = (l, u) => {
                           style: { height: "130px" }
                         }, null, -1)
                       ]))), [
-                        [B, o(u)]
+                        [T, o(u)]
                       ])
                     ]),
                     _: 1
@@ -587,7 +590,7 @@ const Q = (l, u) => {
                         s("ul", Ct, [
                           s("li", null, [
                             e(V, {
-                              icon: o(L),
+                              icon: o(M),
                               href: "https://www.perfree.org.cn",
                               target: "_blank"
                             }, {
@@ -599,7 +602,7 @@ const Q = (l, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: o(L),
+                              icon: o(M),
                               href: "https://www.perfree.org.cn/theme",
                               target: "_blank"
                             }, {
@@ -611,7 +614,7 @@ const Q = (l, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: o(L),
+                              icon: o(M),
                               href: "https://www.perfree.org.cn/plugin",
                               target: "_blank"
                             }, {
@@ -623,7 +626,7 @@ const Q = (l, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: o(L),
+                              icon: o(M),
                               href: "https://www.perfree.org.cn/useDoc",
                               target: "_blank"
                             }, {
@@ -635,7 +638,7 @@ const Q = (l, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: o(L),
+                              icon: o(M),
                               href: "https://www.perfree.org.cn/themeDevDoc",
                               target: "_blank"
                             }, {
@@ -647,7 +650,7 @@ const Q = (l, u) => {
                           ]),
                           s("li", null, [
                             e(V, {
-                              icon: o(L),
+                              icon: o(M),
                               href: "https://www.perfree.org.cn/pluginDevDoc",
                               target: "_blank"
                             }, {
@@ -673,7 +676,7 @@ const Q = (l, u) => {
       });
     };
   }
-}, Pt = /* @__PURE__ */ Q(St, [["__scopeId", "data-v-90528c19"]]);
+}, Ht = /* @__PURE__ */ Q(St, [["__scopeId", "data-v-ff834c2a"]]);
 export {
-  Pt as default
+  Ht as default
 };
