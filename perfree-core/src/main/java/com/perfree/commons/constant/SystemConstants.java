@@ -26,6 +26,8 @@ public class SystemConstants {
 
     /** 附件上传到本地后,统一的访问url前缀 */
     public static final String DEFAULT_ATTACH_URL_PATTERNS = "/api/attach/**";
+    public static final String DEFAULT_OLD_ATTACH_URL_PATTERNS = "/static/attach/**";
+    public static final String DEFAULT_OLD_ATTACH_URL_PATTERNS_2 = "/attach/**";
 
 
     /** 插件路径 */

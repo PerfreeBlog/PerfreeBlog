@@ -57,7 +57,7 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 注册默认的静态资源处理器
-        registry.addResourceHandler(SystemConstants.DEFAULT_ATTACH_URL_PATTERNS)
+        registry.addResourceHandler(SystemConstants.DEFAULT_ATTACH_URL_PATTERNS, SystemConstants.DEFAULT_OLD_ATTACH_URL_PATTERNS, SystemConstants.DEFAULT_OLD_ATTACH_URL_PATTERNS_2)
                 .addResourceLocations("file:resources/upload/")
                 .setCachePeriod(3600)
                 .setCacheControl(CacheControl.maxAge(Duration.ofMinutes(30)));
