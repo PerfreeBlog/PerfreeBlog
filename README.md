@@ -23,8 +23,11 @@ PerfreeBlog是一款基于java开发的博客/CMS建站平台,丰富的主题支
 项目支持Mysql数据库, 请先创建数据库,编码格式最好为utf8mb4,无需执行初始化脚本, 之后按照平台参考以下步骤操作即可
 
 #### windows/linux
+1. 安装jdk17(安装过程略)
+2. 下载最新的 PerfreeBlog 运行包解压,
+3. 修改config目录下application-prod.yaml配置文件中的端口和数据库信息
+4. 之后参照以下命令运行
 ```
-下载最新的 PerfreeBlog 运行包解压后执行:
 windows: 双击start.bat
 linux: ./start.sh start
 ```
