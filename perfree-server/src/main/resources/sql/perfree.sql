@@ -5,35 +5,35 @@ SET NAMES utf8mb4;
 -- ----------------------------
 DROP TABLE IF EXISTS `p_article`;
 CREATE TABLE `p_article`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章标题',
-  `content` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '文章内容',
-  `parseContent` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '解析后的文章内容',
-  `contentModel` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章内容类型:html/markdown',
-  `type` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章类型:article文章,page页面',
-  `summary` varchar(1024) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章摘要',
-  `metaKeywords` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO关键字',
-  `metaDescription` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO描述',
-  `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '缩略图',
-  `slug` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'slug',
-  `isTop` int NULL DEFAULT 0 COMMENT '是否置顶0:否,1:是',
-  `status` int NULL DEFAULT 0 COMMENT '状态0:已发布,1:草稿',
-  `viewCount` int NULL DEFAULT 0 COMMENT '访问量',
-  `greatCount` int NULL DEFAULT 0 COMMENT '访问量',
-  `isComment` int NULL DEFAULT 1 COMMENT '是否允许评论0:否,1是',
-  `flag` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标识',
-  `template` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '模板',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NOT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `visibility` int NOT NULL DEFAULT 0 COMMENT '是否可见, 0是, 1否',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `slug`(`slug`) USING BTREE,
-  INDEX `isTop`(`isTop`) USING BTREE,
-  INDEX `type`(`type`) USING BTREE,
-  INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                              `id` int NOT NULL AUTO_INCREMENT,
+                              `title` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章标题',
+                              `content` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '文章内容',
+                              `parseContent` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '解析后的文章内容',
+                              `contentModel` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章内容类型:html/markdown',
+                              `type` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章类型:article文章,page页面',
+                              `summary` varchar(1024) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文章摘要',
+                              `metaKeywords` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO关键字',
+                              `metaDescription` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO描述',
+                              `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '缩略图',
+                              `slug` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'slug',
+                              `isTop` int NULL DEFAULT 0 COMMENT '是否置顶0:否,1:是',
+                              `status` int NULL DEFAULT 0 COMMENT '状态0:已发布,1:草稿',
+                              `viewCount` int NULL DEFAULT 0 COMMENT '访问量',
+                              `greatCount` int NULL DEFAULT 0 COMMENT '访问量',
+                              `isComment` int NULL DEFAULT 1 COMMENT '是否允许评论0:否,1是',
+                              `flag` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标识',
+                              `template` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '模板',
+                              `createTime` datetime NOT NULL COMMENT '创建时间',
+                              `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                              `createUserId` int NOT NULL COMMENT '添加人',
+                              `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                              `visibility` int NOT NULL DEFAULT 0 COMMENT '是否可见, 0是, 1否',
+                              PRIMARY KEY (`id`) USING BTREE,
+                              INDEX `slug`(`slug`) USING BTREE,
+                              INDEX `isTop`(`isTop`) USING BTREE,
+                              INDEX `type`(`type`) USING BTREE,
+                              INDEX `status`(`status`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 187 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_article
@@ -44,15 +44,15 @@ CREATE TABLE `p_article`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_article_category`;
 CREATE TABLE `p_article_category`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `articleId` int NOT NULL COMMENT '文章id',
-  `categoryId` int NOT NULL COMMENT '分类id',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                                       `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                       `articleId` int NOT NULL COMMENT '文章id',
+                                       `categoryId` int NOT NULL COMMENT '分类id',
+                                       `createTime` datetime NOT NULL COMMENT '创建时间',
+                                       `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                       `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                       `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                       PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_article_category
@@ -63,15 +63,15 @@ CREATE TABLE `p_article_category`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_article_tag`;
 CREATE TABLE `p_article_tag`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `articleId` int NOT NULL COMMENT '文章id',
-  `tagId` int NOT NULL COMMENT '标签id',
-  `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                                  `id` int NOT NULL AUTO_INCREMENT,
+                                  `articleId` int NOT NULL COMMENT '文章id',
+                                  `tagId` int NOT NULL COMMENT '标签id',
+                                  `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 73 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_article_tag
@@ -82,24 +82,24 @@ CREATE TABLE `p_article_tag`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_attach`;
 CREATE TABLE `p_attach`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件名',
-  `remark` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '附件描述',
-  `path` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件路径',
-  `flag` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标识',
-  `mineType` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型mineType',
-  `type` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `configId` int NOT NULL COMMENT '存储策略id',
-  `url` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '访问路径',
-  `attachGroup` varchar(256) CHARACTER SET utf8mb4  NOT NULL DEFAULT 'default' COMMENT '附件分组',
-  `storage` int NOT NULL COMMENT '存储器类型',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `type`(`type`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                             `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                             `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件名',
+                             `remark` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '附件描述',
+                             `path` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件路径',
+                             `flag` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标识',
+                             `mineType` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型mineType',
+                             `type` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型',
+                             `createTime` datetime NOT NULL COMMENT '创建时间',
+                             `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                             `configId` int NOT NULL COMMENT '存储策略id',
+                             `url` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '访问路径',
+                             `attachGroup` varchar(256) CHARACTER SET utf8mb4  NOT NULL DEFAULT 'default' COMMENT '附件分组',
+                             `storage` int NOT NULL COMMENT '存储器类型',
+                             `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                             `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                             PRIMARY KEY (`id`) USING BTREE,
+                             INDEX `type`(`type`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 250 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_attach
@@ -110,17 +110,17 @@ CREATE TABLE `p_attach`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_attach_config`;
 CREATE TABLE `p_attach_config`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '配置名',
-  `storage` int NOT NULL COMMENT '存储器',
-  `remark` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
-  `config` varchar(4096) CHARACTER SET utf8mb4  NOT NULL COMMENT '存储配置',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `master` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否为主配置',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                    `name` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '配置名',
+                                    `storage` int NOT NULL COMMENT '存储器',
+                                    `remark` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
+                                    `config` varchar(4096) CHARACTER SET utf8mb4  NOT NULL COMMENT '存储配置',
+                                    `createTime` datetime NOT NULL COMMENT '创建时间',
+                                    `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                    `master` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否为主配置',
+                                    `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                    `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4  COMMENT = '附件服务器配置' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -133,18 +133,18 @@ INSERT INTO `p_attach_config` VALUES (1, '默认配置', 0, '默认配置', '{\"
 -- ----------------------------
 DROP TABLE IF EXISTS `p_attach_library`;
 CREATE TABLE `p_attach_library`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件库名称',
-  `description` varchar(1024) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
-  `type` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件库类型: img: 图库, video视频库, audio音乐库,other其他',
-  `visibility` int NOT NULL DEFAULT 0 COMMENT '是否可见, 0是, 1否',
-  `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '封面图',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NOT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '附件库' ROW_FORMAT = Dynamic;
+                                     `id` int NOT NULL AUTO_INCREMENT,
+                                     `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件库名称',
+                                     `description` varchar(1024) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
+                                     `type` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '附件库类型: img: 图库, video视频库, audio音乐库,other其他',
+                                     `visibility` int NOT NULL DEFAULT 0 COMMENT '是否可见, 0是, 1否',
+                                     `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '封面图',
+                                     `createTime` datetime NOT NULL COMMENT '创建时间',
+                                     `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                     `createUserId` int NOT NULL COMMENT '添加人',
+                                     `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                     PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '附件库' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_attach_library
@@ -155,17 +155,17 @@ CREATE TABLE `p_attach_library`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_attach_library_items`;
 CREATE TABLE `p_attach_library_items`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `attachLibraryId` int NOT NULL COMMENT '附件库id',
-  `url` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT 'url',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `name` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件名称',
-  `description` varchar(1024) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '附件库数据' ROW_FORMAT = Dynamic;
+                                           `id` int NOT NULL AUTO_INCREMENT,
+                                           `attachLibraryId` int NOT NULL COMMENT '附件库id',
+                                           `url` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT 'url',
+                                           `createTime` datetime NOT NULL COMMENT '创建时间',
+                                           `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                           `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                           `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                           `name` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件名称',
+                                           `description` varchar(1024) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
+                                           PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '附件库数据' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_attach_library_items
@@ -176,23 +176,23 @@ CREATE TABLE `p_attach_library_items`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_category`;
 CREATE TABLE `p_category`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '分类名',
-  `pid` int NOT NULL DEFAULT -1 COMMENT '父级id',
-  `desc` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
-  `metaKeywords` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO关键字',
-  `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '封面图',
-  `slug` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'slug',
-  `metaDescription` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO描述内容',
-  `status` int NOT NULL DEFAULT 0 COMMENT '状态0:正常,1禁用',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `status`(`status`) USING BTREE,
-  INDEX `slug`(`slug`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
+                               `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '分类名',
+                               `pid` int NOT NULL DEFAULT -1 COMMENT '父级id',
+                               `desc` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
+                               `metaKeywords` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO关键字',
+                               `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '封面图',
+                               `slug` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'slug',
+                               `metaDescription` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'SEO描述内容',
+                               `status` int NOT NULL DEFAULT 0 COMMENT '状态0:正常,1禁用',
+                               `createTime` datetime NOT NULL COMMENT '创建时间',
+                               `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                               `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                               PRIMARY KEY (`id`) USING BTREE,
+                               INDEX `status`(`status`) USING BTREE,
+                               INDEX `slug`(`slug`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4  COMMENT = '分类表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_category
@@ -203,28 +203,28 @@ CREATE TABLE `p_category`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_codegen_column`;
 CREATE TABLE `p_codegen_column`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tableId` int NOT NULL COMMENT '表编号',
-  `columnName` varchar(200) CHARACTER SET utf8mb4  NOT NULL COMMENT '字段名',
-  `dataType` varchar(100) CHARACTER SET utf8mb4  NOT NULL COMMENT '字段类型',
-  `columnComment` varchar(500) CHARACTER SET utf8mb4  NOT NULL COMMENT '字段描述',
-  `nullable` bit(1) NOT NULL COMMENT '是否允许为空',
-  `primaryKey` bit(1) NOT NULL COMMENT '是否主键',
-  `autoIncrement` bit(1) NOT NULL COMMENT '是否自增',
-  `javaType` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'Java 属性类型',
-  `javaField` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'Java 属性名',
-  `insertOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为插入字段',
-  `updateOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为更新字段',
-  `listOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为列表展示字段',
-  `listQueryOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为列表查询关键字',
-  `queryType` int NULL DEFAULT NULL COMMENT '查询类型',
-  `formType` int NULL DEFAULT NULL COMMENT 'form表单类型',
-  `dictType` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '数据字典',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                                     `id` int NOT NULL AUTO_INCREMENT,
+                                     `tableId` int NOT NULL COMMENT '表编号',
+                                     `columnName` varchar(200) CHARACTER SET utf8mb4  NOT NULL COMMENT '字段名',
+                                     `dataType` varchar(100) CHARACTER SET utf8mb4  NOT NULL COMMENT '字段类型',
+                                     `columnComment` varchar(500) CHARACTER SET utf8mb4  NOT NULL COMMENT '字段描述',
+                                     `nullable` bit(1) NOT NULL COMMENT '是否允许为空',
+                                     `primaryKey` bit(1) NOT NULL COMMENT '是否主键',
+                                     `autoIncrement` bit(1) NOT NULL COMMENT '是否自增',
+                                     `javaType` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'Java 属性类型',
+                                     `javaField` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'Java 属性名',
+                                     `insertOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为插入字段',
+                                     `updateOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为更新字段',
+                                     `listOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为列表展示字段',
+                                     `listQueryOperation` bit(1) NULL DEFAULT NULL COMMENT '是否为列表查询关键字',
+                                     `queryType` int NULL DEFAULT NULL COMMENT '查询类型',
+                                     `formType` int NULL DEFAULT NULL COMMENT 'form表单类型',
+                                     `dictType` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '数据字典',
+                                     `createTime` datetime NOT NULL COMMENT '创建时间',
+                                     `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                     `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                     `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 377 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -236,23 +236,23 @@ CREATE TABLE `p_codegen_column`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_codegen_table`;
 CREATE TABLE `p_codegen_table`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `scene` tinyint NOT NULL DEFAULT 1 COMMENT '生成场景0:后台代码,1: 插件代码',
-  `tableName` varchar(200) CHARACTER SET utf8mb4  NOT NULL DEFAULT '' COMMENT '表名称',
-  `tableComment` varchar(500) CHARACTER SET utf8mb4  NOT NULL DEFAULT '' COMMENT '表描述',
-  `moduleName` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '后端模块名/插件名称',
-  `frontModuleName` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '前端模块名',
-  `packageName` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '包名称',
-  `className` varchar(100) CHARACTER SET utf8mb4  NULL DEFAULT '' COMMENT '类名称',
-  `classComment` varchar(50) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '类描述',
-  `author` varchar(50) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '作者',
-  `parentMenuId` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '父菜单编号',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `mapperLocation` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'mapperxml存放路径',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` int NOT NULL AUTO_INCREMENT,
+                                    `scene` tinyint NOT NULL DEFAULT 1 COMMENT '生成场景0:后台代码,1: 插件代码',
+                                    `tableName` varchar(200) CHARACTER SET utf8mb4  NOT NULL DEFAULT '' COMMENT '表名称',
+                                    `tableComment` varchar(500) CHARACTER SET utf8mb4  NOT NULL DEFAULT '' COMMENT '表描述',
+                                    `moduleName` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '后端模块名/插件名称',
+                                    `frontModuleName` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '前端模块名',
+                                    `packageName` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '包名称',
+                                    `className` varchar(100) CHARACTER SET utf8mb4  NULL DEFAULT '' COMMENT '类名称',
+                                    `classComment` varchar(50) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '类描述',
+                                    `author` varchar(50) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '作者',
+                                    `parentMenuId` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '父菜单编号',
+                                    `createTime` datetime NOT NULL COMMENT '创建时间',
+                                    `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                    `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                    `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                    `mapperLocation` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'mapperxml存放路径',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 46 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -264,27 +264,27 @@ CREATE TABLE `p_codegen_table`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_comment`;
 CREATE TABLE `p_comment`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `articleId` int NOT NULL COMMENT '文章id',
-  `pid` int NULL DEFAULT -1 COMMENT '父级id',
-  `topPid` int NULL DEFAULT -1 COMMENT '顶层父级id',
-  `userId` int NULL DEFAULT NULL COMMENT '用户iD',
-  `content` varchar(2048) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '评论内容',
-  `status` int NULL DEFAULT 0 COMMENT '状态:0正常,1:待审核',
-  `avatar` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '头像',
-  `website` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站地址',
-  `email` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱',
-  `userName` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '评论人',
-  `ip` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'ip',
-  `device` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '设备类型',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `articleId`(`articleId`) USING BTREE,
-  INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                              `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                              `articleId` int NOT NULL COMMENT '文章id',
+                              `pid` int NULL DEFAULT -1 COMMENT '父级id',
+                              `topPid` int NULL DEFAULT -1 COMMENT '顶层父级id',
+                              `userId` int NULL DEFAULT NULL COMMENT '用户iD',
+                              `content` varchar(2048) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '评论内容',
+                              `status` int NULL DEFAULT 0 COMMENT '状态:0正常,1:待审核',
+                              `avatar` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '头像',
+                              `website` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站地址',
+                              `email` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱',
+                              `userName` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '评论人',
+                              `ip` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'ip',
+                              `device` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '设备类型',
+                              `createTime` datetime NOT NULL COMMENT '创建时间',
+                              `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                              `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                              `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                              PRIMARY KEY (`id`) USING BTREE,
+                              INDEX `articleId`(`articleId`) USING BTREE,
+                              INDEX `status`(`status`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 89 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_comment
@@ -295,17 +295,17 @@ CREATE TABLE `p_comment`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_dict`;
 CREATE TABLE `p_dict`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `dictType` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典类型',
-  `status` tinyint NOT NULL DEFAULT 0 COMMENT '状态',
-  `remark` varchar(500) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
-  `dictName` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典名',
-  `seq` int NOT NULL DEFAULT 0 COMMENT '排序',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                           `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                           `dictType` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典类型',
+                           `status` tinyint NOT NULL DEFAULT 0 COMMENT '状态',
+                           `remark` varchar(500) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
+                           `dictName` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典名',
+                           `seq` int NOT NULL DEFAULT 0 COMMENT '排序',
+                           `createTime` datetime NOT NULL COMMENT '创建时间',
+                           `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                           `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                           `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -319,19 +319,19 @@ INSERT INTO `p_dict` VALUES (21, 'USER_STATUS', 0, '', '用户状态', 0, '2024-
 -- ----------------------------
 DROP TABLE IF EXISTS `p_dict_data`;
 CREATE TABLE `p_dict_data`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `dictLabel` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '展示值',
-  `dictValue` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典值',
-  `dictExtendValue` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '扩展值',
-  `status` tinyint NOT NULL DEFAULT 0 COMMENT '状态',
-  `seq` int NOT NULL DEFAULT 0 COMMENT '排序',
-  `dictType` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典类型',
-  `parentDictType` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '父级字典类型',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                                `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                `dictLabel` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '展示值',
+                                `dictValue` varchar(512) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典值',
+                                `dictExtendValue` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '扩展值',
+                                `status` tinyint NOT NULL DEFAULT 0 COMMENT '状态',
+                                `seq` int NOT NULL DEFAULT 0 COMMENT '排序',
+                                `dictType` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '字典类型',
+                                `parentDictType` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '父级字典类型',
+                                `createTime` datetime NOT NULL COMMENT '创建时间',
+                                `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -347,41 +347,41 @@ INSERT INTO `p_dict_data` VALUES (19, '禁用', '1', '', 0, 0, 'USER_STATUS_DISA
 -- ----------------------------
 DROP TABLE IF EXISTS `p_extra`;
 CREATE TABLE `p_extra`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `extraName` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '名称',
-  `extraDescription` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
-  `extraKey` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT 'key',
-  `extraData` longtext CHARACTER SET utf8mb4  NULL COMMENT '附加数据',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                            `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                            `extraName` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '名称',
+                            `extraDescription` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '描述',
+                            `extraKey` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT 'key',
+                            `extraData` longtext CHARACTER SET utf8mb4  NULL COMMENT '附加数据',
+                            `createTime` datetime NOT NULL COMMENT '创建时间',
+                            `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                            `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                            `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                            PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_extra
 -- ----------------------------
-INSERT INTO `p_extra` VALUES (1, '系统设置', '系统设置项-动态表单生成', 'system_setting', '{\n  \"option\": {\n    \"form\": {\n      \"inline\": false,\n      \"hideRequiredAsterisk\": false,\n      \"labelPosition\": \"right\",\n      \"size\": \"default\",\n      \"labelWidth\": \"125px\",\n      \"labelSuffix\": \"\"\n    },\n    \"resetBtn\": {\n      \"show\": false,\n      \"innerText\": \"重置\"\n    },\n    \"submitBtn\": {\n      \"show\": true,\n      \"innerText\": \"提交\"\n    },\n    \"formName\": \"system_setting\"\n  },\n  \"rule\": [\n    {\n      \"type\": \"elTabs\",\n      \"style\": {\n        \"width\": \"100%\"\n      },\n      \"children\": [\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"基础设置\"\n          },\n          \"children\": [\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_NAME\",\n              \"title\": \"网站名称\",\n              \"info\": \"网站名称\",\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"请输入网站名称\",\n                \"clearable\": true\n              },\n              \"_fc_id\": \"id_Fl38lyzg7xd3alc\",\n              \"name\": \"ref_F65wlyzgcpyub1c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"input\"\n            },\n            {\n              \"type\": \"AttachSelectInput\",\n              \"field\": \"WEB_ICO\",\n              \"title\": \"网站ICO\",\n              \"info\": \"网站ICO\",\n              \"$required\": false,\n              \"props\": {\n                \"enableInput\": true,\n                \"attachType\": \"img\",\n                \"placeholder\": \"请选择网站ICO图片\"\n              },\n              \"_fc_id\": \"id_Fkoblyzg8ml4azc\",\n              \"name\": \"ref_Flwalyzg8ml4b0c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"AttachSelectInput\"\n            },\n            {\n              \"type\": \"AttachSelectInput\",\n              \"field\": \"WEB_LOGO\",\n              \"title\": \"网站logo\",\n              \"info\": \"网站logo\",\n              \"$required\": false,\n              \"props\": {\n                \"attachType\": \"img\",\n                \"enableInput\": true,\n                \"placeholder\": \"请选择网站logo\"\n              },\n              \"_fc_id\": \"id_F7ism0aqef5pabc\",\n              \"name\": \"ref_Fkavm0aqef5pacc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"AttachSelectInput\"\n            },\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_TITLE\",\n              \"title\": \"网站标题\",\n              \"info\": \"网站标题\",\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"请输入网站标题\"\n              },\n              \"_fc_id\": \"id_Fk2hlyzg81lfarc\",\n              \"name\": \"ref_F5zblyzg81lfasc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"input\"\n            },\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_COPYRIGHT\",\n              \"title\": \"版权信息\",\n              \"info\": \"版权信息\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"版权信息\",\n                \"rows\": 6,\n                \"autosize\": false,\n                \"showWordLimit\": false\n              },\n              \"_fc_id\": \"id_F7lcm1hb0464bcc\",\n              \"name\": \"ref_F0dbm1hb0464bdc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            }\n          ],\n          \"_fc_id\": \"id_Fplxlyzg6jfoadc\",\n          \"name\": \"ref_F8qdlyzg6jfoaec\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"SEO设置\"\n          },\n          \"children\": [\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_META_KEYWORD\",\n              \"title\": \"网站关键词\",\n              \"info\": \"网站关键词\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"网站关键词\",\n                \"rows\": 4\n              },\n              \"_fc_id\": \"id_Fz8um1hb4e7ubkc\",\n              \"name\": \"ref_F6q5m1hb4e7ublc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            },\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_META_DESC\",\n              \"title\": \"网站描述\",\n              \"info\": \"网站描述\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"网站描述\",\n                \"rows\": 6\n              },\n              \"_fc_id\": \"id_F2oxm1hb4v09bnc\",\n              \"name\": \"ref_F61dm1hb4v09boc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_IS_AUTO_PUSH_BAIDU\",\n              \"title\": \"自动推送百度\",\n              \"info\": \"自动推送百度\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否自动推送百度\",\n                \"filterable\": true,\n                \"multiple\": false\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_F9a5m1hb5e6ubqc\",\n              \"name\": \"ref_Fwlgm1hb5e6ubrc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            }\n          ],\n          \"_fc_id\": \"id_F2kelyzgu7gvboc\",\n          \"name\": \"ref_Fiyhlyzgu7gvbpc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"文章设置\"\n          },\n          \"children\": [\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_AUTO_GEN_SUMMARY\",\n              \"title\": \"自动生成摘要\",\n              \"info\": \"自动生成摘要\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否自动生成摘要\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fnrum1hb7qkybvc\",\n              \"name\": \"ref_Fa82m1hb7qkybwc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_RSS_GEN_MODE\",\n              \"title\": \"RSS生成方式\",\n              \"info\": \"RSS生成方式\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"请选择RSS生成方式\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"全文\",\n                  \"value\": \"0\"\n                },\n                {\n                  \"label\": \"摘要\",\n                  \"value\": \"1\"\n                }\n              ],\n              \"_fc_id\": \"id_F2omm1hb8n7hbyc\",\n              \"name\": \"ref_Fnzum1hb8n7hbzc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"inputNumber\",\n              \"field\": \"WEB_RSS_GEN_NUM\",\n              \"title\": \"RSS生成条数\",\n              \"info\": \"RSS生成条数\",\n              \"$required\": false,\n              \"props\": {\n                \"min\": 0,\n                \"stepStrictly\": false,\n                \"placeholder\": \"生成条数\"\n              },\n              \"_fc_id\": \"id_F2u6m1hbaa1sc4c\",\n              \"name\": \"ref_F8l8m1hbaa1sc5c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"inputNumber\"\n            }\n          ],\n          \"_fc_id\": \"id_Fyyem0afvt7magc\",\n          \"name\": \"ref_Fckam0afvt7mahc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"登录注册\"\n          },\n          \"children\": [\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_IS_REGISTER\",\n              \"title\": \"允许注册新用户\",\n              \"info\": \"\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否允许注册新用户\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"允许\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"不允许\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fk1rlyzh9kwsdmc\",\n              \"name\": \"ref_F91elyzh9kwsdnc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_OPEN_CAPTCHA\",\n              \"title\": \"登录验证码\",\n              \"info\": \"\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否开启登录验证码\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fu9hlyzh9q7udsc\",\n              \"name\": \"ref_F9milyzh9q7udtc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_REGISTER_DEFAULT_ROLE\",\n              \"title\": \"新用户默认角色\",\n              \"info\": \"\",\n              \"effect\": {\n                \"fetch\": {\n                  \"parse\": \"[[FORM-CREATE-PREFIX-function parse(res){let result = [];\\nres.data.forEach(r => {\\n\\tresult.push({label: r.name, value: r.id +\\\"\\\"})\\n})\\nreturn result}-FORM-CREATE-SUFFIX]]\",\n                  \"onError\": \"\",\n                  \"to\": \"options\",\n                  \"action\": \"/api/auth/role/listAll\",\n                  \"method\": \"GET\",\n                  \"headers\": {},\n                  \"data\": {}\n                }\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"新用户默认角色\",\n                \"_optionType\": 1,\n                \"noDataText\": \"请先创建角色\",\n                \"reserveKeyword\": false\n              },\n              \"_fc_id\": \"id_Fn7dlyzh9mwtdpc\",\n              \"name\": \"ref_F6xrlyzh9mwtdqc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            }\n          ],\n          \"_fc_id\": \"id_F0cfm1hb18w2bec\",\n          \"name\": \"ref_Fm3cm1hb18w2bfc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"评论相关\"\n          },\n          \"children\": [\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_COMMENT_IS_REVIEW\",\n              \"title\": \"评论需审核\",\n              \"info\": \"评论需审核\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"评论是否需审核\",\n                \"multiple\": false\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Faokm1hbc0dkc7c\",\n              \"name\": \"ref_Fzk4m1hbc0dkc8c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_COMMENT_IS_STINT\",\n              \"title\": \"评论限制\",\n              \"info\": \"开启后同一IP地址30s内将不允许再次评论,限制评论频率\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否开启评论限制\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fulmm1hbd4ckccc\",\n              \"name\": \"ref_F2h4m1hbd4ckcdc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"COMMENT_IS_SEND_MAIL\",\n              \"title\": \"评论邮件通知\",\n              \"info\": \"评论邮件通知\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否开启评论邮件通知\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_F2rjm1hbes2ucfc\",\n              \"name\": \"ref_Fexdm1hbes2ucgc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            }\n          ],\n          \"_fc_id\": \"id_Fgbfm1hb1kapbhc\",\n          \"name\": \"ref_Fsrxm1hb1kapbic\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"其他设置\"\n          },\n          \"_fc_id\": \"id_Fcj1m1hb1ifgbgc\",\n          \"name\": \"ref_Fm3cm1hb18w2bfc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\",\n          \"children\": [\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_CUSTOM_HEAD\",\n              \"title\": \"自定义head\",\n              \"info\": \"放置于前台每个页面的head标签中,通常可以用来添加第三方统计的代码,如百度统计,或者可以自定义css/js等\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"自定义head\",\n                \"rows\": 8\n              },\n              \"_fc_id\": \"id_F9ppm1hbg0pkcic\",\n              \"name\": \"ref_F93um1hbg0pkcjc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            }\n          ]\n        }\n      ],\n      \"_fc_id\": \"id_F252lyzg6jfoabc\",\n      \"name\": \"ref_Fxaklyzg6jfoacc\",\n      \"display\": true,\n      \"hidden\": false,\n      \"_fc_drag_tag\": \"elTabs\",\n      \"props\": {\n        \"tabPosition\": \"top\",\n        \"stretch\": false\n      }\n    }\n  ]\n}', '2024-07-24 10:55:00', '2024-10-12 15:43:44', 1, 1);
+INSERT INTO `p_extra` VALUES (1, '系统设置', '系统设置项-动态表单生成', 'system_setting', '{\n  \"option\": {\n    \"form\": {\n      \"inline\": false,\n      \"hideRequiredAsterisk\": false,\n      \"labelPosition\": \"right\",\n      \"size\": \"default\",\n      \"labelWidth\": \"125px\",\n      \"labelSuffix\": \"\"\n    },\n    \"resetBtn\": {\n      \"show\": false,\n      \"innerText\": \"重置\"\n    },\n    \"submitBtn\": {\n      \"show\": true,\n      \"innerText\": \"提交\"\n    },\n    \"formName\": \"system_setting\"\n  },\n  \"rule\": [\n    {\n      \"type\": \"elTabs\",\n      \"style\": {\n        \"width\": \"100%\"\n      },\n      \"children\": [\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"基础设置\"\n          },\n          \"children\": [\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_NAME\",\n              \"title\": \"网站名称\",\n              \"info\": \"网站名称\",\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"请输入网站名称\",\n                \"clearable\": true\n              },\n              \"_fc_id\": \"id_Fl38lyzg7xd3alc\",\n              \"name\": \"ref_F65wlyzgcpyub1c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"input\"\n            },\n            {\n              \"type\": \"AttachSelectInput\",\n              \"field\": \"WEB_ICO\",\n              \"title\": \"网站ICO\",\n              \"info\": \"网站ICO\",\n              \"$required\": false,\n              \"props\": {\n                \"enableInput\": true,\n                \"attachType\": \"img\",\n                \"placeholder\": \"请选择网站ICO图片\"\n              },\n              \"_fc_id\": \"id_Fkoblyzg8ml4azc\",\n              \"name\": \"ref_Flwalyzg8ml4b0c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"AttachSelectInput\"\n            },\n            {\n              \"type\": \"AttachSelectInput\",\n              \"field\": \"WEB_LOGO\",\n              \"title\": \"网站logo\",\n              \"info\": \"网站logo\",\n              \"$required\": false,\n              \"props\": {\n                \"attachType\": \"img\",\n                \"enableInput\": true,\n                \"placeholder\": \"请选择网站logo\"\n              },\n              \"_fc_id\": \"id_F7ism0aqef5pabc\",\n              \"name\": \"ref_Fkavm0aqef5pacc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"AttachSelectInput\"\n            },\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_TITLE\",\n              \"title\": \"网站标题\",\n              \"info\": \"网站标题\",\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"请输入网站标题\"\n              },\n              \"_fc_id\": \"id_Fk2hlyzg81lfarc\",\n              \"name\": \"ref_F5zblyzg81lfasc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"input\"\n            },\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_SITE\",\n              \"title\": \"网站域名\",\n              \"info\": \"网站域名\",\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"请输入网站域名\"\n              },\n              \"_fc_id\": \"id_Frfrm3glr8puacc\",\n              \"name\": \"ref_Fyskm3glr8puadc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"input\"\n            },\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_COPYRIGHT\",\n              \"title\": \"版权信息\",\n              \"info\": \"版权信息\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"版权信息\",\n                \"rows\": 6,\n                \"autosize\": false,\n                \"showWordLimit\": false\n              },\n              \"_fc_id\": \"id_F7lcm1hb0464bcc\",\n              \"name\": \"ref_F0dbm1hb0464bdc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            }\n          ],\n          \"_fc_id\": \"id_Fplxlyzg6jfoadc\",\n          \"name\": \"ref_F8qdlyzg6jfoaec\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"SEO设置\"\n          },\n          \"children\": [\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_META_KEYWORD\",\n              \"title\": \"网站关键词\",\n              \"info\": \"网站关键词\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"网站关键词\",\n                \"rows\": 4\n              },\n              \"_fc_id\": \"id_Fz8um1hb4e7ubkc\",\n              \"name\": \"ref_F6q5m1hb4e7ublc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            },\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_META_DESC\",\n              \"title\": \"网站描述\",\n              \"info\": \"网站描述\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"网站描述\",\n                \"rows\": 6\n              },\n              \"_fc_id\": \"id_F2oxm1hb4v09bnc\",\n              \"name\": \"ref_F61dm1hb4v09boc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_IS_AUTO_PUSH_BAIDU\",\n              \"title\": \"自动推送百度\",\n              \"info\": \"自动推送百度\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否自动推送百度\",\n                \"filterable\": true,\n                \"multiple\": false\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_F9a5m1hb5e6ubqc\",\n              \"name\": \"ref_Fwlgm1hb5e6ubrc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            }\n          ],\n          \"_fc_id\": \"id_F2kelyzgu7gvboc\",\n          \"name\": \"ref_Fiyhlyzgu7gvbpc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"文章设置\"\n          },\n          \"children\": [\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_AUTO_GEN_SUMMARY\",\n              \"title\": \"自动生成摘要\",\n              \"info\": \"自动生成摘要\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否自动生成摘要\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fnrum1hb7qkybvc\",\n              \"name\": \"ref_Fa82m1hb7qkybwc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_RSS_GEN_MODE\",\n              \"title\": \"RSS生成方式\",\n              \"info\": \"RSS生成方式\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"请选择RSS生成方式\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"全文\",\n                  \"value\": \"0\"\n                },\n                {\n                  \"label\": \"摘要\",\n                  \"value\": \"1\"\n                }\n              ],\n              \"_fc_id\": \"id_F2omm1hb8n7hbyc\",\n              \"name\": \"ref_Fnzum1hb8n7hbzc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"inputNumber\",\n              \"field\": \"WEB_RSS_GEN_NUM\",\n              \"title\": \"RSS生成条数\",\n              \"info\": \"RSS生成条数\",\n              \"$required\": false,\n              \"props\": {\n                \"min\": 0,\n                \"stepStrictly\": false,\n                \"placeholder\": \"生成条数\"\n              },\n              \"_fc_id\": \"id_F2u6m1hbaa1sc4c\",\n              \"name\": \"ref_F8l8m1hbaa1sc5c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"inputNumber\"\n            }\n          ],\n          \"_fc_id\": \"id_Fyyem0afvt7magc\",\n          \"name\": \"ref_Fckam0afvt7mahc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"登录注册\"\n          },\n          \"children\": [\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_IS_REGISTER\",\n              \"title\": \"允许注册新用户\",\n              \"info\": \"\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否允许注册新用户\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"允许\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"不允许\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fk1rlyzh9kwsdmc\",\n              \"name\": \"ref_F91elyzh9kwsdnc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_OPEN_CAPTCHA\",\n              \"title\": \"登录验证码\",\n              \"info\": \"\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否开启登录验证码\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fu9hlyzh9q7udsc\",\n              \"name\": \"ref_F9milyzh9q7udtc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_REGISTER_DEFAULT_ROLE\",\n              \"title\": \"新用户默认角色\",\n              \"info\": \"\",\n              \"effect\": {\n                \"fetch\": {\n                  \"parse\": \"[[FORM-CREATE-PREFIX-function parse(res){let result = [];\\nres.data.forEach(r => {\\n\\tresult.push({label: r.name, value: r.id +\\\"\\\"})\\n})\\nreturn result}-FORM-CREATE-SUFFIX]]\",\n                  \"onError\": \"\",\n                  \"to\": \"options\",\n                  \"action\": \"/api/auth/role/listAll\",\n                  \"method\": \"GET\",\n                  \"headers\": {},\n                  \"data\": {}\n                }\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"新用户默认角色\",\n                \"_optionType\": 1,\n                \"noDataText\": \"请先创建角色\",\n                \"reserveKeyword\": false\n              },\n              \"_fc_id\": \"id_Fn7dlyzh9mwtdpc\",\n              \"name\": \"ref_F6xrlyzh9mwtdqc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            }\n          ],\n          \"_fc_id\": \"id_F0cfm1hb18w2bec\",\n          \"name\": \"ref_Fm3cm1hb18w2bfc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"评论相关\"\n          },\n          \"children\": [\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_COMMENT_IS_REVIEW\",\n              \"title\": \"评论需审核\",\n              \"info\": \"评论需审核\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"评论是否需审核\",\n                \"multiple\": false\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Faokm1hbc0dkc7c\",\n              \"name\": \"ref_Fzk4m1hbc0dkc8c\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"WEB_COMMENT_IS_STINT\",\n              \"title\": \"评论限制\",\n              \"info\": \"开启后同一IP地址30s内将不允许再次评论,限制评论频率\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否开启评论限制\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_Fulmm1hbd4ckccc\",\n              \"name\": \"ref_F2h4m1hbd4ckcdc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            },\n            {\n              \"type\": \"select\",\n              \"field\": \"COMMENT_IS_SEND_MAIL\",\n              \"title\": \"评论邮件通知\",\n              \"info\": \"评论邮件通知\",\n              \"effect\": {\n                \"fetch\": \"\"\n              },\n              \"$required\": false,\n              \"props\": {\n                \"placeholder\": \"是否开启评论邮件通知\"\n              },\n              \"options\": [\n                {\n                  \"label\": \"开启\",\n                  \"value\": \"ON\"\n                },\n                {\n                  \"label\": \"关闭\",\n                  \"value\": \"OFF\"\n                }\n              ],\n              \"_fc_id\": \"id_F2rjm1hbes2ucfc\",\n              \"name\": \"ref_Fexdm1hbes2ucgc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"select\"\n            }\n          ],\n          \"_fc_id\": \"id_Fgbfm1hb1kapbhc\",\n          \"name\": \"ref_Fsrxm1hb1kapbic\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\"\n        },\n        {\n          \"type\": \"elTabPane\",\n          \"props\": {\n            \"label\": \"其他设置\"\n          },\n          \"_fc_id\": \"id_Fcj1m1hb1ifgbgc\",\n          \"name\": \"ref_Fm3cm1hb18w2bfc\",\n          \"display\": true,\n          \"hidden\": false,\n          \"_fc_drag_tag\": \"elTabPane\",\n          \"children\": [\n            {\n              \"type\": \"input\",\n              \"field\": \"WEB_CUSTOM_HEAD\",\n              \"title\": \"自定义head\",\n              \"info\": \"放置于前台每个页面的head标签中,通常可以用来添加第三方统计的代码,如百度统计,或者可以自定义css/js等\",\n              \"$required\": false,\n              \"props\": {\n                \"type\": \"textarea\",\n                \"placeholder\": \"自定义head\",\n                \"rows\": 8\n              },\n              \"_fc_id\": \"id_F9ppm1hbg0pkcic\",\n              \"name\": \"ref_F93um1hbg0pkcjc\",\n              \"display\": true,\n              \"hidden\": false,\n              \"_fc_drag_tag\": \"textarea\"\n            }\n          ]\n        }\n      ],\n      \"_fc_id\": \"id_F252lyzg6jfoabc\",\n      \"name\": \"ref_Fxaklyzg6jfoacc\",\n      \"display\": true,\n      \"hidden\": false,\n      \"_fc_drag_tag\": \"elTabs\",\n      \"props\": {\n        \"tabPosition\": \"top\",\n        \"stretch\": false\n      }\n    }\n  ]\n}', '2024-07-24 10:55:00', '2024-11-14 08:59:57', 1, 1);
 
 -- ----------------------------
 -- Table structure for p_journal_attach
 -- ----------------------------
 DROP TABLE IF EXISTS `p_journal_attach`;
 CREATE TABLE `p_journal_attach`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `articleId` int NOT NULL,
-  `attachId` int NOT NULL,
-  `url` varchar(512) CHARACTER SET utf8mb4  NOT NULL,
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `mineType` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型mineType',
-  `type` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型',
-  `name` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件名称',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '动态附件表' ROW_FORMAT = Dynamic;
+                                     `id` int NOT NULL AUTO_INCREMENT,
+                                     `articleId` int NOT NULL,
+                                     `attachId` int NOT NULL,
+                                     `url` varchar(512) CHARACTER SET utf8mb4  NOT NULL,
+                                     `createTime` datetime NOT NULL COMMENT '创建时间',
+                                     `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                     `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                     `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                     `mineType` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型mineType',
+                                     `type` varchar(32) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件类型',
+                                     `name` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '文件名称',
+                                     PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  COMMENT = '动态附件表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_journal_attach
@@ -392,17 +392,17 @@ CREATE TABLE `p_journal_attach`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_link`;
 CREATE TABLE `p_link`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '网站名',
-  `logo` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站logo',
-  `desc` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站描述',
-  `address` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '网站地址',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                           `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                           `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '网站名',
+                           `logo` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站logo',
+                           `desc` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站描述',
+                           `address` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '网站地址',
+                           `createTime` datetime NOT NULL COMMENT '创建时间',
+                           `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                           `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                           `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                           PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_link
@@ -413,19 +413,19 @@ CREATE TABLE `p_link`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_mail_log`;
 CREATE TABLE `p_mail_log`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `mailTemplateCode` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '模板编号',
-  `sendDate` datetime NOT NULL COMMENT '发送时间',
-  `receiveMail` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '接收邮箱',
-  `mailTitle` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件标题',
-  `sendStatus` int NOT NULL DEFAULT 0 COMMENT '发送状态',
-  `sendMail` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '发件邮箱',
-  `content` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件内容',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                               `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+                               `mailTemplateCode` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '模板编号',
+                               `sendDate` datetime NOT NULL COMMENT '发送时间',
+                               `receiveMail` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '接收邮箱',
+                               `mailTitle` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件标题',
+                               `sendStatus` int NOT NULL DEFAULT 0 COMMENT '发送状态',
+                               `sendMail` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '发件邮箱',
+                               `content` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件内容',
+                               `createTime` datetime NOT NULL COMMENT '创建时间',
+                               `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                               `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                               PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -437,20 +437,20 @@ CREATE TABLE `p_mail_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_mail_server`;
 CREATE TABLE `p_mail_server`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务名称',
-  `account` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务账号',
-  `userName` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务用户名',
-  `password` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱服务密码',
-  `address` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务SMTP域名',
-  `port` int NOT NULL COMMENT '邮箱服务SMTP端口',
-  `status` int NOT NULL DEFAULT 0 COMMENT '状态',
-  `enableSSL` tinyint NOT NULL DEFAULT 0 COMMENT '是否开启SSL',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                                  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                  `name` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务名称',
+                                  `account` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务账号',
+                                  `userName` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务用户名',
+                                  `password` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱服务密码',
+                                  `address` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮箱服务SMTP域名',
+                                  `port` int NOT NULL COMMENT '邮箱服务SMTP端口',
+                                  `status` int NOT NULL DEFAULT 0 COMMENT '状态',
+                                  `enableSSL` tinyint NOT NULL DEFAULT 0 COMMENT '是否开启SSL',
+                                  `createTime` datetime NOT NULL COMMENT '创建时间',
+                                  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -463,21 +463,21 @@ INSERT INTO `p_mail_server` VALUES (2, '测试', 'perfree@126.com', 'perfree@126
 -- ----------------------------
 DROP TABLE IF EXISTS `p_mail_template`;
 CREATE TABLE `p_mail_template`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `name` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '模板名称',
-  `code` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '模板编码',
-  `mailServerId` int NOT NULL COMMENT '邮箱服务id',
-  `nickname` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '发送人名称',
-  `mailTitle` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件标题',
-  `mailContent` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件内容',
-  `mailParams` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '参数',
-  `status` int NOT NULL DEFAULT 0 COMMENT '状态',
-  `remark` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                                    `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                    `name` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '模板名称',
+                                    `code` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '模板编码',
+                                    `mailServerId` int NOT NULL COMMENT '邮箱服务id',
+                                    `nickname` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '发送人名称',
+                                    `mailTitle` varchar(255) CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件标题',
+                                    `mailContent` longtext CHARACTER SET utf8mb4  NOT NULL COMMENT '邮件内容',
+                                    `mailParams` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '参数',
+                                    `status` int NOT NULL DEFAULT 0 COMMENT '状态',
+                                    `remark` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
+                                    `createTime` datetime NOT NULL COMMENT '创建时间',
+                                    `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                    `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                    `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                    PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -492,29 +492,29 @@ INSERT INTO `p_mail_template` VALUES (5, '评论回复模板', 'COMMENT_REVERT_E
 -- ----------------------------
 DROP TABLE IF EXISTS `p_menu`;
 CREATE TABLE `p_menu`  (
-  `id` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '主键',
-  `pid` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT '-1' COMMENT '父级id',
-  `name` varchar(128) CHARACTER SET utf8mb4  NOT NULL COMMENT '菜单名',
-  `url` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '菜单链接',
-  `icon` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '菜单图标',
-  `seq` int NULL DEFAULT 0 COMMENT '排序序号',
-  `target` int NULL DEFAULT 0 COMMENT '菜单打开方式:0本页,1:新窗口',
-  `status` int NOT NULL DEFAULT 0 COMMENT '菜单状态0:启用,1禁用',
-  `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `menuType` int NULL DEFAULT NULL COMMENT '菜单类型（0目录1菜单2按钮）',
-  `pluginId` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '插件id',
-  `flag` int NULL DEFAULT NULL COMMENT '菜单标识:0:系统自带,1:用户创建,2:插件',
-  `component` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '组件路径',
-  `componentName` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '组件名称',
-  `moduleName` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '模块名称',
-  `perms` varchar(100) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '权限标识',
-  `isFrame` int NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `type` int NOT NULL DEFAULT 0 COMMENT '菜单类型0:前台,1:后台',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `status`(`status`) USING BTREE
+                           `id` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '主键',
+                           `pid` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT '-1' COMMENT '父级id',
+                           `name` varchar(128) CHARACTER SET utf8mb4  NOT NULL COMMENT '菜单名',
+                           `url` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '菜单链接',
+                           `icon` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '菜单图标',
+                           `seq` int NULL DEFAULT 0 COMMENT '排序序号',
+                           `target` int NULL DEFAULT 0 COMMENT '菜单打开方式:0本页,1:新窗口',
+                           `status` int NOT NULL DEFAULT 0 COMMENT '菜单状态0:启用,1禁用',
+                           `createTime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                           `menuType` int NULL DEFAULT NULL COMMENT '菜单类型（0目录1菜单2按钮）',
+                           `pluginId` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '插件id',
+                           `flag` int NULL DEFAULT NULL COMMENT '菜单标识:0:系统自带,1:用户创建,2:插件',
+                           `component` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '组件路径',
+                           `componentName` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '组件名称',
+                           `moduleName` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '模块名称',
+                           `perms` varchar(100) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '权限标识',
+                           `isFrame` int NULL DEFAULT 1 COMMENT '是否为外链（0是 1否）',
+                           `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                           `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                           `type` int NOT NULL DEFAULT 0 COMMENT '菜单类型0:前台,1:后台',
+                           PRIMARY KEY (`id`) USING BTREE,
+                           INDEX `status`(`status`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -645,6 +645,7 @@ INSERT INTO `p_menu` VALUES ('bb626f4c02de498f8b67af93ae4bbcbd', '37544c31dc704f
 INSERT INTO `p_menu` VALUES ('bc0f7fd0e99873cbbc0f7fd0e99873cb', 'af4cb0b4a4c1807faf4cb0b4a4c1807f', '评论管理', '/admin/comment', 'fa-solid fa-comment-alt', 5, 0, 0, '2024-09-11 10:02:50', '2024-09-29 17:06:21', 1, NULL, NULL, '/view/CommentView', 'comment', 'comment', '', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('bc393973512edd7abc393973512edd7a', '-1', '归档', '/archive', 'fa-solid fa-archive', 4, 0, 0, '2024-09-23 08:59:39', '2024-09-24 14:05:24', 1, NULL, NULL, '', '', '', '', 1, 1, 1, 0);
 INSERT INTO `p_menu` VALUES ('bc473014a9ac0aafbc473014a9ac0aaf', '89467371e0fef2d689467371e0fef2d6', '安装主题', '', '', 0, 0, 0, '2024-10-14 09:03:19', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:install', 1, 1, NULL, 1);
+INSERT INTO `p_menu` VALUES ('bcd395403b3586b4bcd395403b3586b4', '761690b8556346c5a12878adb64a0aa6', '关于系统', '/admin/about', 'fa-solid fa-fan', 12, 0, 0, '2024-10-18 13:56:37', '2024-10-18 14:00:07', 1, NULL, NULL, '/view/AboutView', 'about', 'about', '', 1, 1, 1, 1);
 INSERT INTO `p_menu` VALUES ('bdc65690e1564309bf3599464be79c87', '761690b8556346c5a12878adb64a0aa6', '系统设置', '/admin/setting', 'fa-solid fa-tools', 6, 0, 0, '2024-07-24 10:46:44', NULL, 1, NULL, NULL, '/view/SettingView', 'setting', 'setting', '', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('bf6fa66804256db4bf6fa66804256db4', '89467371e0fef2d689467371e0fef2d6', '切换主题', '', '', 0, 0, 0, '2024-10-14 09:04:28', NULL, 2, NULL, NULL, '', '', '', 'admin:theme:swatchTheme', 1, 1, NULL, 1);
 INSERT INTO `p_menu` VALUES ('c19c0aa30b204da38e05b59df0d33f98', 'f624dfd78d0549c9a0978d837098123b', '邮箱服务删除', NULL, NULL, 0, 0, 0, '2024-08-07 08:43:12', NULL, 2, NULL, NULL, NULL, NULL, NULL, 'admin:mailServer:delete', 1, NULL, NULL, 1);
@@ -672,23 +673,22 @@ INSERT INTO `p_menu` VALUES ('ff55eba3bf6b45618bc806e8108bd525', 'f624dfd78d0549
 -- ----------------------------
 DROP TABLE IF EXISTS `p_option`;
 CREATE TABLE `p_option`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `key` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT 'key',
-  `value` text CHARACTER SET utf8mb4  NULL COMMENT 'value',
-  `title` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标题',
-  `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `identification` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标识',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3496 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                             `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                             `key` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT 'key',
+                             `value` text CHARACTER SET utf8mb4  NULL COMMENT 'value',
+                             `title` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标题',
+                             `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                             `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                             `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                             `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                             `identification` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '标识',
+                             PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3593 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_option
 -- ----------------------------
 INSERT INTO `p_option` VALUES (1, 'WEB_THEME', 'default', '默认主题', '2024-09-11 14:40:51', '2024-09-11 14:42:01', 1, 1, 'system');
-INSERT INTO `p_option` VALUES (2, 'WEB_INIT', 'OFF', '网站是否已初始化', '2024-09-11 14:40:51', '2024-09-11 14:42:01', 1, 1, 'system');
 INSERT INTO `p_option` VALUES (3479, 'WEB_ICO', '', '网站ICO', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
 INSERT INTO `p_option` VALUES (3480, 'WEB_LOGO', '', '网站logo', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
 INSERT INTO `p_option` VALUES (3482, 'WEB_COPYRIGHT', '', '版权信息', '2024-10-12 16:00:33', NULL, 1, NULL, 'system_setting');
@@ -711,23 +711,23 @@ INSERT INTO `p_option` VALUES (3495, 'WEB_CUSTOM_HEAD', '', '自定义head', '20
 -- ----------------------------
 DROP TABLE IF EXISTS `p_plugin`;
 CREATE TABLE `p_plugin`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '插件名',
-  `pluginId` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '插件id',
-  `desc` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '插件描述',
-  `version` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '版本',
-  `author` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '作者',
-  `website` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网址',
-  `email` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱',
-  `isDev` bit(1) NULL DEFAULT NULL COMMENT '是否为开发环境',
-  `frontDevAddress` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '开发环境前端地址',
-  `status` int NOT NULL DEFAULT 0 COMMENT '插件状态:0禁用,1启用',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1423 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                             `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                             `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '插件名',
+                             `pluginId` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '插件id',
+                             `desc` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '插件描述',
+                             `version` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '版本',
+                             `author` varchar(64) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '作者',
+                             `website` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网址',
+                             `email` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱',
+                             `isDev` bit(1) NULL DEFAULT NULL COMMENT '是否为开发环境',
+                             `frontDevAddress` varchar(255) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '开发环境前端地址',
+                             `status` int NOT NULL DEFAULT 0 COMMENT '插件状态:0禁用,1启用',
+                             `createTime` datetime NOT NULL COMMENT '创建时间',
+                             `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                             `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                             `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                             PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1521 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_plugin
@@ -738,15 +738,15 @@ CREATE TABLE `p_plugin`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_role`;
 CREATE TABLE `p_role`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '角色名',
-  `description` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '角色描述',
-  `code` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '角色码',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
+                           `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                           `name` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '角色名',
+                           `description` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '角色描述',
+                           `code` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '角色码',
+                           `createTime` datetime NOT NULL COMMENT '创建时间',
+                           `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                           `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                           `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -761,15 +761,15 @@ INSERT INTO `p_role` VALUES (3, '文章编辑', '文章编辑', 'editor', '2024-
 -- ----------------------------
 DROP TABLE IF EXISTS `p_role_menu`;
 CREATE TABLE `p_role_menu`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `roleId` int NOT NULL COMMENT '角色id',
-  `menuId` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '菜单id',
-  `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3726 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                                `id` int NOT NULL AUTO_INCREMENT,
+                                `roleId` int NOT NULL COMMENT '角色id',
+                                `menuId` varchar(64) CHARACTER SET utf8mb4  NOT NULL COMMENT '菜单id',
+                                `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3842 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_role_menu
@@ -834,18 +834,18 @@ INSERT INTO `p_role_menu` VALUES (3841, 3, 'ba8cb1619a8cc77cba8cb1619a8cc77c', '
 -- ----------------------------
 DROP TABLE IF EXISTS `p_tag`;
 CREATE TABLE `p_tag`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '标签名',
-  `color` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '颜色',
-  `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '缩略图',
-  `slug` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'slug',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '修改时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `slug`(`slug`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                          `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                          `name` varchar(256) CHARACTER SET utf8mb4  NOT NULL COMMENT '标签名',
+                          `color` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '颜色',
+                          `thumbnail` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '缩略图',
+                          `slug` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT 'slug',
+                          `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                          `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                          `createTime` datetime NOT NULL COMMENT '创建时间',
+                          `updateTime` datetime NULL DEFAULT NULL COMMENT '修改时间',
+                          PRIMARY KEY (`id`) USING BTREE,
+                          INDEX `slug`(`slug`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of p_tag
@@ -856,40 +856,44 @@ CREATE TABLE `p_tag`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `p_user`;
 CREATE TABLE `p_user`  (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `account` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '账户',
-  `userName` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '账户名',
-  `password` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '密码',
-  `salt` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '盐值',
-  `status` int NOT NULL DEFAULT 0 COMMENT '状态:0正常,1禁用',
-  `avatar` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '头像',
-  `email` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱',
-  `website` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站地址',
-  `createTime` datetime NOT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  `remark` varchar(500) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
-  `mobile` varchar(11) CHARACTER SET utf8mb4  NULL DEFAULT '' COMMENT '手机号码',
-  `sex` tinyint NULL DEFAULT NULL COMMENT '用户性别',
-  `loginIp` varchar(50) CHARACTER SET utf8mb4  NULL DEFAULT '' COMMENT '最后登录IP',
-  `loginDate` datetime NULL DEFAULT NULL COMMENT '最后登录时间',
-  PRIMARY KEY (`id`) USING BTREE,
-  INDEX `account`(`account`) USING BTREE,
-  INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                           `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+                           `account` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '账户',
+                           `userName` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '账户名',
+                           `password` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '密码',
+                           `salt` varchar(32) CHARACTER SET utf8mb4  NOT NULL COMMENT '盐值',
+                           `status` int NOT NULL DEFAULT 0 COMMENT '状态:0正常,1禁用',
+                           `avatar` varchar(512) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '头像',
+                           `email` varchar(128) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '邮箱',
+                           `website` varchar(256) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '网站地址',
+                           `createTime` datetime NOT NULL COMMENT '创建时间',
+                           `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                           `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                           `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                           `remark` varchar(500) CHARACTER SET utf8mb4  NULL DEFAULT NULL COMMENT '备注',
+                           `mobile` varchar(11) CHARACTER SET utf8mb4  NULL DEFAULT '' COMMENT '手机号码',
+                           `sex` tinyint NULL DEFAULT NULL COMMENT '用户性别',
+                           `loginIp` varchar(50) CHARACTER SET utf8mb4  NULL DEFAULT '' COMMENT '最后登录IP',
+                           `loginDate` datetime NULL DEFAULT NULL COMMENT '最后登录时间',
+                           PRIMARY KEY (`id`) USING BTREE,
+                           INDEX `account`(`account`) USING BTREE,
+                           INDEX `status`(`status`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of p_user
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for p_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `p_user_role`;
 CREATE TABLE `p_user_role`  (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `userId` int NOT NULL COMMENT '用户id',
-  `roleId` int NOT NULL COMMENT '角色id',
-  `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
-  `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+                                `id` int NOT NULL AUTO_INCREMENT,
+                                `userId` int NOT NULL COMMENT '用户id',
+                                `roleId` int NOT NULL COMMENT '角色id',
+                                `createTime` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                `updateTime` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                `createUserId` int NULL DEFAULT NULL COMMENT '添加人',
+                                `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
+                                PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;

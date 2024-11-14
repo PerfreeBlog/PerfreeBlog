@@ -72,7 +72,7 @@ public class CommonServiceImpl implements CommonService{
 
         // 存放配置信息
         genInitOption(OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, OptionEnum.WEB_NAME.getKey(), reqVO.getWebName(), OptionEnum.WEB_NAME.getMsg());
-        genInitOption(OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, OptionEnum.WEB_TITLE.getKey(), reqVO.getWebName(), OptionEnum.WEB_TITLE.getMsg());
+        genInitOption(OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, OptionEnum.WEB_TITLE.getKey(), reqVO.getWebTitle(), OptionEnum.WEB_TITLE.getMsg());
         // 存放用户信息
         User user = genInitAdminUser(reqVO);
         // 初始化文章
@@ -85,7 +85,7 @@ public class CommonServiceImpl implements CommonService{
         // 初始化主题
         initTheme();
 
-        genInitOption(OptionConstant.OPTION_IDENTIFICATION_SYSTEM, OptionEnum.WEB_INIT.getKey(), reqVO.getWebName(), OptionEnum.WEB_INIT.getMsg());
+        genInitOption(OptionConstant.OPTION_IDENTIFICATION_SYSTEM, OptionEnum.WEB_INIT.getKey(), OptionConstant.OPTION_PUBLIC_TRUE, OptionEnum.WEB_INIT.getMsg());
 
         return true;
     }
