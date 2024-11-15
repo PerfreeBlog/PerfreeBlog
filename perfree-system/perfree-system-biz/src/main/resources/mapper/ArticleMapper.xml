@@ -50,6 +50,9 @@
         <if test="pageVO.type != null and pageVO.type != ''">
             and t1.type = #{pageVO.type}
         </if>
+        <if test="pageVO.flag != null and pageVO.flag != ''">
+            and t1.flag = #{pageVO.flag}
+        </if>
         <if test="pageVO.visibility != null">
             and t1.visibility = #{pageVO.visibility}
         </if>

@@ -34,6 +34,9 @@
             <el-option v-for="item in tagData" :key="item.id" :label="item.name" :value="item.id" />
           </el-select>
         </el-form-item>
+        <el-form-item label="文章标识">
+          <el-input v-model="searchForm.flag" placeholder="请输入文章标识" clearable/>
+        </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="initList" :icon="Search">查询</el-button>
           <el-button :icon="Refresh" @click="resetSearchForm">重置</el-button>
@@ -151,7 +154,8 @@ const searchForm = ref({
   status: null,
   categoryId: null,
   tagId: null,
-  visibility: null
+  visibility: null,
+  flag: ''
 })
 
 const searchFormRef = ref();
@@ -208,7 +212,8 @@ function resetSearchForm() {
     status: null,
     categoryId: null,
     tagId: null,
-    visibility: null
+    visibility: null,
+    flag: ''
   }
   searchFormRef.value.resetFields();
   initList();

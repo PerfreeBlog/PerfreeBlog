@@ -34,4 +34,7 @@ public class ArticlePageReqVO extends PageParam {
 
     @Schema(description = "是否可见")
     private Integer visibility;
+
+    @Schema(description = "文章标识")
+    private String flag;
 }

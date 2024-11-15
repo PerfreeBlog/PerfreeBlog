@@ -1,6 +1,6 @@
-import { s as re, r as E, p as ce, c as P, a as F, b as de, t as ue, e as pe, d as me } from "./lib/@element-plus.js";
-import { _ as we, p as ve, f as _e, c as fe, h as ge, g as he, t as M, i as ye, j as be, k as Ve, l as ke, m as Ce } from "./lib/tabs.js";
-const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vue.withCtx, r = window.Vue.openBlock, u = window.Vue.createBlock, o = window.Vue.unref, xe = window.Vue.renderList, Te = window.Vue.Fragment, L = window.Vue.createElementBlock, w = window.Vue.createTextVNode, C = window.Vue.createElementVNode, j = window.Vue.resolveDirective, h = window.Vue.withDirectives, U = window.Vue.createCommentVNode, R = window.Vue.toDisplayString, z = window.Vue.withModifiers, Be = { class: "page" }, Ue = { class: "search-box" }, ze = { class: "right-tool" }, Ie = { class: "table-box" }, v = window.ElementPlus.ElMessage, k = window.ElementPlus.ElMessageBox, g = window.Vue.h, Ne = window.Vue.reactive, y = window.Vue.ref, Se = {
+import { s as re, r as E, p as de, c as P, a as F, b as ue, t as ce, e as pe, d as me } from "./lib/@element-plus.js";
+import { _ as ve, p as we, f as fe, c as _e, h as ge, g as he, t as M, i as ye, j as be, k as Ve, l as ke, m as Ce } from "./lib/tabs.js";
+const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vue.withCtx, r = window.Vue.openBlock, c = window.Vue.createBlock, o = window.Vue.unref, xe = window.Vue.renderList, Te = window.Vue.Fragment, L = window.Vue.createElementBlock, w = window.Vue.createTextVNode, C = window.Vue.createElementVNode, j = window.Vue.resolveDirective, h = window.Vue.withDirectives, U = window.Vue.createCommentVNode, R = window.Vue.toDisplayString, z = window.Vue.withModifiers, Be = { class: "page" }, Ue = { class: "search-box" }, ze = { class: "right-tool" }, Ie = { class: "table-box" }, f = window.ElementPlus.ElMessage, k = window.ElementPlus.ElMessageBox, g = window.Vue.h, Ne = window.Vue.reactive, y = window.Vue.ref, Se = {
   __name: "ArticleView",
   setup($e) {
     const n = y({
@@ -12,7 +12,8 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
       status: null,
       categoryId: null,
       tagId: null,
-      visibility: null
+      visibility: null,
+      flag: ""
     }), I = y();
     let N = y([]), x = y(!1);
     const q = Ne({
@@ -22,12 +23,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
     });
     let S = y([]), $ = y([]);
     function m() {
-      x.value = !0, _e(n.value).then((a) => {
+      x.value = !0, fe(n.value).then((a) => {
         N.value = a.data.list, n.value.total = a.data.total, x.value = !1;
       });
     }
     function G() {
-      fe({}).then((a) => {
+      _e({}).then((a) => {
         S.value = ge(a.data, "id", "pid", "children", -1);
       });
     }
@@ -46,7 +47,8 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
         status: null,
         categoryId: null,
         tagId: null,
-        visibility: null
+        visibility: null,
+        flag: ""
       }, I.value.resetFields(), m();
     }
     function K() {
@@ -62,7 +64,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
         type: "warning"
       }).then(() => {
         ye(a.id).then((t) => {
-          t.code === 200 && t.data ? (v.success("删除成功"), m()) : v.error(t.msg);
+          t.code === 200 && t.data ? (f.success("删除成功"), m()) : f.error(t.msg);
         });
       }).catch(() => {
       });
@@ -81,12 +83,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        let _ = {
+        let v = {
           id: a.id,
           isComment: a.isComment === 0 ? 1 : 0
         };
-        be(_).then((c) => {
-          c.code === 200 ? (m(), v.success("修改成功")) : v.error("修改失败");
+        be(v).then((d) => {
+          d.code === 200 ? (m(), f.success("修改成功")) : f.error("修改失败");
         });
       }).catch(() => {
       });
@@ -105,12 +107,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        let _ = {
+        let v = {
           id: a.id,
           isTop: a.isTop === 0 ? 1 : 0
         };
-        Ve(_).then((c) => {
-          c.code === 200 ? (m(), v.success("修改成功")) : v.error("修改失败");
+        Ve(v).then((d) => {
+          d.code === 200 ? (m(), f.success("修改成功")) : f.error("修改失败");
         });
       }).catch(() => {
       });
@@ -129,12 +131,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        let _ = {
+        let v = {
           id: a.id,
           visibility: a.visibility === 0 ? 1 : 0
         };
-        ke(_).then((c) => {
-          c.code === 200 ? (m(), v.success("修改成功")) : v.error("修改失败");
+        ke(v).then((d) => {
+          d.code === 200 ? (m(), f.success("修改成功")) : f.error("修改失败");
         });
       }).catch(() => {
       });
@@ -153,18 +155,18 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        let _ = {
+        let v = {
           id: a.id,
           status: a.status === 0 ? 1 : 0
         };
-        Ce(_).then((c) => {
-          c.code === 200 ? (m(), v.success("修改成功")) : v.error("修改失败");
+        Ce(v).then((d) => {
+          d.code === 200 ? (m(), f.success("修改成功")) : f.error("修改失败");
         });
       }).catch(() => {
       });
     }
     return m(), G(), H(), (a, t) => {
-      const _ = s("el-input"), c = s("el-form-item"), b = s("el-option"), T = s("el-select"), Z = s("el-tree-select"), f = s("el-button"), ee = s("el-form"), te = s("el-col"), le = s("el-row"), d = s("el-table-column"), D = s("el-tag"), ae = s("el-link"), ie = s("el-image"), B = s("el-switch"), ne = s("el-table"), oe = s("el-pagination"), V = j("hasPermission"), se = j("loading");
+      const v = s("el-input"), d = s("el-form-item"), b = s("el-option"), T = s("el-select"), Z = s("el-tree-select"), _ = s("el-button"), ee = s("el-form"), te = s("el-col"), le = s("el-row"), u = s("el-table-column"), D = s("el-tag"), ae = s("el-link"), ie = s("el-image"), B = s("el-switch"), ne = s("el-table"), oe = s("el-pagination"), V = j("hasPermission"), se = j("loading");
       return r(), L("div", Be, [
         C("div", Ue, [
           l(ee, {
@@ -175,9 +177,9 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
             ref: I
           }, {
             default: i(() => [
-              l(c, { label: "文章标题" }, {
+              l(d, { label: "文章标题" }, {
                 default: i(() => [
-                  l(_, {
+                  l(v, {
                     modelValue: n.value.title,
                     "onUpdate:modelValue": t[0] || (t[0] = (e) => n.value.title = e),
                     placeholder: "请输入文章标题",
@@ -186,7 +188,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(c, { label: "文章状态" }, {
+              l(d, { label: "文章状态" }, {
                 default: i(() => [
                   l(T, {
                     modelValue: n.value.status,
@@ -196,12 +198,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                     clearable: ""
                   }, {
                     default: i(() => [
-                      (r(), u(b, {
+                      (r(), c(b, {
                         key: 0,
                         label: "已发布",
                         value: 0
                       })),
-                      (r(), u(b, {
+                      (r(), c(b, {
                         key: 1,
                         label: "草稿箱",
                         value: 1
@@ -212,7 +214,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(c, { label: "是否可见" }, {
+              l(d, { label: "是否可见" }, {
                 default: i(() => [
                   l(T, {
                     modelValue: n.value.visibility,
@@ -222,12 +224,12 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                     clearable: ""
                   }, {
                     default: i(() => [
-                      (r(), u(b, {
+                      (r(), c(b, {
                         key: 0,
                         label: "所有人可见",
                         value: 0
                       })),
-                      (r(), u(b, {
+                      (r(), c(b, {
                         key: 1,
                         label: "仅自己可见",
                         value: 1
@@ -238,7 +240,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(c, { label: "所属分类" }, {
+              l(d, { label: "所属分类" }, {
                 default: i(() => [
                   l(Z, {
                     modelValue: n.value.categoryId,
@@ -254,7 +256,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(c, { label: "所属标签" }, {
+              l(d, { label: "所属标签" }, {
                 default: i(() => [
                   l(T, {
                     modelValue: n.value.tagId,
@@ -264,7 +266,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                     clearable: ""
                   }, {
                     default: i(() => [
-                      (r(!0), L(Te, null, xe(o($), (e) => (r(), u(b, {
+                      (r(!0), L(Te, null, xe(o($), (e) => (r(), c(b, {
                         key: e.id,
                         label: e.name,
                         value: e.id
@@ -275,23 +277,34 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(c, null, {
+              l(d, { label: "文章标识" }, {
                 default: i(() => [
-                  l(f, {
+                  l(v, {
+                    modelValue: n.value.flag,
+                    "onUpdate:modelValue": t[5] || (t[5] = (e) => n.value.flag = e),
+                    placeholder: "请输入文章标识",
+                    clearable: ""
+                  }, null, 8, ["modelValue"])
+                ]),
+                _: 1
+              }),
+              l(d, null, {
+                default: i(() => [
+                  l(_, {
                     type: "primary",
                     onClick: m,
                     icon: o(re)
                   }, {
-                    default: i(() => t[7] || (t[7] = [
+                    default: i(() => t[8] || (t[8] = [
                       w("查询")
                     ])),
                     _: 1
                   }, 8, ["icon"]),
-                  l(f, {
+                  l(_, {
                     icon: o(E),
                     onClick: J
                   }, {
-                    default: i(() => t[8] || (t[8] = [
+                    default: i(() => t[9] || (t[9] = [
                       w("重置")
                     ])),
                     _: 1
@@ -310,13 +323,13 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
           default: i(() => [
             l(te, { span: 1.5 }, {
               default: i(() => [
-                h((r(), u(f, {
-                  icon: o(ce),
+                h((r(), c(_, {
+                  icon: o(de),
                   type: "primary",
                   plain: "",
                   onClick: K
                 }, {
-                  default: i(() => t[9] || (t[9] = [
+                  default: i(() => t[10] || (t[10] = [
                     w("写文章")
                   ])),
                   _: 1
@@ -327,7 +340,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
               _: 1
             }),
             C("div", ze, [
-              l(f, {
+              l(_, {
                 icon: o(E),
                 circle: "",
                 onClick: m
@@ -337,42 +350,42 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
           _: 1
         }),
         C("div", Ie, [
-          h((r(), u(ne, {
+          h((r(), c(ne, {
             data: o(N),
             style: { width: "100%", height: "100%" },
             "row-key": "id"
           }, {
             default: i(() => [
-              l(d, {
+              l(u, {
                 label: "序号",
                 "min-width": "60",
                 type: "index"
               }),
-              l(d, {
+              l(u, {
                 prop: "title",
                 label: "文章标题",
                 "min-width": "150",
                 "show-overflow-tooltip": ""
               }),
-              l(d, {
+              l(u, {
                 prop: "status",
                 label: "状态",
                 "min-width": "120"
               }, {
                 default: i((e) => [
-                  e.row.status === 0 ? (r(), u(D, {
+                  e.row.status === 0 ? (r(), c(D, {
                     key: 0,
                     type: "success"
                   }, {
-                    default: i(() => t[10] || (t[10] = [
+                    default: i(() => t[11] || (t[11] = [
                       w("已发布")
                     ])),
                     _: 1
-                  })) : (r(), u(D, {
+                  })) : (r(), c(D, {
                     key: 1,
                     type: "danger"
                   }, {
-                    default: i(() => t[11] || (t[11] = [
+                    default: i(() => t[12] || (t[12] = [
                       w("草稿箱")
                     ])),
                     _: 1
@@ -380,7 +393,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(d, {
+              l(u, {
                 prop: "slug",
                 label: "访问地址",
                 "min-width": "150",
@@ -399,13 +412,13 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(d, {
+              l(u, {
                 prop: "thumbnail",
                 label: "封面图",
                 "min-width": "80"
               }, {
                 default: i((e) => [
-                  e.row.thumbnail ? (r(), u(ie, {
+                  e.row.thumbnail ? (r(), c(ie, {
                     key: 0,
                     style: { width: "100%", "max-height": "100%" },
                     src: e.row.thumbnail,
@@ -421,25 +434,25 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(d, {
+              l(u, {
                 prop: "viewCount",
                 label: "阅读数量",
                 "min-width": "100",
                 align: "center"
               }),
-              l(d, {
+              l(u, {
                 prop: "greatCount",
                 label: "点赞数量",
                 "min-width": "100",
                 align: "center"
               }),
-              l(d, {
+              l(u, {
                 prop: "commentCount",
                 label: "评论数量",
                 "min-width": "100",
                 align: "center"
               }),
-              l(d, {
+              l(u, {
                 prop: "isComment",
                 label: "允许评论",
                 "min-width": "100",
@@ -460,7 +473,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(d, {
+              l(u, {
                 prop: "isTop",
                 label: "是否置顶",
                 "min-width": "80",
@@ -481,7 +494,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(d, {
+              l(u, {
                 prop: "visibility",
                 label: "是否可见",
                 "min-width": "120"
@@ -502,44 +515,29 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                 ]),
                 _: 1
               }),
-              l(d, {
+              l(u, {
                 prop: "user.userName",
                 label: "创建人",
                 "min-width": "100"
               }),
-              l(d, {
+              l(u, {
                 prop: "createTime",
                 label: "创建时间",
                 "min-width": "180"
               }, {
                 default: i((e) => [
-                  C("span", null, R(o(ve)(e.row.createTime)), 1)
+                  C("span", null, R(o(we)(e.row.createTime)), 1)
                 ]),
                 _: 1
               }),
-              l(d, {
+              l(u, {
                 label: "操作",
                 width: "190",
                 fixed: "right"
               }, {
                 default: i((e) => [
-                  e.row.status === 1 ? h((r(), u(f, {
+                  e.row.status === 1 ? h((r(), c(_, {
                     key: 0,
-                    size: "small",
-                    type: "primary",
-                    link: "",
-                    icon: o(de),
-                    onClick: (p) => A(e.row)
-                  }, {
-                    default: i(() => t[12] || (t[12] = [
-                      w("发布")
-                    ])),
-                    _: 2
-                  }, 1032, ["icon", "onClick"])), [
-                    [V, ["admin:article:updateStatus"]]
-                  ]) : U("", !0),
-                  e.row.status === 0 ? h((r(), u(f, {
-                    key: 1,
                     size: "small",
                     type: "primary",
                     link: "",
@@ -547,34 +545,49 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
                     onClick: (p) => A(e.row)
                   }, {
                     default: i(() => t[13] || (t[13] = [
+                      w("发布")
+                    ])),
+                    _: 2
+                  }, 1032, ["icon", "onClick"])), [
+                    [V, ["admin:article:updateStatus"]]
+                  ]) : U("", !0),
+                  e.row.status === 0 ? h((r(), c(_, {
+                    key: 1,
+                    size: "small",
+                    type: "primary",
+                    link: "",
+                    icon: o(ce),
+                    onClick: (p) => A(e.row)
+                  }, {
+                    default: i(() => t[14] || (t[14] = [
                       w("草稿")
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
                     [V, ["admin:article:updateStatus"]]
                   ]) : U("", !0),
-                  h((r(), u(f, {
+                  h((r(), c(_, {
                     size: "small",
                     type: "primary",
                     link: "",
                     icon: o(pe),
                     onClick: (p) => O(e.row)
                   }, {
-                    default: i(() => t[14] || (t[14] = [
+                    default: i(() => t[15] || (t[15] = [
                       w("修改")
                     ])),
                     _: 2
                   }, 1032, ["icon", "onClick"])), [
                     [V, ["admin:article:update"]]
                   ]),
-                  h((r(), u(f, {
+                  h((r(), c(_, {
                     size: "small",
                     type: "primary",
                     link: "",
                     icon: o(me),
                     onClick: (p) => Q(e.row)
                   }, {
-                    default: i(() => t[15] || (t[15] = [
+                    default: i(() => t[16] || (t[16] = [
                       w("删除")
                     ])),
                     _: 2
@@ -591,9 +604,9 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
           ]),
           l(oe, {
             "current-page": n.value.pageNo,
-            "onUpdate:currentPage": t[5] || (t[5] = (e) => n.value.pageNo = e),
+            "onUpdate:currentPage": t[6] || (t[6] = (e) => n.value.pageNo = e),
             "page-size": n.value.pageSize,
-            "onUpdate:pageSize": t[6] || (t[6] = (e) => n.value.pageSize = e),
+            "onUpdate:pageSize": t[7] || (t[7] = (e) => n.value.pageSize = e),
             "page-sizes": [10, 20, 30, 50],
             layout: "total,sizes,prev, pager, next, jumper",
             background: "",
@@ -605,7 +618,7 @@ const s = window.Vue.resolveComponent, l = window.Vue.createVNode, i = window.Vu
       ]);
     };
   }
-}, Ee = /* @__PURE__ */ we(Se, [["__scopeId", "data-v-32a164e7"]]);
+}, Ee = /* @__PURE__ */ ve(Se, [["__scopeId", "data-v-a1aedcd1"]]);
 export {
   Ee as default
 };
