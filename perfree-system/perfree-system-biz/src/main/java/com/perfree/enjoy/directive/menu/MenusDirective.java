@@ -8,10 +8,14 @@ import com.perfree.commons.directive.BaseDirective;
 import com.perfree.commons.directive.TemplateDirective;
 import com.perfree.controller.auth.system.vo.MenuTreeListRespVO;
 import com.perfree.service.menu.MenuService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * menus模板指令
