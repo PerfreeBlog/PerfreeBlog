@@ -3,8 +3,7 @@ PerfreeBlog是一款基于java开发的博客/CMS建站平台,丰富的主题支
 
 
 * 官网地址: [https://perfree.org.cn](https://perfree.org.cn)
-* 老版文档地址: [https://docs.perfree.org.cn](https://docs.perfree.org.cn)
-* 新版文档地址: 编写中...
+* 文档地址: [https://docs.perfree.org.cn](https://docs.perfree.org.cn)
 
 ## 功能简介
 * 设计简洁，界面美观
