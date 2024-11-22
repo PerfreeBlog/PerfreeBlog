@@ -86,4 +86,12 @@ public class BaseViewController {
             return defaultView;
         }
     }
+
+    public boolean themeFileExist(String view) {
+        File file = new File(SystemConstants.PROD_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
+                currentTheme() + SystemConstants.FILE_SEPARATOR + view);
+        File devFile = ClassPathFileUtil.getDevClassPathFile(SystemConstants.DEV_THEMES_PATH + SystemConstants.FILE_SEPARATOR +
+                currentTheme() + SystemConstants.FILE_SEPARATOR + view);
+        return file.exists() || (devFile != null && devFile.exists());
+    }
 }

@@ -18,17 +18,17 @@ public class CreatePlugin {
         // ---------------------填写插件信息--------------------------------------
 
         // 插件id
-        contextMap.put("pluginId", "perfree-plugin-example");
+        contextMap.put("pluginId", "perfree-plugin-test");
         // 插件名称
-        contextMap.put("pluginName", "示例插件");
+        contextMap.put("pluginName", "测试插件");
         // 插件描述
-        contextMap.put("pluginDesc", "一个通过自动生成的示例插件");
+        contextMap.put("pluginDesc", "测试插件");
         // 插件最低支持版本,低于这个版本的系统不能安装
         contextMap.put("pluginMinimalVersion", "4.0.0");
         // 插件版本
         contextMap.put("pluginVersion", "1.0.0");
         // 包名
-        contextMap.put("package", "com.example");
+        contextMap.put("package", "com.official");
         // 是否有设置页面
         contextMap.put("hasSetting", true);
         // 是否有后台管理前端界面

@@ -14,7 +14,6 @@
     <name>${project.artifactId}</name>
     <modules>
         <module>perfree-plugin-demo</module>
-        <module>perfree-plugin-old-import</module>
     </modules>
     <packaging>pom</packaging>
     <description>插件包</description>

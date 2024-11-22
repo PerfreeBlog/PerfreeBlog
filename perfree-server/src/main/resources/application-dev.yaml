@@ -99,7 +99,7 @@ springdoc:
         - com.perfree.controller.common
 # knife4j的增强配置
 knife4j:
-  enable: false
+  enable: true
   setting:
     language: zh_cn
     enable-version: true

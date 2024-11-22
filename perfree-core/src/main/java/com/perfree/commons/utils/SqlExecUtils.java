@@ -1,6 +1,9 @@
 package com.perfree.commons.utils;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.file.FileReader;
 import com.zaxxer.hikari.HikariDataSource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
@@ -19,6 +22,11 @@ public class SqlExecUtils {
      */
     public static void execSqlFile(File sqlFile) throws SQLException {
         if (!sqlFile.exists()){
+            return;
+        }
+        FileReader fileReader = new FileReader(sqlFile.getAbsoluteFile());
+        String readString = fileReader.readString();
+        if (StringUtils.isBlank(readString)){
             return;
         }
         Resource resource = new FileSystemResource(sqlFile.getAbsoluteFile());
