@@ -26,7 +26,7 @@ public class AttachConfigBaseVO {
 
 
     @Schema(description = "是否为主配置")
-    private Boolean master;
+    private Boolean master = false;
 
     /**
      * 存储配置

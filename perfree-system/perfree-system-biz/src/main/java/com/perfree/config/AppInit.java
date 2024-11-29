@@ -127,7 +127,7 @@ public class AppInit implements ApplicationRunner {
             SqlExecUtils.execSqlFile(updateSqlFile);
         }
         optionService.handleWebVersion();
-        LOGGER.info("执行插件更新sql完毕");
+        LOGGER.info("执行更新sql完毕");
     }
 
     private void handleInit() throws Exception {

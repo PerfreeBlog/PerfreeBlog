@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AttachConfigCacheService {
+
     private final Cache<Integer, AttachConfigCacheDTO> attachConfingCache;
 
     public AttachConfigCacheService() {
