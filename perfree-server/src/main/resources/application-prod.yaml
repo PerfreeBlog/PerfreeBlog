@@ -1,4 +1,4 @@
-version: 4.0.0
+version: 4.0.1
 server:
   port: 8080
   servlet:
@@ -60,7 +60,7 @@ spring:
 # MyBatis Plus 的配置项
 mybatis-plus:
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: false
   global-config:
     db-config:
