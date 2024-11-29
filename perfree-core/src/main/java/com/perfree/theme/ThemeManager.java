@@ -87,7 +87,7 @@ public class ThemeManager {
             // 读取 YAML 文件
             Yaml yaml = new Yaml();
             themeInfo = yaml.loadAs(input, ThemeInfo.class);
-            if (file.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, ""))) {
+            if (themeInfo.getName().equals(optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, ""))) {
                 themeInfo.setIsActive(1);
             }
             themeInfo.setPath(file.getName());
@@ -162,7 +162,7 @@ public class ThemeManager {
         if (null == themeInfo) {
             throw new ServiceException(ErrorCode.THEME_SWITCH_CHECK_ERROR);
         }
-        Boolean result = optionApi.updateOptionByKeyAndIdentification(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, themePath);
+        Boolean result = optionApi.updateOptionByKeyAndIdentification(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, themeInfo.getName());
         initThemeResourceHandle(themePath);
         return result;
     }
