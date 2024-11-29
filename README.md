@@ -50,6 +50,13 @@ docker compose up -d
 ## 老版本数据导入
 PerfreeBlog安装完毕后, 安装[https://github.com/PerfreeBlog/perfree-plugin-old-import/releases](https://github.com/PerfreeBlog/perfree-plugin-old-import/releases)老版本数据导入插件,在插件界面中操作即可
 
+## 交流群
+> QQ交流群: 938402724
+
+微信交流群(添加微信入群,备注PerfreeBlog):
+
+<img width="240" src="./images/wechat.png" alt="微信交流群" />
+
 ## 技术栈
 以下包含了所使用到的技术栈及开发环境版本
 
