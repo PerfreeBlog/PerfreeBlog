@@ -7,6 +7,7 @@ import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.core.PluginClassLoader;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 
 @Component
+@Slf4j
 public class PluginHandle implements ApplicationContextAware {
 
     // 主程序 applicationContext
@@ -61,8 +63,12 @@ public class PluginHandle implements ApplicationContextAware {
     public void stopPlugin(String pluginId) throws Exception {
         PluginInfo pluginInfo = PluginInfoHolder.getPluginInfo(pluginId);
         LOGGER.info("plugin  ----->  plugin msg load complete: {}", pluginInfo);
-        pluginCompoundHandle.initialize();
-        pluginCompoundHandle.unRegistry(pluginInfo);
+        try{
+            pluginCompoundHandle.initialize();
+            pluginCompoundHandle.unRegistry(pluginInfo);
+        }catch (Exception e) {
+            log.error("plugin stop unRegistry error", e);
+        }
 
         // 移除插件专属AnnotationConfigApplicationContext
         PluginApplicationContextHolder.removePluginApplicationContext(pluginId);

@@ -9,6 +9,7 @@ import com.perfree.plugin.exception.PluginException;
 import com.perfree.plugin.handle.compound.PluginHandle;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import java.io.File;
  * @date 15:36 2023/9/28
  */
 @Component
+@Slf4j
 public class PluginManager{
     private static final Logger LOGGER = LoggerFactory.getLogger(PluginManager.class);
 
@@ -136,13 +138,17 @@ public class PluginManager{
      * @param pluginDirFile pluginDirFile
      */
     public void unInstallPlugin(File pluginDirFile) throws Exception {
-        PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDirFile);
-        BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
-        if (null != bean) {
-            bean.onUnInstall();
+        try{
+            PluginInfo pluginInfo = pluginHandle.startPlugin(pluginDirFile);
+            BasePluginEvent bean = PluginApplicationContextHolder.getPluginBean(pluginInfo.getPluginId(), BasePluginEvent.class);
+            if (null != bean) {
+                bean.onUnInstall();
+            }
+            pluginHandle.stopPlugin(pluginInfo.getPluginId());
+            PluginHandleUtils.execPluginUnInstallSql(pluginDirFile);
+        }catch (Exception e) {
+            log.error("unInstall plugin error", e);
         }
-        pluginHandle.stopPlugin(pluginInfo.getPluginId());
-        PluginHandleUtils.execPluginUnInstallSql(pluginDirFile);
         FileUtil.del(pluginDirFile);
     }
 
