@@ -13,6 +13,8 @@ import com.perfree.enums.OptionEnum;
 import com.perfree.mapper.OptionMapper;
 import com.perfree.model.Option;
 import com.perfree.system.api.option.dto.OptionDTO;
+import com.perfree.theme.ThemeManager;
+import com.perfree.theme.commons.ThemeInfo;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +43,9 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
 
     @Resource
     private OptionCacheService optionCacheService;
+
+    @Resource
+    private ThemeManager themeManager;
 
     @Override
     @Transactional
@@ -86,28 +91,28 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
 
     @Override
     public List<Option> getCurrentThemeSettingValue() {
-        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
-        if (StringUtils.isBlank(webTheme)) {
+        ThemeInfo themeInfo = themeManager.getThemeInfo(null);
+        if (null == themeInfo) {
             throw new ServiceException(ErrorCode.GET_CURRENT_THEME_ERROR);
         }
-        return optionMapper.getSettingValueByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + webTheme);
+        return optionMapper.getSettingValueByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + themeInfo.getName());
     }
 
     @Override
     @Transactional
     public Boolean saveCurrentThemeSetting(OptionAddListReqVO optionAddListReqVO) {
-        String webTheme = optionCacheService.getDefaultValue(OptionEnum.WEB_THEME.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM, "");
-        if (StringUtils.isBlank(webTheme)) {
+        ThemeInfo themeInfo = themeManager.getThemeInfo(null);
+        if (null == themeInfo) {
             throw new ServiceException(ErrorCode.GET_CURRENT_THEME_ERROR);
         }
 
         List<Option> optionList = new ArrayList<>();
         for (OptionAddReqVO optionAddReqVO : optionAddListReqVO.getOptions()) {
             Option option = OptionConvert.INSTANCE.convertByAddReqVO(optionAddReqVO);
-            option.setIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + webTheme);
+            option.setIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + themeInfo.getName());
             optionList.add(option);
         }
-        optionMapper.delByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + webTheme);
+        optionMapper.delByIdentification(SystemConstants.THEME_OPTION_IDENT_PRE + themeInfo.getName());
         optionMapper.insertBatch(optionList);
         for (Option option : optionList) {
             optionCacheService.putOption(option.getKey(),option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
