@@ -173,7 +173,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
           e[6] || (e[6] = a("span", null, "-", -1)),
           n(u, {
             type: "primary",
-            href: "https://www.perfree.org.cn/themeDevDoc",
+            href: "https://docs.perfree.org.cn/themeDevDocs/",
             target: "_blank"
           }, {
             default: s(() => e[5] || (e[5] = [
@@ -406,7 +406,7 @@ const i = window.Vue.createTextVNode, r = window.Vue.resolveComponent, ne = wind
       ]);
     };
   }
-}, xe = /* @__PURE__ */ X(be, [["__scopeId", "data-v-5b0dc4b7"]]);
+}, xe = /* @__PURE__ */ X(be, [["__scopeId", "data-v-01b23769"]]);
 export {
   xe as default
 };

@@ -5,7 +5,7 @@
       <span v-hasPermission="['admin:theme:install']">-</span>
       <el-link type="primary" href="https://www.perfree.org.cn/theme" target="_blank">主题仓库</el-link>
       <span>-</span>
-      <el-link type="primary" href="https://www.perfree.org.cn/themeDevDoc" target="_blank">主题开发指南</el-link>
+      <el-link type="primary" href="https://docs.perfree.org.cn/themeDevDocs/" target="_blank">主题开发指南</el-link>
     </div>
     <el-row :gutter="15">
       <el-col :xs="24" :sm="12" :md="8" :lg="8" :xl="6" v-for="theme in themeList" :key="theme.name">

@@ -66,16 +66,16 @@ function J(l, u) {
     s: f.getSeconds(),
     a: f.getDay()
   };
-  return w.replace(/{([ymdhisa])+}/g, (b, k) => {
+  return w.replace(/{([ymdhisa])+}/g, (I, k) => {
     let p = d[k];
-    return k === "a" ? ["日", "一", "二", "三", "四", "五", "六"][p] : (b.length > 0 && p < 10 && (p = "0" + p), p || 0);
+    return k === "a" ? ["日", "一", "二", "三", "四", "五", "六"][p] : (I.length > 0 && p < 10 && (p = "0" + p), p || 0);
   });
 }
 function K(l) {
-  const u = new Date(l), w = /* @__PURE__ */ new Date(), f = 1e3 * 60, d = f * 60, y = d * 24, b = y * 7, k = y * 30, p = w - u;
+  const u = new Date(l), w = /* @__PURE__ */ new Date(), f = 1e3 * 60, d = f * 60, y = d * 24, I = y * 7, k = y * 30, p = w - u;
   if (p < 0)
     return "刚刚发表";
-  const v = p / k, N = p / b, E = p / y, D = p / d, S = p / f;
+  const v = p / k, N = p / I, E = p / y, D = p / d, S = p / f;
   let i;
   return v >= 3 ? i = `${u.getFullYear()}-${(u.getMonth() + 1).toString().padStart(2, "0")}-${u.getDate().toString().padStart(2, "0")}` : v >= 1 ? i = `${Math.floor(v)}月前` : N >= 1 ? i = `${Math.floor(N)}周前` : E >= 1 ? i = `${Math.floor(E)}天前` : D >= 1 ? i = `${Math.floor(D)}小时前` : S >= 1 ? i = `${Math.floor(S)}分钟前` : i = "刚刚发表", i;
 }
@@ -84,12 +84,12 @@ const Q = (l, u) => {
   for (const [f, d] of u)
     w[f] = d;
   return w;
-}, h = window.Vue.resolveComponent, e = window.Vue.createVNode, x = window.Vue.toDisplayString, s = window.Vue.createElementVNode, n = window.Vue.withCtx, o = window.Vue.unref, g = window.Vue.createTextVNode, U = window.Vue.resolveDirective, c = window.Vue.openBlock, m = window.Vue.createElementBlock, B = window.Vue.withDirectives, A = window.Vue.renderList, O = window.Vue.Fragment, P = window.Vue.createBlock, H = window.Vue.createCommentVNode, Z = { class: "panelBox" }, tt = { style: { display: "flex", "flex-wrap": "wrap" } }, et = { class: "loginBoxRight" }, nt = { class: "title" }, st = { class: "panelBox" }, ot = { class: "panelBox" }, lt = { class: "panelBox" }, at = { class: "panelBox" }, it = { class: "panelBox" }, rt = { class: "panelBox" }, ut = { class: "panelBox" }, dt = { style: { "text-align": "center", "margin-top": "10px", "min-height": "500px" } }, ct = { class: "panelBox" }, ft = { style: { "margin-top": "10px", "min-height": "500px" } }, mt = { class: "comment-detail-box" }, pt = { class: "comment-detail-avatar-box" }, gt = ["src"], _t = { key: 1 }, vt = { class: "comment-detail-msg-box" }, wt = { class: "comment-detail-info" }, ht = { class: "comment-detail-name" }, xt = { class: "comment-detail-time" }, yt = { key: 0 }, kt = { key: 1 }, Vt = { key: 2 }, Tt = ["innerHTML"], Bt = { class: "panelBox" }, It = { class: "panelBox" }, bt = { class: "panelBox" }, Ct = { class: "link-ul" }, Lt = window.ElementPlus.ElMessage, Mt = window.Vue.onMounted, I = window.Vue.ref, Dt = window.Vue.watch, St = {
+}, h = window.Vue.resolveComponent, e = window.Vue.createVNode, x = window.Vue.toDisplayString, s = window.Vue.createElementVNode, n = window.Vue.withCtx, o = window.Vue.unref, g = window.Vue.createTextVNode, U = window.Vue.resolveDirective, c = window.Vue.openBlock, m = window.Vue.createElementBlock, b = window.Vue.withDirectives, A = window.Vue.renderList, O = window.Vue.Fragment, P = window.Vue.createBlock, H = window.Vue.createCommentVNode, Z = { class: "panelBox" }, tt = { style: { display: "flex", "flex-wrap": "wrap" } }, et = { class: "loginBoxRight" }, nt = { class: "title" }, st = { class: "panelBox" }, ot = { class: "panelBox" }, lt = { class: "panelBox" }, at = { class: "panelBox" }, it = { class: "panelBox" }, rt = { class: "panelBox" }, ut = { class: "panelBox" }, dt = { style: { "text-align": "center", "margin-top": "10px", "min-height": "500px" } }, ct = { class: "panelBox" }, ft = { style: { "margin-top": "10px", "min-height": "500px" } }, mt = { class: "comment-detail-box" }, pt = { class: "comment-detail-avatar-box" }, gt = ["src"], _t = { key: 1 }, vt = { class: "comment-detail-msg-box" }, wt = { class: "comment-detail-info" }, ht = { class: "comment-detail-name" }, xt = { class: "comment-detail-time" }, yt = { key: 0 }, kt = { key: 1 }, Vt = { key: 2 }, Tt = ["innerHTML"], bt = { class: "panelBox" }, Bt = { class: "panelBox" }, It = { class: "panelBox" }, Ct = { class: "link-ul" }, Lt = window.ElementPlus.ElMessage, Mt = window.Vue.onMounted, B = window.Vue.ref, Dt = window.Vue.watch, St = {
   __name: "Home",
   setup(l) {
     var D, S;
-    let u = I(!0), w = I(!0), f = I(!0), d = I({}), y = I([]), b = I([]);
-    const k = I((S = (D = window.pinia.state._value) == null ? void 0 : D.userStore) == null ? void 0 : S.userInfo);
+    let u = B(!0), w = B(!0), f = B(!0), d = B({}), y = B([]), I = B([]);
+    const k = B((S = (D = window.pinia.state._value) == null ? void 0 : D.userStore) == null ? void 0 : S.userInfo);
     Dt(() => {
       var i, t;
       return (t = (i = window.pinia.state._value) == null ? void 0 : i.userStore) == null ? void 0 : t.userInfo;
@@ -138,7 +138,7 @@ const Q = (l, u) => {
     }
     function E() {
       f.value = !0, X(6).then((i) => {
-        b.value = i.data, f.value = !1;
+        I.value = i.data, f.value = !1;
       });
     }
     return N(), E(), (i, t) => {
@@ -196,7 +196,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      B((c(), m("div", st, [
+                      b((c(), m("div", st, [
                         e(C, {
                           value: o(d).articleTotal
                         }, {
@@ -222,7 +222,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      B((c(), m("div", ot, [
+                      b((c(), m("div", ot, [
                         e(C, {
                           value: o(d).journalTotal
                         }, {
@@ -248,7 +248,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      B((c(), m("div", lt, [
+                      b((c(), m("div", lt, [
                         e(C, {
                           value: o(d).categoryTotal
                         }, {
@@ -274,7 +274,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      B((c(), m("div", at, [
+                      b((c(), m("div", at, [
                         e(C, {
                           value: o(d).tagTotal
                         }, {
@@ -300,7 +300,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      B((c(), m("div", it, [
+                      b((c(), m("div", it, [
                         e(C, {
                           value: o(d).commentTotal
                         }, {
@@ -326,7 +326,7 @@ const Q = (l, u) => {
                     xl: 4
                   }, {
                     default: n(() => [
-                      B((c(), m("div", rt, [
+                      b((c(), m("div", rt, [
                         e(C, {
                           value: o(d).userTotal
                         }, {
@@ -395,7 +395,7 @@ const Q = (l, u) => {
                               s("div", ct, [
                                 t[15] || (t[15] = s("div", { class: "panelTitle" }, "最新评论", -1)),
                                 s("div", ft, [
-                                  (c(!0), m(O, null, A(o(b), (a) => (c(), m("div", mt, [
+                                  (c(!0), m(O, null, A(o(I), (a) => (c(), m("div", mt, [
                                     s("div", pt, [
                                       a.avatar || a.userInfo && a.userInfo.avatar ? (c(), m("img", {
                                         key: 0,
@@ -449,7 +449,7 @@ const Q = (l, u) => {
                 default: n(() => [
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      s("div", Bt, [
+                      s("div", bt, [
                         t[22] || (t[22] = s("div", { class: "panelTitle" }, "快捷功能", -1)),
                         e($, null, {
                           default: n(() => [
@@ -570,7 +570,7 @@ const Q = (l, u) => {
                   }),
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      B((c(), m("div", It, t[23] || (t[23] = [
+                      b((c(), m("div", Bt, t[23] || (t[23] = [
                         s("div", { class: "panelTitle" }, "附件统计", -1),
                         s("div", {
                           class: "echartsBox",
@@ -585,7 +585,7 @@ const Q = (l, u) => {
                   }),
                   e(r, { span: 24 }, {
                     default: n(() => [
-                      s("div", bt, [
+                      s("div", It, [
                         t[30] || (t[30] = s("div", { class: "panelTitle" }, "相关文档", -1)),
                         s("ul", Ct, [
                           s("li", null, [
@@ -627,7 +627,7 @@ const Q = (l, u) => {
                           s("li", null, [
                             e(V, {
                               icon: o(M),
-                              href: "https://www.perfree.org.cn/useDoc",
+                              href: "https://docs.perfree.org.cn/useDocs/",
                               target: "_blank"
                             }, {
                               default: n(() => t[27] || (t[27] = [
@@ -639,7 +639,7 @@ const Q = (l, u) => {
                           s("li", null, [
                             e(V, {
                               icon: o(M),
-                              href: "https://www.perfree.org.cn/themeDevDoc",
+                              href: "https://docs.perfree.org.cn/themeDevDocs/",
                               target: "_blank"
                             }, {
                               default: n(() => t[28] || (t[28] = [
@@ -651,7 +651,7 @@ const Q = (l, u) => {
                           s("li", null, [
                             e(V, {
                               icon: o(M),
-                              href: "https://www.perfree.org.cn/pluginDevDoc",
+                              href: "https://docs.perfree.org.cn/pluginDevDocs/",
                               target: "_blank"
                             }, {
                               default: n(() => t[29] || (t[29] = [
@@ -676,7 +676,7 @@ const Q = (l, u) => {
       });
     };
   }
-}, Ht = /* @__PURE__ */ Q(St, [["__scopeId", "data-v-ff834c2a"]]);
+}, Ht = /* @__PURE__ */ Q(St, [["__scopeId", "data-v-bb6b7582"]]);
 export {
   Ht as default
 };

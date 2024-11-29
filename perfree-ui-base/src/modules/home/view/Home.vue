@@ -166,13 +166,13 @@
                 <el-link :icon="Link" href="https://www.perfree.org.cn/plugin" target="_blank">PerfreeBlog 插件仓库</el-link>
               </li>
               <li>
-                <el-link :icon="Link" href="https://www.perfree.org.cn/useDoc" target="_blank">PerfreeBlog 使用文档</el-link>
+                <el-link :icon="Link" href="https://docs.perfree.org.cn/useDocs/" target="_blank">PerfreeBlog 使用文档</el-link>
               </li>
               <li>
-                <el-link :icon="Link" href="https://www.perfree.org.cn/themeDevDoc" target="_blank">PerfreeBlog 主题开发文档</el-link>
+                <el-link :icon="Link" href="https://docs.perfree.org.cn/themeDevDocs/" target="_blank">PerfreeBlog 主题开发文档</el-link>
               </li>
               <li>
-                <el-link :icon="Link" href="https://www.perfree.org.cn/pluginDevDoc" target="_blank">PerfreeBlog 插件开发文档</el-link>
+                <el-link :icon="Link" href="https://docs.perfree.org.cn/pluginDevDocs/" target="_blank">PerfreeBlog 插件开发文档</el-link>
               </li>
             </ul>
           </div>
