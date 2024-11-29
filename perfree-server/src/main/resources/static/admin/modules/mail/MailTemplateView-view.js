@@ -1,7 +1,7 @@
 import { d as me, p as tl } from "./lib/perfree.js";
 import { s as Ke, r as Me, u as ze, d as al, p as ol, b as nl, e as il, a as ul } from "./lib/@element-plus.js";
 import { f as rl } from "./lib/mailServer.js";
-import { e as dl } from "./lib/aieditor.js";
+import { i as dl } from "./lib/aieditor.js";
 function sl(m) {
   return axios.post("/api/auth/mailTemplate/page", m);
 }

@@ -1,4 +1,4 @@
-/*! Element Plus v2.8.6 */
+/*! Element Plus v2.8.8 */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue')) :
@@ -18,7 +18,7 @@
     if (element.tabIndex > 0 || element.tabIndex === 0 && element.getAttribute("tabIndex") !== null) {
       return true;
     }
-    if (element.disabled) {
+    if (element.tabIndex < 0 || element.hasAttribute("disabled") || element.getAttribute("aria-disabled") === "true") {
       return false;
     }
     switch (element.nodeName) {
@@ -770,9 +770,6 @@
   };
   const objectToString$1 = Object.prototype.toString;
   const toTypeString = (value) => objectToString$1.call(value);
-  const toRawType = (value) => {
-    return toTypeString(value).slice(8, -1);
-  };
   const isPlainObject$1 = (val) => toTypeString(val) === "[object Object]";
   const cacheStringFunction = (fn) => {
     const cache = /* @__PURE__ */ Object.create(null);
@@ -7608,18 +7605,14 @@
       return false;
     return e instanceof Element;
   };
-  const isPropAbsent = (prop) => {
-    return isNil(prop);
-  };
+  const isPropAbsent = (prop) => isNil(prop);
   const isStringNumber = (val) => {
     if (!isString$1(val)) {
       return false;
     }
     return !Number.isNaN(Number(val));
   };
-  const isWindow$1 = (val) => {
-    return val === window;
-  };
+  const isWindow$1 = (val) => val === window;
 
   const rAF = (fn) => isClient ? window.requestAnimationFrame(fn) : setTimeout(fn, 16);
   const cAF = (handle) => isClient ? window.cancelAnimationFrame(handle) : clearTimeout(handle);
@@ -7782,7 +7775,7 @@
       }
       if (time < duration) {
         handle = rAF(scroll);
-      } else if (typeof callback === "function") {
+      } else if (isFunction$1(callback)) {
         callback();
       }
     };
@@ -8752,13 +8745,12 @@
       var _a;
       if (isArray$1(child)) {
         result.push(...flattedChildren(child));
+      } else if (vue.isVNode(child) && ((_a = child.component) == null ? void 0 : _a.subTree)) {
+        result.push(child, ...flattedChildren(child.component.subTree));
       } else if (vue.isVNode(child) && isArray$1(child.children)) {
         result.push(...flattedChildren(child.children));
       } else {
         result.push(child);
-        if (vue.isVNode(child) && ((_a = child.component) == null ? void 0 : _a.subTree)) {
-          result.push(...flattedChildren(child.component.subTree));
-        }
       }
     });
     return result;
@@ -8768,7 +8760,7 @@
   const castArray = (arr) => {
     if (!arr && arr !== 0)
       return [];
-    return Array.isArray(arr) ? arr : [arr];
+    return isArray$1(arr) ? arr : [arr];
   };
 
   const isKorean = (text) => /([\uAC00-\uD7AF\u3130-\u318F])+/gi.test(text);
@@ -9539,23 +9531,39 @@
   const useThrottleRender = (loading, throttle = 0) => {
     if (throttle === 0)
       return loading;
-    const throttled = vue.ref(false);
+    const initVal = isObject$1(throttle) && Boolean(throttle.initVal);
+    const throttled = vue.ref(initVal);
     let timeoutHandle = null;
-    const dispatchThrottling = () => {
+    const dispatchThrottling = (timer) => {
+      if (isUndefined(timer)) {
+        throttled.value = loading.value;
+        return;
+      }
       if (timeoutHandle) {
         clearTimeout(timeoutHandle);
       }
       timeoutHandle = setTimeout(() => {
         throttled.value = loading.value;
-      }, throttle);
+      }, timer);
     };
-    vue.onMounted(dispatchThrottling);
-    vue.watch(() => loading.value, (val) => {
-      if (val) {
-        dispatchThrottling();
+    const dispatcher = (type) => {
+      if (type === "leading") {
+        if (isNumber(throttle)) {
+          dispatchThrottling(throttle);
+        } else {
+          dispatchThrottling(throttle.leading);
+        }
       } else {
-        throttled.value = val;
+        if (isObject$1(throttle)) {
+          dispatchThrottling(throttle.trailing);
+        } else {
+          throttled.value = false;
+        }
       }
+    };
+    vue.onMounted(() => dispatcher("leading"));
+    vue.watch(() => loading.value, (val) => {
+      dispatcher(val ? "leading" : "trailing");
     });
     return throttled;
   };
@@ -9645,14 +9653,13 @@
   const useId = (deterministicId) => {
     const idInjection = useIdInjection();
     const namespace = useGetDerivedNamespace();
-    const idRef = vue.computed(() => vue.unref(deterministicId) || `${namespace.value}-id-${idInjection.prefix}-${idInjection.current++}`);
+    const idRef = computedEager(() => vue.unref(deterministicId) || `${namespace.value}-id-${idInjection.prefix}-${idInjection.current++}`);
     return idRef;
   };
 
   let registeredEscapeHandlers = [];
-  const cachedHandler = (e) => {
-    const event = e;
-    if (event.key === EVENT_CODE.esc) {
+  const cachedHandler = (event) => {
+    if (event.code === EVENT_CODE.esc) {
       registeredEscapeHandlers.forEach((registeredHandler) => registeredHandler(event));
     }
   };
@@ -11560,7 +11567,7 @@
 
   const ElConfigProvider = withInstall(ConfigProvider);
 
-  const version$1 = "2.8.6";
+  const version$1 = "2.8.8";
 
   const makeInstaller = (components = []) => {
     const install = (app, options) => {
@@ -11610,11 +11617,11 @@
   };
 
   const COMPONENT_NAME$n = "ElAffix";
-  const __default__$1P = vue.defineComponent({
+  const __default__$1Q = vue.defineComponent({
     name: COMPONENT_NAME$n
   });
-  const _sfc_main$2v = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1P,
+  const _sfc_main$2w = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1Q,
     props: affixProps,
     emits: affixEmits,
     setup(__props, { expose, emit }) {
@@ -11719,7 +11726,7 @@
       };
     }
   });
-  var Affix = /* @__PURE__ */ _export_sfc(_sfc_main$2v, [["__file", "affix.vue"]]);
+  var Affix = /* @__PURE__ */ _export_sfc(_sfc_main$2w, [["__file", "affix.vue"]]);
 
   const ElAffix = withInstall(Affix);
 
@@ -11732,12 +11739,12 @@
     }
   });
 
-  const __default__$1O = vue.defineComponent({
+  const __default__$1P = vue.defineComponent({
     name: "ElIcon",
     inheritAttrs: false
   });
-  const _sfc_main$2u = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1O,
+  const _sfc_main$2v = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1P,
     props: iconProps,
     setup(__props) {
       const props = __props;
@@ -11761,7 +11768,7 @@
       };
     }
   });
-  var Icon = /* @__PURE__ */ _export_sfc(_sfc_main$2u, [["__file", "icon.vue"]]);
+  var Icon = /* @__PURE__ */ _export_sfc(_sfc_main$2v, [["__file", "icon.vue"]]);
 
   const ElIcon = withInstall(Icon);
 
@@ -11800,11 +11807,11 @@
     close: (evt) => evt instanceof MouseEvent
   };
 
-  const __default__$1N = vue.defineComponent({
+  const __default__$1O = vue.defineComponent({
     name: "ElAlert"
   });
-  const _sfc_main$2t = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1N,
+  const _sfc_main$2u = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1O,
     props: alertProps,
     emits: alertEmits,
     setup(__props, { emit }) {
@@ -11889,7 +11896,7 @@
       };
     }
   });
-  var Alert = /* @__PURE__ */ _export_sfc(_sfc_main$2t, [["__file", "alert.vue"]]);
+  var Alert = /* @__PURE__ */ _export_sfc(_sfc_main$2u, [["__file", "alert.vue"]]);
 
   const ElAlert = withInstall(Alert);
 
@@ -12054,11 +12061,11 @@
   };
 
   const COMPONENT_NAME$m = "ElForm";
-  const __default__$1M = vue.defineComponent({
+  const __default__$1N = vue.defineComponent({
     name: COMPONENT_NAME$m
   });
-  const _sfc_main$2s = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1M,
+  const _sfc_main$2t = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1N,
     props: formProps,
     emits: formEmits,
     setup(__props, { expose, emit }) {
@@ -12191,7 +12198,7 @@
       };
     }
   });
-  var Form = /* @__PURE__ */ _export_sfc(_sfc_main$2s, [["__file", "form.vue"]]);
+  var Form = /* @__PURE__ */ _export_sfc(_sfc_main$2t, [["__file", "form.vue"]]);
 
   function _extends() {
     _extends = Object.assign ? Object.assign.bind() : function(target) {
@@ -13375,11 +13382,11 @@
     }
   });
 
-  const __default__$1L = vue.defineComponent({
+  const __default__$1M = vue.defineComponent({
     name: "ElFormItem"
   });
-  const _sfc_main$2r = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1L,
+  const _sfc_main$2s = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1M,
     props: formItemProps,
     setup(__props, { expose }) {
       const props = __props;
@@ -13493,7 +13500,7 @@
         return rules.filter((rule) => {
           if (!rule.trigger || !trigger)
             return true;
-          if (Array.isArray(rule.trigger)) {
+          if (isArray$1(rule.trigger)) {
             return rule.trigger.includes(trigger);
           } else {
             return rule.trigger === trigger;
@@ -13679,7 +13686,7 @@
       };
     }
   });
-  var FormItem = /* @__PURE__ */ _export_sfc(_sfc_main$2r, [["__file", "form-item.vue"]]);
+  var FormItem = /* @__PURE__ */ _export_sfc(_sfc_main$2s, [["__file", "form-item.vue"]]);
 
   const ElForm = withInstall(Form, {
     FormItem
@@ -13857,27 +13864,19 @@
     compositionend: (evt) => evt instanceof CompositionEvent
   };
 
-  const __default__$1K = vue.defineComponent({
+  const __default__$1L = vue.defineComponent({
     name: "ElInput",
     inheritAttrs: false
   });
-  const _sfc_main$2q = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1K,
+  const _sfc_main$2r = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1L,
     props: inputProps,
     emits: inputEmits,
     setup(__props, { expose, emit }) {
       const props = __props;
       const rawAttrs = vue.useAttrs();
+      const attrs = useAttrs();
       const slots = vue.useSlots();
-      const containerAttrs = vue.computed(() => {
-        const comboBoxAttrs = {};
-        if (props.containerRole === "combobox") {
-          comboBoxAttrs["aria-haspopup"] = rawAttrs["aria-haspopup"];
-          comboBoxAttrs["aria-owns"] = rawAttrs["aria-owns"];
-          comboBoxAttrs["aria-expanded"] = rawAttrs["aria-expanded"];
-        }
-        return comboBoxAttrs;
-      });
       const containerKls = vue.computed(() => [
         props.type === "textarea" ? nsTextarea.b() : nsInput.b(),
         nsInput.m(inputSize.value),
@@ -13896,11 +13895,6 @@
         nsInput.e("wrapper"),
         nsInput.is("focus", isFocused.value)
       ]);
-      const attrs = useAttrs({
-        excludeKeys: vue.computed(() => {
-          return Object.keys(containerAttrs.value);
-        })
-      });
       const { form: elForm, formItem: elFormItem } = useFormItem();
       const { inputId } = useFormItemInputId(props, {
         formItemContext: elFormItem
@@ -14096,19 +14090,18 @@
         resizeTextarea
       });
       return (_ctx, _cache) => {
-        return vue.openBlock(), vue.createElementBlock("div", vue.mergeProps(vue.unref(containerAttrs), {
-          class: [
+        return vue.openBlock(), vue.createElementBlock("div", {
+          class: vue.normalizeClass([
             vue.unref(containerKls),
             {
               [vue.unref(nsInput).bm("group", "append")]: _ctx.$slots.append,
               [vue.unref(nsInput).bm("group", "prepend")]: _ctx.$slots.prepend
             }
-          ],
-          style: vue.unref(containerStyle),
-          role: _ctx.containerRole,
+          ]),
+          style: vue.normalizeStyle(vue.unref(containerStyle)),
           onMouseenter: handleMouseEnter,
           onMouseleave: handleMouseLeave
-        }), [
+        }, [
           vue.createCommentVNode(" input "),
           _ctx.type !== "textarea" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
             vue.createCommentVNode(" prepend slot "),
@@ -14161,13 +14154,14 @@
                 style: _ctx.inputStyle,
                 form: _ctx.form,
                 autofocus: _ctx.autofocus,
+                role: _ctx.containerRole,
                 onCompositionstart: vue.unref(handleCompositionStart),
                 onCompositionupdate: vue.unref(handleCompositionUpdate),
                 onCompositionend: vue.unref(handleCompositionEnd),
                 onInput: handleInput,
                 onChange: handleChange,
                 onKeydown: handleKeydown
-              }), null, 16, ["id", "minlength", "maxlength", "type", "disabled", "readonly", "autocomplete", "tabindex", "aria-label", "placeholder", "form", "autofocus", "onCompositionstart", "onCompositionupdate", "onCompositionend"]),
+              }), null, 16, ["id", "minlength", "maxlength", "type", "disabled", "readonly", "autocomplete", "tabindex", "aria-label", "placeholder", "form", "autofocus", "role", "onCompositionstart", "onCompositionupdate", "onCompositionend"]),
               vue.createCommentVNode(" suffix slot "),
               vue.unref(suffixVisible) ? (vue.openBlock(), vue.createElementBlock("span", {
                 key: 1,
@@ -14260,6 +14254,7 @@
               form: _ctx.form,
               autofocus: _ctx.autofocus,
               rows: _ctx.rows,
+              role: _ctx.containerRole,
               onCompositionstart: vue.unref(handleCompositionStart),
               onCompositionupdate: vue.unref(handleCompositionUpdate),
               onCompositionend: vue.unref(handleCompositionEnd),
@@ -14268,18 +14263,18 @@
               onBlur: vue.unref(handleBlur),
               onChange: handleChange,
               onKeydown: handleKeydown
-            }), null, 16, ["id", "minlength", "maxlength", "tabindex", "disabled", "readonly", "autocomplete", "aria-label", "placeholder", "form", "autofocus", "rows", "onCompositionstart", "onCompositionupdate", "onCompositionend", "onFocus", "onBlur"]),
+            }), null, 16, ["id", "minlength", "maxlength", "tabindex", "disabled", "readonly", "autocomplete", "aria-label", "placeholder", "form", "autofocus", "rows", "role", "onCompositionstart", "onCompositionupdate", "onCompositionend", "onFocus", "onBlur"]),
             vue.unref(isWordLimitVisible) ? (vue.openBlock(), vue.createElementBlock("span", {
               key: 0,
               style: vue.normalizeStyle(countStyle.value),
               class: vue.normalizeClass(vue.unref(nsInput).e("count"))
             }, vue.toDisplayString(vue.unref(textLength)) + " / " + vue.toDisplayString(_ctx.maxlength), 7)) : vue.createCommentVNode("v-if", true)
           ], 64))
-        ], 16, ["role"]);
+        ], 38);
       };
     }
   });
-  var Input = /* @__PURE__ */ _export_sfc(_sfc_main$2q, [["__file", "input.vue"]]);
+  var Input = /* @__PURE__ */ _export_sfc(_sfc_main$2r, [["__file", "input.vue"]]);
 
   const ElInput = withInstall(Input);
 
@@ -14329,7 +14324,7 @@
   });
 
   const COMPONENT_NAME$k = "Thumb";
-  const _sfc_main$2p = /* @__PURE__ */ vue.defineComponent({
+  const _sfc_main$2q = /* @__PURE__ */ vue.defineComponent({
     __name: "thumb",
     props: thumbProps,
     setup(__props) {
@@ -14448,7 +14443,7 @@
       };
     }
   });
-  var Thumb = /* @__PURE__ */ _export_sfc(_sfc_main$2p, [["__file", "thumb.vue"]]);
+  var Thumb = /* @__PURE__ */ _export_sfc(_sfc_main$2q, [["__file", "thumb.vue"]]);
 
   const barProps = buildProps({
     always: {
@@ -14461,7 +14456,7 @@
     }
   });
 
-  const _sfc_main$2o = /* @__PURE__ */ vue.defineComponent({
+  const _sfc_main$2p = /* @__PURE__ */ vue.defineComponent({
     __name: "bar",
     props: barProps,
     setup(__props, { expose }) {
@@ -14519,7 +14514,7 @@
       };
     }
   });
-  var Bar = /* @__PURE__ */ _export_sfc(_sfc_main$2o, [["__file", "bar.vue"]]);
+  var Bar = /* @__PURE__ */ _export_sfc(_sfc_main$2p, [["__file", "bar.vue"]]);
 
   const scrollbarProps = buildProps({
     height: {
@@ -14576,11 +14571,11 @@
   };
 
   const COMPONENT_NAME$j = "ElScrollbar";
-  const __default__$1J = vue.defineComponent({
+  const __default__$1K = vue.defineComponent({
     name: COMPONENT_NAME$j
   });
-  const _sfc_main$2n = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1J,
+  const _sfc_main$2o = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1K,
     props: scrollbarProps,
     emits: scrollbarEmits,
     setup(__props, { expose, emit }) {
@@ -14732,7 +14727,7 @@
       };
     }
   });
-  var Scrollbar$1 = /* @__PURE__ */ _export_sfc(_sfc_main$2n, [["__file", "scrollbar.vue"]]);
+  var Scrollbar$1 = /* @__PURE__ */ _export_sfc(_sfc_main$2o, [["__file", "scrollbar.vue"]]);
 
   const ElScrollbar = withInstall(Scrollbar$1);
 
@@ -14762,12 +14757,12 @@
   });
   const usePopperProps = popperProps;
 
-  const __default__$1I = vue.defineComponent({
+  const __default__$1J = vue.defineComponent({
     name: "ElPopper",
     inheritAttrs: false
   });
-  const _sfc_main$2m = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1I,
+  const _sfc_main$2n = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1J,
     props: popperProps,
     setup(__props, { expose }) {
       const props = __props;
@@ -14790,7 +14785,7 @@
       };
     }
   });
-  var Popper = /* @__PURE__ */ _export_sfc(_sfc_main$2m, [["__file", "popper.vue"]]);
+  var Popper = /* @__PURE__ */ _export_sfc(_sfc_main$2n, [["__file", "popper.vue"]]);
 
   const popperArrowProps = buildProps({
     arrowOffset: {
@@ -14800,12 +14795,12 @@
   });
   const usePopperArrowProps = popperArrowProps;
 
-  const __default__$1H = vue.defineComponent({
+  const __default__$1I = vue.defineComponent({
     name: "ElPopperArrow",
     inheritAttrs: false
   });
-  const _sfc_main$2l = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1H,
+  const _sfc_main$2m = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1I,
     props: popperArrowProps,
     setup(__props, { expose }) {
       const props = __props;
@@ -14831,7 +14826,7 @@
       };
     }
   });
-  var ElPopperArrow = /* @__PURE__ */ _export_sfc(_sfc_main$2l, [["__file", "arrow.vue"]]);
+  var ElPopperArrow = /* @__PURE__ */ _export_sfc(_sfc_main$2m, [["__file", "arrow.vue"]]);
 
   const NAME = "ElOnlyChild";
   const OnlyChild = vue.defineComponent({
@@ -14919,12 +14914,12 @@
   });
   const usePopperTriggerProps = popperTriggerProps;
 
-  const __default__$1G = vue.defineComponent({
+  const __default__$1H = vue.defineComponent({
     name: "ElPopperTrigger",
     inheritAttrs: false
   });
-  const _sfc_main$2k = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1G,
+  const _sfc_main$2l = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1H,
     props: popperTriggerProps,
     setup(__props, { expose }) {
       const props = __props;
@@ -14978,18 +14973,20 @@
                 (_a = prevEl == null ? void 0 : prevEl.removeEventListener) == null ? void 0 : _a.call(prevEl, eventName.slice(2).toLowerCase(), handler);
               }
             });
-            virtualTriggerAriaStopWatch = vue.watch([ariaControls, ariaDescribedby, ariaHaspopup, ariaExpanded], (watches) => {
-              [
-                "aria-controls",
-                "aria-describedby",
-                "aria-haspopup",
-                "aria-expanded"
-              ].forEach((key, idx) => {
-                isNil(watches[idx]) ? el.removeAttribute(key) : el.setAttribute(key, watches[idx]);
-              });
-            }, { immediate: true });
+            if (isFocusable(el)) {
+              virtualTriggerAriaStopWatch = vue.watch([ariaControls, ariaDescribedby, ariaHaspopup, ariaExpanded], (watches) => {
+                [
+                  "aria-controls",
+                  "aria-describedby",
+                  "aria-haspopup",
+                  "aria-expanded"
+                ].forEach((key, idx) => {
+                  isNil(watches[idx]) ? el.removeAttribute(key) : el.setAttribute(key, watches[idx]);
+                });
+              }, { immediate: true });
+            }
           }
-          if (isElement$1(prevEl)) {
+          if (isElement$1(prevEl) && isFocusable(prevEl)) {
             [
               "aria-controls",
               "aria-describedby",
@@ -15033,7 +15030,7 @@
       };
     }
   });
-  var ElPopperTrigger = /* @__PURE__ */ _export_sfc(_sfc_main$2k, [["__file", "trigger.vue"]]);
+  var ElPopperTrigger = /* @__PURE__ */ _export_sfc(_sfc_main$2l, [["__file", "trigger.vue"]]);
 
   const FOCUS_AFTER_TRAPPED = "focus-trap.focus-after-trapped";
   const FOCUS_AFTER_RELEASED = "focus-trap.focus-after-released";
@@ -15183,7 +15180,7 @@
     });
   };
 
-  const _sfc_main$2j = vue.defineComponent({
+  const _sfc_main$2k = vue.defineComponent({
     name: "ElFocusTrap",
     inheritAttrs: false,
     props: {
@@ -15227,9 +15224,9 @@
           return;
         if (focusLayer.paused)
           return;
-        const { key, altKey, ctrlKey, metaKey, currentTarget, shiftKey } = e;
+        const { code, altKey, ctrlKey, metaKey, currentTarget, shiftKey } = e;
         const { loop } = props;
-        const isTabbing = key === EVENT_CODE.tab && !altKey && !ctrlKey && !metaKey;
+        const isTabbing = code === EVENT_CODE.tab && !altKey && !ctrlKey && !metaKey;
         const currentFocusingEl = document.activeElement;
         if (isTabbing && currentFocusingEl) {
           const container = currentTarget;
@@ -15428,7 +15425,7 @@
   function _sfc_render$u(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.renderSlot(_ctx.$slots, "default", { handleKeydown: _ctx.onKeydown });
   }
-  var ElFocusTrap = /* @__PURE__ */ _export_sfc(_sfc_main$2j, [["render", _sfc_render$u], ["__file", "focus-trap.vue"]]);
+  var ElFocusTrap = /* @__PURE__ */ _export_sfc(_sfc_main$2k, [["render", _sfc_render$u], ["__file", "focus-trap.vue"]]);
 
   const POSITIONING_STRATEGIES = ["fixed", "absolute"];
   const popperCoreConfigProps = buildProps({
@@ -15719,11 +15716,11 @@
     };
   };
 
-  const __default__$1F = vue.defineComponent({
+  const __default__$1G = vue.defineComponent({
     name: "ElPopperContent"
   });
-  const _sfc_main$2i = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1F,
+  const _sfc_main$2j = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1G,
     props: popperContentProps,
     emits: popperContentEmits,
     setup(__props, { expose, emit }) {
@@ -15839,7 +15836,7 @@
       };
     }
   });
-  var ElPopperContent = /* @__PURE__ */ _export_sfc(_sfc_main$2i, [["__file", "content.vue"]]);
+  var ElPopperContent = /* @__PURE__ */ _export_sfc(_sfc_main$2j, [["__file", "content.vue"]]);
 
   const ElPopper = withInstall(Popper);
 
@@ -15879,7 +15876,7 @@
     },
     triggerKeys: {
       type: definePropType(Array),
-      default: () => [EVENT_CODE.enter, EVENT_CODE.space]
+      default: () => [EVENT_CODE.enter, EVENT_CODE.numpadEnter, EVENT_CODE.space]
     }
   });
 
@@ -15921,11 +15918,11 @@
     };
   };
 
-  const __default__$1E = vue.defineComponent({
+  const __default__$1F = vue.defineComponent({
     name: "ElTooltipTrigger"
   });
-  const _sfc_main$2h = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1E,
+  const _sfc_main$2i = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1F,
     props: useTooltipTriggerProps,
     setup(__props, { expose }) {
       const props = __props;
@@ -15984,7 +15981,7 @@
       };
     }
   });
-  var ElTooltipTrigger = /* @__PURE__ */ _export_sfc(_sfc_main$2h, [["__file", "trigger.vue"]]);
+  var ElTooltipTrigger = /* @__PURE__ */ _export_sfc(_sfc_main$2i, [["__file", "trigger.vue"]]);
 
   const teleportProps = buildProps({
     to: {
@@ -15994,7 +15991,7 @@
     disabled: Boolean
   });
 
-  const _sfc_main$2g = /* @__PURE__ */ vue.defineComponent({
+  const _sfc_main$2h = /* @__PURE__ */ vue.defineComponent({
     __name: "teleport",
     props: teleportProps,
     setup(__props) {
@@ -16008,17 +16005,17 @@
       };
     }
   });
-  var Teleport = /* @__PURE__ */ _export_sfc(_sfc_main$2g, [["__file", "teleport.vue"]]);
+  var Teleport = /* @__PURE__ */ _export_sfc(_sfc_main$2h, [["__file", "teleport.vue"]]);
 
   const ElTeleport = withInstall(Teleport);
   var ElTeleport$1 = ElTeleport;
 
-  const __default__$1D = vue.defineComponent({
+  const __default__$1E = vue.defineComponent({
     name: "ElTooltipContent",
     inheritAttrs: false
   });
-  const _sfc_main$2f = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1D,
+  const _sfc_main$2g = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1E,
     props: useTooltipContentProps,
     setup(__props, { expose }) {
       const props = __props;
@@ -16181,13 +16178,13 @@
       };
     }
   });
-  var ElTooltipContent = /* @__PURE__ */ _export_sfc(_sfc_main$2f, [["__file", "content.vue"]]);
+  var ElTooltipContent = /* @__PURE__ */ _export_sfc(_sfc_main$2g, [["__file", "content.vue"]]);
 
-  const __default__$1C = vue.defineComponent({
+  const __default__$1D = vue.defineComponent({
     name: "ElTooltip"
   });
-  const _sfc_main$2e = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1C,
+  const _sfc_main$2f = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1D,
     props: useTooltipProps,
     emits: tooltipEmits,
     setup(__props, { expose, emit }) {
@@ -16339,7 +16336,7 @@
       };
     }
   });
-  var Tooltip = /* @__PURE__ */ _export_sfc(_sfc_main$2e, [["__file", "tooltip.vue"]]);
+  var Tooltip = /* @__PURE__ */ _export_sfc(_sfc_main$2f, [["__file", "tooltip.vue"]]);
 
   const ElTooltip = withInstall(Tooltip);
 
@@ -16419,12 +16416,12 @@
   };
 
   const COMPONENT_NAME$i = "ElAutocomplete";
-  const __default__$1B = vue.defineComponent({
+  const __default__$1C = vue.defineComponent({
     name: COMPONENT_NAME$i,
     inheritAttrs: false
   });
-  const _sfc_main$2d = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1B,
+  const _sfc_main$2e = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1C,
     props: autocompleteProps,
     emits: autocompleteEmits,
     setup(__props, { expose, emit }) {
@@ -16764,7 +16761,7 @@
       };
     }
   });
-  var Autocomplete = /* @__PURE__ */ _export_sfc(_sfc_main$2d, [["__file", "autocomplete.vue"]]);
+  var Autocomplete = /* @__PURE__ */ _export_sfc(_sfc_main$2e, [["__file", "autocomplete.vue"]]);
 
   const ElAutocomplete = withInstall(Autocomplete);
 
@@ -16798,11 +16795,11 @@
     error: (evt) => evt instanceof Event
   };
 
-  const __default__$1A = vue.defineComponent({
+  const __default__$1B = vue.defineComponent({
     name: "ElAvatar"
   });
-  const _sfc_main$2c = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1A,
+  const _sfc_main$2d = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1B,
     props: avatarProps,
     emits: avatarEmits,
     setup(__props, { emit }) {
@@ -16856,7 +16853,7 @@
       };
     }
   });
-  var Avatar = /* @__PURE__ */ _export_sfc(_sfc_main$2c, [["__file", "avatar.vue"]]);
+  var Avatar = /* @__PURE__ */ _export_sfc(_sfc_main$2d, [["__file", "avatar.vue"]]);
 
   const ElAvatar = withInstall(Avatar);
 
@@ -16917,11 +16914,11 @@
   };
 
   const COMPONENT_NAME$h = "ElBacktop";
-  const __default__$1z = vue.defineComponent({
+  const __default__$1A = vue.defineComponent({
     name: COMPONENT_NAME$h
   });
-  const _sfc_main$2b = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1z,
+  const _sfc_main$2c = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1A,
     props: backtopProps,
     emits: backtopEmits,
     setup(__props, { emit }) {
@@ -16960,7 +16957,7 @@
       };
     }
   });
-  var Backtop = /* @__PURE__ */ _export_sfc(_sfc_main$2b, [["__file", "backtop.vue"]]);
+  var Backtop = /* @__PURE__ */ _export_sfc(_sfc_main$2c, [["__file", "backtop.vue"]]);
 
   const ElBacktop = withInstall(Backtop);
 
@@ -16997,11 +16994,11 @@
     }
   });
 
-  const __default__$1y = vue.defineComponent({
+  const __default__$1z = vue.defineComponent({
     name: "ElBadge"
   });
-  const _sfc_main$2a = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1y,
+  const _sfc_main$2b = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1z,
     props: badgeProps,
     setup(__props, { expose }) {
       const props = __props;
@@ -17059,7 +17056,7 @@
       };
     }
   });
-  var Badge = /* @__PURE__ */ _export_sfc(_sfc_main$2a, [["__file", "badge.vue"]]);
+  var Badge = /* @__PURE__ */ _export_sfc(_sfc_main$2b, [["__file", "badge.vue"]]);
 
   const ElBadge = withInstall(Badge);
 
@@ -17075,11 +17072,11 @@
     }
   });
 
-  const __default__$1x = vue.defineComponent({
+  const __default__$1y = vue.defineComponent({
     name: "ElBreadcrumb"
   });
-  const _sfc_main$29 = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1x,
+  const _sfc_main$2a = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1y,
     props: breadcrumbProps,
     setup(__props) {
       const props = __props;
@@ -17106,7 +17103,7 @@
       };
     }
   });
-  var Breadcrumb = /* @__PURE__ */ _export_sfc(_sfc_main$29, [["__file", "breadcrumb.vue"]]);
+  var Breadcrumb = /* @__PURE__ */ _export_sfc(_sfc_main$2a, [["__file", "breadcrumb.vue"]]);
 
   const breadcrumbItemProps = buildProps({
     to: {
@@ -17116,11 +17113,11 @@
     replace: Boolean
   });
 
-  const __default__$1w = vue.defineComponent({
+  const __default__$1x = vue.defineComponent({
     name: "ElBreadcrumbItem"
   });
-  const _sfc_main$28 = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1w,
+  const _sfc_main$29 = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1x,
     props: breadcrumbItemProps,
     setup(__props) {
       const props = __props;
@@ -17165,7 +17162,7 @@
       };
     }
   });
-  var BreadcrumbItem = /* @__PURE__ */ _export_sfc(_sfc_main$28, [["__file", "breadcrumb-item.vue"]]);
+  var BreadcrumbItem = /* @__PURE__ */ _export_sfc(_sfc_main$29, [["__file", "breadcrumb-item.vue"]]);
 
   const ElBreadcrumb = withInstall(Breadcrumb, {
     BreadcrumbItem
@@ -18223,11 +18220,11 @@
     });
   }
 
-  const __default__$1v = vue.defineComponent({
+  const __default__$1w = vue.defineComponent({
     name: "ElButton"
   });
-  const _sfc_main$27 = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1v,
+  const _sfc_main$28 = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1w,
     props: buttonProps,
     emits: buttonEmits,
     setup(__props, { expose, emit }) {
@@ -18293,18 +18290,18 @@
       };
     }
   });
-  var Button = /* @__PURE__ */ _export_sfc(_sfc_main$27, [["__file", "button.vue"]]);
+  var Button = /* @__PURE__ */ _export_sfc(_sfc_main$28, [["__file", "button.vue"]]);
 
   const buttonGroupProps = {
     size: buttonProps.size,
     type: buttonProps.type
   };
 
-  const __default__$1u = vue.defineComponent({
+  const __default__$1v = vue.defineComponent({
     name: "ElButtonGroup"
   });
-  const _sfc_main$26 = /* @__PURE__ */ vue.defineComponent({
-    ...__default__$1u,
+  const _sfc_main$27 = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1v,
     props: buttonGroupProps,
     setup(__props) {
       const props = __props;
@@ -18322,7 +18319,7 @@
       };
     }
   });
-  var ButtonGroup = /* @__PURE__ */ _export_sfc(_sfc_main$26, [["__file", "button-group.vue"]]);
+  var ButtonGroup = /* @__PURE__ */ _export_sfc(_sfc_main$27, [["__file", "button-group.vue"]]);
 
   const ElButton = withInstall(Button, {
     ButtonGroup
@@ -18337,31 +18334,34 @@
     !function(t, e) {
       module.exports = e() ;
     }(commonjsGlobal, function() {
-      var t = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", f = "month", h = "quarter", c = "year", d = "date", $ = "Invalid Date", l = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_") }, m = function(t2, e2, n2) {
+      var t = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", c = "month", f = "quarter", h = "year", d = "date", l = "Invalid Date", $ = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t2) {
+        var e2 = ["th", "st", "nd", "rd"], n2 = t2 % 100;
+        return "[" + t2 + (e2[(n2 - 20) % 10] || e2[n2] || e2[0]) + "]";
+      } }, m = function(t2, e2, n2) {
         var r2 = String(t2);
         return !r2 || r2.length >= e2 ? t2 : "" + Array(e2 + 1 - r2.length).join(n2) + t2;
-      }, g = { s: m, z: function(t2) {
+      }, v = { s: m, z: function(t2) {
         var e2 = -t2.utcOffset(), n2 = Math.abs(e2), r2 = Math.floor(n2 / 60), i2 = n2 % 60;
         return (e2 <= 0 ? "+" : "-") + m(r2, 2, "0") + ":" + m(i2, 2, "0");
       }, m: function t2(e2, n2) {
         if (e2.date() < n2.date())
           return -t2(n2, e2);
-        var r2 = 12 * (n2.year() - e2.year()) + (n2.month() - e2.month()), i2 = e2.clone().add(r2, f), s2 = n2 - i2 < 0, u2 = e2.clone().add(r2 + (s2 ? -1 : 1), f);
+        var r2 = 12 * (n2.year() - e2.year()) + (n2.month() - e2.month()), i2 = e2.clone().add(r2, c), s2 = n2 - i2 < 0, u2 = e2.clone().add(r2 + (s2 ? -1 : 1), c);
         return +(-(r2 + (n2 - i2) / (s2 ? i2 - u2 : u2 - i2)) || 0);
       }, a: function(t2) {
         return t2 < 0 ? Math.ceil(t2) || 0 : Math.floor(t2);
       }, p: function(t2) {
-        return { M: f, y: c, w: o, d: a, D: d, h: u, m: s, s: i, ms: r, Q: h }[t2] || String(t2 || "").toLowerCase().replace(/s$/, "");
+        return { M: c, y: h, w: o, d: a, D: d, h: u, m: s, s: i, ms: r, Q: f }[t2] || String(t2 || "").toLowerCase().replace(/s$/, "");
       }, u: function(t2) {
         return t2 === void 0;
-      } }, v = "en", D = {};
-      D[v] = M;
-      var p = function(t2) {
-        return t2 instanceof _;
-      }, S = function t2(e2, n2, r2) {
+      } }, g = "en", D = {};
+      D[g] = M;
+      var p = "$isDayjsObject", S = function(t2) {
+        return t2 instanceof _ || !(!t2 || !t2[p]);
+      }, w = function t2(e2, n2, r2) {
         var i2;
         if (!e2)
-          return v;
+          return g;
         if (typeof e2 == "string") {
           var s2 = e2.toLowerCase();
           D[s2] && (i2 = s2), n2 && (D[s2] = n2, i2 = s2);
@@ -18372,19 +18372,19 @@
           var a2 = e2.name;
           D[a2] = e2, i2 = a2;
         }
-        return !r2 && i2 && (v = i2), i2 || !r2 && v;
-      }, w = function(t2, e2) {
-        if (p(t2))
+        return !r2 && i2 && (g = i2), i2 || !r2 && g;
+      }, O = function(t2, e2) {
+        if (S(t2))
           return t2.clone();
         var n2 = typeof e2 == "object" ? e2 : {};
         return n2.date = t2, n2.args = arguments, new _(n2);
-      }, O = g;
-      O.l = S, O.i = p, O.w = function(t2, e2) {
-        return w(t2, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
+      }, b = v;
+      b.l = w, b.i = S, b.w = function(t2, e2) {
+        return O(t2, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
       };
       var _ = function() {
         function M2(t2) {
-          this.$L = S(t2.locale, null, true), this.parse(t2);
+          this.$L = w(t2.locale, null, true), this.parse(t2), this.$x = this.$x || t2.x || {}, this[p] = true;
         }
         var m2 = M2.prototype;
         return m2.parse = function(t2) {
@@ -18392,130 +18392,212 @@
             var e2 = t3.date, n2 = t3.utc;
             if (e2 === null)
               return new Date(NaN);
-            if (O.u(e2))
+            if (b.u(e2))
               return new Date();
             if (e2 instanceof Date)
               return new Date(e2);
             if (typeof e2 == "string" && !/Z$/i.test(e2)) {
-              var r2 = e2.match(l);
+              var r2 = e2.match($);
               if (r2) {
                 var i2 = r2[2] - 1 || 0, s2 = (r2[7] || "0").substring(0, 3);
                 return n2 ? new Date(Date.UTC(r2[1], i2, r2[3] || 1, r2[4] || 0, r2[5] || 0, r2[6] || 0, s2)) : new Date(r2[1], i2, r2[3] || 1, r2[4] || 0, r2[5] || 0, r2[6] || 0, s2);
               }
             }
             return new Date(e2);
-          }(t2), this.$x = t2.x || {}, this.init();
+          }(t2), this.init();
         }, m2.init = function() {
           var t2 = this.$d;
           this.$y = t2.getFullYear(), this.$M = t2.getMonth(), this.$D = t2.getDate(), this.$W = t2.getDay(), this.$H = t2.getHours(), this.$m = t2.getMinutes(), this.$s = t2.getSeconds(), this.$ms = t2.getMilliseconds();
         }, m2.$utils = function() {
-          return O;
+          return b;
         }, m2.isValid = function() {
-          return !(this.$d.toString() === $);
+          return !(this.$d.toString() === l);
         }, m2.isSame = function(t2, e2) {
-          var n2 = w(t2);
+          var n2 = O(t2);
           return this.startOf(e2) <= n2 && n2 <= this.endOf(e2);
         }, m2.isAfter = function(t2, e2) {
-          return w(t2) < this.startOf(e2);
+          return O(t2) < this.startOf(e2);
         }, m2.isBefore = function(t2, e2) {
-          return this.endOf(e2) < w(t2);
+          return this.endOf(e2) < O(t2);
         }, m2.$g = function(t2, e2, n2) {
-          return O.u(t2) ? this[e2] : this.set(n2, t2);
+          return b.u(t2) ? this[e2] : this.set(n2, t2);
         }, m2.unix = function() {
           return Math.floor(this.valueOf() / 1e3);
         }, m2.valueOf = function() {
           return this.$d.getTime();
         }, m2.startOf = function(t2, e2) {
-          var n2 = this, r2 = !!O.u(e2) || e2, h2 = O.p(t2), $2 = function(t3, e3) {
-            var i2 = O.w(n2.$u ? Date.UTC(n2.$y, e3, t3) : new Date(n2.$y, e3, t3), n2);
+          var n2 = this, r2 = !!b.u(e2) || e2, f2 = b.p(t2), l2 = function(t3, e3) {
+            var i2 = b.w(n2.$u ? Date.UTC(n2.$y, e3, t3) : new Date(n2.$y, e3, t3), n2);
             return r2 ? i2 : i2.endOf(a);
-          }, l2 = function(t3, e3) {
-            return O.w(n2.toDate()[t3].apply(n2.toDate("s"), (r2 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n2);
-          }, y2 = this.$W, M3 = this.$M, m3 = this.$D, g2 = "set" + (this.$u ? "UTC" : "");
-          switch (h2) {
+          }, $2 = function(t3, e3) {
+            return b.w(n2.toDate()[t3].apply(n2.toDate("s"), (r2 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n2);
+          }, y2 = this.$W, M3 = this.$M, m3 = this.$D, v2 = "set" + (this.$u ? "UTC" : "");
+          switch (f2) {
+            case h:
+              return r2 ? l2(1, 0) : l2(31, 11);
             case c:
-              return r2 ? $2(1, 0) : $2(31, 11);
-            case f:
-              return r2 ? $2(1, M3) : $2(0, M3 + 1);
+              return r2 ? l2(1, M3) : l2(0, M3 + 1);
             case o:
-              var v2 = this.$locale().weekStart || 0, D2 = (y2 < v2 ? y2 + 7 : y2) - v2;
-              return $2(r2 ? m3 - D2 : m3 + (6 - D2), M3);
+              var g2 = this.$locale().weekStart || 0, D2 = (y2 < g2 ? y2 + 7 : y2) - g2;
+              return l2(r2 ? m3 - D2 : m3 + (6 - D2), M3);
             case a:
             case d:
-              return l2(g2 + "Hours", 0);
+              return $2(v2 + "Hours", 0);
             case u:
-              return l2(g2 + "Minutes", 1);
+              return $2(v2 + "Minutes", 1);
             case s:
-              return l2(g2 + "Seconds", 2);
+              return $2(v2 + "Seconds", 2);
             case i:
-              return l2(g2 + "Milliseconds", 3);
+              return $2(v2 + "Milliseconds", 3);
             default:
               return this.clone();
           }
         }, m2.endOf = function(t2) {
           return this.startOf(t2, false);
         }, m2.$set = function(t2, e2) {
-          var n2, o2 = O.p(t2), h2 = "set" + (this.$u ? "UTC" : ""), $2 = (n2 = {}, n2[a] = h2 + "Date", n2[d] = h2 + "Date", n2[f] = h2 + "Month", n2[c] = h2 + "FullYear", n2[u] = h2 + "Hours", n2[s] = h2 + "Minutes", n2[i] = h2 + "Seconds", n2[r] = h2 + "Milliseconds", n2)[o2], l2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
-          if (o2 === f || o2 === c) {
+          var n2, o2 = b.p(t2), f2 = "set" + (this.$u ? "UTC" : ""), l2 = (n2 = {}, n2[a] = f2 + "Date", n2[d] = f2 + "Date", n2[c] = f2 + "Month", n2[h] = f2 + "FullYear", n2[u] = f2 + "Hours", n2[s] = f2 + "Minutes", n2[i] = f2 + "Seconds", n2[r] = f2 + "Milliseconds", n2)[o2], $2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
+          if (o2 === c || o2 === h) {
             var y2 = this.clone().set(d, 1);
-            y2.$d[$2](l2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
+            y2.$d[l2]($2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
           } else
-            $2 && this.$d[$2](l2);
+            l2 && this.$d[l2]($2);
           return this.init(), this;
         }, m2.set = function(t2, e2) {
           return this.clone().$set(t2, e2);
         }, m2.get = function(t2) {
-          return this[O.p(t2)]();
-        }, m2.add = function(r2, h2) {
-          var d2, $2 = this;
+          return this[b.p(t2)]();
+        }, m2.add = function(r2, f2) {
+          var d2, l2 = this;
           r2 = Number(r2);
-          var l2 = O.p(h2), y2 = function(t2) {
-            var e2 = w($2);
-            return O.w(e2.date(e2.date() + Math.round(t2 * r2)), $2);
+          var $2 = b.p(f2), y2 = function(t2) {
+            var e2 = O(l2);
+            return b.w(e2.date(e2.date() + Math.round(t2 * r2)), l2);
           };
-          if (l2 === f)
-            return this.set(f, this.$M + r2);
-          if (l2 === c)
-            return this.set(c, this.$y + r2);
-          if (l2 === a)
+          if ($2 === c)
+            return this.set(c, this.$M + r2);
+          if ($2 === h)
+            return this.set(h, this.$y + r2);
+          if ($2 === a)
             return y2(1);
-          if (l2 === o)
+          if ($2 === o)
             return y2(7);
-          var M3 = (d2 = {}, d2[s] = e, d2[u] = n, d2[i] = t, d2)[l2] || 1, m3 = this.$d.getTime() + r2 * M3;
-          return O.w(m3, this);
+          var M3 = (d2 = {}, d2[s] = e, d2[u] = n, d2[i] = t, d2)[$2] || 1, m3 = this.$d.getTime() + r2 * M3;
+          return b.w(m3, this);
         }, m2.subtract = function(t2, e2) {
           return this.add(-1 * t2, e2);
         }, m2.format = function(t2) {
           var e2 = this, n2 = this.$locale();
           if (!this.isValid())
-            return n2.invalidDate || $;
-          var r2 = t2 || "YYYY-MM-DDTHH:mm:ssZ", i2 = O.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, f2 = n2.months, h2 = function(t3, n3, i3, s3) {
+            return n2.invalidDate || l;
+          var r2 = t2 || "YYYY-MM-DDTHH:mm:ssZ", i2 = b.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, c2 = n2.months, f2 = n2.meridiem, h2 = function(t3, n3, i3, s3) {
             return t3 && (t3[n3] || t3(e2, r2)) || i3[n3].slice(0, s3);
-          }, c2 = function(t3) {
-            return O.s(s2 % 12 || 12, t3, "0");
-          }, d2 = n2.meridiem || function(t3, e3, n3) {
+          }, d2 = function(t3) {
+            return b.s(s2 % 12 || 12, t3, "0");
+          }, $2 = f2 || function(t3, e3, n3) {
             var r3 = t3 < 12 ? "AM" : "PM";
             return n3 ? r3.toLowerCase() : r3;
-          }, l2 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a2 + 1, MM: O.s(a2 + 1, 2, "0"), MMM: h2(n2.monthsShort, a2, f2, 3), MMMM: h2(f2, a2), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h2(n2.weekdaysMin, this.$W, o2, 2), ddd: h2(n2.weekdaysShort, this.$W, o2, 3), dddd: o2[this.$W], H: String(s2), HH: O.s(s2, 2, "0"), h: c2(1), hh: c2(2), a: d2(s2, u2, true), A: d2(s2, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2 };
-          return r2.replace(y, function(t3, e3) {
-            return e3 || l2[t3] || i2.replace(":", "");
+          };
+          return r2.replace(y, function(t3, r3) {
+            return r3 || function(t4) {
+              switch (t4) {
+                case "YY":
+                  return String(e2.$y).slice(-2);
+                case "YYYY":
+                  return b.s(e2.$y, 4, "0");
+                case "M":
+                  return a2 + 1;
+                case "MM":
+                  return b.s(a2 + 1, 2, "0");
+                case "MMM":
+                  return h2(n2.monthsShort, a2, c2, 3);
+                case "MMMM":
+                  return h2(c2, a2);
+                case "D":
+                  return e2.$D;
+                case "DD":
+                  return b.s(e2.$D, 2, "0");
+                case "d":
+                  return String(e2.$W);
+                case "dd":
+                  return h2(n2.weekdaysMin, e2.$W, o2, 2);
+                case "ddd":
+                  return h2(n2.weekdaysShort, e2.$W, o2, 3);
+                case "dddd":
+                  return o2[e2.$W];
+                case "H":
+                  return String(s2);
+                case "HH":
+                  return b.s(s2, 2, "0");
+                case "h":
+                  return d2(1);
+                case "hh":
+                  return d2(2);
+                case "a":
+                  return $2(s2, u2, true);
+                case "A":
+                  return $2(s2, u2, false);
+                case "m":
+                  return String(u2);
+                case "mm":
+                  return b.s(u2, 2, "0");
+                case "s":
+                  return String(e2.$s);
+                case "ss":
+                  return b.s(e2.$s, 2, "0");
+                case "SSS":
+                  return b.s(e2.$ms, 3, "0");
+                case "Z":
+                  return i2;
+              }
+              return null;
+            }(t3) || i2.replace(":", "");
           });
         }, m2.utcOffset = function() {
           return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
-        }, m2.diff = function(r2, d2, $2) {
-          var l2, y2 = O.p(d2), M3 = w(r2), m3 = (M3.utcOffset() - this.utcOffset()) * e, g2 = this - M3, v2 = O.m(this, M3);
-          return v2 = (l2 = {}, l2[c] = v2 / 12, l2[f] = v2, l2[h] = v2 / 3, l2[o] = (g2 - m3) / 6048e5, l2[a] = (g2 - m3) / 864e5, l2[u] = g2 / n, l2[s] = g2 / e, l2[i] = g2 / t, l2)[y2] || g2, $2 ? v2 : O.a(v2);
+        }, m2.diff = function(r2, d2, l2) {
+          var $2, y2 = this, M3 = b.p(d2), m3 = O(r2), v2 = (m3.utcOffset() - this.utcOffset()) * e, g2 = this - m3, D2 = function() {
+            return b.m(y2, m3);
+          };
+          switch (M3) {
+            case h:
+              $2 = D2() / 12;
+              break;
+            case c:
+              $2 = D2();
+              break;
+            case f:
+              $2 = D2() / 3;
+              break;
+            case o:
+              $2 = (g2 - v2) / 6048e5;
+              break;
+            case a:
+              $2 = (g2 - v2) / 864e5;
+              break;
+            case u:
+              $2 = g2 / n;
+              break;
+            case s:
+              $2 = g2 / e;
+              break;
+            case i:
+              $2 = g2 / t;
+              break;
+            default:
+              $2 = g2;
+          }
+          return l2 ? $2 : b.a($2);
         }, m2.daysInMonth = function() {
-          return this.endOf(f).$D;
+          return this.endOf(c).$D;
         }, m2.$locale = function() {
           return D[this.$L];
         }, m2.locale = function(t2, e2) {
           if (!t2)
             return this.$L;
-          var n2 = this.clone(), r2 = S(t2, e2, true);
+          var n2 = this.clone(), r2 = w(t2, e2, true);
           return r2 && (n2.$L = r2), n2;
         }, m2.clone = function() {
-          return O.w(this.$d, this);
+          return b.w(this.$d, this);
         }, m2.toDate = function() {
           return new Date(this.valueOf());
         }, m2.toJSON = function() {
@@ -18525,16 +18607,16 @@
         }, m2.toString = function() {
           return this.$d.toUTCString();
         }, M2;
-      }(), T = _.prototype;
-      return w.prototype = T, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", f], ["$y", c], ["$D", d]].forEach(function(t2) {
-        T[t2[1]] = function(e2) {
+      }(), k = _.prototype;
+      return O.prototype = k, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", c], ["$y", h], ["$D", d]].forEach(function(t2) {
+        k[t2[1]] = function(e2) {
           return this.$g(e2, t2[0], t2[1]);
         };
-      }), w.extend = function(t2, e2) {
-        return t2.$i || (t2(e2, _, w), t2.$i = true), w;
-      }, w.locale = S, w.isDayjs = p, w.unix = function(t2) {
-        return w(1e3 * t2);
-      }, w.en = D[v], w.Ls = D, w.p = {}, w;
+      }), O.extend = function(t2, e2) {
+        return t2.$i || (t2(e2, _, O), t2.$i = true), O;
+      }, O.locale = w, O.isDayjs = S, O.unix = function(t2) {
+        return O(1e3 * t2);
+      }, O.en = D[g], O.Ls = D, O.p = {}, O;
     });
   })(dayjs_min);
   var dayjs = dayjs_min.exports;
@@ -18545,14 +18627,14 @@
     !function(e, t) {
       module.exports = t() ;
     }(commonjsGlobal, function() {
-      var e = { LTS: "h:mm:ss A", LT: "h:mm A", L: "MM/DD/YYYY", LL: "MMMM D, YYYY", LLL: "MMMM D, YYYY h:mm A", LLLL: "dddd, MMMM D, YYYY h:mm A" }, t = /(\[[^[]*\])|([-_:/.,()\s]+)|(A|a|YYYY|YY?|MM?M?M?|Do|DD?|hh?|HH?|mm?|ss?|S{1,3}|z|ZZ?)/g, n = /\d\d/, r = /\d\d?/, i = /\d*[^-_:/,()\s\d]+/, o = {}, s = function(e2) {
+      var e = { LTS: "h:mm:ss A", LT: "h:mm A", L: "MM/DD/YYYY", LL: "MMMM D, YYYY", LLL: "MMMM D, YYYY h:mm A", LLLL: "dddd, MMMM D, YYYY h:mm A" }, t = /(\[[^[]*\])|([-_:/.,()\s]+)|(A|a|Q|YYYY|YY?|ww?|MM?M?M?|Do|DD?|hh?|HH?|mm?|ss?|S{1,3}|z|ZZ?)/g, n = /\d/, r = /\d\d/, i = /\d\d?/, o = /\d*[^-_:/,()\s\d]+/, s = {}, a = function(e2) {
         return (e2 = +e2) + (e2 > 68 ? 1900 : 2e3);
       };
-      var a = function(e2) {
+      var f = function(e2) {
         return function(t2) {
           this[e2] = +t2;
         };
-      }, f = [/[+-]\d\d:?(\d\d)?|Z/, function(e2) {
+      }, h = [/[+-]\d\d:?(\d\d)?|Z/, function(e2) {
         (this.zone || (this.zone = {})).offset = function(e3) {
           if (!e3)
             return 0;
@@ -18561,11 +18643,11 @@
           var t2 = e3.match(/([+-]|\d\d)/g), n2 = 60 * t2[1] + (+t2[2] || 0);
           return n2 === 0 ? 0 : t2[0] === "+" ? -n2 : n2;
         }(e2);
-      }], h = function(e2) {
-        var t2 = o[e2];
+      }], u = function(e2) {
+        var t2 = s[e2];
         return t2 && (t2.indexOf ? t2 : t2.s.concat(t2.f));
-      }, u = function(e2, t2) {
-        var n2, r2 = o.meridiem;
+      }, d = function(e2, t2) {
+        var n2, r2 = s.meridiem;
         if (r2) {
           for (var i2 = 1; i2 <= 24; i2 += 1)
             if (e2.indexOf(r2(i2, 0, t2)) > -1) {
@@ -18575,55 +18657,57 @@
         } else
           n2 = e2 === (t2 ? "pm" : "PM");
         return n2;
-      }, d = { A: [i, function(e2) {
-        this.afternoon = u(e2, false);
-      }], a: [i, function(e2) {
-        this.afternoon = u(e2, true);
-      }], S: [/\d/, function(e2) {
+      }, c = { A: [o, function(e2) {
+        this.afternoon = d(e2, false);
+      }], a: [o, function(e2) {
+        this.afternoon = d(e2, true);
+      }], Q: [n, function(e2) {
+        this.month = 3 * (e2 - 1) + 1;
+      }], S: [n, function(e2) {
         this.milliseconds = 100 * +e2;
-      }], SS: [n, function(e2) {
+      }], SS: [r, function(e2) {
         this.milliseconds = 10 * +e2;
       }], SSS: [/\d{3}/, function(e2) {
         this.milliseconds = +e2;
-      }], s: [r, a("seconds")], ss: [r, a("seconds")], m: [r, a("minutes")], mm: [r, a("minutes")], H: [r, a("hours")], h: [r, a("hours")], HH: [r, a("hours")], hh: [r, a("hours")], D: [r, a("day")], DD: [n, a("day")], Do: [i, function(e2) {
-        var t2 = o.ordinal, n2 = e2.match(/\d+/);
+      }], s: [i, f("seconds")], ss: [i, f("seconds")], m: [i, f("minutes")], mm: [i, f("minutes")], H: [i, f("hours")], h: [i, f("hours")], HH: [i, f("hours")], hh: [i, f("hours")], D: [i, f("day")], DD: [r, f("day")], Do: [o, function(e2) {
+        var t2 = s.ordinal, n2 = e2.match(/\d+/);
         if (this.day = n2[0], t2)
           for (var r2 = 1; r2 <= 31; r2 += 1)
             t2(r2).replace(/\[|\]/g, "") === e2 && (this.day = r2);
-      }], M: [r, a("month")], MM: [n, a("month")], MMM: [i, function(e2) {
-        var t2 = h("months"), n2 = (h("monthsShort") || t2.map(function(e3) {
+      }], w: [i, f("week")], ww: [r, f("week")], M: [i, f("month")], MM: [r, f("month")], MMM: [o, function(e2) {
+        var t2 = u("months"), n2 = (u("monthsShort") || t2.map(function(e3) {
           return e3.slice(0, 3);
         })).indexOf(e2) + 1;
         if (n2 < 1)
           throw new Error();
         this.month = n2 % 12 || n2;
-      }], MMMM: [i, function(e2) {
-        var t2 = h("months").indexOf(e2) + 1;
+      }], MMMM: [o, function(e2) {
+        var t2 = u("months").indexOf(e2) + 1;
         if (t2 < 1)
           throw new Error();
         this.month = t2 % 12 || t2;
-      }], Y: [/[+-]?\d+/, a("year")], YY: [n, function(e2) {
-        this.year = s(e2);
-      }], YYYY: [/\d{4}/, a("year")], Z: f, ZZ: f };
-      function c(n2) {
+      }], Y: [/[+-]?\d+/, f("year")], YY: [r, function(e2) {
+        this.year = a(e2);
+      }], YYYY: [/\d{4}/, f("year")], Z: h, ZZ: h };
+      function l(n2) {
         var r2, i2;
-        r2 = n2, i2 = o && o.formats;
-        for (var s2 = (n2 = r2.replace(/(\[[^\]]+])|(LTS?|l{1,4}|L{1,4})/g, function(t2, n3, r3) {
-          var o2 = r3 && r3.toUpperCase();
-          return n3 || i2[r3] || e[r3] || i2[o2].replace(/(\[[^\]]+])|(MMMM|MM|DD|dddd)/g, function(e2, t3, n4) {
+        r2 = n2, i2 = s && s.formats;
+        for (var o2 = (n2 = r2.replace(/(\[[^\]]+])|(LTS?|l{1,4}|L{1,4})/g, function(t2, n3, r3) {
+          var o3 = r3 && r3.toUpperCase();
+          return n3 || i2[r3] || e[r3] || i2[o3].replace(/(\[[^\]]+])|(MMMM|MM|DD|dddd)/g, function(e2, t3, n4) {
             return t3 || n4.slice(1);
           });
-        })).match(t), a2 = s2.length, f2 = 0; f2 < a2; f2 += 1) {
-          var h2 = s2[f2], u2 = d[h2], c2 = u2 && u2[0], l = u2 && u2[1];
-          s2[f2] = l ? { regex: c2, parser: l } : h2.replace(/^\[|\]$/g, "");
+        })).match(t), a2 = o2.length, f2 = 0; f2 < a2; f2 += 1) {
+          var h2 = o2[f2], u2 = c[h2], d2 = u2 && u2[0], l2 = u2 && u2[1];
+          o2[f2] = l2 ? { regex: d2, parser: l2 } : h2.replace(/^\[|\]$/g, "");
         }
         return function(e2) {
           for (var t2 = {}, n3 = 0, r3 = 0; n3 < a2; n3 += 1) {
-            var i3 = s2[n3];
+            var i3 = o2[n3];
             if (typeof i3 == "string")
               r3 += i3.length;
             else {
-              var o2 = i3.regex, f3 = i3.parser, h3 = e2.slice(r3), u3 = o2.exec(h3)[0];
+              var s2 = i3.regex, f3 = i3.parser, h3 = e2.slice(r3), u3 = s2.exec(h3)[0];
               f3.call(t2, u3), e2 = e2.replace(u3, "");
             }
           }
@@ -18637,35 +18721,35 @@
         };
       }
       return function(e2, t2, n2) {
-        n2.p.customParseFormat = true, e2 && e2.parseTwoDigitYear && (s = e2.parseTwoDigitYear);
+        n2.p.customParseFormat = true, e2 && e2.parseTwoDigitYear && (a = e2.parseTwoDigitYear);
         var r2 = t2.prototype, i2 = r2.parse;
         r2.parse = function(e3) {
-          var t3 = e3.date, r3 = e3.utc, s2 = e3.args;
+          var t3 = e3.date, r3 = e3.utc, o2 = e3.args;
           this.$u = r3;
-          var a2 = s2[1];
+          var a2 = o2[1];
           if (typeof a2 == "string") {
-            var f2 = s2[2] === true, h2 = s2[3] === true, u2 = f2 || h2, d2 = s2[2];
-            h2 && (d2 = s2[2]), o = this.$locale(), !f2 && d2 && (o = n2.Ls[d2]), this.$d = function(e4, t4, n3) {
+            var f2 = o2[2] === true, h2 = o2[3] === true, u2 = f2 || h2, d2 = o2[2];
+            h2 && (d2 = o2[2]), s = this.$locale(), !f2 && d2 && (s = n2.Ls[d2]), this.$d = function(e4, t4, n3, r4) {
               try {
                 if (["x", "X"].indexOf(t4) > -1)
                   return new Date((t4 === "X" ? 1e3 : 1) * e4);
-                var r4 = c(t4)(e4), i3 = r4.year, o2 = r4.month, s3 = r4.day, a3 = r4.hours, f3 = r4.minutes, h3 = r4.seconds, u3 = r4.milliseconds, d3 = r4.zone, l2 = new Date(), m2 = s3 || (i3 || o2 ? 1 : l2.getDate()), M2 = i3 || l2.getFullYear(), Y = 0;
-                i3 && !o2 || (Y = o2 > 0 ? o2 - 1 : l2.getMonth());
-                var p = a3 || 0, v = f3 || 0, D = h3 || 0, g = u3 || 0;
-                return d3 ? new Date(Date.UTC(M2, Y, m2, p, v, D, g + 60 * d3.offset * 1e3)) : n3 ? new Date(Date.UTC(M2, Y, m2, p, v, D, g)) : new Date(M2, Y, m2, p, v, D, g);
+                var i3 = l(t4)(e4), o3 = i3.year, s2 = i3.month, a3 = i3.day, f3 = i3.hours, h3 = i3.minutes, u3 = i3.seconds, d3 = i3.milliseconds, c3 = i3.zone, m2 = i3.week, M2 = new Date(), Y = a3 || (o3 || s2 ? 1 : M2.getDate()), p = o3 || M2.getFullYear(), v = 0;
+                o3 && !s2 || (v = s2 > 0 ? s2 - 1 : M2.getMonth());
+                var D, w = f3 || 0, g = h3 || 0, y = u3 || 0, L = d3 || 0;
+                return c3 ? new Date(Date.UTC(p, v, Y, w, g, y, L + 60 * c3.offset * 1e3)) : n3 ? new Date(Date.UTC(p, v, Y, w, g, y, L)) : (D = new Date(p, v, Y, w, g, y, L), m2 && (D = r4(D).week(m2).toDate()), D);
               } catch (e5) {
                 return new Date("");
               }
-            }(t3, a2, r3), this.init(), d2 && d2 !== true && (this.$L = this.locale(d2).$L), u2 && t3 != this.format(a2) && (this.$d = new Date("")), o = {};
+            }(t3, a2, r3, n2), this.init(), d2 && d2 !== true && (this.$L = this.locale(d2).$L), u2 && t3 != this.format(a2) && (this.$d = new Date("")), s = {};
           } else if (a2 instanceof Array)
-            for (var l = a2.length, m = 1; m <= l; m += 1) {
-              s2[1] = a2[m - 1];
-              var M = n2.apply(this, s2);
+            for (var c2 = a2.length, m = 1; m <= c2; m += 1) {
+              o2[1] = a2[m - 1];
+              var M = n2.apply(this, o2);
               if (M.isValid()) {
                 this.$d = M.$d, this.$L = M.$L, this.init();
                 break;
               }
-              m === l && (this.$d = new Date(""));
+              m === c2 && (this.$d = new Date(""));
             }
           else
             i2.call(this, e3);
@@ -18781,8 +18865,7 @@
       type: definePropType([Array, String])
     },
     name: {
-      type: definePropType([Array, String]),
-      default: ""
+      type: definePropType([Array, String])
     },
     popperClass: {
       type: String,
@@ -18871,8 +18954,130 @@
       default: ["bottom", "top", "right", "left"]
     },
     ...useEmptyValuesProps,
-    ...useAriaProps(["ariaLabel"])
+    ...useAriaProps(["ariaLabel"]),
+    showNow: {
+      type: Boolean,
+      default: true
+    }
   });
+  const timePickerRngeTriggerProps = buildProps({
+    id: {
+      type: definePropType(Array)
+    },
+    name: {
+      type: definePropType(Array)
+    },
+    modelValue: {
+      type: definePropType([Array, String])
+    },
+    startPlaceholder: String,
+    endPlaceholder: String
+  });
+
+  const __default__$1u = vue.defineComponent({
+    name: "PickerRangeTrigger",
+    inheritAttrs: false
+  });
+  const _sfc_main$26 = /* @__PURE__ */ vue.defineComponent({
+    ...__default__$1u,
+    props: timePickerRngeTriggerProps,
+    emits: [
+      "mouseenter",
+      "mouseleave",
+      "click",
+      "touchstart",
+      "focus",
+      "blur",
+      "startInput",
+      "endInput",
+      "startChange",
+      "endChange"
+    ],
+    setup(__props, { expose, emit }) {
+      const attrs = useAttrs();
+      const nsDate = useNamespace("date");
+      const nsRange = useNamespace("range");
+      const inputRef = vue.ref();
+      const endInputRef = vue.ref();
+      const { wrapperRef, isFocused } = useFocusController(inputRef);
+      const handleClick = (evt) => {
+        emit("click", evt);
+      };
+      const handleMouseEnter = (evt) => {
+        emit("mouseenter", evt);
+      };
+      const handleMouseLeave = (evt) => {
+        emit("mouseleave", evt);
+      };
+      const handleTouchStart = (evt) => {
+        emit("mouseenter", evt);
+      };
+      const handleStartInput = (evt) => {
+        emit("startInput", evt);
+      };
+      const handleEndInput = (evt) => {
+        emit("endInput", evt);
+      };
+      const handleStartChange = (evt) => {
+        emit("startChange", evt);
+      };
+      const handleEndChange = (evt) => {
+        emit("endChange", evt);
+      };
+      const focus = () => {
+        var _a;
+        (_a = inputRef.value) == null ? void 0 : _a.focus();
+      };
+      const blur = () => {
+        var _a, _b;
+        (_a = inputRef.value) == null ? void 0 : _a.blur();
+        (_b = endInputRef.value) == null ? void 0 : _b.blur();
+      };
+      expose({
+        focus,
+        blur
+      });
+      return (_ctx, _cache) => {
+        return vue.openBlock(), vue.createElementBlock("div", {
+          ref_key: "wrapperRef",
+          ref: wrapperRef,
+          class: vue.normalizeClass([vue.unref(nsDate).is("active", vue.unref(isFocused)), _ctx.$attrs.class]),
+          style: vue.normalizeStyle(_ctx.$attrs.style),
+          onClick: handleClick,
+          onMouseenter: handleMouseEnter,
+          onMouseleave: handleMouseLeave,
+          onTouchstart: handleTouchStart
+        }, [
+          vue.renderSlot(_ctx.$slots, "prefix"),
+          vue.createElementVNode("input", vue.mergeProps(vue.unref(attrs), {
+            id: _ctx.id && _ctx.id[0],
+            ref_key: "inputRef",
+            ref: inputRef,
+            name: _ctx.name && _ctx.name[0],
+            placeholder: _ctx.startPlaceholder,
+            value: _ctx.modelValue && _ctx.modelValue[0],
+            class: vue.unref(nsRange).b("input"),
+            onInput: handleStartInput,
+            onChange: handleStartChange
+          }), null, 16, ["id", "name", "placeholder", "value"]),
+          vue.renderSlot(_ctx.$slots, "range-separator"),
+          vue.createElementVNode("input", vue.mergeProps(vue.unref(attrs), {
+            id: _ctx.id && _ctx.id[1],
+            ref_key: "endInputRef",
+            ref: endInputRef,
+            name: _ctx.name && _ctx.name[1],
+            placeholder: _ctx.endPlaceholder,
+            value: _ctx.modelValue && _ctx.modelValue[1],
+            class: vue.unref(nsRange).b("input"),
+            onInput: handleEndInput,
+            onChange: handleEndChange
+          }), null, 16, ["id", "name", "placeholder", "value"]),
+          vue.renderSlot(_ctx.$slots, "suffix")
+        ], 38);
+      };
+    }
+  });
+  var PickerRangeTrigger = /* @__PURE__ */ _export_sfc(_sfc_main$26, [["__file", "picker-range-trigger.vue"]]);
 
   const __default__$1t = vue.defineComponent({
     name: "Picker"
@@ -18907,7 +19112,24 @@
       const pickerActualVisible = vue.ref(false);
       const valueOnOpen = vue.ref(null);
       let hasJustTabExitedInput = false;
-      let ignoreFocusEvent = false;
+      const { isFocused, handleFocus, handleBlur } = useFocusController(inputRef, {
+        beforeFocus() {
+          return props.readonly || pickerDisabled.value;
+        },
+        afterFocus() {
+          pickerVisible.value = true;
+        },
+        beforeBlur(event) {
+          var _a;
+          return !hasJustTabExitedInput && ((_a = refPopper.value) == null ? void 0 : _a.isFocusInsideContent(event));
+        },
+        afterBlur() {
+          handleChange();
+          pickerVisible.value = false;
+          hasJustTabExitedInput = false;
+          props.validateEvent && (formItem == null ? void 0 : formItem.validate("blur").catch((err) => debugWarn()));
+        }
+      });
       const rangeInputKls = vue.computed(() => [
         nsDate.b("editor"),
         nsDate.bm("editor", props.type),
@@ -18959,8 +19181,7 @@
       };
       const refInput = vue.computed(() => {
         if (inputRef.value) {
-          const _r = isRangeInput.value ? inputRef.value : inputRef.value.$el;
-          return Array.from(_r.querySelectorAll("input"));
+          return Array.from(inputRef.value.$el.querySelectorAll("input"));
         }
         return [];
       });
@@ -18976,16 +19197,7 @@
           _inputs[1].focus();
         }
       };
-      const focusOnInputBox = () => {
-        focus(true, true);
-        vue.nextTick(() => {
-          ignoreFocusEvent = false;
-        });
-      };
       const onPick = (date = "", visible = false) => {
-        if (!visible) {
-          ignoreFocusEvent = true;
-        }
         pickerVisible.value = visible;
         let result;
         if (isArray$1(date)) {
@@ -19002,15 +19214,9 @@
       const onShow = () => {
         emit("visible-change", true);
       };
-      const onKeydownPopperContent = (event) => {
-        if ((event == null ? void 0 : event.key) === EVENT_CODE.esc) {
-          focus(true, true);
-        }
-      };
       const onHide = () => {
         pickerActualVisible.value = false;
         pickerVisible.value = false;
-        ignoreFocusEvent = false;
         emit("visible-change", false);
       };
       const handleOpen = () => {
@@ -19018,45 +19224,6 @@
       };
       const handleClose = () => {
         pickerVisible.value = false;
-      };
-      const focus = (focusStartInput = true, isIgnoreFocusEvent = false) => {
-        ignoreFocusEvent = isIgnoreFocusEvent;
-        const [leftInput, rightInput] = vue.unref(refInput);
-        let input = leftInput;
-        if (!focusStartInput && isRangeInput.value) {
-          input = rightInput;
-        }
-        if (input) {
-          input.focus();
-        }
-      };
-      const handleFocusInput = (e) => {
-        if (props.readonly || pickerDisabled.value || pickerVisible.value || ignoreFocusEvent) {
-          return;
-        }
-        pickerVisible.value = true;
-        emit("focus", e);
-      };
-      let currentHandleBlurDeferCallback = void 0;
-      const handleBlurInput = (e) => {
-        const handleBlurDefer = async () => {
-          setTimeout(() => {
-            var _a;
-            if (currentHandleBlurDeferCallback === handleBlurDefer) {
-              if (!(((_a = refPopper.value) == null ? void 0 : _a.isFocusInsideContent()) && !hasJustTabExitedInput) && refInput.value.filter((input) => {
-                return input.contains(document.activeElement);
-              }).length === 0) {
-                handleChange();
-                pickerVisible.value = false;
-                emit("blur", e);
-                props.validateEvent && (formItem == null ? void 0 : formItem.validate("blur").catch((err) => debugWarn()));
-              }
-              hasJustTabExitedInput = false;
-            }
-          }, 0);
-        };
-        currentHandleBlurDeferCallback = handleBlurDefer;
-        handleBlurDefer();
       };
       const pickerDisabled = vue.computed(() => {
         return props.disabled || (form == null ? void 0 : form.disabled);
@@ -19121,7 +19288,6 @@
           return;
         if (showClose.value) {
           event.stopPropagation();
-          focusOnInputBox();
           if (pickerOptions.value.handleClear) {
             pickerOptions.value.handleClear();
           } else {
@@ -19141,7 +19307,7 @@
         var _a;
         if (props.readonly || pickerDisabled.value)
           return;
-        if (((_a = event.target) == null ? void 0 : _a.tagName) !== "INPUT" || refInput.value.includes(document.activeElement)) {
+        if (((_a = event.target) == null ? void 0 : _a.tagName) !== "INPUT" || isFocused.value) {
           pickerVisible.value = true;
         }
       };
@@ -19159,7 +19325,7 @@
         var _a;
         if (props.readonly || pickerDisabled.value)
           return;
-        if (((_a = event.touches[0].target) == null ? void 0 : _a.tagName) !== "INPUT" || refInput.value.includes(document.activeElement)) {
+        if (((_a = event.touches[0].target) == null ? void 0 : _a.tagName) !== "INPUT" || isFocused.value) {
           pickerVisible.value = true;
         }
       };
@@ -19171,17 +19337,10 @@
         var _a, _b;
         return (_b = (_a = vue.unref(refPopper)) == null ? void 0 : _a.popperRef) == null ? void 0 : _b.contentRef;
       });
-      const actualInputRef = vue.computed(() => {
-        var _a;
-        if (vue.unref(isRangeInput)) {
-          return vue.unref(inputRef);
-        }
-        return (_a = vue.unref(inputRef)) == null ? void 0 : _a.$el;
-      });
-      const stophandle = onClickOutside(actualInputRef, (e) => {
+      const stophandle = onClickOutside(inputRef, (e) => {
         const unrefedPopperEl = vue.unref(popperEl);
-        const inputEl = vue.unref(actualInputRef);
-        if (unrefedPopperEl && (e.target === unrefedPopperEl || e.composedPath().includes(unrefedPopperEl)) || e.target === inputEl || e.composedPath().includes(inputEl))
+        const inputEl = unrefElement(inputRef);
+        if (unrefedPopperEl && (e.target === unrefedPopperEl || e.composedPath().includes(unrefedPopperEl)) || e.target === inputEl || inputEl && e.composedPath().includes(inputEl))
           return;
         pickerVisible.value = false;
       });
@@ -19332,13 +19491,20 @@
       const onPanelChange = (value, mode, view) => {
         emit("panel-change", value, mode, view);
       };
+      const focus = () => {
+        var _a;
+        (_a = inputRef.value) == null ? void 0 : _a.focus();
+      };
+      const blur = () => {
+        var _a;
+        (_a = inputRef.value) == null ? void 0 : _a.blur();
+      };
       vue.provide("EP_PICKER_BASE", {
         props
       });
       expose({
         focus,
-        handleFocusInput,
-        handleBlurInput,
+        blur,
         handleOpen,
         handleClose,
         onPick
@@ -19386,8 +19552,8 @@
               tabindex: _ctx.tabindex,
               "validate-event": false,
               onInput: onUserInput,
-              onFocus: handleFocusInput,
-              onBlur: handleBlurInput,
+              onFocus: vue.unref(handleFocus),
+              onBlur: vue.unref(handleBlur),
               onKeydown: handleKeydownInput,
               onChange: handleChange,
               onMousedown: onMouseDownInput,
@@ -19414,84 +19580,79 @@
                 showClose.value && _ctx.clearIcon ? (vue.openBlock(), vue.createBlock(vue.unref(ElIcon), {
                   key: 0,
                   class: vue.normalizeClass(`${vue.unref(nsInput).e("icon")} clear-icon`),
-                  onClick: vue.withModifiers(onClearIconClick, ["stop"])
+                  onMousedown: vue.withModifiers(vue.unref(NOOP), ["prevent"]),
+                  onClick: onClearIconClick
                 }, {
                   default: vue.withCtx(() => [
                     (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.clearIcon)))
                   ]),
                   _: 1
-                }, 8, ["class", "onClick"])) : vue.createCommentVNode("v-if", true)
+                }, 8, ["class", "onMousedown"])) : vue.createCommentVNode("v-if", true)
               ]),
               _: 1
-            }, 8, ["id", "model-value", "name", "size", "disabled", "placeholder", "class", "style", "readonly", "aria-label", "tabindex", "onKeydown", "onClick"])) : (vue.openBlock(), vue.createElementBlock("div", {
+            }, 8, ["id", "model-value", "name", "size", "disabled", "placeholder", "class", "style", "readonly", "aria-label", "tabindex", "onFocus", "onBlur", "onClick"])) : (vue.openBlock(), vue.createBlock(PickerRangeTrigger, {
               key: 1,
+              id: _ctx.id,
               ref_key: "inputRef",
               ref: inputRef,
+              "model-value": vue.unref(displayValue),
+              name: _ctx.name,
+              disabled: vue.unref(pickerDisabled),
+              readonly: !_ctx.editable || _ctx.readonly,
+              "start-placeholder": _ctx.startPlaceholder,
+              "end-placeholder": _ctx.endPlaceholder,
               class: vue.normalizeClass(vue.unref(rangeInputKls)),
               style: vue.normalizeStyle(_ctx.$attrs.style),
-              onClick: handleFocusInput,
+              "aria-label": _ctx.ariaLabel,
+              tabindex: _ctx.tabindex,
+              autocomplete: "off",
+              role: "combobox",
+              onClick: onMouseDownInput,
+              onFocus: vue.unref(handleFocus),
+              onBlur: vue.unref(handleBlur),
+              onStartInput: handleStartInput,
+              onStartChange: handleStartChange,
+              onEndInput: handleEndInput,
+              onEndChange: handleEndChange,
+              onMousedown: onMouseDownInput,
               onMouseenter: onMouseEnter,
               onMouseleave: onMouseLeave,
               onTouchstartPassive: onTouchStartInput,
               onKeydown: handleKeydownInput
-            }, [
-              vue.unref(triggerIcon) ? (vue.openBlock(), vue.createBlock(vue.unref(ElIcon), {
-                key: 0,
-                class: vue.normalizeClass([vue.unref(nsInput).e("icon"), vue.unref(nsRange).e("icon")]),
-                onMousedown: vue.withModifiers(onMouseDownInput, ["prevent"]),
-                onTouchstartPassive: onTouchStartInput
-              }, {
-                default: vue.withCtx(() => [
-                  (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(triggerIcon))))
-                ]),
-                _: 1
-              }, 8, ["class", "onMousedown"])) : vue.createCommentVNode("v-if", true),
-              vue.createElementVNode("input", {
-                id: _ctx.id && _ctx.id[0],
-                autocomplete: "off",
-                name: _ctx.name && _ctx.name[0],
-                placeholder: _ctx.startPlaceholder,
-                value: vue.unref(displayValue) && vue.unref(displayValue)[0],
-                disabled: vue.unref(pickerDisabled),
-                readonly: !_ctx.editable || _ctx.readonly,
-                class: vue.normalizeClass(vue.unref(nsRange).b("input")),
-                onMousedown: onMouseDownInput,
-                onInput: handleStartInput,
-                onChange: handleStartChange,
-                onFocus: handleFocusInput,
-                onBlur: handleBlurInput
-              }, null, 42, ["id", "name", "placeholder", "value", "disabled", "readonly"]),
-              vue.renderSlot(_ctx.$slots, "range-separator", {}, () => [
-                vue.createElementVNode("span", {
-                  class: vue.normalizeClass(vue.unref(nsRange).b("separator"))
-                }, vue.toDisplayString(_ctx.rangeSeparator), 3)
+            }, {
+              prefix: vue.withCtx(() => [
+                vue.unref(triggerIcon) ? (vue.openBlock(), vue.createBlock(vue.unref(ElIcon), {
+                  key: 0,
+                  class: vue.normalizeClass([vue.unref(nsInput).e("icon"), vue.unref(nsRange).e("icon")])
+                }, {
+                  default: vue.withCtx(() => [
+                    (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(vue.unref(triggerIcon))))
+                  ]),
+                  _: 1
+                }, 8, ["class"])) : vue.createCommentVNode("v-if", true)
               ]),
-              vue.createElementVNode("input", {
-                id: _ctx.id && _ctx.id[1],
-                autocomplete: "off",
-                name: _ctx.name && _ctx.name[1],
-                placeholder: _ctx.endPlaceholder,
-                value: vue.unref(displayValue) && vue.unref(displayValue)[1],
-                disabled: vue.unref(pickerDisabled),
-                readonly: !_ctx.editable || _ctx.readonly,
-                class: vue.normalizeClass(vue.unref(nsRange).b("input")),
-                onMousedown: onMouseDownInput,
-                onFocus: handleFocusInput,
-                onBlur: handleBlurInput,
-                onInput: handleEndInput,
-                onChange: handleEndChange
-              }, null, 42, ["id", "name", "placeholder", "value", "disabled", "readonly"]),
-              _ctx.clearIcon ? (vue.openBlock(), vue.createBlock(vue.unref(ElIcon), {
-                key: 1,
-                class: vue.normalizeClass(vue.unref(clearIconKls)),
-                onClick: onClearIconClick
-              }, {
-                default: vue.withCtx(() => [
-                  (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.clearIcon)))
-                ]),
-                _: 1
-              }, 8, ["class"])) : vue.createCommentVNode("v-if", true)
-            ], 38))
+              "range-separator": vue.withCtx(() => [
+                vue.renderSlot(_ctx.$slots, "range-separator", {}, () => [
+                  vue.createElementVNode("span", {
+                    class: vue.normalizeClass(vue.unref(nsRange).b("separator"))
+                  }, vue.toDisplayString(_ctx.rangeSeparator), 3)
+                ])
+              ]),
+              suffix: vue.withCtx(() => [
+                _ctx.clearIcon ? (vue.openBlock(), vue.createBlock(vue.unref(ElIcon), {
+                  key: 0,
+                  class: vue.normalizeClass(vue.unref(clearIconKls)),
+                  onMousedown: vue.withModifiers(vue.unref(NOOP), ["prevent"]),
+                  onClick: onClearIconClick
+                }, {
+                  default: vue.withCtx(() => [
+                    (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(_ctx.clearIcon)))
+                  ]),
+                  _: 1
+                }, 8, ["class", "onMousedown"])) : vue.createCommentVNode("v-if", true)
+              ]),
+              _: 3
+            }, 8, ["id", "model-value", "name", "disabled", "readonly", "start-placeholder", "end-placeholder", "class", "style", "aria-label", "tabindex", "onFocus", "onBlur"]))
           ]),
           content: vue.withCtx(() => [
             vue.renderSlot(_ctx.$slots, "default", {
@@ -19504,12 +19665,12 @@
               unlinkPanels: _ctx.unlinkPanels,
               type: _ctx.type,
               defaultValue: _ctx.defaultValue,
+              showNow: _ctx.showNow,
               onPick,
               onSelectRange: setSelectionRange,
               onSetPickerOption,
               onCalendarChange,
               onPanelChange,
-              onKeydown: onKeydownPopperContent,
               onMousedown: vue.withModifiers(() => {
               }, ["stop"])
             })
@@ -19643,7 +19804,7 @@
   }
   function createDocumentHandler(el, binding) {
     let excludes = [];
-    if (Array.isArray(binding.arg)) {
+    if (isArray$1(binding.arg)) {
       excludes = binding.arg;
     } else if (isElement$1(binding.arg)) {
       excludes.push(binding.arg);
@@ -19836,6 +19997,8 @@
     emits: ["change", "select-range", "set-option"],
     setup(__props, { emit }) {
       const props = __props;
+      const pickerBase = vue.inject("EP_PICKER_BASE");
+      const { isRange } = pickerBase.props;
       const ns = useNamespace("time");
       const { getHoursList, getMinutesList, getSecondsList } = getTimeLists(props.disabledHours, props.disabledMinutes, props.disabledSeconds);
       let isScrolling = false;
@@ -19860,10 +20023,12 @@
       });
       const timeList = vue.computed(() => {
         const { hours, minutes } = vue.unref(timePartials);
+        const { role, spinnerDate } = props;
+        const compare = !isRange ? spinnerDate : void 0;
         return {
-          hours: getHoursList(props.role),
-          minutes: getMinutesList(hours, props.role),
-          seconds: getSecondsList(hours, minutes, props.role)
+          hours: getHoursList(role, compare),
+          minutes: getMinutesList(hours, role, compare),
+          seconds: getSecondsList(hours, minutes, role, compare)
         };
       });
       const arrowControlTimeList = vue.computed(() => {
@@ -19984,9 +20149,12 @@
         }
       };
       const handleScroll = (type) => {
+        const scrollbar = vue.unref(listRefsMap[type]);
+        if (!scrollbar)
+          return;
         isScrolling = true;
         debouncedResetScroll(type);
-        const value = Math.min(Math.round((getScrollbarElement(vue.unref(listRefsMap[type]).$el).scrollTop - (scrollBarHeight(type) * 0.5 - 10) / typeItemHeight(type) + 3) / typeItemHeight(type)), type === "hours" ? 23 : 59);
+        const value = Math.min(Math.round((getScrollbarElement(scrollbar.$el).scrollTop - (scrollBarHeight(type) * 0.5 - 10) / typeItemHeight(type) + 3) / typeItemHeight(type)), type === "hours" ? 23 : 59);
         modifyDateField(type, value);
       };
       const scrollBarHeight = (type) => {
@@ -20014,7 +20182,7 @@
         });
       });
       const setRef = (scrollbar, type) => {
-        listRefsMap[type].value = scrollbar;
+        listRefsMap[type].value = scrollbar != null ? scrollbar : void 0;
       };
       emit("set-option", [`${props.role}_scrollDown`, scrollDown]);
       emit("set-option", [`${props.role}_emitSelectRange`, emitSelectRange]);
@@ -20100,7 +20268,7 @@
                       vue.unref(ns).is("disabled", vue.unref(timeList)[item][time])
                     ])
                   }, [
-                    typeof time === "number" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
+                    vue.unref(isNumber)(time) ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
                       item === "hours" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
                         vue.createTextVNode(vue.toDisplayString(("0" + (_ctx.amPmMode ? time % 12 || 12 : time)).slice(-2)) + vue.toDisplayString(getAmPmFlag(time)), 1)
                       ], 64)) : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
@@ -20567,13 +20735,13 @@
       const modelUpdater = (value) => ctx.emit("update:modelValue", value);
       vue.provide("ElPopperOptions", props.popperOptions);
       ctx.expose({
-        focus: (e) => {
+        focus: () => {
           var _a;
-          (_a = commonPicker.value) == null ? void 0 : _a.handleFocusInput(e);
+          (_a = commonPicker.value) == null ? void 0 : _a.focus();
         },
-        blur: (e) => {
+        blur: () => {
           var _a;
-          (_a = commonPicker.value) == null ? void 0 : _a.handleBlurInput(e);
+          (_a = commonPicker.value) == null ? void 0 : _a.blur();
         },
         handleOpen: () => {
           var _a;
@@ -23207,7 +23375,7 @@
       const { data, config, childrenData, loaded } = this;
       const { lazy, leaf } = config;
       const isLeaf = isFunction$1(leaf) ? leaf(data, this) : data[leaf];
-      return isUndefined(isLeaf) ? lazy && !loaded ? false : !(Array.isArray(childrenData) && childrenData.length) : !!isLeaf;
+      return isUndefined(isLeaf) ? lazy && !loaded ? false : !(isArray$1(childrenData) && childrenData.length) : !!isLeaf;
     }
     get valueByOption() {
       return this.config.emitPath ? this.pathValues : this.value;
@@ -23215,7 +23383,7 @@
     appendChild(childData) {
       const { childrenData, children } = this;
       const node = new Node$2(childData, this.config, this);
-      if (Array.isArray(childrenData)) {
+      if (isArray$1(childrenData)) {
         childrenData.push(childData);
       } else {
         this.childrenData = [childData];
@@ -23592,6 +23760,7 @@
             break;
           }
           case EVENT_CODE.enter:
+          case EVENT_CODE.numpadEnter:
             checkNode(target);
             break;
         }
@@ -24109,6 +24278,7 @@
           return;
         switch (e.code) {
           case EVENT_CODE.enter:
+          case EVENT_CODE.numpadEnter:
             togglePopperVisible();
             break;
           case EVENT_CODE.down:
@@ -24163,6 +24333,7 @@
             break;
           }
           case EVENT_CODE.enter:
+          case EVENT_CODE.numpadEnter:
             target.click();
             break;
         }
@@ -25445,10 +25616,10 @@
     ];
   };
   const isOnePointZero = function(n) {
-    return typeof n === "string" && n.includes(".") && Number.parseFloat(n) === 1;
+    return isString$1(n) && n.includes(".") && Number.parseFloat(n) === 1;
   };
   const isPercentage = function(n) {
-    return typeof n === "string" && n.includes("%");
+    return isString$1(n) && n.includes("%");
   };
   const bound01 = function(value, max) {
     if (isOnePointZero(value))
@@ -26044,6 +26215,7 @@
       function handleKeyDown(event) {
         switch (event.code) {
           case EVENT_CODE.enter:
+          case EVENT_CODE.numpadEnter:
           case EVENT_CODE.space:
             event.preventDefault();
             event.stopPropagation();
@@ -26432,16 +26604,13 @@
     !function(e, t) {
       module.exports = t() ;
     }(commonjsGlobal, function() {
-      return function(e, t, r) {
-        var n = t.prototype, s = n.format;
-        r.en.ordinal = function(e2) {
-          var t2 = ["th", "st", "nd", "rd"], r2 = e2 % 100;
-          return "[" + e2 + (t2[(r2 - 20) % 10] || t2[r2] || t2[0]) + "]";
-        }, n.format = function(e2) {
+      return function(e, t) {
+        var r = t.prototype, n = r.format;
+        r.format = function(e2) {
           var t2 = this, r2 = this.$locale();
           if (!this.isValid())
-            return s.bind(this)(e2);
-          var n2 = this.$utils(), a = (e2 || "YYYY-MM-DDTHH:mm:ssZ").replace(/\[([^\]]+)]|Q|wo|ww|w|WW|W|zzz|z|gggg|GGGG|Do|X|x|k{1,2}|S/g, function(e3) {
+            return n.bind(this)(e2);
+          var s = this.$utils(), a = (e2 || "YYYY-MM-DDTHH:mm:ssZ").replace(/\[([^\]]+)]|Q|wo|ww|w|WW|W|zzz|z|gggg|GGGG|Do|X|x|k{1,2}|S/g, function(e3) {
             switch (e3) {
               case "Q":
                 return Math.ceil((t2.$M + 1) / 3);
@@ -26455,13 +26624,13 @@
                 return r2.ordinal(t2.week(), "W");
               case "w":
               case "ww":
-                return n2.s(t2.week(), e3 === "w" ? 1 : 2, "0");
+                return s.s(t2.week(), e3 === "w" ? 1 : 2, "0");
               case "W":
               case "WW":
-                return n2.s(t2.isoWeek(), e3 === "W" ? 1 : 2, "0");
+                return s.s(t2.isoWeek(), e3 === "W" ? 1 : 2, "0");
               case "k":
               case "kk":
-                return n2.s(String(t2.$H === 0 ? 24 : t2.$H), e3 === "k" ? 1 : 2, "0");
+                return s.s(String(t2.$H === 0 ? 24 : t2.$H), e3 === "k" ? 1 : 2, "0");
               case "X":
                 return Math.floor(t2.$d.getTime() / 1e3);
               case "x":
@@ -26474,7 +26643,7 @@
                 return e3;
             }
           });
-          return s.bind(this)(a);
+          return n.bind(this)(a);
         };
       };
     });
@@ -26623,7 +26792,11 @@
       values: datePickTypes
     },
     dateFormat: String,
-    timeFormat: String
+    timeFormat: String,
+    showNow: {
+      type: Boolean,
+      default: true
+    }
   });
   const panelRangeSharedProps = buildProps({
     unlinkPanels: Boolean,
@@ -27020,7 +27193,7 @@
         newDate = newDate.add(1, "month");
       }
       newDate = newDate.date(Number.parseInt(cell.text, 10));
-      if (props.parsedValue && !Array.isArray(props.parsedValue)) {
+      if (props.parsedValue && !isArray$1(props.parsedValue)) {
         const dayOffset = (props.parsedValue.day() - firstDayOfWeek + 7) % 7 - 1;
         const weekDate = props.parsedValue.subtract(dayOffset, "day");
         return weekDate.isSame(newDate, "day");
@@ -28040,7 +28213,7 @@
         if (val) {
           if (isMultipleType.value)
             return;
-          if (Array.isArray(val))
+          if (isArray$1(val))
             return;
           innerDate.value = val;
         } else {
@@ -28277,7 +28450,7 @@
               ]),
               _: 1
             }, 8, ["class", "disabled"]), [
-              [vue.vShow, !vue.unref(isMultipleType)]
+              [vue.vShow, !vue.unref(isMultipleType) && _ctx.showNow]
             ]),
             vue.createVNode(vue.unref(ElButton), {
               plain: "",
@@ -29774,9 +29947,13 @@
       });
       const commonPicker = vue.ref();
       const refProps = {
-        focus: (focusStartInput = true) => {
+        focus: () => {
           var _a;
-          (_a = commonPicker.value) == null ? void 0 : _a.focus(focusStartInput);
+          (_a = commonPicker.value) == null ? void 0 : _a.focus();
+        },
+        blur: () => {
+          var _a;
+          (_a = commonPicker.value) == null ? void 0 : _a.blur();
         },
         handleOpen: () => {
           var _a;
@@ -29860,8 +30037,9 @@
       const labelAlign = item.labelAlign ? `is-${item.labelAlign}` : align;
       const className = item.className;
       const labelClassName = item.labelClassName;
+      const width = this.type === "label" ? item.labelWidth || this.descriptions.labelWidth || item.width : item.width;
       const style = {
-        width: addUnit(item.width),
+        width: addUnit(width),
         minWidth: addUnit(item.minWidth)
       };
       const ns = useNamespace("descriptions");
@@ -29999,6 +30177,10 @@
     },
     extra: {
       type: String,
+      default: ""
+    },
+    labelWidth: {
+      type: [String, Number],
       default: ""
     }
   });
@@ -30141,6 +30323,10 @@
       default: ""
     },
     minWidth: {
+      type: [String, Number],
+      default: ""
+    },
+    labelWidth: {
       type: [String, Number],
       default: ""
     },
@@ -31100,7 +31286,7 @@
     }
   };
   const getFocusIntent = (event, orientation, dir) => {
-    const key = getDirectionAwareKey(event.key, dir);
+    const key = getDirectionAwareKey(event.code, dir);
     if (orientation === "vertical" && [EVENT_CODE.left, EVENT_CODE.right].includes(key))
       return void 0;
     if (orientation === "horizontal" && [EVENT_CODE.up, EVENT_CODE.down].includes(key))
@@ -31273,8 +31459,8 @@
       const handleKeydown = composeEventHandlers((e) => {
         emit("keydown", e);
       }, (e) => {
-        const { key, shiftKey, target, currentTarget } = e;
-        if (key === EVENT_CODE.tab && shiftKey) {
+        const { code, shiftKey, target, currentTarget } = e;
+        if (code === EVENT_CODE.tab && shiftKey) {
           onItemShiftTab();
           return;
         }
@@ -31455,7 +31641,12 @@
       const scrollbar = vue.ref(null);
       const currentTabId = vue.ref(null);
       const isUsingKeyboard = vue.ref(false);
-      const triggerKeys = [EVENT_CODE.enter, EVENT_CODE.space, EVENT_CODE.down];
+      const triggerKeys = [
+        EVENT_CODE.enter,
+        EVENT_CODE.numpadEnter,
+        EVENT_CODE.space,
+        EVENT_CODE.down
+      ];
       const wrapStyle = vue.computed(() => ({
         maxHeight: addUnit(props.maxHeight)
       }));
@@ -31743,8 +31934,7 @@
         return "button";
       });
       const handleKeydown = composeEventHandlers((e) => {
-        const { code } = e;
-        if (code === EVENT_CODE.enter || code === EVENT_CODE.space) {
+        if ([EVENT_CODE.enter, EVENT_CODE.numpadEnter, EVENT_CODE.space].includes(e.code)) {
           e.preventDefault();
           e.stopImmediatePropagation();
           emit("clickimpl", e);
@@ -32741,7 +32931,7 @@
       });
       const preview = vue.computed(() => {
         const { previewSrcList } = props;
-        return Array.isArray(previewSrcList) && previewSrcList.length > 0;
+        return isArray$1(previewSrcList) && previewSrcList.length > 0;
       });
       const imageIndex = vue.computed(() => {
         const { previewSrcList, initialIndex } = props;
@@ -33419,6 +33609,7 @@
               break;
             }
             case EVENT_CODE.enter:
+            case EVENT_CODE.numpadEnter:
             case EVENT_CODE.space: {
               prevDef = true;
               event.currentTarget.click();
@@ -33472,6 +33663,7 @@
             break;
           }
           case EVENT_CODE.enter:
+          case EVENT_CODE.numpadEnter:
           case EVENT_CODE.space: {
             prevDef = true;
             event.currentTarget.click();
@@ -33942,7 +34134,7 @@
       default: 300
     }
   });
-  const checkIndexPath = (indexPath) => Array.isArray(indexPath) && indexPath.every((path) => isString$1(path));
+  const checkIndexPath = (indexPath) => isArray$1(indexPath) && indexPath.every((path) => isString$1(path));
   const menuEmits = {
     close: (index, indexPath) => isString$1(index) && checkIndexPath(indexPath),
     open: (index, indexPath) => isString$1(index) && checkIndexPath(indexPath),
@@ -34223,7 +34415,7 @@
     disabled: Boolean
   });
   const menuItemEmits = {
-    click: (item) => isString$1(item.index) && Array.isArray(item.indexPath)
+    click: (item) => isString$1(item.index) && isArray$1(item.indexPath)
   };
 
   const COMPONENT_NAME$b = "ElMenuItem";
@@ -34732,13 +34924,13 @@
       role: "option",
       "aria-disabled": _ctx.isDisabled || void 0,
       "aria-selected": _ctx.itemSelected,
-      onMouseenter: _ctx.hoverItem,
+      onMousemove: _ctx.hoverItem,
       onClick: vue.withModifiers(_ctx.selectOptionClick, ["stop"])
     }, [
       vue.renderSlot(_ctx.$slots, "default", {}, () => [
         vue.createElementVNode("span", null, vue.toDisplayString(_ctx.currentLabel), 1)
       ])
-    ], 42, ["id", "aria-disabled", "aria-selected", "onMouseenter", "onClick"])), [
+    ], 42, ["id", "aria-disabled", "aria-selected", "onMousemove", "onClick"])), [
       [vue.vShow, _ctx.visible]
     ]);
   }
@@ -34803,7 +34995,6 @@
       inputValue: "",
       options: /* @__PURE__ */ new Map(),
       cachedOptions: /* @__PURE__ */ new Map(),
-      disabledOptions: /* @__PURE__ */ new Map(),
       optionValues: [],
       selected: [],
       selectionWidth: 0,
@@ -34865,6 +35056,10 @@
     const selectDisabled = vue.computed(() => props.disabled || (form == null ? void 0 : form.disabled));
     const hasModelValue = vue.computed(() => {
       return isArray$1(props.modelValue) ? props.modelValue.length > 0 : !isEmptyValue(props.modelValue);
+    });
+    const needStatusIcon = vue.computed(() => {
+      var _a;
+      return (_a = form == null ? void 0 : form.statusIcon) != null ? _a : false;
     });
     const showClose = vue.computed(() => {
       return props.clearable && !selectDisabled.value && states.inputHovering && hasModelValue.value;
@@ -35017,7 +35212,8 @@
       const optionsInDropdown = optionsArray.value.filter((n) => n.visible && !n.disabled && !n.states.groupDisabled);
       const userCreatedOption = optionsInDropdown.find((n) => n.created);
       const firstOriginOption = optionsInDropdown[0];
-      states.hoveringIndex = getValueIndex(optionsArray.value, userCreatedOption || firstOriginOption);
+      const valueList = optionsArray.value.map((item) => item.value);
+      states.hoveringIndex = getValueIndex(valueList, userCreatedOption || firstOriginOption);
     };
     const setSelected = () => {
       if (!props.multiple) {
@@ -35039,9 +35235,7 @@
     };
     const getOption = (value) => {
       let option;
-      const isObjectValue = toRawType(value).toLowerCase() === "object";
-      const isNull = toRawType(value).toLowerCase() === "null";
-      const isUndefined2 = toRawType(value).toLowerCase() === "undefined";
+      const isObjectValue = isPlainObject$1(value);
       for (let i = states.cachedOptions.size - 1; i >= 0; i--) {
         const cachedOption = cachedOptionsArray.value[i];
         const isEqualValue = isObjectValue ? get(cachedOption.value, props.valueKey) === get(value, props.valueKey) : cachedOption.value === value;
@@ -35058,7 +35252,7 @@
       }
       if (option)
         return option;
-      const label = isObjectValue ? value.label : !isNull && !isUndefined2 ? value : "";
+      const label = isObjectValue ? value.label : value != null ? value : "";
       const newOption = {
         value,
         currentLabel: label
@@ -35107,7 +35301,10 @@
         emit(CHANGE_EVENT, val);
       }
     };
-    const getLastNotDisabledIndex = (value) => findLastIndex(value, (it) => !states.disabledOptions.has(it));
+    const getLastNotDisabledIndex = (value) => findLastIndex(value, (it) => {
+      const option = states.cachedOptions.get(it);
+      return option && !option.disabled && !option.states.groupDisabled;
+    });
     const deletePrevTag = (e) => {
       if (!props.multiple)
         return;
@@ -35157,7 +35354,7 @@
       var _a;
       if (props.multiple) {
         const value = castArray$1((_a = props.modelValue) != null ? _a : []).slice();
-        const optionIndex = getValueIndex(value, option.value);
+        const optionIndex = getValueIndex(value, option);
         if (optionIndex > -1) {
           value.splice(optionIndex, 1);
         } else if (props.multipleLimit <= 0 || value.length < props.multipleLimit) {
@@ -35183,19 +35380,14 @@
         scrollToOption(option);
       });
     };
-    const getValueIndex = (arr = [], value) => {
-      if (!isObject$1(value))
-        return arr.indexOf(value);
-      const valueKey = props.valueKey;
-      let index = -1;
-      arr.some((item, i) => {
-        if (vue.toRaw(get(item, valueKey)) === get(value, valueKey)) {
-          index = i;
-          return true;
-        }
-        return false;
+    const getValueIndex = (arr = [], option) => {
+      if (isUndefined(option))
+        return -1;
+      if (!isObject$1(option.value))
+        return arr.indexOf(option.value);
+      return arr.findIndex((item) => {
+        return isEqual$1(get(item, props.valueKey), getValueKey(option));
       });
-      return index;
     };
     const scrollToOption = (option) => {
       var _a, _b, _c, _d, _e;
@@ -35218,7 +35410,6 @@
     const onOptionCreate = (vm) => {
       states.options.set(vm.value, vm);
       states.cachedOptions.set(vm.value, vm);
-      vm.disabled && states.disabledOptions.set(vm.value, vm);
     };
     const onOptionDestroy = (key, vm) => {
       if (states.options.get(key) === vm) {
@@ -35281,8 +35472,9 @@
       if (!expanded.value) {
         toggleMenu();
       } else {
-        if (optionsArray.value[states.hoveringIndex]) {
-          handleOptionSelect(optionsArray.value[states.hoveringIndex]);
+        const option = optionsArray.value[states.hoveringIndex];
+        if (option && !option.disabled && !option.states.groupDisabled) {
+          handleOptionSelect(option);
         }
       }
     };
@@ -35380,6 +35572,7 @@
       shouldShowPlaceholder,
       currentPlaceholder,
       mouseEnterEventName,
+      needStatusIcon,
       showClose,
       iconComponent,
       iconReverse,
@@ -35547,6 +35740,14 @@
       default: true
     },
     remoteShowSuffix: Boolean,
+    showArrow: {
+      type: Boolean,
+      default: true
+    },
+    offset: {
+      type: Number,
+      default: 12
+    },
     placement: {
       type: definePropType(String),
       values: Ee,
@@ -35653,6 +35854,8 @@
         "gpu-acceleration": false,
         persistent: _ctx.persistent,
         "append-to": _ctx.appendTo,
+        "show-arrow": _ctx.showArrow,
+        offset: _ctx.offset,
         onBeforeShow: _ctx.handleMenuEnter,
         onHide: ($event) => _ctx.states.isBeforeHide = false
       }, {
@@ -35880,7 +36083,7 @@
                   ]),
                   _: 1
                 }, 8, ["class", "onClick"])) : vue.createCommentVNode("v-if", true),
-                _ctx.validateState && _ctx.validateIcon ? (vue.openBlock(), vue.createBlock(_component_el_icon, {
+                _ctx.validateState && _ctx.validateIcon && _ctx.needStatusIcon ? (vue.openBlock(), vue.createBlock(_component_el_icon, {
                   key: 2,
                   class: vue.normalizeClass([_ctx.nsInput.e("icon"), _ctx.nsInput.e("validateIcon")])
                 }, {
@@ -35958,7 +36161,7 @@
           }, 512)
         ]),
         _: 3
-      }, 8, ["visible", "placement", "teleported", "popper-class", "popper-options", "fallback-placements", "effect", "transition", "persistent", "append-to", "onBeforeShow", "onHide"])
+      }, 8, ["visible", "placement", "teleported", "popper-class", "popper-options", "fallback-placements", "effect", "transition", "persistent", "append-to", "show-arrow", "offset", "onBeforeShow", "onHide"])
     ], 16, ["onMouseleave"])), [
       [_directive_click_outside, _ctx.handleClickOutside, _ctx.popperRef]
     ]);
@@ -36085,7 +36288,7 @@
       vue.watch(() => props.pageSizes, (newVal, oldVal) => {
         if (isEqual$1(newVal, oldVal))
           return;
-        if (Array.isArray(newVal)) {
+        if (isArray$1(newVal)) {
           const pageSize = newVal.includes(props.pageSize) ? props.pageSize : props.pageSizes[0];
           emit("page-size-change", pageSize);
         }
@@ -39692,6 +39895,14 @@
       type: Boolean,
       default: true
     },
+    offset: {
+      type: Number,
+      default: 12
+    },
+    showArrow: {
+      type: Boolean,
+      default: true
+    },
     placement: {
       type: definePropType(String),
       values: Ee,
@@ -39703,6 +39914,7 @@
     },
     tagType: { ...tagProps.type, default: "info" },
     tagEffect: { ...tagProps.effect, default: "light" },
+    appendTo: String,
     ...useEmptyValuesProps,
     ...useAriaProps(["ariaLabel"])
   });
@@ -39762,7 +39974,7 @@
         _ctx.ns.is("created", _ctx.created),
         _ctx.ns.is("hovering", _ctx.hovering)
       ]),
-      onMouseenter: _ctx.hoverItem,
+      onMousemove: _ctx.hoverItem,
       onClick: vue.withModifiers(_ctx.selectOptionClick, ["stop"])
     }, [
       vue.renderSlot(_ctx.$slots, "default", {
@@ -39772,7 +39984,7 @@
       }, () => [
         vue.createElementVNode("span", null, vue.toDisplayString(_ctx.getLabel(_ctx.item)), 1)
       ])
-    ], 46, ["aria-selected", "onMouseenter", "onClick"]);
+    ], 46, ["aria-selected", "onMousemove", "onClick"]);
   }
   var OptionItem = /* @__PURE__ */ _export_sfc(_sfc_main$N, [["render", _sfc_render$6], ["__file", "option-item.vue"]]);
 
@@ -39941,7 +40153,8 @@
           esc,
           down,
           up,
-          enter
+          enter,
+          numpadEnter
         } = EVENT_CODE;
         if (code !== tab) {
           e.preventDefault();
@@ -39949,21 +40162,18 @@
         }
         switch (code) {
           case tab:
-          case esc: {
+          case esc:
             break;
-          }
-          case down: {
+          case down:
             onForward();
             break;
-          }
-          case up: {
+          case up:
             onBackward();
             break;
-          }
-          case enter: {
+          case enter:
+          case numpadEnter:
             onKeyboardSelect();
             break;
-          }
         }
       };
       return () => {
@@ -40144,6 +40354,10 @@
     const filteredOptions = vue.ref([]);
     const expanded = vue.ref(false);
     const selectDisabled = vue.computed(() => props.disabled || (elForm == null ? void 0 : elForm.disabled));
+    const needStatusIcon = vue.computed(() => {
+      var _a;
+      return (_a = elForm == null ? void 0 : elForm.statusIcon) != null ? _a : false;
+    });
     const popupHeight = vue.computed(() => {
       const totalHeight = filteredOptions.value.length * props.itemHeight;
       return totalHeight > props.height ? props.height : totalHeight;
@@ -40643,7 +40857,8 @@
     });
     vue.watch(() => props.modelValue, (val, oldVal) => {
       var _a;
-      if (!val || props.multiple && val.toString() !== states.previousValue || !props.multiple && getValueKey(val) !== getValueKey(states.previousValue)) {
+      const isValEmpty = !val || isArray$1(val) && val.length === 0;
+      if (isValEmpty || props.multiple && !isEqual$1(val.toString(), states.previousValue) || !props.multiple && getValueKey(val) !== getValueKey(states.previousValue)) {
         initStates(true);
       }
       if (!isEqual$1(val, oldVal) && props.validateEvent) {
@@ -40716,6 +40931,7 @@
       shouldShowPlaceholder,
       selectDisabled,
       selectSize,
+      needStatusIcon,
       showClearBtn,
       states,
       isFocused,
@@ -40848,6 +41064,9 @@
         transition: `${_ctx.nsSelect.namespace.value}-zoom-in-top`,
         trigger: "click",
         persistent: _ctx.persistent,
+        "append-to": _ctx.appendTo,
+        "show-arrow": _ctx.showArrow,
+        offset: _ctx.offset,
         onBeforeShow: _ctx.handleMenuEnter,
         onHide: ($event) => _ctx.states.isBeforeHide = false
       }, {
@@ -41074,7 +41293,7 @@
                 ]),
                 _: 1
               }, 8, ["class", "onClick"])) : vue.createCommentVNode("v-if", true),
-              _ctx.validateState && _ctx.validateIcon ? (vue.openBlock(), vue.createBlock(_component_el_icon, {
+              _ctx.validateState && _ctx.validateIcon && _ctx.needStatusIcon ? (vue.openBlock(), vue.createBlock(_component_el_icon, {
                 key: 2,
                 class: vue.normalizeClass([_ctx.nsInput.e("icon"), _ctx.nsInput.e("validateIcon")])
               }, {
@@ -41143,7 +41362,7 @@
           ]), 1032, ["data", "width", "hovering-index", "scrollbar-always-on"])
         ]),
         _: 3
-      }, 8, ["visible", "teleported", "popper-class", "popper-options", "fallback-placements", "effect", "placement", "transition", "persistent", "onBeforeShow", "onHide"])
+      }, 8, ["visible", "teleported", "popper-class", "popper-options", "fallback-placements", "effect", "placement", "transition", "persistent", "append-to", "show-arrow", "offset", "onBeforeShow", "onHide"])
     ], 42, ["onMouseenter", "onMouseleave"])), [
       [_directive_click_outside, _ctx.handleClickOutside, _ctx.popperRef]
     ]);
@@ -41170,7 +41389,7 @@
       default: true
     },
     throttle: {
-      type: Number
+      type: definePropType([Number, Object])
     }
   });
 
@@ -41231,7 +41450,7 @@
         }, _ctx.$attrs), [
           (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(_ctx.count, (i) => {
             return vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: i }, [
-              _ctx.loading ? vue.renderSlot(_ctx.$slots, "template", { key: i }, () => [
+              vue.unref(uiLoading) ? vue.renderSlot(_ctx.$slots, "template", { key: i }, () => [
                 vue.createVNode(SkeletonItem, {
                   class: vue.normalizeClass(vue.unref(ns).is("first")),
                   variant: "p"
@@ -41348,7 +41567,7 @@
     const sliderWrapper = vue.ref();
     vue.onMounted(async () => {
       if (props.range) {
-        if (Array.isArray(props.modelValue)) {
+        if (isArray$1(props.modelValue)) {
           initData.firstValue = Math.max(props.min, props.modelValue[0]);
           initData.secondValue = Math.min(props.max, props.modelValue[1]);
         } else {
@@ -41357,7 +41576,7 @@
         }
         initData.oldValue = [initData.firstValue, initData.secondValue];
       } else {
-        if (typeof props.modelValue !== "number" || Number.isNaN(props.modelValue)) {
+        if (!isNumber(props.modelValue) || Number.isNaN(props.modelValue)) {
           initData.firstValue = props.min;
         } else {
           initData.firstValue = Math.min(props.max, Math.max(props.min, props.modelValue));
@@ -41529,7 +41748,6 @@
     };
   };
 
-  const { left, down, right, up, home, end, pageUp, pageDown } = EVENT_CODE;
   const useTooltip = (props, formatTooltip, showTooltip) => {
     const tooltip = vue.ref();
     const tooltipVisible = vue.ref(false);
@@ -41630,20 +41848,30 @@
     };
     const onKeyDown = (event) => {
       let isPreventDefault = true;
-      if ([left, down].includes(event.key)) {
-        onLeftKeyDown();
-      } else if ([right, up].includes(event.key)) {
-        onRightKeyDown();
-      } else if (event.key === home) {
-        onHomeKeyDown();
-      } else if (event.key === end) {
-        onEndKeyDown();
-      } else if (event.key === pageDown) {
-        onPageDownKeyDown();
-      } else if (event.key === pageUp) {
-        onPageUpKeyDown();
-      } else {
-        isPreventDefault = false;
+      switch (event.code) {
+        case EVENT_CODE.left:
+        case EVENT_CODE.down:
+          onLeftKeyDown();
+          break;
+        case EVENT_CODE.right:
+        case EVENT_CODE.up:
+          onRightKeyDown();
+          break;
+        case EVENT_CODE.home:
+          onHomeKeyDown();
+          break;
+        case EVENT_CODE.end:
+          onEndKeyDown();
+          break;
+        case EVENT_CODE.pageDown:
+          onPageDownKeyDown();
+          break;
+        case EVENT_CODE.pageUp:
+          onPageUpKeyDown();
+          break;
+        default:
+          isPreventDefault = false;
+          break;
       }
       isPreventDefault && event.preventDefault();
     };
@@ -41798,7 +42026,7 @@
         throwError("Slider", "min should not be greater than max.");
       }
       const val = props.modelValue;
-      if (props.range && Array.isArray(val)) {
+      if (props.range && isArray$1(val)) {
         if (val[1] < props.min) {
           _emit([props.min, props.min]);
         } else if (val[0] > props.max) {
@@ -41817,7 +42045,7 @@
             initData.oldValue = val.slice();
           }
         }
-      } else if (!props.range && typeof val === "number" && !Number.isNaN(val)) {
+      } else if (!props.range && isNumber(val) && !Number.isNaN(val)) {
         if (val < props.min) {
           _emit(props.min);
         } else if (val > props.max) {
@@ -41840,7 +42068,7 @@
       }
     });
     vue.watch(() => props.modelValue, (val, oldVal) => {
-      if (initData.dragging || Array.isArray(val) && Array.isArray(oldVal) && val.every((item, index) => item === oldVal[index]) && initData.firstValue === val[0] && initData.secondValue === val[1]) {
+      if (initData.dragging || isArray$1(val) && isArray$1(oldVal) && val.every((item, index) => item === oldVal[index]) && initData.firstValue === val[0] && initData.secondValue === val[1]) {
         return;
       }
       setValues();
@@ -41936,7 +42164,7 @@
             "stop-popper-mouse-event": false,
             "popper-class": _ctx.tooltipClass,
             disabled: !vue.unref(showTooltip),
-            persistent: ""
+            persistent: vue.unref(showTooltip)
           }, {
             content: vue.withCtx(() => [
               vue.createElementVNode("span", null, vue.toDisplayString(vue.unref(formatValue)), 1)
@@ -41947,7 +42175,7 @@
               }, null, 2)
             ]),
             _: 1
-          }, 8, ["visible", "placement", "popper-class", "disabled"])
+          }, 8, ["visible", "placement", "popper-class", "disabled", "persistent"])
         ], 46, ["tabindex", "onMouseenter", "onMouseleave", "onMousedown", "onFocus", "onBlur", "onKeydown"]);
       };
     }
@@ -43177,21 +43405,21 @@
     return (_a = event.target) == null ? void 0 : _a.closest("td");
   };
   const orderBy = function(array, sortKey, reverse, sortMethod, sortBy) {
-    if (!sortKey && !sortMethod && (!sortBy || Array.isArray(sortBy) && !sortBy.length)) {
+    if (!sortKey && !sortMethod && (!sortBy || isArray$1(sortBy) && !sortBy.length)) {
       return array;
     }
-    if (typeof reverse === "string") {
+    if (isString$1(reverse)) {
       reverse = reverse === "descending" ? -1 : 1;
     } else {
       reverse = reverse && reverse < 0 ? -1 : 1;
     }
     const getKey = sortMethod ? null : function(value, index) {
       if (sortBy) {
-        if (!Array.isArray(sortBy)) {
+        if (!isArray$1(sortBy)) {
           sortBy = [sortBy];
         }
         return sortBy.map((by) => {
-          if (typeof by === "string") {
+          if (isString$1(by)) {
             return get(value, by);
           } else {
             return by(value, index, array);
@@ -43264,7 +43492,7 @@
   const getRowIdentity = (row, rowKey) => {
     if (!row)
       throw new Error("Row is required when get row identity");
-    if (typeof rowKey === "string") {
+    if (isString$1(rowKey)) {
       if (!rowKey.includes(".")) {
         return `${row[rowKey]}`;
       }
@@ -43274,7 +43502,7 @@
         current = current[element];
       }
       return `${current}`;
-    } else if (typeof rowKey === "function") {
+    } else if (isFunction$1(rowKey)) {
       return rowKey.call(null, row);
     }
   };
@@ -43324,10 +43552,10 @@
     return minWidth;
   }
   function parseHeight(height) {
-    if (typeof height === "number") {
+    if (isNumber(height)) {
       return height;
     }
-    if (typeof height === "string") {
+    if (isString$1(height)) {
       if (/^\d+(?:px)?$/.test(height)) {
         return Number.parseInt(height, 10);
       } else {
@@ -43390,7 +43618,7 @@
     return changed;
   }
   function walkTreeNode(root, cb, childrenKey = "children", lazyKey = "hasChildren") {
-    const isNil = (array) => !(Array.isArray(array) && array.length);
+    const isNil = (array) => !(isArray$1(array) && array.length);
     function _walker(parent, children, level) {
       cb(parent, children, level);
       children.forEach((item) => {
@@ -43415,20 +43643,26 @@
       }
     });
   }
+  const getTableOverflowTooltipProps = (props, content) => {
+    return {
+      content,
+      ...props,
+      popperOptions: {
+        strategy: "fixed",
+        ...props.popperOptions
+      }
+    };
+  };
   let removePopper = null;
   function createTablePopper(props, popperContent, trigger, table) {
     if ((removePopper == null ? void 0 : removePopper.trigger) === trigger) {
+      merge(removePopper.vm.component.props, getTableOverflowTooltipProps(props, popperContent));
       return;
     }
     removePopper == null ? void 0 : removePopper();
     const parentNode = table == null ? void 0 : table.refs.tableWrapper;
     const ns = parentNode == null ? void 0 : parentNode.dataset.prefix;
-    const popperOptions = {
-      strategy: "fixed",
-      ...props.popperOptions
-    };
     const vm = vue.createVNode(ElTooltip, {
-      content: popperContent,
       virtualTriggering: true,
       virtualRef: trigger,
       appendTo: parentNode,
@@ -43436,11 +43670,7 @@
       transition: "none",
       offset: 0,
       hideAfter: 0,
-      ...props,
-      popperOptions,
-      onHide: () => {
-        removePopper == null ? void 0 : removePopper();
-      }
+      ...getTableOverflowTooltipProps(props, popperContent)
     });
     vm.appContext = { ...table.appContext, ...table };
     const container = document.createElement("div");
@@ -43453,6 +43683,7 @@
       removePopper = null;
     };
     removePopper.trigger = trigger;
+    removePopper.vm = vm;
     scrollContainer == null ? void 0 : scrollContainer.addEventListener("scroll", removePopper);
   }
   function getCurrentColumns(column) {
@@ -43715,7 +43946,7 @@
       const res = {};
       walkTreeNode(data, (parent, children, level) => {
         const parentId = getRowIdentity(parent, rowKey);
-        if (Array.isArray(children)) {
+        if (isArray$1(children)) {
           res[parentId] = {
             children: children.map((row) => getRowIdentity(row, rowKey)),
             level
@@ -43810,7 +44041,7 @@
       const data = id && treeData.value[id];
       if (id && data && "expanded" in data) {
         const oldExpanded = data.expanded;
-        expanded = typeof expanded === "undefined" ? !data.expanded : expanded;
+        expanded = isUndefined(expanded) ? !data.expanded : expanded;
         treeData.value[id].expanded = expanded;
         if (oldExpanded !== expanded) {
           instance.emit("expand-change", row, expanded);
@@ -43834,7 +44065,7 @@
       if (load && !treeData.value[key].loaded) {
         treeData.value[key].loading = true;
         load(row, treeNode, (data) => {
-          if (!Array.isArray(data)) {
+          if (!isArray$1(data)) {
             throw new TypeError("[ElTable] data must be an array");
           }
           treeData.value[key].loading = false;
@@ -43880,7 +44111,7 @@
 
   const sortData = (data, states) => {
     const sortingColumn = states.sortingColumn;
-    if (!sortingColumn || typeof sortingColumn.sortable === "string") {
+    if (!sortingColumn || isString$1(sortingColumn.sortable)) {
       return data;
     }
     return orderBy(data, states.sortProp, states.sortOrder, sortingColumn.sortMethod, sortingColumn.sortBy);
@@ -43927,7 +44158,16 @@
     const sortProp = vue.ref(null);
     const sortOrder = vue.ref(null);
     const hoverRow = vue.ref(null);
-    vue.watch(data, () => instance.state && scheduleLayout(false), {
+    vue.watch(data, () => {
+      var _a2;
+      if (instance.state) {
+        scheduleLayout(false);
+        const needUpdateFixed = instance.props.tableLayout === "auto";
+        if (needUpdateFixed) {
+          (_a2 = instance.refs.tableHeaderRef) == null ? void 0 : _a2.updateFixedColumnStyle();
+        }
+      }
+    }, {
       deep: true
     });
     const assertRowKey = () => {
@@ -44124,7 +44364,7 @@
       return count;
     };
     const updateFilters = (columns2, values) => {
-      if (!Array.isArray(columns2)) {
+      if (!isArray$1(columns2)) {
         columns2 = [columns2];
       }
       const filters_ = {};
@@ -44180,10 +44420,10 @@
       const keys = Object.keys(panels);
       if (!keys.length)
         return;
-      if (typeof columnKeys === "string") {
+      if (isString$1(columnKeys)) {
         columnKeys = [columnKeys];
       }
-      if (Array.isArray(columnKeys)) {
+      if (isArray$1(columnKeys)) {
         const columns_ = columnKeys.map((key) => getColumnByKey({
           columns: columns.value
         }, key));
@@ -44626,10 +44866,10 @@
       this.height.value = Number(value);
       if (!el && (value || value === 0))
         return vue.nextTick(() => this.setHeight(value, prop));
-      if (typeof value === "number") {
+      if (isNumber(value)) {
         el.style[prop] = `${value}px`;
         this.updateElsHeight();
-      } else if (typeof value === "string") {
+      } else if (isString$1(value)) {
         el.style[prop] = value;
         this.updateElsHeight();
       }
@@ -44672,9 +44912,9 @@
       const bodyWidth = this.table.vnode.el.clientWidth;
       let bodyMinWidth = 0;
       const flattenColumns = this.getFlattenColumns();
-      const flexColumns = flattenColumns.filter((column) => typeof column.width !== "number");
+      const flexColumns = flattenColumns.filter((column) => !isNumber(column.width));
       flattenColumns.forEach((column) => {
-        if (typeof column.width === "number" && column.realWidth)
+        if (isNumber(column.width) && column.realWidth)
           column.realWidth = null;
       });
       if (flexColumns.length > 0 && fit) {
@@ -45278,7 +45518,7 @@
     const ns = useNamespace("table");
     const getHeaderRowStyle = (rowIndex) => {
       const headerRowStyle = parent == null ? void 0 : parent.props.headerRowStyle;
-      if (typeof headerRowStyle === "function") {
+      if (isFunction$1(headerRowStyle)) {
         return headerRowStyle.call(null, { rowIndex });
       }
       return headerRowStyle;
@@ -45286,9 +45526,9 @@
     const getHeaderRowClass = (rowIndex) => {
       const classes = [];
       const headerRowClassName = parent == null ? void 0 : parent.props.headerRowClassName;
-      if (typeof headerRowClassName === "string") {
+      if (isString$1(headerRowClassName)) {
         classes.push(headerRowClassName);
-      } else if (typeof headerRowClassName === "function") {
+      } else if (isFunction$1(headerRowClassName)) {
         classes.push(headerRowClassName.call(null, { rowIndex }));
       }
       return classes.join(" ");
@@ -45296,7 +45536,7 @@
     const getHeaderCellStyle = (rowIndex, columnIndex, row, column) => {
       var _a;
       let headerCellStyles = (_a = parent == null ? void 0 : parent.props.headerCellStyle) != null ? _a : {};
-      if (typeof headerCellStyles === "function") {
+      if (isFunction$1(headerCellStyles)) {
         headerCellStyles = headerCellStyles.call(null, {
           rowIndex,
           columnIndex,
@@ -45326,9 +45566,9 @@
         classes.push("is-sortable");
       }
       const headerCellClassName = parent == null ? void 0 : parent.props.headerCellClassName;
-      if (typeof headerCellClassName === "string") {
+      if (isString$1(headerCellClassName)) {
         classes.push(headerCellClassName);
-      } else if (typeof headerCellClassName === "function") {
+      } else if (isFunction$1(headerCellClassName)) {
         classes.push(headerCellClassName.call(null, {
           rowIndex,
           columnIndex,
@@ -45456,11 +45696,29 @@
       const ns = useNamespace("table");
       const filterPanels = vue.ref({});
       const { onColumnsChange, onScrollableChange } = useLayoutObserver(parent);
+      const isTableLayoutAuto = (parent == null ? void 0 : parent.props.tableLayout) === "auto";
+      const saveIndexSelection = /* @__PURE__ */ new Map();
+      const theadRef = vue.ref();
+      const updateFixedColumnStyle = () => {
+        setTimeout(() => {
+          if (saveIndexSelection.size > 0) {
+            saveIndexSelection.forEach((column, key) => {
+              const el = theadRef.value.querySelector(`.${key.replace(/\s/g, ".")}`);
+              if (el) {
+                const width = el.getBoundingClientRect().width;
+                column.width = width;
+              }
+            });
+            saveIndexSelection.clear();
+          }
+        });
+      };
       vue.onMounted(async () => {
         await vue.nextTick();
         await vue.nextTick();
         const { prop, order } = props.defaultSort;
         parent == null ? void 0 : parent.store.commit("sort", { prop, order, init: true });
+        updateFixedColumnStyle();
       });
       const {
         handleHeaderClick,
@@ -45501,7 +45759,11 @@
         handleSortClick,
         handleFilterClick,
         isGroup,
-        toggleAllSelection
+        toggleAllSelection,
+        saveIndexSelection,
+        isTableLayoutAuto,
+        theadRef,
+        updateFixedColumnStyle
       };
     },
     render() {
@@ -45520,10 +45782,13 @@
         handleSortClick,
         handleMouseOut,
         store,
-        $parent
+        $parent,
+        saveIndexSelection,
+        isTableLayoutAuto
       } = this;
       let rowSpan = 1;
       return vue.h("thead", {
+        ref: "theadRef",
         class: { [ns.is("group")]: isGroup }
       }, columnRows.map((subColumns, rowIndex) => vue.h("tr", {
         class: getHeaderRowClass(rowIndex),
@@ -45533,8 +45798,12 @@
         if (column.rowSpan > rowSpan) {
           rowSpan = column.rowSpan;
         }
+        const _class = getHeaderCellClass(rowIndex, cellIndex, subColumns, column);
+        if (isTableLayoutAuto && column.fixed) {
+          saveIndexSelection.set(_class, column);
+        }
         return vue.h("th", {
-          class: getHeaderCellClass(rowIndex, cellIndex, subColumns, column),
+          class: _class,
           colspan: column.colSpan,
           key: `${column.id}-thead`,
           rowspan: column.rowSpan,
@@ -45718,7 +45987,7 @@
     const ns = useNamespace("table");
     const getRowStyle = (row, rowIndex) => {
       const rowStyle = parent == null ? void 0 : parent.props.rowStyle;
-      if (typeof rowStyle === "function") {
+      if (isFunction$1(rowStyle)) {
         return rowStyle.call(null, {
           row,
           rowIndex
@@ -45735,9 +46004,9 @@
         classes.push(ns.em("row", "striped"));
       }
       const rowClassName = parent == null ? void 0 : parent.props.rowClassName;
-      if (typeof rowClassName === "string") {
+      if (isString$1(rowClassName)) {
         classes.push(rowClassName);
-      } else if (typeof rowClassName === "function") {
+      } else if (isFunction$1(rowClassName)) {
         classes.push(rowClassName.call(null, {
           row,
           rowIndex
@@ -45748,7 +46017,7 @@
     const getCellStyle = (rowIndex, columnIndex, row, column) => {
       const cellStyle = parent == null ? void 0 : parent.props.cellStyle;
       let cellStyles = cellStyle != null ? cellStyle : {};
-      if (typeof cellStyle === "function") {
+      if (isFunction$1(cellStyle)) {
         cellStyles = cellStyle.call(null, {
           rowIndex,
           columnIndex,
@@ -45765,9 +46034,9 @@
       const fixedClasses = getFixedColumnsClass(ns.b(), columnIndex, props == null ? void 0 : props.fixed, props.store, void 0, offset);
       const classes = [column.id, column.align, column.className, ...fixedClasses];
       const cellClassName = parent == null ? void 0 : parent.props.cellClassName;
-      if (typeof cellClassName === "string") {
+      if (isString$1(cellClassName)) {
         classes.push(cellClassName);
-      } else if (typeof cellClassName === "function") {
+      } else if (isFunction$1(cellClassName)) {
         classes.push(cellClassName.call(null, {
           rowIndex,
           columnIndex,
@@ -45782,14 +46051,14 @@
       let rowspan = 1;
       let colspan = 1;
       const fn = parent == null ? void 0 : parent.props.spanMethod;
-      if (typeof fn === "function") {
+      if (isFunction$1(fn)) {
         const result = fn({
           row,
           column,
           rowIndex,
           columnIndex
         });
-        if (Array.isArray(result)) {
+        if (isArray$1(result)) {
           rowspan = result[0];
           colspan = result[1];
         } else if (typeof result === "object") {
@@ -45918,7 +46187,7 @@
             indent: treeRowData.level * indent.value,
             level: treeRowData.level
           };
-          if (typeof treeRowData.expanded === "boolean") {
+          if (isBoolean(treeRowData.expanded)) {
             data.treeNode.expanded = treeRowData.expanded;
             if ("loading" in treeRowData) {
               data.treeNode.loading = treeRowData.loading;
@@ -45991,8 +46260,8 @@
             level: cur.level,
             display: true
           };
-          if (typeof cur.lazy === "boolean") {
-            if (typeof cur.loaded === "boolean" && cur.loaded) {
+          if (isBoolean(cur.lazy)) {
+            if (isBoolean(cur.loaded) && cur.loaded) {
               treeRowData.noLazyChildren = !(cur.children && cur.children.length);
             }
             treeRowData.loading = cur.loading;
@@ -46021,8 +46290,8 @@
                 innerTreeRowData.expanded = cur.expanded;
                 cur.level = cur.level || innerTreeRowData.level;
                 cur.display = !!(cur.expanded && innerTreeRowData.display);
-                if (typeof cur.lazy === "boolean") {
-                  if (typeof cur.loaded === "boolean" && cur.loaded) {
+                if (isBoolean(cur.lazy)) {
+                  if (isBoolean(cur.loaded) && cur.loaded) {
                     innerTreeRowData.noLazyChildren = !(cur.children && cur.children.length);
                   }
                   innerTreeRowData.loading = cur.loading;
@@ -46579,19 +46848,6 @@
         height
       };
     });
-    const tableInnerStyle = vue.computed(() => {
-      if (props.height) {
-        return {
-          height: !Number.isNaN(Number(props.height)) ? `${props.height}px` : props.height
-        };
-      }
-      if (props.maxHeight) {
-        return {
-          maxHeight: !Number.isNaN(Number(props.maxHeight)) ? `${props.maxHeight}px` : props.maxHeight
-        };
-      }
-      return {};
-    });
     const scrollbarStyle = vue.computed(() => {
       if (props.height) {
         return {
@@ -46643,7 +46899,6 @@
       tableBodyStyles,
       tableLayout,
       scrollbarViewStyle,
-      tableInnerStyle,
       scrollbarStyle
     };
   }
@@ -46880,7 +47135,6 @@
         tableBodyStyles,
         tableLayout,
         scrollbarViewStyle,
-        tableInnerStyle,
         scrollbarStyle
       } = useStyle(props, layout, store, table);
       const { scrollBarRef, scrollTo, setScrollLeft, setScrollTop } = useScrollbar$1();
@@ -46946,7 +47200,6 @@
         computedEmptyText,
         tableLayout,
         scrollbarViewStyle,
-        tableInnerStyle,
         scrollbarStyle,
         scrollBarRef,
         scrollTo,
@@ -46988,8 +47241,7 @@
       onMouseleave: _ctx.handleMouseLeave
     }, [
       vue.createElementVNode("div", {
-        class: vue.normalizeClass(_ctx.ns.e("inner-wrapper")),
-        style: vue.normalizeStyle(_ctx.tableInnerStyle)
+        class: vue.normalizeClass(_ctx.ns.e("inner-wrapper"))
       }, [
         vue.createElementVNode("div", {
           ref: "hiddenColumns",
@@ -47140,7 +47392,7 @@
           key: 2,
           class: vue.normalizeClass(_ctx.ns.e("border-left-patch"))
         }, null, 2)) : vue.createCommentVNode("v-if", true)
-      ], 6),
+      ], 2),
       vue.withDirectives(vue.createElementVNode("div", {
         ref: "resizeProxy",
         class: vue.normalizeClass(_ctx.ns.e("column-resize-proxy"))
@@ -47226,9 +47478,9 @@
       }) {
         let i = $index + 1;
         const index = column.index;
-        if (typeof index === "number") {
+        if (isNumber(index)) {
           i = $index + index;
-        } else if (typeof index === "function") {
+        } else if (isFunction$1(index)) {
           i = index($index);
         }
         return vue.h("div", {}, [i]);
@@ -47315,7 +47567,7 @@
         style: { "padding-left": `${treeNode.indent}px` }
       }));
     }
-    if (typeof treeNode.expanded === "boolean" && !treeNode.noLazyChildren) {
+    if (isBoolean(treeNode.expanded) && !treeNode.noLazyChildren) {
       const expandClasses = [
         ns.e("expand-icon"),
         treeNode.expanded ? ns.em("expand-icon", "expanded") : ""
@@ -47477,7 +47729,7 @@
       return column;
     };
     const checkSubColumn = (children) => {
-      if (Array.isArray(children)) {
+      if (isArray$1(children)) {
         children.forEach((child) => check(child));
       } else {
         check(children);
@@ -47541,7 +47793,7 @@
     };
     const getPropsData = (...propsKey) => {
       return propsKey.reduce((prev, cur) => {
-        if (Array.isArray(cur)) {
+        if (isArray$1(cur)) {
           cur.forEach((key) => {
             prev[key] = props[key];
           });
@@ -47745,11 +47997,11 @@
           $index: -1
         });
         const children = [];
-        if (Array.isArray(renderDefault)) {
+        if (isArray$1(renderDefault)) {
           for (const childNode of renderDefault) {
             if (((_c = childNode.type) == null ? void 0 : _c.name) === "ElTableColumn" || childNode.shapeFlag & 2) {
               children.push(childNode);
-            } else if (childNode.type === vue.Fragment && Array.isArray(childNode.children)) {
+            } else if (childNode.type === vue.Fragment && isArray$1(childNode.children)) {
               childNode.children.forEach((vnode2) => {
                 if ((vnode2 == null ? void 0 : vnode2.patchFlag) !== 1024 && !isString$1(vnode2 == null ? void 0 : vnode2.children)) {
                   children.push(vnode2);
@@ -48108,7 +48360,7 @@
       while (copy.length > 0) {
         const item = copy.shift();
         array.push(item);
-        if (keysSet.has(item[rowKey]) && Array.isArray(item.children) && item.children.length > 0) {
+        if (keysSet.has(item[rowKey]) && isArray$1(item.children) && item.children.length > 0) {
           copy = [...item.children, ...copy];
           item.children.forEach((child) => depths[child[rowKey]] = depths[item[rowKey]] + 1);
         }
@@ -48726,6 +48978,7 @@
       expose
     }) {
       const ns = useNamespace("table-v2");
+      const scrollLeftInfo = vue.inject("tableV2GridScrollLeft");
       const headerRef = vue.ref();
       const headerStyle = vue.computed(() => enforceUnit({
         width: props.width,
@@ -48785,6 +49038,11 @@
           });
         });
       };
+      vue.onUpdated(() => {
+        if (scrollLeftInfo == null ? void 0 : scrollLeftInfo.value) {
+          scrollToLeft(scrollLeftInfo.value);
+        }
+      });
       expose({
         scrollToLeft
       });
@@ -49042,6 +49300,7 @@
   const useTableGrid = (props) => {
     const headerRef = vue.ref();
     const bodyRef = vue.ref();
+    const scrollLeft = vue.ref(0);
     const totalHeight = vue.computed(() => {
       const {
         data,
@@ -49097,9 +49356,11 @@
       const body$ = vue.unref(bodyRef);
       if (isObject$1(leftOrOptions)) {
         header$ == null ? void 0 : header$.scrollToLeft(leftOrOptions.scrollLeft);
+        scrollLeft.value = leftOrOptions.scrollLeft;
         body$ == null ? void 0 : body$.scrollTo(leftOrOptions);
       } else {
         header$ == null ? void 0 : header$.scrollToLeft(leftOrOptions);
+        scrollLeft.value = leftOrOptions;
         body$ == null ? void 0 : body$.scrollTo({
           scrollLeft: leftOrOptions,
           scrollTop: top
@@ -49135,7 +49396,8 @@
       resetAfterRowIndex,
       scrollTo,
       scrollToTop,
-      scrollToRow
+      scrollToRow,
+      scrollLeft
     };
   };
   const TableGrid = vue.defineComponent({
@@ -49162,8 +49424,10 @@
         resetAfterRowIndex,
         scrollTo,
         scrollToTop,
-        scrollToRow
+        scrollToRow,
+        scrollLeft
       } = useTableGrid(props);
+      vue.provide("tableV2GridScrollLeft", scrollLeft);
       expose({
         forceUpdate,
         totalHeight,
@@ -50130,31 +50394,27 @@
           }
         }
       };
-      const changeTab = (e) => {
-        const code = e.code;
-        const {
-          up,
-          down,
-          left,
-          right
-        } = EVENT_CODE;
-        if (![up, down, left, right].includes(code))
-          return;
-        const tabList = Array.from(e.currentTarget.querySelectorAll("[role=tab]:not(.is-disabled)"));
-        const currentIndex = tabList.indexOf(e.target);
-        let nextIndex;
-        if (code === left || code === up) {
-          if (currentIndex === 0) {
-            nextIndex = tabList.length - 1;
-          } else {
-            nextIndex = currentIndex - 1;
-          }
-        } else {
-          if (currentIndex < tabList.length - 1) {
-            nextIndex = currentIndex + 1;
-          } else {
-            nextIndex = 0;
-          }
+      const changeTab = (event) => {
+        let step = 0;
+        switch (event.code) {
+          case EVENT_CODE.left:
+          case EVENT_CODE.up:
+            step = -1;
+            break;
+          case EVENT_CODE.right:
+          case EVENT_CODE.down:
+            step = 1;
+            break;
+          default:
+            return;
+        }
+        const tabList = Array.from(event.currentTarget.querySelectorAll("[role=tab]:not(.is-disabled)"));
+        const currentIndex = tabList.indexOf(event.target);
+        let nextIndex = currentIndex + step;
+        if (nextIndex < 0) {
+          nextIndex = tabList.length - 1;
+        } else if (nextIndex >= tabList.length) {
+          nextIndex = 0;
         }
         tabList[nextIndex].focus({
           preventScroll: true
@@ -50372,7 +50632,7 @@
           "tabindex": "0",
           "onClick": handleTabAdd,
           "onKeydown": (ev) => {
-            if (ev.code === EVENT_CODE.enter)
+            if ([EVENT_CODE.enter, EVENT_CODE.numpadEnter].includes(ev.code))
               handleTabAdd();
           }
         }, [addSlot ? vue.renderSlot(slots, "add-icon") : vue.createVNode(ElIcon, {
@@ -52037,11 +52297,11 @@
     const props = node.store.props;
     const data = node.data || {};
     const config = props[prop];
-    if (typeof config === "function") {
+    if (isFunction$1(config)) {
       return config(data, node);
-    } else if (typeof config === "string") {
+    } else if (isString$1(config)) {
       return data[config];
-    } else if (typeof config === "undefined") {
+    } else if (isUndefined(config)) {
       const dataProp = data[prop];
       return dataProp === void 0 ? "" : dataProp;
     }
@@ -52081,7 +52341,7 @@
       const props = store.props;
       if (props && typeof props.isLeaf !== "undefined") {
         const isLeaf = getPropertyFromData(this, "isLeaf");
-        if (typeof isLeaf === "boolean") {
+        if (isBoolean(isLeaf)) {
           this.isLeafByUser = isLeaf;
         }
       }
@@ -52094,7 +52354,7 @@
       } else if (this.level > 0 && store.lazy && store.defaultExpandAll && !this.isLeafByUser) {
         this.expand();
       }
-      if (!Array.isArray(this.data)) {
+      if (!isArray$1(this.data)) {
         markNodeData(this, this.data);
       }
       if (!this.data)
@@ -52116,13 +52376,13 @@
         this.canFocus = true;
     }
     setData(data) {
-      if (!Array.isArray(data)) {
+      if (!isArray$1(data)) {
         markNodeData(this, data);
       }
       this.data = data;
       this.childNodes = [];
       let children;
-      if (this.level === 0 && Array.isArray(this.data)) {
+      if (this.level === 0 && isArray$1(this.data)) {
         children = this.data;
       } else {
         children = getPropertyFromData(this, "children") || [];
@@ -52179,7 +52439,7 @@
         if (!batch) {
           const children = this.getChildren(true);
           if (!children.includes(child.data)) {
-            if (typeof index === "undefined" || index < 0) {
+            if (isUndefined(index) || index < 0) {
               children.push(child.data);
             } else {
               children.splice(index, 0, child.data);
@@ -52196,7 +52456,7 @@
         }
       }
       child.level = this.level + 1;
-      if (typeof index === "undefined" || index < 0) {
+      if (isUndefined(index) || index < 0) {
         this.childNodes.push(child);
       } else {
         this.childNodes.splice(index, 0, child);
@@ -52263,7 +52523,7 @@
       };
       if (this.shouldLoadData()) {
         this.loadData((data) => {
-          if (Array.isArray(data)) {
+          if (isArray$1(data)) {
             if (this.checked) {
               this.setChecked(true, true);
             } else if (!this.store.checkStrictly) {
@@ -52492,6 +52752,7 @@
         this.nodesMap = {};
         this.root.setData(newVal);
         this._initDefaultCheckedNodes();
+        this.setCurrentNodeKey(this.currentNodeKey);
       } else {
         this.root.updateChildren();
       }
@@ -52725,6 +52986,7 @@
       }
     }
     setCurrentNodeKey(key, shouldAutoExpandParent = true) {
+      this.currentNodeKey = key;
       if (key === null || key === void 0) {
         this.currentNode && (this.currentNode.isCurrent = false);
         this.currentNode = null;
@@ -52800,7 +53062,7 @@
       dropType: null
     });
     const treeNodeDragStart = ({ event, treeNode }) => {
-      if (typeof props.allowDrag === "function" && !props.allowDrag(treeNode.node)) {
+      if (isFunction$1(props.allowDrag) && !props.allowDrag(treeNode.node)) {
         event.preventDefault();
         return false;
       }
@@ -52825,7 +53087,7 @@
       let dropInner = true;
       let dropNext = true;
       let userAllowDropInner = true;
-      if (typeof props.allowDrop === "function") {
+      if (isFunction$1(props.allowDrop)) {
         dropPrev = props.allowDrop(draggingNode.node, dropNode.node, "prev");
         userAllowDropInner = dropInner = props.allowDrop(draggingNode.node, dropNode.node, "inner");
         dropNext = props.allowDrop(draggingNode.node, dropNode.node, "next");
@@ -53034,7 +53296,16 @@
         oldIndeterminate.value = indeterminate;
       };
       const handleClick = (e) => {
-        handleCurrentChange(tree.store, tree.ctx.emit, () => tree.store.value.setCurrentNode(props.node));
+        handleCurrentChange(tree.store, tree.ctx.emit, () => {
+          var _a;
+          const nodeKeyProp = (_a = tree == null ? void 0 : tree.props) == null ? void 0 : _a.nodeKey;
+          if (nodeKeyProp) {
+            const curNodeKey = getNodeKey$1(props.node);
+            tree.store.value.setCurrentNodeKey(curNodeKey);
+          } else {
+            tree.store.value.setCurrentNode(props.node);
+          }
+        });
         tree.currentNode.value = props.node;
         if (tree.props.expandOnClickNode) {
           handleExpandIconClick();
@@ -53298,7 +53569,7 @@
         currentItem.click();
       }
       const hasInput = currentItem.querySelector('[type="checkbox"]');
-      if ([EVENT_CODE.enter, EVENT_CODE.space].includes(code) && hasInput) {
+      if ([EVENT_CODE.enter, EVENT_CODE.numpadEnter, EVENT_CODE.space].includes(code) && hasInput) {
         ev.preventDefault();
         hasInput.click();
       }
@@ -53713,10 +53984,10 @@
     return val || val === 0;
   }
   function isValidArray(val) {
-    return Array.isArray(val) && val.length;
+    return isArray$1(val) && val.length;
   }
   function toValidArray(val) {
-    return Array.isArray(val) ? val : isValidValue(val) ? [val] : [];
+    return isArray$1(val) ? val : isValidValue(val) ? [val] : [];
   }
   function treeFind(treeData, findCallback, getChildren, resultCallback, parent) {
     for (let i = 0; i < treeData.length; i++) {
@@ -54142,14 +54413,14 @@
     [NODE_COLLAPSE]: (data, node) => data && node,
     [CURRENT_CHANGE]: (data, node) => data && node,
     [NODE_CHECK]: (data, checkedInfo) => data && checkedInfo,
-    [NODE_CHECK_CHANGE]: (data, checked) => data && typeof checked === "boolean",
+    [NODE_CHECK_CHANGE]: (data, checked) => data && isBoolean(checked),
     [NODE_CONTEXTMENU]: (evt, data, node) => evt && data && node
   };
   const treeNodeEmits = {
     click: (node, e) => !!(node && e),
     drop: (node, e) => !!(node && e),
     toggle: (node) => !!node,
-    check: (node, checked) => node && typeof checked === "boolean"
+    check: (node, checked) => node && isBoolean(checked)
   };
 
   function useCheck(props, tree) {
@@ -55884,7 +56155,7 @@
         ctx.fillStyle = color;
         ctx.textAlign = textAlign;
         ctx.textBaseline = textBaseline;
-        const contents = Array.isArray(content) ? content : [content];
+        const contents = isArray$1(content) ? content : [content];
         contents == null ? void 0 : contents.forEach((item, index) => {
           ctx.fillText(item != null ? item : "", contentWidth / 2, index * (mergedFontSize + FontGap * ratio));
         });
@@ -56051,7 +56322,7 @@
         const height = props.height;
         if (!image && ctx.measureText) {
           ctx.font = `${Number(fontSize.value)}px ${fontFamily.value}`;
-          const contents = Array.isArray(content) ? content : [content];
+          const contents = isArray$1(content) ? content : [content];
           const sizes = contents.map((item) => {
             const metrics = ctx.measureText(item);
             return [
@@ -56186,7 +56457,7 @@
         posInfo.value = null;
         return;
       }
-      if (!isInViewPort(targetEl) && open.value) {
+      if (!isInViewPort(targetEl)) {
         targetEl.scrollIntoView(scrollIntoViewOptions.value);
       }
       const { left, top, width, height } = targetEl.getBoundingClientRect();
@@ -57318,6 +57589,10 @@
   const ElAnchorLink = withNoopInstall(AnchorLink);
 
   const segmentedProps = buildProps({
+    direction: {
+      type: definePropType(String),
+      default: "horizontal"
+    },
     options: {
       type: definePropType(Array),
       default: () => []
@@ -57364,7 +57639,9 @@
       const state = vue.reactive({
         isInit: false,
         width: 0,
+        height: 0,
         translateX: 0,
+        translateY: 0,
         focusVisible: false
       });
       const handleChange = (item) => {
@@ -57401,14 +57678,21 @@
         const selectedItemInput = segmentedRef.value.querySelector(".is-selected input");
         if (!selectedItem || !selectedItemInput) {
           state.width = 0;
+          state.height = 0;
           state.translateX = 0;
+          state.translateY = 0;
           state.focusVisible = false;
           return;
         }
         const rect = selectedItem.getBoundingClientRect();
         state.isInit = true;
-        state.width = rect.width;
-        state.translateX = selectedItem.offsetLeft;
+        if (props.direction === "vertical") {
+          state.height = rect.height;
+          state.translateY = selectedItem.offsetTop;
+        } else {
+          state.width = rect.width;
+          state.translateX = selectedItem.offsetLeft;
+        }
         try {
           state.focusVisible = selectedItemInput.matches(":focus-visible");
         } catch (e) {
@@ -57420,8 +57704,9 @@
         ns.is("block", props.block)
       ]);
       const selectedStyle = vue.computed(() => ({
-        width: `${state.width}px`,
-        transform: `translateX(${state.translateX}px)`,
+        width: props.direction === "vertical" ? "100%" : `${state.width}px`,
+        height: props.direction === "vertical" ? `${state.height}px` : "100%",
+        transform: props.direction === "vertical" ? `translateY(${state.translateY}px)` : `translateX(${state.translateX}px)`,
         display: state.isInit ? "block" : "none"
       }));
       const selectedCls = vue.computed(() => [
@@ -57455,7 +57740,7 @@
           "aria-labelledby": vue.unref(isLabeledByFormItem) ? vue.unref(formItem).labelId : void 0
         }, [
           vue.createElementVNode("div", {
-            class: vue.normalizeClass(vue.unref(ns).e("group"))
+            class: vue.normalizeClass([vue.unref(ns).e("group"), vue.unref(ns).m(props.direction)])
           }, [
             vue.createElementVNode("div", {
               style: vue.normalizeStyle(vue.unref(selectedStyle)),
@@ -57829,12 +58114,12 @@
                   ref_for: true,
                   ref_key: "optionRefs",
                   ref: optionRefs,
-                  key: item.value,
+                  key: index,
                   class: vue.normalizeClass(optionkls(item, index)),
                   role: "option",
                   "aria-disabled": item.disabled || _ctx.disabled || void 0,
                   "aria-selected": hoveringIndex.value === index,
-                  onMouseenter: ($event) => handleMouseEnter(index),
+                  onMousemove: ($event) => handleMouseEnter(index),
                   onClick: vue.withModifiers(($event) => handleSelect(item), ["stop"])
                 }, [
                   vue.renderSlot(_ctx.$slots, "label", {
@@ -57846,7 +58131,7 @@
                       vue.createElementVNode("span", null, vue.toDisplayString((_a = item.label) != null ? _a : item.value), 1)
                     ];
                   })
-                ], 42, ["id", "aria-disabled", "aria-selected", "onMouseenter", "onClick"]);
+                ], 42, ["id", "aria-disabled", "aria-selected", "onMousemove", "onClick"]);
               }), 128))
             ]),
             _: 3
@@ -57912,55 +58197,60 @@
         emit("update:modelValue", value);
         syncAfterCursorMove();
       };
-      const handleInputKeyDown = (e) => {
+      const handleInputKeyDown = (event) => {
         var _a, _b, _c, _d;
-        if (!("key" in e))
+        if (!("code" in event) || ((_a = elInputRef.value) == null ? void 0 : _a.isComposing))
           return;
-        if ((_a = elInputRef.value) == null ? void 0 : _a.isComposing)
-          return;
-        if (["ArrowLeft", "ArrowRight"].includes(e.key)) {
-          syncAfterCursorMove();
-        } else if (["ArrowUp", "ArrowDown"].includes(e.key)) {
-          if (!visible.value)
-            return;
-          e.preventDefault();
-          const direction = e.key === "ArrowUp" ? "prev" : "next";
-          (_b = dropdownRef.value) == null ? void 0 : _b.navigateOptions(direction);
-        } else if (["Enter"].includes(e.key)) {
-          if (!visible.value)
-            return;
-          e.preventDefault();
-          if ((_c = dropdownRef.value) == null ? void 0 : _c.hoverOption) {
-            (_d = dropdownRef.value) == null ? void 0 : _d.selectHoverOption();
-          } else {
-            visible.value = false;
-          }
-        } else if (["Escape"].includes(e.key)) {
-          if (!visible.value)
-            return;
-          e.preventDefault();
-          visible.value = false;
-        } else if (["Backspace"].includes(e.key)) {
-          if (props.whole && mentionCtx.value) {
-            const { splitIndex, selectionEnd, pattern, prefixIndex, prefix } = mentionCtx.value;
-            const inputEl = getInputEl();
-            if (!inputEl)
+        switch (event.code) {
+          case EVENT_CODE.left:
+          case EVENT_CODE.right:
+            syncAfterCursorMove();
+            break;
+          case EVENT_CODE.up:
+          case EVENT_CODE.down:
+            if (!visible.value)
               return;
-            const inputValue = inputEl.value;
-            const matchOption = props.options.find((item) => item.value === pattern);
-            const isWhole = isFunction$1(props.checkIsWhole) ? props.checkIsWhole(pattern, prefix) : matchOption;
-            if (isWhole && splitIndex !== -1 && splitIndex + 1 === selectionEnd) {
-              e.preventDefault();
-              const newValue = inputValue.slice(0, prefixIndex) + inputValue.slice(splitIndex + 1);
-              emit(UPDATE_MODEL_EVENT, newValue);
-              const newSelectionEnd = prefixIndex;
-              vue.nextTick(() => {
-                inputEl.selectionStart = newSelectionEnd;
-                inputEl.selectionEnd = newSelectionEnd;
-                syncDropdownVisible();
-              });
+            event.preventDefault();
+            (_b = dropdownRef.value) == null ? void 0 : _b.navigateOptions(event.code === EVENT_CODE.up ? "prev" : "next");
+            break;
+          case EVENT_CODE.enter:
+          case EVENT_CODE.numpadEnter:
+            if (!visible.value)
+              return;
+            event.preventDefault();
+            if ((_c = dropdownRef.value) == null ? void 0 : _c.hoverOption) {
+              (_d = dropdownRef.value) == null ? void 0 : _d.selectHoverOption();
+            } else {
+              visible.value = false;
             }
-          }
+            break;
+          case EVENT_CODE.esc:
+            if (!visible.value)
+              return;
+            event.preventDefault();
+            visible.value = false;
+            break;
+          case EVENT_CODE.backspace:
+            if (props.whole && mentionCtx.value) {
+              const { splitIndex, selectionEnd, pattern, prefixIndex, prefix } = mentionCtx.value;
+              const inputEl = getInputEl();
+              if (!inputEl)
+                return;
+              const inputValue = inputEl.value;
+              const matchOption = props.options.find((item) => item.value === pattern);
+              const isWhole = isFunction$1(props.checkIsWhole) ? props.checkIsWhole(pattern, prefix) : matchOption;
+              if (isWhole && splitIndex !== -1 && splitIndex + 1 === selectionEnd) {
+                event.preventDefault();
+                const newValue = inputValue.slice(0, prefixIndex) + inputValue.slice(splitIndex + 1);
+                emit(UPDATE_MODEL_EVENT, newValue);
+                const newSelectionEnd = prefixIndex;
+                vue.nextTick(() => {
+                  inputEl.selectionStart = newSelectionEnd;
+                  inputEl.selectionEnd = newSelectionEnd;
+                  syncDropdownVisible();
+                });
+              }
+            }
         }
       };
       const { wrapperRef } = useFocusController(elInputRef, {
@@ -59235,14 +59525,14 @@
             return false;
           }
           const inputValidator = state.inputValidator;
-          if (typeof inputValidator === "function") {
+          if (isFunction$1(inputValidator)) {
             const validateResult = inputValidator(state.inputValue);
             if (validateResult === false) {
               state.editorErrorMessage = state.inputErrorMessage || t("el.messagebox.error");
               state.validateError = true;
               return false;
             }
-            if (typeof validateResult === "string") {
+            if (isString$1(validateResult)) {
               state.editorErrorMessage = validateResult;
               state.validateError = true;
               return false;
@@ -59842,7 +60132,7 @@
   const notify = function(options = {}, context = null) {
     if (!isClient)
       return { close: () => void 0 };
-    if (typeof options === "string" || vue.isVNode(options)) {
+    if (isString$1(options) || vue.isVNode(options)) {
       options = { message: options };
     }
     const position = options.position || "top-right";
@@ -59890,7 +60180,7 @@
   };
   notificationTypes.forEach((type) => {
     notify[type] = (options = {}) => {
-      if (typeof options === "string" || vue.isVNode(options)) {
+      if (isString$1(options) || vue.isVNode(options)) {
         options = {
           message: options
         };
@@ -60317,6 +60607,7 @@
   exports.textProps = textProps;
   exports.thumbProps = thumbProps;
   exports.timePickerDefaultProps = timePickerDefaultProps;
+  exports.timePickerRngeTriggerProps = timePickerRngeTriggerProps;
   exports.timeSelectProps = timeSelectProps;
   exports.timeUnits = timeUnits$1;
   exports.timelineItemProps = timelineItemProps;

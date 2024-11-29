@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div>
     <div class="theme-header-box">
       <h2 class="theme-editor-title">主题编辑: {{currThemePath}}</h2>
       <el-button type="primary" style="margin-left: auto;" @click="saveFile">保存</el-button>
@@ -7,13 +7,14 @@
     <el-divider />
     <el-row :gutter="20">
 
-      <el-col  :xs="24" :sm="24" :md="4" :lg="4" :xl="4">
+      <el-col  :xs="24" :sm="24" :md="4" :lg="4" :xl="4" v-loading="loading">
         <el-tree
             style="width: 100%;max-height: 700px;overflow: auto;"
             :data="fileList"
             :props="defaultProps"
             @node-click="handleNodeClick"
             node-key="id"
+            :highlight-current="true"
             :default-checked-keys="activeFileId"
             ref="treeRef"
         >
@@ -33,16 +34,9 @@
         </el-tree>
       </el-col>
 
-      <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="20">
-        <codemirror
-            v-model="code"
-            placeholder="请选择左侧要编辑的文件..."
-            :style="{ height: '700px' }"
-            :autofocus="true"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-        />
+      <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="20"   v-loading="codeLoading">
+        <div class="codeEditorFileName">{{activeFile.fileName}}</div>
+        <div ref="codeEditorRef" class="codeEditor"></div>
       </el-col>
     </el-row>
 
@@ -56,19 +50,38 @@
   </div>
 </template>
 <script setup>
-
 import {getThemeFileContent, getThemeFilesByName, saveThemeFileContent} from "@/modules/theme/api/theme.js";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {handleTree} from "@/core/utils/perfree.js";
 import {ElMessage} from "element-plus";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {Codemirror} from 'vue-codemirror'
-import {javascript} from '@codemirror/lang-javascript'
-import {oneDark} from '@codemirror/theme-one-dark'
-
+import Codemirror from 'codemirror';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/mode/yaml/yaml';
+import 'codemirror/mode/css/css';
+import 'codemirror/lib/codemirror.css'; // 样式
+import 'codemirror/theme/material-darker.css';
+import 'codemirror/addon/display/placeholder';
 const currThemePath = router.currentRoute.value.params.themePath;
 let fileList = ref([]);
 let loading = ref(true)
+let codeLoading = ref(false)
+const codeEditorRef = ref();
+let editor = null;
+onMounted(() => {
+  editor = Codemirror(codeEditorRef.value, {
+    value: '',
+    placeholder: '请在左侧文件列表选择文件进行编辑...',
+    lineNumbers: true, // 显示行号
+    mode: 'htmlmixed', // 设置语言模式
+    theme: 'material-darker', // 主题
+    indentWithTabs: true, // 使用 Tab 键缩进
+    tabSize: 2, // 设置 Tab 键的宽度
+    lineWrapping: true, // 自动换行
+  });
+})
+
 const defaultProps = {
   children: 'children',
   label: 'fileName',
@@ -82,8 +95,6 @@ const supportImageFileType = ["jpg","png","gif","ico", "jpeg"];
 let srcList = ref([]);
 let showViewer =  ref(false)
 // 编辑器
-const code = ref(``)
-const extensions = [javascript(), oneDark]
 const supportEditFileType = ['java', 'js', 'css', 'html', 'json', 'yaml', 'less', 'scss', 'txt', 'md']
 function initFileList() {
   loading.value = true;
@@ -115,18 +126,34 @@ function handleNodeClick(data) {
     themePath: currThemePath,
     path:  data.filePath
   }
-  loading.value = true;
+  codeLoading.value = true;
   getThemeFileContent(param).then(res => {
     if (res.code === 200) {
+      editor.setValue(res.data);
+      switchMode(data.fileType);
       activeFileId.value = [data.id];
-      code.value = res.data
       activeFile.value = data;
-      treeRef.value.setCheckedKeys([data.id], true)
     } else {
       ElMessage.error(res.msg);
     }
-    loading.value = false;
+    codeLoading.value = false;
   })
+}
+
+function switchMode(fileType) {
+  if (fileType === 'html') {
+    editor.setOption('mode', 'htmlmixed');
+  } else if (fileType === 'css') {
+    editor.setOption('mode', 'css');
+  } else if (fileType === 'js') {
+    editor.setOption('mode', 'javascript');
+  }  else if (fileType === 'json') {
+    editor.setOption('mode', 'javascript');
+  }else if (fileType === 'yaml') {
+    editor.setOption('mode', 'yaml');
+  } else {
+    editor.setOption('mode', 'javascript');
+  }
 }
 
 
@@ -143,14 +170,14 @@ function saveFile() {
   if (!activeFile.value.filePath) {
     return
   }
-  loading.value = true;
-  saveThemeFileContent({themePath: currThemePath, content: code.value, path: activeFile.value.filePath}).then(res => {
+  codeLoading.value = true;
+  saveThemeFileContent({themePath: currThemePath, content: editor.getValue(), path: activeFile.value.filePath}).then(res => {
     if (res.code === 200 && res.data) {
       ElMessage.success('保存成功');
     } else {
       ElMessage.error(res.msg);
     }
-    loading.value = false;
+    codeLoading.value = false;
   })
 }
 
@@ -180,12 +207,15 @@ initFileList()
 :deep().ͼ1.cm-focused{
   outline: none!important;
 }
-:deep().ͼ1 .cm-scroller{
+:deep().CodeMirror{
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', serif;
   font-size: 14px;
 }
-:deep().el-tree-node.is-checked{
+:deep().el-tree-node.is-current{
   background-color: var(--el-fill-color-darker)!important;
+}
+:deep().is-expanded .el-tree-node{
+  background: var(--el-bg-color);
 }
 
 .theme-editor-title{
@@ -198,5 +228,15 @@ initFileList()
 }
 .theme-header-box{
   display: flex;
+}
+:deep().CodeMirror{
+  height: 670px!important;
+  overflow: hidden;
+}
+.codeEditorFileName{
+  background: var(--el-bg-color);
+  height: 35px;
+  line-height: 35px;
+  padding-left: 10px;
 }
 </style>

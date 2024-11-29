@@ -1,4 +1,4 @@
-/*! Element Plus v2.8.6 */
+/*! Element Plus v2.8.8 */
 
 var mn = {
   name: "mn",

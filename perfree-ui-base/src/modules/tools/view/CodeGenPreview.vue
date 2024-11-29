@@ -28,15 +28,7 @@
         </el-tree>
       </el-col>
       <el-col :span="18" v-loading="fileContentLoading">
-        <codemirror
-            v-model="code"
-            placeholder="请选择左侧要编辑的文件..."
-            :style="{ height: '700px' }"
-            :autofocus="true"
-            :indent-with-tab="true"
-            :tab-size="2"
-            :extensions="extensions"
-        />
+        <div ref="codeEditorRef" class="codeEditor"></div>
       </el-col>
     </el-row>
   </div>
@@ -44,16 +36,17 @@
 
 <script setup>
 
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {handleTree} from "@/core/utils/perfree.js";
 import {ElMessage} from "element-plus";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-import {Codemirror} from 'vue-codemirror'
-import {javascript} from '@codemirror/lang-javascript'
-import {oneDark} from '@codemirror/theme-one-dark'
 import {getCodeFileContent, getCodeFileList} from "../api/codegen.js";
 import {useRoute} from "vue-router";
-
+import Codemirror from 'codemirror';
+import 'codemirror/mode/javascript/javascript';
+import 'codemirror/lib/codemirror.css'; // 样式
+import 'codemirror/theme/material-darker.css';
+import 'codemirror/addon/display/placeholder';
 const route = useRoute();
 let fileList = ref([]);
 let loading = ref(true)
@@ -65,10 +58,22 @@ const defaultProps = {
 let activeFileId = ref([]);
 let activeFile = ref({});
 const treeRef = ref();
-
+let codeLoading = ref(false)
+const codeEditorRef = ref();
+let editor = null;
+onMounted(() => {
+  editor = Codemirror(codeEditorRef.value, {
+    value: '',
+    placeholder: '请在左侧文件列表选择文件...',
+    lineNumbers: true, // 显示行号
+    mode: 'javascript', // 设置语言模式
+    theme: 'material-darker', // 主题
+    indentWithTabs: true, // 使用 Tab 键缩进
+    tabSize: 2, // 设置 Tab 键的宽度
+    lineWrapping: true, // 自动换行
+  });
+})
 // 编辑器
-const code = ref(``)
-const extensions = [javascript(), oneDark]
 const supportEditFileType = ['java', 'js', 'css', 'html', 'json', 'yaml', 'less', 'scss', 'txt', 'md','vue', 'xml', 'sql']
 function initFileList() {
   loading.value = true;
@@ -106,7 +111,7 @@ function handleNodeClick(data) {
   getCodeFileContent(param).then(res => {
     if (res.code === 200) {
       activeFileId.value = [data.id];
-      code.value = res.data
+      editor.setValue(res.data);
       activeFile.value = data;
       treeRef.value.setCheckedKeys([data.id], true)
     } else {
@@ -142,7 +147,7 @@ initFileList()
 :deep().ͼ1.cm-focused{
   outline: none!important;
 }
-:deep().ͼ1 .cm-scroller{
+:deep().CodeMirror{
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', serif;
   font-size: 14px;
 }
@@ -160,5 +165,8 @@ initFileList()
 }
 .theme-header-box{
   display: flex;
+}
+:deep().CodeMirror{
+  height: 700px!important;
 }
 </style>

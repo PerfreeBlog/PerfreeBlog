@@ -1,7 +1,7 @@
 import { s as yt, r as bt, u as Me, f as Ct } from "./lib/@element-plus.js";
 import { _ as ie, d as ne, c as kt, h as xt, g as $t, u as At, t as Ue, a as Fe, b as Et, e as Nt } from "./lib/tabs.js";
 import { V as St } from "./lib/vditor.js";
-import { e as Tt } from "./lib/aieditor.js";
+import { i as Tt } from "./lib/aieditor.js";
 import { p as Re } from "./lib/js-pinyin.js";
 function Bt(A) {
   return axios.post("/api/auth/attach/page", A);
