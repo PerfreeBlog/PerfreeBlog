@@ -30,6 +30,9 @@ public class MenuDTO {
     /** 菜单状态0:启用,1禁用 */
     private Integer status;
 
+    /** 菜单状态0:启用,1禁用 */
+    private Integer type;
+
     /** 插件id */
     private String pluginId;
 

@@ -15,7 +15,7 @@ server:
     connection-timeout: 12000
 logging:
   level:
-    root: info
+    root: error
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss:sss} %-5level %logger{36} - %msg%n"
   file:
