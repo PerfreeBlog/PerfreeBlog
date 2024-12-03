@@ -14,6 +14,7 @@ import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.FileUtils;
 import com.perfree.commons.utils.SpringBeanUtil;
 import com.perfree.constant.OptionConstant;
+import com.perfree.enjoy.EnjoyConfig;
 import com.perfree.enums.ErrorCode;
 import com.perfree.enums.OptionEnum;
 import com.perfree.system.api.option.OptionApi;
@@ -308,6 +309,7 @@ public class ThemeManager {
         File file = new File(path);
         FileWriter writer = new FileWriter(file);
         writer.write(content);
+        EnjoyConfig.jfr.getEngine().removeAllTemplateCache();
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.perfree.controller.view;
 
 import com.perfree.base.BaseViewController;
+import com.perfree.common.ArticleUtils;
 import com.perfree.commons.annotation.FrontViewNodeRender;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.constant.ArticleConstant;
@@ -39,11 +40,8 @@ public class ArticleController  extends BaseViewController {
     public String articlePage(@PathVariable(value = "slug", required = false) String slug, Model model,
                               HttpServletRequest request, HttpServletResponse response) {
         ArticleRespVO articleRespVO = articleService.getBySlugAndTypeAndStatus(slug, ArticleConstant.ARTICLE_TYPE_ARTICLE, ArticleConstant.ARTICLE_STATUS_PUBLISHED);
+        ArticleUtils.handleArticleModelAttribute(model, articleRespVO);
         if (articleRespVO != null) {
-            model.addAttribute("article", articleRespVO);
-            model.addAttribute(SystemConstants.RENDER_PAGE_SEO_TITLE, StringUtils.isBlank(articleRespVO.getTitle()) ? null : articleRespVO.getTitle().trim());
-            model.addAttribute(SystemConstants.RENDER_PAGE_SEO_KEYWORD, StringUtils.isBlank(articleRespVO.getMetaKeywords()) ? null : articleRespVO.getMetaKeywords().trim());
-            model.addAttribute(SystemConstants.RENDER_PAGE_SEO_DESC, StringUtils.isBlank(articleRespVO.getMetaDescription()) ? null : articleRespVO.getMetaDescription().trim());
             articleService.viewCountHandle(request, response, articleRespVO.getId());
         }
         return themeView("article.html");

@@ -14,6 +14,9 @@ public class EnjoyConfig {
     @Value("${version}")
     private String version;
 
+    @Value("${spring.profiles.active}")
+    private String profilesActive;
+
     public static JFinalViewResolver jfr = null;
 
 
@@ -28,11 +31,12 @@ public class EnjoyConfig {
         engine.setSourceFactory(new TemplateSourceFactory());
         engine.addSharedMethod(new StrUtil());
         engine.setCompressorOn('\n');
-        engine.setDevMode(true);
+        engine.setDevMode(profilesActive.equals("dev"));
         Engine.setFastMode(true);
         Engine.setChineseExpression(true);
         engine.addSharedMethod(new TplMethodShared());
         engine.addSharedObject(SystemConstants.VERSION, version);
+
         return jfr;
     }
 }

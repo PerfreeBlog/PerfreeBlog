@@ -27,7 +27,8 @@ public enum OptionEnum {
     WEB_COMMENT_IS_REVIEW("WEB_COMMENT_IS_REVIEW", ""),
     COMMENT_IS_SEND_MAIL("COMMENT_IS_SEND_MAIL", ""),
     WEB_COMMENT_IS_STINT("WEB_COMMENT_IS_STINT", ""),
-    WEB_INIT("WEB_INIT","")
+    WEB_INIT("WEB_INIT",""),
+    ENABLE_CACHE_VIEW("ENABLE_CACHE_VIEW","")
     ;
     private final String key;
 

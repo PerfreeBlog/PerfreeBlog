@@ -44,9 +44,6 @@ public class SystemConstants {
     public static final String RESOURCES_DIR = "resources";
 
 
-    /**数据库配置文件地址*/
-    public static final String DB_PROPERTIES_PATH = "resources/db.properties";
-
     /** 统一的url分隔符 */
     public final static String URL_SEPARATOR = "/";
 
@@ -56,6 +53,9 @@ public class SystemConstants {
 
     /** 生产主题路径 */
     public static final String PROD_THEMES_PATH = "resources/static/themes";
+
+    /** 前台页面缓存路径 */
+    public static final String CACHE_PATH = "resources/static/cache";
 
     /** 开发主题路径 */
     public static final String DEV_THEMES_PATH = "classpath:static/themes";
