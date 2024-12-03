@@ -15,6 +15,7 @@ import org.springframework.http.CacheControl;
 import org.springframework.web.servlet.config.annotation.*;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
@@ -64,13 +65,13 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/api/static/**").addResourceLocations(
                 "classpath:/static/",
                 "file:./resources/static/"
-        );
+        ).setCachePeriod(3600).setCacheControl(CacheControl.maxAge(3600, TimeUnit.SECONDS).cachePublic());
 
         // 兼容老版本
         registry.addResourceHandler("/static/**").addResourceLocations(
                 "classpath:/static/",
                 "file:./resources/static/"
-        );
+        ).setCachePeriod(3600).setCacheControl(CacheControl.maxAge(3600, TimeUnit.SECONDS).cachePublic());
 
         registry.addResourceHandler("/assets/**").addResourceLocations(
                 "classpath:/static/admin/assets/",
