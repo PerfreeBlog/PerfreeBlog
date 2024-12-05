@@ -39,14 +39,12 @@ public class PluginResourceResolver extends AbstractResourceResolver {
             // 从插件内置文件路径获取资源
             Resource resource = resolveClassPathFile(plugin, partialPath);
             if(resource != null){
-                System.out.println("1111111111111111111111111");
                 return resource;
             }
 
             // 从外置文件路径获取资源
             resource = resolveFilePath(plugin, partialPath);
             if(resource != null){
-                System.out.println("2222222222222222222");
                 return resource;
             }
             return null;

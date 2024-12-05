@@ -26,6 +26,8 @@ import download from "@/core/utils/download.js";
 import {AttachSelectInputRule} from "@/core/components/attach/AttachSelectInput.js";
 import SettingCarousel from "@/core/components/setting-carousel/setting-carousel.vue";
 import {SettingCarouselRule} from "@/core/components/setting-carousel/SettingCarousel.js";
+import AttachSelectPanel from "@/core/components/attach/attach-select-panel.vue";
+import CustomEditor from "@/core/components/editor/custom-editor.vue";
 
 
 const app = createApp(App);
@@ -54,6 +56,9 @@ app.component('font-awesome-icon', FontAwesomeIcon)
 // VueDOMPurifyHTML
 app.use(VueDOMPurifyHTML)
 
+app.component("AttachSelectPanel", AttachSelectPanel)
+app.component("CustomEditor", CustomEditor)
+app.component("AttachSelectInput", AttachSelectInput)
 
 
 // form-create
