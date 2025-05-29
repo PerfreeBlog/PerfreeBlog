@@ -37,6 +37,54 @@ watch(() => props.initValue, (val) => {
 onMounted(() => {
   aiEditor = new AiEditor({
     element: divRef.value,
+    ai: {
+      models: {
+        openai: {
+
+        }
+      },
+      onCreateClientUrl: (modelName,modelConfig,startFn)=>{
+        //通过后端获取到 签名 url 后，执行 startFn 并传入 url。
+        fetch("/api/auth/option/getOptionByIdentification?identification=system_setting")
+            .then(resp=>resp.json())
+            .then(json=> {
+              if (!json?.data?.length) {
+                throw new Error('配置数据为空')
+              }
+
+              const configMap = json.data.reduce((acc, item) => {
+                acc[item.key] = item.value
+                return acc
+              }, {})
+
+              // 检查必要配置
+              if (!configMap.WEB_AI_ENDPOIND || !configMap.WEB_AI_KEY) {
+                throw new Error('AI 配置不完整')
+              }
+
+              Object.assign(modelConfig, {
+                apiKey: configMap.WEB_AI_KEY,
+                model: configMap.WEB_AI_MODEL_NAME,
+                endpoint: configMap.WEB_AI_ENDPOIND,
+              })
+              modelName=configMap.WEB_AI_MODEL
+              startFn(modelConfig.endpoint)
+            })
+            .catch(err => {
+              console.error('AI 配置获取失败:', err)
+              startFn('')  // 出错时使用空地址
+            })
+      },
+      onTokenConsume: (modelName, modelConfig, count)=> {
+        // axios.post("/api/v1/resource/doTokenCounting", {
+        //   count
+        // })
+        // TODO token 暂时不起作用 还没查到原因
+        console.log("modelName:"+ modelName);
+        console.log("modelConfig:"+ modelConfig);
+        console.log("count:"+ count);
+      }
+    },
     placeholder: "写点什么?",
     content: props.initValue ? props.initValue : '',
     toolbarKeys: ["undo", "redo", "brush", "eraser",
