@@ -87,6 +87,7 @@ public class AttachController {
     @PostMapping("/uploadAttachByUrl")
     @Operation(summary = "通过url下载并上传附件")
     @DemoMode
+    @PreAuthorize("@ss.hasPermission('admin:attach:update')")
     public CommonResult<AttachByUrlRespVO> uploadAttachByUrl(@Valid @RequestBody AttachUploadByUrlVO attachUploadByUrlVO) {
         Attach attach = attachService.uploadAttachByUrl(attachUploadByUrlVO.getUrl());
         AttachByUrlRespVO attachByUrlRespVO = AttachConvert.INSTANCE.convertByUrlRespVO(attach);
