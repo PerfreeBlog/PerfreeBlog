@@ -1,6 +1,6 @@
 package com.perfree.service.mailServer;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.mailServer.vo.*;
 import com.perfree.convert.mailServer.MailServerConvert;

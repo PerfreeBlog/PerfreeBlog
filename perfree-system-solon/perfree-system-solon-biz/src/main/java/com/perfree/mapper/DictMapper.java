@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.dict.vo.*;
@@ -22,33 +23,32 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-@Db
 public interface DictMapper extends BaseMapperX<Dict> {
 
     default PageResult<Dict> selectPage(DictPageReqVO reqVO) {
-        LambdaQueryWrapper<Dict> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getDictType()), Dict::getDictType, reqVO.getDictType());
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getDictName()), Dict::getDictName, reqVO.getDictName());
-        lambdaQueryWrapper.orderByAsc(Dict::getSeq);
-        return selectPage(reqVO, lambdaQueryWrapper);
+        QueryWrapper queryWrapper = QueryWrapper.create();
+        queryWrapper.like(Dict::getDictType, reqVO.getDictType());
+        queryWrapper.like(Dict::getDictName, reqVO.getDictName());
+        queryWrapper.orderBy(Dict::getSeq);
+        return selectPage(reqVO, queryWrapper);
     }
 
     default List<Dict> listAll() {
-        return selectList(new LambdaQueryWrapper<Dict>()
-            .orderByDesc(Dict::getId)
+        return selectListByQuery(new QueryWrapper()
+            .orderBy(Dict::getId,false)
         );
     }
 
     default List<Dict> queryListAll(String dictType, String dictName){
-        return selectList(new LambdaQueryWrapper<Dict>()
-                .like(StringUtils.isNotBlank(dictType), Dict::getDictType, dictType)
-                .or()
-                .like(StringUtils.isNotBlank(dictName), Dict::getDictName, dictName)
-                .orderByDesc(Dict::getId)
+        return selectListByQuery(new QueryWrapper()
+                .like(Dict::getDictType, dictType)
+                .or(Dict::getDictName)
+                .like(dictName)
+                .orderBy(Dict::getId,false)
         );
     }
 
     default Dict queryByDictType(String dictType){
-        return selectOne(new LambdaQueryWrapper<Dict>().eq(Dict::getDictType, dictType));
+        return selectOneByQuery(new QueryWrapper().eq(Dict::getDictType, dictType));
     }
 }

@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.UserRole;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,16 +18,15 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface UserRoleMapper extends BaseMapperX<UserRole> {
 
 
     default void deleteByUserId(Integer userId){
-        delete(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, userId));
+        deleteByQuery(new QueryWrapper().eq(UserRole::getUserId, userId));
     }
 
     default List<UserRole> getByUserId(Integer userId){
-        return selectList(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, userId));
+        return selectListByQuery(new QueryWrapper().eq(UserRole::getUserId, userId));
     }
 
 }

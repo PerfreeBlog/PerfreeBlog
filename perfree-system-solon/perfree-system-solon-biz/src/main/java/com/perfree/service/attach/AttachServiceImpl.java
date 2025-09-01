@@ -6,7 +6,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.URLUtil;
 import cn.hutool.http.HttpDownloader;
 import cn.hutool.http.HttpUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.commons.common.CustomMultipartFile;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;

@@ -1,6 +1,6 @@
 package com.perfree.service.dictData;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.cache.DictDataCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;

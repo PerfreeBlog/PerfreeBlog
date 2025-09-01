@@ -1,6 +1,6 @@
 package ${table.packageName}.service.${table.lowerFirstClassName};
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.commons.common.PageResult;
 import ${table.packageName}.controller.auth.${table.lowerFirstClassName}.vo.*;
 import ${table.packageName}.model.${table.className};

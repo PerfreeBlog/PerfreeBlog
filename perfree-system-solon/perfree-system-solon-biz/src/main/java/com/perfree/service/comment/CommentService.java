@@ -1,6 +1,6 @@
 package com.perfree.service.comment;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.comment.vo.*;
 import com.perfree.controller.common.comment.vo.CommentPageByArticleIdReqVO;

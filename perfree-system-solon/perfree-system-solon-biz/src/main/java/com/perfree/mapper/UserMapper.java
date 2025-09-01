@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.user.vo.UserExportReqVO;
@@ -22,31 +23,30 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface UserMapper extends BaseMapperX<User> {
 
     default User findByAccount(String account){
-        return selectOne(new LambdaQueryWrapper<User>().eq(User::getAccount, account));
+        return selectOneByQuery(new QueryWrapper().eq(User::getAccount, account));
     }
 
     default PageResult<User> selectPage(UserPageReqVO pageVO) {
-        return selectPage(pageVO, new LambdaQueryWrapper<User>()
-                .like(StringUtils.isNotBlank(pageVO.getUserName()), User::getUserName, pageVO.getUserName())
-                .like(StringUtils.isNotBlank(pageVO.getAccount()), User::getAccount, pageVO.getAccount())
-                .orderByDesc(User::getId)
+        return selectPage(pageVO, new QueryWrapper()
+                .like(User::getUserName, pageVO.getUserName())
+                .like(User::getAccount, pageVO.getAccount())
+                .orderBy(User::getId,false)
         );
     }
 
     default List<User> queryExportData(UserExportReqVO reqVO){
-        return selectList(new LambdaQueryWrapper<User>()
-                .like(StringUtils.isNotBlank(reqVO.getUserName()), User::getUserName, reqVO.getUserName())
-                .like(StringUtils.isNotBlank(reqVO.getAccount()), User::getAccount, reqVO.getAccount())
-                .orderByDesc(User::getId)
+        return selectListByQuery(new QueryWrapper()
+                .like(User::getUserName, reqVO.getUserName())
+                .like(User::getAccount, reqVO.getAccount())
+                .orderBy(User::getId,false)
         );
     }
 
     default Long getTotalUser(){
-        return selectCount(new LambdaQueryWrapper<User>().eq(User::getStatus, UserStatusEnum.ENABLE.getCode()));
+        return selectCountByQuery(new QueryWrapper().eq(User::getStatus, UserStatusEnum.ENABLE.getCode()));
     }
 
 }

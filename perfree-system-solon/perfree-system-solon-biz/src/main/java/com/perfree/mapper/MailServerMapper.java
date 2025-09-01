@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.mailServer.vo.*;
@@ -21,29 +22,28 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-@Db
 public interface MailServerMapper extends BaseMapperX<MailServer> {
 
     default PageResult<MailServer> selectPage(MailServerPageReqVO reqVO) {
-        LambdaQueryWrapper<MailServer> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getName()), MailServer::getName, reqVO.getName());
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getAccount()), MailServer::getAccount, reqVO.getAccount());
-        lambdaQueryWrapper.orderByDesc(MailServer::getId);
-        return selectPage(reqVO, lambdaQueryWrapper);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.like(MailServer::getName, reqVO.getName());
+        queryWrapper.like(MailServer::getAccount, reqVO.getAccount());
+        queryWrapper.orderBy(MailServer::getId,false);
+        return selectPage(reqVO, queryWrapper);
     }
 
     default List<MailServer> listAll() {
-        return selectList(new LambdaQueryWrapper<MailServer>()
-            .orderByDesc(MailServer::getId)
+        return selectListByQuery(new QueryWrapper()
+            .orderBy(MailServer::getId,false)
         );
     }
 
     default List<MailServer> queryExportData(MailServerExportReqVO reqVO){
-        LambdaQueryWrapper<MailServer> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getName()), MailServer::getName, reqVO.getName());
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getAccount()), MailServer::getAccount, reqVO.getAccount());
-        lambdaQueryWrapper.orderByDesc(MailServer::getId);
-        return selectList(lambdaQueryWrapper);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.like(MailServer::getName, reqVO.getName());
+        queryWrapper.like(MailServer::getAccount, reqVO.getAccount());
+        queryWrapper.orderBy(MailServer::getId,false);
+        return selectListByQuery(queryWrapper);
     }
 
 }

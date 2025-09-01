@@ -1,6 +1,6 @@
 package com.perfree.service.dict;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.dict.vo.*;
 import com.perfree.model.Dict;

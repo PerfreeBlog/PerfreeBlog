@@ -1,7 +1,7 @@
 package com.perfree.service.attachConfig;
 
 import cn.hutool.json.JSONUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.cache.AttachConfigCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;

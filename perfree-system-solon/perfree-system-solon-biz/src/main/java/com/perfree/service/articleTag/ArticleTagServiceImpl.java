@@ -1,6 +1,6 @@
 package com.perfree.service.articleTag;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.mapper.ArticleTagMapper;
 import com.perfree.model.ArticleTag;
 import jakarta.annotation.Resource;

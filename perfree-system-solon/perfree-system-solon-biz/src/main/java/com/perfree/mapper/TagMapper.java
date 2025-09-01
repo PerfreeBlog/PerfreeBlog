@@ -25,7 +25,6 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface TagMapper extends BaseMapperX<Tag> {
 
     IPage<TagRespVO> tagPage(IPage<TagRespVO> page, @Param("pageVO") TagPageReqVO pageVO);

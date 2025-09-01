@@ -1,15 +1,12 @@
 package com.perfree.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.constant.AttachConfigConstant;
 import com.perfree.controller.auth.attachConfig.vo.AttachConfigPageReqVO;
 import com.perfree.model.AttachConfig;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.solon.annotation.Db;
 
 import java.util.List;
 
@@ -22,38 +19,37 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface AttachConfigMapper extends BaseMapperX<AttachConfig> {
 
     default List<AttachConfig> getAll(){
-        return selectList(new LambdaQueryWrapper<AttachConfig>()
-                .orderByDesc(AttachConfig::getMaster)
-                .orderByDesc(AttachConfig::getCreateTime));
+        return selectListByQuery(new QueryWrapper()
+                .orderBy(AttachConfig::getMaster,false)
+                .orderBy(AttachConfig::getCreateTime,false));
     }
 
     default PageResult<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO){
-        return selectPage(pageVO, new LambdaQueryWrapper<AttachConfig>()
-                .like(StringUtils.isNotBlank(pageVO.getName()), AttachConfig::getName, pageVO.getName())
-                .orderByDesc(AttachConfig::getId)
+        return selectPage(pageVO, new QueryWrapper()
+                .like(AttachConfig::getName, pageVO.getName())
+                .orderBy(AttachConfig::getId,false)
         );
     }
 
     default void clearMaster() {
-        update(new AttachConfig(), new LambdaUpdateWrapper<AttachConfig>()
-                .eq(AttachConfig::getMaster, true)
-                .set(AttachConfig::getMaster, false)
-        );
+        AttachConfig attachConfig = new AttachConfig();
+        attachConfig.setMaster(false);
+        updateByQuery(attachConfig , new QueryWrapper().eq(AttachConfig::getMaster, true));
     }
 
     default void updateMaster(Integer id){
-        update(new AttachConfig(), new LambdaUpdateWrapper<AttachConfig>()
+        AttachConfig attachConfig = new AttachConfig();
+        attachConfig.setMaster(true);
+        updateByQuery(attachConfig, new QueryWrapper()
                 .eq(AttachConfig::getId, id)
-                .set(AttachConfig::getMaster, true)
         );
     }
 
     default List<AttachConfig> getAllLocalConfig(){
-        return selectList(new LambdaQueryWrapper<AttachConfig>()
+        return selectListByQuery(new QueryWrapper()
                 .eq(AttachConfig::getStorage, AttachConfigConstant.LOCAL_CONFIG)
         );
     }

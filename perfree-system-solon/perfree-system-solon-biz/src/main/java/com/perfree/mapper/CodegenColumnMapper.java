@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.CodegenColumn;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,18 +18,17 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface CodegenColumnMapper extends BaseMapperX<CodegenColumn> {
 
 
     default List<CodegenColumn> selectByTableId(Integer tableId){
-        return selectList(new LambdaQueryWrapper<CodegenColumn>()
+        return selectListByQuery(new QueryWrapper()
                 .eq(CodegenColumn::getTableId, tableId)
-                .orderByDesc(CodegenColumn::getCreateTime));
+                .orderBy(CodegenColumn::getCreateTime,false));
     }
 
     default void delByTableId(Integer tableId){
-        delete(new LambdaQueryWrapper<CodegenColumn>().eq(CodegenColumn::getTableId, tableId));
+        deleteByQuery(new QueryWrapper().eq(CodegenColumn::getTableId, tableId));
     }
 
 }

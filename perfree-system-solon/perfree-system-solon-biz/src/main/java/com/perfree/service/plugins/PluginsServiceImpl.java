@@ -1,7 +1,7 @@
 package com.perfree.service.plugins;
 
 import cn.hutool.core.io.FileUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.cache.PluginChangeCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;

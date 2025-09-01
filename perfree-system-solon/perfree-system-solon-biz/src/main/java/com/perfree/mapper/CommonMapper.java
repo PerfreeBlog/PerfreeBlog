@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.solon.annotation.Db;
 
 @Mapper
-@Db
 public interface CommonMapper {
     DirectiveStatisticVO queryStatistics();
 

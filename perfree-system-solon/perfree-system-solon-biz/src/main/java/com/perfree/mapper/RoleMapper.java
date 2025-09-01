@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.role.vo.RolePageReqVO;
@@ -24,9 +25,9 @@ import java.util.List;
 public interface RoleMapper extends BaseMapperX<Role> {
 
     default PageResult<Role> selectPage(RolePageReqVO pageVO) {
-        return selectPage(pageVO, new LambdaQueryWrapper<Role>()
-                .like(StringUtils.isNotBlank(pageVO.getName()), Role::getName, pageVO.getName())
-                .orderByDesc(Role::getId)
+        return selectPage(pageVO, new QueryWrapper()
+                .like(Role::getName, pageVO.getName())
+                .orderBy(Role::getId,false)
         );
     }
 

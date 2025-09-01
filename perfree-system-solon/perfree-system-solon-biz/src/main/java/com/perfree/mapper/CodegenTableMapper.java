@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.codegen.vo.table.CodegenTablePageReqVO;
@@ -18,13 +19,12 @@ import org.apache.ibatis.solon.annotation.Db;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface CodegenTableMapper extends BaseMapperX<CodegenTable> {
 
     default PageResult<CodegenTable> codegenTablePage(CodegenTablePageReqVO pageVO){
-        return selectPage(pageVO,  new LambdaQueryWrapper<CodegenTable>()
-                .eq(StringUtils.isNotBlank(pageVO.getTableName()), CodegenTable::getTableName, pageVO.getTableName())
-                .orderByDesc(CodegenTable::getId)
+        return selectPage(pageVO,  new QueryWrapper()
+                .eq(CodegenTable::getTableName, pageVO.getTableName())
+                .orderBy(CodegenTable::getId,false)
         );
     }
 

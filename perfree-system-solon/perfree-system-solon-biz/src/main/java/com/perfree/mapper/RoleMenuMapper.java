@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.RoleMenu;
 import org.apache.ibatis.annotations.Mapper;
@@ -17,7 +18,6 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface RoleMenuMapper extends BaseMapperX<RoleMenu> {
 
     /**
@@ -25,7 +25,7 @@ public interface RoleMenuMapper extends BaseMapperX<RoleMenu> {
      * @param menuId menuId
      */
     default void deleteByMenuId(String menuId){
-        delete(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getMenuId, menuId));
+        deleteByQuery(new QueryWrapper().eq(RoleMenu::getMenuId, menuId));
     }
 
     /**
@@ -34,7 +34,7 @@ public interface RoleMenuMapper extends BaseMapperX<RoleMenu> {
      * @return List<RoleMenu>
      */
     default List<RoleMenu> selectByRoleId(Integer roleId){
-        return selectList(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId));
+        return selectListByQuery(new QueryWrapper().eq(RoleMenu::getRoleId, roleId));
     }
 
     /**
@@ -42,6 +42,6 @@ public interface RoleMenuMapper extends BaseMapperX<RoleMenu> {
      * @param roleId roleId
      */
     default void deleteByRoleId(Integer roleId){
-        delete(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, roleId));
+        deleteByQuery(new QueryWrapper().eq(RoleMenu::getRoleId, roleId));
     }
 }

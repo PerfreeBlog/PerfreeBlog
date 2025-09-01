@@ -1,19 +1,14 @@
 package com.perfree.service.mailLog;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
-import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.mailLog.vo.*;
 import com.perfree.convert.mailLog.MailLogConvert;
 import com.perfree.mapper.MailLogMapper;
 import com.perfree.model.MailLog;
-import jakarta.annotation.Resource;
-import org.apache.ibatis.solon.annotation.Db;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.data.annotation.Transaction;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

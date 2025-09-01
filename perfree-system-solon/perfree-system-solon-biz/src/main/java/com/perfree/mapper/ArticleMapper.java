@@ -1,7 +1,7 @@
 package com.perfree.mapper;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticleCategoryRespVO;
@@ -28,7 +28,6 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface ArticleMapper extends BaseMapperX<Article> {
 
     /**
@@ -37,7 +36,7 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @param pageVO pageVO
      * @return IPage<ArticleRespVO>
      */
-    IPage<ArticleRespVO> articlePage(IPage<ArticleRespVO> page,  @Param("pageVO") ArticlePageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
+    Page<ArticleRespVO> articlePage(Page<ArticleRespVO> page, @Param("pageVO") ArticlePageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     /**
      * 根据slug查询
@@ -45,7 +44,7 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @return Article
      */
     default Article getBySlugAndType(String slug, String type){
-        return selectOne(new LambdaQueryWrapper<Article>()
+        return selectOneByQuery(new QueryWrapper()
                 .eq(Article::getSlug, slug)
                 .eq(Article::getType, type)
         );
@@ -107,9 +106,9 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * 动态分页列表
      * @param page page
      * @param pageVO pageVO
-     * @return IPage<JournalRespVO>
+     * @return Page<JournalRespVO>
      */
-    IPage<JournalRespVO> journalPage(IPage<JournalRespVO> page, @Param("pageVO") JournalPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
+    Page<JournalRespVO> journalPage(Page<JournalRespVO> page, @Param("pageVO") JournalPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     /**
      * 根据id获取动态
@@ -119,9 +118,9 @@ public interface ArticleMapper extends BaseMapperX<Article> {
     JournalRespVO getJournalById(@Param("id") Integer id);
 
     default List<Article> getAllPage(){
-        return selectList(new LambdaQueryWrapper<Article>()
+        return selectListByQuery(new QueryWrapper()
                 .eq(Article::getType, ArticleConstant.ARTICLE_TYPE_PAGE)
-                .orderByDesc(Article::getCreateTime)
+                .orderBy(Article::getCreateTime,false)
         );
     }
 
@@ -131,7 +130,7 @@ public interface ArticleMapper extends BaseMapperX<Article> {
      * @param pageVO pageVO
      * @return IPage<ArchiveRespVO>
      */
-    IPage<ArchiveRespVO> archivePage(IPage<ArchiveRespVO> page, @Param("pageVO") ArchivePageReqVO pageVO);
+    Page<ArchiveRespVO> archivePage(Page<ArchiveRespVO> page, @Param("pageVO") ArchivePageReqVO pageVO);
 
     /**
      * 获取最近发布的文章

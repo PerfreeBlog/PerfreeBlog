@@ -23,7 +23,6 @@ import org.apache.ibatis.solon.annotation.Db;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface LinkMapper extends BaseMapperX<Link> {
 
     IPage<LinkRespVO> linkPage(IPage<LinkRespVO> page, @Param("pageVO") LinkPageReqVO pageVO);

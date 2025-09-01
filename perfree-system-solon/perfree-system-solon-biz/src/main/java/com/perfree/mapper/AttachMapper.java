@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.adminHome.vo.HomeStatisticRespVO;
@@ -23,7 +24,6 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface AttachMapper extends BaseMapperX<Attach> {
 
     /**
@@ -32,13 +32,13 @@ public interface AttachMapper extends BaseMapperX<Attach> {
      * @return PageResult<Attach>
      */
     default PageResult<Attach> selectPage(AttachPageReqVO pageVO) {
-        return selectPage(pageVO, new LambdaQueryWrapper<Attach>()
-                .like(StringUtils.isNotBlank(pageVO.getName()), Attach::getName, pageVO.getName())
-                .eq(StringUtils.isNotBlank(pageVO.getAttachGroup()), Attach::getAttachGroup, pageVO.getAttachGroup())
-                .eq(pageVO.getAttachConfigId() != null, Attach::getConfigId, pageVO.getAttachConfigId())
-                .eq(pageVO.getStorage()!= null, Attach::getStorage, pageVO.getStorage())
-                .eq(StringUtils.isNotBlank(pageVO.getType()), Attach::getType, pageVO.getType())
-                .orderByDesc(Attach::getId)
+        return selectPage(pageVO, new QueryWrapper()
+                .like(Attach::getName, pageVO.getName())
+                .eq(Attach::getAttachGroup, pageVO.getAttachGroup())
+                .eq(Attach::getConfigId, pageVO.getAttachConfigId())
+                .eq(Attach::getStorage, pageVO.getStorage())
+                .eq(Attach::getType, pageVO.getType())
+                .orderBy(Attach::getId,false)
         );
     }
 

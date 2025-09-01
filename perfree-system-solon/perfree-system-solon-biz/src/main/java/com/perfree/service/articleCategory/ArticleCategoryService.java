@@ -1,6 +1,6 @@
 package com.perfree.service.articleCategory;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.model.ArticleCategory;
 
 import java.util.List;

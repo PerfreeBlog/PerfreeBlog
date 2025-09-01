@@ -1,6 +1,6 @@
 package com.perfree.service.role;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.role.vo.RoleAddReqVO;
 import com.perfree.controller.auth.role.vo.RoleMenuReqVO;

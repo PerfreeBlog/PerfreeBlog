@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.JournalAttach;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,11 +16,10 @@ import org.apache.ibatis.solon.annotation.Db;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface JournalAttachMapper extends BaseMapperX<JournalAttach> {
 
     default void delByArticleId(Integer id){
-        delete(new LambdaQueryWrapper<JournalAttach>().eq(JournalAttach::getArticleId, id));
+        deleteByQuery(new QueryWrapper().eq(JournalAttach::getArticleId, id));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.perfree.service.articleTag;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.model.ArticleTag;
 
 import java.util.List;

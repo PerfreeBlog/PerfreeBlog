@@ -1,6 +1,6 @@
 package com.perfree.service.journal;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.controller.auth.journal.vo.JournalAttachAddReqVO;
 import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.convert.article.ArticleConvert;

@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.constant.DictConstant;
@@ -22,33 +23,32 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-@Db
 public interface DictDataMapper extends BaseMapperX<DictData> {
 
     default PageResult<DictData> selectPage(DictDataPageReqVO reqVO) {
-        LambdaQueryWrapper<DictData> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getDictLabel()), DictData::getDictLabel, reqVO.getDictLabel());
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getDictType()), DictData::getDictType, reqVO.getDictType());
-        lambdaQueryWrapper.eq(StringUtils.isNotBlank(reqVO.getParentDictType()), DictData::getParentDictType, reqVO.getParentDictType());
-        lambdaQueryWrapper.orderByAsc(DictData::getSeq);
-        return selectPage(reqVO, lambdaQueryWrapper);
+        QueryWrapper wrapper = QueryWrapper.create();
+        wrapper.like(DictData::getDictLabel, reqVO.getDictLabel());
+        wrapper.like(DictData::getDictType, reqVO.getDictType());
+        wrapper.eq(DictData::getParentDictType, reqVO.getParentDictType());
+        wrapper.orderBy(DictData::getSeq,false);
+        return selectPage(reqVO, wrapper);
     }
 
     default List<DictData> listAll() {
-        return selectList(new LambdaQueryWrapper<DictData>()
-            .orderByDesc(DictData::getId)
+        return selectListByQuery(new QueryWrapper()
+            .orderBy(DictData::getId,false)
         );
     }
 
     default List<DictData> queryByParentDictType(String parentDictType){
-        return selectList(new LambdaQueryWrapper<DictData>()
-                .eq(DictData::getParentDictType, parentDictType)
-                .orderByAsc(DictData::getSeq)
-        );
+        QueryWrapper wrapper = QueryWrapper.create();
+        wrapper.eq(DictData::getParentDictType, parentDictType);
+        wrapper.orderBy(DictData::getSeq);
+        return selectListByQuery(wrapper);
     }
 
     default DictData queryByDictType(String dictType){
-        return selectOne(new LambdaQueryWrapper<DictData>().eq(DictData::getDictType, dictType));
+        return selectOneByQuery(new QueryWrapper().eq(DictData::getDictType, dictType));
     }
 
     List<DictData> listByStatus(@Param("status") Integer status);

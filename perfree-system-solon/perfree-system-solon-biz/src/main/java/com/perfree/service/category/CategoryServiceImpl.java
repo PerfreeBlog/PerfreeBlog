@@ -2,7 +2,7 @@ package com.perfree.service.category;
 
 import cn.hutool.core.collection.ListUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.common.SortingField;
 import com.perfree.commons.exception.ServiceException;

@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.menu.vo.MenuListReqVO;
 import com.perfree.model.Menu;
@@ -20,7 +21,6 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface MenuMapper extends BaseMapperX<Menu> {
 
     /**
@@ -36,10 +36,13 @@ public interface MenuMapper extends BaseMapperX<Menu> {
      * @return List<Menu>
      */
     default List<Menu> menuList(MenuListReqVO pageVO){
-        return selectList(new LambdaQueryWrapper<Menu>()
-                .like(StringUtils.isNotBlank(pageVO.getName()), Menu::getName, pageVO.getName())
-                .eq(null != pageVO.getType(), Menu::getType, pageVO.getType())
-                .orderByAsc(Menu::getSeq));
+        QueryWrapper queryWrapper = QueryWrapper.create();
+        if (StringUtils.isNotBlank(pageVO.getName())) {
+            queryWrapper.like(Menu::getName, pageVO.getName());
+        }
+        queryWrapper.eq(Menu::getType, pageVO.getType());
+        queryWrapper.orderBy(Menu::getSeq);
+        return selectListByQuery(queryWrapper);
     }
 
     /**
@@ -48,7 +51,7 @@ public interface MenuMapper extends BaseMapperX<Menu> {
      * @return List<Menu
      */
     default List<Menu> getByParentId(String id){
-        return selectList(new LambdaQueryWrapper<Menu>()
+        return selectListByQuery(new QueryWrapper()
                 .eq(Menu::getPid, id));
     }
 
@@ -67,7 +70,7 @@ public interface MenuMapper extends BaseMapperX<Menu> {
     List<Menu> menuListByType(@Param("type") Integer type);
 
     default void deleteMenuByPluginId(String pluginId){
-        delete(new LambdaQueryWrapper<Menu>().eq(Menu::getPluginId, pluginId));
+        deleteByQuery(new QueryWrapper().eq(Menu::getPluginId, pluginId));
     }
 
 }

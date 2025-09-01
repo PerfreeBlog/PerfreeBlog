@@ -1,6 +1,6 @@
 package com.perfree.service.plugins;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.plugins.vo.PluginsPageReqVO;
 import com.perfree.model.Plugins;

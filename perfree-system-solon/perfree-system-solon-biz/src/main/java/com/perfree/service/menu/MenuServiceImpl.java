@@ -1,7 +1,7 @@
 package com.perfree.service.menu;
 
 import cn.hutool.core.util.IdUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.constant.MenuConstant;
 import com.perfree.controller.auth.menu.vo.MenuAddOrUpdateReqVO;

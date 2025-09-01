@@ -2,7 +2,7 @@ package com.perfree.service.comment;
 
 import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.cache.CommentStintCache;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.PageResult;

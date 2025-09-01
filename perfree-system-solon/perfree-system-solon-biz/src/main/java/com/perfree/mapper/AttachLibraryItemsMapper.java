@@ -2,17 +2,17 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.perfree.commons.common.PageResult;
+import com.mybatisflex.core.BaseMapper;
+import com.mybatisflex.core.query.QueryCondition;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.attachLibraryItems.vo.*;
 import com.perfree.model.AttachLibraryItems;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.*;
-import com.perfree.commons.utils.DateTimeUtils;
 import org.apache.ibatis.solon.annotation.Db;
 
 import java.util.List;
-import java.util.Objects;
 
 
 
@@ -22,21 +22,20 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-@Db
 public interface AttachLibraryItemsMapper extends BaseMapperX<AttachLibraryItems> {
 
     default List<AttachLibraryItems> listAll() {
-        return selectList(new LambdaQueryWrapper<AttachLibraryItems>()
-            .orderByDesc(AttachLibraryItems::getId)
+        return selectListByQuery(new QueryWrapper()
+            .orderBy(AttachLibraryItems::getId,false)
         );
     }
 
     default List<AttachLibraryItems> queryExportData(AttachLibraryItemsExportReqVO reqVO){
-        LambdaQueryWrapper<AttachLibraryItems> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(null != reqVO.getAttachLibraryId(), AttachLibraryItems::getAttachLibraryId, reqVO.getAttachLibraryId());
-        lambdaQueryWrapper.like(StringUtils.isNotBlank(reqVO.getName()), AttachLibraryItems::getName, reqVO.getName());
-        lambdaQueryWrapper.orderByDesc(AttachLibraryItems::getId);
-        return selectList(lambdaQueryWrapper);
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq(AttachLibraryItems::getAttachLibraryId, reqVO.getAttachLibraryId());
+        queryWrapper.like( AttachLibraryItems::getName, reqVO.getName());
+        queryWrapper.orderBy(AttachLibraryItems::getId, false);
+        return selectListByQuery(queryWrapper);
     }
 
     IPage<AttachLibraryItemsRespVO> attachLibraryItemsPage(IPage<AttachLibraryItemsRespVO> page, @Param("pageVO") AttachLibraryItemsPageReqVO pageVO);

@@ -1,6 +1,6 @@
 package com.perfree.service.roleMenu;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.mapper.RoleMenuMapper;
 import com.perfree.model.RoleMenu;
 import org.noear.solon.annotation.Component;

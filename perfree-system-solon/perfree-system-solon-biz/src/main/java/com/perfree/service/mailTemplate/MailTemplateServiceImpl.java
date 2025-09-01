@@ -1,7 +1,7 @@
 package com.perfree.service.mailTemplate;
 
 import cn.hutool.core.util.ReUtil;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.mailTemplate.vo.*;
 import com.perfree.convert.mailTemplate.MailTemplateConvert;

@@ -1,6 +1,6 @@
 package com.perfree.service.articleCategory;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.mapper.ArticleCategoryMapper;
 import com.perfree.model.ArticleCategory;
 import jakarta.annotation.Resource;

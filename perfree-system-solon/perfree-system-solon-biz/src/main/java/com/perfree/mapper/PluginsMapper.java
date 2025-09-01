@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.constant.PluginConstant;
@@ -21,7 +22,6 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface PluginsMapper extends BaseMapperX<Plugins> {
 
     /**
@@ -30,20 +30,20 @@ public interface PluginsMapper extends BaseMapperX<Plugins> {
      * @return PageResult<Plugins>
      */
     default PageResult<Plugins> selectPage(PluginsPageReqVO pageVO) {
-        return selectPage(pageVO, new LambdaQueryWrapper<Plugins>()
-                .like(StringUtils.isNotBlank(pageVO.getName()), Plugins::getName, pageVO.getName()));
+        return selectPage(pageVO, new QueryWrapper()
+                .like(Plugins::getName, pageVO.getName()));
     }
 
     default void delByPluginId(String pluginId){
-        delete(new LambdaQueryWrapper<Plugins>().eq(Plugins::getPluginId, pluginId));
+        deleteByQuery(new QueryWrapper().eq(Plugins::getPluginId, pluginId));
     }
 
     default List<Plugins> getAllEnablePlugins(){
-        return selectList(new LambdaQueryWrapper<Plugins>().eq(Plugins::getStatus, PluginConstant.PLUGIN_STATUS_ENABLE));
+        return selectListByQuery(new QueryWrapper().eq(Plugins::getStatus, PluginConstant.PLUGIN_STATUS_ENABLE));
     }
 
     default Plugins getByPluginId(String pluginId){
-        return selectOne(new LambdaQueryWrapper<Plugins>().eq(Plugins::getPluginId, pluginId));
+        return selectOneByQuery(new QueryWrapper().eq(Plugins::getPluginId, pluginId));
     }
 
 }

@@ -1,6 +1,6 @@
 package com.perfree.service.attachConfig;
 
-import com.baomidou.mybatisplus.extension.service.IService;
+import com.mybatisflex.core.service.IService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.attachConfig.vo.AttachConfigCreateVO;
 import com.perfree.controller.auth.attachConfig.vo.AttachConfigPageReqVO;

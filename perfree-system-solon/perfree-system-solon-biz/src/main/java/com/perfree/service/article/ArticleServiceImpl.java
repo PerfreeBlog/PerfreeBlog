@@ -4,7 +4,8 @@ import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.http.HtmlUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.common.SortingField;
@@ -90,8 +91,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 new SortingField("isTop", SortingField.ORDER_DESC),
                 new SortingField("createTime", SortingField.ORDER_DESC)
         ));
-        IPage<ArticleRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<ArticleRespVO> articlePage = articleMapper.articlePage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
+        Page<ArticleRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
+        Page<ArticleRespVO> articlePage = articleMapper.articlePage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
         return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
     }
 
@@ -127,7 +128,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Transaction
     public Boolean updateIsComment(ArticleUpdateIsCommentReqVO articleUpdateIsCommentReqVO) {
         Article article = ArticleConvert.INSTANCE.convertModelByIsCommentVO(articleUpdateIsCommentReqVO);
-        articleMapper.updateById(article);
+        articleMapper.update(article);
         return true;
     }
 
@@ -135,7 +136,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Transaction
     public Boolean updateIsTop(ArticleUpdateIsTopReqVO articleUpdateIsTopReqVO) {
         Article article = ArticleConvert.INSTANCE.convertModelByIsTopVO(articleUpdateIsTopReqVO);
-        articleMapper.updateById(article);
+        articleMapper.update(article);
         return true;
     }
 
@@ -143,7 +144,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Transaction
     public Boolean updateStatus(ArticleUpdateStatusReqVO articleUpdateStatusReqVO) {
         Article article = ArticleConvert.INSTANCE.convertModelByStatusVO(articleUpdateStatusReqVO);
-        articleMapper.updateById(article);
+        articleMapper.update(article);
         return true;
     }
 
@@ -201,7 +202,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         Article article = ArticleConvert.INSTANCE.convertModelByUpdateArticleVO(articleUpdateReqVO);
         article.setSummary(genSummary(article.getSummary(), article.getParseContent()));
-        articleMapper.updateById(article);
+        articleMapper.update(article);
 
         // 处理标签关联关系
         articleTagService.handleArticleTag(articleUpdateReqVO.getTagIds(), article.getId());
@@ -260,7 +261,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         Article article = ArticleConvert.INSTANCE.convertByJournalUpdateReqVO(updateReqVO);
         article.setTitle(genSummary("", article.getParseContent()));
-        articleMapper.updateById(article);
+        articleMapper.update(article);
         journalAttachService.delByArticleId(article.getId());
         List<JournalAttach> journalAttachList = journalAttachService.handleJournalAttach(updateReqVO.getAttachList(), article.getId());
         JournalRespVO journalRespVO = ArticleConvert.INSTANCE.convertToJournalResp(article);
@@ -321,7 +322,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public Boolean updateVisibility(ArticleUpdateVisibilityReqVO updateReqVO) {
         Article article = ArticleConvert.INSTANCE.convertModelByVisibilityVO(updateReqVO);
-        articleMapper.updateById(article);
+        articleMapper.update(article);
         return true;
     }
 

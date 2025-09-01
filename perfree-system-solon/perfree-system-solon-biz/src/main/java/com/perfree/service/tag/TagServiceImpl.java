@@ -1,7 +1,7 @@
 package com.perfree.service.tag;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.MyBatisUtils;
@@ -64,7 +64,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         tagMapper.insert(tag);
         if (StringUtils.isBlank(tag.getSlug())) {
             tag.setSlug(tag.getId().toString());
-            tagMapper.updateById(tag);
+            updateById(tag);
         }
         return tag;
     }
@@ -82,7 +82,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         }
 
         Tag tag = TagConvert.INSTANCE.convertUpdateReqVoToModel(tagUpdateReqVO);
-        tagMapper.updateById(tag);
+        tagMapper.update(tag);
         return true;
     }
 
@@ -112,7 +112,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
         for (Tag tag : tagList) {
             tag.setSlug(tag.getId().toString());
         }
-        tagMapper.updateBatch(tagList);
+        updateBatch(tagList);
         return tagList;
     }
 

@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.category.vo.CategoryListReqVO;
 import com.perfree.controller.auth.category.vo.CategoryPageReqVO;
@@ -22,13 +23,12 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-@Db
 public interface CategoryMapper extends BaseMapperX<Category> {
 
     CategoryRespVO selectBySlug(@Param("slug") String slug);
 
     default List<Category> selectByPid(Integer id) {
-        return selectList(new LambdaQueryWrapper<Category>()
+        return selectListByQuery(new QueryWrapper()
                 .eq(Category::getPid, id));
     }
 
