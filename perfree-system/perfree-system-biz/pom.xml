@@ -27,5 +27,9 @@
             <artifactId>perfree-system-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-solon-plugin</artifactId>
+        </dependency>
     </dependencies>
 </project>

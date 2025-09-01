@@ -1,0 +1,25 @@
+#set($pid = $uuidTool.generateUUID())
+
+INSERT INTO `p_menu` (
+`id`,`pid`,`name`,`url`,`icon`,
+`menuType`,`pluginId`,`component`,`componentName`,`moduleName`,`type`
+)
+VALUES(
+'$pid','${table.parentMenuId}','${table.comment}管理','/admin/${table.lowerFirstClassName}','fa-solid fa-feather-alt',
+1, #if(${table.scene} == 1) '${table.moduleName}' #else NULL #end ,'/view/${table.className}View','${table.lowerFirstClassName}','${table.frontModuleName}',1
+);
+
+INSERT INTO `p_menu` (`id`,`pid`,`name`,`menuType`,`pluginId`,`perms`,`type`)
+VALUES('$uuidTool.generateUUID()','$pid','${table.comment}查询',2, #if(${table.scene} == 1) '${table.moduleName}' #else NULL #end ,'admin:${table.lowerFirstClassName}:query', 1);
+
+INSERT INTO `p_menu` (`id`,`pid`,`name`,`menuType`,`pluginId`,`perms`,`type`)
+VALUES('$uuidTool.generateUUID()','$pid','${table.comment}创建',2, #if(${table.scene} == 1) '${table.moduleName}' #else NULL #end ,'admin:${table.lowerFirstClassName}:create', 1);
+
+INSERT INTO `p_menu` (`id`,`pid`,`name`,`menuType`,`pluginId`,`perms`,`type`)
+VALUES('$uuidTool.generateUUID()','$pid','${table.comment}编辑',2, #if(${table.scene} == 1) '${table.moduleName}' #else NULL #end ,'admin:${table.lowerFirstClassName}:update', 1);
+
+INSERT INTO `p_menu` (`id`,`pid`,`name`,`menuType`,`pluginId`,`perms`,`type`)
+VALUES('$uuidTool.generateUUID()','$pid','${table.comment}删除',2, #if(${table.scene} == 1) '${table.moduleName}' #else NULL #end ,'admin:${table.lowerFirstClassName}:delete', 1);
+
+INSERT INTO `p_menu` (`id`,`pid`,`name`,`menuType`,`pluginId`,`perms`,`type`)
+VALUES('$uuidTool.generateUUID()','$pid','${table.comment}导出',2, #if(${table.scene} == 1) '${table.moduleName}' #else NULL #end ,'admin:${table.lowerFirstClassName}:export', 1);

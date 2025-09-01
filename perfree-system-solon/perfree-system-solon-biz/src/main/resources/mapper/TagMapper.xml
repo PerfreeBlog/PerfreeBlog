@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.perfree.mapper.TagMapper">
+
+    <resultMap id="TAG_RESULT" type="com.perfree.controller.auth.tag.vo.TagRespVO" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="userInfo" javaType="com.perfree.commons.common.CommonUserMsg">
+            <id property="id" column="createUserId" />
+            <result property="userName" column="userName"/>
+            <result property="avatar" column="avatar"/>
+            <result property="email" column="email"/>
+            <result property="website" column="website"/>
+        </association>
+    </resultMap>
+
+    <select id="getHotTag" resultMap="TAG_RESULT">
+        SELECT t.*,IFNULL(t1.articleCount,0) as articleCount ,t2.userName,t2.avatar,t2.email,t2.website from p_tag t
+        LEFT JOIN (SELECT tagId, count(1) articleCount FROM `p_article_tag` GROUP BY tagId) t1 ON t.id = t1.tagId
+        left JOIN p_user t2 on t.createUserId = t2.id
+        ORDER BY t1.articleCount desc LIMIT 0,#{count}
+    </select>
+
+    <select id="tagPage" resultMap="TAG_RESULT">
+        select t1.*,t2.userName,t2.avatar,t2.email,t2.website, (SELECT count(1) FROM p_article_tag where tagId = t1.id) as articleCount
+        from p_tag t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        <where>
+            <if test="pageVO.name != null and pageVO.name != ''">
+                <bind name="name" value="'%' + _parameter.pageVO.name + '%'" />
+                and t1.name like #{name}
+            </if>
+        </where>
+        order by t1.createTime desc
+    </select>
+
+    <select id="getBySlug" resultMap="TAG_RESULT">
+        select t1.*,t2.userName,t2.avatar,t2.email,t2.website, (SELECT count(1) FROM p_article_tag where tagId = t1.id) as articleCount
+        from p_tag t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.slug = #{slug}
+    </select>
+
+    <select id="getTagById" resultMap="TAG_RESULT">
+        select t1.*,t2.userName,t2.avatar,t2.email,t2.website, (SELECT count(1) FROM p_article_tag where tagId = t1.id) as articleCount
+        from p_tag t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.id = #{id}
+    </select>
+</mapper>

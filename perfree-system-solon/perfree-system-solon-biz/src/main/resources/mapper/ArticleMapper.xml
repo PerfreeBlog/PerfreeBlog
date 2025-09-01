@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.perfree.mapper.ArticleMapper">
+
+    <resultMap id="ARTICLE_RESULT" type="com.perfree.controller.auth.article.vo.ArticleRespVO" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="user" javaType="com.perfree.commons.common.CommonUserMsg">
+            <id property="id" column="createUserId" />
+            <result property="userName" column="userName"/>
+            <result property="avatar" column="avatar"/>
+            <result property="email" column="email"/>
+            <result property="website" column="website"/>
+        </association>
+
+        <collection property="categoryList" select="getArticleCategoryById" column="id"/>
+        <collection property="tagList" select="getArticleTagById" column="id"/>
+    </resultMap>
+    <update id="updateGreatCount">
+        update p_article set greatCount = greatCount+1 where id = #{id}
+    </update>
+
+    <update id="updateViewCount">
+        update p_article set viewCount = viewCount+1 where id = #{id}
+    </update>
+
+    <!-- 文章分页列表 -->
+    <select id="articlePage" resultMap="ARTICLE_RESULT">
+        select a.* from (SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where
+        articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where 1 =1
+        <if test="pageVO.categoryId != null">
+           and t1.id IN (SELECT articleId FROM p_article_category WHERE categoryId = #{pageVO.categoryId})
+        </if>
+        <if test="pageVO.categorySlug != null and pageVO.categorySlug != ''">
+            and t1.id IN (SELECT articleId FROM p_article_category a1 LEFT JOIN p_category a2 ON a1.categoryId = a2.id WHERE a2.slug = #{pageVO.categorySlug})
+        </if>
+
+        <if test="pageVO.tagId != null">
+            and  t1.id IN (SELECT articleId FROM p_article_tag WHERE tagId = #{pageVO.tagId})
+        </if>
+
+        <if test="pageVO.tagSlug != null and pageVO.tagSlug != ''">
+            and t1.id IN (SELECT articleId FROM p_article_tag a1 LEFT JOIN p_tag a2 ON a1.tagId = a2.id WHERE a2.slug = #{pageVO.tagSlug})
+        </if>
+
+        <if test="pageVO.status != null">
+            and t1.status = #{pageVO.status}
+        </if>
+
+        <if test="pageVO.type != null and pageVO.type != ''">
+            and t1.type = #{pageVO.type}
+        </if>
+        <if test="pageVO.flag != null and pageVO.flag != ''">
+            and t1.flag = #{pageVO.flag}
+        </if>
+        <if test="pageVO.visibility != null">
+            and t1.visibility = #{pageVO.visibility}
+        </if>
+
+        <if test="pageVO.title != null and pageVO.title != ''">
+            <bind name="title" value="'%' + _parameter.pageVO.title + '%'" />
+            and t1.title like #{title}
+        </if>) a
+        <where>
+            <if test="loginUserId != null">
+                and (a.createUserId = #{loginUserId} or a.visibility = 0)
+            </if>
+            <if test="loginUserId == null">
+                and a.visibility = 0
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取文章的标签 -->
+    <select id="getArticleTagById" resultType="com.perfree.controller.auth.article.vo.ArticleTagRespVO">
+        select t2.* from p_article_tag t1 left join p_tag t2 on t1.tagId = t2.id where t1.articleId = #{id}
+    </select>
+
+    <!-- 获取文章的分类 -->
+    <select id="getArticleCategoryById" resultType="com.perfree.controller.auth.article.vo.ArticleCategoryRespVO">
+        select t2.* from p_article_category t1 left join p_category t2 on t1.categoryId = t2.id where t1.articleId = #{id}
+    </select>
+
+    <select id="getBySlugAndTypeAndStatus" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.slug = #{slug} and t1.type = #{articleType} and t1.status = #{status}
+    </select>
+
+    <select id="getPreArticle" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.type = #{articleType} and t1.status = #{status} and t1.id <![CDATA[ > ]]> #{id}
+        ORDER BY t1.id asc LIMIT 0,1
+    </select>
+
+    <select id="getNextArticle" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.type = #{articleType} and t1.status = #{status} and t1.id <![CDATA[ < ]]> #{id}
+        ORDER BY t1.id desc LIMIT 0,1
+    </select>
+    <select id="getArticleById" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.id = #{id}
+    </select>
+
+
+    <resultMap id="JOURNAL_RESULT" type="com.perfree.controller.auth.journal.vo.JournalRespVO"  autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="user" javaType="com.perfree.commons.common.CommonUserMsg">
+            <id property="id" column="createUserId" />
+            <result property="userName" column="userName"/>
+            <result property="avatar" column="avatar"/>
+            <result property="email" column="email"/>
+            <result property="website" column="website"/>
+        </association>
+        <collection property="attachList" select="getJournalAttachList" column="id"/>
+    </resultMap>
+
+    <select id="journalPage" resultMap="JOURNAL_RESULT">
+        select a.* from (SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where
+        articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'journal'
+
+        <if test="pageVO.visibility != null">
+            and t1.visibility = #{pageVO.visibility}
+        </if>
+
+        <if test="pageVO.content != null and pageVO.content != ''">
+            <bind name="content" value="'%' + _parameter.pageVO.content + '%'"/>
+            and t1.content like #{content}
+        </if>
+        ) a
+        <where>
+            <if test="loginUserId != null">
+                and (a.createUserId = #{loginUserId} or a.visibility = 0)
+            </if>
+            <if test="loginUserId == null">
+                and a.visibility = 0
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取文章的标签 -->
+    <select id="getJournalAttachList" resultType="com.perfree.controller.auth.journal.vo.JournalAttachRespVO">
+        select * from p_journal_attach  WHERE articleId = #{id}
+        ORDER BY CASE type WHEN 'img' THEN 4 WHEN 'video' THEN 3 WHEN 'audio' THEN 2 WHEN 'other' THEN 1 ELSE 0 END ASC,createTime asc
+    </select>
+
+    <select id="getJournalById" resultMap="JOURNAL_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.id= #{id}
+    </select>
+
+
+    <resultMap id="ARCHIVE_RESULT" type="com.perfree.controller.common.article.vo.ArchiveRespVO"  autoMapping="true">
+        <result property="date" column="date"/>
+        <collection property="articles" select="getArticleByDate" column="date"/>
+    </resultMap>
+
+    <select id="archivePage" resultMap="ARCHIVE_RESULT">
+        SELECT DISTINCT t1.date from (SELECT DATE_FORMAT(createTime,'%Y年%m月') AS date
+        FROM p_article  where type= 'article'  and status = 0) t1
+        ORDER BY t1.date desc
+    </select>
+
+    <select id="getArticleByDate" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0 and DATE_FORMAT(t1.createTime,'%Y年%m月') = #{date}
+        ORDER BY t1.createTime desc
+    </select>
+
+    <select id="getLatestArticle" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by t1.createTime desc LIMIT 0,#{num}
+    </select>
+
+    <select id="getHotArticleByCommentCount" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by  commentCount desc LIMIT 0,#{num}
+    </select>
+
+    <select id="getHotArticleByViewCount" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by   t1.viewCount desc LIMIT 0,#{num}
+    </select>
+    <select id="getBySlug" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id
+        where t1.slug = #{slug}
+    </select>
+
+    <select id="getHotArticleByGreatCount" resultMap="ARTICLE_RESULT">
+        SELECT t1.*,t2.userName,t2.avatar,t2.email,t2.website,(SELECT count(1) from p_comment where articleId = t1.id and status = 0) as commentCount
+        FROM p_article t1 left JOIN p_user t2 on t1.createUserId = t2.id where t1.type= 'article'  and t1.status = 0
+        order by   t1.greatCount desc LIMIT 0,#{num}
+    </select>
+</mapper>

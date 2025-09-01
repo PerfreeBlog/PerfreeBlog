@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.perfree.mapper.LinkMapper">
+
+    <resultMap id="LINK_RESULT" type="com.perfree.controller.auth.link.vo.LinkRespVO" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="userInfo" javaType="com.perfree.commons.common.CommonUserMsg">
+            <id property="id" column="createUserId" />
+            <result property="userName" column="userName"/>
+            <result property="avatar" column="avatar"/>
+            <result property="email" column="email"/>
+            <result property="website" column="website"/>
+        </association>
+    </resultMap>
+
+    <select id="linkPage" resultMap="LINK_RESULT">
+        select t1.*,t2.userName,t2.avatar,t2.email,t2.website  from p_link t1  left JOIN p_user t2 on t1.createUserId = t2.id
+        <where>
+            <if test="pageVO.name != null and pageVO.name != ''">
+                <bind name="name" value="'%' + _parameter.pageVO.name + '%'" />
+                and t1.name like #{name}
+            </if>
+        </where>
+    </select>
+    <select id="getLinkById" resultMap="LINK_RESULT">
+        select t1.*,t2.userName,t2.avatar,t2.email,t2.website  from p_link t1  left JOIN p_user t2 on t1.createUserId = t2.id where t1.id = #{id}
+    </select>
+</mapper>

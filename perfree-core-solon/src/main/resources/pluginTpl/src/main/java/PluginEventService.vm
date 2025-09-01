@@ -1,0 +1,28 @@
+package ${package};
+
+import com.perfree.plugin.BasePluginEvent;
+import org.springframework.stereotype.Service;
+
+@Service
+public class PluginEventService implements BasePluginEvent {
+
+    @Override
+    public void onStart() {
+    }
+
+    @Override
+    public void onStop() {
+    }
+
+    @Override
+    public void onUpdate() {
+    }
+
+    @Override
+    public void onInstall() {
+    }
+
+    @Override
+    public void onUnInstall() {
+    }
+}

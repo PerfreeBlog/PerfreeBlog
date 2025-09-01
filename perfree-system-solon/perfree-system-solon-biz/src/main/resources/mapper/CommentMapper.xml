@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.perfree.mapper.CommentMapper">
+    <resultMap id="COMMENT_RESULT" type="com.perfree.controller.auth.comment.vo.CommentRespVO" autoMapping="true">
+        <id property="id" column="id"/>
+        <association property="userInfo" javaType="com.perfree.commons.common.CommonUserMsg">
+            <result property="userName" column="tUserName"/>
+            <result property="avatar" column="tAvatar"/>
+            <result property="email" column="tEmail"/>
+            <result property="website" column="tWebsite"/>
+        </association>
+    </resultMap>
+
+    <select id="commentPage" resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite ,
+       (select count(1) from p_comment where topPid = t1.id or pid = t1.id and status = 0) childNum
+        from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
+        where 1 = 1
+        <if test="pageVO.content != null and pageVO.content != ''">
+            <bind name="content" value="'%' + _parameter.pageVO.content + '%'" />
+            and t1.content like #{content}
+        </if>
+        <if test="pageVO.userName != null and pageVO.userName != ''">
+            <bind name="userName" value="'%' + _parameter.pageVO.userName + '%'" />
+            and (t1.userName like #{userName} or t3.userName like #{userName})
+        </if>
+        <if test="pageVO.articleId != null and pageVO.articleId != ''">
+            and t1.articleId = #{pageVO.articleId}
+        </if>
+        <if test="pageVO.articleTitle != null and pageVO.articleTitle != ''">
+            <bind name="articleTitle" value="'%' + _parameter.pageVO.articleTitle + '%'" />
+            and t2.title like #{articleTitle}
+        </if>
+
+        <if test="pageVO.status != null and pageVO.status != ''">
+            and t1.status = #{pageVO.status}
+        </if>
+        <if test="pageVO.articleType != null and pageVO.articleType != ''">
+            and t2.type = #{pageVO.articleType}
+        </if>
+        order by t1.createTime desc
+    </select>
+    <select id="queryById" resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
+        where t1.id = #{id}
+    </select>
+    <select id="queryChildCommentPage"  resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+       t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
+        where t1.topPid = #{pageVO.id} or t1.pid = #{pageVO.id}
+        order by t1.createTime desc
+    </select>
+
+    <select id="pageByArticleId" resultMap="COMMENT_RESULT">
+        select t1.*,(select count(1) from p_comment where topPid = t1.id and status = 0) childNum,
+        t2.avatar as tAvatar, t2.email as tEmail, t2.userName as tUserName, t2.website as tWebsite
+        from p_comment t1 LEFT JOIN p_user t2 on t1.userId = t2.id
+        where t1.status = 0 and t1.topPid = -1 and t1.articleId = #{pageVO.articleId}
+        order by t1.createTime desc
+    </select>
+    <select id="pageByTopPid" resultMap="COMMENT_RESULT">
+        select t1.*, t2.avatar as tAvatar, t2.email as tEmail, t2.userName as tUserName, t2.website as tWebsite
+        from p_comment t1 LEFT JOIN p_user t2 on t1.userId = t2.id
+        where t1.status = 0 and t1.topPid = #{pageVO.topPid}
+        order by t1.createTime desc
+    </select>
+
+    <select id="getLatestComment" resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+        t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
+        where t1.status = 0
+        order by t1.createTime desc LIMIT 0,#{num}
+    </select>
+
+    <select id="getCommentByArticleId" resultMap="COMMENT_RESULT">
+        select t1.*, t2.title as articleTitle,t2.slug as articleSlug, t2.type as articleType,
+        t3.avatar as tAvatar, t3.email as tEmail, t3.userName as tUserName, t3.website as tWebsite from p_comment t1
+        LEFT JOIN p_article t2 on t1.articleId = t2.id LEFT JOIN p_user t3 on t1.userId = t3.id
+        where t1.status = 0 and t1.articleId = #{articleId}
+        order by t1.createTime desc
+    </select>
+</mapper>

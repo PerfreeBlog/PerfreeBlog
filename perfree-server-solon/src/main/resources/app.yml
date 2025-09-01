@@ -1,0 +1,48 @@
+server:
+  port: 8080
+
+solon:
+  app:
+    name: perfree
+  env: dev
+  datasource:
+    master!:
+      class: "com.zaxxer.hikari.HikariDataSource"
+      jdbcUrl: jdbc:mysql://192.144.160.229:3306/solon_blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+      driverClassName: com.mysql.cj.jdbc.Driver
+      username: solon_blog
+      password: HfzZy43eCJN3bnH2
+  # 序列化
+  serialization:
+    json:
+      dateAsFormat: yyyy-MM-dd HH:mm:ss # 配置日期格式（默认输出为时间戳）
+      dateAsTimeZone: GMT+8 # 配置时区
+      #      dateAsTicks: false # 将date转为毫秒数（和 dateAsFormat 二选一）
+      longAsString: true # 将long型转为字符串输出（默认为false）
+      boolAsInt: false   # 将bool型转为字符串输出（默认为false）
+      nullStringAsEmpty: false
+      nullBoolAsFalse: false
+      nullNumberAsZero: false
+      nullArrayAsEmpty: false
+      nullAsWriteable: false # 输出所有null值
+      enumAsName: false # 枚举使用名字
+version: 4.0.1
+
+perfree:
+  # 是否开启开发环境插件自动更新,当执行build modules时,会自动更新插件
+  autoLoadDevPlugin: true
+  # 监听插件是否发生改变的时间间隔(毫秒)   默认10秒(根据你的电脑配置改动,编译的快就调短一点)
+  autoLoadDevPluginTime: 10000
+  # 是否为演示环境
+  demoModel: false
+
+mybatis.master:
+  typeAliases:
+    - com.perfree.model
+  mappers:
+    - com.perfree.mapper
+    - classpath:mapper/*.xml
+  configuration: #扩展配置（要与 MybatisConfiguration 类的属性一一对应）
+    cacheEnabled: false
+    mapperVerifyEnabled: false #如果为 true，则要求所有 mapper 有 @Mapper 主解
+    mapUnderscoreToCamelCase: true
