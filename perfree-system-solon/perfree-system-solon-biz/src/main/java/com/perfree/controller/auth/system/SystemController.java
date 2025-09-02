@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.system;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.controller.auth.option.vo.OptionRespVO;
@@ -17,8 +18,6 @@ import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Get;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -71,7 +70,7 @@ public class SystemController {
         if (session != null) {
             session.invalidate();
         }
-        SecurityContextHolder.clearContext();
+        StpUtil.logout();
         return CommonResult.success("退出成功");
     }
 }

@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.mailLog;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -15,7 +16,6 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.servlet.http.HttpServletResponse;
 import com.perfree.commons.excel.ExcelUtils;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,7 @@ public class MailLogController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "邮件日志分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:mailLog:query')")
+    @SaCheckPermission("admin:mailLog:query")
     public CommonResult<PageResult<MailLogRespVO>> page(@Body MailLogPageReqVO pageVO) {
         startPage(pageVO);
         List<MailLog> mailLogList = mailLogService.mailLogPage(pageVO);
@@ -52,7 +52,7 @@ public class MailLogController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加邮件日志")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailLog:create')")
+    @SaCheckPermission("admin:mailLog:create")
     public CommonResult<MailLogRespVO> add(@Body @Valid MailLogAddReqVO mailLogAddReqVO) {
         return success(MailLogConvert.INSTANCE.convertRespVO(mailLogService.add(mailLogAddReqVO)));
     }
@@ -61,7 +61,7 @@ public class MailLogController extends BaseController {
     @Mapping("/update")
     @Operation(summary = "更新邮件日志")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailLog:update')")
+    @SaCheckPermission("admin:mailLog:update")
     public CommonResult<MailLogRespVO> update(@Body @Valid MailLogUpdateReqVO mailLogUpdateReqVO) {
         return success(MailLogConvert.INSTANCE.convertRespVO(mailLogService.update(mailLogUpdateReqVO)));
     }
@@ -77,7 +77,7 @@ public class MailLogController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "根据id删除邮件日志")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailLog:delete')")
+    @SaCheckPermission("admin:mailLog:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(mailLogService.del(id));
     }
@@ -92,7 +92,7 @@ public class MailLogController extends BaseController {
     @Post
     @Mapping("/export")
     @Operation(summary = "导出邮件日志")
-    @PreAuthorize("@ss.hasPermission('admin:mailLog:export')")
+    @SaCheckPermission("admin:mailLog:export")
     public void export(@Body MailLogExportReqVO exportReqVO, HttpServletResponse response) {
         List<MailLog> mailLogList = mailLogService.queryExportData(exportReqVO);
         ExcelUtils.renderExcel(response, MailLogConvert.INSTANCE.convertToExcelVOList(mailLogList), MailLogExcelVO.class, "邮件日志数据","邮件日志数据.xlsx");

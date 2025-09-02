@@ -1,5 +1,8 @@
 package com.perfree.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.enums.ResultCodeEnum;
 import com.perfree.commons.exception.ServiceException;
@@ -7,10 +10,8 @@ import com.perfree.demoModel.DemoModelException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -107,11 +108,42 @@ public class GlobalExceptionHandler{
         return new ResponseEntity<>(CommonResult.error(ResultCodeEnum.FAIL.getCode(), exception.getMessage()), HttpStatus.OK);
     }
 
-    @ExceptionHandler(AccessDeniedException.class)
+    /**
+     * Sa-Token 未登录异常处理
+     */
+    @ExceptionHandler(NotLoginException.class)
     @ResponseBody
-    public CommonResult<?> handleAccessDeniedException(Exception exception) {
-        LOGGER.error(exception.getMessage(), exception);
-        return CommonResult.error(ResultCodeEnum.AUTH_FORBIDDEN.getCode(), ResultCodeEnum.AUTH_FORBIDDEN.getMsg());
+    public CommonResult<?> handleNotLoginException(NotLoginException exception) {
+        String message = switch (exception.getType()) {
+            case NotLoginException.NOT_TOKEN -> "未提供token";
+            case NotLoginException.INVALID_TOKEN -> "token无效";
+            case NotLoginException.TOKEN_TIMEOUT -> "token已过期";
+            case NotLoginException.BE_REPLACED -> "token已被顶下线";
+            case NotLoginException.KICK_OUT -> "token已被踢下线";
+            default -> "当前会话未登录";
+        };
+        LOGGER.error("未登录异常: {}", message);
+        return CommonResult.error(ResultCodeEnum.SC_UNAUTHORIZED.getCode(), message);
+    }
+
+    /**
+     * Sa-Token 权限不足异常处理
+     */
+    @ExceptionHandler(NotPermissionException.class)
+    @ResponseBody
+    public CommonResult<?> handleNotPermissionException(NotPermissionException exception) {
+        LOGGER.error("权限不足异常: {}", exception.getMessage());
+        return CommonResult.error(ResultCodeEnum.AUTH_FORBIDDEN.getCode(), "权限不足: " + exception.getPermission());
+    }
+
+    /**
+     * Sa-Token 角色不足异常处理
+     */
+    @ExceptionHandler(NotRoleException.class)
+    @ResponseBody
+    public CommonResult<?> handleNotRoleException(NotRoleException exception) {
+        LOGGER.error("角色不足异常: {}", exception.getMessage());
+        return CommonResult.error(ResultCodeEnum.AUTH_FORBIDDEN.getCode(), "角色不足: " + exception.getRole());
     }
 
     @ExceptionHandler(value = IOException.class)

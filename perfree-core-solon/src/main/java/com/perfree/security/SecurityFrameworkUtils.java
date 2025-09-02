@@ -1,31 +1,18 @@
 package com.perfree.security;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.perfree.security.vo.LoginUserVO;
+import com.perfree.system.api.user.UserApi;
+import com.perfree.system.api.user.dto.UserRespDTO;
+import org.noear.solon.Solon;
 import org.springframework.lang.Nullable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * @author Perfree
- * @description Security工具类
+ * @description Security工具类 - 基于sa-token实现
  * @date 15:39 2023/9/28
  */
 public class SecurityFrameworkUtils {
-
-    /**
-     * 获得当前认证信息
-     *
-     * @return 认证信息
-     */
-    public static Authentication getAuthentication() {
-        SecurityContext context = SecurityContextHolder.getContext();
-        if (context == null) {
-            return null;
-        }
-        return context.getAuthentication();
-    }
-
 
     /**
      * 获取当前登录用户
@@ -34,18 +21,51 @@ public class SecurityFrameworkUtils {
      */
     @Nullable
     public static LoginUserVO getLoginUser() {
-        Authentication authentication = getAuthentication();
-        if (null == authentication || null == authentication.getPrincipal()) {
+        if (!StpUtil.isLogin()) {
             return null;
         }
-        if (authentication.getPrincipal() instanceof LoginUserVO){
-            return (LoginUserVO) authentication.getPrincipal();
+        
+        // 从sa-token session中获取用户信息
+        LoginUserVO loginUser = (LoginUserVO) StpUtil.getSession().get("loginUser");
+        if (loginUser != null) {
+            return loginUser;
         }
+        
+        // 如果session中没有，则根据loginId查询用户信息
+        String account = (String) StpUtil.getLoginId();
+        UserApi userApi = Solon.context().getBean(UserApi.class);
+        UserRespDTO userRespDTO = userApi.findByAccount(account);
+        if (userRespDTO != null) {
+            loginUser = new LoginUserVO();
+            loginUser.setId(userRespDTO.getId());
+            loginUser.setAccount(userRespDTO.getAccount());
+            // 缓存到session中
+            StpUtil.getSession().set("loginUser", loginUser);
+            return loginUser;
+        }
+        
         return null;
     }
 
     public static Integer getLoginUserId() {
         LoginUserVO loginUser = getLoginUser();
         return null == loginUser ? null : loginUser.getId();
+    }
+
+    /**
+     * 检查是否已登录
+     */
+    public static boolean isLogin() {
+        return StpUtil.isLogin();
+    }
+
+    /**
+     * 获取当前登录账号
+     */
+    public static String getLoginAccount() {
+        if (!StpUtil.isLogin()) {
+            return null;
+        }
+        return (String) StpUtil.getLoginId();
     }
 }

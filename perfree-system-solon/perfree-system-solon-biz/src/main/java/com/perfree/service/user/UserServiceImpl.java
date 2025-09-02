@@ -27,12 +27,11 @@ import com.perfree.model.User;
 import com.perfree.model.UserRole;
 import com.perfree.security.SecurityConstants;
 import com.perfree.security.SecurityFrameworkUtils;
-import com.perfree.security.util.JwtUtil;
+import com.perfree.security.util.SaTokenUtil;
 import com.perfree.security.vo.LoginUserVO;
 import com.perfree.service.async.AsyncService;
 import com.perfree.service.menu.MenuService;
 import com.perfree.system.api.option.dto.OptionDTO;
-import io.jsonwebtoken.Claims;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.solon.annotation.Db;
@@ -41,8 +40,6 @@ import org.noear.solon.annotation.Inject;
 import org.noear.solon.data.annotation.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -102,20 +99,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!hexPassword.equals(user.getPassword())) {
             throw new ServiceException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
         }
-        // 生成Token
-        String token = JwtUtil.generateToken(user.getAccount(), false);
-        Date expirationDate = new Date(System.currentTimeMillis() + SecurityConstants.REFRESH_TOKEN_EXPIRATION_TIME * 1000);
-        // 生成refreshToken
-        String refreshToken = JwtUtil.getRefreshToken(user.getAccount(), expirationDate);
+        // 使用sa-token登录
+        String token = SaTokenUtil.login(user.getId(), false);
+        Date expirationDate = new Date(
+                System.currentTimeMillis() + SecurityConstants.REFRESH_TOKEN_EXPIRATION_TIME * 1000);
+
         // 组装返回信息
         LoginUserRespVO loginUserRespVO = new LoginUserRespVO();
         loginUserRespVO.setUserId(user.getId());
         loginUserRespVO.setAccessToken(token);
-        loginUserRespVO.setRefreshToken(refreshToken);
+        loginUserRespVO.setRefreshToken(token); // sa-token统一使用token
         loginUserRespVO.setExpiresTime(expirationDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
-
-        Authentication authentication = JwtUtil.getAuthentication(token);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
         // 记录登录时间及IP
         user.setLoginIp(WebUtils.getClientIP());
         user.setLoginDate(LocalDateTime.now());
@@ -305,7 +299,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     @Transaction
     public User register(RegisterUserReqVO reqVO) {
-        String isOpenRegister = optionCacheService.getDefaultValue(OptionEnum.WEB_IS_REGISTER.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, OptionConstant.OPTION_PUBLIC_TRUE);
+        String isOpenRegister = optionCacheService.getDefaultValue(OptionEnum.WEB_IS_REGISTER.getKey(),
+                OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, OptionConstant.OPTION_PUBLIC_TRUE);
         if (isOpenRegister.equals(OptionConstant.OPTION_PUBLIC_FALSE)) {
             throw new ServiceException(NOT_ALLOW_REGISTER);
         }
@@ -330,7 +325,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.insert(user);
 
         // 处理默认角色
-        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_REGISTER_DEFAULT_ROLE.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING);
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_REGISTER_DEFAULT_ROLE.getKey(),
+                OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING);
         if (null != option && StringUtils.isNotBlank(option.getValue())) {
             UserRole userRole = new UserRole();
             userRole.setUserId(user.getId());
@@ -342,22 +338,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public LoginUserRespVO refreshToken(String refreshToken) {
-        boolean verifyRefreshToken = JwtUtil.verifyRefreshToken(refreshToken);
-        if (!verifyRefreshToken) {
+        // 使用sa-token验证token
+        String account = SaTokenUtil.getAccountByToken(refreshToken);
+        if (account == null) {
             throw new ServiceException(ErrorCode.REFRESH_TOKEN_VALID_FAIL);
         }
-        Claims refreshTokenBody = JwtUtil.getRefreshTokenBody(refreshToken);
-        String account = refreshTokenBody.getSubject();
+
         User user = userMapper.findByAccount(account);
         if (null == user) {
             throw new ServiceException(ErrorCode.ACCOUNT_NOT_FOUNT);
         }
-        // 生成Token
-        String token = JwtUtil.generateToken(user.getAccount(), false);
+
+        // 刷新token
+        String newToken = SaTokenUtil.refreshToken();
+        if (newToken == null) {
+            throw new ServiceException(ErrorCode.REFRESH_TOKEN_VALID_FAIL);
+        }
+
         LoginUserRespVO loginUserRespVO = new LoginUserRespVO();
         loginUserRespVO.setUserId(user.getId());
-        loginUserRespVO.setRefreshToken(refreshToken);
-        loginUserRespVO.setAccessToken(token);
+        loginUserRespVO.setRefreshToken(newToken);
+        loginUserRespVO.setAccessToken(newToken);
         return loginUserRespVO;
     }
 
@@ -399,10 +400,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return true;
     }
 
-
-    private void validCaptchaHandle(String uuid, String code){
+    private void validCaptchaHandle(String uuid, String code) {
         String captcha = captchaCacheService.getCaptcha(uuid);
-        if (StringUtils.isBlank(captcha)){
+        if (StringUtils.isBlank(captcha)) {
             throw new ServiceException(ErrorCode.CAPTCHA_EXPIRE);
         }
         captchaCacheService.removeCaptcha(uuid);
@@ -410,13 +410,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new ServiceException(ErrorCode.CAPTCHA_VALID_ERROR);
         }
     }
+
     /**
      * 校验验证码
+     * 
      * @param uuid uuid
      * @param code code
      */
-    private void validCaptcha(String uuid, String code){
-        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_OPEN_CAPTCHA.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING);
+    private void validCaptcha(String uuid, String code) {
+        OptionDTO option = optionCacheService.getOption(OptionEnum.WEB_OPEN_CAPTCHA.getKey(),
+                OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING);
         if (null == option || option.getValue().equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
             if (StringUtils.isBlank(uuid) || StringUtils.isBlank(code)) {
                 throw new ServiceException(ErrorCode.CAPTCHA_IS_NOT_EMPTY);

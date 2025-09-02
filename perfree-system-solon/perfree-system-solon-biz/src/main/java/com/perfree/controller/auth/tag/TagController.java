@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.tag;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -13,9 +14,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -50,7 +48,7 @@ public class TagController extends BaseController {
     @Post
     @Mapping("/add")
     @Operation(summary = "新增标签")
-    @PreAuthorize("@ss.hasPermission('admin:tag:create')")
+    @SaCheckPermission("admin:tag:create")
     public CommonResult<TagRespVO> add(@Body @Valid TagCreateReqVO tagCreateReqVO) {
         com.perfree.model.Tag tag = tagService.add(tagCreateReqVO);
         return CommonResult.success(TagConvert.INSTANCE.convertRespVO(tag));
@@ -66,7 +64,7 @@ public class TagController extends BaseController {
     @Put
     @Mapping("/update")
     @Operation(summary = "修改标签")
-    @PreAuthorize("@ss.hasPermission('admin:tag:update')")
+    @SaCheckPermission("admin:tag:update")
     public CommonResult<Boolean> update(@Body @Valid TagUpdateReqVO tagUpdateReqVO) {
         return CommonResult.success(tagService.updateTag(tagUpdateReqVO));
     }
@@ -75,7 +73,7 @@ public class TagController extends BaseController {
     @Delete
     @Mapping("/del")
     @Operation(summary = "根据id删除标签")
-    @PreAuthorize("@ss.hasPermission('admin:tag:delete')")
+    @SaCheckPermission("admin:tag:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return CommonResult.success(tagService.del(id));
     }

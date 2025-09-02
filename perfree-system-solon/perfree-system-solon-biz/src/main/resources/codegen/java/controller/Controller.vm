@@ -40,9 +40,9 @@ public class ${table.className}Controller {
     @PostMapping("/page")
     @Operation(summary = "${table.comment}分页列表")
     #if(${table.scene} == "1")
-    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:query')")
+    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:query")
     #else
-    @PreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:query')")
+    @SaCheckPermission("admin:${table.lowerFirstClassName}:query")
     #end
     public CommonResult<PageResult<${table.className}RespVO>> page(@Body ${table.className}PageReqVO pageVO) {
         PageResult<${table.className}> ${table.lowerFirstClassName}PageResult = ${table.lowerFirstClassName}Service.${table.lowerFirstClassName}Page(pageVO);
@@ -52,9 +52,9 @@ public class ${table.className}Controller {
     @PostMapping("/add")
     @Operation(summary = "添加${table.comment}")
     #if(${table.scene} == "1")
-    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:create')")
+    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:create")
     #else
-    @PreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:create')")
+    @SaCheckPermission("admin:${table.lowerFirstClassName}:create")
     #end
     public CommonResult<${table.className}RespVO> add(@Body @Valid ${table.className}AddReqVO ${table.lowerFirstClassName}AddReqVO) {
         return success(${table.className}Convert.INSTANCE.convertRespVO(${table.lowerFirstClassName}Service.add(${table.lowerFirstClassName}AddReqVO)));
@@ -63,9 +63,9 @@ public class ${table.className}Controller {
     @PostMapping("/update")
     @Operation(summary = "更新${table.comment}")
     #if(${table.scene} == "1")
-    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:update')")
+    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:update")
     #else
-    @PreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:update')")
+    @SaCheckPermission("admin:${table.lowerFirstClassName}:update")
     #end
     public CommonResult<${table.className}RespVO> update(@Body @Valid ${table.className}UpdateReqVO ${table.lowerFirstClassName}UpdateReqVO) {
         return success(${table.className}Convert.INSTANCE.convertRespVO(${table.lowerFirstClassName}Service.update(${table.lowerFirstClassName}UpdateReqVO)));
@@ -80,9 +80,9 @@ public class ${table.className}Controller {
     @DeleteMapping("/del")
     @Operation(summary = "根据${table.primaryColumn}删除${table.comment}")
     #if(${table.scene} == "1")
-    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:delete')")
+    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:delete")
     #else
-    @PreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:delete')")
+    @SaCheckPermission("admin:${table.lowerFirstClassName}:delete")
     #end
     public CommonResult<Boolean> del(@Param(value = "${table.primaryColumn}") ${table.primaryColumnType} ${table.primaryColumn}) {
         return success(${table.lowerFirstClassName}Service.del(${table.primaryColumn}));
@@ -97,9 +97,9 @@ public class ${table.className}Controller {
     @PostMapping("/export")
     @Operation(summary = "导出${table.comment}")
     #if(${table.scene} == "1")
-    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:export')")
+    @PluginPreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:export")
     #else
-    @PreAuthorize("@ss.hasPermission('admin:${table.lowerFirstClassName}:export')")
+    @SaCheckPermission("admin:${table.lowerFirstClassName}:export")
     #end
     public void export(@Body ${table.className}ExportReqVO exportReqVO, HttpServletResponse response) {
         List<${table.className}> ${table.lowerFirstClassName}List = ${table.lowerFirstClassName}Service.queryExportData(exportReqVO);

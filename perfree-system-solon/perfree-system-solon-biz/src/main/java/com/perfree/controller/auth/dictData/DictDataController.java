@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.dictData;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -14,9 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +34,7 @@ public class DictDataController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "数据字典值分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:dictData:query')")
+    @SaCheckPermission("admin:dictData:query")
     public CommonResult<PageResult<DictDataRespVO>> page(@Body DictDataPageReqVO pageVO) {
         startPage(pageVO);
         List<DictData> dictDataPageResult = dictDataService.dictDataPage(pageVO);
@@ -50,7 +48,7 @@ public class DictDataController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加数据字典值")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:dictData:create')")
+    @SaCheckPermission("admin:dictData:create")
     public CommonResult<DictDataRespVO> add(@Body @Valid DictDataAddReqVO dictDataAddReqVO) {
         return success(DictDataConvert.INSTANCE.convertRespVO(dictDataService.add(dictDataAddReqVO)));
     }
@@ -59,7 +57,7 @@ public class DictDataController extends BaseController {
     @Mapping("/update") 
     @Operation(summary = "更新数据字典值")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:dictData:update')")
+    @SaCheckPermission("admin:dictData:update")
     public CommonResult<DictDataRespVO> update(@Body @Valid DictDataUpdateReqVO dictDataUpdateReqVO) {
         return success(DictDataConvert.INSTANCE.convertRespVO(dictDataService.update(dictDataUpdateReqVO)));
     }
@@ -75,7 +73,7 @@ public class DictDataController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "根据id删除数据字典值")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:dictData:delete')")
+    @SaCheckPermission("admin:dictData:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(dictDataService.del(id));
     }

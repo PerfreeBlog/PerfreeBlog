@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.role;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -12,12 +13,9 @@ import com.perfree.model.RoleMenu;
 import com.perfree.service.role.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +40,7 @@ public class RoleController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "角色分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:role:query')")
+    @SaCheckPermission("admin:role:query")
     public CommonResult<PageResult<RoleRespVO>> page(@Body RolePageReqVO pageVO) {
         startPage(pageVO);
         List<Role> roleList = roleService.rolePage(pageVO);
@@ -65,7 +63,7 @@ public class RoleController extends BaseController {
     @Mapping("/assignRoleMenu")
     @Operation(summary = "设置角色菜单权限")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:role:permission')")
+    @SaCheckPermission("admin:role:permission")
     public CommonResult<Boolean> assignRoleMenu(@Body @Valid RoleMenuReqVO roleMenuReqVO) {
         return success(roleService.assignRoleMenu(roleMenuReqVO));
     }
@@ -88,7 +86,7 @@ public class RoleController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加角色")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:role:create')")
+    @SaCheckPermission("admin:role:create")
     public CommonResult<RoleRespVO> add(@Body @Valid RoleAddReqVO roleAddReqVO) {
         return success(RoleConvert.INSTANCE.convertRespVO(roleService.add(roleAddReqVO)));
     }
@@ -97,7 +95,7 @@ public class RoleController extends BaseController {
     @Mapping("/update")
     @Operation(summary = "更新角色")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:role:update')")
+    @SaCheckPermission("admin:role:update")
     public CommonResult<RoleRespVO> update(@Body @Valid RoleUpdateReqVO roleUpdateReqVO) {
         return success(RoleConvert.INSTANCE.convertRespVO(roleService.update(roleUpdateReqVO)));
     }
@@ -106,7 +104,7 @@ public class RoleController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "删除角色")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:role:delete')")
+    @SaCheckPermission("admin:role:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(roleService.del(id));
     }

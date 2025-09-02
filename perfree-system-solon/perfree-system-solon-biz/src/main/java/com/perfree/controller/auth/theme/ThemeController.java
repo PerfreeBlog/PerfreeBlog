@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.theme;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
@@ -17,9 +18,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.File;
@@ -50,7 +48,7 @@ public class ThemeController {
     @Post
     @Mapping("installTheme")
     @Operation(summary = "安装主题")
-    @PreAuthorize("@ss.hasPermission('admin:theme:install')")
+    @SaCheckPermission("admin:theme:install")
     public CommonResult<ThemeInfo> installTheme(InstallThemeReqVO installThemeReqVO) throws IOException {
         String multiFileName = installThemeReqVO.getFile().getOriginalFilename();
         File dir = new File(SystemConstants.UPLOAD_TEMP_PATH);
@@ -69,7 +67,7 @@ public class ThemeController {
     @Post
     @Mapping("swatchTheme")
     @Operation(summary = "切换主题")
-    @PreAuthorize("@ss.hasPermission('admin:theme:swatchTheme')")
+    @SaCheckPermission("admin:theme:swatchTheme")
     public CommonResult<Boolean> swatchTheme(@Param(value = "themePath") String themePath) {
         return success(themeManager.swatchTheme(themePath));
     }
@@ -78,7 +76,7 @@ public class ThemeController {
     @Delete
     @Mapping("unInstallTheme")
     @Operation(summary = "卸载主题")
-    @PreAuthorize("@ss.hasPermission('admin:theme:uninstall')")
+    @SaCheckPermission("admin:theme:uninstall")
     public CommonResult<Boolean> unInstallTheme(@Param(value = "themePath") String themePath) {
         Boolean result = themeManager.unInstallTheme(themePath);
         if (result) {
@@ -113,7 +111,7 @@ public class ThemeController {
     @Mapping("saveThemeFileContent")
     @Operation(summary = "保存主题文件内容")
     @ResponseBody
-    @PreAuthorize("@ss.hasPermission('admin:theme:edit')")
+    @SaCheckPermission("admin:theme:edit")
     public CommonResult<Boolean> saveThemeFileContent(@Body ThemeSaveFileContentReqVO themeSaveFileContentReqVO) {
         return success(themeManager.saveThemeFileContent(themeSaveFileContentReqVO.getPath(),
                 themeSaveFileContentReqVO.getThemePath(), themeSaveFileContentReqVO.getContent()));

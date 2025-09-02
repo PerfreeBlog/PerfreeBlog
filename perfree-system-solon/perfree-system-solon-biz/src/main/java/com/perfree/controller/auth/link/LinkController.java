@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.link;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -17,8 +18,6 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class LinkController extends BaseController {
     @Post
     @Mapping("/add")
     @Operation(summary = "添加友链")
-    @PreAuthorize("@ss.hasPermission('admin:link:create')")
+    @SaCheckPermission("admin:link:create")
     public CommonResult<LinkRespVO> add(@Body @Valid LinkAddReqVO linkAddReqVO) {
         Link link = linkService.addLink(linkAddReqVO);
         return success(LinkConvert.INSTANCE.convertRespVO(link));
@@ -56,7 +55,7 @@ public class LinkController extends BaseController {
     @Put
     @Mapping("/update")
     @Operation(summary = "更新友链")
-    @PreAuthorize("@ss.hasPermission('admin:link:update')")
+    @SaCheckPermission("admin:link:update")
     public CommonResult<LinkRespVO> update(@Body @Valid LinkUpdateReqVO linkUpdateReqVO) {
         Link link = linkService.updateLink(linkUpdateReqVO);
         return success(LinkConvert.INSTANCE.convertRespVO(link));
@@ -72,7 +71,7 @@ public class LinkController extends BaseController {
     @Delete
     @Mapping("/del")
     @Operation(summary = "删除友链")
-    @PreAuthorize("@ss.hasPermission('admin:link:delete')")
+    @SaCheckPermission("admin:link:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(linkService.del(id));
     }

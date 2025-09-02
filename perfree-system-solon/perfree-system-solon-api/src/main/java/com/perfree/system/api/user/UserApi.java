@@ -13,4 +13,11 @@ public interface UserApi {
      * @return UserRespDTO
      */
     UserRespDTO findByAccount(String account);
+
+    /**
+     * 根据用户ID获取用户信息
+     * @param userId 用户ID
+     * @return UserRespDTO
+     */
+    UserRespDTO findById(Integer userId);
 }

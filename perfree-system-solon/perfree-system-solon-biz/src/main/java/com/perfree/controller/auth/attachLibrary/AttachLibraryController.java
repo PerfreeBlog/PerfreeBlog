@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.attachLibrary;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.ListUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
@@ -16,11 +17,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.servlet.http.HttpServletResponse;
 import com.perfree.commons.excel.ExcelUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +53,7 @@ public class AttachLibraryController extends BaseController {
     @Post
     @Mapping("/add")
     @Operation(summary = "添加附件库")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibrary:create')")
+    @SaCheckPermission("admin:attachLibrary:create")
     public CommonResult<AttachLibraryRespVO> add(@Body @Valid AttachLibraryAddReqVO attachLibraryAddReqVO) {
         return success(AttachLibraryConvert.INSTANCE.convertRespVO(attachLibraryService.add(attachLibraryAddReqVO)));
     }
@@ -63,7 +61,7 @@ public class AttachLibraryController extends BaseController {
     @Post
     @Mapping("/update")
     @Operation(summary = "更新附件库")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibrary:update')")
+    @SaCheckPermission("admin:attachLibrary:update")
     public CommonResult<AttachLibraryRespVO> update(@Body @Valid AttachLibraryUpdateReqVO attachLibraryUpdateReqVO) {
         return success(AttachLibraryConvert.INSTANCE.convertRespVO(attachLibraryService.update(attachLibraryUpdateReqVO)));
     }
@@ -78,7 +76,7 @@ public class AttachLibraryController extends BaseController {
     @Delete
     @Mapping("/del")
     @Operation(summary = "根据id删除附件库")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibrary:delete')")
+    @SaCheckPermission("admin:attachLibrary:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(attachLibraryService.del(id));
     }
@@ -93,7 +91,7 @@ public class AttachLibraryController extends BaseController {
     @Post
     @Mapping("/export")
     @Operation(summary = "导出附件库")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibrary:export')")
+    @SaCheckPermission("admin:attachLibrary:export")
     public void export(@Body AttachLibraryExportReqVO exportReqVO, HttpServletResponse response) {
         List<AttachLibrary> attachLibraryList = attachLibraryService.queryExportData(exportReqVO);
         ExcelUtils.renderExcel(response, AttachLibraryConvert.INSTANCE.convertToExcelVOList(attachLibraryList), AttachLibraryExcelVO.class, "附件库数据","附件库数据.xlsx");

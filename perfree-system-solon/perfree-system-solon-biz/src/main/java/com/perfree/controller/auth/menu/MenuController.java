@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.menu;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.controller.auth.menu.vo.MenuAddOrUpdateReqVO;
 import com.perfree.controller.auth.menu.vo.MenuListReqVO;
@@ -15,7 +16,6 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,7 +39,7 @@ public class MenuController {
     @Post
     @Mapping("/page")
     @Operation(summary = "菜单页面列表")
-    @PreAuthorize("@ss.hasPermission('admin:menu:query')")
+    @SaCheckPermission("admin:menu:query")
     public CommonResult<List<MenuRespVO>> page(@Body MenuListReqVO pageVO) {
         List<Menu> menuList = menuService.menuList(pageVO);
         return success(MenuConvert.INSTANCE.convertListVO(menuList));
@@ -65,7 +65,7 @@ public class MenuController {
     @Mapping("/add")
     @Operation(summary = "添加菜单")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:menu:create')")
+    @SaCheckPermission("admin:menu:create")
     public CommonResult<MenuRespVO> add(@Body @Valid MenuAddOrUpdateReqVO menuAddOrUpdateReqVO) {
         Menu menu = menuService.addOrUpdate(menuAddOrUpdateReqVO);
         return success(MenuConvert.INSTANCE.convertRespVO(menu));
@@ -75,7 +75,7 @@ public class MenuController {
     @Mapping("/update")
     @Operation(summary = "更新菜单")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:menu:update')")
+    @SaCheckPermission("admin:menu:update")
     public CommonResult<MenuRespVO> update(@Body @Valid MenuAddOrUpdateReqVO menuAddOrUpdateReqVO) {
         Menu menu = menuService.addOrUpdate(menuAddOrUpdateReqVO);
         return success(MenuConvert.INSTANCE.convertRespVO(menu));
@@ -85,7 +85,7 @@ public class MenuController {
     @Mapping("/del")
     @Operation(summary = "删除菜单")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:menu:del')")
+    @SaCheckPermission("admin:menu:del")
     public CommonResult<Boolean> del(@Param(value = "id") String id) {
         return success(menuService.del(id));
     }

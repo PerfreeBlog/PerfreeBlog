@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.attachLibraryItems;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.ListUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
@@ -16,10 +17,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.servlet.http.HttpServletResponse;
 import com.perfree.commons.excel.ExcelUtils;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +53,7 @@ public class AttachLibraryItemsController extends BaseController {
     @Post
     @Mapping("/add")
     @Operation(summary = "添加附件库数据")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibraryItems:create')")
+    @SaCheckPermission("admin:attachLibraryItems:create")
     public CommonResult<AttachLibraryItemsRespVO> add(@Body @Valid AttachLibraryItemsAddReqVO attachLibraryItemsAddReqVO) {
         return success(AttachLibraryItemsConvert.INSTANCE.convertRespVO(attachLibraryItemsService.add(attachLibraryItemsAddReqVO)));
     }
@@ -62,7 +61,7 @@ public class AttachLibraryItemsController extends BaseController {
     @Post
     @Mapping("/batchAdd")
     @Operation(summary = "批量添加附件库数据")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibraryItems:batchAdd')")
+    @SaCheckPermission("admin:attachLibraryItems:batchAdd")
     public CommonResult<List<AttachLibraryItemsRespVO>> batchAdd(@Body @Valid AttachLibraryItemsBatchAddReqVO attachLibraryItemsAddReqVO) {
         return success(AttachLibraryItemsConvert.INSTANCE.convertListRespVO(attachLibraryItemsService.batchAdd(attachLibraryItemsAddReqVO)));
     }
@@ -70,7 +69,7 @@ public class AttachLibraryItemsController extends BaseController {
     @Post
     @Mapping("/update")
     @Operation(summary = "更新附件库数据")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibraryItems:update')")
+    @SaCheckPermission("admin:attachLibraryItems:update")
     public CommonResult<AttachLibraryItemsRespVO> update(@Body @Valid AttachLibraryItemsUpdateReqVO attachLibraryItemsUpdateReqVO) {
         return success(AttachLibraryItemsConvert.INSTANCE.convertRespVO(attachLibraryItemsService.update(attachLibraryItemsUpdateReqVO)));
     }
@@ -85,7 +84,7 @@ public class AttachLibraryItemsController extends BaseController {
     @Post
     @Mapping("/del")
     @Operation(summary = "根据id删除附件库数据")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibraryItems:delete')")
+    @SaCheckPermission("admin:attachLibraryItems:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(attachLibraryItemsService.del(id));
     }
@@ -100,7 +99,7 @@ public class AttachLibraryItemsController extends BaseController {
     @Post
     @Mapping("/export")
     @Operation(summary = "导出附件库数据")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibraryItems:export')")
+    @SaCheckPermission("admin:attachLibraryItems:export")
     public void export(@Body AttachLibraryItemsExportReqVO exportReqVO, HttpServletResponse response) {
         List<AttachLibraryItems> attachLibraryItemsList = attachLibraryItemsService.queryExportData(exportReqVO);
         ExcelUtils.renderExcel(response, AttachLibraryItemsConvert.INSTANCE.convertToExcelVOList(attachLibraryItemsList), AttachLibraryItemsExcelVO.class, "附件库数据数据","附件库数据数据.xlsx");

@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.article;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.ListUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
@@ -18,7 +19,6 @@ import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,7 +50,7 @@ public class ArticleController extends BaseController {
     @Post
     @Mapping("/createArticle")
     @Operation(summary = "发表文章")
-    @PreAuthorize("@ss.hasPermission('admin:article:create')")
+    @SaCheckPermission("admin:article:create")
     public CommonResult<ArticleRespVO> createArticle(@Body @Valid ArticleAddReqVO articleAddReqVO) {
         Article article = articleService.createArticle(articleAddReqVO);
         return CommonResult.success(ArticleConvert.INSTANCE.convertRespVO(article));
@@ -59,7 +59,7 @@ public class ArticleController extends BaseController {
     @Put
     @Mapping("/updateArticle")
     @Operation(summary = "修改文章")
-    @PreAuthorize("@ss.hasPermission('admin:article:update')")
+    @SaCheckPermission("admin:article:update")
     public CommonResult<ArticleRespVO> updateArticle(@Body @Valid ArticleUpdateReqVO articleUpdateReqVO) {
         Article article = articleService.updateArticle(articleUpdateReqVO);
         return CommonResult.success(ArticleConvert.INSTANCE.convertRespVO(article));
@@ -69,7 +69,7 @@ public class ArticleController extends BaseController {
     @Post
     @Mapping("/updateIsComment")
     @Operation(summary = "修改是否允许评论")
-    @PreAuthorize("@ss.hasPermission('admin:article:updateIsComment')")
+    @SaCheckPermission("admin:article:updateIsComment")
     public CommonResult<Boolean> updateIsComment(@Body @Valid ArticleUpdateIsCommentReqVO articleUpdateIsCommentReqVO) {
         return CommonResult.success(articleService.updateIsComment(articleUpdateIsCommentReqVO));
     }
@@ -77,7 +77,7 @@ public class ArticleController extends BaseController {
     @Put
     @Mapping("/updateVisibility")
     @Operation(summary = "修改是否可见")
-    @PreAuthorize("@ss.hasPermission('admin:article:updateVisibility')")
+    @SaCheckPermission("admin:article:updateVisibility")
     public CommonResult<Boolean> updateVisibility(@Body @Valid ArticleUpdateVisibilityReqVO updateReqVO) {
         return CommonResult.success(articleService.updateVisibility(updateReqVO));
     }
@@ -85,7 +85,7 @@ public class ArticleController extends BaseController {
     @Post
     @Mapping("/updateIsTop")
     @Operation(summary = "修改是否置顶")
-    @PreAuthorize("@ss.hasPermission('admin:article:updateIsTop')")
+    @SaCheckPermission("admin:article:updateIsTop")
     public CommonResult<Boolean> updateIsTop(@Body @Valid ArticleUpdateIsTopReqVO articleUpdateIsTopReqVO) {
         return CommonResult.success(articleService.updateIsTop(articleUpdateIsTopReqVO));
     }
@@ -93,7 +93,7 @@ public class ArticleController extends BaseController {
     @Post
     @Mapping("/updateStatus")
     @Operation(summary = "修改状态")
-    @PreAuthorize("@ss.hasPermission('admin:article:updateStatus')")
+    @SaCheckPermission("admin:article:updateStatus")
     public CommonResult<Boolean> updateStatus(@Body @Valid ArticleUpdateStatusReqVO articleUpdateStatusReqVO) {
         return CommonResult.success(articleService.updateStatus(articleUpdateStatusReqVO));
     }
@@ -101,7 +101,7 @@ public class ArticleController extends BaseController {
     @Delete
     @Mapping("/del")
     @Operation(summary = "根据id删除文章")
-    @PreAuthorize("@ss.hasPermission('admin:article:delete')")
+    @SaCheckPermission("admin:article:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return CommonResult.success(articleService.del(id));
     }

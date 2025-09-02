@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.dict;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -11,14 +12,8 @@ import com.perfree.model.Dict;
 import com.perfree.service.dict.DictService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.perfree.commons.common.CommonResult.pageSuccess;
@@ -39,7 +34,7 @@ public class DictController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "数据字典分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:dict:query')")
+    @SaCheckPermission("admin:dict:query")
     public CommonResult<PageResult<DictRespVO>> page(@Body DictPageReqVO pageVO) {
         startPage(pageVO);
         List<Dict> dictList = dictService.dictPage(pageVO);
@@ -50,7 +45,7 @@ public class DictController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加数据字典")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:dict:create')")
+    @SaCheckPermission("admin:dict:create")
     public CommonResult<DictRespVO> add(@Body @Valid DictAddReqVO dictAddReqVO) {
         return success(DictConvert.INSTANCE.convertRespVO(dictService.add(dictAddReqVO)));
     }
@@ -59,7 +54,7 @@ public class DictController extends BaseController {
     @Mapping("/update") 
     @Operation(summary = "更新数据字典")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:dict:update')")
+    @SaCheckPermission("admin:dict:update")
     public CommonResult<DictRespVO> update(@Body @Valid DictUpdateReqVO dictUpdateReqVO) {
         return success(DictConvert.INSTANCE.convertRespVO(dictService.update(dictUpdateReqVO)));
     }
@@ -75,7 +70,7 @@ public class DictController extends BaseController {
     @Mapping("/del")
     @DemoMode
     @Operation(summary = "根据id删除数据字典")
-    @PreAuthorize("@ss.hasPermission('admin:dict:delete')")
+    @SaCheckPermission("admin:dict:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(dictService.del(id));
     }

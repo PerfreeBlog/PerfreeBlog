@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.option;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.controller.auth.option.vo.OptionAddListReqVO;
 import com.perfree.controller.auth.option.vo.OptionRespVO;
@@ -13,11 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,7 +31,7 @@ public class OptionController {
     @Mapping("/saveOptionList")
     @Operation(summary = "保存配置项")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:option:saveOptionList')")
+    @SaCheckPermission("admin:option:saveOptionList")
     public CommonResult<Boolean> saveOptionList(@Body @Valid OptionAddListReqVO optionAddListReqVO) {
         return success(optionService.saveOptionList(optionAddListReqVO));
     }
@@ -59,7 +55,7 @@ public class OptionController {
     @Post
     @Mapping("/saveCurrentThemeSetting")
     @Operation(summary = "保存当前启用主题的设置项")
-    @PreAuthorize("@ss.hasPermission('admin:theme:updateSetting')")
+    @SaCheckPermission("admin:theme:updateSetting")
     public CommonResult<Boolean> saveCurrentThemeSetting(@Body @Valid OptionAddListReqVO optionAddListReqVO) {
         return success(optionService.saveCurrentThemeSetting(optionAddListReqVO));
     }

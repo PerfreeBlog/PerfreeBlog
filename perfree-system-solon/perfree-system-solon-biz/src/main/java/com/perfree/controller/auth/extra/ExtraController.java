@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.extra;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -18,8 +19,6 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,7 +44,7 @@ public class ExtraController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "附加数据分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:extra:query')")
+    @SaCheckPermission("admin:extra:query")
     public CommonResult<PageResult<ExtraRespVO>> page(@Body ExtraPageReqVO pageVO) {
         startPage(pageVO);
         List<Extra> extraList = extraService.extraPage(pageVO);
@@ -63,7 +62,7 @@ public class ExtraController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加附加数据")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:extra:create')")
+    @SaCheckPermission("admin:extra:create")
     public CommonResult<ExtraRespVO> add(@Body @Valid ExtraAddReqVO extraAddReqVO) {
         return success(ExtraConvert.INSTANCE.convertRespVO(extraService.add(extraAddReqVO)));
     }
@@ -72,7 +71,7 @@ public class ExtraController extends BaseController {
     @Mapping("/update")
     @Operation(summary = "更新附加数据")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:extra:update')")
+    @SaCheckPermission("admin:extra:update")
     public CommonResult<ExtraRespVO> update(@Body @Valid ExtraUpdateReqVO extraUpdateReqVO) {
         return success(ExtraConvert.INSTANCE.convertRespVO(extraService.updateExtra(extraUpdateReqVO)));
     }
@@ -81,7 +80,7 @@ public class ExtraController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "删除附加数据")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:extra:delete')")
+    @SaCheckPermission("admin:extra:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(extraService.del(id));
     }

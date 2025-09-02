@@ -9,18 +9,20 @@ import com.perfree.service.menu.MenuService;
 import com.perfree.service.role.RoleService;
 import com.perfree.system.api.permission.PermissionApi;
 import jakarta.annotation.Resource;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Service
+@Component
 public class PermissionApiImpl implements PermissionApi {
 
-    @Resource
+    @Inject
     private MenuService menuService;
 
-    @Resource
+    @Inject
     private RoleService roleService;
 
     @Override

@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.mailServer;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -11,16 +12,12 @@ import com.perfree.model.MailServer;
 import com.perfree.service.mailServer.MailServerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.servlet.http.HttpServletResponse;
 import com.perfree.commons.excel.ExcelUtils;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.perfree.commons.common.CommonResult.pageSuccess;
@@ -41,7 +38,7 @@ public class MailServerController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "邮箱服务分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:mailServer:query')")
+    @SaCheckPermission("admin:mailServer:query")
     public CommonResult<PageResult<MailServerRespVO>> page(@Body MailServerPageReqVO pageVO) {
         startPage(pageVO);
         List<MailServer> mailServerList = mailServerService.mailServerPage(pageVO);
@@ -52,7 +49,7 @@ public class MailServerController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加邮箱服务")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailServer:create')")
+    @SaCheckPermission("admin:mailServer:create")
     public CommonResult<MailServerRespVO> add(@Body @Valid MailServerAddReqVO mailServerAddReqVO) {
         return success(MailServerConvert.INSTANCE.convertRespVO(mailServerService.add(mailServerAddReqVO)));
     }
@@ -61,7 +58,7 @@ public class MailServerController extends BaseController {
     @Mapping("/update")
     @Operation(summary = "更新邮箱服务")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailServer:update')")
+    @SaCheckPermission("admin:mailServer:update")
     public CommonResult<MailServerRespVO> update(@Body @Valid MailServerUpdateReqVO mailServerUpdateReqVO) {
         return success(MailServerConvert.INSTANCE.convertRespVO(mailServerService.update(mailServerUpdateReqVO)));
     }
@@ -77,7 +74,7 @@ public class MailServerController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "根据id删除邮箱服务")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailServer:delete')")
+    @SaCheckPermission("admin:mailServer:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(mailServerService.del(id));
     }
@@ -92,7 +89,7 @@ public class MailServerController extends BaseController {
     @Post
     @Mapping("/export")
     @Operation(summary = "导出邮箱服务")
-    @PreAuthorize("@ss.hasPermission('admin:mailServer:export')")
+    @SaCheckPermission("admin:mailServer:export")
     public void export(@Body MailServerExportReqVO exportReqVO, HttpServletResponse response) {
         List<MailServer> mailServerList = mailServerService.queryExportData(exportReqVO);
         ExcelUtils.renderExcel(response, MailServerConvert.INSTANCE.convertToExcelVOList(mailServerList), MailServerExcelVO.class, "邮箱服务数据","邮箱服务数据.xlsx");

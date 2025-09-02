@@ -19,4 +19,10 @@ public class UserApiImpl implements UserApi {
         User byAccount = userService.findByAccount(account);
         return UserConvert.INSTANCE.convertDto(byAccount);
     }
+
+    @Override
+    public UserRespDTO findById(Integer userId) {
+        User byId = userService.get(userId);
+        return UserConvert.INSTANCE.convertDto(byId);
+    }
 }

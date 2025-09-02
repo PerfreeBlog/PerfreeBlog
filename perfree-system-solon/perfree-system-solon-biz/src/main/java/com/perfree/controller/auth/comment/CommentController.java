@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.comment;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -15,14 +16,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 import static com.perfree.commons.common.CommonResult.pageSuccess;
-import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "评论相关接口")
@@ -59,7 +56,7 @@ public class CommentController extends BaseController {
     @Delete
     @Mapping("/del")
     @Operation(summary = "根据id删除评论")
-    @PreAuthorize("@ss.hasPermission('admin:comment:delete')")
+    @SaCheckPermission("admin:comment:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return CommonResult.success(commentService.del(id));
     }
@@ -67,7 +64,7 @@ public class CommentController extends BaseController {
     @Post
     @Mapping("/updateStatus")
     @Operation(summary = "修改评论状态")
-    @PreAuthorize("@ss.hasPermission('admin:comment:audit')")
+    @SaCheckPermission("admin:comment:audit")
     public CommonResult<Boolean> updateStatus(@Body @Valid CommentUpdateStatusReqVO commentUpdateStatusReqVO) {
         return CommonResult.success(commentService.updateStatus(commentUpdateStatusReqVO));
     }

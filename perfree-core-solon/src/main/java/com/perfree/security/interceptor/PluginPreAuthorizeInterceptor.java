@@ -1,5 +1,6 @@
 package com.perfree.security.interceptor;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.http.ContentType;
 import cn.hutool.json.JSONUtil;
 import com.perfree.commons.common.CommonResult;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.lang.reflect.Method;
 
 /**
- * 定义插件权限拦截器
+ * 定义插件权限拦截器 - 基于sa-token实现
  */
 @Component
 public class PluginPreAuthorizeInterceptor implements HandlerInterceptor {
@@ -30,6 +31,13 @@ public class PluginPreAuthorizeInterceptor implements HandlerInterceptor {
             Method method = handlerMethod.getMethod();
             PluginPreAuthorize annotation = method.getAnnotation(PluginPreAuthorize.class);
             if (annotation != null) {
+                // 首先检查是否登录
+                if (!StpUtil.isLogin()) {
+                    WebUtils.renderString(HttpServletResponse.SC_UNAUTHORIZED, ContentType.JSON.getValue(), response,
+                            JSONUtil.toJsonStr(CommonResult.error(ResultCodeEnum.SC_UNAUTHORIZED.getCode(), "未登录")));
+                    return false;
+                }
+                
                 String expression = annotation.value();
 
                 // 使用 SpEL 解析表达式

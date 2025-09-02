@@ -1,5 +1,6 @@
 package com.perfree.controller.common.attachLibrary;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import cn.hutool.core.collection.ListUtil;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
@@ -13,9 +14,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -33,7 +31,7 @@ public class AttachLibraryController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "附件库分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:attachLibrary:query')")
+    @SaCheckPermission("admin:attachLibrary:query")
     public CommonResult<PageResult<AttachLibraryRespVO>> page(@Body AttachLibraryPageReqVO pageVO) {
         SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
                 new SortingField("createTime", SortingField.ORDER_DESC)

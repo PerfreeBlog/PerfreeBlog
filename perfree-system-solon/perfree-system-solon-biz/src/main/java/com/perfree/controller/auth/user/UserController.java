@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.user;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -20,13 +21,9 @@ import com.perfree.service.attach.AttachService;
 import com.perfree.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -52,7 +49,7 @@ public class UserController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "用户分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:user:query')")
+    @SaCheckPermission("admin:user:query")
     public CommonResult<PageResult<UserRespVO>> page(@Body UserPageReqVO pageVO) {
         startPage(pageVO);
         List<User> userList = userService.userPage(pageVO);
@@ -70,7 +67,7 @@ public class UserController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:create')")
+    @SaCheckPermission("admin:user:create")
     public CommonResult<UserRespVO> add(@Body @Valid UserAddReqVO userAddReqVO) {
         return success(UserConvert.INSTANCE.convertRespVO(userService.addUser(userAddReqVO)));
     }
@@ -79,7 +76,7 @@ public class UserController extends BaseController {
     @Mapping("/update")
     @Operation(summary = "更新")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:update')")
+    @SaCheckPermission("admin:user:update")
     public CommonResult<UserRespVO> update(@Body @Valid UserUpdateReqVO userUpdateReqVO) {
         return success(UserConvert.INSTANCE.convertRespVO(userService.updateUser(userUpdateReqVO)));
     }
@@ -88,7 +85,7 @@ public class UserController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "删除用户")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:delete')")
+    @SaCheckPermission("admin:user:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(userService.del(id));
     }
@@ -97,7 +94,7 @@ public class UserController extends BaseController {
     @Mapping("/updateUserRole")
     @Operation(summary = "更新用户角色")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:configRole')")
+    @SaCheckPermission("admin:user:configRole")
     public CommonResult<Boolean> updateUserRole(@Body @Valid UserRoleReqVO userRoleReqVO) {
         return success(userService.updateUserRole(userRoleReqVO));
     }
@@ -113,7 +110,7 @@ public class UserController extends BaseController {
     @Mapping("/resetPassword")
     @Operation(summary = "重置密码")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:resetPassword')")
+    @SaCheckPermission("admin:user:resetPassword")
     public CommonResult<Boolean> resetPassword(@Body @Valid UserResetPasswordReqVO resetPasswordReqVO) {
         return success(userService.resetPassword(resetPasswordReqVO));
     }
@@ -121,7 +118,7 @@ public class UserController extends BaseController {
     @Post
     @Mapping("/export")
     @Operation(summary = "导出用户")
-    @PreAuthorize("@ss.hasPermission('admin:user:export')")
+    @SaCheckPermission("admin:user:export")
     public void export(@Body UserExportReqVO exportReqVO, HttpServletResponse response) {
         List<User> userList = userService.queryExportData(exportReqVO);
         ExcelUtils.renderExcel(response, UserConvert.INSTANCE.convertToExcelVOList(userList), UserExcelVO.class, "用户数据","用户数据.xlsx");
@@ -131,7 +128,7 @@ public class UserController extends BaseController {
     @Mapping("/updateStatus")
     @Operation(summary = "修改状态")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:updateStatus')")
+    @SaCheckPermission("admin:user:updateStatus")
     public CommonResult<Boolean> updateStatus(@Body UserStatusReqVO userStatusReqVO) {
         return success(userService.updateStatus(userStatusReqVO));
     }
@@ -139,7 +136,7 @@ public class UserController extends BaseController {
     @Post
     @Mapping("/uploadAvatar")
     @Operation(summary = "修改头像")
-    @PreAuthorize("@ss.hasPermission('admin:user:uploadAvatar')")
+    @SaCheckPermission("admin:user:uploadAvatar")
     public CommonResult<String> upload(AttachUploadVO attachUploadVO) {
         String contentType = attachUploadVO.getFile().getContentType();
         boolean isImage = FileTypeUtils.isImage(contentType);
@@ -160,7 +157,7 @@ public class UserController extends BaseController {
     @Mapping("/updateProfile")
     @Operation(summary = "修改个人信息")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:updateProfile')")
+    @SaCheckPermission("admin:user:updateProfile")
     public CommonResult<UserRespVO> updateProfile(@Body @Valid UserProfileUpdateReqVO userProfileUpdateReqVO) {
         return success(UserConvert.INSTANCE.convertRespVO(userService.updateProfile(userProfileUpdateReqVO)));
     }
@@ -169,7 +166,7 @@ public class UserController extends BaseController {
     @Mapping("/updatePassword")
     @Operation(summary = "修改密码")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:user:updatePassword')")
+    @SaCheckPermission("admin:user:updatePassword")
     public CommonResult<Boolean> updatePassword(@Body @Valid UserUpdatePasswordReqVO userUpdatePasswordReqVO) {
         return success(userService.updatePassword(userUpdatePasswordReqVO));
     }

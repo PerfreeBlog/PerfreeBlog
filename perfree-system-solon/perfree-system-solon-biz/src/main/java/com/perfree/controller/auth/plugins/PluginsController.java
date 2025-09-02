@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.plugins;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -15,11 +16,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -37,7 +33,7 @@ public class PluginsController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "插件分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:plugin:query')")
+    @SaCheckPermission("admin:plugin:query")
     public CommonResult<PageResult<PluginsRespVO>> page(@Body PluginsPageReqVO pageVO) {
         startPage(pageVO);
         List<Plugins> pluginsList = pluginsService.pluginsPage(pageVO);
@@ -49,7 +45,7 @@ public class PluginsController extends BaseController {
     @Mapping("/installPlugin")
     @Operation(summary = "插件安装")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:plugin:install')")
+    @SaCheckPermission("admin:plugin:install")
     public CommonResult<Boolean> installPlugin(InstallPluginReqVO installPluginReqVO) {
         return success( pluginsService.installPlugin(installPluginReqVO.getFile()));
     }
@@ -58,7 +54,7 @@ public class PluginsController extends BaseController {
     @Mapping("/disablePlugin")
     @Operation(summary = "插件禁用")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:plugin:disable')")
+    @SaCheckPermission("admin:plugin:disable")
     public CommonResult<Boolean> disablePlugin(@Param(value = "pluginId") String pluginId) {
         return success( pluginsService.disablePlugin(pluginId));
     }
@@ -67,7 +63,7 @@ public class PluginsController extends BaseController {
     @Mapping("/enablePlugin")
     @Operation(summary = "插件启用")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:plugin:enable')")
+    @SaCheckPermission("admin:plugin:enable")
     public CommonResult<Boolean> enablePlugin(@Param(value = "pluginId") String pluginId) {
         return success( pluginsService.enablePlugin(pluginId));
     }
@@ -76,7 +72,7 @@ public class PluginsController extends BaseController {
     @Mapping("/uninstallPlugin")
     @Operation(summary = "卸载插件")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:plugin:uninstall')")
+    @SaCheckPermission("admin:plugin:uninstall")
     public CommonResult<Boolean> uninstallPlugin(@Param(value = "pluginId") String pluginId) {
         return success( pluginsService.unInstallPlugin(pluginId));
     }

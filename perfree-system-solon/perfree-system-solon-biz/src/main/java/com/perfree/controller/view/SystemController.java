@@ -1,5 +1,6 @@
 package com.perfree.controller.view;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.perfree.base.BaseViewController;
 import com.perfree.commons.annotation.FrontViewNodeRender;
 import com.perfree.service.rss.RssService;
@@ -12,8 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import org.apache.commons.lang3.StringUtils;
 import org.noear.solon.annotation.*;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -60,7 +59,7 @@ public class SystemController extends BaseViewController {
         if (session != null) {
             session.invalidate();
         }
-        SecurityContextHolder.clearContext();
+        StpUtil.logout();
         if (StringUtils.isNotBlank(redirectPath)){
             return "redirect:" + redirectPath;
         }

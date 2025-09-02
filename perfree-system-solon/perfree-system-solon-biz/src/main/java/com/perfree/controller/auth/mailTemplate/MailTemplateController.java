@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.mailTemplate;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -15,7 +16,6 @@ import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
-import org.springframework.security.access.prepost.PreAuthorize;
 import jakarta.servlet.http.HttpServletResponse;
 import com.perfree.commons.excel.ExcelUtils;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +41,7 @@ public class MailTemplateController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "邮件模板分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:mailTemplate:query')")
+    @SaCheckPermission("admin:mailTemplate:query")
     public CommonResult<PageResult<MailTemplateRespVO>> page(@Body MailTemplatePageReqVO pageVO) {
         startPage(pageVO);
         List<MailTemplate> mailTemplateList = mailTemplateService.mailTemplatePage(pageVO);
@@ -52,7 +52,7 @@ public class MailTemplateController extends BaseController {
     @Mapping("/add")
     @Operation(summary = "添加邮件模板")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailTemplate:create')")
+    @SaCheckPermission("admin:mailTemplate:create")
     public CommonResult<MailTemplateRespVO> add(@Body @Valid MailTemplateAddReqVO mailTemplateAddReqVO) {
         return success(MailTemplateConvert.INSTANCE.convertRespVO(mailTemplateService.add(mailTemplateAddReqVO)));
     }
@@ -61,7 +61,7 @@ public class MailTemplateController extends BaseController {
     @Mapping("/update")
     @Operation(summary = "更新邮件模板")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailTemplate:update')")
+    @SaCheckPermission("admin:mailTemplate:update")
     public CommonResult<MailTemplateRespVO> update(@Body @Valid MailTemplateUpdateReqVO mailTemplateUpdateReqVO) {
         return success(MailTemplateConvert.INSTANCE.convertRespVO(mailTemplateService.update(mailTemplateUpdateReqVO)));
     }
@@ -77,7 +77,7 @@ public class MailTemplateController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "根据id删除邮件模板")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:mailTemplate:delete')")
+    @SaCheckPermission("admin:mailTemplate:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(mailTemplateService.del(id));
     }
@@ -92,7 +92,7 @@ public class MailTemplateController extends BaseController {
     @Post
     @Mapping("/export")
     @Operation(summary = "导出邮件模板")
-    @PreAuthorize("@ss.hasPermission('admin:mailTemplate:export')")
+    @SaCheckPermission("admin:mailTemplate:export")
     public void export(@Body MailTemplateExportReqVO exportReqVO, HttpServletResponse response) {
         List<MailTemplate> mailTemplateList = mailTemplateService.queryExportData(exportReqVO);
         ExcelUtils.renderExcel(response, MailTemplateConvert.INSTANCE.convertToExcelVOList(mailTemplateList), MailTemplateExcelVO.class, "邮件模板数据","邮件模板数据.xlsx");
@@ -101,7 +101,7 @@ public class MailTemplateController extends BaseController {
     @Post
     @Mapping("/testMail")
     @Operation(summary = "发送测试邮件")
-    @PreAuthorize("@ss.hasPermission('admin:mailTemplate:testMail')")
+    @SaCheckPermission("admin:mailTemplate:testMail")
     public CommonResult<Boolean> testMail(@Body @Valid MailTemplateTestReqVO mailTemplateTestReqVO) {
         return success(mailTemplateService.testMail(mailTemplateTestReqVO));
     }

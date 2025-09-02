@@ -4,10 +4,10 @@ package com.perfree.security.service;
 import com.perfree.system.api.permission.PermissionApi;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 public class SecurityFrameworkServiceImpl implements SecurityFrameworkService{
 
-    private final PermissionApi permissionApi;
+    @Resource
+    private PermissionApi permissionApi;
 
     @Override
     public boolean hasPermission(String permission) {

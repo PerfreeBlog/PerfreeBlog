@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.attach;
 
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
 import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
@@ -16,9 +17,6 @@ import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -44,7 +42,7 @@ public class AttachController extends BaseController {
     @Mapping("/upload")
     @Operation(summary = "附件上传")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:attach:upload')")
+    @SaCheckPermission("admin:attach:upload")
     public CommonResult<AttachRespVO> upload(AttachUploadVO attachUploadVO) {
         Attach attach = attachService.create(attachUploadVO);
         return success(AttachConvert.INSTANCE.convertRespVO(attach));
@@ -53,7 +51,7 @@ public class AttachController extends BaseController {
     @Post
     @Mapping("/page")
     @Operation(summary = "附件分页列表")
-    @PreAuthorize("@ss.hasPermission('admin:attach:query')")
+    @SaCheckPermission("admin:attach:query")
     public CommonResult<PageResult<AttachRespVO>> page(@Body AttachPageReqVO pageVO) {
         startPage(pageVO);
         List<Attach> attachList = attachService.attachPage(pageVO);
@@ -72,7 +70,7 @@ public class AttachController extends BaseController {
     @Mapping("/update")
     @Operation(summary = "修改附件")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:attach:update')")
+    @SaCheckPermission("admin:attach:update")
     public CommonResult<Boolean> update(@Body AttachUpdateVO attachUpdateVO) {
         return success(attachService.updateAttach(attachUpdateVO));
     }
@@ -81,7 +79,7 @@ public class AttachController extends BaseController {
     @Mapping("/del")
     @Operation(summary = "删除附件")
     @DemoMode
-    @PreAuthorize("@ss.hasPermission('admin:attach:delete')")
+    @SaCheckPermission("admin:attach:delete")
     public CommonResult<Boolean> del(@Param(value = "id") Integer id) {
         return success(attachService.del(id));
     }
