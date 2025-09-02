@@ -19,6 +19,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "@vueuse/core": "^10.9.0",
+    "@vueuse/shared": "^10.9.0",
     "aieditor": "^1.0.13",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
