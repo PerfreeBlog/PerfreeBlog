@@ -14,7 +14,8 @@ import com.perfree.theme.commons.ThemeInfo;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Controller;
+import org.noear.solon.annotation.Controller;
+import org.noear.solon.annotation.Inject;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -24,10 +25,10 @@ import java.util.Objects;
 @Controller
 public class BaseViewController {
 
-    @Resource
+    @Inject
     private OptionCacheService optionCacheService;
 
-    @Resource
+    @Inject
     private ThemeManager themeManager;
 
     /**

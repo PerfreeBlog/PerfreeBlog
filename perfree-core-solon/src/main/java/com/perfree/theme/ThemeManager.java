@@ -24,10 +24,11 @@ import com.perfree.theme.commons.ThemeSetting;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import org.yaml.snakeyaml.Yaml;
@@ -46,10 +47,10 @@ public class ThemeManager {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ThemeManager.class);
 
-    @Resource
+    @Inject
     private OptionCacheService optionCacheService;
 
-    @Resource
+    @Inject
     private OptionApi optionApi;
 
     /**

@@ -42,6 +42,12 @@
             <artifactId>mybatis-flex-solon-plugin</artifactId>
         </dependency>
 
+        <!-- mybatis分页插件 -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>mybatis-pagehelper-solon-plugin</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.maven.shared</groupId>
             <artifactId>maven-invoker</artifactId>

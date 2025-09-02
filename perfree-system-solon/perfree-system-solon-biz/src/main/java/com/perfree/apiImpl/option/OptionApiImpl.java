@@ -3,12 +3,14 @@ package com.perfree.apiImpl.option;
 import com.perfree.service.option.OptionService;
 import com.perfree.system.api.option.OptionApi;
 import jakarta.annotation.Resource;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class OptionApiImpl implements OptionApi {
 
-    @Resource
+    @Inject
     private OptionService optionService;
 
     @Override

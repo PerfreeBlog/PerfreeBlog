@@ -49,3 +49,12 @@ mybatis-flex.datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     username: solon_blog
     password: HfzZy43eCJN3bnH2
+
+# 分页插件配置
+pagehelper:
+  offsetAsPageNum: true
+  rowBoundsWithCount: true
+  pageSizeZero: false
+  reasonable: true
+  params: pageNum=pageHelperStart;pageSize=pageHelperRows;
+  supportMethodsArguments: false
