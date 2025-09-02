@@ -8,6 +8,9 @@ import com.perfree.controller.auth.extra.vo.ExtraUpdateReqVO;
 import com.perfree.model.Extra;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ExtraConvert {
@@ -21,6 +24,8 @@ public interface ExtraConvert {
     Extra convertByAddReqVO(ExtraAddReqVO extraAddReqVO);
 
     Extra convertByUpdateReqVO(ExtraUpdateReqVO extraUpdateReqVO);
+
+    List<ExtraRespVO> convertListRespVO(List<Extra> extraList);
 
 }
 

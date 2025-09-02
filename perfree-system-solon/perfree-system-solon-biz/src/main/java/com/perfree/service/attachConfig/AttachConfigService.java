@@ -53,7 +53,7 @@ public interface AttachConfigService extends IService<AttachConfig> {
      * @param pageVO pageVO
      * @return PageResult<AttachConfig>
      */
-    PageResult<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO);
+    List<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO);
 
     /**
      * 修改主配置

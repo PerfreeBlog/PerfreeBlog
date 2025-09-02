@@ -15,7 +15,6 @@ import java.util.List;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface OptionMapper extends BaseMapperX<Option> {
 
     default Option getByKeyAndIdentification(String key, String identification){

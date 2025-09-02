@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.attachConfig;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.attachConfig.vo.*;
@@ -19,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "附件服务器配置相关接口")
 @Mapping("api/auth/attachConfig")
-public class AttachConfigController {
+public class AttachConfigController extends BaseController {
 
     @Inject
     private AttachConfigService attachConfigService;
@@ -42,8 +44,9 @@ public class AttachConfigController {
     @Operation(summary = "配置分页列表")
     @PreAuthorize("@ss.hasPermission('admin:attachConfig:query')")
     public CommonResult<PageResult<AttachConfigRespVO>> page(@Body AttachConfigPageReqVO pageVO) {
-        PageResult<AttachConfig> attachPage = attachConfigService.attachConfigPage(pageVO);
-        return success(AttachConfigConvert.INSTANCE.convertPageResultVO(attachPage));
+        startPage(pageVO);
+        List<AttachConfig> attachPage = attachConfigService.attachConfigPage(pageVO);
+        return pageSuccess(AttachConfigConvert.INSTANCE.convertRespListVO(attachPage));
     }
 
     @Post

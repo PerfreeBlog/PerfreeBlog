@@ -3,7 +3,7 @@ package ${package};
 import com.perfree.plugin.BasePluginEvent;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class PluginEventService implements BasePluginEvent {
 
     @Override

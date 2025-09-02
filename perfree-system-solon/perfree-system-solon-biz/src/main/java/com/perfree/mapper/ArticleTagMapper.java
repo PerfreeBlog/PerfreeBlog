@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.ArticleTag;
@@ -16,7 +17,7 @@ import org.apache.ibatis.solon.annotation.Db;
  * @since 2023-09-27
  */
 @Mapper
-public interface ArticleTagMapper extends BaseMapperX<ArticleTag> {
+public interface ArticleTagMapper extends BaseMapper<ArticleTag> {
 
     default void delByTagId(Integer id){
         deleteByQuery(new QueryWrapper().eq(ArticleTag::getTagId, id));

@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.role;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.role.vo.*;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -32,7 +34,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "角色相关接口")
 @Mapping("api/auth/role")
-public class RoleController {
+public class RoleController extends BaseController {
 
     @Inject
     private RoleService roleService;
@@ -42,8 +44,9 @@ public class RoleController {
     @Operation(summary = "角色分页列表")
     @PreAuthorize("@ss.hasPermission('admin:role:query')")
     public CommonResult<PageResult<RoleRespVO>> page(@Body RolePageReqVO pageVO) {
-        PageResult<Role> rolePageResult = roleService.rolePage(pageVO);
-        return success(RoleConvert.INSTANCE.convertPageResultVO(rolePageResult));
+        startPage(pageVO);
+        List<Role> roleList = roleService.rolePage(pageVO);
+        return pageSuccess(RoleConvert.INSTANCE.convertRespListVO(roleList));
     }
 
     @Get

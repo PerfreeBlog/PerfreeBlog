@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.dict;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.dict.vo.*;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -29,7 +31,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "数据字典相关接口")
 @Mapping("api/auth/dict")
-public class DictController {
+public class DictController extends BaseController {
 
     @Inject
     private DictService dictService;
@@ -39,8 +41,9 @@ public class DictController {
     @Operation(summary = "数据字典分页列表")
     @PreAuthorize("@ss.hasPermission('admin:dict:query')")
     public CommonResult<PageResult<DictRespVO>> page(@Body DictPageReqVO pageVO) {
-        PageResult<Dict> dictPageResult = dictService.dictPage(pageVO);
-        return success(DictConvert.INSTANCE.convertPageResultVO(dictPageResult));
+        startPage(pageVO);
+        List<Dict> dictList = dictService.dictPage(pageVO);
+        return pageSuccess(DictConvert.INSTANCE.convertListRespVO(dictList));
     }
 
     @Post

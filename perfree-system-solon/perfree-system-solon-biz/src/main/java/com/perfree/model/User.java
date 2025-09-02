@@ -3,6 +3,9 @@ package com.perfree.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import com.perfree.base.BaseModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +26,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@TableName("p_user")
+@Table("p_user")
 @NoArgsConstructor
 @AllArgsConstructor
 public class User extends BaseModel implements Serializable {
@@ -34,7 +37,7 @@ public class User extends BaseModel implements Serializable {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @Id(keyType = KeyType.Auto)
     private Integer id;
 
     /**

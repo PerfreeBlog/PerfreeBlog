@@ -3,7 +3,6 @@ package com.perfree.service.plugins;
 import cn.hutool.core.io.FileUtil;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.cache.PluginChangeCacheService;
-import com.perfree.commons.common.PageResult;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.constant.PluginConstant;
@@ -22,21 +21,16 @@ import com.perfree.plugin.commons.PluginSetting;
 import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.service.option.OptionService;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
-import jakarta.annotation.Resource;
 import lombok.SneakyThrows;
 import org.apache.commons.io.monitor.FileAlterationListener;
 import org.apache.commons.io.monitor.FileAlterationMonitor;
 import org.apache.commons.io.monitor.FileAlterationObserver;
-import org.apache.ibatis.solon.annotation.Db;
 import org.jetbrains.annotations.NotNull;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.data.annotation.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -77,7 +71,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
 
 
     @Override
-    public PageResult<Plugins> pluginsPage(PluginsPageReqVO pageVO) {
+    public List<Plugins> pluginsPage(PluginsPageReqVO pageVO) {
         return pluginsMapper.selectPage(pageVO);
     }
 
@@ -208,7 +202,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
             pluginManager.stopPlugin(plugins.getPluginId());
         }
         plugins.setStatus(PluginConstant.PLUGIN_STATUS_DISABLE);
-        pluginsMapper.updateById(plugins);
+        updateById(plugins);
         return true;
     }
 
@@ -223,7 +217,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
                 pluginManager.runPlugin(pluginDirFile);
             }
             plugins.setStatus(PluginConstant.PLUGIN_STATUS_ENABLE);
-            pluginsMapper.updateById(plugins);
+            updateById(plugins);
             return true;
         } else {
             // 可能是冗余数据,删掉
@@ -263,7 +257,7 @@ public class PluginsServiceImpl extends ServiceImpl<PluginsMapper, Plugins> impl
 
     @Override
     public Long getTotalPlugins() {
-        return pluginsMapper.selectCount();
+        return pluginsMapper.selectCountByQuery(null);
     }
 
     @Override

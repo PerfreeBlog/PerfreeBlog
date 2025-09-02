@@ -8,13 +8,13 @@ import com.perfree.plugin.commons.PluginHandleUtils;
 import com.perfree.plugin.core.PluginClassLoader;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.noear.solon.annotation.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 

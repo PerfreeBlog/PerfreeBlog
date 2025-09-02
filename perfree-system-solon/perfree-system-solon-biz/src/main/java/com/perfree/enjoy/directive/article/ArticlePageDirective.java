@@ -1,5 +1,7 @@
 package com.perfree.enjoy.directive.article;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jfinal.template.Env;
 import com.jfinal.template.expr.ast.ExprList;
 import com.jfinal.template.io.Writer;
@@ -14,15 +16,18 @@ import com.perfree.constant.ViewConstant;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.service.article.ArticleService;
+import jakarta.annotation.Resource;
+import org.noear.solon.annotation.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @TemplateDirective("articlePage")
 @Component
 public class ArticlePageDirective extends BaseDirective {
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         ArticlePageDirective.articleService = articleService;
     }
@@ -36,24 +41,23 @@ public class ArticlePageDirective extends BaseDirective {
         ArticlePageReqVO articlePageReqVO = new ArticlePageReqVO();
 
         // 组装来自ModelView的数据
-        articlePageReqVO.setPageNo(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1));
         articlePageReqVO.setTagId(getModelDataToInt(ViewConstant.TAG_ID, scope, null));
         articlePageReqVO.setCategoryId(getModelDataToInt(ViewConstant.CATEGORY_ID, scope, null));
         articlePageReqVO.setTitle(getModelDataToStr(ViewConstant.TITLE, scope));
-
         // 组装来自指令编写的参数
         articlePageReqVO.setType(getExprParamToStr(ViewConstant.ARTICLE_TYPE, ArticleConstant.ARTICLE_TYPE_ARTICLE));
-        articlePageReqVO.setPageSize(getExprParamToInt(ViewConstant.PAGE_SIZE, 10));
-        articlePageReqVO.setSortingFields(DirectiveSortingUtils.handleSortingField(getExprParamToStr(ViewConstant.ORDER_BY, null)));
-
         // 必须的参数,至查询已发布的文章
         articlePageReqVO.setStatus(ArticleConstant.ARTICLE_STATUS_PUBLISHED);
 
+        PageHelper.startPage(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1),
+                getExprParamToInt(ViewConstant.PAGE_SIZE, 10),
+                getExprParamToStr(ViewConstant.ORDER_BY, null)
+                );
         // 查询数据
-        PageResult<ArticleRespVO> articleRespVOPageResult = articleService.articlePage(articlePageReqVO);
+        List<ArticleRespVO> articleRespVOList = articleService.articlePage(articlePageReqVO);
 
         // 组装结果集
-        DirectivePageResult<ArticleRespVO> result = new DirectivePageResult<>(articleRespVOPageResult.getList(),articleRespVOPageResult.getTotal(),
+        DirectivePageResult<ArticleRespVO> result = new DirectivePageResult<>(articleRespVOList,new PageInfo<>(articleRespVOList).getTotal(),
                 articlePageReqVO.getPageNo(), articlePageReqVO.getPageSize());
         scope.set("articlePage", result);
         stat.exec(env, scope, writer);

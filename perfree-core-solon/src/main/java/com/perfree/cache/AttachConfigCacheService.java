@@ -3,14 +3,14 @@ package com.perfree.cache;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
-import org.springframework.stereotype.Service;
+import org.noear.solon.annotation.Component;
 
 /**
  * @author Perfree
  * @description 附件配置缓存相关
  * @date 15:35 2023/9/28
  */
-@Service
+@Component
 public class AttachConfigCacheService {
 
     private final Cache<Integer, AttachConfigCacheDTO> attachConfingCache;

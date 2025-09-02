@@ -6,6 +6,7 @@ import com.perfree.enums.ErrorCode;
 import com.perfree.file.handle.BaseFileHandle;
 import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
 import jakarta.annotation.Resource;
+import org.noear.solon.annotation.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
  * 文件处理器
  * @create 2021-08-17 16:07
  */
-@Service
+@Component
 public class FileHandleService {
     private final static Logger LOGGER = LoggerFactory.getLogger(FileHandleService.class);
     @Resource

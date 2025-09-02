@@ -16,9 +16,9 @@ public interface MailLogService extends IService<MailLog> {
     /**
      * 邮件日志分页
      * @param pageVO pageVO
-     * @return PageResult<MailLog>
+     * @return List<MailLog>
      */
-    PageResult<MailLog> mailLogPage(MailLogPageReqVO pageVO);
+    List<MailLog> mailLogPage(MailLogPageReqVO pageVO);
 
     /**
      * 添加邮件日志

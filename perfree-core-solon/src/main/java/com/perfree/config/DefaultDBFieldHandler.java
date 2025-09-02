@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.perfree.security.SecurityFrameworkUtils;
 import com.perfree.security.vo.LoginUserVO;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.stereotype.Component;
+import org.noear.solon.annotation.Component;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

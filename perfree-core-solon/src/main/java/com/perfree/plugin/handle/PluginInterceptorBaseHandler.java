@@ -7,7 +7,7 @@ import com.perfree.plugin.PluginInfoHolder;
 import com.perfree.plugin.annotation.InterceptPath;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Component;
+import org.noear.solon.annotation.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

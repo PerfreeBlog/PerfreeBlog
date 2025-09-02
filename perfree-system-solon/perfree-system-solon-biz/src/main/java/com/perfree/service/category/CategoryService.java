@@ -69,9 +69,9 @@ public interface CategoryService extends IService<Category> {
     /**
      * 分类分页
      * @param reqVO reqVO
-     * @return PageResult<CategoryRespVO>
+     * @return List<CategoryRespVO>
      */
-    PageResult<CategoryRespVO> categoryPage(CategoryPageReqVO reqVO);
+    List<CategoryRespVO> categoryPage(CategoryPageReqVO reqVO);
 
     List<CategoryRespVO> getHotCategory(int count);
 

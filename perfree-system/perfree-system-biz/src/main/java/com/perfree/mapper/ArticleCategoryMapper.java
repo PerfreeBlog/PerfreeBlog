@@ -13,7 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface ArticleCategoryMapper extends BaseMapperX<ArticleCategory> {
     default void delByCategoryId(Integer id){
         delete(new LambdaQueryWrapper<ArticleCategory>().eq(ArticleCategory::getCategoryId, id));

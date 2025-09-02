@@ -1,5 +1,7 @@
 package com.perfree.enjoy.directive.category;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
@@ -14,6 +16,8 @@ import com.perfree.controller.auth.category.vo.CategoryRespVO;
 import com.perfree.service.category.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @TemplateDirective("categoriesPage")
 @Component
@@ -30,15 +34,16 @@ public class CategoriesPageDirective extends BaseDirective {
     public void exec(Env env, Scope scope, Writer writer) {
         CategoryPageReqVO reqVO = new CategoryPageReqVO();
         // 组装来自ModelView的数据
-        reqVO.setPageNo(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1));
         reqVO.setName(getModelDataToStr(ViewConstant.NAME, scope));
 
         // 组装来自指令编写的参数
-        reqVO.setPageSize(getExprParamToInt(ViewConstant.PAGE_SIZE, 10));
-        reqVO.setSortingFields(DirectiveSortingUtils.handleSortingField(getExprParamToStr(ViewConstant.ORDER_BY, null)));
-        PageResult<CategoryRespVO> pageResult = categoryService.categoryPage(reqVO);
+        PageHelper.startPage(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1),
+                getExprParamToInt(ViewConstant.PAGE_SIZE, 10),
+                getExprParamToStr(ViewConstant.ORDER_BY, null)
+                );
+        List<CategoryRespVO> categoryList = categoryService.categoryPage(reqVO);
         // 组装结果集
-        DirectivePageResult<CategoryRespVO> result = new DirectivePageResult<>(pageResult.getList(),pageResult.getTotal(),
+        DirectivePageResult<CategoryRespVO> result = new DirectivePageResult<>(categoryList,new PageInfo<>(categoryList).getTotal(),
                 reqVO.getPageNo(), reqVO.getPageSize());
         scope.set("categoriesPage", result);
         stat.exec(env, scope, writer);

@@ -20,7 +20,6 @@ import java.util.Objects;
 * @description 附件库
 * @author Perfree
 */
-@Mapper
 public interface AttachLibraryMapper extends BaseMapperX<AttachLibrary> {
 
     default List<AttachLibrary> listAll() {

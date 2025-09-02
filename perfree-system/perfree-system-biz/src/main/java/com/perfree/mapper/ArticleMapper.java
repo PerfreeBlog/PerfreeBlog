@@ -2,7 +2,6 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticleCategoryRespVO;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
@@ -26,7 +25,6 @@ import java.util.List;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface ArticleMapper extends BaseMapperX<Article> {
 
     /**

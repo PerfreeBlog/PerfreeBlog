@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
@@ -23,14 +24,14 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface UserMapper extends BaseMapperX<User> {
+public interface UserMapper extends BaseMapper<User> {
 
     default User findByAccount(String account){
         return selectOneByQuery(new QueryWrapper().eq(User::getAccount, account));
     }
 
-    default PageResult<User> selectPage(UserPageReqVO pageVO) {
-        return selectPage(pageVO, new QueryWrapper()
+    default List<User> selectPage(UserPageReqVO pageVO) {
+        return selectListByQuery(new QueryWrapper()
                 .like(User::getUserName, pageVO.getUserName())
                 .like(User::getAccount, pageVO.getAccount())
                 .orderBy(User::getId,false)

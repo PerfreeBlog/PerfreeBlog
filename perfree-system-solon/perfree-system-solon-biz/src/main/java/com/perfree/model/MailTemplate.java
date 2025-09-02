@@ -2,6 +2,10 @@ package com.perfree.model;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.mybatisflex.annotation.ColumnAlias;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import com.perfree.base.BaseModel;
 import lombok.*;
 import java.util.*;
@@ -15,7 +19,7 @@ import java.io.Serializable;
 */
 @Getter
 @Setter
-@TableName(value = "p_mail_template", autoResultMap = true)
+@Table(value = "p_mail_template")
 public class MailTemplate extends BaseModel implements Serializable {
 
     @Serial
@@ -25,7 +29,7 @@ public class MailTemplate extends BaseModel implements Serializable {
     /**
     * id
     */
-    @TableId(type = IdType.AUTO)
+    @Id(keyType = KeyType.Auto)
     private Integer id;
 
     /**
@@ -71,6 +75,7 @@ public class MailTemplate extends BaseModel implements Serializable {
     /**
      * 参数
      */
-    @TableField(typeHandler = JacksonTypeHandler.class)
+    // TODO json处理
+    //@TableField(typeHandler = JacksonTypeHandler.class)
     private List<String> mailParams;
 }

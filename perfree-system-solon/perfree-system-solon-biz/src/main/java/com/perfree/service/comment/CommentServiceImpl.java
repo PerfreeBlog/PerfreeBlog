@@ -64,10 +64,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
 
     @Override
-    public PageResult<CommentRespVO> commentPage(CommentPageReqVO pageVO) {
-        IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<CommentRespVO> commentPage = commentMapper.commentPage(page, pageVO);
-        return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
+    public List<CommentRespVO> commentPage(CommentPageReqVO pageVO) {
+        List<CommentRespVO> commentPage = commentMapper.commentPage(pageVO);
+        return commentPage;
     }
 
     @Override
@@ -76,10 +75,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public PageResult<CommentRespVO> queryChildCommentPage(CommentChildPageReqVO pageVO) {
-        IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<CommentRespVO> commentPage = commentMapper.queryChildCommentPage(page, pageVO);
-        return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
+    public List<CommentRespVO> queryChildCommentPage(CommentChildPageReqVO pageVO) {
+        List<CommentRespVO> commentRespVOList = commentMapper.queryChildCommentPage(pageVO);
+        return commentRespVOList;
     }
 
     @Override
@@ -93,7 +91,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     @Transaction
     public Boolean updateStatus(CommentUpdateStatusReqVO commentUpdateStatusReqVO) {
         Comment comment = CommentConvert.INSTANCE.convertByUpdateStatusReqVO(commentUpdateStatusReqVO);
-        commentMapper.updateById(comment);
+        updateById(comment);
         // 是否开启了邮件通知
         String isSendMail = optionCacheService.getDefaultValue(OptionEnum.COMMENT_IS_SEND_MAIL.getKey(), OptionConstant.OPTION_IDENTIFICATION_SYSTEM_SETTING, OptionConstant.OPTION_PUBLIC_FALSE);
         if (isSendMail.equals(OptionConstant.OPTION_PUBLIC_TRUE)) {
@@ -103,17 +101,15 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
     }
 
     @Override
-    public PageResult<CommentRespVO> pageByArticleId(CommentPageByArticleIdReqVO pageVO) {
-        IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<CommentRespVO> commentPage = commentMapper.pageByArticleId(page, pageVO);
-        return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
+    public List<CommentRespVO> pageByArticleId(CommentPageByArticleIdReqVO pageVO) {
+        List<CommentRespVO> commentRespVOList = commentMapper.pageByArticleId(pageVO);
+        return commentRespVOList;
     }
 
     @Override
-    public PageResult<CommentRespVO> pageByTopPid(CommentPageByTopPidReqVO pageVO) {
-        IPage<CommentRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<CommentRespVO> commentPage = commentMapper.pageByTopPid(page, pageVO);
-        return new PageResult<>(commentPage.getRecords(), commentPage.getTotal());
+    public List<CommentRespVO> pageByTopPid(CommentPageByTopPidReqVO pageVO) {
+        List<CommentRespVO> commentRespVOList = commentMapper.pageByTopPid(pageVO);
+        return commentRespVOList;
     }
 
     @Override
@@ -131,7 +127,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
             throw new ServiceException(ErrorCode.COMMENT_EMAIL_NOT_EMPTY);
         }
         if (null != loginUser) {
-            User user = userMapper.selectById(loginUser.getId());
+            User user = userMapper.selectOneById(loginUser.getId());
             reqVO.setUserId(user.getId());
         } else {
             reqVO.setAvatar(UserConstant.DEFAULT_AVATAR);

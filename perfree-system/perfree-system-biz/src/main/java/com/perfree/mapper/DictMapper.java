@@ -20,7 +20,6 @@ import java.util.Objects;
 * @description 数据字典
 * @author Perfree
 */
-@Mapper
 public interface DictMapper extends BaseMapperX<Dict> {
 
     default PageResult<Dict> selectPage(DictPageReqVO reqVO) {

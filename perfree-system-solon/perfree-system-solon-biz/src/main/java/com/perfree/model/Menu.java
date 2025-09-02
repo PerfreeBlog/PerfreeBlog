@@ -3,10 +3,15 @@ package com.perfree.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.crypto.KeyGenerator;
 import java.io.Serial;
 import java.io.Serializable;
 
@@ -20,14 +25,14 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@TableName("p_menu")
+@Table("p_menu")
 public class Menu extends BaseModel implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     /** 主键 */
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.uuid)
     private String id;
 
     /** 父级id */

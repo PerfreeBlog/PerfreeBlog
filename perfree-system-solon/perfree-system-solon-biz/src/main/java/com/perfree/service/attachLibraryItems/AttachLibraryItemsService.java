@@ -18,7 +18,7 @@ public interface AttachLibraryItemsService extends IService<AttachLibraryItems> 
      * @param pageVO pageVO
      * @return PageResult<AttachLibraryItemsRespVO>
      */
-    PageResult<AttachLibraryItemsRespVO> attachLibraryItemsPage(AttachLibraryItemsPageReqVO pageVO);
+    List<AttachLibraryItemsRespVO> attachLibraryItemsPage(AttachLibraryItemsPageReqVO pageVO);
 
     /**
      * 添加附件库数据

@@ -1,10 +1,10 @@
 package com.perfree.commons.utils;
 
+import org.noear.solon.annotation.Component;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.stereotype.Component;
 
 @Component
 public class SpringBeanUtil implements ApplicationContextAware {

@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
@@ -23,7 +24,7 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-public interface AttachLibraryMapper extends BaseMapperX<AttachLibrary> {
+public interface AttachLibraryMapper extends BaseMapper<AttachLibrary> {
 
     default List<AttachLibrary> listAll() {
         return selectListByQuery(new QueryWrapper()
@@ -40,7 +41,7 @@ public interface AttachLibraryMapper extends BaseMapperX<AttachLibrary> {
         return selectListByQuery(queryWrapper);
     }
 
-    IPage<AttachLibraryRespVO> attachLibraryPage(IPage<AttachLibraryRespVO> page, @Param("pageVO") AttachLibraryPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
+    List<AttachLibraryRespVO> attachLibraryPage(@Param("pageVO") AttachLibraryPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     AttachLibraryRespVO getById(@Param("id") Integer id);
 

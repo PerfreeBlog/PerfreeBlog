@@ -20,7 +20,7 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-public interface PluginDemoMapper extends BaseMapperX<PluginDemo> {
+public interface PluginDemoMapper extends BaseMapper<PluginDemo> {
 
     default PageResult<PluginDemo> selectPage(PluginDemoPageReqVO reqVO) {
         LambdaQueryWrapper<PluginDemo> lambdaQueryWrapper = new LambdaQueryWrapper<>();

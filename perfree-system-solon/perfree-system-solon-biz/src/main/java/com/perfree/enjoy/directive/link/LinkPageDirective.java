@@ -1,5 +1,7 @@
 package com.perfree.enjoy.directive.link;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
@@ -20,6 +22,8 @@ import com.perfree.service.link.LinkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @TemplateDirective("linkPage")
 @Component
 public class LinkPageDirective extends BaseDirective {
@@ -35,18 +39,16 @@ public class LinkPageDirective extends BaseDirective {
     public void exec(Env env, Scope scope, Writer writer) {
         LinkPageReqVO linkPageReqVO = new LinkPageReqVO();
         // 组装来自ModelView的数据
-        linkPageReqVO.setPageNo(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1));
         linkPageReqVO.setName(getModelDataToStr(ViewConstant.NAME, scope));
 
         // 组装来自指令编写的参数
-        linkPageReqVO.setPageSize(getExprParamToInt(ViewConstant.PAGE_SIZE, 10));
-        linkPageReqVO.setSortingFields(DirectiveSortingUtils.handleSortingField(getExprParamToStr(ViewConstant.ORDER_BY, null)));
-
-
-        PageResult<LinkRespVO> linkPageResult = linkService.linkPage(linkPageReqVO);
+        PageHelper.startPage(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1),
+                getExprParamToInt(ViewConstant.PAGE_SIZE, 10),
+                getExprParamToStr(ViewConstant.ORDER_BY, null));
+        List<LinkRespVO> linkList = linkService.linkPage(linkPageReqVO);
 
         // 组装结果集
-        DirectivePageResult<LinkRespVO> result = new DirectivePageResult<>(linkPageResult.getList(),linkPageResult.getTotal(),
+        DirectivePageResult<LinkRespVO> result = new DirectivePageResult<>(linkList,new PageInfo<>(linkList).getTotal(),
                 linkPageReqVO.getPageNo(), linkPageReqVO.getPageSize());
         scope.set("linkPage", result);
         stat.exec(env, scope, writer);

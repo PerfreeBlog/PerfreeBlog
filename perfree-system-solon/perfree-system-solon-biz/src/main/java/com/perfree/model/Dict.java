@@ -1,6 +1,9 @@
 package com.perfree.model;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import com.perfree.base.BaseModel;
 import lombok.*;
 import java.util.*;
@@ -14,7 +17,7 @@ import java.io.Serializable;
 */
 @Getter
 @Setter
-@TableName("p_dict")
+@Table("p_dict")
 public class Dict extends BaseModel implements Serializable {
 
     @Serial
@@ -24,7 +27,7 @@ public class Dict extends BaseModel implements Serializable {
     /**
     * 主键
     */
-    @TableId(type = IdType.AUTO)
+    @Id(keyType = KeyType.Auto)
     private Integer id;
 
     /**

@@ -8,6 +8,8 @@ import com.perfree.controller.auth.link.vo.LinkRespVO;
 import com.perfree.controller.auth.link.vo.LinkUpdateReqVO;
 import com.perfree.model.Link;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -21,9 +23,9 @@ public interface LinkService extends IService<Link> {
     /**
      * 友链分页
      * @param pageVO pageVO
-     * @return PageResult<LinkRespVO>
+     * @return List<LinkRespVO>
      */
-    PageResult<LinkRespVO> linkPage(LinkPageReqVO pageVO);
+    List<LinkRespVO> linkPage(LinkPageReqVO pageVO);
 
     /**
      * 添加友链

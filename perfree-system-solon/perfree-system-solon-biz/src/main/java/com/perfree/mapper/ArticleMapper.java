@@ -1,8 +1,7 @@
 package com.perfree.mapper;
 
-import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
-import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticleCategoryRespVO;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
@@ -15,7 +14,6 @@ import com.perfree.controller.common.article.vo.ArchiveRespVO;
 import com.perfree.model.Article;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.solon.annotation.Db;
 
 import java.util.List;
 
@@ -28,15 +26,14 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface ArticleMapper extends BaseMapperX<Article> {
+public interface ArticleMapper extends BaseMapper<Article> {
 
     /**
      * 文章分页查询
-     * @param page page
      * @param pageVO pageVO
-     * @return IPage<ArticleRespVO>
+     * @return List<ArticleRespVO>
      */
-    Page<ArticleRespVO> articlePage(Page<ArticleRespVO> page, @Param("pageVO") ArticlePageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
+    List<ArticleRespVO> articlePage(@Param("pageVO") ArticlePageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     /**
      * 根据slug查询
@@ -104,11 +101,10 @@ public interface ArticleMapper extends BaseMapperX<Article> {
 
     /**
      * 动态分页列表
-     * @param page page
      * @param pageVO pageVO
-     * @return Page<JournalRespVO>
+     * @return List<JournalRespVO>
      */
-    Page<JournalRespVO> journalPage(Page<JournalRespVO> page, @Param("pageVO") JournalPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
+    List<JournalRespVO> journalPage(@Param("pageVO") JournalPageReqVO pageVO, @Param("loginUserId") Integer loginUserId);
 
     /**
      * 根据id获取动态
@@ -126,11 +122,10 @@ public interface ArticleMapper extends BaseMapperX<Article> {
 
     /**
      * 归档分页
-     * @param page page
      * @param pageVO pageVO
      * @return IPage<ArchiveRespVO>
      */
-    Page<ArchiveRespVO> archivePage(Page<ArchiveRespVO> page, @Param("pageVO") ArchivePageReqVO pageVO);
+    List<ArchiveRespVO> archivePage(@Param("pageVO") ArchivePageReqVO pageVO);
 
     /**
      * 获取最近发布的文章

@@ -45,10 +45,9 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     private ArticleTagMapper articleTagMapper;
 
     @Override
-    public PageResult<TagRespVO> tagPage(TagPageReqVO pageVO) {
-        IPage<TagRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<TagRespVO> tagPage = tagMapper.tagPage(page, pageVO);
-        return new PageResult<>(tagPage.getRecords(), tagPage.getTotal());
+    public List<TagRespVO> tagPage(TagPageReqVO pageVO) {
+        List<TagRespVO> tagList = tagMapper.tagPage(pageVO);
+        return tagList;
     }
 
     @Override

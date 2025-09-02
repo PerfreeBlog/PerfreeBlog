@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.extra;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.extra.vo.ExtraAddReqVO;
@@ -20,12 +21,15 @@ import org.noear.solon.annotation.Mapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "附加数据相关接口")
 @Mapping("api/auth/extra")
-public class ExtraController {
+public class ExtraController extends BaseController {
 
     @Inject
     private ExtraService extraService;
@@ -43,8 +47,9 @@ public class ExtraController {
     @Operation(summary = "附加数据分页列表")
     @PreAuthorize("@ss.hasPermission('admin:extra:query')")
     public CommonResult<PageResult<ExtraRespVO>> page(@Body ExtraPageReqVO pageVO) {
-        PageResult<Extra> extraPageResult = extraService.extraPage(pageVO);
-        return success(ExtraConvert.INSTANCE.convertPageResultVO(extraPageResult));
+        startPage(pageVO);
+        List<Extra> extraList = extraService.extraPage(pageVO);
+        return pageSuccess(ExtraConvert.INSTANCE.convertListRespVO(extraList));
     }
 
     @Get

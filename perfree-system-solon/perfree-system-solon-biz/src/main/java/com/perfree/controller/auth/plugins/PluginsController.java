@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.plugins;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.plugins.vo.InstallPluginReqVO;
@@ -20,12 +21,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "插件相关接口")
 @Mapping("api/auth/plugins")
-public class PluginsController {
+public class PluginsController extends BaseController {
 
     @Inject
     private PluginsService pluginsService;
@@ -35,8 +39,9 @@ public class PluginsController {
     @Operation(summary = "插件分页列表")
     @PreAuthorize("@ss.hasPermission('admin:plugin:query')")
     public CommonResult<PageResult<PluginsRespVO>> page(@Body PluginsPageReqVO pageVO) {
-        PageResult<Plugins> pluginsPageResult = pluginsService.pluginsPage(pageVO);
-        return success(PluginsConvert.INSTANCE.convertPageResultVO(pluginsPageResult));
+        startPage(pageVO);
+        List<Plugins> pluginsList = pluginsService.pluginsPage(pageVO);
+        return pageSuccess(PluginsConvert.INSTANCE.convertListVO(pluginsList));
     }
 
 

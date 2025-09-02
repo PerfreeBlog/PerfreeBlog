@@ -3,6 +3,7 @@ package com.perfree.cache;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.perfree.system.api.dictData.dto.DictDataDTO;
+import org.noear.solon.annotation.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Perfree
  * @description 数据字典缓存相关
  */
-@Service
+@Component
 public class DictDataCacheService {
     private final Cache<String, DictDataDTO> dictDataCache;
 

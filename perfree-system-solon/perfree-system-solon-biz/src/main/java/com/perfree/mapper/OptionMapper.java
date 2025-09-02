@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.Option;
@@ -18,7 +19,7 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface OptionMapper extends BaseMapperX<Option> {
+public interface OptionMapper extends BaseMapper<Option> {
 
     default Option getByKeyAndIdentification(String key, String identification){
         return selectOneByQuery(new QueryWrapper()

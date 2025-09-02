@@ -50,4 +50,6 @@ public interface UserConvert {
 
     User convertByRegisterVO(RegisterUserReqVO reqVO);
 
+    List<UserRespVO> convertListVO(List<User> list);
+
 }

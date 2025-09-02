@@ -19,7 +19,6 @@ import java.util.Objects;
 * @description 邮件模板
 * @author Perfree
 */
-@Mapper
 public interface MailTemplateMapper extends BaseMapperX<MailTemplate> {
 
     default PageResult<MailTemplate> selectPage(MailTemplatePageReqVO reqVO) {

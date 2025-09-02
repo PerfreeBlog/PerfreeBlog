@@ -24,9 +24,9 @@ public interface RoleService extends IService<Role> {
     /**
      * 角色分页
      * @param pageVO pageVO
-     * @return PageResult<Role>
+     * @return List<Role>
      */
-    PageResult<Role> rolePage(RolePageReqVO pageVO);
+    List<Role> rolePage(RolePageReqVO pageVO);
 
 
     /**

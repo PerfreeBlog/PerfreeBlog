@@ -3,11 +3,12 @@ package com.perfree.cache;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.noear.solon.annotation.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
-@Service
+@Component
 public class FindPasswordCacheService {
     private final Cache<String, String> findPasswordCodeCache;
 

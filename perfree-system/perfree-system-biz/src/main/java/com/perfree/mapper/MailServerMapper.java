@@ -19,7 +19,6 @@ import java.util.Objects;
 * @description 邮箱服务
 * @author Perfree
 */
-@Mapper
 public interface MailServerMapper extends BaseMapperX<MailServer> {
 
     default PageResult<MailServer> selectPage(MailServerPageReqVO reqVO) {

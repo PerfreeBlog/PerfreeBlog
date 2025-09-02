@@ -119,7 +119,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         // 记录登录时间及IP
         user.setLoginIp(WebUtils.getClientIP());
         user.setLoginDate(LocalDateTime.now());
-        userMapper.updateById(user);
+        updateById(user);
         return loginUserRespVO;
     }
 
@@ -132,7 +132,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public LoginUserInfoRespVO userInfo() {
         LoginUserVO loginUser = SecurityFrameworkUtils.getLoginUser();
         assert loginUser != null;
-        User user = userMapper.selectById(loginUser.getId());
+        User user = userMapper.selectOneById(loginUser.getId());
         user.setPassword(null);
         user.setSalt(null);
         LoginUserInfoRespVO loginUserInfoRespVO = UserConvert.INSTANCE.convertLoginInfo(user);
@@ -150,13 +150,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public PageResult<User> userPage(UserPageReqVO pageVO) {
+    public List<User> userPage(UserPageReqVO pageVO) {
         return userMapper.selectPage(pageVO);
     }
 
     @Override
     public User get(Integer id) {
-        return userMapper.selectById(id);
+        return userMapper.selectOneById(id);
     }
 
     @Override
@@ -202,7 +202,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (StringUtils.isBlank(user.getAvatar())) {
             user.setAvatar(UserConstant.DEFAULT_AVATAR);
         }
-        userMapper.updateById(user);
+        updateById(user);
         return user;
     }
 
@@ -237,11 +237,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (StringUtils.isBlank(resetPasswordReqVO.getPassword())) {
             throw new ServiceException(USER_PASSWORD_NOT_EMPTY);
         }
-        User user = userMapper.selectById(resetPasswordReqVO.getId());
+        User user = userMapper.selectOneById(resetPasswordReqVO.getId());
         // PS: 为了兼容老数据,这里依然采用MD5 + Salt的方式
         String hexPassword = DigestUtil.md5Hex(user.getSalt() + resetPasswordReqVO.getPassword());
         user.setPassword(hexPassword);
-        userMapper.updateById(user);
+        updateById(user);
         return true;
     }
 
@@ -254,7 +254,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Transaction
     public Boolean updateStatus(UserStatusReqVO userStatusReqVO) {
         User user = UserConvert.INSTANCE.convertByStatusReqVO(userStatusReqVO);
-        userMapper.updateById(user);
+        updateById(user);
         return true;
     }
 
@@ -264,7 +264,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = new User();
         user.setAvatar(url);
         user.setId(id);
-        userMapper.updateById(user);
+        updateById(user);
     }
 
     @Override
@@ -280,7 +280,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (null != byAccount && !byAccount.getId().equals(user.getId())) {
             throw new ServiceException(ACCOUNT_EXIST);
         }
-        userMapper.updateById(user);
+        updateById(user);
         return user;
     }
 
@@ -291,14 +291,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (null == loginUser) {
             throw new ServiceException(ErrorCode.USER_NOT_LOGIN);
         }
-        User user = userMapper.selectById(loginUser.getId());
+        User user = userMapper.selectOneById(loginUser.getId());
         String oldPass = DigestUtil.md5Hex(user.getSalt() + userUpdatePasswordReqVO.getOldPassword());
         if (!user.getPassword().equals(oldPass)) {
             throw new ServiceException(ErrorCode.OLD_PASSWORD_ERROR);
         }
         String newPass = DigestUtil.md5Hex(user.getSalt() + userUpdatePasswordReqVO.getNewPassword());
         user.setPassword(newPass);
-        userMapper.updateById(user);
+        updateById(user);
         return true;
     }
 
@@ -395,7 +395,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = userMapper.findByAccount(reqVO.getAccount());
         String newPass = DigestUtil.md5Hex(user.getSalt() + reqVO.getNewPassword());
         user.setPassword(newPass);
-        userMapper.updateById(user);
+        updateById(user);
         return true;
     }
 

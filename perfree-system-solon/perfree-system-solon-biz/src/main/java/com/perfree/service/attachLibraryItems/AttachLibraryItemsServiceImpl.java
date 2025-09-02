@@ -30,13 +30,9 @@ public class AttachLibraryItemsServiceImpl extends ServiceImpl<AttachLibraryItem
 
 
     @Override
-    public PageResult<AttachLibraryItemsRespVO> attachLibraryItemsPage(AttachLibraryItemsPageReqVO pageVO) {
-        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
-                new SortingField("createTime", SortingField.ORDER_DESC)
-        ));
-        IPage<AttachLibraryItemsRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<AttachLibraryItemsRespVO> attachLibraryItemsRespVOIPage = attachLibraryItemsMapper.attachLibraryItemsPage(page, pageVO);
-        return new PageResult<>(attachLibraryItemsRespVOIPage.getRecords(), attachLibraryItemsRespVOIPage.getTotal());
+    public List<AttachLibraryItemsRespVO> attachLibraryItemsPage(AttachLibraryItemsPageReqVO pageVO) {
+        List<AttachLibraryItemsRespVO> attachLibraryItemsRespVOList = attachLibraryItemsMapper.attachLibraryItemsPage(pageVO);
+        return attachLibraryItemsRespVOList;
     }
 
     @Override
@@ -51,7 +47,7 @@ public class AttachLibraryItemsServiceImpl extends ServiceImpl<AttachLibraryItem
     @Transaction
     public AttachLibraryItems update(AttachLibraryItemsUpdateReqVO attachLibraryItemsUpdateReqVO) {
         AttachLibraryItems attachLibraryItems = AttachLibraryItemsConvert.INSTANCE.convertUpdateReqVO(attachLibraryItemsUpdateReqVO);
-        attachLibraryItemsMapper.updateById(attachLibraryItems);
+        updateById(attachLibraryItems);
         return attachLibraryItems;
     }
 

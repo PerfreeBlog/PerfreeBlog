@@ -89,7 +89,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     public Menu addOrUpdate(MenuAddOrUpdateReqVO menuAddOrUpdateReqVO) {
         Menu menu = MenuConvert.INSTANCE.convertMenu(menuAddOrUpdateReqVO);
         if (StringUtils.isNotBlank(menu.getId())) {
-            menuMapper.updateById(menu);
+            updateById(menu);
         } else {
             menu.setId(IdUtil.simpleUUID());
             menuMapper.insert(menu);

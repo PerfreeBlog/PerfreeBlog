@@ -7,9 +7,10 @@ import com.perfree.commons.directive.BaseDirective;
 import com.perfree.commons.directive.TemplateDirective;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.service.article.ArticleService;
+import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.noear.solon.annotation.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class HotArticleDirective extends BaseDirective {
 
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         HotArticleDirective.articleService = articleService;
     }

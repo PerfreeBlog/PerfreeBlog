@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.dictData;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.dictData.vo.*;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -29,15 +31,16 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "数据字典值相关接口")
 @Mapping("api/auth/dictData")
-public class DictDataController {
+public class DictDataController extends BaseController {
 
     @Post
     @Mapping("/page")
     @Operation(summary = "数据字典值分页列表")
     @PreAuthorize("@ss.hasPermission('admin:dictData:query')")
     public CommonResult<PageResult<DictDataRespVO>> page(@Body DictDataPageReqVO pageVO) {
-        PageResult<DictData> dictDataPageResult = dictDataService.dictDataPage(pageVO);
-        return success(DictDataConvert.INSTANCE.convertPageResultVO(dictDataPageResult));
+        startPage(pageVO);
+        List<DictData> dictDataPageResult = dictDataService.dictDataPage(pageVO);
+        return pageSuccess(DictDataConvert.INSTANCE.convertListRespVO(dictDataPageResult));
     }
 
     @Inject

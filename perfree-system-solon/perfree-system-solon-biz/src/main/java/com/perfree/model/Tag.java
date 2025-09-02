@@ -3,6 +3,9 @@ package com.perfree.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +23,7 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@TableName("p_tag")
+@Table("p_tag")
 public class Tag  extends BaseModel implements Serializable {
 
     @Serial
@@ -29,7 +32,7 @@ public class Tag  extends BaseModel implements Serializable {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @Id(keyType = KeyType.Auto)
     private Integer id;
 
     /**

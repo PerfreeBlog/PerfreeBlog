@@ -1,8 +1,9 @@
 package com.perfree.controller.auth.codegen;
 
 
+import com.mybatisflex.codegen.entity.Table;
+import com.perfree.base.BaseController;
 import com.perfree.demoModel.DemoMode;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.codegen.vo.*;
@@ -14,17 +15,13 @@ import com.perfree.model.CodegenTable;
 import com.perfree.service.codegen.CodegenService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -36,7 +33,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "代码生成相关接口")
 @Mapping("api/auth/codegen")
-public class CodegenController {
+public class CodegenController extends BaseController {
 
     @Inject
     private CodegenService codegenService;
@@ -44,7 +41,7 @@ public class CodegenController {
     @Post
     @Mapping("/getTableList")
     @Operation(summary = "获取数据库所有的表")
-    public CommonResult<List<TableInfo>> getTableList(@Body CodegenTableListReqVO codegenTableListReqVO) {
+    public CommonResult<List<Table>> getTableList(@Body CodegenTableListReqVO codegenTableListReqVO) {
         return success(codegenService.getTableList(codegenTableListReqVO));
     }
 
@@ -60,8 +57,9 @@ public class CodegenController {
     @Mapping("/codegenTablePage")   
     @Operation(summary = "代码生成数据库表分页列表")
     public CommonResult<PageResult<CodegenTableRespVO>> codegenTablePage(@Body CodegenTablePageReqVO pageVO) {
-        PageResult<CodegenTable> codegenTablePage = codegenService.codegenTablePage(pageVO);
-        return success(CodegenConvert.INSTANCE.convertPageResultVO(codegenTablePage));
+        startPage(pageVO);
+        List<CodegenTable> codegenTableList = codegenService.codegenTablePage(pageVO);
+        return pageSuccess(CodegenConvert.INSTANCE.ConvertToTableListRespVO(codegenTableList));
     }
 
     @Get
@@ -88,7 +86,6 @@ public class CodegenController {
     @Post
     @Mapping("/getCodeFileContent")
     @Operation(summary = "获取代码文件内容")
-    @ResponseBody
     public CommonResult<String> getCodeFileContent(@Body CodeFileContentReqVO codeFileContentReqVO) {
         return success(codegenService.getCodeFileContent(codeFileContentReqVO));
     }

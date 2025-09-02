@@ -7,6 +7,8 @@ import com.perfree.controller.auth.extra.vo.ExtraPageReqVO;
 import com.perfree.controller.auth.extra.vo.ExtraUpdateReqVO;
 import com.perfree.model.Extra;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -27,9 +29,9 @@ public interface ExtraService extends IService<Extra> {
     /***
      * 分页列表
      * @param pageVO pageVO
-     * @return PageResult<Extra>
+     * @return List<Extra>
      */
-    PageResult<Extra> extraPage(ExtraPageReqVO pageVO);
+    List<Extra> extraPage(ExtraPageReqVO pageVO);
 
     /**
      * 根据id获取附加数据

@@ -22,9 +22,9 @@ public interface CommentService extends IService<Comment> {
     /**
      * 评论分页
      * @param commentPageReqVO commentPageReqVO
-     * @return PageResult<CommentRespVO>
+     * @return List<CommentRespVO>
      */
-    PageResult<CommentRespVO> commentPage(CommentPageReqVO commentPageReqVO);
+    List<CommentRespVO> commentPage(CommentPageReqVO commentPageReqVO);
 
     /**
      * 根据id获取评论信息
@@ -35,9 +35,9 @@ public interface CommentService extends IService<Comment> {
 
     /**
      * @param pageReqVO pageReqVO
-     * @return PageResult<CommentRespVO>
+     * @return List<CommentRespVO>
      */
-    PageResult<CommentRespVO> queryChildCommentPage(CommentChildPageReqVO pageReqVO);
+    List<CommentRespVO> queryChildCommentPage(CommentChildPageReqVO pageReqVO);
 
     /**
      * 根据id删除评论
@@ -56,16 +56,16 @@ public interface CommentService extends IService<Comment> {
     /**
      * 根据文章id获取评论分页列表
      * @param pageVo pageVo
-     * @return PageResult<CommentRespVO>
+     * @return List<CommentRespVO>
      */
-    PageResult<CommentRespVO> pageByArticleId(CommentPageByArticleIdReqVO pageVo);
+    List<CommentRespVO> pageByArticleId(CommentPageByArticleIdReqVO pageVo);
 
     /**
      * 根据topPid加载所有子级评论
      * @param pageVO CommentPageByTopPidReqVO
-     * @return PageResult<CommentRespVO>
+     * @return List<CommentRespVO>
      */
-    PageResult<CommentRespVO> pageByTopPid(CommentPageByTopPidReqVO pageVO);
+    List<CommentRespVO> pageByTopPid(CommentPageByTopPidReqVO pageVO);
 
     /**
      * 新增评论

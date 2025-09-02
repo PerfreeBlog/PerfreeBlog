@@ -15,6 +15,7 @@ import com.perfree.system.api.attach.dto.AttachFileDTO;
 import com.perfree.system.api.attach.dto.AttachUploadDTO;
 import io.minio.*;
 import org.apache.commons.lang3.StringUtils;
+import org.noear.solon.annotation.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ import java.io.ByteArrayInputStream;
 /**
  * 代理文件上传服务(案例)
  */
-@Service
+@Component
 public class FileS3HandleImpl extends BaseFileHandle {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(FileS3HandleImpl.class);

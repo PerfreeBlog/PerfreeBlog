@@ -38,16 +38,12 @@ import com.perfree.service.comment.CommentService;
 import com.perfree.service.journal.JournalAttachService;
 import com.perfree.service.tag.TagService;
 import com.perfree.system.api.option.dto.OptionDTO;
-import jakarta.annotation.Resource;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.solon.annotation.Db;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.data.annotation.Transaction;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -86,14 +82,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private CommentService commentService;
 
     @Override
-    public PageResult<ArticleRespVO> articlePage(ArticlePageReqVO pageVO) {
-        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
-                new SortingField("isTop", SortingField.ORDER_DESC),
-                new SortingField("createTime", SortingField.ORDER_DESC)
-        ));
-        Page<ArticleRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        Page<ArticleRespVO> articlePage = articleMapper.articlePage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
-        return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
+    public List<ArticleRespVO> articlePage(ArticlePageReqVO pageVO) {
+        List<ArticleRespVO> articlePage = articleMapper.articlePage(pageVO, SecurityFrameworkUtils.getLoginUserId());
+        return articlePage;
     }
 
     @Override
@@ -235,14 +226,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public PageResult<JournalRespVO> journalPage(JournalPageReqVO pageVO) {
-        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
-                new SortingField("isTop", SortingField.ORDER_DESC),
-                new SortingField("createTime", SortingField.ORDER_DESC)
-        ));
-        IPage<JournalRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<JournalRespVO> journalPage = articleMapper.journalPage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
-        return new PageResult<>(journalPage.getRecords(), journalPage.getTotal());
+    public List<JournalRespVO> journalPage(JournalPageReqVO pageVO) {
+        List<JournalRespVO> journalPage = articleMapper.journalPage(pageVO, SecurityFrameworkUtils.getLoginUserId());
+        return journalPage;
     }
 
     @Override
@@ -275,10 +261,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public PageResult<ArchiveRespVO> archivePage(ArchivePageReqVO pageVO) {
-        IPage<ArchiveRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<ArchiveRespVO> articlePage = articleMapper.archivePage(page, pageVO);
-        return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
+    public List<ArchiveRespVO> archivePage(ArchivePageReqVO pageVO) {
+        List<ArchiveRespVO> articleList = articleMapper.archivePage(pageVO);
+        return articleList;
     }
 
     @Override

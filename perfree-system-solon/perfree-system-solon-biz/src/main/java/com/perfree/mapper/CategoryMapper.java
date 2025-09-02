@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.category.vo.CategoryListReqVO;
@@ -23,7 +24,7 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface CategoryMapper extends BaseMapperX<Category> {
+public interface CategoryMapper extends BaseMapper<Category> {
 
     CategoryRespVO selectBySlug(@Param("slug") String slug);
 
@@ -36,7 +37,7 @@ public interface CategoryMapper extends BaseMapperX<Category> {
 
     CategoryRespVO getCategoryById(@Param("id") Integer id);
 
-    IPage<CategoryRespVO> categoryPage(IPage<CategoryRespVO> page, @Param("pageVO") CategoryPageReqVO pageVO);
+    List<CategoryRespVO> categoryPage(@Param("pageVO") CategoryPageReqVO pageVO);
 
     List<CategoryRespVO> getHotCategory(@Param("num") int num);
 }

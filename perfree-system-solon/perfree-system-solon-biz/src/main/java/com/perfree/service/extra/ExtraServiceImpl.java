@@ -19,6 +19,8 @@ import org.noear.solon.data.annotation.Transaction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -39,13 +41,13 @@ public class ExtraServiceImpl extends ServiceImpl<ExtraMapper, Extra> implements
     }
 
     @Override
-    public PageResult<Extra> extraPage(ExtraPageReqVO pageVO) {
+    public List<Extra> extraPage(ExtraPageReqVO pageVO) {
         return extraMapper.selectExtraPage(pageVO);
     }
 
     @Override
     public Extra get(Integer id) {
-        return extraMapper.selectById(id);
+        return extraMapper.selectOneById(id);
     }
 
     @Override
@@ -68,7 +70,7 @@ public class ExtraServiceImpl extends ServiceImpl<ExtraMapper, Extra> implements
             throw new ServiceException(ErrorCode.EXTRA_KEY_EXIST);
         }
         Extra extra = ExtraConvert.INSTANCE.convertByUpdateReqVO(extraUpdateReqVO);
-        extraMapper.updateById(extra);
+        updateById(extra);
         return extra;
     }
 

@@ -21,7 +21,6 @@ import java.util.List;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface AttachMapper extends BaseMapperX<Attach> {
 
     /**

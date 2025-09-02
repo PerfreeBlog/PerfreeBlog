@@ -1,7 +1,9 @@
 package com.perfree.controller.common.link;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.link.vo.LinkPageReqVO;
 import com.perfree.controller.auth.link.vo.LinkRespVO;
 import com.perfree.service.link.LinkService;
@@ -12,12 +14,15 @@ import org.noear.solon.annotation.*;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "友链相关接口")
 @Mapping("api/link")
-public class LinkController {
+public class LinkController extends BaseController {
 
     @Inject
     private LinkService linkService;
@@ -27,8 +32,10 @@ public class LinkController {
     @Mapping("/page")
     @Operation(summary = "友链分页列表")
     public CommonResult<PageResult<LinkRespVO>> page(@Body LinkPageReqVO pageVO) {
-        PageResult<LinkRespVO> linkPageResult = linkService.linkPage(pageVO);
-        return success(linkPageResult);
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
+        startPage(pageVO);
+        List<LinkRespVO> linkPageResult = linkService.linkPage(pageVO);
+        return pageSuccess(linkPageResult);
     }
 
     @Get

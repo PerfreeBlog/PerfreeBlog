@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.BaseMapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.article.vo.ArticlePageReqVO;
@@ -25,9 +26,9 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface TagMapper extends BaseMapperX<Tag> {
+public interface TagMapper extends BaseMapper<Tag> {
 
-    IPage<TagRespVO> tagPage(IPage<TagRespVO> page, @Param("pageVO") TagPageReqVO pageVO);
+    List<TagRespVO> tagPage(@Param("pageVO") TagPageReqVO pageVO);
 
     List<TagRespVO> getHotTag(@Param("count") int count);
 

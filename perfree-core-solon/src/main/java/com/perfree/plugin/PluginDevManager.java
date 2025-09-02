@@ -9,9 +9,9 @@ import com.perfree.plugin.pojo.PluginBaseConfig;
 import com.perfree.system.api.plugin.dto.PluginsDTO;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
+import org.noear.solon.annotation.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;

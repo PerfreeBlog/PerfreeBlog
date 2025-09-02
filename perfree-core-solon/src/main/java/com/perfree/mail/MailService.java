@@ -13,6 +13,7 @@ import com.perfree.system.api.mailTemplate.MailTemplateApi;
 import com.perfree.system.api.mailTemplate.dto.MailTemplateDTO;
 import com.sun.mail.util.MailSSLSocketFactory;
 import jakarta.annotation.Resource;
+import org.noear.solon.annotation.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-@Service
+@Component
 public class MailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailService.class);

@@ -7,14 +7,14 @@ import cn.hutool.core.io.file.PathUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
-import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
-import com.baomidou.mybatisplus.generator.config.po.TableField;
-import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.baomidou.mybatisplus.generator.config.rules.DateType;
-import com.perfree.commons.common.PageResult;
+
+import com.mybatisflex.codegen.Generator;
+import com.mybatisflex.codegen.config.GlobalConfig;
+
+import com.mybatisflex.codegen.entity.Column;
+import com.mybatisflex.codegen.entity.Table;
+
+
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.WebUtils;
@@ -30,15 +30,11 @@ import com.perfree.mapper.CodegenColumnMapper;
 import com.perfree.mapper.CodegenTableMapper;
 import com.perfree.model.CodegenColumn;
 import com.perfree.model.CodegenTable;
-import jakarta.annotation.Resource;
+import com.zaxxer.hikari.HikariDataSource;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.ibatis.solon.annotation.Db;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.data.annotation.Transaction;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
@@ -47,10 +43,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class CodegenServiceImpl implements CodegenService{
-
-    @Inject
-    private DataSourceProperties dataSourceProperties;
+public class CodegenServiceImpl implements CodegenService {
 
     @Inject
     private CodegenTableMapper codegenTableMapper;
@@ -62,9 +55,9 @@ public class CodegenServiceImpl implements CodegenService{
     private CodegenEngine codegenEngine;
 
     @Override
-    public List<TableInfo> getTableList(CodegenTableListReqVO codegenTableListReqVO) {
-        List<TableInfo> tableInfoList = getTableInfoListHandle(codegenTableListReqVO.getTableName());
-        List<CodegenTable> existsTableList = codegenTableMapper.selectList();
+    public List<Table> getTableList(CodegenTableListReqVO codegenTableListReqVO) {
+        List<Table> tableInfoList = getTableInfoListHandle(codegenTableListReqVO.getTableName());
+        List<CodegenTable> existsTableList = codegenTableMapper.selectListByQuery(null);
         if (!existsTableList.isEmpty()) {
             Set<String> existsTables = existsTableList.stream().map(CodegenTable::getTableName).filter(Objects::nonNull).collect(Collectors.toSet());
             tableInfoList.removeIf(table -> existsTables.contains(table.getName()));
@@ -76,11 +69,11 @@ public class CodegenServiceImpl implements CodegenService{
     @Transaction
     public void createCodegenList(CodegenCreateListReqVO reqVO) {
         for (String tableName : reqVO.getTableNames()) {
-            TableInfo tableInfo = getTableInfoHandle(tableName);
+            Table tableInfo = getTableInfoHandle(tableName);
             CodegenTable codegenTable = CodegenConvert.INSTANCE.convertToCodegenTable(tableInfo);
             genBaseTableInfo(codegenTable);
             codegenTableMapper.insert(codegenTable);
-            for (TableField field : tableInfo.getFields()) {
+            for (Column field : tableInfo.getColumns()) {
                 CodegenColumn codegenColumn = CodegenConvert.INSTANCE.convertToCodegenColum(field);
                 codegenColumn.setTableId(codegenTable.getId());
                 codegenEngine.genBaseColumnInfo(codegenColumn);
@@ -91,13 +84,13 @@ public class CodegenServiceImpl implements CodegenService{
 
 
     @Override
-    public PageResult<CodegenTable> codegenTablePage(CodegenTablePageReqVO pageVO) {
+    public List<CodegenTable> codegenTablePage(CodegenTablePageReqVO pageVO) {
         return codegenTableMapper.codegenTablePage(pageVO);
     }
 
     @Override
     public CodegenInfoRespVO getCodegenInfoByTableId(Integer tableId) {
-        CodegenTable codegenTable = codegenTableMapper.selectById(tableId);
+        CodegenTable codegenTable = codegenTableMapper.selectOneById(tableId);
         List<CodegenColumn> codegenColumnList = codegenColumnMapper.selectByTableId(tableId);
 
         CodegenInfoRespVO codegenInfoRespVO = new CodegenInfoRespVO();
@@ -110,19 +103,21 @@ public class CodegenServiceImpl implements CodegenService{
     @Transaction
     public Boolean saveConfig(CodegenInfoReqVO codegenInfoReqVO) {
         CodegenTable codegenTable = CodegenConvert.INSTANCE.convertByCodegenTableReqVO( codegenInfoReqVO.getCodegenTable());
-        codegenTableMapper.updateById(codegenTable);
+        codegenTableMapper.update(codegenTable);
         List<CodegenColumn> batchUpdate = new ArrayList<>();
         for (CodegenColumnReqVO codegenColumnReqVO : codegenInfoReqVO.getCodegenColumnList()) {
             CodegenColumn codegenColumn = CodegenConvert.INSTANCE.convertByCodegenColumnReqVO(codegenColumnReqVO);
             batchUpdate.add(codegenColumn);
         }
-        codegenColumnMapper.updateBatch(batchUpdate);
+        for (CodegenColumn codegenColumn : batchUpdate) {
+            codegenColumnMapper.update(codegenColumn);
+        }
         return true;
     }
 
     @Override
     public List<CodegenFileListRespVO> getCodeFileList(Integer tableId) {
-        CodegenTable codegenTable = codegenTableMapper.selectById(tableId);
+        CodegenTable codegenTable = codegenTableMapper.selectOneById(tableId);
         List<CodegenColumn> codegenColumnList = codegenColumnMapper.selectByTableId(tableId);
         File file = codegenEngine.genCode(codegenTable, codegenColumnList);
         List<CodegenFileListRespVO> result = new ArrayList<>();
@@ -134,7 +129,7 @@ public class CodegenServiceImpl implements CodegenService{
 
     @Override
     public String getCodeFileContent(CodeFileContentReqVO codeFileContentReqVO) {
-        CodegenTable codegenTable = codegenTableMapper.selectById(codeFileContentReqVO.getTableId());
+        CodegenTable codegenTable = codegenTableMapper.selectOneById(codeFileContentReqVO.getTableId());
         if (null == codegenTable) {
             return null;
         }
@@ -163,7 +158,7 @@ public class CodegenServiceImpl implements CodegenService{
     public void download(Integer tableId, HttpServletResponse response) {
         File zip = null;
         try{
-            CodegenTable codegenTable = codegenTableMapper.selectById(tableId);
+            CodegenTable codegenTable = codegenTableMapper.selectOneById(tableId);
             List<CodegenColumn> codegenColumnList = codegenColumnMapper.selectByTableId(tableId);
             File file = codegenEngine.genCode(codegenTable, codegenColumnList);
             zip = ZipUtil.zip(file);
@@ -225,9 +220,9 @@ public class CodegenServiceImpl implements CodegenService{
     /**
      * 根据表明获取表信息处理逻辑
      * @param tableName tableName
-     * @return TableInfo
+     * @return Table
      */
-    private TableInfo getTableInfoHandle(String tableName) {
+    private Table getTableInfoHandle(String tableName) {
         return CollUtil.getFirst(getTableInfoListHandle(tableName));
     }
 
@@ -235,22 +230,33 @@ public class CodegenServiceImpl implements CodegenService{
     /**
      * 获取数据库所有表处理逻辑
      * @param tableName 表名称
-     * @return List<TableInfo>
+     * @return List<Table>
      */
-    private List<TableInfo> getTableInfoListHandle(String tableName) {
-        // 使用 MyBatis Plus Generator 解析表结构
-        DataSourceConfig dataSourceConfig = new DataSourceConfig.Builder(dataSourceProperties.getUrl(), dataSourceProperties.getUsername(),
-                dataSourceProperties.getPassword()).build();
-        StrategyConfig.Builder strategyConfig = new StrategyConfig.Builder();
+    private List<Table> getTableInfoListHandle(String tableName) {
+
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl("jdbc:mysql://127.0.0.1:3306/your-database?characterEncoding=utf-8");
+        dataSource.setUsername("root");
+        dataSource.setPassword("******");
+
+        // 使用 MyBatis-Flex Generator 解析表结构
+        GlobalConfig globalConfig = new GlobalConfig();
+        globalConfig.setAuthor("System");
+        
+        // 配置包信息
+        globalConfig.getPackageConfig().setSourceDir(System.getProperty("user.dir") + "/src/main/java");
+        globalConfig.getPackageConfig().setBasePackage("com.perfree");
+
+        // 配置策略
         if (StrUtil.isNotEmpty(tableName)) {
-            strategyConfig.addInclude(tableName);
+            globalConfig.getStrategyConfig().setGenerateTables(Set.of(tableName));
         }
-        GlobalConfig globalConfig = new GlobalConfig.Builder().dateType(DateType.TIME_PACK).build(); // 只使用 LocalDateTime 类型，不使用 LocalDate
-        ConfigBuilder builder = new ConfigBuilder(null, dataSourceConfig, strategyConfig.build(),
-                null, globalConfig, null);
+        // 创建生成器并获取表信息
+        Generator generator = new Generator(dataSource,globalConfig);
+        List<Table> tables = generator.getTables();
+        
         // 按照名字排序
-        List<TableInfo> tables = builder.getTableInfoList();
-        tables.sort(Comparator.comparing(TableInfo::getName));
+        tables.sort(Comparator.comparing(Table::getName));
         return tables;
     }
 }

@@ -16,9 +16,9 @@ public interface MailServerService extends IService<MailServer> {
     /**
      * 邮箱服务分页
      * @param pageVO pageVO
-     * @return PageResult<MailServer>
+     * @return List<MailServer>
      */
-    PageResult<MailServer> mailServerPage(MailServerPageReqVO pageVO);
+    List<MailServer> mailServerPage(MailServerPageReqVO pageVO);
 
     /**
      * 添加邮箱服务

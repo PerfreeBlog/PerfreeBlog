@@ -12,13 +12,14 @@ import com.perfree.system.api.option.dto.OptionDTO;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Component;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 public class WebInitInterceptor implements HandlerInterceptor {
 
-    @Resource
+    @Inject
     private OptionCacheService optionCacheService;
 
     @Override

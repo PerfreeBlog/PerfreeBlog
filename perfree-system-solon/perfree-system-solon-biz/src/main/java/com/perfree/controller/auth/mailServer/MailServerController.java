@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.mailServer;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.mailServer.vo.*;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -31,7 +33,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "邮箱服务相关接口")
 @Mapping("api/auth/mailServer")
-public class MailServerController {
+public class MailServerController extends BaseController {
 
     @Inject
     private MailServerService mailServerService;
@@ -41,8 +43,9 @@ public class MailServerController {
     @Operation(summary = "邮箱服务分页列表")
     @PreAuthorize("@ss.hasPermission('admin:mailServer:query')")
     public CommonResult<PageResult<MailServerRespVO>> page(@Body MailServerPageReqVO pageVO) {
-        PageResult<MailServer> mailServerPageResult = mailServerService.mailServerPage(pageVO);
-        return success(MailServerConvert.INSTANCE.convertPageResultVO(mailServerPageResult));
+        startPage(pageVO);
+        List<MailServer> mailServerList = mailServerService.mailServerPage(pageVO);
+        return pageSuccess(MailServerConvert.INSTANCE.convertListRespVO(mailServerList));
     }
 
     @Post

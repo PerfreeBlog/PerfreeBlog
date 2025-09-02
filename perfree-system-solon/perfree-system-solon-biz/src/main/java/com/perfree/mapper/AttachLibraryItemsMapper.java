@@ -22,7 +22,7 @@ import java.util.List;
 * @author Perfree
 */
 @Mapper
-public interface AttachLibraryItemsMapper extends BaseMapperX<AttachLibraryItems> {
+public interface AttachLibraryItemsMapper extends BaseMapper<AttachLibraryItems> {
 
     default List<AttachLibraryItems> listAll() {
         return selectListByQuery(new QueryWrapper()
@@ -38,7 +38,7 @@ public interface AttachLibraryItemsMapper extends BaseMapperX<AttachLibraryItems
         return selectListByQuery(queryWrapper);
     }
 
-    IPage<AttachLibraryItemsRespVO> attachLibraryItemsPage(IPage<AttachLibraryItemsRespVO> page, @Param("pageVO") AttachLibraryItemsPageReqVO pageVO);
+    List<AttachLibraryItemsRespVO> attachLibraryItemsPage(@Param("pageVO") AttachLibraryItemsPageReqVO pageVO);
 
     AttachLibraryItemsRespVO getById(@Param("id") Integer id);
 }

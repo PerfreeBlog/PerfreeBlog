@@ -1,7 +1,9 @@
 package com.perfree.controller.auth.link;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.link.vo.LinkAddReqVO;
 import com.perfree.controller.auth.link.vo.LinkPageReqVO;
 import com.perfree.controller.auth.link.vo.LinkRespVO;
@@ -18,12 +20,15 @@ import org.noear.solon.annotation.Mapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "友链相关接口")
 @Mapping("api/auth/link")
-public class LinkController {
+public class LinkController extends BaseController {
 
     @Inject
     private LinkService linkService;
@@ -33,8 +38,10 @@ public class LinkController {
     @Mapping("/page")
     @Operation(summary = "友链分页列表")
     public CommonResult<PageResult<LinkRespVO>> page(@Body LinkPageReqVO pageVO) {
-        PageResult<LinkRespVO> linkPageResult = linkService.linkPage(pageVO);
-        return success(linkPageResult);
+        SortingFieldUtils.handleDefaultSortingField(pageVO);
+        startPage(pageVO);
+        List<LinkRespVO> linkRespVOList = linkService.linkPage(pageVO);
+        return pageSuccess(linkRespVOList);
     }
 
     @Post

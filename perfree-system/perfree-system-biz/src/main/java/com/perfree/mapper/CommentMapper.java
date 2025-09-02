@@ -22,7 +22,6 @@ import java.util.List;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface CommentMapper extends BaseMapperX<Comment> {
 
     IPage<CommentRespVO> commentPage(IPage<CommentRespVO> page, @Param("pageVO") CommentPageReqVO pageVO);

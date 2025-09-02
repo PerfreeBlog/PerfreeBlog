@@ -1,17 +1,18 @@
 package com.perfree.controller.auth.article;
 
 
+import cn.hutool.core.collection.ListUtil;
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.common.SortingField;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.article.vo.*;
-import com.perfree.controller.auth.journal.vo.JournalRespVO;
-import com.perfree.controller.auth.journal.vo.JournalUpdateReqVO;
 import com.perfree.convert.article.ArticleConvert;
 import com.perfree.model.Article;
 import com.perfree.service.article.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.noear.solon.annotation.*;
 import org.noear.solon.annotation.Mapping;
@@ -22,12 +23,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.perfree.commons.common.CommonResult.success;
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 
 @Controller
 @Tag(name = "文章相关接口")
 @Mapping("api/auth/article")
-public class ArticleController {
+public class ArticleController extends BaseController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ArticleController.class);
 
@@ -38,7 +39,12 @@ public class ArticleController {
     @Mapping("/page")
     @Operation(summary = "文章分页列表")
     public CommonResult<PageResult<ArticleRespVO>> page(@Body ArticlePageReqVO pageVO) {
-        return success(articleService.articlePage(pageVO));
+        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
+                new SortingField("isTop", SortingField.ORDER_DESC),
+                new SortingField("createTime", SortingField.ORDER_DESC)
+        ));
+        startPage(pageVO);
+        return pageSuccess(articleService.articlePage(pageVO));
     }
 
     @Post

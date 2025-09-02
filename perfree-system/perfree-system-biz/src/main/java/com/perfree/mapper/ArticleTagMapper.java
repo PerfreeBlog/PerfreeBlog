@@ -13,7 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface ArticleTagMapper extends BaseMapperX<ArticleTag> {
 
     default void delByTagId(Integer id){

@@ -1,7 +1,11 @@
 package com.perfree.controller.common.category;
 
+import cn.hutool.core.collection.ListUtil;
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.common.SortingField;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.category.vo.CategoryListReqVO;
 import com.perfree.controller.auth.category.vo.CategoryPageReqVO;
 import com.perfree.controller.auth.category.vo.CategoryRespVO;
@@ -18,12 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "分类相关接口")
 @Mapping("api/category")
-public class CategoryController {
+public class CategoryController extends BaseController {
 
     @Inject
     private CategoryService categoryService;
@@ -32,7 +37,11 @@ public class CategoryController {
     @Mapping("/page")
     @Operation(summary = "分类分页列表")
     public CommonResult< PageResult<CategoryRespVO>> page(@Body CategoryPageReqVO pageVO) {
-        return success(categoryService.categoryPage(pageVO));
+        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
+                new SortingField("createTime", SortingField.ORDER_DESC)
+        ));
+        startPage(pageVO);
+        return pageSuccess(categoryService.categoryPage(pageVO));
     }
 
     @Post

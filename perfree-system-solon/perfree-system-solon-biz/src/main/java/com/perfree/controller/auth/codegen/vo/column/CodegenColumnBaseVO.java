@@ -14,7 +14,7 @@ public class CodegenColumnBaseVO {
 
     private String columnComment;
 
-    private Boolean nullable;
+    private Integer nullable;
 
     private Boolean primaryKey;
 

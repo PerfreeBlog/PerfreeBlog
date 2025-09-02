@@ -25,7 +25,7 @@ public class MailLogServiceImpl extends ServiceImpl<MailLogMapper, MailLog> impl
 
 
     @Override
-    public PageResult<MailLog> mailLogPage(MailLogPageReqVO pageVO) {
+    public List<MailLog> mailLogPage(MailLogPageReqVO pageVO) {
         return mailLogMapper.selectPage(pageVO);
     }
 
@@ -41,13 +41,13 @@ public class MailLogServiceImpl extends ServiceImpl<MailLogMapper, MailLog> impl
     @Transaction
     public MailLog update(MailLogUpdateReqVO mailLogUpdateReqVO) {
         MailLog mailLog = MailLogConvert.INSTANCE.convertUpdateReqVO(mailLogUpdateReqVO);
-        mailLogMapper.updateById(mailLog);
+        updateById(mailLog);
         return mailLog;
     }
 
     @Override
     public MailLog get(Integer id) {
-        return mailLogMapper.selectById(id);
+        return mailLogMapper.selectOneById(id);
     }
 
     @Override

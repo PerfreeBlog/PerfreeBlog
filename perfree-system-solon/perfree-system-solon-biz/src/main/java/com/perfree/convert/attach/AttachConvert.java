@@ -31,4 +31,6 @@ public interface AttachConvert {
 
     AttachByUrlRespVO convertByUrlRespVO(Attach attach);
 
+    List<AttachRespVO> convertRespVOList(List<Attach> attachList);
+
 }

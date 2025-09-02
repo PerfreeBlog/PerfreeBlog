@@ -10,10 +10,10 @@
     <packaging>pom</packaging>
     <url>https://github.com/perfree/xxx</url>
     <modules>
-        <module>perfree-core</module>
+<!--        <module>perfree-core</module>-->
 <!--        <module>perfree-plugins</module>-->
-        <module>perfree-system</module>
-        <module>perfree-server</module>
+<!--        <module>perfree-system</module>-->
+<!--        <module>perfree-server</module>-->
         <module>perfree-core-solon</module>
         <module>perfree-system-solon</module>
         <module>perfree-server-solon</module>
@@ -44,6 +44,7 @@
         <solon.version>3.5.1</solon.version>
         <sa-token.version>1.44.0</sa-token.version>
         <mybatis-flex.version>1.11.1</mybatis-flex.version>
+        <HikariCP.version>4.0.3</HikariCP.version>
     </properties>
 
     <dependencyManagement>
@@ -98,6 +99,18 @@
                 <groupId>com.mybatis-flex</groupId>
                 <artifactId>mybatis-flex-solon-plugin</artifactId>
                 <version>${mybatis-flex.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-codegen</artifactId>
+                <version>${mybatis-flex.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${HikariCP.version}</version>
             </dependency>
 
 
@@ -229,7 +242,7 @@
 
             <dependency>
                 <groupId>cn.dev33</groupId>
-                <artifactId>sa-token-spring-boot-starter</artifactId>
+                <artifactId>sa-token-solon-plugin</artifactId>
                 <version>${sa-token.version}</version>
             </dependency>
         </dependencies>

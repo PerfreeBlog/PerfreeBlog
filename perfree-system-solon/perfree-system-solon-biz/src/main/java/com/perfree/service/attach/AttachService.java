@@ -28,7 +28,7 @@ public interface AttachService extends IService<Attach> {
      * @param pageVO pageVO
      * @return PageResult<Attach>
      */
-    PageResult<Attach> attachPage(AttachPageReqVO pageVO);
+    List<Attach> attachPage(AttachPageReqVO pageVO);
 
     /**
      * 附件创建

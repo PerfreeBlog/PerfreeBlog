@@ -1,5 +1,7 @@
 package com.perfree.enjoy.directive.article;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
@@ -12,15 +14,19 @@ import com.perfree.constant.ViewConstant;
 import com.perfree.controller.auth.journal.vo.JournalPageReqVO;
 import com.perfree.controller.auth.journal.vo.JournalRespVO;
 import com.perfree.service.article.ArticleService;
+import jakarta.annotation.Resource;
+import org.noear.solon.annotation.Component;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+
+import java.util.List;
+
 @TemplateDirective("journalPage")
 @Component
 public class JournalPageDirective extends BaseDirective {
 
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         JournalPageDirective.articleService = articleService;
     }
@@ -30,17 +36,16 @@ public class JournalPageDirective extends BaseDirective {
         JournalPageReqVO journalPageReqVO = new JournalPageReqVO();
 
         // 组装来自ModelView的数据
-        journalPageReqVO.setPageNo(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1));
-
         // 组装来自指令编写的参数
-        journalPageReqVO.setPageSize(getExprParamToInt(ViewConstant.PAGE_SIZE, 10));
-        journalPageReqVO.setSortingFields(DirectiveSortingUtils.handleSortingField(getExprParamToStr(ViewConstant.ORDER_BY, null)));
-
+        PageHelper.startPage(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1),
+                getExprParamToInt(ViewConstant.PAGE_SIZE, 10),
+                getExprParamToStr(ViewConstant.ORDER_BY, null)
+        );
         // 查询数据
-        PageResult<JournalRespVO> journalRespVOPageResult = articleService.journalPage(journalPageReqVO);
+        List<JournalRespVO> journalRespVOList = articleService.journalPage(journalPageReqVO);
 
         // 组装结果集
-        DirectivePageResult<JournalRespVO> result = new DirectivePageResult<>(journalRespVOPageResult.getList(),journalRespVOPageResult.getTotal(),
+        DirectivePageResult<JournalRespVO> result = new DirectivePageResult<>(journalRespVOList,new PageInfo<>(journalRespVOList).getTotal(),
                 journalPageReqVO.getPageNo(), journalPageReqVO.getPageSize());
         scope.set("journalPage", result);
         stat.exec(env, scope, writer);

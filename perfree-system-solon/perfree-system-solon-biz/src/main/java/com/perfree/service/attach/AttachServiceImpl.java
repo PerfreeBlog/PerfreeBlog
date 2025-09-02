@@ -59,7 +59,7 @@ public class AttachServiceImpl extends ServiceImpl<AttachMapper, Attach> impleme
 
 
     @Override
-    public PageResult<Attach> attachPage(AttachPageReqVO pageVO) {
+    public List<Attach> attachPage(AttachPageReqVO pageVO) {
         return attachMapper.selectPage(pageVO);
     }
 
@@ -86,7 +86,7 @@ public class AttachServiceImpl extends ServiceImpl<AttachMapper, Attach> impleme
     @Override
     @Transaction
     public Boolean del(Integer id) {
-        Attach attach = attachMapper.selectById(id);
+        Attach attach = attachMapper.selectOneById(id);
         BaseFileHandle fileHandle = fileHandleService.getFileHandle(attach.getConfigId());
         boolean result = fileHandle.delete(AttachConvert.INSTANCE.convertToAttachFileDTO(attach));
         if (!result) {
@@ -110,7 +110,7 @@ public class AttachServiceImpl extends ServiceImpl<AttachMapper, Attach> impleme
     @Transaction
     public Boolean updateAttach(AttachUpdateVO attachUpdateVO) {
         Attach attach = AttachConvert.INSTANCE.convertByUpdateVO(attachUpdateVO);
-        attachMapper.updateById(attach);
+        updateById(attach);
         return true;
     }
 
@@ -148,7 +148,7 @@ public class AttachServiceImpl extends ServiceImpl<AttachMapper, Attach> impleme
 
     @Override
     public Long getTotalAttach() {
-        return attachMapper.selectCount();
+        return attachMapper.selectCountByQuery(null);
     }
 
     @Override

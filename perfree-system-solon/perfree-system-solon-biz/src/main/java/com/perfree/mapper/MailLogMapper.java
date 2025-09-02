@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
@@ -22,9 +23,9 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-public interface MailLogMapper extends BaseMapperX<MailLog> {
+public interface MailLogMapper extends BaseMapper<MailLog> {
 
-    default PageResult<MailLog> selectPage(MailLogPageReqVO reqVO) {
+    default List<MailLog> selectPage(MailLogPageReqVO reqVO) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.like(MailLog::getMailTemplateCode, reqVO.getMailTemplateCode());
         if (reqVO.getSendDate() != null && reqVO.getSendDate().length > 0 && reqVO.getSendDate()[0] != null) {
@@ -38,7 +39,7 @@ public interface MailLogMapper extends BaseMapperX<MailLog> {
         queryWrapper.eq(MailLog::getSendStatus, reqVO.getSendStatus());
         queryWrapper.like(MailLog::getSendMail, reqVO.getSendMail());
         queryWrapper.orderBy(MailLog::getId, false);
-        return selectPage(reqVO, queryWrapper);
+        return selectListByQuery(queryWrapper);
     }
 
     default List<MailLog> listAll() {

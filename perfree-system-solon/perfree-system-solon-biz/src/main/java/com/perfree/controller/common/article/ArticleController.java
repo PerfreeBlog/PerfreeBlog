@@ -1,5 +1,6 @@
 package com.perfree.controller.common.article;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.constant.ArticleConstant;
@@ -21,12 +22,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "文章相关接口")
 @Mapping("api/article")
-public class ArticleController {
+public class ArticleController extends BaseController {
 
     @Inject
     private ArticleService articleService;
@@ -42,7 +44,8 @@ public class ArticleController {
     @Mapping("archivePage")
     @Operation(summary = "文章归档列表分页")
     public CommonResult<PageResult<ArchiveRespVO>> archivePage(@Body ArchivePageReqVO pageVO){
-        return success(articleService.archivePage(pageVO));
+        startPage(pageVO);
+        return pageSuccess(articleService.archivePage(pageVO));
     }
 
     @Get
@@ -81,7 +84,8 @@ public class ArticleController {
     @Mapping("/page")
     @Operation(summary = "文章分页列表")
     public CommonResult<PageResult<ArticleRespVO>> page(@Body ArticlePageReqVO pageVO) {
-        return success(articleService.articlePage(pageVO));
+        startPage(pageVO);
+        return pageSuccess(articleService.articlePage(pageVO));
     }
 
     @Get

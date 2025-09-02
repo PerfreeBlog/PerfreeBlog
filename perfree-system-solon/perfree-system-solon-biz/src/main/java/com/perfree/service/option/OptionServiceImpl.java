@@ -59,7 +59,7 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
             return false;
         }
         option.setValue(value);
-        optionMapper.updateById(option);
+        updateById(option);
         optionCacheService.putOption(option.getKey(), option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
         return true;
     }
@@ -86,7 +86,7 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
 
     @Override
     public void initOptionCache() {
-        List<Option> optionList = optionMapper.selectList();
+        List<Option> optionList = optionMapper.selectListByQuery(null);
         List<OptionDTO> options = OptionConvert.INSTANCE.convertCacheDTO(optionList);
         for (OptionDTO option : options) {
             optionCacheService.putOption(option.getKey(), option.getIdentification(), option);
@@ -155,7 +155,7 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
             optionCacheService.putOption(option.getKey(),option.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(option));
         } else {
             optionByIdentificationAndKey.setValue(version);
-            optionMapper.updateById(optionByIdentificationAndKey);
+            updateById(optionByIdentificationAndKey);
             optionCacheService.putOption(optionByIdentificationAndKey.getKey(),optionByIdentificationAndKey.getIdentification(), OptionConvert.INSTANCE.convertModelToDTO(optionByIdentificationAndKey));
         }
 

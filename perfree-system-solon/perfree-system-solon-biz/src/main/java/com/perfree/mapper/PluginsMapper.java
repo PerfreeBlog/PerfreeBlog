@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
@@ -22,15 +23,15 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface PluginsMapper extends BaseMapperX<Plugins> {
+public interface PluginsMapper extends BaseMapper<Plugins> {
 
     /**
      * 插件分页
      * @param pageVO pageVO
      * @return PageResult<Plugins>
      */
-    default PageResult<Plugins> selectPage(PluginsPageReqVO pageVO) {
-        return selectPage(pageVO, new QueryWrapper()
+    default List<Plugins> selectPage(PluginsPageReqVO pageVO) {
+        return selectListByQuery(new QueryWrapper()
                 .like(Plugins::getName, pageVO.getName()));
     }
 

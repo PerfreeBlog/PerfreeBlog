@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.attach;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.attach.vo.*;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -32,7 +34,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "附件相关接口")
 @Mapping("api/auth/attach")
-public class AttachController {
+public class AttachController extends BaseController {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(AttachController.class);
     @Inject
@@ -53,8 +55,9 @@ public class AttachController {
     @Operation(summary = "附件分页列表")
     @PreAuthorize("@ss.hasPermission('admin:attach:query')")
     public CommonResult<PageResult<AttachRespVO>> page(@Body AttachPageReqVO pageVO) {
-        PageResult<Attach> rolePageResult = attachService.attachPage(pageVO);
-        return success(AttachConvert.INSTANCE.convertPageResultVO(rolePageResult));
+        startPage(pageVO);
+        List<Attach> attachList = attachService.attachPage(pageVO);
+        return pageSuccess(AttachConvert.INSTANCE.convertRespVOList(attachList));
     }
 
     @Get

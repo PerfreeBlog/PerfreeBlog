@@ -1,5 +1,6 @@
 package com.perfree.controller.common.comment;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
@@ -19,12 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "评论相关接口")
 @Mapping("api/comment")
-public class CommentController {
+public class CommentController extends BaseController {
 
     @Inject
     private CommentService commentService;
@@ -33,15 +35,17 @@ public class CommentController {
     @Mapping("/pageByArticleId")
     @Operation(summary = "根据文章id获取评论分页列表(顶级)")
     public CommonResult<PageResult<CommentRespVO>> pageByArticleId(@Valid @Body CommentPageByArticleIdReqVO pageVo) {
-        PageResult<CommentRespVO> commentPageResult = commentService.pageByArticleId(pageVo);
-        return success(commentPageResult);
+        startPage(pageVo);
+        List<CommentRespVO> commentPageResult = commentService.pageByArticleId(pageVo);
+        return pageSuccess(commentPageResult);
     }
 
     @Post
     @Mapping("/pageByTopPid")
     @Operation(summary = "根据topPid获取所有子级评论信息")
     public CommonResult<PageResult<CommentRespVO>> pageByTopPid(@Valid @Body CommentPageByTopPidReqVO pageVO) {
-        return CommonResult.success(commentService.pageByTopPid(pageVO));
+        startPage(pageVO);
+        return pageSuccess(commentService.pageByTopPid(pageVO));
     }
 
     @Post

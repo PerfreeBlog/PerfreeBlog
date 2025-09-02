@@ -37,13 +37,9 @@ public class AttachLibraryServiceImpl extends ServiceImpl<AttachLibraryMapper, A
 
 
     @Override
-    public PageResult<AttachLibraryRespVO> attachLibraryPage(AttachLibraryPageReqVO pageVO) {
-        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
-                new SortingField("createTime", SortingField.ORDER_DESC)
-        ));
-        IPage<AttachLibraryRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<AttachLibraryRespVO> attachLibraryRespVOIPage = attachLibraryMapper.attachLibraryPage(page, pageVO, SecurityFrameworkUtils.getLoginUserId());
-        return new PageResult<>(attachLibraryRespVOIPage.getRecords(), attachLibraryRespVOIPage.getTotal());
+    public List<AttachLibraryRespVO> attachLibraryPage(AttachLibraryPageReqVO pageVO) {
+        List<AttachLibraryRespVO> attachLibraryRespVOIPage = attachLibraryMapper.attachLibraryPage(pageVO, SecurityFrameworkUtils.getLoginUserId());
+        return attachLibraryRespVOIPage;
     }
 
     @Override
@@ -58,7 +54,7 @@ public class AttachLibraryServiceImpl extends ServiceImpl<AttachLibraryMapper, A
     @Transaction
     public AttachLibrary update(AttachLibraryUpdateReqVO attachLibraryUpdateReqVO) {
         AttachLibrary attachLibrary = AttachLibraryConvert.INSTANCE.convertUpdateReqVO(attachLibraryUpdateReqVO);
-        attachLibraryMapper.updateById(attachLibrary);
+        updateById(attachLibrary);
         return attachLibrary;
     }
 

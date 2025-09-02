@@ -1,5 +1,6 @@
 package com.perfree.mapper;
 
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
@@ -19,7 +20,7 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface AttachConfigMapper extends BaseMapperX<AttachConfig> {
+public interface AttachConfigMapper extends BaseMapper<AttachConfig> {
 
     default List<AttachConfig> getAll(){
         return selectListByQuery(new QueryWrapper()
@@ -27,8 +28,8 @@ public interface AttachConfigMapper extends BaseMapperX<AttachConfig> {
                 .orderBy(AttachConfig::getCreateTime,false));
     }
 
-    default PageResult<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO){
-        return selectPage(pageVO, new QueryWrapper()
+    default List<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO){
+        return selectListByQuery(new QueryWrapper()
                 .like(AttachConfig::getName, pageVO.getName())
                 .orderBy(AttachConfig::getId,false)
         );

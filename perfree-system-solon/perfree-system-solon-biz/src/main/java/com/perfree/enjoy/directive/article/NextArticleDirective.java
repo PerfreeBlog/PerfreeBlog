@@ -8,8 +8,8 @@ import com.perfree.commons.directive.TemplateDirective;
 import com.perfree.constant.ArticleConstant;
 import com.perfree.controller.auth.article.vo.ArticleRespVO;
 import com.perfree.service.article.ArticleService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import jakarta.annotation.Resource;
+import org.noear.solon.annotation.Component;
 
 @TemplateDirective("nextArticle")
 @Component
@@ -17,7 +17,7 @@ public class NextArticleDirective extends BaseDirective {
 
     private static ArticleService articleService;
 
-    @Autowired
+    @Resource
     public void setArticleService(ArticleService articleService){
         NextArticleDirective.articleService = articleService;
     }

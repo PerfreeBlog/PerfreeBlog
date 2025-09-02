@@ -7,6 +7,8 @@ import com.perfree.model.Plugins;
 import com.perfree.plugin.commons.PluginSetting;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -20,9 +22,9 @@ public interface PluginsService extends IService<Plugins> {
     /**
      * 插件分页列表
      * @param pageVO pageVO
-     * @return PageResult<Plugins>
+     * @return List<Plugins>
      */
-    PageResult<Plugins> pluginsPage(PluginsPageReqVO pageVO);
+    List<Plugins> pluginsPage(PluginsPageReqVO pageVO);
 
     /**
      * 安装插件

@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.comment.vo.CommentChildPageReqVO;
@@ -25,13 +26,13 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface CommentMapper extends BaseMapperX<Comment> {
+public interface CommentMapper extends BaseMapper<Comment> {
 
-    IPage<CommentRespVO> commentPage(IPage<CommentRespVO> page, @Param("pageVO") CommentPageReqVO pageVO);
+    List<CommentRespVO> commentPage(@Param("pageVO") CommentPageReqVO pageVO);
 
     CommentRespVO queryById(@Param("id") Integer id);
 
-    IPage<CommentRespVO> queryChildCommentPage(IPage<CommentRespVO> page, @Param("pageVO") CommentChildPageReqVO pageVO);
+    List<CommentRespVO> queryChildCommentPage(@Param("pageVO") CommentChildPageReqVO pageVO);
 
     default void del(Integer id){
         deleteByQuery(QueryWrapper.create().where(Comment::getId).eq(id)
@@ -39,9 +40,9 @@ public interface CommentMapper extends BaseMapperX<Comment> {
                 .or(Comment::getTopPid).eq(id));
     }
 
-    IPage<CommentRespVO> pageByArticleId(IPage<CommentRespVO> page, @Param("pageVO") CommentPageByArticleIdReqVO pageVO);
+    List<CommentRespVO> pageByArticleId(@Param("pageVO") CommentPageByArticleIdReqVO pageVO);
 
-    IPage<CommentRespVO> pageByTopPid(IPage<CommentRespVO> page, @Param("pageVO") CommentPageByTopPidReqVO pageVO);
+    List<CommentRespVO> pageByTopPid(@Param("pageVO") CommentPageByTopPidReqVO pageVO);
 
     default void delByArticleId(Integer articleId){
         deleteByQuery(new QueryWrapper().eq(Comment::getArticleId, articleId));

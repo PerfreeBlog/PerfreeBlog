@@ -2,8 +2,8 @@ package com.perfree.demoModel;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.noear.solon.annotation.Component;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 @Aspect
 @Component

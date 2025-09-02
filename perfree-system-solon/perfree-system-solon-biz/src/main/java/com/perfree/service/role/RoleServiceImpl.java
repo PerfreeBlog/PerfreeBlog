@@ -42,7 +42,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
 
     @Override
-    public PageResult<Role> rolePage(RolePageReqVO pageVO) {
+    public List<Role> rolePage(RolePageReqVO pageVO) {
         return roleMapper.selectPage(pageVO);
     }
 
@@ -68,7 +68,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Override
     public Role get(Integer id) {
-        return roleMapper.selectById(id);
+        return roleMapper.selectOneById(id);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Transaction
     public Role update(RoleUpdateReqVO roleUpdateReqVO) {
         Role role = RoleConvert.INSTANCE.convertUpdateReqVO(roleUpdateReqVO);
-        roleMapper.updateById(role);
+        updateById(role);
         return role;
     }
 

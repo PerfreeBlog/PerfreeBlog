@@ -17,7 +17,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface ExtraMapper extends BaseMapperX<Extra> {
 
     default Extra getByKey(String extraKey){

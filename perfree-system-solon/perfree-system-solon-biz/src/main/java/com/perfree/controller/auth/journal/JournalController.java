@@ -1,7 +1,10 @@
 package com.perfree.controller.auth.journal;
 
+import cn.hutool.core.collection.ListUtil;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.common.SortingField;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.article.vo.ArticleUpdateIsCommentReqVO;
 import com.perfree.controller.auth.article.vo.ArticleUpdateIsTopReqVO;
 import com.perfree.controller.auth.journal.vo.JournalAddReqVO;
@@ -18,6 +21,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
@@ -64,7 +68,11 @@ public class JournalController {
     @Mapping("/page")
     @Operation(summary = "动态分页列表")
     public CommonResult<PageResult<JournalRespVO>> page(@Body JournalPageReqVO pageVO) {
-        return success(articleService.journalPage(pageVO));
+        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
+                new SortingField("isTop", SortingField.ORDER_DESC),
+                new SortingField("createTime", SortingField.ORDER_DESC)
+        ));
+        return pageSuccess(articleService.journalPage(pageVO));
     }
 
     @Get

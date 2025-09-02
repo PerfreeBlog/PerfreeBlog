@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.mailTemplate;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.mailTemplate.vo.*;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -31,7 +33,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "邮件模板相关接口")
 @Mapping("api/auth/mailTemplate")
-public class MailTemplateController {
+public class MailTemplateController extends BaseController {
 
     @Inject
     private MailTemplateService mailTemplateService;
@@ -41,8 +43,9 @@ public class MailTemplateController {
     @Operation(summary = "邮件模板分页列表")
     @PreAuthorize("@ss.hasPermission('admin:mailTemplate:query')")
     public CommonResult<PageResult<MailTemplateRespVO>> page(@Body MailTemplatePageReqVO pageVO) {
-        PageResult<MailTemplate> mailTemplatePageResult = mailTemplateService.mailTemplatePage(pageVO);
-        return success(MailTemplateConvert.INSTANCE.convertPageResultVO(mailTemplatePageResult));
+        startPage(pageVO);
+        List<MailTemplate> mailTemplateList = mailTemplateService.mailTemplatePage(pageVO);
+        return pageSuccess(MailTemplateConvert.INSTANCE.convertListRespVO(mailTemplateList));
     }
 
     @Post

@@ -16,7 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface CodegenTableMapper extends BaseMapperX<CodegenTable> {
 
     default PageResult<CodegenTable> codegenTablePage(CodegenTablePageReqVO pageVO){

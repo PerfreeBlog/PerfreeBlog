@@ -1,5 +1,6 @@
 package com.perfree.controller.common.tag;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.tag.vo.TagPageReqVO;
@@ -16,12 +17,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "标签相关接口")
 @Mapping("api/tag")
-public class TagController {
+public class TagController extends BaseController {
 
     @Inject
     private TagService tagService;
@@ -30,8 +32,9 @@ public class TagController {
     @Mapping("/page")
     @Operation(summary = "标签分页列表")
     public CommonResult<PageResult<TagRespVO>> page(@Body TagPageReqVO pageVO) {
-        PageResult<TagRespVO> tagPageResult = tagService.tagPage(pageVO);
-        return success(tagPageResult);
+        startPage(pageVO);
+        List<TagRespVO> tagPageResult = tagService.tagPage(pageVO);
+        return pageSuccess(tagPageResult);
     }
 
     @Get

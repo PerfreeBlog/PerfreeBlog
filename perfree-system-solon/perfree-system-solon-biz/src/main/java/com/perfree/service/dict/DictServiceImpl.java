@@ -37,7 +37,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
 
 
     @Override
-    public PageResult<Dict> dictPage(DictPageReqVO pageVO) {
+    public List<Dict> dictPage(DictPageReqVO pageVO) {
         return dictMapper.selectPage(pageVO);
     }
 
@@ -61,19 +61,19 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
             throw new ServiceException(ErrorCode.DICT_TYPE_EXIST);
         }
         Dict dict = DictConvert.INSTANCE.convertUpdateReqVO(dictUpdateReqVO);
-        dictMapper.updateById(dict);
+        updateById(dict);
         return dict;
     }
 
     @Override
     public Dict get(Integer id) {
-        return dictMapper.selectById(id);
+        return dictMapper.selectOneById(id);
     }
 
     @Override
     @Transaction
     public Boolean del(Integer id) {
-        Dict dict = dictMapper.selectById(id);
+        Dict dict = dictMapper.selectOneById(id);
         List<DictData> dictDataList = dictDataMapper.queryByParentDictType(dict.getDictType());
         if (!dictDataList.isEmpty()) {
             throw new ServiceException(ErrorCode.NO_DEL_EXIST_DICT_DATA);

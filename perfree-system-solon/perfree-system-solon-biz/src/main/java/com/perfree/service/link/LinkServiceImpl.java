@@ -21,6 +21,8 @@ import org.noear.solon.data.annotation.Transaction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -36,11 +38,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     private LinkMapper linkMapper;
 
     @Override
-    public PageResult<LinkRespVO> linkPage(LinkPageReqVO pageVO) {
-        SortingFieldUtils.handleDefaultSortingField(pageVO);
-        IPage<LinkRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<LinkRespVO> linkPage = linkMapper.linkPage(page, pageVO);
-        return new PageResult<>(linkPage.getRecords(), linkPage.getTotal());
+    public List<LinkRespVO> linkPage(LinkPageReqVO pageVO) {
+        List<LinkRespVO> linkRespVOList = linkMapper.linkPage(pageVO);
+        return linkRespVOList;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Transaction
     public Link updateLink(LinkUpdateReqVO linkUpdateReqVO) {
         Link link = LinkConvert.INSTANCE.convertUpdateReqVOToModel(linkUpdateReqVO);
-        linkMapper.updateById(link);
+        updateById(link);
         return link;
     }
 

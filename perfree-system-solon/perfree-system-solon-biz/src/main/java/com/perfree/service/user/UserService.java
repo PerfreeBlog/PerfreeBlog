@@ -48,9 +48,9 @@ public interface UserService extends IService<User> {
      * 用户分页列表
      *
      * @param pageVO pageVO
-     * @return PageResult<User>
+     * @return List<User>
      */
-    PageResult<User> userPage(UserPageReqVO pageVO);
+    List<User> userPage(UserPageReqVO pageVO);
 
     /**
      * 获取用户

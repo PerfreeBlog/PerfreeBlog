@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
@@ -23,15 +24,15 @@ import java.util.Objects;
 * @author Perfree
 */
 @Mapper
-public interface DictDataMapper extends BaseMapperX<DictData> {
+public interface DictDataMapper extends BaseMapper<DictData> {
 
-    default PageResult<DictData> selectPage(DictDataPageReqVO reqVO) {
+    default List<DictData> selectPage(DictDataPageReqVO reqVO) {
         QueryWrapper wrapper = QueryWrapper.create();
         wrapper.like(DictData::getDictLabel, reqVO.getDictLabel());
         wrapper.like(DictData::getDictType, reqVO.getDictType());
         wrapper.eq(DictData::getParentDictType, reqVO.getParentDictType());
         wrapper.orderBy(DictData::getSeq,false);
-        return selectPage(reqVO, wrapper);
+        return selectListByQuery(wrapper);
     }
 
     default List<DictData> listAll() {

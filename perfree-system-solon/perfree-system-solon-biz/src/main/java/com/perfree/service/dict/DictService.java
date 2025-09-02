@@ -18,7 +18,7 @@ public interface DictService extends IService<Dict> {
      * @param pageVO pageVO
      * @return PageResult<Dict>
      */
-    PageResult<Dict> dictPage(DictPageReqVO pageVO);
+    List<Dict> dictPage(DictPageReqVO pageVO);
 
     /**
      * 添加数据字典

@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.user;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.excel.ExcelUtils;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -39,7 +41,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "用户相关接口")
 @Mapping("api/auth/user")
-public class UserController {
+public class UserController extends BaseController {
 
     @Inject
     private UserService userService;
@@ -52,8 +54,9 @@ public class UserController {
     @Operation(summary = "用户分页列表")
     @PreAuthorize("@ss.hasPermission('admin:user:query')")
     public CommonResult<PageResult<UserRespVO>> page(@Body UserPageReqVO pageVO) {
-        PageResult<User> userPageResult = userService.userPage(pageVO);
-        return success(UserConvert.INSTANCE.convertPageResultVO(userPageResult));
+        startPage(pageVO);
+        List<User> userList = userService.userPage(pageVO);
+        return pageSuccess(UserConvert.INSTANCE.convertListVO(userList));
     }
 
     @Get

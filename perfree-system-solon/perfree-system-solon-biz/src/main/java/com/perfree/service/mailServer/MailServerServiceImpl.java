@@ -25,7 +25,7 @@ public class MailServerServiceImpl extends ServiceImpl<MailServerMapper, MailSer
 
 
     @Override
-    public PageResult<MailServer> mailServerPage(MailServerPageReqVO pageVO) {
+    public List<MailServer> mailServerPage(MailServerPageReqVO pageVO) {
         return mailServerMapper.selectPage(pageVO);
     }
 
@@ -41,13 +41,13 @@ public class MailServerServiceImpl extends ServiceImpl<MailServerMapper, MailSer
     @Transaction
     public MailServer update(MailServerUpdateReqVO mailServerUpdateReqVO) {
         MailServer mailServer = MailServerConvert.INSTANCE.convertUpdateReqVO(mailServerUpdateReqVO);
-        mailServerMapper.updateById(mailServer);
+        updateById(mailServer);
         return mailServer;
     }
 
     @Override
     public MailServer get(Integer id) {
-        return mailServerMapper.selectById(id);
+        return mailServerMapper.selectOneById(id);
     }
 
     @Override

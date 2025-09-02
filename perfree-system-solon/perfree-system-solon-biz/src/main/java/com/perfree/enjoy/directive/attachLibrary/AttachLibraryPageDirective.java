@@ -1,5 +1,7 @@
 package com.perfree.enjoy.directive.attachLibrary;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jfinal.template.Env;
 import com.jfinal.template.io.Writer;
 import com.jfinal.template.stat.Scope;
@@ -16,6 +18,8 @@ import com.perfree.service.attachLibrary.AttachLibraryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @TemplateDirective("attachLibraryPage")
 @Component
 public class AttachLibraryPageDirective extends BaseDirective {
@@ -31,16 +35,17 @@ public class AttachLibraryPageDirective extends BaseDirective {
     public void exec(Env env, Scope scope, Writer writer) {
         AttachLibraryPageReqVO attachLibraryPageReqVO = new AttachLibraryPageReqVO();
         // 组装来自ModelView的数据
-        attachLibraryPageReqVO.setPageNo(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1));
         attachLibraryPageReqVO.setName(getModelDataToStr(ViewConstant.NAME, scope));
 
         // 组装来自指令编写的参数
         attachLibraryPageReqVO.setType(getExprParamToStr(ViewConstant.TYPE,  null));
-        attachLibraryPageReqVO.setPageSize(getExprParamToInt(ViewConstant.PAGE_SIZE, 10));
-        attachLibraryPageReqVO.setSortingFields(DirectiveSortingUtils.handleSortingField(getExprParamToStr(ViewConstant.ORDER_BY, null)));
-        PageResult<AttachLibraryRespVO> attachLibraryRespVOPageResult = attachLibraryService.attachLibraryPage(attachLibraryPageReqVO);
+        PageHelper.startPage(getModelDataToInt(ViewConstant.PAGE_INDEX, scope, 1),
+                getExprParamToInt(ViewConstant.PAGE_SIZE, 10),
+                getExprParamToStr(ViewConstant.ORDER_BY, null)
+        );
+        List<AttachLibraryRespVO> attachLibraryRespVOPageResult = attachLibraryService.attachLibraryPage(attachLibraryPageReqVO);
         // 组装结果集
-        DirectivePageResult<AttachLibraryRespVO> result = new DirectivePageResult<>(attachLibraryRespVOPageResult.getList(),attachLibraryRespVOPageResult.getTotal(),
+        DirectivePageResult<AttachLibraryRespVO> result = new DirectivePageResult<>(attachLibraryRespVOPageResult,new PageInfo<>(attachLibraryRespVOPageResult).getTotal(),
                 attachLibraryPageReqVO.getPageNo(), attachLibraryPageReqVO.getPageSize());
         scope.set("attachLibraryPage", result);
         stat.exec(env, scope, writer);

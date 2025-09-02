@@ -1,8 +1,8 @@
 package com.perfree.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
+import com.mybatisflex.annotation.Table;
 import com.perfree.base.BaseModel;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +12,12 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@TableName("p_codegen_column")
+@Table("p_codegen_column")
 public class CodegenColumn extends BaseModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    @TableId(value = "id", type = IdType.AUTO)
+    @Id(keyType = KeyType.Auto)
     private Integer id;
 
     private Integer tableId;
@@ -28,7 +28,7 @@ public class CodegenColumn extends BaseModel implements Serializable {
 
     private String columnComment;
 
-    private Boolean nullable;
+    private Integer nullable;
 
     private Boolean primaryKey;
 

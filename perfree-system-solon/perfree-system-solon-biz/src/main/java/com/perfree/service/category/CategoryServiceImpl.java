@@ -63,7 +63,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         if (StringUtils.isBlank(category.getSlug())){
             category.setSlug(category.getId().toString());
         }
-        categoryMapper.updateById(category);
+        updateById(category);
         return category;
     }
 
@@ -79,7 +79,7 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
             categoryUpdateReqVO.setSlug(categoryUpdateReqVO.getId().toString());
         }
         Category category = CategoryConvert.INSTANCE.convertUpdateReqVOToModel(categoryUpdateReqVO);
-        categoryMapper.updateById(category);
+        updateById(category);
         return category;
     }
 
@@ -120,13 +120,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
     }
 
     @Override
-    public PageResult<CategoryRespVO> categoryPage(CategoryPageReqVO pageVO) {
-        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
-                new SortingField("createTime", SortingField.ORDER_DESC)
-        ));
-        IPage<CategoryRespVO> page = MyBatisUtils.buildPage(pageVO, pageVO.getSortingFields());
-        IPage<CategoryRespVO> articlePage = categoryMapper.categoryPage(page, pageVO);
-        return new PageResult<>(articlePage.getRecords(), articlePage.getTotal());
+    public List<CategoryRespVO> categoryPage(CategoryPageReqVO pageVO) {
+        List<CategoryRespVO> articleList = categoryMapper.categoryPage(pageVO);
+        return articleList;
     }
 
     @Override

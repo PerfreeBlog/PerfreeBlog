@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.model.UserRole;
@@ -18,7 +19,7 @@ import java.util.List;
  * @since 2023-09-27
  */
 @Mapper
-public interface UserRoleMapper extends BaseMapperX<UserRole> {
+public interface UserRoleMapper extends BaseMapper<UserRole> {
 
 
     default void deleteByUserId(Integer userId){

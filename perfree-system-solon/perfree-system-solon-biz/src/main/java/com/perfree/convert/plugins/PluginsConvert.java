@@ -8,6 +8,8 @@ import com.perfree.system.api.plugin.dto.PluginsDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface PluginsConvert {
     PluginsConvert INSTANCE = Mappers.getMapper(PluginsConvert.class);
@@ -15,5 +17,7 @@ public interface PluginsConvert {
     PageResult<PluginsRespVO> convertPageResultVO(PageResult<Plugins> pluginsPageResult);
 
     PluginsDTO convertToDTO(Plugins plugins);
+
+    List<PluginsRespVO> convertListVO(List<Plugins> pluginsList);
 
 }

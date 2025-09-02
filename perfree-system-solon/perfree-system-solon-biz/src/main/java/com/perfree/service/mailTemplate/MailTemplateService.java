@@ -16,9 +16,9 @@ public interface MailTemplateService extends IService<MailTemplate> {
     /**
      * 邮件模板分页
      * @param pageVO pageVO
-     * @return PageResult<MailTemplate>
+     * @return List<MailTemplate>
      */
-    PageResult<MailTemplate> mailTemplatePage(MailTemplatePageReqVO pageVO);
+    List<MailTemplate> mailTemplatePage(MailTemplatePageReqVO pageVO);
 
     /**
      * 添加邮件模板

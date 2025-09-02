@@ -19,7 +19,6 @@ import java.util.Objects;
 * @description 邮件日志
 * @author Perfree
 */
-@Mapper
 public interface MailLogMapper extends BaseMapperX<MailLog> {
 
     default PageResult<MailLog> selectPage(MailLogPageReqVO reqVO) {

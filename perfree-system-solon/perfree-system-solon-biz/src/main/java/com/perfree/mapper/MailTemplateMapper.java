@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
@@ -20,15 +21,15 @@ import java.util.List;
 * @author Perfree
 */
 @Mapper
-public interface MailTemplateMapper extends BaseMapperX<MailTemplate> {
+public interface MailTemplateMapper extends BaseMapper<MailTemplate> {
 
-    default PageResult<MailTemplate> selectPage(MailTemplatePageReqVO reqVO) {
+    default List<MailTemplate> selectPage(MailTemplatePageReqVO reqVO) {
         QueryWrapper queryWrapper = new QueryWrapper();
         queryWrapper.like(MailTemplate::getName, reqVO.getName());
         queryWrapper.like(MailTemplate::getCode, reqVO.getCode());
         queryWrapper.eq(MailTemplate::getMailServerId, reqVO.getMailServerId());
         queryWrapper.orderBy(MailTemplate::getId,false);
-        return selectPage(reqVO, queryWrapper);
+        return selectListByQuery(queryWrapper);
     }
 
     default List<MailTemplate> listAll() {

@@ -1,11 +1,13 @@
 package com.perfree.commons.common;
 
+import com.github.pagehelper.PageInfo;
 import com.perfree.commons.enums.ResultCodeEnum;
 import com.perfree.enums.ErrorCode;
 import lombok.Data;
 import org.springframework.util.Assert;
 
 import java.io.Serializable;
+import java.util.List;
 
 
 /**
@@ -104,6 +106,21 @@ public class CommonResult<T> implements Serializable {
         result.code = ResultCodeEnum.SUCCESS.getCode();
         result.data = data;
         result.msg = msg;
+        return result;
+    }
+    /**
+     * @author Matuto
+     * @description 响应成功信息
+     * @date 15:10 2023/9/28
+     * @param dataList 数据列表
+     * @return com.perfree.commons.common.CommonResult<PageResult<T>>
+     */
+    public static <T> CommonResult<PageResult<T>> pageSuccess(List<T> dataList) {
+        CommonResult<PageResult<T>> result = new CommonResult<>();
+        PageResult<T> pageResult = new PageResult<T>(dataList, new PageInfo<>(dataList).getTotal());
+        result.code = ResultCodeEnum.SUCCESS.getCode();
+        result.data = pageResult;
+        result.msg = "";
         return result;
     }
 }

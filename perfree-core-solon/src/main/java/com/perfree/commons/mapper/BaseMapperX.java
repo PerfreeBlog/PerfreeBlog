@@ -8,7 +8,6 @@ import com.perfree.commons.common.PageParam;
 import com.perfree.commons.common.PageResult;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
 
 
 public interface BaseMapperX<T> extends BaseMapper<T> {

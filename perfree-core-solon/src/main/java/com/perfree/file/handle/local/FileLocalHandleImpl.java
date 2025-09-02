@@ -10,6 +10,7 @@ import com.perfree.commons.utils.FileTypeUtils;
 import com.perfree.file.handle.BaseFileHandle;
 import com.perfree.system.api.attach.dto.AttachFileDTO;
 import com.perfree.system.api.attach.dto.AttachUploadDTO;
+import org.noear.solon.annotation.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -19,7 +20,7 @@ import java.util.Date;
 /**
  * 上传文件到本地的处理逻辑
  */
-@Service
+@Component
 public class FileLocalHandleImpl extends BaseFileHandle {
 
     private final String DEFAULT_ATTACH_URL_PREFIX = "/api/attach/";

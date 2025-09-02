@@ -69,7 +69,7 @@ public class AttachConfigServiceImpl extends ServiceImpl<AttachConfigMapper, Att
     @Transaction
     public Boolean updateAttachConfig(AttachConfigUpdateVO attachConfigUpdateVO) {
         AttachConfig attachConfig = AttachConfigConvert.INSTANCE.convertUpdateVO(attachConfigUpdateVO);
-        attachConfigMapper.updateById(attachConfig);
+        updateById(attachConfig);
         attachConfigCacheService.putAttachConfig(attachConfig.getId(), AttachConfigConvert.INSTANCE.convertCacheDTO(attachConfig));
         initLocalResourcesPatterns();
         return true;
@@ -85,7 +85,7 @@ public class AttachConfigServiceImpl extends ServiceImpl<AttachConfigMapper, Att
     }
 
     @Override
-    public PageResult<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO) {
+    public List<AttachConfig> attachConfigPage(AttachConfigPageReqVO pageVO) {
         return attachConfigMapper.attachConfigPage(pageVO);
     }
 

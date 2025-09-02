@@ -38,7 +38,7 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
 
 
     @Override
-    public PageResult<DictData> dictDataPage(DictDataPageReqVO pageVO) {
+    public List<DictData> dictDataPage(DictDataPageReqVO pageVO) {
         return dictDataMapper.selectPage(pageVO);
     }
 
@@ -63,20 +63,20 @@ public class DictDataServiceImpl extends ServiceImpl<DictDataMapper, DictData> i
             throw new ServiceException(ErrorCode.DICT_DATA_EXIST);
         }
         DictData dictData = DictDataConvert.INSTANCE.convertUpdateReqVO(dictDataUpdateReqVO);
-        dictDataMapper.updateById(dictData);
+        updateById(dictData);
         dictDataCacheService.putDictData(dictData.getDictType(),  DictDataConvert.INSTANCE.convertToDTO(dictData));
         return dictData;
     }
 
     @Override
     public DictData get(Integer id) {
-        return dictDataMapper.selectById(id);
+        return dictDataMapper.selectOneById(id);
     }
 
     @Override
     @Transaction
     public Boolean del(Integer id) {
-        DictData dictData = dictDataMapper.selectById(id);
+        DictData dictData = dictDataMapper.selectOneById(id);
         dictDataMapper.deleteById(id);
         dictDataCacheService.removeDictData(dictData.getDictType());
         return true;

@@ -20,7 +20,6 @@ import java.util.List;
  * @author perfree
  * @since 2023-09-27
  */
-@Mapper
 public interface UserMapper extends BaseMapperX<User> {
 
     default User findByAccount(String account){

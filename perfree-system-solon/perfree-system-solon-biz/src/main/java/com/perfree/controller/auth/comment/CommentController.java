@@ -1,5 +1,6 @@
 package com.perfree.controller.auth.comment;
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.comment.vo.CommentChildPageReqVO;
@@ -20,12 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 @Controller
 @Tag(name = "评论相关接口")
 @Mapping("api/auth/comment")
-public class CommentController {
+public class CommentController extends BaseController {
 
     @Inject
     private CommentService commentService;
@@ -34,8 +36,9 @@ public class CommentController {
     @Mapping("/page")
     @Operation(summary = "评论分页列表")
     public CommonResult<PageResult<CommentRespVO>> page(@Body CommentPageReqVO commentPageReqVO) {
-        PageResult<CommentRespVO> commentPageResult = commentService.commentPage(commentPageReqVO);
-        return success(commentPageResult);
+        startPage(commentPageReqVO);
+        List<CommentRespVO> commentRespVOList = commentService.commentPage(commentPageReqVO);
+        return pageSuccess(commentRespVOList);
     }
 
     @Get
@@ -49,7 +52,8 @@ public class CommentController {
     @Mapping("/queryChildCommentPage")  
     @Operation(summary = "获取子评论分页列表")
     public CommonResult<PageResult<CommentRespVO>> queryChildCommentPage(@Body CommentChildPageReqVO pageReqVO) {
-        return CommonResult.success(commentService.queryChildCommentPage(pageReqVO));
+        startPage(pageReqVO);
+        return pageSuccess(commentService.queryChildCommentPage(pageReqVO));
     }
 
     @Delete

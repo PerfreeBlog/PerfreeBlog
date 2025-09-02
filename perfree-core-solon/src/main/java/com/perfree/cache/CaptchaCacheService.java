@@ -3,6 +3,7 @@ package com.perfree.cache;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.noear.solon.annotation.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -12,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @description 验证码缓存相关
  * @date 15:35 2023/9/28
  */
-@Service
+@Component
 public class CaptchaCacheService {
     private final Cache<String, String> verificationCodeCache;
 

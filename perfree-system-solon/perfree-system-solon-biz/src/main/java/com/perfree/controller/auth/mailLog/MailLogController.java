@@ -1,6 +1,7 @@
 package com.perfree.controller.auth.mailLog;
 
 
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
 import com.perfree.controller.auth.mailLog.vo.*;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -31,7 +33,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "邮件日志相关接口")
 @Mapping("api/auth/mailLog")
-public class MailLogController {
+public class MailLogController extends BaseController {
 
     @Inject
     private MailLogService mailLogService;
@@ -41,8 +43,9 @@ public class MailLogController {
     @Operation(summary = "邮件日志分页列表")
     @PreAuthorize("@ss.hasPermission('admin:mailLog:query')")
     public CommonResult<PageResult<MailLogRespVO>> page(@Body MailLogPageReqVO pageVO) {
-        PageResult<MailLog> mailLogPageResult = mailLogService.mailLogPage(pageVO);
-        return success(MailLogConvert.INSTANCE.convertPageResultVO(mailLogPageResult));
+        startPage(pageVO);
+        List<MailLog> mailLogList = mailLogService.mailLogPage(pageVO);
+        return pageSuccess(MailLogConvert.INSTANCE.convertListRespVO(mailLogList));
     }
 
     @Post

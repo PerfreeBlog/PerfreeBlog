@@ -2,6 +2,7 @@ package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.mybatisflex.core.BaseMapper;
 import com.perfree.commons.common.PageResult;
 import com.perfree.commons.mapper.BaseMapperX;
 import com.perfree.controller.auth.link.vo.LinkPageReqVO;
@@ -14,6 +15,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.solon.annotation.Db;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -23,9 +26,9 @@ import org.apache.ibatis.solon.annotation.Db;
  * @since 2023-09-27
  */
 @Mapper
-public interface LinkMapper extends BaseMapperX<Link> {
+public interface LinkMapper extends BaseMapper<Link> {
 
-    IPage<LinkRespVO> linkPage(IPage<LinkRespVO> page, @Param("pageVO") LinkPageReqVO pageVO);
+    List<LinkRespVO> linkPage(@Param("pageVO") LinkPageReqVO pageVO);
 
     LinkRespVO getLinkById(@Param("id") Integer id);
 }

@@ -36,7 +36,7 @@ public class MailTemplateServiceImpl extends ServiceImpl<MailTemplateMapper, Mai
 
 
     @Override
-    public PageResult<MailTemplate> mailTemplatePage(MailTemplatePageReqVO pageVO) {
+    public List<MailTemplate> mailTemplatePage(MailTemplatePageReqVO pageVO) {
         return mailTemplateMapper.selectPage(pageVO);
     }
 
@@ -54,13 +54,13 @@ public class MailTemplateServiceImpl extends ServiceImpl<MailTemplateMapper, Mai
     public MailTemplate update(MailTemplateUpdateReqVO mailTemplateUpdateReqVO) {
         MailTemplate mailTemplate = MailTemplateConvert.INSTANCE.convertUpdateReqVO(mailTemplateUpdateReqVO);
         mailTemplate.setMailParams(ReUtil.findAllGroup1(PATTERN_PARAMS, mailTemplate.getMailContent()));
-        mailTemplateMapper.updateById(mailTemplate);
+        updateById(mailTemplate);
         return mailTemplate;
     }
 
     @Override
     public MailTemplate get(Integer id) {
-        return mailTemplateMapper.selectById(id);
+        return mailTemplateMapper.selectOneById(id);
     }
 
     @Override

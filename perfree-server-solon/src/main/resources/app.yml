@@ -12,7 +12,7 @@ solon:
       dateAsTimeZone: GMT+8 # 配置时区
       #      dateAsTicks: false # 将date转为毫秒数（和 dateAsFormat 二选一）
       longAsString: true # 将long型转为字符串输出（默认为false）
-      boolAsInt: false   # 将bool型转为字符串输出（默认为false）
+      boolAsInt: false # 将bool型转为字符串输出（默认为false）
       nullStringAsEmpty: false
       nullBoolAsFalse: false
       nullNumberAsZero: false
@@ -30,10 +30,16 @@ perfree:
   demoModel: false
 
 mybatis-flex:
+  datasource:
+    master:
+      class: "com.zaxxer.hikari.HikariDataSource"
+      jdbcUrl: jdbc:mysql://192.144.160.229:3306/solon_blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+      driverClassName: com.mysql.cj.jdbc.Driver
+      username: solon_blog
+      password: HfzZy43eCJN3bnH2
   type-aliases-package:
     - com.perfree.model
   mapper-locations:
-    - classpath:mapper/*.xml
     - com.perfree.mapper
   configuration: #扩展配置（要与 FlexConfiguration 类的属性一一对应）
     cacheEnabled: false
@@ -41,14 +47,6 @@ mybatis-flex:
   global-config:
     key-config:
       key-type: Auto
-
-mybatis-flex.datasource:
-  master!:
-    class: "com.zaxxer.hikari.HikariDataSource"
-    jdbcUrl: jdbc:mysql://192.144.160.229:3306/solon_blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
-    driverClassName: com.mysql.cj.jdbc.Driver
-    username: solon_blog
-    password: HfzZy43eCJN3bnH2
 
 # 分页插件配置
 pagehelper:

@@ -28,9 +28,9 @@ public interface ArticleService extends IService<Article> {
     /**
      * 文章分页列表
      * @param pageVO pageVO
-     * @return PageResult<ArticleRespVO>
+     * @return List<ArticleRespVO>
      */
-    PageResult<ArticleRespVO> articlePage(ArticlePageReqVO pageVO);
+    List<ArticleRespVO> articlePage(ArticlePageReqVO pageVO);
 
     /**
      * 发表文章
@@ -127,7 +127,7 @@ public interface ArticleService extends IService<Article> {
      * @param pageVO pageVO
      * @return PageResult<JournalRespVO>
      */
-    PageResult<JournalRespVO> journalPage(JournalPageReqVO pageVO);
+    List<JournalRespVO> journalPage(JournalPageReqVO pageVO);
 
     /**
      * 根据id获取动态
@@ -152,9 +152,9 @@ public interface ArticleService extends IService<Article> {
     /**
      * 归档分页
      * @param pageVO pageVO
-     * @return PageResult<ArchiveRespVO>
+     * @return List<ArchiveRespVO>
      */
-    PageResult<ArchiveRespVO> archivePage(ArchivePageReqVO pageVO);
+    List<ArchiveRespVO> archivePage(ArchivePageReqVO pageVO);
 
     /**
      * 获取最近发布的文章

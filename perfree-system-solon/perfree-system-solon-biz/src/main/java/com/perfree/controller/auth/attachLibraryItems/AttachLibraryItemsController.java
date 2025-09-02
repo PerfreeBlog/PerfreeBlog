@@ -1,8 +1,12 @@
 package com.perfree.controller.auth.attachLibraryItems;
 
 
+import cn.hutool.core.collection.ListUtil;
+import com.perfree.base.BaseController;
 import com.perfree.commons.common.CommonResult;
 import com.perfree.commons.common.PageResult;
+import com.perfree.commons.common.SortingField;
+import com.perfree.commons.utils.SortingFieldUtils;
 import com.perfree.controller.auth.attachLibraryItems.vo.*;
 import com.perfree.convert.attachLibraryItems.AttachLibraryItemsConvert;
 import com.perfree.model.AttachLibraryItems;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.perfree.commons.common.CommonResult.pageSuccess;
 import static com.perfree.commons.common.CommonResult.success;
 
 /**
@@ -29,7 +34,7 @@ import static com.perfree.commons.common.CommonResult.success;
 @Controller
 @Tag(name = "附件库数据相关接口")
 @Mapping("api/auth/attachLibraryItems")
-public class AttachLibraryItemsController {
+public class AttachLibraryItemsController extends BaseController {
 
     @Inject
     private AttachLibraryItemsService attachLibraryItemsService;
@@ -38,8 +43,12 @@ public class AttachLibraryItemsController {
     @Mapping("/page")
     @Operation(summary = "附件库数据分页列表")
     public CommonResult<PageResult<AttachLibraryItemsRespVO>> page(@Body AttachLibraryItemsPageReqVO pageVO) {
-        PageResult<AttachLibraryItemsRespVO> attachLibraryItemsPageResult = attachLibraryItemsService.attachLibraryItemsPage(pageVO);
-        return success(attachLibraryItemsPageResult);
+        SortingFieldUtils.handleCustomSortingField(pageVO, ListUtil.of(
+                new SortingField("createTime", SortingField.ORDER_DESC)
+        ));
+        startPage(pageVO);
+        List<AttachLibraryItemsRespVO> attachLibraryItemsPageResult = attachLibraryItemsService.attachLibraryItemsPage(pageVO);
+        return pageSuccess(attachLibraryItemsPageResult);
     }
 
     @Post
