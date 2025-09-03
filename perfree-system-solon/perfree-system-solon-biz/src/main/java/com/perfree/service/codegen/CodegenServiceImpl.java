@@ -15,6 +15,7 @@ import com.mybatisflex.codegen.entity.Column;
 import com.mybatisflex.codegen.entity.Table;
 
 
+import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.constant.SystemConstants;
 import com.perfree.commons.exception.ServiceException;
 import com.perfree.commons.utils.WebUtils;
@@ -57,7 +58,7 @@ public class CodegenServiceImpl implements CodegenService {
     @Override
     public List<Table> getTableList(CodegenTableListReqVO codegenTableListReqVO) {
         List<Table> tableInfoList = getTableInfoListHandle(codegenTableListReqVO.getTableName());
-        List<CodegenTable> existsTableList = codegenTableMapper.selectListByQuery(null);
+        List<CodegenTable> existsTableList = codegenTableMapper.selectListByQuery(new QueryWrapper());
         if (!existsTableList.isEmpty()) {
             Set<String> existsTables = existsTableList.stream().map(CodegenTable::getTableName).filter(Objects::nonNull).collect(Collectors.toSet());
             tableInfoList.removeIf(table -> existsTables.contains(table.getName()));

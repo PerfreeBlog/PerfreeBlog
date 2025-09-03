@@ -22,14 +22,16 @@ import com.perfree.service.dictData.DictDataService;
 import com.perfree.service.option.OptionService;
 import com.perfree.service.plugins.PluginsService;
 import com.perfree.theme.ThemeManager;
+import lombok.extern.slf4j.Slf4j;
+import org.noear.solon.Solon;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Init;
+import org.noear.solon.annotation.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -40,38 +42,33 @@ import java.util.Map;
  * @date 15:39 2023/9/28
  */
 @Component
-public class AppInit implements ApplicationRunner {
+public class AppInit {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationRunner.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AppInit.class);
 
-    @Value("${server.port}")
+    @Inject("${server.port}")
     private String port;
 
-    @Value("${version}")
+    @Inject("${version}")
     private String version;
 
-    private final PluginsService pluginsService;
+    @Inject
+    private PluginsService pluginsService;
 
-    private final OptionService optionService;
+    @Inject
+    private OptionService optionService;
 
-    private final AttachConfigService attachConfigService;
+    @Inject
+    private AttachConfigService attachConfigService;
 
-    private final DictDataService dictDataService;
+    @Inject
+    private DictDataService dictDataService;
 
-    private final ThemeManager themeManager;
+    @Inject
+    private ThemeManager themeManager;
 
-
-    public AppInit(OptionService optionService,  AttachConfigService attachConfigService,
-                   PluginsService pluginsService, DictDataService dictDataService, ThemeManager themeManager) {
-        this.optionService = optionService;
-        this.attachConfigService = attachConfigService;
-        this.pluginsService = pluginsService;
-        this.dictDataService = dictDataService;
-        this.themeManager = themeManager;
-    }
-
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
+    @Init
+    public void run() throws Exception {
         if (!datasourceIsExist()) {
             LOGGER.info("-> 数据库未初始化,正在执行初始化....");
             File sqlFile = ClassPathFileUtil.getClassPathFile("classpath:sql/perfree.sql");
@@ -103,7 +100,7 @@ public class AppInit implements ApplicationRunner {
         System.out.println(banner);
     }
 
-    private void handleUpdate() throws SQLException {
+    private void handleUpdate() throws SQLException, IOException {
         Option optionByIdentificationAndKey = optionService.getOptionByIdentificationAndKey(OptionConstant.OPTION_IDENTIFICATION_SYSTEM, OptionEnum.WEB_VERSION.getKey());
         if (null == optionByIdentificationAndKey) {
             return;
@@ -132,7 +129,7 @@ public class AppInit implements ApplicationRunner {
 
     private void handleInit() throws Exception {
         LOGGER.info("-> 初始化模板指令....");
-        loadDirective();
+        //loadDirective();
         LOGGER.info("-> 初始化模板指令完成");
 
         LOGGER.info("-> 初始化存储策略配置缓存....");
@@ -177,19 +174,19 @@ public class AppInit implements ApplicationRunner {
     /**
      * Load Template Directive
      */
-    private static void loadDirective() {
-        Map<String, Object> beans = SpringBeanUtil.context.getBeansWithAnnotation(TemplateDirective.class);
-        for (Map.Entry<String, Object> entry : beans.entrySet()) {
-            Object bean = entry.getValue();
-            TemplateDirective injectBean = bean.getClass().getAnnotation(TemplateDirective.class);
-            Directive directive = (Directive) bean;
-            Class<? extends Directive> directiveByName = EnjoyConfig.jfr.getEngine().getEngineConfig().getDirective(injectBean.value());
-            if (directiveByName == null) {
-                LOGGER.info("Add Directive: {}", injectBean.value());
-                EnjoyConfig.jfr.addDirective(injectBean.value(), directive.getClass());
-            }
-        }
-    }
+//    private static void loadDirective() {
+//        Map<String, Object> beans = Solon.context().getBeansOfType(TemplateDirective.class);
+//        for (Map.Entry<String, Object> entry : beans.entrySet()) {
+//            Object bean = entry.getValue();
+//            TemplateDirective injectBean = bean.getClass().getAnnotation(TemplateDirective.class);
+//            Directive directive = (Directive) bean;
+//            Class<? extends Directive> directiveByName = EnjoyConfig.jfr.getEngine().getEngineConfig().getDirective(injectBean.value());
+//            if (directiveByName == null) {
+//                LOGGER.info("Add Directive: {}", injectBean.value());
+//                EnjoyConfig.jfr.addDirective(injectBean.value(), directive.getClass());
+//            }
+//        }
+//    }
 
     private Boolean datasourceIsExist() {
         try{

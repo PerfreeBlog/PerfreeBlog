@@ -1,6 +1,7 @@
 package com.perfree.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.mybatisflex.core.BaseMapper;
 import com.mybatisflex.core.query.QueryWrapper;
 import com.perfree.commons.common.PageResult;
@@ -52,5 +53,16 @@ public interface DictDataMapper extends BaseMapper<DictData> {
         return selectOneByQuery(new QueryWrapper().eq(DictData::getDictType, dictType));
     }
 
-    List<DictData> listByStatus(@Param("status") Integer status);
+//    List<DictData> listByStatus(@Param("status") Integer status);
+
+    default List<DictData> listByStatus(@Param("status") Integer status) {
+        QueryWrapper queryWrapper = QueryWrapper.create();
+        queryWrapper.select("t1.*");
+        queryWrapper.from("p_dict_data").as("t1");
+        queryWrapper.leftJoin("p_dict").as("t2").on("t1.parentDictType = t2.dictType");
+        queryWrapper.eq("t1.status", status);
+        queryWrapper.eq("t2.status", status);
+        queryWrapper.orderBy(DictData::getSeq);
+        return selectListByQuery(queryWrapper);
+    }
 }

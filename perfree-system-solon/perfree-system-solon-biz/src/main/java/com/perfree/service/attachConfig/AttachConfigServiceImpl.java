@@ -17,17 +17,20 @@ import com.perfree.model.AttachConfig;
 import com.perfree.system.api.attachConfig.dto.AttachConfigCacheDTO;
 import jakarta.annotation.Resource;
 import org.apache.ibatis.solon.annotation.Db;
+import org.noear.solon.Solon;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.data.annotation.Transaction;
+import org.noear.solon.web.staticfiles.StaticMappings;
+import org.noear.solon.web.staticfiles.StaticRepository;
+import org.noear.solon.web.staticfiles.repository.FileStaticRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanInitializationException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,24 +112,16 @@ public class AttachConfigServiceImpl extends ServiceImpl<AttachConfigMapper, Att
     @Override
     public void initLocalResourcesPatterns() {
         List<AttachConfig> attachConfigs = attachConfigMapper.getAllLocalConfig();
-        List<String> locationStrings = new ArrayList<>();
         for (AttachConfig attachConfig : attachConfigs) {
             FileLocalConfig fileLocalConfig = JSONUtil.toBean(attachConfig.getConfig(), FileLocalConfig.class);
+            // 统一路径分隔符
             fileLocalConfig.setBasePath(fileLocalConfig.getBasePath().replaceAll("\\\\", SystemConstants.FILE_SEPARATOR));
             if (!fileLocalConfig.getBasePath().endsWith(SystemConstants.FILE_SEPARATOR)) {
                 fileLocalConfig.setBasePath(fileLocalConfig.getBasePath() + SystemConstants.FILE_SEPARATOR);
             }
-            locationStrings.add("file:" + fileLocalConfig.getBasePath());
-        }
-        SimpleUrlHandlerMapping mapping = (SimpleUrlHandlerMapping) SpringBeanUtil.context.getBean("resourceHandlerMapping");
-        ResourceHttpRequestHandler handler = (ResourceHttpRequestHandler) mapping.getUrlMap().get(SystemConstants.DEFAULT_ATTACH_URL_PATTERNS);
-        handler.setLocationValues(locationStrings);
-        handler.getLocations().clear();
-        handler.getResourceResolvers().clear();
-        try {
-            handler.afterPropertiesSet();
-        } catch (Throwable ex) {
-            throw new BeanInitializationException("Failed to init ResourceHttpRequestHandler", ex);
+
+            // 使用 Solon 的静态资源映射
+            StaticMappings.add(SystemConstants.DEFAULT_ATTACH_URL_PATTERNS, new FileStaticRepository(fileLocalConfig.getBasePath()));
         }
     }
 

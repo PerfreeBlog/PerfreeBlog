@@ -306,7 +306,7 @@ public class PluginHandleUtils {
      *
      * @param pluginDir pluginDir
      */
-    public static void execPluginInstallSql(File pluginDir) throws SQLException {
+    public static void execPluginInstallSql(File pluginDir) throws SQLException, IOException {
         if (null == pluginDir || !pluginDir.exists()) {
             return;
         }
@@ -332,7 +332,7 @@ public class PluginHandleUtils {
      * @param oldVersion oldVersion
      * @param newVersion newVersion
      */
-    public static void execPluginUpdateSql(File pluginDir, String oldVersion, String newVersion) throws SQLException {
+    public static void execPluginUpdateSql(File pluginDir, String oldVersion, String newVersion) throws SQLException, IOException {
         if (null == pluginDir || !pluginDir.exists()) {
             return;
         }
@@ -357,7 +357,7 @@ public class PluginHandleUtils {
      *
      * @param pluginDir pluginDirFile
      */
-    public static void execPluginUnInstallSql(File pluginDir) throws SQLException {
+    public static void execPluginUnInstallSql(File pluginDir) throws SQLException, IOException {
         if (null == pluginDir || !pluginDir.exists()) {
             return;
         }

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.noear.solon.annotation.Controller;
 import org.noear.solon.annotation.Inject;
+import org.noear.solon.core.handle.Context;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -36,8 +37,8 @@ public class BaseViewController {
      * @return String
      */
     public String currentTheme() {
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String previewTheme = request.getParameter(SystemConstants.PREVIEW_THEME_URL);
+        Context context = Context.current();
+        String previewTheme = context.param(SystemConstants.PREVIEW_THEME_URL);
         if (StringUtils.isNotBlank(previewTheme)) {
             themeManager.initThemeResourceHandle(previewTheme);
             return previewTheme;

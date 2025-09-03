@@ -2,6 +2,7 @@ package com.perfree.base;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.mybatisflex.annotation.Column;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -12,24 +13,24 @@ public class BaseModel {
     /**
      * 创建人
      */
-    @TableField(fill = FieldFill.INSERT)
+    @Column(value = "createUserId")
     private Integer createUserId;
 
     /**
      * 更新人
      */
-    @TableField(fill = FieldFill.UPDATE)
+    @Column(value = "updateUserId")
     private Integer updateUserId;
 
     /**
      * 创建时间
      */
-    @TableField(fill = FieldFill.INSERT)
+    @Column(value = "createTime", onInsertValue = "now()")
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
-    @TableField(fill = FieldFill.UPDATE)
+    @Column(value = "updateTime", onUpdateValue = "now()", onInsertValue = "now()")
     private LocalDateTime updateTime;
 }

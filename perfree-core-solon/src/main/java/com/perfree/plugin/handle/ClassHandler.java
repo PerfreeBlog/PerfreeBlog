@@ -1,7 +1,6 @@
 package com.perfree.plugin.handle;
 
 import com.mybatisflex.core.mybatis.FlexConfiguration;
-import com.mybatisflex.core.mybatis.binding.FlexMapperRegistry;
 import com.perfree.plugin.PluginApplicationContextHolder;
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.annotation.InterceptPath;

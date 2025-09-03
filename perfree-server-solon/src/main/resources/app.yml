@@ -29,21 +29,26 @@ perfree:
   # 是否为演示环境
   demoModel: false
 
+solon.dataSources:
+  master!:
+    class: "com.zaxxer.hikari.HikariDataSource"
+    jdbcUrl: jdbc:mysql://192.144.160.229:3306/solon_blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: solon_blog
+    password: HfzZy43eCJN3bnH2
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: false
+
 mybatis-flex:
-  datasource:
-    master:
-      class: "com.zaxxer.hikari.HikariDataSource"
-      jdbcUrl: jdbc:mysql://192.144.160.229:3306/solon_blog?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=true
-      driverClassName: com.mysql.cj.jdbc.Driver
-      username: solon_blog
-      password: HfzZy43eCJN3bnH2
   type-aliases-package:
     - com.perfree.model
   mapper-locations:
     - com.perfree.mapper
   configuration: #扩展配置（要与 FlexConfiguration 类的属性一一对应）
     cacheEnabled: false
-    mapUnderscoreToCamelCase: true
+    mapUnderscoreToCamelCase: false
   global-config:
     key-config:
       key-type: Auto

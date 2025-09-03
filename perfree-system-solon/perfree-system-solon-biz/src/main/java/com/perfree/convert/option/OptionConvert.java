@@ -10,7 +10,7 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface OptionConvert {
     OptionConvert INSTANCE = Mappers.getMapper(OptionConvert.class);
 

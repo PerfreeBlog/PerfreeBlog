@@ -1,5 +1,6 @@
 package com.perfree.service.option;
 
+import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.solon.service.impl.ServiceImpl;
 import com.perfree.cache.OptionCacheService;
 import com.perfree.commons.constant.SystemConstants;
@@ -86,7 +87,7 @@ public class OptionServiceImpl extends ServiceImpl<OptionMapper, Option> impleme
 
     @Override
     public void initOptionCache() {
-        List<Option> optionList = optionMapper.selectListByQuery(null);
+        List<Option> optionList = optionMapper.selectListByQuery(new QueryWrapper());
         List<OptionDTO> options = OptionConvert.INSTANCE.convertCacheDTO(optionList);
         for (OptionDTO option : options) {
             optionCacheService.putOption(option.getKey(), option.getIdentification(), option);
