@@ -2,6 +2,9 @@ package com.perfree.plugin.handle;
 
 import com.perfree.plugin.PluginInfo;
 import com.perfree.plugin.pojo.PluginSpringDoc;
+import io.swagger.v3.core.converter.AnnotatedType;
+import io.swagger.v3.core.converter.ModelConverters;
+import io.swagger.v3.core.converter.ResolvedSchema;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -89,7 +92,6 @@ public class SwaggerHandler implements BasePluginRegistryHandler {
         springDocConfigProperties.getGroupConfigs().add(groupConfig);
 
         // 手动创建并注册OpenApiResource
-        System.out.println("准备创建OpenApiResource，分组: " + springdoc.getGroupName());
         createAndRegisterOpenApiResource(springdoc.getGroupName(), groupConfig);
     }
 
@@ -315,9 +317,14 @@ public class SwaggerHandler implements BasePluginRegistryHandler {
                     openAPI.getPaths().addPathItem(path, pathItem);
                 }
 
+                // 确保有 Components
+                if (openAPI.getComponents() == null) {
+                    openAPI.setComponents(new io.swagger.v3.oas.models.Components());
+                }
+
                 // 为每个HTTP方法创建Operation
                 for (org.springframework.web.bind.annotation.RequestMethod requestMethod : methods) {
-                    io.swagger.v3.oas.models.Operation operation = createOperation(handlerMethod);
+                    io.swagger.v3.oas.models.Operation operation = createOperation(handlerMethod, openAPI.getComponents());
 
                     switch (requestMethod) {
                         case GET -> pathItem.setGet(operation);
@@ -338,15 +345,44 @@ public class SwaggerHandler implements BasePluginRegistryHandler {
     /**
      * 创建Operation对象
      */
-    private io.swagger.v3.oas.models.Operation createOperation(HandlerMethod handlerMethod) {
+    private io.swagger.v3.oas.models.Operation createOperation(HandlerMethod handlerMethod, io.swagger.v3.oas.models.Components components) {
         io.swagger.v3.oas.models.Operation operation = new io.swagger.v3.oas.models.Operation();
 
-        // 读取@Operation注解
+        // 解析基本信息（summary, description, tags等）
+        parseBasicOperation(operation, handlerMethod);
+
+        // 解析方法参数（@RequestParam, @PathVariable, @RequestBody等）
+        parseMethodParameters(operation, handlerMethod, components);
+
+        // 解析响应
+        parseResponse(operation, handlerMethod, components);
+
+        // 添加Token认证要求
+        SecurityRequirement securityRequirement = new SecurityRequirement();
+        securityRequirement.addList("Authorization");
+        operation.addSecurityItem(securityRequirement);
+
+        return operation;
+    }
+
+    /**
+     * 解析基本的 Operation 信息（降级方案）
+     */
+    private void parseBasicOperation(io.swagger.v3.oas.models.Operation operation, HandlerMethod handlerMethod) {
         Method method = handlerMethod.getMethod();
         Operation operationAnnotation = method.getAnnotation(Operation.class);
-        if (operationAnnotation != null && StringUtils.hasText(operationAnnotation.summary())) {
-            operation.setSummary(operationAnnotation.summary());
-        } else {
+        if (operationAnnotation != null) {
+            if (StringUtils.hasText(operationAnnotation.summary())) {
+                operation.setSummary(operationAnnotation.summary());
+            }
+            if (StringUtils.hasText(operationAnnotation.description())) {
+                operation.setDescription(operationAnnotation.description());
+            }
+            if (StringUtils.hasText(operationAnnotation.operationId())) {
+                operation.setOperationId(operationAnnotation.operationId());
+            }
+        }
+        if (!StringUtils.hasText(operation.getSummary())) {
             operation.setSummary(method.getName());
         }
 
@@ -355,26 +391,185 @@ public class SwaggerHandler implements BasePluginRegistryHandler {
         if (tagAnnotation != null && StringUtils.hasText(tagAnnotation.name())) {
             operation.setTags(List.of(tagAnnotation.name()));
         }
+    }
 
-        // 添加Token认证要求
-        SecurityRequirement securityRequirement = new SecurityRequirement();
-        securityRequirement.addList("Authorization");
-        operation.addSecurityItem(securityRequirement);
+    /**
+     * 解析方法参数（使用 Swagger ModelConverters）
+     */
+    private void parseMethodParameters(io.swagger.v3.oas.models.Operation operation, HandlerMethod handlerMethod, io.swagger.v3.oas.models.Components components) {
+        Method method = handlerMethod.getMethod();
+        java.lang.reflect.Parameter[] parameters = method.getParameters();
 
-        // 添加默认响应
+        for (java.lang.reflect.Parameter param : parameters) {
+            // @RequestBody 注解 - 请求体
+            if (param.isAnnotationPresent(org.springframework.web.bind.annotation.RequestBody.class)) {
+                org.springframework.web.bind.annotation.RequestBody reqBody =
+                    param.getAnnotation(org.springframework.web.bind.annotation.RequestBody.class);
+
+                io.swagger.v3.oas.models.parameters.RequestBody requestBody =
+                    new io.swagger.v3.oas.models.parameters.RequestBody();
+                requestBody.setRequired(reqBody.required());
+                requestBody.setDescription("请求体");
+
+                Content content = new Content();
+                MediaType mediaType = new MediaType();
+
+                // 使用 Swagger ModelConverters 解析类型（支持所有 Swagger 注解）
+                try {
+                    ResolvedSchema resolvedSchema = ModelConverters.getInstance()
+                        .resolveAsResolvedSchema(new AnnotatedType(param.getType()).resolveAsRef(true));
+
+                    if (resolvedSchema != null && resolvedSchema.schema != null) {
+                        // 将解析出的所有 schema 添加到 components
+                        if (resolvedSchema.referencedSchemas != null && !resolvedSchema.referencedSchemas.isEmpty()) {
+                            if (components.getSchemas() == null) {
+                                components.setSchemas(new java.util.HashMap<>());
+                            }
+                            resolvedSchema.referencedSchemas.forEach(components.getSchemas()::put);
+                        }
+
+                        // 使用主 schema（可能是引用）
+                        mediaType.setSchema(resolvedSchema.schema);
+                    } else {
+                        // 降级方案
+                        mediaType.setSchema(new Schema<>().type("object"));
+                    }
+                } catch (Exception e) {
+                    // 降级方案
+                    mediaType.setSchema(new Schema<>().type("object"));
+                }
+
+                content.addMediaType("application/json", mediaType);
+                requestBody.setContent(content);
+                operation.setRequestBody(requestBody);
+                continue;
+            }
+
+            // @RequestParam 注解 - 查询参数
+            if (param.isAnnotationPresent(org.springframework.web.bind.annotation.RequestParam.class)) {
+                org.springframework.web.bind.annotation.RequestParam reqParam =
+                    param.getAnnotation(org.springframework.web.bind.annotation.RequestParam.class);
+
+                io.swagger.v3.oas.models.parameters.Parameter parameter =
+                    new io.swagger.v3.oas.models.parameters.Parameter();
+                parameter.setIn("query");
+                parameter.setName(StringUtils.hasText(reqParam.value()) ? reqParam.value() :
+                    (StringUtils.hasText(reqParam.name()) ? reqParam.name() : param.getName()));
+                parameter.setRequired(reqParam.required());
+                parameter.setSchema(createSimpleSchema(param.getType()));
+
+                // 读取 @Parameter 注解的描述
+                if (param.isAnnotationPresent(io.swagger.v3.oas.annotations.Parameter.class)) {
+                    io.swagger.v3.oas.annotations.Parameter paramAnno =
+                        param.getAnnotation(io.swagger.v3.oas.annotations.Parameter.class);
+                    if (StringUtils.hasText(paramAnno.description())) {
+                        parameter.setDescription(paramAnno.description());
+                    }
+                }
+
+                operation.addParametersItem(parameter);
+                continue;
+            }
+
+            // @PathVariable 注解 - 路径参数
+            if (param.isAnnotationPresent(org.springframework.web.bind.annotation.PathVariable.class)) {
+                org.springframework.web.bind.annotation.PathVariable pathVar =
+                    param.getAnnotation(org.springframework.web.bind.annotation.PathVariable.class);
+
+                io.swagger.v3.oas.models.parameters.Parameter parameter =
+                    new io.swagger.v3.oas.models.parameters.Parameter();
+                parameter.setIn("path");
+                parameter.setName(StringUtils.hasText(pathVar.value()) ? pathVar.value() :
+                    (StringUtils.hasText(pathVar.name()) ? pathVar.name() : param.getName()));
+                parameter.setRequired(true);
+                parameter.setSchema(createSimpleSchema(param.getType()));
+
+                // 读取 @Parameter 注解的描述
+                if (param.isAnnotationPresent(io.swagger.v3.oas.annotations.Parameter.class)) {
+                    io.swagger.v3.oas.annotations.Parameter paramAnno =
+                        param.getAnnotation(io.swagger.v3.oas.annotations.Parameter.class);
+                    if (StringUtils.hasText(paramAnno.description())) {
+                        parameter.setDescription(paramAnno.description());
+                    }
+                }
+
+                operation.addParametersItem(parameter);
+            }
+        }
+    }
+
+    /**
+     * 解析响应（使用 Swagger ModelConverters）
+     */
+    private void parseResponse(io.swagger.v3.oas.models.Operation operation, HandlerMethod handlerMethod, io.swagger.v3.oas.models.Components components) {
         ApiResponses responses = new ApiResponses();
         ApiResponse response200 = new ApiResponse();
-        response200.setDescription("OK");
+        response200.setDescription("成功");
+
+        // 获取返回类型
+        Class<?> returnType = handlerMethod.getReturnType().getParameterType();
 
         Content content = new Content();
         MediaType mediaType = new MediaType();
-        mediaType.setSchema(new Schema<>().type("object"));
+
+        // 使用 Swagger ModelConverters 解析返回类型
+        try {
+            ResolvedSchema resolvedSchema = ModelConverters.getInstance()
+                .resolveAsResolvedSchema(new AnnotatedType(returnType).resolveAsRef(true));
+
+            if (resolvedSchema != null && resolvedSchema.schema != null) {
+                // 将解析出的所有 schema 添加到 components
+                if (resolvedSchema.referencedSchemas != null && !resolvedSchema.referencedSchemas.isEmpty()) {
+                    if (components.getSchemas() == null) {
+                        components.setSchemas(new java.util.HashMap<>());
+                    }
+                    resolvedSchema.referencedSchemas.forEach(components.getSchemas()::put);
+                }
+
+                // 使用主 schema
+                mediaType.setSchema(resolvedSchema.schema);
+            } else {
+                // 降级方案
+                mediaType.setSchema(new Schema<>().type("object"));
+            }
+        } catch (Exception e) {
+            // 降级方案
+            mediaType.setSchema(new Schema<>().type("object"));
+        }
+
         content.addMediaType("application/json", mediaType);
         response200.setContent(content);
 
         responses.addApiResponse("200", response200);
         operation.setResponses(responses);
-
-        return operation;
     }
+
+    /**
+     * 为简单类型创建 Schema
+     */
+    private Schema<?> createSimpleSchema(Class<?> type) {
+        Schema<?> schema = new Schema<>();
+
+        if (type == String.class) {
+            schema.setType("string");
+        } else if (type == Integer.class || type == int.class) {
+            schema.setType("integer");
+            schema.setFormat("int32");
+        } else if (type == Long.class || type == long.class) {
+            schema.setType("integer");
+            schema.setFormat("int64");
+        } else if (type == Boolean.class || type == boolean.class) {
+            schema.setType("boolean");
+        } else if (type == Double.class || type == double.class || type == Float.class || type == float.class) {
+            schema.setType("number");
+        } else if (type.isArray()) {
+            schema.setType("array");
+            schema.setItems(createSimpleSchema(type.getComponentType()));
+        } else {
+            schema.setType("object");
+        }
+
+        return schema;
+    }
+
 }
