@@ -897,3 +897,4 @@ CREATE TABLE `p_user_role`  (
                                 `updateUserId` int NULL DEFAULT NULL COMMENT '更新人',
                                 PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 56 CHARACTER SET = utf8mb4  ROW_FORMAT = DYNAMIC;
+
