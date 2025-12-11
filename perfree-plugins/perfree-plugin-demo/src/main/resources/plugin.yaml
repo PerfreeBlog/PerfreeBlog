@@ -26,3 +26,11 @@ author:
   email: perfree@126.com
   # 作者网站
   webSite: http://111111
+# Swagger接口文档配置
+springdoc:
+  # 分组名称（必须唯一）
+  groupName: perfree-plugin-demo
+  # 路径匹配规则
+  pathsToMatch: /api/auth/pluginDemo/**
+  # 扫描的包路径
+  packagesToScan: com.demo.controller

@@ -36,17 +36,20 @@ public class PluginCompoundHandle implements BasePluginRegistryHandler, Applicat
         ControllerHandler controllerHandler = new ControllerHandler(this.applicationContext);
         WebSocketHandle webSocketHandle = new WebSocketHandle(this.applicationContext);
         TemplateDirectiveHandle templateDirectiveHandle = new TemplateDirectiveHandle(this.applicationContext);
+        SwaggerHandler swaggerHandler = new SwaggerHandler(this.applicationContext);
 
         pluginRegisterList.add(classHandler);
         pluginRegisterList.add(mapperXmlHandle);
         pluginRegisterList.add(controllerHandler);
         pluginRegisterList.add(templateDirectiveHandle);
         pluginRegisterList.add(webSocketHandle);
+        pluginRegisterList.add(swaggerHandler);
         for (BasePluginRegistryHandler pluginHandle : pluginRegisterList) {
             pluginHandle.initialize();
         }
 
 
+        pluginUnRegisterList.add(swaggerHandler);
         pluginUnRegisterList.add(mapperXmlHandle);
         pluginUnRegisterList.add(templateDirectiveHandle);
         pluginUnRegisterList.add(controllerHandler);
