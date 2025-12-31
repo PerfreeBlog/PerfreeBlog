@@ -1,5 +1,5 @@
 <template>
-  <div class="article-page" v-loading="loading">
+  <div class="article-page" :class="{ 'is-dark': isDark }" v-loading="loading">
     <el-form :model="addForm" ref="addFormRef" label-position="top">
       <el-row :gutter="16">
         <!-- 左侧编辑区 -->
@@ -236,7 +236,7 @@ initThemePageTpl();
 .article-page {
   height: calc(100% - 30px);
   overflow: hidden;
-  background-color: #f0f2f5;
+  background-color: var(--el-bg-color-page);
   box-sizing: border-box;
 }
 
@@ -258,16 +258,16 @@ initThemePageTpl();
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background: var(--el-bg-color);
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--el-box-shadow-light);
   overflow: hidden;
   min-height: 0;
 }
 
 .title-wrapper {
   padding: 20px 24px 0;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--el-border-color-lighter);
 }
 
 .article-title-input {
@@ -276,13 +276,13 @@ initThemePageTpl();
   outline: none;
   font-size: 24px;
   font-weight: 600;
-  color: #1a1a1a;
+  color: var(--el-text-color-primary);
   padding: 0 0 16px;
   background: transparent;
 }
 
 .article-title-input::placeholder {
-  color: #bfbfbf;
+  color: var(--el-text-color-placeholder);
   font-weight: 400;
 }
 
@@ -304,9 +304,9 @@ initThemePageTpl();
 
 .setting-card {
   height: 100%;
-  background: #fff;
+  background: var(--el-bg-color);
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--el-box-shadow-light);
   padding: 16px;
   box-sizing: border-box;
   overflow-y: auto;
@@ -319,7 +319,7 @@ initThemePageTpl();
   gap: 8px;
   margin-bottom: 16px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid var(--el-border-color-lighter);
 }
 
 .setting-collapse {
@@ -329,7 +329,7 @@ initThemePageTpl();
 
 .setting-collapse :deep(.el-collapse-item__header) {
   font-weight: 600;
-  color: #303133;
+  color: var(--el-text-color-primary);
   font-size: 14px;
   border-bottom: none;
   height: 40px;
@@ -349,7 +349,7 @@ initThemePageTpl();
 
 .setting-collapse :deep(.el-form-item__label) {
   font-size: 13px;
-  color: #606266;
+  color: var(--el-text-color-regular);
   margin-bottom: 4px;
 }
 
@@ -364,13 +364,13 @@ initThemePageTpl();
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  background: #f9fafb;
+  background: var(--el-fill-color-light);
   border-radius: 6px;
 }
 
 .switch-label {
   font-size: 13px;
-  color: #606266;
+  color: var(--el-text-color-regular);
 }
 
 /* AiEditor 样式优化 */

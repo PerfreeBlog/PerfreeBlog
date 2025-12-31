@@ -1,5 +1,5 @@
 <template>
-  <div class="article-page" v-loading="loading">
+  <div class="article-page" :class="{ 'is-dark': isDark }" v-loading="loading">
     <el-form :model="addForm" ref="addFormRef" label-position="top">
       <el-row :gutter="16">
         <!-- 左侧编辑区 -->
@@ -112,7 +112,9 @@ import {ElMessage, ElMessageBox} from "element-plus";
 import pinyin from 'js-pinyin'
 import {closeTab, toPage} from "@/core/utils/tabs.js";
 import {reactive, ref} from "vue";
+import {useDark} from "@vueuse/core";
 
+const isDark = useDark();
 const addFormRef = ref();
 let initLoading = ref(true);
 const activeCollapse = ref(['basic']);
@@ -302,6 +304,10 @@ initTag();
   box-sizing: border-box;
 }
 
+.article-page.is-dark {
+  background-color: #1d1e1f;
+}
+
 .article-page :deep(.el-form) {
   height: 100%;
 }
@@ -327,9 +333,18 @@ initTag();
   min-height: 0;
 }
 
+.is-dark .editor-card {
+  background: #1d1e1f;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
 .title-wrapper {
   padding: 20px 24px 0;
   border-bottom: 1px solid #f0f0f0;
+}
+
+.is-dark .title-wrapper {
+  border-bottom-color: #414243;
 }
 
 .article-title-input {
@@ -343,9 +358,17 @@ initTag();
   background: transparent;
 }
 
+.is-dark .article-title-input {
+  color: #e5eaf3;
+}
+
 .article-title-input::placeholder {
   color: #bfbfbf;
   font-weight: 400;
+}
+
+.is-dark .article-title-input::placeholder {
+  color: #8d9095;
 }
 
 .editor-wrapper {
@@ -376,12 +399,21 @@ initTag();
   flex-direction: column;
 }
 
+.is-dark .setting-card {
+  background: #1d1e1f;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
 .publish-area {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
   padding-bottom: 16px;
   border-bottom: 1px solid #f0f0f0;
+}
+
+.is-dark .publish-area {
+  border-bottom-color: #414243;
 }
 
 .setting-collapse {
@@ -395,6 +427,10 @@ initTag();
   font-size: 14px;
   border-bottom: none;
   height: 40px;
+}
+
+.is-dark .setting-collapse :deep(.el-collapse-item__header) {
+  color: #e5eaf3;
 }
 
 .setting-collapse :deep(.el-collapse-item__wrap) {
@@ -415,6 +451,10 @@ initTag();
   margin-bottom: 4px;
 }
 
+.is-dark .setting-collapse :deep(.el-form-item__label) {
+  color: #a3a6ad;
+}
+
 .switch-group {
   display: flex;
   flex-direction: column;
@@ -430,9 +470,17 @@ initTag();
   border-radius: 6px;
 }
 
+.is-dark .switch-item {
+  background: #262727;
+}
+
 .switch-label {
   font-size: 13px;
   color: #606266;
+}
+
+.is-dark .switch-label {
+  color: #a3a6ad;
 }
 
 /* AiEditor 样式优化 */

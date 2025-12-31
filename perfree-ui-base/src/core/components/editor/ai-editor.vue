@@ -294,4 +294,74 @@ defineExpose({
   background-color: #f8f9fa !important;
   border-bottom: 1px solid #e8e8e8 !important;
 }
+
+/* 暗黑模式样式 */
+html.dark .aieditor {
+  /* 工具栏背景色 */
+  --aie-toolbar-bg-color: #1f2937;
+
+  /* 基础颜色 */
+  --aie-bg-color: #111827;
+  --aie-border-color: #374151;
+  --aie-text-color: #e5e7eb;
+  --aie-text-placeholder-color: #6b7280;
+
+  /* 按钮 */
+  --aie-button-bg-color: #374151;
+  --aie-button-border-color: #4b5563;
+  --aie-button-hover-bg-color: #1e3a5f;
+  --aie-button-hover-border-color: #3b82f6;
+
+  /* 输入框 */
+  --aie-input-bg-color: #1f2937;
+  --aie-input-border-color: #4b5563;
+  --aie-input-focus-bg-color: #1f2937;
+  --aie-input-focus-border-color: #3b82f6;
+
+  /* 弹出框 */
+  --aie-popover-bg-color: #1f2937;
+  --aie-popover-border-color: #374151;
+  --aie-popover-title-color: #9ca3af;
+  --aie-popover-selected-color: #1e3a5f;
+
+  /* 菜单 */
+  --aie-menus-text-color: var(--aie-text-color);
+  --aie-menus-bg-color: #1f2937;
+  --aie-menus-svg-color: #9ca3af;
+  --aie-menus-item-hover-color: #1e3a5f;
+  --aie-menus-divider-color: #374151;
+  --aie-menus-ai-bg-color: #3b82f6;
+  --aie-menus-ai-color: #ffffff;
+  --aie-menus-tip-bg-color: #374151;
+  --aie-menus-tip-text-color: #e5e7eb;
+  --aie-menus-table-cell-border-color: #4b5563;
+  --aie-menus-table-cell-border-active-color: #3b82f6;
+
+  /* 内容区 */
+  --aie-content-pre-bg-color: #1f2937;
+  --aie-content-blockquote-bg-color: #1f2937;
+  --aie-content-blockquote-border-color: #4b5563;
+  --aie-content-blockquote-text-color: #9ca3af;
+  --aie-content-container-info-color: #1e3a5f;
+  --aie-content-container-warning-color: #422006;
+  --aie-content-container-danger-color: #450a0a;
+  --aie-content-table-th-bg-color: #1f2937;
+  --aie-content-table-selected-bg-color: rgba(59, 130, 246, 0.2);
+  --aie-content-table-border-color: #374151;
+  --aie-content-table-handler-color: #3b82f6;
+  --aie-content-scrollbar-track-piece: #1f2937;
+  --aie-content-scrollbar-thumb: #4b5563;
+  --aie-content-scrollbar-thumb-hover: #6b7280;
+  --aie-content-scrollbar-thumb-active: #9ca3af;
+  --aie-content-link-a-color: #60a5fa;
+  --aie-content-link-a-hover-color: #93c5fd;
+  --aie-content-link-a-visited-color: #a78bfa;
+  --aie-content-link-a-active-color: #3b82f6;
+}
+
+/* 暗黑模式工具栏样式 */
+html.dark :deep(.aie-container-header) {
+  background-color: #1f2937 !important;
+  border-bottom: 1px solid #374151 !important;
+}
 </style>
