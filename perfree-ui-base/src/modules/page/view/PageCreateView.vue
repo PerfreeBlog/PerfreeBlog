@@ -15,19 +15,10 @@
           <el-form-item prop="content" class="article-content-item">
             <template #label>
               <div class="content-label">
-                <div class="content-label-left">
-                  <span class="required">*</span>页面内容
-                </div>
-                <div class="content-label-right">
-                  切换编辑器:
-                  <el-select placeholder="Select" size="small" style="width: 180px" v-model="addForm.contentModel">
-                    <el-option :key="'Vditor'" :label="'Vditor'" :value="'Vditor'"  @click.prevent="editorChange('Vditor')" disabled class="editor-option"/>
-                    <el-option :key="'AiEditor'" :label="'AiEditor'" :value="'AiEditor'"  @click.prevent="editorChange('AiEditor')" disabled class="editor-option"/>
-                  </el-select>
-                </div>
+                <span class="required">*</span>页面内容
               </div>
             </template>
-            <custom-editor :editor-type="addForm.contentModel"  :init-value="addForm.content" :height="'666px'" ref="editorRef" v-if="!initLoading"></custom-editor>
+            <custom-editor :editor-type="addForm.contentModel"  :init-value="addForm.content" :height="'100%'" ref="editorRef" v-if="!initLoading"></custom-editor>
           </el-form-item>
         </el-col>
 
@@ -99,7 +90,7 @@ const addForm = ref({
   isTop: 0,
   flag: '',
   type: 'page',
-  contentModel: 'Vditor',
+  contentModel: 'AiEditor',
   template: 'default'
 
 });
@@ -108,25 +99,6 @@ const editorRef = ref();
 let loading = ref(false);
 let initLoading = ref(true);
 let templates = ref([]);
-
-/**
- * 切换编辑器事件
- */
-function editorChange(val) {
-  if (addForm.value.contentModel === val) {
-    return;
-  }
-  ElMessageBox.confirm('切换编辑器可能会造成内容丢失,是否切换?', '提示', {
-    confirmButtonText: '确定',
-    cancelButtonText: '取消',
-    type: 'warning',
-  }).then(() => {
-    let articleContent = editorRef.value.getValue();
-    addForm.value.content = articleContent.content;
-    addForm.value.parseContent = articleContent.parseContent;
-    addForm.value.contentModel = val;
-  }).catch(() => {})
-}
 
 /**
  * 重置表单
@@ -146,7 +118,7 @@ function resetAddForm() {
     isTop: 0,
     flag: '',
     type: 'page',
-    contentModel: 'Vditor',
+    contentModel: 'AiEditor',
     template: 'default'
   }
   editorRef.value.resetContent();
@@ -247,16 +219,44 @@ initThemePageTpl();
 </script>
 
 <style scoped>
-
+.page{
+  height: calc(100% - 30px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.page :deep(.el-form){
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.page :deep(.el-form > .el-row){
+  flex: 1;
+  min-height: 0;
+}
+.page :deep(.el-col:first-child){
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.page :deep(.article-content-item){
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.page :deep(.article-content-item .el-form-item__content){
+  flex: 1;
+  min-height: 0;
+}
 .content-label{
   display: flex;
   width: 100%;
 }
-.content-label-right{
-  margin-left: auto;
-}
 .article-right{
   border-left: 1px solid var(--el-color-info-light-8);
+  overflow-y: auto;
 }
 :deep().cherry{
   box-shadow: none;
@@ -283,15 +283,5 @@ initThemePageTpl();
 .required{
   color: var(--el-color-error);
   margin-right: 3px;
-}
-.editor-option{
-  cursor: pointer;
-  color: var(--el-text-color-regular);
-}
-.editor-option.is-selected{
-  color: var(--el-color-primary);
-}
-.editor-option:hover{
-  background-color: var(--el-fill-color-light);
 }
 </style>
