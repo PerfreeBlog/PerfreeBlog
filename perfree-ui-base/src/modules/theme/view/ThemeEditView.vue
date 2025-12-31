@@ -1,15 +1,12 @@
 <template>
-  <div>
-    <div class="theme-header-box">
-      <h2 class="theme-editor-title">主题编辑: {{currThemePath}}</h2>
-      <el-button type="primary" style="margin-left: auto;" @click="saveFile">保存</el-button>
-    </div>
-    <el-divider />
-    <el-row :gutter="20">
-
-      <el-col  :xs="24" :sm="24" :md="4" :lg="4" :xl="4" v-loading="loading">
+  <div class="theme-edit-container">
+    <div class="theme-content-wrapper">
+      <div class="theme-sidebar" v-loading="loading">
+        <div class="sidebar-header">
+          <span class="sidebar-title">{{ currThemePath }}</span>
+        </div>
         <el-tree
-            style="width: 100%;max-height: 700px;overflow: auto;"
+            class="theme-file-tree"
             :data="fileList"
             :props="defaultProps"
             @node-click="handleNodeClick"
@@ -20,25 +17,31 @@
         >
           <template #default="{ node, data }">
           <span class="custom-tree-node">
-            <font-awesome-icon  icon="fa-regular fa-folder-open " v-if="data.fileType === 'dir'" class="file-list-icon folder"></font-awesome-icon>
-            <font-awesome-icon  icon="fa-brands fa-js-square" v-else-if="data.fileType === 'js'" class="file-list-icon js"></font-awesome-icon>
-            <font-awesome-icon  icon="fa-brands fa-html5 " v-else-if="data.fileType === 'html'" class="file-list-icon html"></font-awesome-icon>
-            <font-awesome-icon  icon="fa-brands fa-css3 "
+            <font-awesome-icon icon="fa-regular fa-folder-open" v-if="data.fileType === 'dir'" class="file-list-icon folder"></font-awesome-icon>
+            <font-awesome-icon icon="fa-brands fa-js-square" v-else-if="data.fileType === 'js'" class="file-list-icon js"></font-awesome-icon>
+            <font-awesome-icon icon="fa-brands fa-html5" v-else-if="data.fileType === 'html'" class="file-list-icon html"></font-awesome-icon>
+            <font-awesome-icon icon="fa-brands fa-css3"
                                 v-else-if="data.fileType === 'css' || data.fileType === 'less' || data.fileType === 'scss'" class="file-list-icon css"
             ></font-awesome-icon>
-             <font-awesome-icon  icon="fa-solid fa-text-height " v-else-if="data.fileType === 'txt'" class="file-list-icon txt"></font-awesome-icon>
-            <font-awesome-icon  icon="fa-regular fa-file " v-else class="file-list-icon"></font-awesome-icon>
-            <span>{{ node.label }}</span>
+            <font-awesome-icon icon="fa-solid fa-text-height" v-else-if="data.fileType === 'txt'" class="file-list-icon txt"></font-awesome-icon>
+            <font-awesome-icon icon="fa-regular fa-file" v-else class="file-list-icon"></font-awesome-icon>
+            <span class="file-name">{{ node.label }}</span>
           </span>
           </template>
         </el-tree>
-      </el-col>
+      </div>
 
-      <el-col :xs="24" :sm="24" :md="20" :lg="20" :xl="20"   v-loading="codeLoading">
-        <div class="codeEditorFileName">{{activeFile.fileName}}</div>
+      <div class="theme-editor-panel" v-loading="codeLoading">
+        <div class="editor-header">
+          <span class="editor-file-name">{{ activeFile.fileName || '请选择文件' }}</span>
+          <el-button type="primary" size="small" @click="saveFile" :disabled="!activeFile.fileName">
+            <font-awesome-icon icon="fa-solid fa-save" style="margin-right: 5px;"></font-awesome-icon>
+            保存
+          </el-button>
+        </div>
         <div ref="codeEditorRef" class="codeEditor"></div>
-      </el-col>
-    </el-row>
+      </div>
+    </div>
 
 
     <el-image-viewer
@@ -186,57 +189,154 @@ initFileList()
 </script>
 
 <style scoped>
-.file-list-icon{
-  margin-right: 5px;
-}
-.file-list-icon.folder{
-  color: #ebd109;
-}
-.file-list-icon.js{
-  color: #ebd109;
-}
-.file-list-icon.css{
-  color: #eb6909;
-}
-.file-list-icon.html{
-  color: #09eb46;
-}
-.file-list-icon.txt{
-  color: #09eb46;
-}
-:deep().ͼ1.cm-focused{
-  outline: none!important;
-}
-:deep().CodeMirror{
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', serif;
-  font-size: 14px;
-}
-:deep().el-tree-node.is-current{
-  background-color: var(--el-fill-color-darker)!important;
-}
-:deep().is-expanded .el-tree-node{
-  background: var(--el-bg-color);
-}
-
-.theme-editor-title{
-  font-size: 17px;
-  margin: 0 ;
-  color: var(--el-text-color-regular);
-}
-.el-divider--horizontal{
-  margin: 15px 0;
-}
-.theme-header-box{
+.theme-edit-container {
+  height: 100%;
   display: flex;
-}
-:deep().CodeMirror{
-  height: 670px!important;
+  flex-direction: column;
   overflow: hidden;
 }
-.codeEditorFileName{
+
+.theme-content-wrapper {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.theme-sidebar {
+  width: 240px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
   background: var(--el-bg-color);
-  height: 35px;
-  line-height: 35px;
-  padding-left: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--el-border-color-lighter);
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--el-border-color-lighter);
+  background: var(--el-fill-color-lighter);
+}
+
+.sidebar-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--el-text-color-primary);
+}
+
+.theme-file-tree {
+  flex: 1;
+  overflow: auto;
+  padding: 8px 0;
+  background: transparent;
+}
+
+.theme-editor-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--el-bg-color);
+  border-radius: 8px;
+  border: 1px solid var(--el-border-color-lighter);
+  overflow: hidden;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  border-bottom: 1px solid var(--el-border-color-lighter);
+  background: var(--el-fill-color-lighter);
+}
+
+.editor-file-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--el-text-color-regular);
+}
+
+.codeEditor {
+  flex: 1;
+  overflow: hidden;
+}
+
+.custom-tree-node {
+  display: flex;
+  align-items: center;
+}
+
+.file-list-icon {
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+.file-list-icon.folder {
+  color: #f0c040;
+}
+
+.file-list-icon.js {
+  color: #f7df1e;
+}
+
+.file-list-icon.css {
+  color: #264de4;
+}
+
+.file-list-icon.html {
+  color: #e44d26;
+}
+
+.file-list-icon.txt {
+  color: #6b7280;
+}
+
+.file-name {
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:deep(.ͼ1.cm-focused) {
+  outline: none !important;
+}
+
+:deep(.CodeMirror) {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+  font-size: 13px;
+  height: 100% !important;
+  line-height: 1.6;
+}
+
+:deep(.CodeMirror-gutters) {
+  border-right: none;
+  background: transparent;
+}
+
+:deep(.el-tree-node__content) {
+  height: 32px;
+  border-radius: 4px;
+  margin: 0 6px;
+  padding-left: 8px !important;
+}
+
+:deep(.el-tree-node__content:hover) {
+  background-color: var(--el-fill-color);
+}
+
+:deep(.el-tree-node.is-current > .el-tree-node__content) {
+  background-color: var(--el-color-primary-light-9) !important;
+  color: var(--el-color-primary);
+}
+
+:deep(.el-tree-node.is-current > .el-tree-node__content .file-list-icon) {
+  color: var(--el-color-primary);
+}
+
+:deep(.el-tree-node__expand-icon) {
+  font-size: 12px;
 }
 </style>
