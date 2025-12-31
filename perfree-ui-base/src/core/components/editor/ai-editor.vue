@@ -1,5 +1,5 @@
 <template>
-  <div ref="divRef" :style="{height: props.height}"/>
+  <div ref="divRef" :style="{height: props.height}" class="aieditor"/>
   <el-dialog v-model="open" :title="title" :width="dialogWidth(900)" draggable   destroy-on-close>
     <attach-select-panel @update:selected-attach="selectAttach" :max="attachMaxSelect" :attach-type="attachType"></attach-select-panel>
     <template #footer>
@@ -158,6 +158,9 @@ onMounted(() => {
         },
       }
     },
+    codeBlock: {
+      lineNumbers: true
+    },
   })
 })
 
@@ -222,5 +225,73 @@ defineExpose({
 <style scoped>
 :deep(.aie-content p) {
   margin: 0;
+}
+.aieditor{
+  /* 工具栏背景色 */
+  --aie-toolbar-bg-color: #f8f9fa;
+
+  /* 基础颜色 */
+  --aie-bg-color: #fff;
+  --aie-border-color: #e8e8e8;
+  --aie-text-color: #333;
+  --aie-text-placeholder-color: #adb5bd;
+
+  /* 按钮 */
+  --aie-button-bg-color: #f5f5f5;
+  --aie-button-border-color: #e8e8e8;
+  --aie-button-hover-bg-color: #e6f7ff;
+  --aie-button-hover-border-color: #91d5ff;
+
+  /* 输入框 */
+  --aie-input-bg-color: #fff;
+  --aie-input-border-color: #d9d9d9;
+  --aie-input-focus-bg-color: #fff;
+  --aie-input-focus-border-color: #40a9ff;
+
+  /* 弹出框 */
+  --aie-popover-bg-color: #fff;
+  --aie-popover-border-color: #e8e8e8;
+  --aie-popover-title-color: #666;
+  --aie-popover-selected-color: #e6f7ff;
+
+  /* 菜单 */
+  --aie-menus-text-color: var(--aie-text-color);
+  --aie-menus-bg-color: #f8f9fa;
+  --aie-menus-svg-color: #595959;
+  --aie-menus-item-hover-color: #e6f7ff;
+  --aie-menus-divider-color: #e8e8e8;
+  --aie-menus-ai-bg-color: #1890ff;
+  --aie-menus-ai-color: #ffffff;
+  --aie-menus-tip-bg-color: #333;
+  --aie-menus-tip-text-color: #eee;
+  --aie-menus-table-cell-border-color: #ccc;
+  --aie-menus-table-cell-border-active-color: #1890ff;
+
+  /* 内容区 */
+  --aie-content-pre-bg-color: #f6f8fa;
+  --aie-content-blockquote-bg-color: #f6f8fa;
+  --aie-content-blockquote-border-color: #dfe2e5;
+  --aie-content-blockquote-text-color: #6a737d;
+  --aie-content-container-info-color: #e6f7ff;
+  --aie-content-container-warning-color: #fffbe6;
+  --aie-content-container-danger-color: #fff1f0;
+  --aie-content-table-th-bg-color: #fafafa;
+  --aie-content-table-selected-bg-color: rgba(24, 144, 255, 0.1);
+  --aie-content-table-border-color: #e8e8e8;
+  --aie-content-table-handler-color: #1890ff;
+  --aie-content-scrollbar-track-piece: #f1f1f1;
+  --aie-content-scrollbar-thumb: #c1c1c1;
+  --aie-content-scrollbar-thumb-hover: #a9a9a9;
+  --aie-content-scrollbar-thumb-active: #787878;
+  --aie-content-link-a-color: #1890ff;
+  --aie-content-link-a-hover-color: #40a9ff;
+  --aie-content-link-a-visited-color: #722ed1;
+  --aie-content-link-a-active-color: #096dd9;
+}
+
+/* 工具栏样式 */
+:deep(.aie-container-header) {
+  background-color: #f8f9fa !important;
+  border-bottom: 1px solid #e8e8e8 !important;
 }
 </style>

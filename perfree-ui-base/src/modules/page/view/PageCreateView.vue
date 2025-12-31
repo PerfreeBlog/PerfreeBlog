@@ -1,66 +1,79 @@
 <template>
-  <div class="page" v-loading="loading">
-    <el-form :model="addForm" class="demo-form-inline" ref="addFormRef" label-position="top">
-      <el-row :gutter="24">
-        <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17">
-          <el-form-item prop="title">
-            <template #label>
-              <div class="content-label">
-                <span class="required">*</span>页面标题
-              </div>
-            </template>
-            <el-input v-model="addForm.title" placeholder="请输入页面标题" clearable @change="titleChange"/>
-          </el-form-item>
-
-          <el-form-item prop="content" class="article-content-item">
-            <template #label>
-              <div class="content-label">
-                <span class="required">*</span>页面内容
-              </div>
-            </template>
-            <custom-editor :editor-type="addForm.contentModel"  :init-value="addForm.content" :height="'100%'" ref="editorRef" v-if="!initLoading"></custom-editor>
-          </el-form-item>
+  <div class="article-page" v-loading="loading">
+    <el-form :model="addForm" ref="addFormRef" label-position="top">
+      <el-row :gutter="16">
+        <!-- 左侧编辑区 -->
+        <el-col :xs="24" :sm="24" :md="17" :lg="17" :xl="17" class="editor-col">
+          <div class="editor-card">
+            <div class="title-wrapper">
+              <input
+                v-model="addForm.title"
+                class="article-title-input"
+                placeholder="请输入页面标题..."
+                @change="titleChange"
+              />
+            </div>
+            <div class="editor-wrapper">
+              <custom-editor :editor-type="addForm.contentModel" :init-value="addForm.content" :height="'100%'" ref="editorRef" v-if="!initLoading"></custom-editor>
+            </div>
+          </div>
         </el-col>
 
-        <el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7" class="article-right">
-          <el-form-item>
-              <el-button type="primary" @click="submitAddForm(0)">发布</el-button>
-              <el-button @click="submitAddForm(1)">保存至草稿</el-button>
-          </el-form-item>
-          <el-form-item label="访问地址别名" prop="slug">
-            <el-input v-model="addForm.slug" placeholder="请输入访问地址别名" clearable/>
-          </el-form-item>
-          <el-form-item label="主题模板" prop="template">
-            <el-select v-model="addForm.template" placeholder="请选择主题模板">
-              <el-option :key="'default'" :label="'默认匹配'" :value="'default'" />
-              <el-option v-for="item in templates" :key="item" :label="item" :value="item" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="页面摘要" prop="summary">
-            <el-input v-model="addForm.summary" placeholder="请输入页面摘要" :autosize="{ minRows: 3, maxRows: 6 }"
-                      type="textarea"/>
-          </el-form-item>
-
-          <el-form-item label="SEO关键字" prop="metaKeywords">
-            <el-input v-model="addForm.metaKeywords" placeholder="请输入SEO关键字" clearable/>
-          </el-form-item>
-          <el-form-item label="SEO描述" prop="metaDescription">
-            <el-input v-model="addForm.metaDescription" placeholder="请输入SEO描述" :autosize="{ minRows: 3, maxRows: 6 }"
-                    type="textarea"/>
-          </el-form-item>
-          <el-form-item label="页面标识" prop="flag">
-            <el-input v-model="addForm.flag" placeholder="请输入页面标识" clearable/>
-          </el-form-item>
-          <el-form-item>
-            <div style="display: flex;">
-              <div>
-                <span class="custom-label">允许评论</span> <el-switch v-model="addForm.isComment"  :active-value="1" :inactive-value="0"/>
-              </div>
-              <div style="margin-left: 15px;">
-                <span class="custom-label">置顶</span> <el-switch v-model="addForm.isTop"  :active-value="1" :inactive-value="0"/>
-              </div>
+        <!-- 右侧设置区 -->
+        <el-col :xs="24" :sm="24" :md="7" :lg="7" :xl="7" class="setting-col">
+          <div class="setting-card">
+            <!-- 发布按钮 -->
+            <div class="publish-area">
+              <el-button type="primary" @click="submitAddForm(0)" size="large" style="flex: 1;">发布页面</el-button>
+              <el-button @click="submitAddForm(1)" size="large">存草稿</el-button>
             </div>
-          </el-form-item>
+
+            <!-- 折叠面板 -->
+            <el-collapse v-model="activeCollapse" class="setting-collapse">
+              <!-- 基本设置 -->
+              <el-collapse-item title="基本设置" name="basic">
+                <el-form-item label="访问地址别名" prop="slug">
+                  <el-input v-model="addForm.slug" placeholder="请输入访问地址别名" clearable/>
+                </el-form-item>
+                <el-form-item label="主题模板" prop="template">
+                  <el-select v-model="addForm.template" placeholder="请选择主题模板" style="width: 100%">
+                    <el-option :key="'default'" :label="'默认匹配'" :value="'default'" />
+                    <el-option v-for="item in templates" :key="item" :label="item" :value="item" />
+                  </el-select>
+                </el-form-item>
+              </el-collapse-item>
+
+              <!-- 摘要与SEO -->
+              <el-collapse-item title="摘要与SEO" name="seo">
+                <el-form-item label="页面摘要" prop="summary">
+                  <el-input v-model="addForm.summary" placeholder="请输入页面摘要" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea"/>
+                </el-form-item>
+                <el-form-item label="SEO关键字" prop="metaKeywords">
+                  <el-input v-model="addForm.metaKeywords" placeholder="请输入SEO关键字" clearable/>
+                </el-form-item>
+                <el-form-item label="SEO描述" prop="metaDescription">
+                  <el-input v-model="addForm.metaDescription" placeholder="请输入SEO描述" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea"/>
+                </el-form-item>
+              </el-collapse-item>
+
+              <!-- 高级设置 -->
+              <el-collapse-item title="高级设置" name="advanced">
+                <el-form-item label="页面标识" prop="flag">
+                  <el-input v-model="addForm.flag" placeholder="请输入页面标识" clearable/>
+                </el-form-item>
+                <div class="switch-group">
+                  <div class="switch-item">
+                    <span class="switch-label">允许评论</span>
+                    <el-switch v-model="addForm.isComment" :active-value="1" :inactive-value="0"/>
+                  </div>
+                  <div class="switch-item">
+                    <span class="switch-label">置顶</span>
+                    <el-switch v-model="addForm.isTop" :active-value="1" :inactive-value="0"/>
+                  </div>
+                </div>
+              </el-collapse-item>
+            </el-collapse>
+          </div>
         </el-col>
       </el-row>
     </el-form>
@@ -76,6 +89,7 @@ import {ref} from "vue";
 import {getThemePageTplApi} from "@/modules/page/api/theme.js";
 
 const addFormRef = ref();
+const activeCollapse = ref(['basic']);
 const addForm = ref({
   id: null,
   title: '',
@@ -219,69 +233,153 @@ initThemePageTpl();
 </script>
 
 <style scoped>
-.page{
+.article-page {
   height: calc(100% - 30px);
   overflow: hidden;
+  background-color: #f0f2f5;
+  box-sizing: border-box;
+}
+
+.article-page :deep(.el-form) {
+  height: 100%;
+}
+
+.article-page :deep(.el-row) {
+  height: 100%;
+}
+
+.editor-col {
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
-.page :deep(.el-form){
+
+.editor-card {
   flex: 1;
-  min-height: 0;
   display: flex;
   flex-direction: column;
-}
-.page :deep(.el-form > .el-row){
-  flex: 1;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
   min-height: 0;
 }
-.page :deep(.el-col:first-child){
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
+
+.title-wrapper {
+  padding: 20px 24px 0;
+  border-bottom: 1px solid #f0f0f0;
 }
-.page :deep(.article-content-item){
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-}
-.page :deep(.article-content-item .el-form-item__content){
-  flex: 1;
-  min-height: 0;
-}
-.content-label{
-  display: flex;
+
+.article-title-input {
   width: 100%;
+  border: none;
+  outline: none;
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1a;
+  padding: 0 0 16px;
+  background: transparent;
 }
-.article-right{
-  border-left: 1px solid var(--el-color-info-light-8);
-  overflow-y: auto;
+
+.article-title-input::placeholder {
+  color: #bfbfbf;
+  font-weight: 400;
 }
-:deep().cherry{
-  box-shadow: none;
-  background: white;
-  border: 1px solid var(--el-color-info-light-8);
-}
-:deep().cherry-editor .CodeMirror{
-  background-color: white !important;;
-}
-.custom-label{
-  line-height: 22px;
-  margin-right: 3px;
-  color: var(--el-text-color-regular);
-}
-:deep().el-form-item{
-  margin-bottom: 12px;
-}
-:deep().el-form--default.el-form--label-top .el-form-item .el-form-item__label{
-  margin-bottom: 5px;
-}
-:deep().article-content-item .el-form-item__label{
+
+.editor-wrapper {
+  flex: 1;
+  min-height: 0;
   display: flex;
+  flex-direction: column;
 }
-.required{
-  color: var(--el-color-error);
-  margin-right: 3px;
+
+.editor-wrapper :deep(> *) {
+  flex: 1;
+  min-height: 0;
+}
+
+.setting-col {
+  height: 100%;
+}
+
+.setting-card {
+  height: 100%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  padding: 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.publish-area {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.setting-collapse {
+  border: none;
+  --el-collapse-header-bg-color: transparent;
+}
+
+.setting-collapse :deep(.el-collapse-item__header) {
+  font-weight: 600;
+  color: #303133;
+  font-size: 14px;
+  border-bottom: none;
+  height: 40px;
+}
+
+.setting-collapse :deep(.el-collapse-item__wrap) {
+  border-bottom: none;
+}
+
+.setting-collapse :deep(.el-collapse-item__content) {
+  padding-bottom: 8px;
+}
+
+.setting-collapse :deep(.el-form-item) {
+  margin-bottom: 14px;
+}
+
+.setting-collapse :deep(.el-form-item__label) {
+  font-size: 13px;
+  color: #606266;
+  margin-bottom: 4px;
+}
+
+.switch-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.switch-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #f9fafb;
+  border-radius: 6px;
+}
+
+.switch-label {
+  font-size: 13px;
+  color: #606266;
+}
+
+/* AiEditor 样式优化 */
+:deep(.aie-container) {
+  border: none !important;
+  height: 100% !important;
+}
+
+:deep(.aie-container .aie-main) {
+  height: 100% !important;
 }
 </style>
